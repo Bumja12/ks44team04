@@ -17,6 +17,7 @@ public class Goods {
     private String regularDeliverCheck;
     private String regDate;
     private int goodsReportAmount;
+    private String imageFile;
 
     public String getGoodsCode() {
         return goodsCode;
@@ -138,6 +139,14 @@ public class Goods {
         this.goodsReportAmount = goodsReportAmount;
     }
 
+    public String getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(String imageFile) {
+        this.imageFile = imageFile;
+    }
+
     @Override
     public String toString() {
         return "Goods{" +
@@ -156,6 +165,7 @@ public class Goods {
                 ", regularDeliverCheck='" + regularDeliverCheck + '\'' +
                 ", regDate='" + regDate + '\'' +
                 ", goodsReportAmount=" + goodsReportAmount +
+                ", imageFile='" + imageFile + '\'' +
                 '}';
     }
 }
