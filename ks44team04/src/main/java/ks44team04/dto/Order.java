@@ -6,6 +6,7 @@ public class Order {
     private String buyerId;
     private String couponCode;
     private String orderDate;
+    private String orderStatus;
     private int totalSum;
     private int totalPrice;
     private int couponPrice;
@@ -47,6 +48,14 @@ public class Order {
 
     public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public int getTotalSum() {
@@ -136,6 +145,7 @@ public class Order {
                 ", buyerId='" + buyerId + '\'' +
                 ", couponCode='" + couponCode + '\'' +
                 ", orderDate='" + orderDate + '\'' +
+                ", orderStatus='" + orderStatus + '\'' +
                 ", totalSum=" + totalSum +
                 ", totalPrice=" + totalPrice +
                 ", couponPrice=" + couponPrice +
