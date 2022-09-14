@@ -22,24 +22,56 @@
         <result column="post_address_list" property="postAddressList"/>
     </resultMap>
 
-    <select id="order" resultMap="orderResultMap">
-        SELECT order_num,
-               buyer_id,
-               coupon_code,
-               order_date,
-               order_status,
-               total_sum,
-               total_price,
-               coupon_price,
-               use_point,
-               goods_discount_price,
-               post_price,
-               total_order_price,
-               final_confirm_price,
-               final_confirm_date,
-               post_address_list
-        FROM tb_order;
-    </select>
+    <resultMap type="OrderDetail" id="orderDetailResultMap">
+        <result column="order_detail_code" property="orderDetailCode"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="goods_code" property="goodsCode"/>
+        <result column="order_amount" property="orderAmount"/>
+        <result column="order_og_price" property="orderOgPrice"/>
+        <result column="order_price" property="orderPrice"/>
+        <result column="order_status" property="orderStatus"/>
+        <result column="post_info" property="postInfo"/>
+        <result column="refund_check" property="refundCheck"/>
+        <result column="auto_confirm_date" property="autoConfirmDate"/>
+        <result column="order_confirm_date" property="orderConfirmDate"/>
+        <result column="save_point" property="savePoint"/>
+    </resultMap>
+
+    <resultMap type="OrderCancel" id="orderCancelResultMap">
+        <result column="order_cancel_code" property="orderDetailCode"/>
+        <result column="order_detail_code" property="orderNum"/>
+        <result column="payment_code" property="goodsCode"/>
+        <result column="buyer_id" property="orderAmount"/>
+        <result column="cancel_ask_date" property="orderOgPrice"/>
+        <result column="cancel_reason" property="orderPrice"/>
+        <result column="approve_date" property="orderStatus"/>
+    </resultMap>
+
+    <resultMap type="OrderExchange" id="orderExchangeResultMap">
+        <result column="exchange_ask_code" property="exchangeAskCode"/>
+        <result column="order_detail_code" property="orderDetailCode"/>
+        <result column="buyer_id" property="buyerId"/>
+        <result column="post_info" property="postInfo"/>
+        <result column="exchange_ask_date" property="exchangeAskDate"/>
+        <result column="exchange_reason" property="exchangeReason"/>
+        <result column="approve_check" property="approveCheck"/>
+        <result column="approve_date" property="approveDate"/>
+        <result column="post_company" property="postCompany"/>
+        <result column="invoice_number" property="invoiceNumber"/>
+    </resultMap>
+
+    <resultMap type="OrderReturn" id="orderReturnResultMap">
+        <result column="order_return_code" property="orderReturnCode"/>
+        <result column="order_detail_code" property="orderDetailCode"/>
+        <result column="payment_code" property="paymentCode"/>
+        <result column="buyer_id" property="buyerId"/>
+        <result column="return_ask_date" property="returnAskDate"/>
+        <result column="cancel_reason" property="cancelReason"/>
+        <result column="permit_date" property="permitDate"/>
+        <result column="post_company" property="postCompany"/>
+        <result column="invoice_number" property="invoiceNumber"/>
+    </resultMap>
+
 
 
 </mapper>
