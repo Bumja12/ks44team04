@@ -72,6 +72,4 @@
         <result column="invoice_number" property="invoiceNumber"/>
     </resultMap>
 
-
-
 </mapper>
