@@ -2,9 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<li th:fragment="leftmenusuk"><a><i class="fa fa-table"></i> 석환 <span class="fa fa-chevron-down"></span></a>
+<li th:fragment="leftmenusuk"><a><i class="fa fa-table"></i> 결제관리 <span class="fa fa-chevron-down"></span></a>
     <ul class="nav child_menu">
-        <li><a th:href="@{/menu}">메뉴</a></li>
+        <li><a th:href="@{/admin/paymentList}">결제내역</a></li>
+        <li><a th:href="@{/admin/paymentDetail}">결제상세내역</a></li>
     </ul>
 </li>
 
