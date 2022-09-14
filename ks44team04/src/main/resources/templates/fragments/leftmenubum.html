@@ -2,9 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<li th:fragment="leftmenubum"><a><i class="fa fa-edit"></i> 범현 <span class="fa fa-chevron-down"></span></a>
+<li th:fragment="leftmenubum"><a><i class="fa fa-edit"></i> 주문관리 <span class="fa fa-chevron-down"></span></a>
     <ul class="nav child_menu">
-        <li><a th:href="@{/menu}">메뉴</a></li>
+        <li><a th:href="@{/admin/addresslist}">배송지목록</a></li>
+        <li><a th:href="@{/admin/postlist}">배송정보목록</a></li>
     </ul>
 </li>
 
