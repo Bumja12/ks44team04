@@ -9,6 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/admin/category")
 public class CategoryController {
 
+	// 카테고리 등록 화면
+	@GetMapping("/addCategory")
+	public String addCategory (Model model) {
+		
+		model.addAttribute("title", "카테고리 등록 화면");
+		return "admin/category/category_add";
+	}
+	
+	// 카테고리 목록 화면
 	@GetMapping("/categoryList")
 	public String getCategoryList (Model model) {
 		
