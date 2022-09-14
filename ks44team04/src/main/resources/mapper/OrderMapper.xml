@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team04.admin.mapper.UserMapper">
+
+    <resultMap type="Order" id="orderResultMap">
+        <result column="order_num" property="orderNum"/>
+        <result column="buyer_id" property="buyerId"/>
+        <result column="coupon_code" property="couponCode"/>
+        <result column="order_date" property="orderDate"/>
+        <result column="order_status" property="orderStatus"/>
+        <result column="total_sum" property="totalSum"/>
+        <result column="total_price" property="totalPrice"/>
+        <result column="coupon_price" property="couponPrice"/>
+        <result column="use_point" property="usePoint"/>
+        <result column="goods_discount_price" property="goodsDiscountPrice"/>
+        <result column="post_price" property="postPrice"/>
+        <result column="total_order_price" property="totalOrderPrice"/>
+        <result column="final_confirm_price" property="finalConfirmPrice"/>
+        <result column="final_confirm_date" property="finalConfirmDate"/>
+        <result column="post_address_list" property="postAddressList"/>
+    </resultMap>
+
+    <select id="order" resultMap="orderResultMap">
+        SELECT order_num,
+               buyer_id,
+               coupon_code,
+               order_date,
+               order_status,
+               total_sum,
+               total_price,
+               coupon_price,
+               use_point,
+               goods_discount_price,
+               post_price,
+               total_order_price,
+               final_confirm_price,
+               final_confirm_date,
+               post_address_list
+        FROM tb_order;
+    </select>
+
+
+</mapper>

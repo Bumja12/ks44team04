@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team04.admin.mapper.UserMapper">
+
+    <resultMap type="OrderDetail" id="orderDetailResultMap">
+        <result column="order_detail_code" property="orderDetailCode"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="goods_code" property="goodsCode"/>
+        <result column="order_amount" property="orderAmount"/>
+        <result column="order_og_price" property="orderOgPrice"/>
+        <result column="order_price" property="orderPrice"/>
+        <result column="order_status" property="orderStatus"/>
+        <result column="post_info" property="postInfo"/>
+        <result column="refund_check" property="refundCheck"/>
+        <result column="auto_confirm_date" property="autoConfirmDate"/>
+        <result column="order_confirm_date" property="orderConfirmDate"/>
+        <result column="save_point" property="savePoint"/>
+    </resultMap>
+
+    <select id="orderDetail" resultMap="orderDetailResultMap">
+        SELECT
+            order_detail_code,
+            order_num,
+            goods_code,
+            order_amount,
+            order_og_price,
+            order_price,
+            order_status,
+            post_info,
+            refund_check,
+            auto_confirm_date,
+            order_confirm_date,
+            save_point
+        FROM tb_order_detail;
+    </select>
+
+</mapper>
