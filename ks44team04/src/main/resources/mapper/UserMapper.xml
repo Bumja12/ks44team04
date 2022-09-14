@@ -23,7 +23,6 @@
         <result column="user_level" property="userLevel"/>
     </resultMap>
 
-
     <select id="userLogin" parameterType="String" resultType="String">
         SELECT IF(COUNT(*) = 1, user_pw, 'none')
         FROM tb_user
@@ -36,5 +35,5 @@
         FROM tb_user
         WHERE user_id = #{userId};
     </select>
-
+    
 </mapper>
