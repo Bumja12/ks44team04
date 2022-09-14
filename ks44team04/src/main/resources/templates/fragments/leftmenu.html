@@ -5,7 +5,7 @@
 <div class="col-md-3 left_col" th:fragment="leftmenuFragment">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="/" class="site_title"><i class="fa fa-paw"></i> <span>관리자 페이지</span></a>
+            <a href="/admin" class="site_title"><i class="fa fa-cogs"></i> <span>관리자 페이지</span></a>
         </div>
 
         <div class="clearfix"></div>
@@ -16,8 +16,13 @@
                 <img src="images/img.jpg" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
-                <span>반갑습니다,</span>
-                <h2 th:text="${session.SNAME}"></h2>
+            	<th:block th:switch="${session.SID}">
+              		<span th:case="null">로그인이 필요합니다.</span>
+              		<th:block th:case="*">
+              			<span>환영합니다</span>
+              			<h2 th:text="${session.SNAME} + ' 님'"></h2>
+              		</th:block>
+                </th:block>
             </div>
         </div>
         <!-- /menu profile quick info -->
