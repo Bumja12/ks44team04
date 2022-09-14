@@ -5,7 +5,7 @@
 <div class="col-md-3 left_col" th:fragment="leftmenuFragment">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="/" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+            <a href="/" class="site_title"><i class="fa fa-paw"></i> <span>관리자 페이지</span></a>
         </div>
 
         <div class="clearfix"></div>
@@ -16,8 +16,8 @@
                 <img src="images/img.jpg" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <span>반갑습니다,</span>
+                <h2 th:text="${session.SNAME}"></h2>
             </div>
         </div>
         <!-- /menu profile quick info -->
