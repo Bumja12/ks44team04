@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/userDefault}">
+      layout:decorate="~{layout/adminDefault}">
 
 <th:block layout:fragment="customContents">
 
-    <div th:replace="/fragments/userHeader :: headerFragment"></div>
+    <div th:replace="/fragments/adminHeader :: headerFragment"></div>
 
      <!-- top tiles -->
         <div class="row" style="display: inline-block;">
@@ -164,7 +164,7 @@
 
 
         </div>
-      </div>
+      </div>	
       <!-- /top tiles -->
 
 </th:block>

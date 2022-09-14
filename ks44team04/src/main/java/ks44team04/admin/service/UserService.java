@@ -1,7 +1,11 @@
 package ks44team04.admin.service;
 
 import ks44team04.admin.mapper.UserMapper;
+import ks44team04.dto.Report;
 import ks44team04.dto.User;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,5 +26,11 @@ public class UserService {
         User loginUserInfo = userMapper.getLoginUserInfo(userId);
         return loginUserInfo;
     }
+    
+    //신고 리스트 
+    public List<Report> getReportList(){
+    	List<Report> reportList = userMapper.getReportList();
+		return reportList;
+	}
 
 }
