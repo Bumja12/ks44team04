@@ -6,11 +6,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
-public class BumjaController {
+public class OrderController {
 
     @GetMapping("/addresslist")
     public String addresslist() {
         return "admin/addressList";
+    }
+
+    @GetMapping("/postlist")
+    public String postlist() {
+        return "admin/postList";
     }
 
 
