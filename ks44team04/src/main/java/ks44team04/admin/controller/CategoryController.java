@@ -11,7 +11,7 @@ public class CategoryController {
 
 	// 카테고리 등록 화면
 	@GetMapping("/addCategory")
-	public String addCategory (Model model) {
+	public String addCategoryForm (Model model) {
 		
 		model.addAttribute("title", "카테고리 등록 화면");
 		return "admin/category/category_add";
