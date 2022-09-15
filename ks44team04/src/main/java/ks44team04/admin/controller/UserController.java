@@ -28,6 +28,16 @@ public class UserController {
         this.userService = userService;
     }
 
+	@GetMapping("/user/userList")
+	public String getUserList(Model model) {
+		List<User> userList = userService.getUserList();
+		log.info("회원의 목록 ::: {}", userList);
+		model.addAttribute("userList", userList);
+		model.addAttribute("title", "회원목록");
+		
+		return "admin/user/userList";
+	}
+    
     @GetMapping("/login")
     public String login(Model model, @RequestParam(value = "loginFailed", required = false) String loginFailed) {
         model.addAttribute("loginFailed", loginFailed);

@@ -1,6 +1,7 @@
 package ks44team04.admin.service;
 
 import ks44team04.admin.mapper.UserMapper;
+import ks44team04.dto.Level;
 import ks44team04.dto.Report;
 import ks44team04.dto.User;
 
@@ -12,10 +13,42 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserMapper userMapper;
-
+    
     public UserService(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
+    
+
+    //레벨 조회
+	public List<Level> getUserLevelList() {
+		List<Level> userLevelList = userMapper.getLevelList();
+		
+		return userLevelList;
+	}
+    
+	//전체 회원 목록 조회
+	public List<User> getUserList() {
+		List<User> userList = userMapper.getUserList();
+		
+		if(userList != null) {
+			for(User user : userList) {
+				String userRight = user.getUserRight();
+				
+				if(userRight == "admin") {
+					user.setUserRightName("관리자");
+				}else if(userRight == "seller") {
+					user.setUserRightName("판매자");
+				}else if(userRight == "buyer") {
+					user.setUserRightName("구매자");
+				}else if(userRight == "seller_before") {
+					user.setUserRightName("판매자 승인 전");
+				}else {
+					user.setUserRightName("회원");
+				}
+			}
+		}
+		return userList;
+	}
 
     public String userLogin(String userId){
         String result = userMapper.userLogin(userId);

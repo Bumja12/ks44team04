@@ -22,6 +22,35 @@
         <result column="user_info_keep" property="userInfoKeep"/>
         <result column="user_level" property="userLevel"/>
     </resultMap>
+    
+    <!-- 회원 목록 조회 -->
+    <select id="getUserList" resultMap="userResultMap">
+    	/* 회원 목록 조회 */
+    	SELECT
+			 u.user_id
+			,u.user_pw
+			,u.user_name
+			,u.user_gender
+			,u.user_nickname
+			,u.user_address
+			,u.user_phone
+			,u.user_email
+			,u.user_right
+			,l.level_status
+			,u.user_reg_date
+			,u.user_update_date
+			,u.user_status
+			,u.user_penalty
+			,u.user_point
+			,u.user_info_keep
+			,u.user_level
+		FROM 
+			tb_user AS u
+			INNER JOIN 
+			tb_level AS l
+			ON 
+			u.user_right = l.user_level;
+    </select>
 
     <select id="userLogin" parameterType="String" resultType="String">
         SELECT IF(COUNT(*) = 1, user_pw, 'none')
