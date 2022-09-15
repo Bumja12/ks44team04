@@ -1,82 +1,57 @@
 package ks44team04.user.controller;
 
+import ks44team04.user.service.UserAddressService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/user/order")
 public class UserOrderController {
 
-    @GetMapping("/address/list")
-    public String addressList(Model model) {
-
-        return "user/addressList";
-    }
-
-    @GetMapping("/address/register")
-    public String addressRegister() {
-
-        return "user/addressRegister";
-    }
-
-    @GetMapping("/address/modify")
-    public String addressModify(Model model) {
-
-        return "user/addressModify";
-    }
-
-    @GetMapping("/address/delete")
-    public String addressDelete(@RequestParam(value = "userId") String userId) {
-
-        return "redirect:/user/address/list";
-    }
-
-    @GetMapping("/order")
+    @GetMapping("/")
     public String order() {
 
         return "user/order/order";
     }
 
-    @GetMapping("/order/payment")
+    @GetMapping("/payment")
     public String orderPayment() {
 
         return "user/order/payment";
     }
 
-    @GetMapping("/order/list")
+    @GetMapping("/list")
     public String orderList() {
 
         return "user/order/orderList";
     }
 
-    @GetMapping("/order/detail")
+    @GetMapping("/detail")
     public String orderDetail() {
 
         return "user/order/orderDetail";
     }
 
-    @GetMapping("/order/modify")
+    @GetMapping("/modify")
     public String orderModify() {
 
         return "user/order/orderModify";
     }
 
-    @GetMapping("/order/cancel")
+    @GetMapping("/cancel")
     public String orderCancel() {
 
         return "user/order/orderCancel";
     }
 
-    @GetMapping("/order/exchange")
+    @GetMapping("/exchange")
     public String orderExchange() {
 
         return "user/order/orderExchange";
     }
 
-    @GetMapping("/order/return")
+    @GetMapping("/return")
     public String orderReturn() {
 
         return "user/order/orderReturn";
