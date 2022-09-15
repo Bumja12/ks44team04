@@ -11,6 +11,7 @@ public class User {
     private String userPhone;
     private String userEmail;
     private String userRight;
+    private String userRightName;
     private String userRegDate;
     private String userUpdateDate;
     private String userStatus;
@@ -19,7 +20,15 @@ public class User {
     private String userInfoKeep;
     private String userLevel;
 
-    public String getUserId() {
+    public String getUserRightName() {
+		return userRightName;
+	}
+
+	public void setUserRightName(String userRightName) {
+		this.userRightName = userRightName;
+	}
+
+	public String getUserId() {
         return userId;
     }
 
@@ -159,6 +168,7 @@ public class User {
                 ", userPhone='" + userPhone + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", userRight='" + userRight + '\'' +
+                ", userRightName='" + userRightName + '\'' +
                 ", userRegDate='" + userRegDate + '\'' +
                 ", userUpdateDate='" + userUpdateDate + '\'' +
                 ", userStatus='" + userStatus + '\'' +
