@@ -3,12 +3,12 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/adminDefault}">
 
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+</th:block>
+
 <th:block layout:fragment="customContents">
-
-    <div th:replace="/fragments/adminHeader :: headerFragment"></div>
-
-     <!-- top tiles -->
-        <div class="row" style="display: inline-block;">
+   <div class="row" style="display: inline-block;">
           <div class="tile_count">
             <h1>신고 관리</h1>
           </div>
@@ -161,11 +161,11 @@
               </table>
             </div>
           </div>
+</th:block>
 
+<th:block layout:fragment="customJsScript">
 
-        </div>
-      </div>	
-      <!-- /top tiles -->
+    <th:block th:replace="/fragments/adminJs :: datatablesFragment"></th:block>
 
 </th:block>
 
