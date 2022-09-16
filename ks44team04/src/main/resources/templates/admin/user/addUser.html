@@ -1,144 +1,174 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/adminDefault}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
 
 <th:block layout:fragment="customTitle">
-    <title th:text="${title}"></title>
+	<title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customCss">
+	<style>
+		.loginInput {
+			margin-bottom: 10px;
+		}
+	</style>
 </th:block>
 
 <th:block layout:fragment="customContents">
-   
-            <div class="page-title">
-              <div class="title_left">
-                <h3>회원등록</h3>
-              </div>
 
-            <div class="clearfix"></div>
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_content">
-                    <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+	<div class="page-title">
+		<div class="title_left">
+			<h3>회원등록</h3>
+		</div>
 
-                      <div class="form-group" style="margin-top: 25px;">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="userId">아이디 <span class="required">*</span>
-                        </label>
-                        <div class="loginInput col-md-4 col-sm-4 col-xs-8">
-                          <input type="text" id="userId" id="userId" required="required" class="form-control col-md-3 col-xs-6" placeholder="아이디를 입력해주세요">
-                        </div>
-                        <button class="btn col-lg-1">중복확인</button>
-                      </div>
+		<div class="clearfix"></div>
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel">
+					<div class="x_content">
+						<br />
+						<form id="demo-form2" data-parsley-validate
+							class="form-horizontal form-label-left">
 
-                      <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="userPw">비밀번호 <span class="required">*</span>
-                        </label>
-                        <div class="loginInput col-md-4 col-sm-4 col-xs-8">
-                          <input type="text" id="userPw" name="userPw" required="required" class="form-control col-md-4 col-xs-8" placeholder="비밀번호를 입력해주세요">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="passwordCheck">비밀번호 확인 <span class="required">*</span>
-                        </label>
-                        <div class="loginInput col-md-4 col-sm-4 col-xs-8">
-                          <input type="text" id="passwordCheck" name="passwordCheck" required="required" class="form-control col-md-7 col-xs-12" placeholder="비밀번호를 다시 입력해주세요">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="userName">이름 <span class="required">*</span>
-                        </label>
-                        <div class="loginInput col-md-4 col-sm-4 col-xs-8">
-                          <input type="text" id="userName" name="userName" required="required" class="form-control col-md-7 col-xs-12" placeholder="이름을 입력해주세요">
-                        </div>
-                      </div>
-                      
-                    
-                      <div class="form-group row">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="gender">성별 <span class="required">*</span>
-                        </label>
-                        <div class="container">
-                          <div class="row">
-                            <div class="loginInput col-md-4 col-sm-4 col-xs-8" style="margin-top: 8px;">
-                              <label>
-                                <input type="radio" class="flat" id="" name="userGender" checked> 여성 &nbsp;
-                              </label>
-                              <label>
-                                <input type="radio" class="flat" name="userGender"> 남성 &nbsp;
-                              </label>
-                              <label>
-                                <input type="radio" class="flat" name="userGender"> 선택 안함 &nbsp;
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+							<div class="form-group" style="margin-top: 25px;">
+								<label class="control-label col-md-4 col-sm-4 col-xs-12"
+									for="userId">아이디 <span class="required">*</span>
+								</label>
+								<div class="loginInput col-md-4 col-sm-4 col-xs-8">
+									<input type="text" id="userId" id="userId" required="required"
+										class="form-control col-md-3 col-xs-6"
+										placeholder="아이디를 입력해주세요">
+								</div>
+								<button class="btn col-lg-1">중복확인</button>
+							</div>
 
-                      <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="userNickName">닉네임 <span class="required">*</span>
-                        </label>
-                        <div class="loginInput col-md-4 col-sm-4 col-xs-8">
-                          <input type="text" id="userNickName" name="userNickName" required="required" class="form-control col-md-7 col-xs-12" placeholder="닉네임을 입력해주세요">
-                        </div>
-                        <button class="btn col-lg-1">중복확인</button>
-                      </div>
-
-                      <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="userEmail">이메일 <span class="required">*</span>
-                        </label>
-                        <div class="loginInput col-md-4 col-sm-4 col-xs-8">
-                          <input type="text" id="userEmail" name="userEmail" required="required" class="form-control col-md-7 col-xs-12" placeholder="예: ksteam44@gmail.com">
-                        </div>
-                        <button class="btn col-lg-1">중복확인</button>
-                      </div>
-
-                      <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="userPhone">연락처 <span class="required">*</span>
-                        </label>
-                        <div class="loginInput col-md-4 col-sm-4 col-xs-8">
-                          <input type="text" id="userPhone" name="userPhone" required="required" class="form-control col-md-7 col-xs-12" placeholder="숫자만 입력해주세요">
-                        </div>
-                      </div>
-                      
-                      <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="userAddr">주소 <span class="required">*</span>
-                        </label>
-                        <div class="loginInput col-md-4 col-sm-4 col-xs-8">
-                          <input type="text" id="userAddr" name="userAddr" required="required" class="form-control col-md-7 col-xs-12" placeholder="주소를 입력해주세요">
-                        </div>
-                        <button class="btn col-lg-1">주소검색</button>
-                      </div>
-
-                      <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="userRight">권한 <span class="required">*</span>
-                        </label>
-                        <div class="loginInput col-md-4 col-sm-4 col-xs-8">
-                          <select id="userRight" name="userRight" required="required" class="form-control col-md-7 col-xs-12">
-                            <option selected>- 권한선택 -</option>
-                            <option value="">관리자</option>
-                            <option value="">구매자</option>
-                            <option value="">판매자</option>
-                            <option value="">판매자 승인 전</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div style="text-align:center; margin: 25px;" >
-                          <button class="btn btn-lg">취소</button>
-                          <button type="submit" class="btn btn-success btn-lg">가입하기</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
+							<div class="form-group">
+								<label class="control-label col-md-4 col-sm-4 col-xs-12"
+									for="userPw">비밀번호 <span class="required">*</span>
+								</label>
+								<div class="loginInput col-md-4 col-sm-4 col-xs-8">
+									<input type="text" id="userPw" name="userPw"
+										required="required" class="form-control col-md-4 col-xs-8"
+										placeholder="비밀번호를 입력해주세요">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-4 col-sm-4 col-xs-12"
+									for="passwordCheck">비밀번호 확인 <span class="required">*</span>
+								</label>
+								<div class="loginInput col-md-4 col-sm-4 col-xs-8">
+									<input type="text" id="passwordCheck" name="passwordCheck"
+										required="required" class="form-control col-md-7 col-xs-12"
+										placeholder="비밀번호를 다시 입력해주세요">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-4 col-sm-4 col-xs-12"
+									for="userName">이름 <span class="required">*</span>
+								</label>
+								<div class="loginInput col-md-4 col-sm-4 col-xs-8">
+									<input type="text" id="userName" name="userName"
+										required="required" class="form-control col-md-7 col-xs-12"
+										placeholder="이름을 입력해주세요">
+								</div>
+							</div>
 
 
-</th:block>
-</html>
+							<div class="form-group row">
+								<label class="control-label col-md-4 col-sm-4 col-xs-12"
+									for="gender">성별 <span class="required">*</span>
+								</label>
+								<div class="container">
+									<div class="row">
+										<div class="loginInput col-md-4 col-sm-4 col-xs-8"
+											style="margin-top: 8px;">
+											<label> <input type="radio" class="flat" id=""
+												name="userGender" checked> 여성 &nbsp;
+											</label> <label> <input type="radio" class="flat"
+												name="userGender"> 남성 &nbsp;
+											</label> <label> <input type="radio" class="flat"
+												name="userGender"> 선택 안함 &nbsp;
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
 
+							<div class="form-group">
+								<label class="control-label col-md-4 col-sm-4 col-xs-12"
+									for="userNickName">닉네임 <span class="required">*</span>
+								</label>
+								<div class="loginInput col-md-4 col-sm-4 col-xs-8">
+									<input type="text" id="userNickName" name="userNickName"
+										required="required" class="form-control col-md-7 col-xs-12"
+										placeholder="닉네임을 입력해주세요">
+								</div>
+								<button class="btn col-lg-1">중복확인</button>
+							</div>
 
+							<div class="form-group">
+								<label class="control-label col-md-4 col-sm-4 col-xs-12"
+									for="userEmail">이메일 <span class="required">*</span>
+								</label>
+								<div class="loginInput col-md-4 col-sm-4 col-xs-8">
+									<input type="text" id="userEmail" name="userEmail"
+										required="required" class="form-control col-md-7 col-xs-12"
+										placeholder="예: ksteam44@gmail.com">
+								</div>
+								<button class="btn col-lg-1">중복확인</button>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-md-4 col-sm-4 col-xs-12"
+									for="userPhone">연락처 <span class="required">*</span>
+								</label>
+								<div class="loginInput col-md-4 col-sm-4 col-xs-8">
+									<input type="text" id="userPhone" name="userPhone"
+										required="required" class="form-control col-md-7 col-xs-12"
+										placeholder="숫자만 입력해주세요">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-md-4 col-sm-4 col-xs-12"
+									for="userAddr">주소 <span class="required">*</span>
+								</label>
+								<div class="loginInput col-md-4 col-sm-4 col-xs-8">
+									<input type="text" id="userAddr" name="userAddr"
+										required="required" class="form-control col-md-7 col-xs-12"
+										placeholder="주소를 입력해주세요">
+								</div>
+								<button class="btn col-lg-1">주소검색</button>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-md-4 col-sm-4 col-xs-12"
+									for="userRight">권한 <span class="required">*</span>
+								</label>
+								<div class="loginInput col-md-4 col-sm-4 col-xs-8">
+									<select id="userRight" name="userRight" required="required"
+										class="form-control col-md-7 col-xs-12">
+										<option selected>- 권한선택 -</option>
+										<option value="">관리자</option>
+										<option value="">구매자</option>
+										<option value="">판매자</option>
+										<option value="">판매자 승인 전</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div style="text-align: center; margin: 25px;">
+									<button class="btn btn-lg">취소</button>
+									<button type="submit" class="btn btn-dark btn-lg">가입하기</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </th:block>
 </html>

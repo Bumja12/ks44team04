@@ -1,161 +1,123 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/adminDefault}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
 
 <th:block layout:fragment="customTitle">
-    <title th:text="${title}"></title>
+	<title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script>
+		$(function() {
+			let $checks = $('.indivChecks');
+			$('#rowAllCheck').click(function() {
+				$checks.prop('checked', $(this).prop('checked'));
+			});
+		});
+	</script>
 </th:block>
 
 <th:block layout:fragment="customContents">
-   
-          <div class="page-title">
-            <div>
-              <h3>회원목록</h3>
-            </div>
-            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-              <div class="input-group"> </div>
-            </div>
-          </div>
-          
-            <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="x_panel">
-                <div class="x_title">
-                  <h2>검색조건</h2>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <br />
-                  <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-                    <div class="row">
-                      <div class="col-md-12 col-sm-12 col-xs-12">
-                        <table class="table table-borderless">
-                          <tbody>
-                            <tr>
-                              <td class="col-md-2 col-sm-2" style="margin: 0px;">검색어</td>
-                              <td class="col-md-4">
-                                <div class="form-inline">
-                                  <div class="form-group">
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                      <option>아이디</option>
-                                      <option>이름</option>
-                                      <option>닉네임</option>
-                                      <option>주소</option>
-                                      <option>전화번호</option>
-                                    </select>
-                                  </div>
-                                  <div class="form-group">
-                                    <input type="text" class="form-control text">
-                                  </div>
-                                </div>
-                              </td>
-                              <td class="col-md-2 col-sm-2">회원등급</td>
-                              <td class="col-md-4">
-                                <label class="form-check">
-                                  <input type="checkbox" class="form-check-input" id="rowAllCheck" name="rowAllCheck"> 전체
-                                </label>
-                                <label>
-                                  <input type="checkbox" class="indivChecks form-check-input" name="indivChecks"> 구매자
-                                </label>
-                                <label>
-                                  <input type="checkbox" class="indivChecks form-check-input" name="indivChecks">  판매자
-                                </label>
-                                <label>
-                                  <input type="checkbox" class="indivChecks form-check-input" name="indivChecks"> 관리자 
-                                </label>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <div class="form-group">
-                          <div style="text-align:center;">
-                            <button class="btn btn-primary" type="reset">리셋</button>
-                            <button type="submit" class="btn btn-success">검색</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
 
-                </div>
-              </div>
-            </div>
+	<div class="page-title">
+		<div class="title_left">
+			<h3>회원 목록</h3>
+		</div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="userDetailModal" tabindex="-1" role="dialog"
-              aria-labelledby="userDetailModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="userDetailModalLabel">회원 상세정보</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <table class="table table-borderless">
-                      <tbody>
-                        <tr>
-                          <td><b>회원아이디</b></td>
-                          <td>seller01</td>
-                          <td><b>비밀번호</b></td>
-                          <td>pw001</td>
-                        </tr>
-                        <tr>
-                          <td><b>주소</b></td>
-                          <td>전북 전주시 금암동</td>
-                          <td><b>벌점</b></td>
-                          <td>0점</td>
-                        </tr>
-                        <tr>
-                          <td><b>등록일시</b></td>
-                          <td>2021-01-01 0:00:00</td>
-                          <td><b>수정일시</b></td>
-                          <td>2021-01-02 0:00:00</td>
-                        </tr>
-                        <tr>
-                          <td><b>최종포인트</b></td>
-                          <td>19340원</td>
-                          <td><b>정보보관기간</b></td>
-                          <td>1년</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Modal End -->
+		<div class="title_right">
+			<div
+				class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search"></div>
+		</div>
+	</div>
 
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+			<div class="x_title">
+				<h5>
+					검색 필터 <a class="collapse-link"><i class="fa fa-chevron-up"
+						style="color: #b4b7ba;"></i></a>
+				</h5>
+				<div class="clearfix"></div>
+			</div>
 
-            <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="x_panel">
-                <div class="x_title">
-                  <h2>회원목록 <small>Users</small></h2>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <table id="datatable" class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>회원아이디</th>
-                        <th>이름</th>
-                        <th>닉네임</th>
-                        <th>권한</th>
-                        <th>등급</th>
-                        <th>연락처</th>
-                        <th>이메일</th>
-                        <th>가입일</th>
-                        <th>최근접속일</th>
-                        <th>상태</th>
-                        <th>관리</th>
-                      </tr>
-                    </thead>
-                    
-                    <tbody>
-						<tr th:if="${not #lists.isEmpty(userList)}" th:each="l : ${userList}">
+			<div class="x_content">
+				<div class="well" style="overflow: auto">
+					<div class="">
+						<table class=" table table-bordered"
+							style="background-color: white;">
+							<tbody>
+								<tr>
+									<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>검색어</b></td>
+									<td class="col-md-4">
+										<div class="form-inline">
+											<div class="form-group">
+												<select class="form-control" id="userSearchOption"
+													style="width: 150px;">
+													<option selected>- 전체검색 -</option>
+													<option value="userId">아이디</option>
+													<option value="userName">이름</option>
+													<option value="userNickName">닉네임</option>
+													<option value="userAddr">주소</option>
+													<option value="userPhone">전화번호</option>
+													<option value="userEmail">이메일</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<input type="text" class="form-control text" placeholder="검색어를 입력해주세요">
+											</div>
+										</div>
+									</td>
+									<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>권한</b></td>
+									<td class="col-md-4" style="padding-top: 13px;"><label
+										class="form-check"> <input type="checkbox"
+											class="form-check-input" id="rowAllCheck" name="rowAllCheck">
+											전체 &nbsp;
+									</label> <label> <input type="checkbox"
+											class="indivChecks form-check-input" name="indivChecks">
+											구매자 &nbsp;
+									</label> <label> <input type="checkbox"
+											class="indivChecks form-check-input" name="indivChecks">
+											판매자 &nbsp;
+									</label> <label> <input type="checkbox"
+											class="indivChecks form-check-input" name="indivChecks">
+											관리자 &nbsp;
+									</label></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div style="text-align: center;">
+							<button type="reset" class="btn btn-dark">초기화</button>
+							<button type="button" class="btn btn-dark">검색</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="x_content2">
+				<table id="datatable-checkbox"
+					class="table table-striped table-bordered table-hover dataTable no-footer"
+					role="grid">
+					<thead>
+						<tr>
+							<th>회원아이디</th>
+							<th>이름</th>
+							<th>닉네임</th>
+							<th>권한</th>
+							<th>등급</th>
+							<th>연락처</th>
+							<th>이메일</th>
+							<th>가입일</th>
+							<th>최근접속일</th>
+							<th style="width: 80px">상태</th>
+							<th style="width: 180px">관리</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:if="${not #lists.isEmpty(userList)}"
+							th:each="l : ${userList}">
 							<td th:text="${l.userId}"></td>
 							<td th:text="${l.userName}"></td>
 							<td th:text="${l.userNickname}"></td>
@@ -164,28 +126,80 @@
 							<td th:text="${l.userPhone}"></td>
 							<td th:text="${l.userEmail}"></td>
 							<td th:text="${l.userRegDate}"></td>
-							<td th:text="${l.userName}"></td>
+							<td th:text="${l.userRegDate}"></td>
 							<td th:text="${l.userStatus}"></td>
-	                        <td>
-	                          <a href="#" data-toggle="modal" data-target="#userDetailModal">
-	                          	<i class="fa fa-info-circle"></i> 상세
-	                          </a>
-	                          <a href="#"><i class="fa fa-edit"></i> 수정</a>
-	                          <a href="#"><i class="fa fa-close"></i> 삭제</a>
-	                        </td>
-						</tr>								
+							<td>
+								<a href="#" data-toggle="modal" data-target="#userDetailModal"> 
+									<i class="fa fa-info-circle"></i> 상세 &nbsp;
+								</a> 
+								<a href="#"><i class="fa fa-edit"></i> 수정 &nbsp;</a> 
+								<a href="#"><i class="fa fa-close"></i> 탈퇴 &nbsp;</a>
+							</td>
+						</tr>
+						<tr th:unless="${not #lists.isEmpty(userList)}">
+							<td colspan="14" style="text-align: center;">등록된 회원이 없습니다.</td>
+						</tr>
 					</tbody>
-                   
-                  </table>
-                </div>
-                <a th:href="@{/admin/user/addUser}">회원등록</a>
-				<!--                 
-				<div style="text-align: right; margin-bottom: 20px;">
-                   <button th:onclick="|location.href='@{/admin/user/addUser}'|" class="btn">회원등록</button>
-                </div> 
-                -->
-              </div>
-            </div>
+				</table>
+				<div style="text-align: right; margin: 10px;">
+					<a th:href="@{/admin/user/addUser}">회원등록</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="userDetailModal" tabindex="-1"
+		role="dialog" aria-labelledby="userDetailModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="userDetailModalLabel">회원 상세정보</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<td><b>회원아이디</b></td>
+								<td>seller01</td>
+								<td><b>비밀번호</b></td>
+								<td>pw001</td>
+							</tr>
+							<tr>
+								<td><b>주소</b></td>
+								<td>전북 전주시 금암동</td>
+								<td><b>정보보관기간</b></td>
+								<td>1년</td>
+							</tr>
+							<tr>
+								<td><b>최종포인트</b></td>
+								<td>19340원</td>
+								<td><b>벌점</b></td>
+								<td>0점</td>
+							</tr>
+							<tr>
+								<td><b>등록일시</b></td>
+								<td>2021-01-01 0:00:00</td>
+								<td><b>수정일시</b></td>
+								<td>2021-01-02 0:00:00</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
 
 
 </th:block>

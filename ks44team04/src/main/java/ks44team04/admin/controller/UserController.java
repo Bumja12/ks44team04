@@ -29,6 +29,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    
 	@PostMapping("/user/addUser")
     public String addUser(User user) {
 		
