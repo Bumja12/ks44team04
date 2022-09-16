@@ -19,11 +19,17 @@ public class UserService {
     }
     
 
+	//회원가입
+	public void addUser(User user) {
+        int result = userMapper.addUser(user);
+        System.out.println("회원가입 결과:" + result);
+    }
+    
     //레벨 조회
-	public List<Level> getUserLevelList() {
-		List<Level> userLevelList = userMapper.getLevelList();
+	public List<Level> getLevelList() {
+		List<Level> LevelList = userMapper.getLevelList();
 		
-		return userLevelList;
+		return LevelList;
 	}
     
 	//전체 회원 목록 조회

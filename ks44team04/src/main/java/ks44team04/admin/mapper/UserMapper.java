@@ -14,6 +14,9 @@ public interface UserMapper {
     public String userLogin(String userId);
     public User getLoginUserInfo(String userId);
     
+	//회원 가입
+	public int addUser(User user);
+    
 	//회원 권한 조회
 	public List<Level> getLevelList();
 	

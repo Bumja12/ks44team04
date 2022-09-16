@@ -134,7 +134,6 @@
               <div class="x_panel">
                 <div class="x_title">
                   <h2>회원목록 <small>Users</small></h2>
-
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -179,9 +178,14 @@
                    
                   </table>
                 </div>
+                <a th:href="@{/admin/user/addUser}">회원등록</a>
+				<!--                 
+				<div style="text-align: right; margin-bottom: 20px;">
+                   <button th:onclick="|location.href='@{/admin/user/addUser}'|" class="btn">회원등록</button>
+                </div> 
+                -->
               </div>
             </div>
-          </div>
 
 
 </th:block>

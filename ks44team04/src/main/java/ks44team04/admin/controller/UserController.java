@@ -1,6 +1,7 @@
 package ks44team04.admin.controller;
 
 import ks44team04.admin.service.UserService;
+import ks44team04.dto.Level;
 import ks44team04.dto.Report;
 import ks44team04.dto.User;
 import org.slf4j.Logger;
@@ -28,6 +29,27 @@ public class UserController {
         this.userService = userService;
     }
 
+	@PostMapping("/user/addUser")
+    public String addUser(User user) {
+		
+		log.info("사용자가 입력한 회원의 정보 ::: {}", user);
+		
+        System.out.println("사용자가 입력한 회원의 정보 -> " + user);
+        userService.addUser(user);
+        
+        return "redirect:/admin/user/userList";
+    }
+	
+	@GetMapping("/user/addUser")
+	public String addUserForm(Model model) {
+		
+		List<Level> LevelList = userService.getLevelList();
+		model.addAttribute("title", "회원가입");
+		model.addAttribute("LevelList", LevelList);
+		
+		return "admin/user/addUser";
+	}
+    
 	@GetMapping("/user/userList")
 	public String getUserList(Model model) {
 		List<User> userList = userService.getUserList();
