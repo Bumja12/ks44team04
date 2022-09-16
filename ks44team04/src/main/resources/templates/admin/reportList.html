@@ -3,12 +3,12 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/adminDefault}">
 
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+</th:block>
+
 <th:block layout:fragment="customContents">
-
-    <div th:replace="/fragments/adminHeader :: headerFragment"></div>
-
-     <!-- top tiles -->
-        <div class="row" style="display: inline-block;">
+   <div class="row" style="display: inline-block;">
           <div class="tile_count">
             <h1>신고 관리</h1>
           </div>
@@ -81,10 +81,11 @@
                   <option>아이디</option>
                   <option>닉네임</option>
                 </select>
-              <input type="text" class="form-control col-md-10"  >
-              <div class="input-group-append col-md-1">
-                <button type="button" class="btn btn-outline-secondary ">검색 </button>
-              </div>
+                <label>
+                 <input type="text" >
+                  <button type="button" class="btn btn-outline-secondary ">검색 </button>
+                </label>
+             
             </div>
             <!-- 검색 끝-->
 
@@ -161,11 +162,11 @@
               </table>
             </div>
           </div>
+</th:block>
 
+<th:block layout:fragment="customJsScript">
 
-        </div>
-      </div>	
-      <!-- /top tiles -->
+    <th:block th:replace="/fragments/adminJs :: datatablesFragment"></th:block>
 
 </th:block>
 
