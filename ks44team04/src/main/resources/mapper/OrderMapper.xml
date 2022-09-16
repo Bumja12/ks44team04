@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ks44team04.admin.controller.user.mapper.UserAddressMapper">
+<mapper namespace="ks44team04.user.mapper.UserAddressMapper">
 
     <resultMap type="Order" id="orderResultMap">
         <result column="order_num" property="orderNum"/>

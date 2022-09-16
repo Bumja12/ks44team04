@@ -1,6 +1,6 @@
-package ks44team04.admin.controller.user.service;
+package ks44team04.user.service;
 
-import ks44team04.admin.controller.user.mapper.UserAddressMapper;
+import ks44team04.user.mapper.UserAddressMapper;
 import ks44team04.dto.AddressList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

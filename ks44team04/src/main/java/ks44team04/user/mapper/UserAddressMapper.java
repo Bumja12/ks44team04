@@ -1,4 +1,4 @@
-package ks44team04.admin.controller.user.mapper;
+package ks44team04.user.mapper;
 
 import ks44team04.dto.AddressList;
 import org.apache.ibatis.annotations.Mapper;
