@@ -23,6 +23,26 @@
         <result column="user_level" property="userLevel"/>
     </resultMap>
     
+    <!-- 회원 가입 -->
+	<insert id="addUser" parameterType="User">
+		/* 회원 가입 */
+		INSERT INTO tb_user
+			(user_id, user_pw, user_name, user_gender, user_nickname, user_address, user_phone, user_email, user_right, user_reg_date, user_update_date, user_status, user_penalty, user_point, user_info_keep, user_level)
+		VALUES 
+			('#{userId}', '#{userPw}', '#{userName}', '#{userGender}', '#{userNickname}', '#{userAddress}', '#{userPhone}', '#{userEmail}', '#{userRight}', CURDATE(), CURDATE(), '#{userStatus}', #{userPenalty}, #{userPoint}, '#{userInfoKeep}', '#{userLevel}')
+	</insert>
+	
+	
+	<!-- 회원 권한 조회 -->
+	<select id="getLevelList" resultType="Level">
+		/* 회원 권한 조회 */
+		SELECT
+			 l.user_level		AS userRightGruop
+			,l.level_status		AS rightStatus
+		FROM 
+			tb_level AS l
+	</select>
+    
     <!-- 회원 목록 조회 -->
     <select id="getUserList" resultMap="userResultMap">
     	/* 회원 목록 조회 */
