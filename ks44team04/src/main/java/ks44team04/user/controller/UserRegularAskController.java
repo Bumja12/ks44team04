@@ -1,4 +1,4 @@
-package ks44team04.admin.controller.user.controller;
+package ks44team04.user.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
