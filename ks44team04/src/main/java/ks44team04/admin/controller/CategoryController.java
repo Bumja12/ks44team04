@@ -9,6 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/admin/category")
 public class CategoryController {
 
+	// 카테고리 수정 화면
+	@GetMapping("/modifyCategory")
+	public String modifyCategoryForm (Model model) {
+		
+		model.addAttribute("title", "카테고리 수정 화면");
+		return "admin/category/category_modify";
+	}
+	
 	// 카테고리 내역 화면
 	@GetMapping("/categoryDetail")
 	public String getCategoryDetail (Model model) {

@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title th:text="${title}"></title>
-</head>
-<body>
-
-</body>
+	<!-- 검색바 -->
+	<div th:fragment="searchFragment">
+		<form action="#"  method="post">
+			<select name="searchKey">
+				<option value="memberId">아이디</option>
+				<option value="memberName">이름</option>
+				<option value="memberEmail">이메일</option>
+				<option value="goodsName">상품명</option>
+			</select>
+			<input type="text" name="searchValue" placeholder="검색어를 입력해주세요.">
+			<button type="submit">검색</button>
+		</form>
+	</div>
 </html>
