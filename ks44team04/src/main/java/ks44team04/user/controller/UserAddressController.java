@@ -2,6 +2,7 @@ package ks44team04.user.controller;
 
 import ks44team04.dto.AddressList;
 import ks44team04.user.service.UserAddressService;
+import ks44team04.util.CodeIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -39,11 +40,11 @@ public class UserAddressController {
     }
     @PostMapping("/register")
     public String addressRegister(AddressList addressList) {
+        CodeIndex codeIndex = new CodeIndex();
+
         String addressListCode = userAddressService.getAddressListCode();
-        int addressListNum = Integer.parseInt(addressListCode.substring(13));
-        if(addressListNum < 10) {addressListCode = "address_list_00" + (addressListNum + 1);}
-        else if(addressListNum < 100) {addressListCode = "address_list_0" + (addressListNum + 1);}
-        else if(addressListNum < 1000) {addressListCode = "address_list_" + (addressListNum + 1);}
+        addressListCode = codeIndex.codeIndex(addressListCode, 13);
+
         addressList.setAddressList(addressListCode);
         addressList.setBuyerId("buyer01");
         userAddressService.addressRegister(addressList);
