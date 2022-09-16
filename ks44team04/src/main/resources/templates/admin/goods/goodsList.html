@@ -3,20 +3,20 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/adminDefault}">
 
+ <link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+ 
 <th:block layout:fragment="customTitle">
     <title th:text="${title}"></title>
 </th:block>
 
 <th:block layout:fragment="customContents">
-   
 	<div class="page-title">
 		<div class="title_left">
 		<h3>상품 목록</h3>
 		</div>
-
+		
 		<div class="title_right">
-			<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-			</div>
+			<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search"></div>
 		</div>
 	</div>
 
@@ -77,35 +77,44 @@
 			</div> 
                   
 			<div class="x_content2">
-				<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action">
-					<thead>
-						<tr>
+					<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action dataTable no-footer" role="grid" aria-describedby="datatable-checkbox_info">
+	                    <thead>
+	                      <tr role="row">
 							<th>상품코드</th>
 							<th>상품명</th>
 							<th>정가</th>
 							<th>재고</th>
-							<th>판매자</th>
 							<th>품절</th>
 							<th>판매중지</th>
+							<th>판매자</th>
+							<th>신고수</th>
 							<th>등록일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:if="${not #lists.isEmpty(goodsList)}" th:each="g : ${goodsList}">
+							<th style="width: 100px;">관리</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr th:if="${not #lists.isEmpty(goodsList)}" th:each="g : ${goodsList}">
 							<td th:text="${g.goodsCode}"></td>
 							<td th:text="${g.goodsName}"></td>
 							<td th:text="${g.goodsPrice}"></td>
 							<td th:text="${g.goodsStock}"></td>
-							<td th:text="${g.sellerId}"></td>
 							<td th:text="${g.soldoutCheck}"></td>
 							<td th:text="${g.stopSaleCheck}"></td>
+							<td th:text="${g.userInfo.userId}"></td>
+							<td th:text="${g.goodsReportAmount}"></td>
 							<td th:text="${g.regDate}"></td>
-					</tr>				
-					<tr th:unless="${not #lists.isEmpty(goodsList)}">
-						<td colspan="7">등록된 상이 없습니다.</td>
-					</tr>		                       
-					</tbody>
-				</table>
+							<td style="text-align: center;">
+								<a th:href="@{/goods/modifyGoods(goodsCode=${g.goodsCode})}"><i class="fa fa-edit"></i> 수정</a>
+	                          	<!-- <a th:href="@{/goods/removeGoods(goodsCode=${l.goodsCode})}""><i class="fa fa-close"></i> 삭제</a>  -->
+	                          	<!-- <a href="#"><i class="fa fa-edit"></i> 수정</a> -->
+                        		<a href="#"><i class="fa fa-close"></i> 삭제</a>
+	                        </td>
+						  </tr>				
+						  <tr th:unless="${not #lists.isEmpty(goodsList)}">
+							<td colspan="7">등록된 상품이 없습니다.</td>
+						  </tr>		                       
+						</tbody>
+					</table>
 			</div>
 		</div>
 	</div>
