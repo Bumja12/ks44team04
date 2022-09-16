@@ -1,6 +1,5 @@
-package ks44team04.user.controller;
+package ks44team04.admin.controller.user.controller;
 
-import ks44team04.user.service.UserAddressService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

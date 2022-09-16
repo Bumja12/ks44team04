@@ -1,7 +1,7 @@
-package ks44team04.user.controller;
+package ks44team04.admin.controller.user.controller;
 
 import ks44team04.dto.AddressList;
-import ks44team04.user.service.UserAddressService;
+import ks44team04.admin.controller.user.service.UserAddressService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
