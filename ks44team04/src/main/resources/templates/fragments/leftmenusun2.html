@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<li th:fragment="leftmenusun2"><a><i class="fa fa-tasks"></i> 자주 묻는 질문 관리 <span class="fa fa-chevron-down"></span></a>
+	  	<ul class="nav child_menu">
+	      	<li><a th:href="@{/admin/regularAsk/regularAskList}">#자주 묻는 질문 목록</a></li>
+	      	<li><a th:href="@{/admin/regularAsk/addRegularAsk}">#자주 묻는 질문 등록</a></li>
+	  	</ul>
+	</li>
+
+</html>
