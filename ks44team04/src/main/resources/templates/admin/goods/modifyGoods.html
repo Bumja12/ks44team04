@@ -1,95 +1,149 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/adminDefault}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
 
- <link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
- 
-<th:block layout:fragment="customTitle">
-    <title th:text="${title}"></title>
+<title th:text="${title}"></title>
 </th:block>
-
+	
 <th:block layout:fragment="customContents">
 	<div class="page-title">
 		<div class="title_left">
-		<h3>상품 목록</h3>
+			<h3>상품 수정</h3>
 		</div>
+	</div>
 
-		<div class="title_right">
-			<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+
+			<div class="x_content">
+				<div class="well">
+					<div class="">
+						<form id="modifyGoodsForm" th:action="@{/admin/goods/modifyGoods}" th:object="${goodsInfo}" class="form-horizontal" method="post">
+							<div class="form-inline form-group">
+								<label class="col-sm-2 control-label">카테고리 대분류</label>
+								<div class="col-sm-1">
+									<select class="form-control" style="margin-left: -8px;">
+										<option>::</option>
+										<option value="F000">과일</option>
+										<option value="V000">채소</option>
+										<option value="G000">쌀/잡곡</option>
+										<option value="M000">버섯</option>
+										<option value="UF00">못난이과일</option>
+										<option value="UV00">못난이채소</option>
+										<option value="Z000">기타</option>
+									</select>
+								</div>
+
+								<label class="col-sm-1 control-label" style="margin-left: 3px;">중분류</label>
+								<div class="col-sm-1">
+									<select class="form-control" tabindex="-1" style="margin-left: -8px;">
+										<option>::</option>
+										<option value="apple">사과</option>
+										<option value="pineapple">파인애플</option>
+										<option value="watermelon">수박</option>
+										<option value="strawberry">딸기</option>
+										<option value="kmelon">참외</option>
+										<option value="paprika">파프리카</option>
+										<option value="cucumber">오이</option>
+										<option value="carrot">당근</option>
+										<option value="tomato">토마토</option>
+										<option value="bracken">고사리</option>
+										<option value="brownrice">현미</option>
+										<option value="blackrice">흑미</option>
+										<option value="whiterice">백미</option>
+										<option value="millet">조</option>
+										<option value="kingoystermushroom">새송이버섯</option>
+										<option value="enokimushroom">팽이버섯</option>
+										<option value="uglypersimmon">못난이감</option>
+										<option value="uglyapple">못난이사과</option>
+										<option value="uglypotato">못난이감자</option>
+										<option value="uglycorn">못난이옥수수</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-inline form-group">
+								<label for="goodsCode" class="col-sm-2 control-label">상품코드</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control" id="goodsCode" name="goodsCode" th:value="${goodsInfo.goodsCode}" style="margin-left: -8px;" placeholder="Default Input" readonly="readonly">
+								</div>
+								<label for="sellerId" class="col-sm-2 control-label" style="margin-left: -3px;">판매자</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control" th:value="*{sellerId}" style="margin-left: -8px;" placeholder="Default Input" readonly="readonly">
+								</div>
+							</div>
+
+							<div class="form-inline form-group">
+								<label for="goodsName" class="col-sm-2 control-label">상품명</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" th:value="*{goodsName}" style="margin-left: -8px;" placeholder="Default Input">
+								</div>
+							</div>
+
+							<div class="form-inline form-group">
+								<label for="goodsContent" class="col-sm-2 control-label">상품내용</label>
+								<div class="col-sm-10">
+									<textarea class="form-control" th:value="*{goodsContent}" th:text="*{goodsContent}" rows="3" cols="51" style="margin-left: -8px;"></textarea>
+								</div>
+							</div>
+
+							<div class="form-inline form-group">
+								<label for="goodsPrice" class="col-sm-2 control-label">가격</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control" th:value="*{goodsPrice}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+								</div>
+								<label for="goodsDiscountRate" class="col-sm-2 control-label" style="margin-left: -3px;">할인율</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control" th:value="*{goodsDiscountRate}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+								</div>
+							</div>
+
+							<div class="form-inline form-group">
+								<label for="goodsStock" class="col-sm-2 control-label">재고</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control" th:value="*{goodsStock}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+								</div>
+								<label for="goodsPostPrice" class="col-sm-2 control-label" style="margin-left: -3px;">배송비</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control" th:value="*{goodsPostPrice}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+								</div>
+							</div>
+
+							<div class="form-inline form-group">
+								<label for="goodsReportAmount" class="col-sm-2 control-label">누적신고수</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" th:value="*{goodsReportAmount}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+								</div>
+							</div>
+							<div class="form-inline form-group">
+								<label for="soldoutCheck" class="col-sm-3 control-label">
+									품절여부 <input type="checkbox" class="flat" th:value="*{soldoutCheck}">
+								</label>
+								<label for="stopSaleCheck" class="control-label">
+									판매중지여부 <input type="checkbox" class="flat" th:value="*{stopSaleCheck}">
+								</label>
+								<label for="packagePostCheck" class="control-label">
+									묶음배송여부 <input type="checkbox" class="flat" th:value="*{packagePostCheck}">
+								</label>
+								<label for="regularDeliverCheck" class="control-label">
+									정기배송여부 <input type="checkbox" class="flat" th:value="*{regularDeliverCheck}">
+								</label>
+							</div>
+
+							<div class="ln_solid"></div>
+							<div class="form-inline form-group">
+								<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+									<button type="button" class="btn btn-dark" id="modifyGoodsCancel" th:onclick="|location.href='@{/admin/goods/goodsList}'|">취소</button>
+									<button type="reset" class="btn btn-dark" id="modifyGoodsReset">초기화</button>
+									<button type="submit" class="btn btn-dark" id="modifyGoodsBtn">수정</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	
-		<form id="modifyGoodsForm" th:action="@{/goods/modifyGoods}" method="post">	
-			<table border="1" th:object="${goodsInfo}">
-				<tbody>
-					<tr>
-						<td>
-							<label for="memberId">회원아이디</label>
-						</td>
-						<td>
-							<input type="text" id="memberId" name="memberId" th:value="${memberInfo.memberId}" placeholder="회원 아이디를 입력해주세요" readonly="readonly"/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="memberPw">회원비밀번호</label>
-						</td>
-						<td>
-							<input type="text" id="memberPw" name="memberPw" th:value="*{memberPw}" placeholder="회원 비밀번호를 입력해주세요"/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							회원등급
-						</td>
-						<td>
-							<select name="memberLevel" style="width: 100%;">
-								<!-- 디비연결  th:selected=${}-->
-								<th:block th:unless="${#lists.isEmpty(memberLevelList)}" th:each="l : ${memberLevelList}">
-									<option th:value="${l.levelNum}" th:text="${l.levelName}" th:selected="${l.levelNum} == *{memberLevel}"></option>
-								</th:block>
-								<th:block th:if="${#lists.isEmpty(memberLevelList)}">
-									<option value="">등록된 회원등급이 없습니다.</option>
-								</th:block>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="memberName">회원이름</label>
-						</td>
-						<td>
-							<input type="text" id="memberName" name="memberName" th:value="*{memberName}" placeholder="회원 이름을 입력해주세요"/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="memberEmail">회원이메일</label>
-						</td>
-						<td>
-							<input type="text" id="memberEmail" name="memberEmail" th:value="*{memberEmail}" placeholder="회원 이메일을 입력해주세요"/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="memberAddress">회원주소</label>
-						</td>
-						<td>
-							<input type="text" id="memberAddress" name="memberAddress" th:value="*{memberAddress}" placeholder="회원 주소를 입력해주세요"/>
-						</td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="2">
-							<button type="submit" id="modifyBtn" style="width: 100%;">회원수정</button>
-						</td>
-					</tr>
-				</tfoot>
-			</table>
-		</form>
-		
 </th:block>
 </html>

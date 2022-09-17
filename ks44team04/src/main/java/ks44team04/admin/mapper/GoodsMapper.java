@@ -7,6 +7,9 @@ import ks44team04.dto.Goods;
 @Mapper
 public interface GoodsMapper {
 	
+	//상품 삭제
+	public void removeGoods(String goods);
+	
 	//상품 수정
 	public int modifyGoods(Goods goods);
 	

@@ -2,10 +2,11 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
 <mapper namespace="ks44team04.admin.mapper.GoodsMapper">
 
     <resultMap type="Goods" id="goodsResultMap">
-        <result column="goods_code" 			property="goodsCode"/>
+        <id column="goods_code" 			property="goodsCode"/>
         <result column="goods_small_category" 	property="goodsSmallCategory"/>
         <result column="seller_id" 				property="sellerId"/>
         <result column="goods_name" 			property="goodsName"/>
@@ -20,84 +21,73 @@
         <result column="regular_deliver_check" 	property="regularDeliverCheck"/>
         <result column="reg_date" 				property="regDate"/>
         <result column="goods_report_amount"	property="goodsReportAmount"/>
-        <result column="image_file" 			property="imageFile"/>
+        <result column="goods_file" 			property="goodsFile"/>
 			<association property="userInfo" javaType="User">
-		        <id column="user_id" property="userId"/>
-		        <result column="user_pw" property="userPw"/>
-		        <result column="user_name" property="userName"/>
-		        <result column="user_gender" property="userGender"/>
-		        <result column="user_nickname" property="userNickname"/>
-		        <result column="user_address" property="userAddress"/>
-		        <result column="user_phone" property="userPhone"/>
-		        <result column="user_email" property="userEmail"/>
-		        <result column="user_right" property="userRight"/>
-		        <result column="user_reg_date" property="userRegDate"/>
-		        <result column="user_update_date" property="userUpdateDate"/>
-		        <result column="user_status" property="userStatus"/>
-		        <result column="user_penalty" property="userPenalty"/>
-		        <result column="user_point" property="userPoint"/>
+		        <id 	column="user_id" 		property="userId"/>
+		        <result column="user_pw" 		property="userPw"/>
+		        <result column="user_name" 		property="userName"/>
+		        <result column="user_gender" 	property="userGender"/>
+		        <result column="user_nickname" 	property="userNickname"/>
+		        <result column="user_address" 	property="userAddress"/>
+		        <result column="user_phone" 	property="userPhone"/>
+		        <result column="user_email" 	property="userEmail"/>
+		        <result column="user_right" 	property="userRight"/>
+		        <result column="user_reg_date" 	property="userRegDate"/>
+		        <result column="user_update_date"	 property="userUpdateDate"/>
+		        <result column="user_status" 	property="userStatus"/>
+		        <result column="user_penalty" 	property="userPenalty"/>
+		        <result column="user_point" 	property="userPoint"/>
 		        <result column="user_info_keep" property="userInfoKeep"/>
-		        <result column="user_level" property="userLevel" />
+		        <result column="user_level" 	property="userLevel" />
 	        </association>
     </resultMap>
-    
+
+	<!-- 상품 삭제 -->    
+    	<delete id="removeGoods" parameterType="String">
+		/* 상품 삭제 */
+		DELETE
+		FROM
+			tb_goods
+		WHERE
+			goods_code = #{goodsCode};
+	</delete>
+	
     <!-- 상품 수정 -->
 	<update id="modifyGoods" parameterType="Goods">
-		UPDATE tb_Goods
-		<trim prefix="SET" prefixOverrides=",">		
-			<if test="goodsSmallCategory != null and goodsSmallCategory != ''">
-			    goods_small_category       	= #{goodsSmallCategory}
-			</if>
-			<if test="sellerId != null and sellerId != ''">
-			    seller_id       	= #{sellerId}
-			</if>
-			<if test="goodsName != null and goodsName != ''">
-			    ,goods_name       	= #{goodsName}
-			</if>
-			<if test="goodsContent != null and goodsContent != ''">
-			    ,goods_content       	= #{goodsContent}
-			</if>
-			<if test="goodsPrice != null and goodsPrice != ''">			
-			   ,goods_price     	= #{goodsPrice}
-			</if>
-			<if test="goodsDiscountRate != null and goodsDiscountRate != ''">			
-			   ,goods_discount_rate     	= #{goodsDiscountRate}
-			</if>
-			<if test="goodsPostPrice != null and goodsPostPrice != ''">			
-			   ,goods_post_price     	= #{goodsPostPrice}
-			</if>
-			<if test="goodsStock != null and goodsStock != ''">			
-			   ,goods_stock     	= #{goodsStock}
-			</if>
-			<if test="soldoutCheck != null and soldoutCheck != ''">
-			   ,soldout_check    	= #{soldoutCheck}
-			</if>
-			<if test="stopSaleCheck != null and stopSaleCheck != ''">
-			   ,stop_sale_check     	= #{stopSaleCheck}
-			</if>
-			<if test="stopSaleCheck != null and stopSaleCheck != ''">
-			   ,stop_sale_check     	= #{stopSaleCheck}
-			</if>
-			<if test="packagePostCheck != null and packagePostCheck != ''">
-			   ,package_post_check     	= #{packagePostCheck}
-			</if>
-			<if test="regularDeliverCheck != null and regularDeliverCheck != ''">
-			   ,regular_deliver_check     	= #{regularDeliverCheck}
-			</if>
-			<if test="goodsReportAmount != null and goodsReportAmount != ''">
-			   ,goods_report_amount     	= #{goodsReportAmount}
-			</if>
-			<if test="imageFile != null and imageFile != ''">
-			   ,image_file     	= #{imageFile}
-			</if>
+		/* 상품 수정 */
+		UPDATE
+			tb_goods
+		<trim prefix="SET" prefixOverrides=",">
+			<if test="goodsSmallCategory != null">,goods_small_category = #{goodsSmallCategory}</if>
+			<if test="sellerId != null">,seller_id = #{sellerId}</if>
+			<if test="goodsName != null">,goods_name = #{goodsName}</if>
+			<if test="goodsContent != null">,goods_content = #{goodsContent}</if>
+			<if test="goodsPrice != null">,goods_price = #{goodsPrice}</if>
+			<if test="goodsDiscountRate != null">,goods_discount_rate = #{goodsDiscountRate}</if>
+			<if test="goodsPostPrice != null">,goods_post_price = #{goodsPostPrice}</if>
+			<if test="goodsStock != null">,goods_stock = #{goodsStock}</if>
+			<if test="soldoutCheck != null">,soldout_check = #{soldoutCheck}</if>
+			<if test="stopSaleCheck != null">,stop_sale_check = #{stopSaleCheck}</if>
+			<if test="packagePostCheck != null">,package_post_check = #{packagePostCheck}</if>
+			<if test="regularDeliverCheck != null">,regular_deliver_check = #{regularDeliverCheck}</if>
+			<if test="goodsReportAmount != null">,goods_report_amount = #{goodsReportAmount}</if>
 		</trim>
 		WHERE
-		   goods_code = #{goodsCode};
+			goods_code = #{goodsCode};
 	</update>
+	<!--  	
+			<where>
+			<if test="goodsCode != null and goodsCode != ''">goods_code=#{goodsCode}</if>
+		</where>
+		WHERE
+		   goods_code = #{goodsCode}; -->
+	<!-- 	<if test="goodsFile != null and goodsFile != ''">
+			   ,goods_file     	= #{goodsFile}
+			</if>  -->
 
 	<!-- 특정상품 조회 -->
 	<select id="getGoodsInfoByCode" parameterType="String" resultType="Goods">
-		/* 특정회원 조회 */
+		/* 특정상품 조회 */
 		SELECT
 			 g.goods_code  				AS goodsCode
 			,g.goods_small_category		AS goodsSmallCategory
@@ -114,12 +104,12 @@
 			,g.regular_deliver_check	AS regularDeliverCheck
 			,g.reg_date					AS regDate
 			,g.goods_report_amount		AS goodsReportAmount
-			,g.image_file				AS imageFile
 		FROM
 			tb_goods AS g
 		WHERE
-			g.goods_code = #{goodsCode};
+			goods_code = #{goodsCode};
 	</select>
+	<!--  	,g.goods_file				AS goodsFile -->
 	
 	<!-- 상품 목록 조회 -->
 	<select id="getGoodsList" resultMap="goodsResultMap" fetchSize="100" >
