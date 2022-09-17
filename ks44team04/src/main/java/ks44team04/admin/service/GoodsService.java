@@ -2,18 +2,31 @@ package ks44team04.admin.service;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ks44team04.admin.mapper.GoodsMapper;
 import ks44team04.dto.Goods;
 
 @Service
+@Transactional
 public class GoodsService {
 	
-	//의존성 주
+	//의존성 주입
     private final GoodsMapper goodsMapper;
 	public GoodsService(GoodsMapper goodsMapper) {
 		this.goodsMapper = goodsMapper;
+	}
+	
+	@PostConstruct
+	public void goodsServiceInit() {
+	}
+	
+	//상품 삭제
+	public void removeGoods(String goods) {
+		goodsMapper.removeGoods(goods);
 	}
 	
 	//상품 수정
