@@ -13,4 +13,6 @@ public interface UserAddressMapper {
     public String getAddressListCode();
 
     public void addressRegister(AddressList addressList);
+    
+    
 }

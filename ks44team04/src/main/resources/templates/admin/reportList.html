@@ -9,21 +9,17 @@
 
 <th:block layout:fragment="customContents">
    <div class="row" style="display: inline-block;">
-          <div class="tile_count">
-            <h1>신고 관리</h1>
-          </div>
-        </div>
-
-
-
-        <div class="col-md-12 col-sm-12  ">
+      <div class="tile_count">
+        <h1>신고 관리</h1>
+      </div>
+   </div>
+        <div class="col-md-12 col-sm-12 ">
           <div class="x_panel">
 
             <div class="x_title">
               <h2>처리 대기중</h2>
               <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
                       class="fa fa-wrench"></i></a>
@@ -56,15 +52,15 @@
                   </tr>
                 </thead>
 
-                <tbody>
-                  <tr class="even pointer">
-                    <td class=" ">report_history_1</td>
-                    <td class=" ">buyer03</td>
-                    <td class=" ">buyer01 </td>
-                    <td class=" ">게시글</td>
-                    <td class=" ">음란물</td>
-                    <td class=" ">2021.07.01</td>
-                    <td class=" ">대기중</td>
+                <tbody >
+                  <tr th:if="${l.reportResult == '대기중' }" th:each="l : ${reportList}"  class="even pointer">
+                    <td th:text="${l.reportHistoryCode}"></td>
+                    <td th:text="${l.reportedId}"></td>
+                    <td th:text="${l.reportingId}"> </td>
+                    <td th:text="${l.reportWhat}"></td>
+                    <td th:text="${l.reportReason}"></td>
+                    <td th:text="${l.reportDate}"></td>
+                    <td th:text="${l.reportResult}"></td>
                   </tr>
                 </tbody>
               </table>
@@ -122,45 +118,27 @@
                     <th class="column-title">처리상태</th>
                     <th class="bulk-actions" colspan="8">
                       <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">
-                        </span> ) <i class="fa fa-chevron-down"></i></a>
+                        </span> <i class="fa fa-chevron-down"></i></a>
                     </th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  <tr class="even pointer">
-                    <td class=" ">report_history_1</td>
-                    <td class=" ">buyer03</td>
-                    <td class=" ">buyer01 </td>
-                    <td class=" ">게시글</td>
-                    <td class=" ">음란물</td>
-                    <td class=" ">2021.06.01</td>
-                    <td class=" ">2021.06.02</td>
-                    <td class=" ">승인</td>
+                  <tr th:if="${not #lists.isEmpty(reportList)}" th:each="l : ${reportList}"  class="even pointer">
+                    <td th:text="${l.reportHistoryCode}"></td>
+                    <td th:text="${l.reportedId}"></td>
+                    <td th:text="${l.reportingId}"> </td>
+                    <td th:text="${l.reportWhat}"></td>
+                    <td th:text="${l.reportReason}"></td>
+                    <td th:text="${l.reportDate}"></td>
+                    <td th:text="${l.reportResultDate}"></td>
+                    <td th:text="${l.reportResult}"></td>
                   </tr>
-                  <tr class="odd pointer">
-                    <td class=" ">report_history_2</td>
-                    <td class=" ">buyer03</td>
-                    <td class=" ">buyer01 </td>
-                    <td class=" ">게시글</td>
-                    <td class=" ">음란물</td>
-                    <td class=" ">2022.02.01</td>
-                    <td class=" ">2022.02.02</td>
-                    <td class=" ">승인</td>
-                  </tr>
-                  <tr class="even pointer">
-                    <td class=" ">report_history_3</td>
-                    <td class=" ">buyer03</td>
-                    <td class=" ">buyer01 </td>
-                    <td class=" ">게시글</td>
-                    <td class=" ">음란물</td>
-                    <td class=" ">2022.09.01</td>
-                    <td class=" ">2022.09.03</td>
-                    <td class=" ">승인</td>
-                  </tr>
+                  
                 </tbody>
               </table>
             </div>
+          </div>
           </div>
 </th:block>
 
