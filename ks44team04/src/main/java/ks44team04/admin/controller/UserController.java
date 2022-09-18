@@ -2,7 +2,6 @@ package ks44team04.admin.controller;
 
 import ks44team04.admin.service.UserService;
 import ks44team04.dto.Level;
-import ks44team04.dto.Report;
 import ks44team04.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,15 +92,5 @@ public class UserController {
         return "redirect:/admin";
     }
     
-    @GetMapping("/reportList")
-    public String getReportList(Model model) {
-    	System.out.println("/admin/reportList getReportList UserController.java");
-    	List<Report> reportList = userService.getReportList();
-    	
-    	model.addAttribute("title", "신고목록");
-		model.addAttribute("reportList", reportList);
-
-    	return "/admin/reportList";
-    }
   
 }
