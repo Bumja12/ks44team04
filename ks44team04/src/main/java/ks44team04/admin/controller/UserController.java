@@ -96,12 +96,11 @@ public class UserController {
     @GetMapping("/reportList")
     public String getReportList(Model model) {
     	System.out.println("/admin/reportList getReportList UserController.java");
-    	//List<Report> reportList = userService.getReportList();
+    	List<Report> reportList = userService.getReportList();
     	
-    	//model.addAttribute("title", "신고목록");
-		//model.addAttribute("reportList", reportList);
-		
-    	//return "/reportList";
+    	model.addAttribute("title", "신고목록");
+		model.addAttribute("reportList", reportList);
+
     	return "/admin/reportList";
     }
   

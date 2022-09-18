@@ -69,6 +69,7 @@ public class UserService {
     //신고 리스트 
     public List<Report> getReportList(){
     	List<Report> reportList = userMapper.getReportList();
+    	System.out.println("신고리스트");
 		return reportList;
 	}
 
