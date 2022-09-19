@@ -1,10 +1,105 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title th:text="${title}"></title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminDefault}">
 
-</body>
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+	<div class="row" style="display: block;">
+		<div class="col-sm-12">
+        	<div class="x_panel">
+            	<div class="x_title">
+                	<h2>자주 묻는 질문 목록</h2>
+                    <div class="clearfix"></div>
+            	</div>
+            	<div class="x_content">
+            		<!-- 검색 조각 -->
+	            	<div th:include="admin/regularAsk/regularAsk_search :: regularAskSearchFragment" style="margin-bottom: 10px"></div>
+	            	<div class="clearfix"></div>
+	            	<!-- 테이블 -->
+					<div class="card-box table-responsive">
+		            	<table id="datatable-checkbox" class="table table-hover table-bordered bulk_action" style="width:100%">
+		    				<thead>
+		                    	<tr>
+			                        <th>자주 묻는 질문 PK</th>
+			                        <th>자주 묻는 질문 FK</th>
+			                        <th>회원 아이디 FK(작성자)</th>
+			                        <th>제목</th>
+			                        <th>사용 여부</th>
+		                         	<th>등록일</th>
+		                        	<th>수정일</th>
+		                    	</tr>
+		                   	</thead>
+							<tbody>
+		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
+		                          	<td>regularAsk001</td>
+		                          	<td>regularAskCategory01</std>
+		                          	<td>admin01</td>
+		                          	<td>제목1</td>
+		                            <td>Y</td>
+		                        	<td>2021-01-01 00:00:00</td>
+		                        	<td>2022-05-22 00:00:00</td>
+		                    	</tr>
+		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
+		                          	<td>regularAsk002</td>
+		                          	<td>regularAskCategory02</td>
+		                          	<td>admin01</td>
+		                          	<td>제목2</td>
+		                            <td>Y</td>
+		                        	<td>2021-01-01 00:00:00</td>
+		                        	<td>2022-05-15 00:00:00</td>
+		                    	</tr>
+		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
+		                          	<td>regularAsk003</td>
+		                          	<td>regularAskCategory03</td>
+		                          	<td>admin01</td>
+		                          	<td>제목3</td>
+		                            <td>Y</td>
+		                        	<td>2021-01-01 00:00:00</td>
+		                        	<td>2022-05-20 00:00:00</td>
+		                    	</tr>
+		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
+		                          	<td>regularAsk004</td>
+		                          	<td>regularAskCategory04</td>
+		                          	<td>admin01</td>
+		                          	<td>제목4</td>
+		                            <td>Y</td>
+		                        	<td>2021-01-01 00:00:00</td>
+		                        	<td>2022-06-01 00:00:00</td>
+		                    	</tr>
+		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
+		                          	<td>regularAsk005</td>
+		                          	<td>regularAskCategory05</td>
+		                          	<td>admin01</td>
+		                          	<td>제목5</td>
+		                            <td>Y</td>
+		                        	<td>2021-01-01 00:00:00</td>
+		                        	<td>2022-06-01 00:00:00</td>
+		                    	</tr>
+		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
+    								<td>regularAsk006</td>
+		                          	<td>regularAskCategory06</td>
+		                          	<td>admin01</td>
+		                          	<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+		                            </td>
+		                            <td>Y</td>
+		                        	<td>2021-01-01 00:00:00</td>
+		                        	<td>2022-06-03 00:00:00</td>
+		                    	</tr>
+							</tbody>
+		        		</table>
+					</div> <!-- </div class="card-box table-responsive"> -->
+					<div class="clearfix"></div>
+           			
+            	</div> <!-- </div class="x_content"> -->
+            </div> <!-- </div class="x_panel"> -->
+            
+		</div> <!-- </div class="col-md-12 col-sm-12"> -->
+	</div> <!-- </div class="row"> -->
+
+</th:block>
 </html>
