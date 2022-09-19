@@ -66,7 +66,7 @@
 										<div class="col-md-6 col-sm-6 offset-md-3">
 											<button type="submit" class="btn btn-success">수정</button>
 											<button class="btn btn-primary" type="reset">초기화</button>
-											<button class="btn btn-primary" type="button">취소</button>
+											<button id="cancelBtn" class="btn btn-primary" type="button">취소</button>
 										</div>
 									</div>
 								</form> <!-- <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"> -->
@@ -89,6 +89,12 @@
 			      = el.value.substr(0, maxlength);
 			  }
 			}
+			let cancelBtn = document.querySelector('#cancelBtn');
+			cancelBtn.addEventListener('click', function(){
+				console.log(location.href);
+				window.location = 'http://localhost:80/admin/category/categoryDetail';
+			
+			});
 		</script>
 	</th:block>
 
