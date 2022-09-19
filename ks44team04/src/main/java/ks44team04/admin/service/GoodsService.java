@@ -25,13 +25,14 @@ public class GoodsService {
 	}
 	
 	//상품 삭제
-	public void removeGoods(String goods) {
-		goodsMapper.removeGoods(goods);
+	public void goodsRemove(String goods) {
+		goodsMapper.goodsRemove(goods);
 	}
 	
 	//상품 수정
-	public void modifyGoods(Goods goods) {
-		goodsMapper.modifyGoods(goods);
+	public int goodsModify(Goods goods) {
+		int result = goodsMapper.goodsModify(goods);
+		return result;
 	}
 	
 	//특정상품 조회

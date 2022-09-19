@@ -10,7 +10,11 @@
 <th:block layout:fragment="customTopJs">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript" th:inline="javascript">
-	
+		$(function(){
+			  $('#removeBtn').click(function() {
+				  $('#datatable > tbody > tr:last').remove();
+				  });
+		    });
 		</script>
 	</th:block>
 
@@ -108,7 +112,7 @@
 							th:each="g : ${goodsList}" id="goodsListTable">
 							<td th:text="${g.goodsCode}"></td>
 							<td th:text="${g.goodsName}"></td>
-							<td th:text="${'₩' + #numbers.formatInteger(g.goodsPrice,3,'COMMA')}"></td>
+							<td th:text="${g.goodsPrice}"></td>
 							<td th:text="${g.goodsStock}"></td>
 							<td th:text="${g.soldoutCheck}"></td>
 							<td th:text="${g.stopSaleCheck}"></td>

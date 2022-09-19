@@ -8,10 +8,10 @@ import ks44team04.dto.Goods;
 public interface GoodsMapper {
 	
 	//상품 삭제
-	public void removeGoods(String goods);
+	public void goodsRemove(String goods);
 	
 	//상품 수정
-	public int modifyGoods(Goods goods);
+	public int goodsModify(Goods goods);
 	
 	//특정 상품 정보 조회
 	public Goods getGoodsInfoByCode(String goodsCode);
