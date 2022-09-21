@@ -115,7 +115,7 @@
 							<td th:text="${g.userInfo.userId}"></td>
 							<td th:text="${g.goodsReportAmount}"></td>
 							<td th:text="${g.regDate}"></td>
-							<td style="text-align: center;">
+							<td style="text-align: center; width: 120px;">
 								<!-- <a th:href="@{/admin/goods/modifyGoods}"><i class="fa fa-edit"></i>수정</a> -->
 								<a th:href="@{/admin/goods/goodsModify(goodsCode=${g.goodsCode})}"><i class="fa fa-edit"></i> 수정</a>
 								<!-- <a href="#"><i class="fa fa-edit"></i> 수정</a> -->
@@ -131,9 +131,9 @@
 		</div>
 	</div>
 </th:block>
-<th:block layout:fragment="customJsScript">
+<!-- <th:block layout:fragment="customJsScript">
 
     <th:block th:replace="/fragments/adminJs :: datatablesFragment"></th:block>
 
-</th:block>
+</th:block>  -->
 </html>

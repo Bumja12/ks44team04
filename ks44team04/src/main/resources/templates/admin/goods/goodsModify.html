@@ -6,7 +6,7 @@
 <title th:text="${title}"></title>
 </th:block>
 
-<th:block layout:fragment="customJsScript">
+<!-- <th:block layout:fragment="customJsScript">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 	<script>
 	
@@ -27,19 +27,18 @@
         				              window.location = data;
         				          }
         		    	      });
-        		    	
         		    },
         		    error: function (request, status, error){        
-
         		    }
-				
 		    	});
 			});
 		});
 	</script>
-</th:block>	
+</th:block>	  -->
 	
 <th:block layout:fragment="customContents">
+
+
 	<div class="page-title">
 		<div class="title_left">
 			<h3>상품 수정</h3>
@@ -103,64 +102,64 @@
 								</div>
 								<label for="sellerId" class="col-sm-2 control-label" style="margin-left: -3px;">판매자</label>
 								<div class="col-sm-1">
-									<input type="text" class="form-control" th:value="${goodsInfo.sellerId}" style="margin-left: -8px;" placeholder="Default Input" readonly="readonly">
+									<input type="text" class="form-control" id="sellerId" name="sellerId" th:value="${goodsInfo.sellerId}" style="margin-left: -8px;" placeholder="Default Input" readonly="readonly">
 								</div>
 							</div>
 
 							<div class="form-inline form-group">
 								<label for="goodsName" class="col-sm-2 control-label">상품명</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" th:value="${goodsInfo.goodsName}" style="margin-left: -8px;" placeholder="Default Input">
+									<input type="text" class="form-control" id="goodsName" name="goodsName" th:value="${goodsInfo.goodsName}" style="margin-left: -8px;" placeholder="Default Input">
 								</div>
 							</div>
 
 							<div class="form-inline form-group">
 								<label for="goodsContent" class="col-sm-2 control-label">상품내용</label>
 								<div class="col-sm-10">
-									<textarea class="form-control" th:value="${goodsInfo.goodsContent}" th:text="${goodsInfo.goodsContent}" rows="3" cols="51" style="margin-left: -8px;"></textarea>
+									<textarea class="form-control" id="goodsContent" name="goodsContent" th:value="${goodsInfo.goodsContent}" th:text="${goodsInfo.goodsContent}" rows="3" cols="51" style="margin-left: -8px;"></textarea>
 								</div>
 							</div>
 
 							<div class="form-inline form-group">
 								<label for="goodsPrice" class="col-sm-2 control-label">가격</label>
 								<div class="col-sm-1">
-									<input type="text" class="form-control" th:value="${goodsInfo.goodsPrice}" style="margin-left: -8px;" placeholder="Default Input">
+									<input type="text" class="form-control" id="goodsPrice" name="goodsPrice" th:value="${goodsInfo.goodsPrice}" style="margin-left: -8px;" placeholder="Default Input">
 								</div>
 								<label for="goodsDiscountRate" class="col-sm-2 control-label" style="margin-left: -3px;">할인율</label>
 								<div class="col-sm-1">
-									<input type="text" class="form-control" th:value="${goodsInfo.goodsDiscountRate}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+									<input type="text" class="form-control" id="goodsDiscountRate" name="goodsDiscountRate" th:value="${goodsInfo.goodsDiscountRate}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
 								</div>
 							</div>
 
 							<div class="form-inline form-group">
 								<label for="goodsStock" class="col-sm-2 control-label">재고</label>
 								<div class="col-sm-1">
-									<input type="text" class="form-control" th:value="${goodsInfo.goodsStock}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+									<input type="text" class="form-control" id="goodsStock" name="goodsStock" th:value="${goodsInfo.goodsStock}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
 								</div>
 								<label for="goodsPostPrice" class="col-sm-2 control-label" style="margin-left: -3px;">배송비</label>
 								<div class="col-sm-1">
-									<input type="text" class="form-control" th:value="${goodsInfo.goodsPostPrice}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+									<input type="text" class="form-control" id="goodsPostPrice" name="goodsPostPrice" th:value="${goodsInfo.goodsPostPrice}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
 								</div>
 							</div>
 
 							<div class="form-inline form-group">
 								<label for="goodsReportAmount" class="col-sm-2 control-label">누적신고수</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" th:value="${goodsInfo.goodsReportAmount}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+									<input type="text" class="form-control" id="goodsReportAmount" name="goodsReportAmount" th:value="${goodsInfo.goodsReportAmount}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
 								</div>
 							</div>
 							<div class="form-inline form-group">
 								<label for="soldoutCheck" class="col-sm-3 control-label">
-									품절여부 <input type="checkbox" class="flat" th:value="${goodsInfo.soldoutCheck}">
+									품절여부 <input type="checkbox" class="flat" id="soldoutCheck" name="soldoutCheck" th:value="${goodsInfo.soldoutCheck}">
 								</label>
 								<label for="stopSaleCheck" class="control-label">
-									판매중지여부 <input type="checkbox" class="flat" th:value="${goodsInfo.stopSaleCheck}">
+									판매중지여부 <input type="checkbox" class="flat" id="stopSaleCheck" name="stopSaleCheck" th:value="${goodsInfo.stopSaleCheck}">
 								</label>
 								<label for="packagePostCheck" class="control-label">
-									묶음배송여부 <input type="checkbox" class="flat" th:value="${goodsInfo.packagePostCheck}">
+									묶음배송여부 <input type="checkbox" class="flat" id="packagePostCheck" name="packagePostCheck" th:value="${goodsInfo.packagePostCheck}">
 								</label>
 								<label for="regularDeliverCheck" class="control-label">
-									정기배송여부 <input type="checkbox" class="flat" th:value="${regularDeliverCheck}">
+									정기배송여부 <input type="checkbox" class="flat" id="regularDeliverCheck" name="regularDeliverCheck" th:value="${regularDeliverCheck}">
 								</label>
 							</div>
 
