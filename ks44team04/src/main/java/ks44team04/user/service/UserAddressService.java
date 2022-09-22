@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -17,9 +18,9 @@ public class UserAddressService {
         this.userAddressMapper = userAddressMapper;
     }
 
-    public List<AddressList> getAddressList(String userId) {
-        List<AddressList> addressList = userAddressMapper.getAddressList(userId);
-        return addressList;
+    public List<AddressList> getAddressList(Map addressInfo) {
+        List<AddressList> addressLists = userAddressMapper.getAddressList(addressInfo);
+        return addressLists;
     }
 
     public String getAddressListCode() {
@@ -29,6 +30,10 @@ public class UserAddressService {
 
     public void addressRegister(AddressList addressList) {
         userAddressMapper.addressRegister(addressList);
+    }
+
+    public void addressModify(AddressList addressList) {
+        userAddressMapper.addressModify(addressList);
     }
 
 

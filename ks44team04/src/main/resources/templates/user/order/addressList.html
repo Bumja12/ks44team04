@@ -56,10 +56,10 @@
                                 <td class=" " th:text="${l.phone}">Paid</td>
                                 <td class=" " th:text="${l.phone2}">Paid</td>
                                 <td class="a-right a-right ">
-                                    <a href="javascript:void(0);">수정</a>
+                                    <a th:href="@{|/user/address/modify/${l.addressList}|}">수정</a>
                                 </td>
                                 <td class=" last">
-                                    <a href="javascript:void(0);">삭제</a>
+                                    <a th:href="@{|/user/address/delete/${l.addressList}|}">삭제</a>
                                 </td>
                             </tr>
                             <tr class="odd pointer" th:if="${(e.index % 2) == 1}">
@@ -75,10 +75,10 @@
                                 <td class=" " th:text="${l.phone}">Paid</td>
                                 <td class=" " th:text="${l.phone2}">Paid</td>
                                 <td class="a-right a-right ">
-                                    <a href="javascript:void(0);">수정</a>
+                                    <a th:href="@{|/user/address/modify/${l.addressList}|}">수정</a>
                                 </td>
                                 <td class=" last">
-                                    <a href="javascript:void(0);">삭제</a>
+                                    <a th:href="@{|/user/address/delete/${l.addressList}|}">삭제</a>
                                 </td>
                             </tr>
                         </th:block>
