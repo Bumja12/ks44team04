@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ks44team04.admin.mapper.GoodsMapper;
 import ks44team04.dto.Goods;
+import ks44team04.dto.GoodsQnaList;
 
 @Service
 @Transactional
@@ -22,6 +23,12 @@ public class GoodsService {
 	
 	@PostConstruct
 	public void goodsServiceInit() {
+	}
+	
+	//상품 문의 조회
+	public List<GoodsQnaList> getGoodsQnaList() {
+		List<GoodsQnaList> goodsQnaList = goodsMapper.getGoodsQnaList();
+		return goodsQnaList;
 	}
 	
 	//상품 삭제

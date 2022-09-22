@@ -10,7 +10,7 @@
 <th:block layout:fragment="customContents">
 	<div class="page-title">
 		<div class="title_left">
-			<h3>게시물 관리</h3>
+			<h3>좋아요 관리</h3>
 		</div>
 	</div>
 
@@ -36,14 +36,7 @@
 								<option value="4">맛집추천</option>
 								<option value="5">행사</option>
 							</select>
-						<label class="control-label" for="qnaSearch" style="margin-left: 10px; margin-right: 10px;">키워드</label>
-							<select class="form-control" style="font-weight: bold;">
-								<option>::</option>
-								<option value="1">제목</option>
-								<option value="2">내용</option>
-								<option value="3">태그</option>
-								<option value="4">작성자ID</option>
-							</select>
+						<label class="control-label" for="qnaSearch" style="margin-left: 10px; margin-right: 10px;">작성자</label>
 								<input type="text" class="form-control" size="12">
 					</div>
 					<div class="form-inline control-group controls">
@@ -73,14 +66,9 @@
 							<tr>
 								<th style="width: 30px"><input type="checkbox" id="check-all" class="flat"></th>
 								<th>게시판</th>
-								<th>제목</th>
-								<th>내용</th>
+								<th>게시글 제목</th>
 								<th>작성자</th>
-								<th>조회수</th>
-								<th>추천수</th>
-								<th>신고수</th>
 								<th>등록일</th>
-								<th>수정일</th>
 								<th style="width: 100px;">관리</th>
 							</tr>
 						</thead>
@@ -91,15 +79,7 @@
 								<td>ㅇ</td>
 								<td>ㅇ</td>
 								<td>ㅇ</td>
-								<td>ㅇ</td>
-								<td>ㅇ</td>
-								<td>ㅇ</td>
-								<td>ㅇ</td>
-								<td>ㅇ</td>
-								<td style="text-align: center; width: 110px;">
-									<a href="#"><i class="fa fa-edit"></i> 수정</a>
-									<a href="#"><i class="fa fa-close"></i> 삭제</a>
-								</td>
+								<td><a href="#"><i class="fa fa-close"></i> 삭제</a></td>
 							</tr>
 						</tbody>
 					</table>

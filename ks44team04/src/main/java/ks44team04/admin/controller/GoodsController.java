@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import ks44team04.admin.service.GoodsService;
 import ks44team04.dto.Goods;
+import ks44team04.dto.GoodsQnaList;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -27,9 +27,14 @@ public class GoodsController {
 	}
 	
 	//상품문의
-    @GetMapping("/goods/goodsQna")
-    public String main() {
-        return "admin/goods/goodsQna";
+    @GetMapping("/goods/goodsQnaList")
+    public String getGoodsQnaList(Model model) {
+    	List<GoodsQnaList> goodsQnaList = goodsService.getGoodsQnaList();
+    	
+		model.addAttribute("title", "문의목록");
+		model.addAttribute("goodsQnaList", goodsQnaList);
+		
+        return "/admin/goods/goodsQnaList";
     }
 	
 	//상품 삭제
