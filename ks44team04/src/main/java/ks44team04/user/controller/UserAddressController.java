@@ -7,12 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user/address")
@@ -28,8 +27,10 @@ public class UserAddressController {
     @GetMapping("/list")
     public String addressList(@RequestParam(value = "userId", required = false) String userId, Model model) {
         userId = "buyer01";
-        List<AddressList> addressList = userAddressService.getAddressList(userId);
-        model.addAttribute("addressList", addressList);
+        Map<String, String> addressInfo = new HashMap<>();
+        addressInfo.put("userId", userId);
+        List<AddressList> addressLists = userAddressService.getAddressList(addressInfo);
+        model.addAttribute("addressList", addressLists);
         return "user/order/addressList";
     }
 
@@ -52,10 +53,21 @@ public class UserAddressController {
         return "redirect:/user/address/list";
     }
 
-    @GetMapping("/modify")
-    public String addressModify(Model model) {
-
+    @GetMapping("/modify/{addressList}")
+    public String getAddressModify(@PathVariable(value = "addressList", required = false) String addressList,
+                                Model model) {
+        Map<String, String> addressInfo = new HashMap<>();
+        addressInfo.put("addressList", addressList);
+        AddressList addressLists = userAddressService.getAddressList(addressInfo).get(0);
+        model.addAttribute("addressList", addressLists);
         return "user/order/addressModify";
+    }
+
+    @PostMapping("/modify")
+    public String addressModify(AddressList addressList) {
+        userAddressService.addressModify(addressList);
+        log.info("userAddress.addressList, {}", addressList.getAddressList());
+        return "redirect:/user/address/list";
     }
 
     @GetMapping("/delete")
