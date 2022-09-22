@@ -18,7 +18,6 @@ public class CategoryController {
 		return "admin/category/category_remove";
 	}
 	
-	
 	// 카테고리 수정 화면
 	@PostMapping("modifyCategory")
 	public String modifyCategoryAction () {
@@ -33,14 +32,6 @@ public class CategoryController {
 		
 		model.addAttribute("title", "카테고리 수정 화면");
 		return "admin/category/category_modify";
-	}
-	
-	// 카테고리 내역 화면
-	@GetMapping("/categoryDetail")
-	public String getCategoryDetail (Model model) {
-		
-		model.addAttribute("title", "카테고리 내역 화면");
-		return "admin/category/category_detail";
 	}
 	
 	// 카테고리 등록 처리

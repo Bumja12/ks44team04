@@ -66,52 +66,35 @@
 									<textarea id="regular_ask_content"  class="form-control" rows="3" disabled="disabled" placeholder="내용"></textarea>
 								</div>
 							</div>
-								
-							<!-- 등급 이름 -->
+							<!-- 등록일 -->
 							<div class="item form-group">
-								<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_name">등급 이름<span class="required"> *</span>
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="reg_date">등록일
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="text" id="level_name" required="required" class="form-control" maxlength="15">
+									<input type="datetime" id="reg_date" disabled="disabled" value="2021-01-01 00:00:00" required="required" class="form-control" maxlength="15">
 								</div>
 							</div>
-							<!-- 구매자 금액 조건 -->
+							<!-- 수정일 -->
 							<div class="item form-group">
-								<label class="col-form-label col-md-3 col-sm-3 label-align" for="buyer_price_terms">구매자 금액 조건<span class="required"> *</span>
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="update_date">수정일
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<!-- 숫자만 입력 가능 -->
-									<input type="number" id="buyer_price_terms" name="buyer_price_terms" required="required" class="form-control" oninput="handleOnInput(this, 15)">
-								</div>
-							</div>
-							<!-- 적립율(%) -->
-							<div class="item form-group">
-								<label for="save_rate" class="col-form-label col-md-3 col-sm-3 label-align">적립율(%)<span class="required"> *</span>
-								</label>
-								<div class="col-md-6 col-sm-6 ">
-									<!-- 숫자만 입력 가능 -->
-									<input id="save_rate" class="form-control" type="number" required="required" name="save_rate" oninput='handleOnInput(this, 15)'>
+									<input type="datetime" id="update_date" disabled="disabled" value="2022-05-22 00:00:00" required="required" class="form-control" maxlength="15">
 								</div>
 							</div>
 							<!-- 사용 여부 -->
 							<div class="item form-group">
-								<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부<span class="required"> *</span>
+								<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<div id="gender" class="btn-group" data-toggle="buttons">
-										<label class="btn btn-secondary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-											<input type="radio" name="use_check" value="Y" class="join-btn"> &nbsp;Y&nbsp;
-										</label>
-										<label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-											<input type="radio" name="use_check" value="N" class="join-btn"> &nbsp;N&nbsp;
-										</label>
-									</div>
+									<input type="radio" class="flat" name="gender" id="genderM" value="M" dis checked="checked" required /> Y
+									<input type="radio" class="flat" name="gender" id="genderF" value="F" disabled="disabled"/> N
 								</div>
 							</div>
 							<div class="ln_solid"></div>
 							<div class="item form-group">
 								<div class="col-md-6 col-sm-6 offset-md-3">
-									<button type="submit" class="btn btn-success">수정</button>
+									<button type="button" id="modifyBtn" class="btn btn-success">수정</button>
 									<button class="btn btn-primary" type="reset">초기화</button>
 									<button id="cancelBtn" class="btn btn-primary" type="button">취소</button>
 								</div>
@@ -128,16 +111,31 @@
 
 	<th:block layout:fragment="customJsScript">
 		<script type="text/javascript">
-			function handleOnInput(el, maxlength) {
-			  if(el.value.length > maxlength)  {
-			    el.value 
-			      = el.value.substr(0, maxlength);
-			  }
-			}
+		
+			let modifyBtn = document.querySelector('#modifyBtn');
+// 			console.log(modifyBtn);
+			modifyBtn.addEventListener('click', function(){
+				let input = document.querySelectorAll('.form-group input, textarea');
+				for(var i=0; i<input.length; i++){
+					console.log(input[i]);
+					input[i].disabled = false;
+				}
+				
+			});
+			
+			
+// 			console.log(input);
+			cancelBtn.addEventListener('click', function(){
+				console.log(location.href);
+				window.location = 'http://localhost:80/admin/regularAsk/regularAskList';
+			
+			});
+
+			
 			let cancelBtn = document.querySelector('#cancelBtn');
 			cancelBtn.addEventListener('click', function(){
 				console.log(location.href);
-				window.location = 'http://localhost:80/admin/category/categoryDetail';
+				window.location = 'http://localhost:80/admin/regularAsk/regularAskList';
 			
 			});
 		</script>
