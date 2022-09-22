@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
-public class pointController {
+public class PointController {
 
 	    @GetMapping("/pointHistory")
 	    public String paymentList(Model model) {

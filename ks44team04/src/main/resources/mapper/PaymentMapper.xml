@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team04.admin.mapper.PaymentMapper">
+	
+	<resultMap type="PaymentTotal" id="paymentResultMap">
+		<id 	column="order_num" 			property="orderNum"/>
+		<result column="order_detail_code" 	property="orderDetailCode"/>
+		<result column="goods_code" 		property="goodsCode"/>
+		<result column="buyer_id"			property="buyerId"/>
+		<result column="payment_method"		property="paymentMethod"/>
+		<result column="card_company" 		property="cardCompany"/>
+		<result column="card_number" 		property="cardNumber"/>
+		<result column="refund_bank" 		property="refundBank"/>
+		<result column="refund_account" 	property="refundAccount"/>
+		<result column="order_price" 		property="orderPrice"/>
+		<result column="approve_date"		property="approveDate"/>
+	</resultMap>
+		
+	<select id="paymentList" resultType="PaymentTotal" resultMap="paymentResultMap" fetchSize="100">
+		SELECT
+			*
+		FROM
+			(SELECT 
+				o.order_num
+				,od.order_detail_code
+				,od.goods_code
+				,o.buyer_id
+				,p.payment_method
+				,cp.card_company
+				,cp.card_number
+				,od.order_price
+				,cp.approve_date
+			FROM
+				tb_order AS o
+				INNER JOIN
+				tb_order_detail AS od
+				ON
+				o.order_num = od.order_num
+				INNER JOIN
+				tb_payment AS p
+				ON
+				od.order_num = p.order_num
+				INNER JOIN
+				tb_card_payment AS cp
+				ON
+				p.payment_group_code = cp.card_payment_code) AS a
+				
+				UNION
+				
+				SELECT 
+				o.order_num
+				,od.order_detail_code
+				,od.goods_code
+				,o.buyer_id
+				,p.payment_method
+				,ap.refund_bank
+				,ap.refund_account
+				,od.order_price
+				,ap.approve_date
+			FROM
+				tb_order AS o
+				INNER JOIN
+				tb_order_detail AS od
+				ON
+				o.order_num = od.order_num
+				INNER JOIN
+				tb_payment AS p
+				ON
+				od.order_num = p.order_num
+				INNER JOIN
+				tb_account_payment AS ap
+				ON
+				p.payment_group_code = ap.account_payment_code
+			ORDER BY order_detail_code;
+	</select>
+	
+</mapper>

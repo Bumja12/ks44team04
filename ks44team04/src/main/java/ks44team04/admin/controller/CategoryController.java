@@ -10,14 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/admin/category")
 public class CategoryController {
 
-	// modifyCategoryAction
+	// 카테고리 삭제 처리
+	@GetMapping("/removeCategory")
+	public String removeCategoryAction () {
+		
+		// 카테고리 목록 화면으로 리다이렉트
+		return "admin/category/category_remove";
+	}
 	
 	// 카테고리 수정 화면
 	@PostMapping("modifyCategory")
 	public String modifyCategoryAction () {
 		
 		// 카테고리 내역 화면으로 리다이렉트
-		return "redirect:/admin/category/categoryDetail";
+		return "redirect:/admin/category/categoryList";
 	}
 	
 	// 카테고리 수정 화면
@@ -28,12 +34,11 @@ public class CategoryController {
 		return "admin/category/category_modify";
 	}
 	
-	// 카테고리 내역 화면
-	@GetMapping("/categoryDetail")
-	public String getCategoryDetail (Model model) {
+	// 카테고리 등록 처리
+	@PostMapping("/addCategory")
+	public String addCategoryAction (Model model) {
 		
-		model.addAttribute("title", "카테고리 내역 화면");
-		return "admin/category/category_detail";
+		return "redirect:/admin/category/categoryList";
 	}
 	
 	// 카테고리 등록 화면
