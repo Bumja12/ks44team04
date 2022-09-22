@@ -36,5 +36,9 @@ public class UserAddressService {
         userAddressMapper.addressModify(addressList);
     }
 
+    public void addressDelete(String addressList) {
+        userAddressMapper.addressDelete(addressList);
+    }
+
 
 }

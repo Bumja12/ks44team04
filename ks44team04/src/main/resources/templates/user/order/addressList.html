@@ -59,7 +59,7 @@
                                     <a th:href="@{|/user/address/modify/${l.addressList}|}">수정</a>
                                 </td>
                                 <td class=" last">
-                                    <a th:href="@{|/user/address/delete/${l.addressList}|}">삭제</a>
+                                    <a th:href="|javascript:deleteAddressFn('${l.addressList}')|">삭제</a>
                                 </td>
                             </tr>
                             <tr class="odd pointer" th:if="${(e.index % 2) == 1}">
@@ -78,7 +78,7 @@
                                     <a th:href="@{|/user/address/modify/${l.addressList}|}">수정</a>
                                 </td>
                                 <td class=" last">
-                                    <a th:href="@{|/user/address/delete/${l.addressList}|}">삭제</a>
+                                    <a th:href="|javascript:deleteAddressFn('${l.addressList}')|">삭제</a>
                                 </td>
                             </tr>
                         </th:block>
@@ -99,5 +99,12 @@
 
 <th:block layout:fragment="customJsScript">
     <th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
-</th:block>
+        <script>
+            function deleteAddressFn(href) {
+                if(confirm("정말로 삭제하시겠습니까?")){
+                    location.href = `/user/address/delete/${href}`;
+                }
+            }
+        </script>
+    </th:block>
 </html>

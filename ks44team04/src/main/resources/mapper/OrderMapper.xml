@@ -157,4 +157,8 @@
         WHERE address_list = #{addressList};
     </update>
 
+    <delete id="addressDelete" parameterType="String">
+        DELETE FROM tb_address_list WHERE address_list = #{addressList}
+    </delete>
+
 </mapper>

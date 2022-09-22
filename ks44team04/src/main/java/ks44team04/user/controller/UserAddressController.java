@@ -70,9 +70,9 @@ public class UserAddressController {
         return "redirect:/user/address/list";
     }
 
-    @GetMapping("/delete")
-    public String getAddressDelete(@RequestParam(value = "userId") String userId) {
-
+    @GetMapping("/delete/{addressList}")
+    public String getAddressDelete(@PathVariable("addressList") String addressList) {
+        userAddressService.addressDelete(addressList);
         return "redirect:/user/address/list";
     }
   
