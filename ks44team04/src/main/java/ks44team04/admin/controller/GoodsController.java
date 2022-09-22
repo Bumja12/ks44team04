@@ -26,6 +26,12 @@ public class GoodsController {
 	public void goodsControllerInit() {
 	}
 	
+	//상품문의
+    @GetMapping("/goods/goodsQna")
+    public String main() {
+        return "admin/goods/goodsQna";
+    }
+	
 	//상품 삭제
 	@PostMapping("/goods/removeGoods")
 	public String goodsRemove(String goods) {
