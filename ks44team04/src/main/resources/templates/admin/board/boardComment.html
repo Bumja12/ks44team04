@@ -10,7 +10,7 @@
 <th:block layout:fragment="customContents">
 	<div class="page-title">
 		<div class="title_left">
-			<h3>게시물 관리</h3>
+			<h3>댓글 관리</h3>
 		</div>
 	</div>
 
@@ -39,10 +39,8 @@
 						<label class="control-label" for="qnaSearch" style="margin-left: 10px; margin-right: 10px;">키워드</label>
 							<select class="form-control" style="font-weight: bold;">
 								<option>::</option>
-								<option value="1">제목</option>
-								<option value="2">내용</option>
-								<option value="3">태그</option>
-								<option value="4">작성자ID</option>
+								<option value="1">내용</option>
+								<option value="2">작성자ID</option>
 							</select>
 								<input type="text" class="form-control" size="12">
 					</div>
@@ -73,23 +71,17 @@
 							<tr>
 								<th style="width: 30px"><input type="checkbox" id="check-all" class="flat"></th>
 								<th>게시판</th>
-								<th>제목</th>
-								<th>내용</th>
+								<th>댓글내용</th>
 								<th>작성자</th>
-								<th>조회수</th>
-								<th>추천수</th>
 								<th>신고수</th>
 								<th>등록일</th>
 								<th>수정일</th>
-								<th style="width: 100px;">관리</th>
+								<th>관리</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td><input type="checkbox" id="check-all" class="flat"></td>
-								<td>ㅇ</td>
-								<td>ㅇ</td>
-								<td>ㅇ</td>
 								<td>ㅇ</td>
 								<td>ㅇ</td>
 								<td>ㅇ</td>

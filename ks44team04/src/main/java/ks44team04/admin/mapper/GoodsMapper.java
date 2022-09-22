@@ -3,9 +3,13 @@ package ks44team04.admin.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import ks44team04.dto.Goods;
+import ks44team04.dto.GoodsQnaList;
 
 @Mapper
 public interface GoodsMapper {
+	
+	//상품 문의 조회
+	public List<GoodsQnaList> getGoodsQnaList();
 	
 	//상품 삭제
 	public void goodsRemove(String goods);
