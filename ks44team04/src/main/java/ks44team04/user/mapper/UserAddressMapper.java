@@ -17,6 +17,8 @@ public interface UserAddressMapper {
     public void addressRegister(AddressList userAddress);
 
     public void addressModify(AddressList addressList);
+
+    public void addressDelete(String addressList);
     
     
 }
