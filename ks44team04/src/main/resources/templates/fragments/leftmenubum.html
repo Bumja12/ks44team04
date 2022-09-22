@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
-<li th:fragment="leftmenubum"><a><i class="fa fa-edit"></i> 주문관리 <span class="fa fa-chevron-down"></span></a>
+<th:block th:fragment="leftmenubum">
+<li><a><i class="fa fa-edit"></i> 주문관리 <span class="fa fa-chevron-down"></span></a>
     <ul class="nav child_menu">
         <li><a th:href="@{/user/address/list}">배송지목록</a></li>
         <li><a th:href="@{/user/address/register}">배송지등록</a></li>
@@ -10,5 +10,6 @@
         <li><a th:href="@{/user/address/delete}">배송지삭제</a></li>
     </ul>
 </li>
+</th:block>
 
 </html>
