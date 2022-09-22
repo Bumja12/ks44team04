@@ -19,9 +19,7 @@ th {
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>
-					결제내역<small>Admin</small>
-					</h3>
+				<h2>결제내역<small>Admin</small></h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -40,9 +38,8 @@ th {
 				<p class="text-muted font-13 m-b-30">결제내역 페이지입니다. 결제내역에서 항목을
 					선택하면 결제상세내역 페이지로 이동하도록 구현할 것입니다.</p>
 
-				<table id="datatable-responsive"
-					class="table table-striped table-bordered dt-responsive nowrap"
-					cellspacing="0" width="100%">
+				<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" 
+						cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th>주문번호</th>
@@ -56,23 +53,32 @@ th {
 							<th>결제일자</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr th:if="${not #lists.isEmpty(paymentTotal)}" th:each="p : ${paymentTotal}">
+					<tbody th:with="target='카드', target2='계좌이체'">
+						<tr th:if="${not #lists.isEmpty(paymentTotal)} and ${p.paymentMethod} == '카드'" th:each="p : ${paymentTotal}">
 							<td th:text="${p.orderNum}"></td>
 							<td th:text="${p.orderDetailCode}"></td>
 							<td th:text="${p.buyerId}"></td>
 							<td th:text="${p.goodsCode}"></td>
 							<td th:text="${p.paymentMethod}"></td>
-							<th:block>
-							<td th:if="${p.paymentMethod} == '카드'" th:text="${p.cardCompany}"></td>
-							<td th:if="${p.paymentMethod} == '카드'" th:text="${p.cardNumber}"></td>			
-							<td th:unless="${p.paymentMethod} == '계좌이체'" th:text="${p.refundBank}"></td>
-							<td th:unless="${p.paymentMethod} == '계좌이체'" th:text="${p.refundAccount}"></td>
-							<td th:unless="${p.paymentMethod} == '계좌이체'" th:text="${p.orderPrice}"></td>
-							<td th:unless="${p.paymentMethod} == '계좌이체'" th:text="${p.approveDate}"></td>
-							</th:unless>
-							</th:block>
+							<td th:text="${p.cardCompany}"></td>
+							<td th:text="${p.cardNumber}"></td>
+							<td th:text="${p.orderPrice}"></td>
+							<td th:text="${p.approveDate}"></td>
 						</tr>
+						<tr th:if="${not #lists.isEmpty(paymentTotal)} and ${p.paymentMethod} == '계좌이체'" th:each="p : ${paymentTotal}">
+							<td th:text="${p.orderNum}"></td>
+							<td th:text="${p.orderDetailCode}"></td>
+							<td th:text="${p.buyerId}"></td>
+							<td th:text="${p.goodsCode}"></td>
+							<td th:text="${p.paymentMethod}"></td>
+							<td th:text="${p.refundBank}"></td>
+							<td th:text="${p.refundAccount}"></td>
+							<td th:text="${p.orderPrice}"></td>
+							<td th:text="${p.approveDate}"></td>
+						</tr>
+						<tr th:unless="${not #lists.isEmpty(paymentTotal)}">
+							<td colspan="9">데이터가 없습니다.</td>
+						</tr>		
 					</tbody>
 				</table>
 
