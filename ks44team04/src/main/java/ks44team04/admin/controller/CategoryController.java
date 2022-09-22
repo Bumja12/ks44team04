@@ -24,7 +24,7 @@ public class CategoryController {
 	public String modifyCategoryAction () {
 		
 		// 카테고리 내역 화면으로 리다이렉트
-		return "redirect:/admin/category/categoryDetail";
+		return "redirect:/admin/category/categoryList";
 	}
 	
 	// 카테고리 수정 화면

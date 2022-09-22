@@ -20,45 +20,71 @@
                     		<div class="col-sm-12">
          						<br/>
 								<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" th:action="@{/admin/category/modifyCategory}" method="post">
+									<!-- 등급 코드 PK -->
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_code">등급 코드 PK
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" id="level_code" value="levelBuyer01" disabled="disabled" class="form-control" maxlength="15">
+										</div>
+									</div>
 									<!-- 등급 이름 -->
 									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_name">등급 이름<span class="required"> *</span>
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_name">등급 이름
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" id="level_name" required="required" class="form-control" maxlength="15">
+											<input type="text" id="level_name" value="씨앗" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
-									<!-- 구매자 금액 조건 -->
+									<!-- 회원 아이디(등록) -->
 									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="buyer_price_terms">구매자 금액 조건<span class="required"> *</span>
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="reg_id">회원 아이디(등록)
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<!-- 숫자만 입력 가능 -->
-											<input type="number" id="buyer_price_terms" name="buyer_price_terms" required="required" class="form-control" oninput="handleOnInput(this, 15)">
+											<input type="text" id="reg_id" value="admin01" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
-									<!-- 적립율(%) -->
+									<!-- 등급 생성일 -->
 									<div class="item form-group">
-										<label for="save_rate" class="col-form-label col-md-3 col-sm-3 label-align">적립율(%)<span class="required"> *</span>
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_reg_date">등급 생성일
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<!-- 숫자만 입력 가능 -->
-											<input id="save_rate" class="form-control" type="number" required="required" name="save_rate" oninput='handleOnInput(this, 15)'>
+											<input type="datetime" id="level_reg_date" value="2021-01-01 00:00:00" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 사용 여부 -->
 									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부<span class="required"> *</span>
+										<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<div id="gender" class="btn-group" data-toggle="buttons">
-												<label class="btn btn-secondary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-													<input type="radio" name="use_check" value="Y" class="join-btn"> &nbsp;Y&nbsp;
-												</label>
-												<label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-													<input type="radio" name="use_check" value="N" class="join-btn"> &nbsp;N&nbsp;
-												</label>
-											</div>
+											<input type="radio" class="flat" name="gender" id="genderM" value="M" checked="checked" required /> Y
+											<input type="radio" class="flat" name="gender" id="genderF" value="F" /> N
+										</div>
+									</div>
+									<!-- 구매자 구매 금액 조건(6개월) -->
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="buyer_price_terms">구매자 구매 금액 조건(6개월)
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<!-- 숫자만 입력 가능 -->
+											<input type="number" id="buyer_price_terms" name="buyer_price_terms" value="0" required="required" class="form-control" oninput="handleOnInput(this, 15)">
+										</div>
+									</div>
+									<!-- 적립율(%) -->
+									<div class="item form-group">
+										<label for="save_rate" class="col-form-label col-md-3 col-sm-3 label-align">적립율(%)
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<!-- 숫자만 입력 가능 -->
+											<input id="save_rate" class="form-control" type="number" value="0.5" required="required" name="save_rate" oninput='handleOnInput(this, 15)'>
+										</div>
+									</div>
+									<!-- 등급 코드 -->
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_code_npk">등급 코드 
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" id="level_code_npk" value="levelBuyer01" disabled="disabled" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<div class="ln_solid"></div>
@@ -92,7 +118,7 @@
 			let cancelBtn = document.querySelector('#cancelBtn');
 			cancelBtn.addEventListener('click', function(){
 				console.log(location.href);
-				window.location = 'http://localhost:80/admin/category/categoryDetail';
+				window.location = 'http://localhost:80/admin/category/categoryList';
 			
 			});
 		</script>

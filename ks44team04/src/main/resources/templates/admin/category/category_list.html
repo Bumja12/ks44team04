@@ -101,7 +101,7 @@
            				<div class="col-sm-12">
 	           				<div class="ml-auto">
 	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
-	           					<button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
 	           				</div>
            				</div> <!-- </div class="col-sm-12"> -->
            			</div> <!-- </div class="row"> -->
@@ -209,7 +209,7 @@
            				<div class="col-sm-12">
 	           				<div class="ml-auto">
 	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
-	           					<button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
 	           				</div>
            				</div> <!-- </div class="col-sm-12"> -->
            			</div> <!-- </div class="row"> -->
@@ -307,7 +307,7 @@
            				<div class="col-sm-12">
 	           				<div class="ml-auto">
 	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
-	           					<button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
 	           				</div>
            				</div> <!-- </div class="col-sm-12"> -->
            			</div> <!-- </div class="row"> -->
@@ -415,7 +415,7 @@
            				<div class="col-sm-12">
 	           				<div class="ml-auto">
 	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
-	           					<button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>	     
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>	     
          					</div>
           				</div> <!-- </div class="col-sm-12"> -->
            			</div> <!-- </div class="row"> -->
@@ -513,7 +513,7 @@
            				<div class="col-sm-12">
 	           				<div class="ml-auto">
            						<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
-	           					<button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>	           				</div>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>	           				</div>
            				</div> <!-- </div class="col-sm-12"> -->
            			</div> <!-- </div class="row"> -->
            			
@@ -610,7 +610,7 @@
            				<div class="col-sm-12">
 	           				<div class="ml-auto">
 	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
-	           					<button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
 	           				</div>
            				</div> <!-- </div class="col-sm-12"> -->
            			</div> <!-- </div class="row"> -->
@@ -728,7 +728,7 @@
            				<div class="col-sm-12">
 	           				<div class="ml-auto">
 	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
-	           					<button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>	           				</div>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>	           				</div>
            				</div> <!-- </div class="col-sm-12"> -->
            			</div> <!-- </div class="row"> -->
            			
@@ -1007,7 +1007,7 @@
            				<div class="col-sm-12">
 	           				<div class="ml-auto">
 	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
-	           					<button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
 	           				</div>
            				</div> <!-- </div class="col-sm-12"> -->
            			</div> <!-- </div class="row"> -->
@@ -1105,7 +1105,7 @@
            				<div class="col-sm-12">
 	           				<div class="ml-auto">
 	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
-	           					<button type="button" class="btn btn-danger" id="deleteBtn" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
 	           				</div>
            				</div> <!-- </div class="col-sm-12"> -->
            			</div> <!-- </div class="row"> -->
@@ -1130,7 +1130,7 @@
 	            </div>
 	            <div class="modal-footer">
 		            <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
-		            <button type="button" id="deleteModal" class="btn btn-danger">삭제</button>
+		            <button type="button" id="deleteBtn" class="btn btn-danger ">삭제</button>
 	            </div>
         	</div>
       	</div>
@@ -1138,14 +1138,19 @@
 	
 	<th:block layout:fragment="customJsScript">
 		<script type="text/javascript">
-			var deleteBtn = document.getElementById('deleteBtn');	
-			deleteBtn.addEventListener('click', function(){
-				console.log('deleteBtn 클릭');
-				var deleteModal = document.getElementById('deleteModal');	
-				deleteModal.addEventListener('click', function(){
-					location.href='removeCategory';
+			var deleteModal = document.getElementsByClassName('deleteModal');	
+			
+			for(var i=0; i<deleteModal.length; i++){
+				console.log(deleteModal[i]);
+				deleteModal[i].addEventListener('click', function(){
+					console.log('deleteModal Event');
+					var deleteBtn = document.getElementById('deleteBtn');	
+					deleteBtn.addEventListener('click', function(){
+						console.log(deleteBtn);
+						location.href='removeCategory';
+					});
 				});
-			});
+			}
 			
 		</script>
 	</th:block>
