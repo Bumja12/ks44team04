@@ -22,15 +22,12 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(commonInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/error/**")
-                .excludePathPatterns("/vendors/**")
-                .excludePathPatterns("/user/vendors/**")
-                .excludePathPatterns("/images/**")
                 .excludePathPatterns("/build/**")
-                .excludePathPatterns("/user/css/**")
-                .excludePathPatterns("/user/images/**")
-                .excludePathPatterns("/user/address/images/**")
-                .excludePathPatterns("/user/fonts/**")
-                .excludePathPatterns("/user/js/**")
+                .excludePathPatterns("/**/vendors/**")
+                .excludePathPatterns("/**/images/**")
+                .excludePathPatterns("/**/css/**")
+                .excludePathPatterns("/**/fonts/**")
+                .excludePathPatterns("/**/js/**")
                 .excludePathPatterns("/favicon.ico");
 
         WebMvcConfigurer.super.addInterceptors(registry);

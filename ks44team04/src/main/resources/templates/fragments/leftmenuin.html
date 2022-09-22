@@ -2,18 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<li th:fragment="leftmenuin"><a><i class="fa fa-gift"></i>상품관리<span class="fa fa-chevron-down"></span></a>
+<th:block th:fragment="leftmenuin">
+<li><a><i class="fa fa-gift"></i>상품관리<span class="fa fa-chevron-down"></span></a>
     <ul class="nav child_menu">
         <li><a th:href="@{/admin/goods/goodsList}">상품목록</a></li>
         <li><a th:href="@{/admin/goods/goodsQna}">상품문의</a></li>
         <li><a th:href="@{/admin/goods/goodsList}">상품후기</a></li>
     </ul>
 </li>
-<li th:fragment="leftmenuin"><a><i class="fa fa-list-alt"></i>게시판관리<span class="fa fa-chevron-down"></span></a>
+<li><a><i class="fa fa-list-alt"></i>게시판관리<span class="fa fa-chevron-down"></span></a>
     <ul class="nav child_menu">
         <li><a th:href="@{/admin/board/boardList}">게시물 목록</a></li>
         <li><a th:href="@{/admin/board/boardList}">좋아요 내역</a></li>
         <li><a th:href="@{/admin/board/boardList}">댓글 내역</a></li>
     </ul>
 </li>
+</th:block>
+
 </html>
