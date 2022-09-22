@@ -43,6 +43,13 @@ public class CategoryController {
 		return "admin/category/category_detail";
 	}
 	
+	// 카테고리 등록 처리
+	@PostMapping("/addCategory")
+	public String addCategoryAction (Model model) {
+		
+		return "redirect:/admin/category/categoryList";
+	}
+	
 	// 카테고리 등록 화면
 	@GetMapping("/addCategory")
 	public String addCategoryForm (Model model) {
