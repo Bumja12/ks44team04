@@ -2,7 +2,7 @@ package ks44team04.admin.service;
 
 import ks44team04.admin.mapper.UserMapper;
 import ks44team04.dto.Right;
-import ks44team04.dto.Report;
+import ks44team04.dto.Seller;
 import ks44team04.dto.User;
 
 import java.util.List;
@@ -24,11 +24,17 @@ public class UserService {
         this.userMapper = userMapper;
     }
     
+    //회원가입
+    public void addUser(User user) {
+    	int result = userMapper.addUser(user);
+    	System.out.println("회원가입 결과:" + result);
+    }
     
-	//회원가입
-	public void addUser(User user) {
-        int result = userMapper.addUser(user);
-        System.out.println("회원가입 결과:" + result);
+    //판매자 목록 조회
+    public List<Seller> getSellerList() {
+    	List<Seller> sellerList = userMapper.getSellerList();
+    	
+    	return sellerList;
     }
     
     //레벨 조회

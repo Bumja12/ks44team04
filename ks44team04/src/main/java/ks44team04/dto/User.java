@@ -20,7 +20,7 @@ public class User {
     private String userInfoKeep;
     private String userLevel;
 
-    private LevelSellerCategory levelSeller;
+	private LevelSellerCategory levelSeller;
     public LevelSellerCategory getLevelSeller() {
     	return levelSeller;
     }
