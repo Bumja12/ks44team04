@@ -9,6 +9,8 @@ import ks44team04.dto.PaymentTotal;
 @Mapper
 public interface PaymentMapper {
 	
+	public List<PaymentTotal> paymentDetailList();
+	
 	public List<PaymentTotal> paymentList();
 	
 }
