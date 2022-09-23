@@ -25,7 +25,7 @@
             		</div>
             		<div class="x_content">
      					<br/>
-						<form class="form-horizontal form-label-left" th:action="@{/admin/category/modifyCategory}" method="post">
+						<form class="form-horizontal form-label-left" th:action="@{/admin/regularAsk/modifyRegularAsk}" method="post">
 							<!-- 자주 묻는 질문 PK -->
 							<div class="form-group row ">
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="regular_ask">자주 묻는 질문 PK
@@ -63,7 +63,7 @@
 								<label class="col-form-label col-md-3 col-sm-3" for="regular_ask_content">내용
 								</label>
 								<div class="col-md-9 col-sm-9 ">
-									<textarea id="regular_ask_content"  class="form-control" rows="3" disabled="disabled" placeholder="내용"></textarea>
+									<textarea id="regular_ask_content"  class="form-control" rows="3" required="required" disabled="disabled" placeholder="내용">ㅇㅇ</textarea>
 								</div>
 							</div>
 							<!-- 등록일 -->
@@ -87,15 +87,15 @@
 								<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="radio" class="flat" name="gender" id="genderM" value="M" dis checked="checked" required /> Y
-									<input type="radio" class="flat" name="gender" id="genderF" value="F" disabled="disabled"/> N
+									<input type="radio" class="flat" name="use_check" id="use_check_Y" value="Y" checked="checked" required /> Y
+									<input type="radio" class="flat" name="use_check" id="use_check_N" value="N" /> N								
 								</div>
 							</div>
 							<div class="ln_solid"></div>
 							<div class="item form-group">
 								<div class="col-md-6 col-sm-6 offset-md-3">
 									<button type="button" id="modifyBtn" class="btn btn-success">수정</button>
-									<button class="btn btn-primary" type="reset">초기화</button>
+									<button class="btn btn-primary" id="resetBtn" type="reset">초기화</button>
 									<button id="cancelBtn" class="btn btn-primary" type="button">취소</button>
 								</div>
 							</div>
@@ -111,33 +111,34 @@
 
 	<th:block layout:fragment="customJsScript">
 		<script type="text/javascript">
-		
-			let modifyBtn = document.querySelector('#modifyBtn');
-// 			console.log(modifyBtn);
-			modifyBtn.addEventListener('click', function(){
-				let input = document.querySelectorAll('.form-group input, textarea');
-				for(var i=0; i<input.length; i++){
-					console.log(input[i]);
-					input[i].disabled = false;
-				}
-				
-			});
-			
-			
-// 			console.log(input);
-			cancelBtn.addEventListener('click', function(){
-				console.log(location.href);
-				window.location = 'http://localhost:80/admin/regularAsk/regularAskList';
-			
-			});
 
-			
+			// 수정 버튼 탐색
+			let modifyBtn = document.querySelector('#modifyBtn');
+			// 수정할 요소 탐색 (자주 묻는 질문 카테고리 FK, 제목, 내용, 사용 여부 ) - 총 5개 요소
+ 			let updateContent = document.querySelectorAll('#regular_ask_category, #regular_ask_title, #regular_ask_content, #use_check_N, #use_check_Y');
+			// 취소 버튼 탐색
 			let cancelBtn = document.querySelector('#cancelBtn');
+			// 수정 버튼에 이벤트 등록
+			modifyBtn.addEventListener('click', function(){
+				for(var i=0; i<updateContent.length; i++){
+					// 수정할 요소가 disabled 상태라면 원래대로 바꾼다. 
+					if(updateContent[i].disabled){
+						updateContent[i].disabled = false;
+					}
+				}
+				// 그리고 수정 버튼을 전송 버튼으로 바꾼다.
+				modifyBtn.addEventListener('click', function(){
+					this.type = 'submit';
+				});
+			});
+			// 취소 버튼에 이벤트 등록
 			cancelBtn.addEventListener('click', function(){
 				console.log(location.href);
+				// 자주 묻는 질문 목록으로 리다이렉트
 				window.location = 'http://localhost:80/admin/regularAsk/regularAskList';
 			
 			});
+			
 		</script>
 	</th:block>
 

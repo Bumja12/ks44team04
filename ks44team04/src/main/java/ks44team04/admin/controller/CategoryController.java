@@ -12,7 +12,7 @@ public class CategoryController {
 
 	// 카테고리 삭제 처리
 	@GetMapping("/removeCategory")
-	public String removeCategoryAction () {
+	public String removeCategory () {
 		
 		// 카테고리 목록 화면으로 리다이렉트
 		return "admin/category/category_remove";
