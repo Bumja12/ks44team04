@@ -4,7 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team04.admin.mapper.PaymentMapper">
 	
-	<resultMap type="PaymentTotal" id="paymentDetailResultMap">
+	<!-- 결제상세내역 -->
+	<!-- <resultMap type="PaymentTotal" id="paymentDetailResultMap">
 		<id 	column="order_num" 			property="orderNum"/>
 		<result column="order_detail_code" 	property="orderDetailCode"/>
 		<result column="goods_code" 		property="goodsCode"/>
@@ -23,24 +24,26 @@
 		<result column="order_amount"		property="orderAmount"/>
 		<result column="order_status"		property="orderStatus"/>
 		<result column="order_date"			property="orderDate"/>
-	</resultMap>
+	</resultMap> -->
 	
+	<!-- 결제페이지종합 -->
 	<resultMap type="PaymentTotal" id="paymentResultMap">
-		<result column="goods_name"				property="goodsName"/>
-		<result column="coupon_price" 		property="couponPrice"/>
-		<result column="use_point" 			property="usePoint"/>
-		<result column="save_point" 		property="savePoint"/>
+		<result column="order_detail_code" 	property="orderDetailCode"/>
+		<result column="goods_code" 		property="goodsCode"/>
+		<result column="payment_method"		property="paymentMethod"/>
+		<result column="card_company" 		property="cardCompany"/>
+		<result column="card_number" 		property="cardNumber"/>
+		<result column="refund_bank" 		property="refundBank"/>
+		<result column="refund_account" 	property="refundAccount"/>
 		<result column="order_price" 		property="orderPrice"/>
-		<result column="order_amount" 		property="orderAmount"/>
-		<result column="order_status" 		property="orderStatus"/>
-<!-- 
-		<result column="order_num" 		property="orderNum"/>
-		<result column="buyer_id" 		property="buyerId"/>
-		<result column="order_date" 		property="orderDate"/>
-		
- -->		
-		
-		<association property="orderUser" 	javaType="OrderUser">
+		<result column="approve_date"		property="approveDate"/>
+		<result column="goods_name"			property="goodsName"/>
+		<result column="coupon_price"		property="couponPrice"/>
+		<result column="use_point"			property="usePoint"/>
+		<result column="save_point"			property="savePoint"/>
+		<result column="order_amount"		property="orderAmount"/>
+		<result column="order_status"		property="orderStatus"/>		
+		<association property="paymentInfo" 	javaType="PaymentInfo">
 			<id 	column="order_num" 		property="orderNum"/>
 			<result column="buyer_id" 		property="buyerId"/>
 			<result column="order_date" 	property="orderDate"/>
@@ -50,7 +53,7 @@
 	</resultMap>
 	
 	<!-- 결제상세목록 -->
-	<select id="paymentDetailList" resultType="PaymentTotal" resultMap="paymentDetailResultMap" fetchSize="100">
+	<select id="paymentDetailList" resultType="PaymentTotal" resultMap="paymentResultMap" fetchSize="100">
 		SELECT
 			*
 		FROM

@@ -63,9 +63,9 @@ th, td {
 					</thead>
 					<tbody>
 						<tr th:if="${not #lists.isEmpty(paymentDetailList)}" th:each="p : ${paymentDetailList}">
-							<td th:text="${p.orderNum}"></td>
+							<td th:text="${p.paymentInfo.orderNum}"></td>
 							<td th:text="${p.orderDetailCode}"></td>
-							<td th:text="${p.buyerId}"></td>
+							<td th:text="${p.paymentInfo.buyerId}"></td>
 							<td th:text="${p.goodsCode}"></td>
 							<td th:text="${p.paymentMethod}"></td>
 							<td th:text="${p.cardCompany}"></td>

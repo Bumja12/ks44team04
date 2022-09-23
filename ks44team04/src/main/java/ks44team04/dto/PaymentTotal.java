@@ -1,29 +1,17 @@
 package ks44team04.dto;
 
-import java.util.List;
-
 public class PaymentTotal {
 	
-	private OrderUser orderUser;
-
-    public OrderUser getOrderUser() {
-		return orderUser;
-	}
-	public void setOrderUser(OrderUser orderUser) {
-		this.orderUser = orderUser;
-	}
+	private PaymentInfo paymentInfo;
 	
-	//OrderUser 필드 임시 추가
-
-	
+	public PaymentInfo getPaymentInfo() {
+		return paymentInfo;
+	}
+	public void setPaymentInfo(PaymentInfo paymentInfo) {
+		this.paymentInfo = paymentInfo;
+	}
 	
 	//주문정보
-//	private String orderNum;
-//    private String buyerId;
-//    private String orderDate;
-    
-    
-
 	private String couponCode;
     private String orderStatus;
     private int totalSum;
@@ -276,10 +264,11 @@ public class PaymentTotal {
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
+	
 	@Override
 	public String toString() {
-		return "PaymentTotal [orderUser=" + orderUser + ", couponCode=" + couponCode + ", orderStatus=" + orderStatus
-				+ ", totalSum=" + totalSum + ", totalPrice=" + totalPrice + ", couponPrice=" + couponPrice
+		return "PaymentTotal [paymentInfo=" + paymentInfo + ", couponCode=" + couponCode + ", orderStatus="
+				+ orderStatus + ", totalSum=" + totalSum + ", totalPrice=" + totalPrice + ", couponPrice=" + couponPrice
 				+ ", usePoint=" + usePoint + ", goodsDiscountPrice=" + goodsDiscountPrice + ", postPrice=" + postPrice
 				+ ", totalOrderPrice=" + totalOrderPrice + ", finalConfirmPrice=" + finalConfirmPrice
 				+ ", finalConfirmDate=" + finalConfirmDate + ", postAddressList=" + postAddressList
@@ -292,8 +281,5 @@ public class PaymentTotal {
 				+ ", approveDate=" + approveDate + ", accountPaymentCode=" + accountPaymentCode + ", refundBank="
 				+ refundBank + ", refundAccount=" + refundAccount + ", goodsName=" + goodsName + "]";
 	}
-	
-	
-
 	
 }

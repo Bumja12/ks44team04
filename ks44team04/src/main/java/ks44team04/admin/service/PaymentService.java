@@ -2,6 +2,8 @@ package ks44team04.admin.service;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ public class PaymentService {
 		this.paymentMapper = paymentMapper;
 	}
 	
+	@PostConstruct
 	public void paymentService() {
 		log.info("paymentService bean 생성");
 	}
