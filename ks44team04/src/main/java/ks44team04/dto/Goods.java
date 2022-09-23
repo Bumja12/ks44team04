@@ -20,16 +20,15 @@ public class Goods {
     private String imageFile;
     
 	private User userInfo;
-	
 	public User getUserInfo() {
 		return userInfo;
 	}
 	public void setUserInfo(User userInfo) {
 		this.userInfo = userInfo;
 	}
-	
 
-    public String getGoodsCode() {
+	
+	public String getGoodsCode() {
         return goodsCode;
     }
 

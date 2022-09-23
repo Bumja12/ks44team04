@@ -94,15 +94,17 @@
 					role="grid">
 					<thead>
 						<tr role="row">
-							<th>상품코드</th>
+							<th style="width: 100px;">상품코드</th>
 							<th>상품명</th>
-							<th>정가</th>
-							<th>재고</th>
-							<th>품절</th>
-							<th>판매중지</th>
-							<th>판매자</th>
-							<th>신고수</th>
-							<th>등록일</th>
+							<th style="width: 80px;">정가</th>
+							<th style="width: 60px;">할인율</th>
+							<th style="width: 80px;">할인가</th>
+							<th style="width: 60px;">재고</th>
+							<th style="width: 60px;">품절</th>
+							<th style="width: 80px;">판매중지</th>
+							<th style="width: 80px;">판매자</th>
+							<th style="width: 60px;">신고수</th>
+							<th style="width: 140px;">등록일</th>
 							<th>관리</th>
 						</tr>
 					</thead>
@@ -112,6 +114,8 @@
 							<td th:text="${g.goodsCode}"></td>
 							<td th:text="${g.goodsName}"></td>
 							<td th:text="${'₩' + #numbers.formatInteger(g.goodsPrice,3,'COMMA')}"></td>
+							<td th:text="${g.goodsDiscountRate}"></td>
+							<td th:text="${'₩'+ #numbers.formatInteger((g.goodsPrice-g.goodsPrice*g.goodsDiscountRate/100),3,'COMMA')}"></td>
 							<td th:text="${g.goodsStock}"></td>
 							<td th:text="${g.soldoutCheck}"></td>
 							<td th:text="${g.stopSaleCheck}"></td>
@@ -126,7 +130,7 @@
 							</td>
 						</tr>
 						<tr th:unless="${not #lists.isEmpty(goodsList)}">
-							<td colspan="10">등록된 상품이 없습니다.</td>
+							<td colspan="11">등록된 상품이 없습니다.</td>
 						</tr>
 					</tbody>
 				</table>
