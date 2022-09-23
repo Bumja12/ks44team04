@@ -1,7 +1,8 @@
 package ks44team04.admin.mapper;
 
-import ks44team04.dto.Level;
+import ks44team04.dto.Right;
 import ks44team04.dto.Report;
+import ks44team04.dto.Seller;
 import ks44team04.dto.User;
 
 import java.util.List;
@@ -16,9 +17,12 @@ public interface UserMapper {
     
 	//회원 가입
 	public int addUser(User user);
+	
+	//판매자 목록 조회
+	public List<Seller> getSellerList();
     
 	//회원 권한 조회
-	public List<Level> getLevelList();
+	public List<Right> getRightList();
 	
 	//회원 목록 조회
 	public List<User> getUserList();

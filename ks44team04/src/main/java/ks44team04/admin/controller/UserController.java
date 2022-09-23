@@ -1,7 +1,10 @@
 package ks44team04.admin.controller;
 
 import ks44team04.admin.service.UserService;
-import ks44team04.dto.Level;
+import ks44team04.dto.Right;
+import ks44team04.dto.Seller;
+import ks44team04.dto.Report;
+
 import ks44team04.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,11 +46,21 @@ public class UserController {
 	@GetMapping("/user/addUser")
 	public String addUserForm(Model model) {
 		
-		List<Level> LevelList = userService.getLevelList();
+		List<Right> RightList = userService.getRightList();
 		model.addAttribute("title", "회원가입");
-		model.addAttribute("LevelList", LevelList);
+		model.addAttribute("RightList", RightList);
 		
 		return "admin/user/addUser";
+	}
+	
+	@GetMapping("/user/sellerList")
+	public String getSellerList(Model model) {
+		List<Seller> sellerList = userService.getSellerList();
+		log.info("판매자 목록 ::: {}", sellerList);
+		model.addAttribute("sellerList", sellerList);
+		model.addAttribute("title", "판매자목록");
+		
+		return "admin/user/sellerList";
 	}
     
 	@GetMapping("/user/userList")

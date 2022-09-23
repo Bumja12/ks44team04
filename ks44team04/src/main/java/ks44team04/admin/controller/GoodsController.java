@@ -26,6 +26,12 @@ public class GoodsController {
 	public void goodsControllerInit() {
 	}
 	
+	//상품 후기
+    @GetMapping("/goods/goodsReview")
+    public String goodsReview() {
+        return "/admin/goods/goodsReview";
+    }
+	
 	//상품문의
     @GetMapping("/goods/goodsQnaList")
     public String getGoodsQnaList(Model model) {
