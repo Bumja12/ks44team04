@@ -1,8 +1,8 @@
 package ks44team04.dto;
 
-public class GoodsQndList {
+public class GoodsQnaList {
 
-    private String goodsQna;
+    private int goodsQna;
     private String goodsCode;
     private String goodsQnaCategory;
     private String buyerId;
@@ -10,16 +10,41 @@ public class GoodsQndList {
     private String goodsQnaContent;
     private String goodsQnaDate;
     private String secretCheck;
-    private int goodsQnaQw;
+    private int goodsQnaPw;
     private String sellerId;
     private String goodsQnaAnswer;
     private String answerDate;
-
-    public String getGoodsQna() {
+    
+    
+	private User userInfo;
+	public User getUserInfo() {
+		return userInfo;
+	}
+	public void setUserInfo(User userInfo) {
+		this.userInfo = userInfo;
+	}
+	
+	private Goods goodsInfo;
+	public Goods getGoodsInfo() {
+		return goodsInfo;
+	}
+	public void setGoodsInfo(Goods goodsInfo) {
+		this.goodsInfo = goodsInfo;
+	}
+	
+	public GoodsQnaCategory goodsQnaCategoryInfo;
+	public GoodsQnaCategory getGoodsQnaCategoryInfo() {
+		return goodsQnaCategoryInfo;
+	}
+	public void setGoodsQnaCategoryInfo(GoodsQnaCategory goodsQnaCategoryInfo) {
+		this.goodsQnaCategoryInfo = goodsQnaCategoryInfo;
+	}
+	
+    public int getGoodsQna() {
         return goodsQna;
     }
 
-    public void setGoodsQna(String goodsQna) {
+    public void setGoodsQna(int goodsQna) {
         this.goodsQna = goodsQna;
     }
 
@@ -79,12 +104,12 @@ public class GoodsQndList {
         this.secretCheck = secretCheck;
     }
 
-    public int getGoodsQnaQw() {
-        return goodsQnaQw;
+    public int getGoodsQnaPw() {
+        return goodsQnaPw;
     }
 
-    public void setGoodsQnaQw(int goodsQnaQw) {
-        this.goodsQnaQw = goodsQnaQw;
+    public void setGoodsQnaPw(int goodsQnaPw) {
+        this.goodsQnaPw = goodsQnaPw;
     }
 
     public String getSellerId() {
@@ -122,7 +147,7 @@ public class GoodsQndList {
                 ", goodsQnaContent='" + goodsQnaContent + '\'' +
                 ", goodsQnaDate='" + goodsQnaDate + '\'' +
                 ", secretCheck='" + secretCheck + '\'' +
-                ", goodsQnaQw=" + goodsQnaQw +
+                ", goodsQnaPw=" + goodsQnaPw +
                 ", sellerId='" + sellerId + '\'' +
                 ", goodsQnaAnswer='" + goodsQnaAnswer + '\'' +
                 ", answerDate='" + answerDate + '\'' +

@@ -9,6 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/admin/regularAsk")
 public class RegularAskController {
 	
+	// 관리자 자주 묻는 질문 내역 화면
+	@GetMapping("/regularAskDetail")
+	public String getRegularAskDetail (Model model) {
+		
+		model.addAttribute("title", "관리자 자주 묻는 질문 내역 화면");
+		return "admin/regularAsk/admin_regularAsk_detail";
+	}
+	
 	// 관리자 자주 묻는 질문 등록 화면
 	@GetMapping("/addRegularAsk")
 	public String addRegularAskForm (Model model) {

@@ -2,10 +2,104 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
 <mapper namespace="ks44team04.admin.mapper.GoodsMapper">
 
-    <resultMap type="Goods" id="goodsResultMap">
-        <result column="goods_code" 			property="goodsCode"/>
+    <resultMap type="GoodsQnaList" id="goodsQnaMap">
+        <id 	column="goods_qna" 			property="goodsQna"/>
+        <result column="goods_qna_category" property="goodsQnaCategory"/>
+        <result column="goods_code" 		property="goodsCode"/>
+        <result column="buyer_id" 			property="buyerId"/>
+        <result column="goods_qna_title" 	property="goodsQnaTitle"/>
+        <result column="goods_qna_content" 	property="goodsQnaContent"/>
+        <result column="goods_qna_date" 	property="goodsQnaDate"/>
+        <result column="secret_check" 		property="secretCheck"/>
+        <result column="goods_qna_pw" 		property="goodsQnaPw"/>
+        <result column="seller_id" 			property="sellerId"/>
+        <result column="goods_qna_answer" 	property="goodsQnaAnswer"/>
+        <result column="answer_date" 		property="answerDate"/>
+			<association property="goodsInfo" javaType="Goods">
+		        <id 	column="goods_code" 			property="goodsCode"/>
+		        <result column="goods_small_category" 	property="goodsSmallCategory"/>
+		        <result column="seller_id" 				property="sellerId"/>
+		        <result column="goods_name" 			property="goodsName"/>
+		        <result column="goods_content" 			property="goodsContent"/>
+		        <result column="goods_price" 			property="goodsPrice"/>
+		        <result column="goods_discount_rate" 	property="goodsDiscountRate"/>
+		        <result column="goods_post_price" 		property="goodsPostPrice"/>
+		        <result column="goods_stock" 			property="goodsStock"/>
+		        <result column="soldout_check" 			property="soldoutCheck"/>
+		        <result column="stop_sale_check" 		property="stopSaleCheck"/>
+		        <result column="package_post_check" 	property="packagePostCheck"/>
+		        <result column="regular_deliver_check" 	property="regularDeliverCheck"/>
+		        <result column="reg_date" 				property="regDate"/>
+		        <result column="goods_report_amount"	property="goodsReportAmount"/>
+		        <result column="goods_file" 			property="goodsFile"/>
+	        </association>
+	        <association property="goodsQnaCategoryInfo" javaType="GoodsQnaCategory">
+		        <id 	column="goods_qna_category" 	property="goodsQnaCategory"/>
+		        <result column="reg_id" 				property="regId" />
+		        <result column="category_name" 			property="categoryName"/>
+		        <result column="reg_date" 				property="regDate"/>
+		        <result column="use_check" 				property="useCheck"/>
+	        </association>
+	        <association property="userInfo" javaType="User">
+		        <id 	column="user_id" 			property="userId"/>
+		        <result column="user_pw" 			property="userPw"/>
+		        <result column="user_name" 			property="userName"/>
+		        <result column="user_gender" 		property="userGender"/>
+		        <result column="user_nickname" 		property="userNickname"/>
+		        <result column="user_address" 		property="userAddress"/>
+		        <result column="user_phone" 		property="userPhone"/>
+		        <result column="user_email" 		property="userEmail"/>
+		        <result column="user_right" 		property="userRight"/>
+		        <result column="user_reg_date" 		property="userRegDate"/>
+		        <result column="user_update_date"	property="userUpdateDate"/>
+		        <result column="user_status" 		property="userStatus"/>
+		        <result column="user_penalty" 		property="userPenalty"/>
+		        <result column="user_point" 		property="userPoint"/>
+		        <result column="user_info_keep" 	property="userInfoKeep"/>
+		        <result column="user_level" 		property="userLevel" />
+	        </association>
+    </resultMap>
+    
+    <!-- 상품 문의 조회 -->
+    <select id="getGoodsQnaList" resultMap="goodsQnaMap" fetchSize="100" >
+		/* 상품 문의 조회 */
+		SELECT
+			 q.goods_qna
+			,g.goods_code
+			,g.goods_name
+			,q.goods_qna_category
+			,u.user_id
+			,q.goods_qna_title
+			,q.goods_qna_content
+			,q.goods_qna_date
+			,q.secret_check
+			,q.goods_qna_pw
+			,g.seller_id
+			,q.goods_qna_answer
+			,q.answer_date
+			,qc.category_name
+		FROM
+			tb_goods_qna_list AS q
+			INNER JOIN
+			tb_goods AS g
+			ON
+			q.goods_code = g.goods_code
+			INNER JOIN
+			tb_goods_qna_category AS qc
+			ON
+			q.goods_qna_category = qc.goods_qna_category
+			INNER JOIN
+			tb_user AS u
+			ON
+			q.buyer_id = u.user_id
+		ORDER BY q.goods_qna_date DESC;
+	</select>
+	
+	<resultMap type="Goods" id="goodsResultMap">
+        <id 	column="goods_code" 			property="goodsCode"/>
         <result column="goods_small_category" 	property="goodsSmallCategory"/>
         <result column="seller_id" 				property="sellerId"/>
         <result column="goods_name" 			property="goodsName"/>
@@ -20,84 +114,73 @@
         <result column="regular_deliver_check" 	property="regularDeliverCheck"/>
         <result column="reg_date" 				property="regDate"/>
         <result column="goods_report_amount"	property="goodsReportAmount"/>
-        <result column="image_file" 			property="imageFile"/>
+        <result column="goods_file" 			property="goodsFile"/>
 			<association property="userInfo" javaType="User">
-		        <id column="user_id" property="userId"/>
-		        <result column="user_pw" property="userPw"/>
-		        <result column="user_name" property="userName"/>
-		        <result column="user_gender" property="userGender"/>
-		        <result column="user_nickname" property="userNickname"/>
-		        <result column="user_address" property="userAddress"/>
-		        <result column="user_phone" property="userPhone"/>
-		        <result column="user_email" property="userEmail"/>
-		        <result column="user_right" property="userRight"/>
-		        <result column="user_reg_date" property="userRegDate"/>
-		        <result column="user_update_date" property="userUpdateDate"/>
-		        <result column="user_status" property="userStatus"/>
-		        <result column="user_penalty" property="userPenalty"/>
-		        <result column="user_point" property="userPoint"/>
-		        <result column="user_info_keep" property="userInfoKeep"/>
-		        <result column="user_level" property="userLevel" />
+		        <id 	column="user_id" 			property="userId"/>
+		        <result column="user_pw" 			property="userPw"/>
+		        <result column="user_name" 			property="userName"/>
+		        <result column="user_gender" 		property="userGender"/>
+		        <result column="user_nickname" 		property="userNickname"/>
+		        <result column="user_address" 		property="userAddress"/>
+		        <result column="user_phone" 		property="userPhone"/>
+		        <result column="user_email" 		property="userEmail"/>
+		        <result column="user_right" 		property="userRight"/>
+		        <result column="user_reg_date" 		property="userRegDate"/>
+		        <result column="user_update_date"	property="userUpdateDate"/>
+		        <result column="user_status" 		property="userStatus"/>
+		        <result column="user_penalty" 		property="userPenalty"/>
+		        <result column="user_point" 		property="userPoint"/>
+		        <result column="user_info_keep" 	property="userInfoKeep"/>
+		        <result column="user_level" 		property="userLevel" />
 	        </association>
     </resultMap>
-    
+
+	<!-- 상품 삭제 -->    
+    	<delete id="goodsRemove" parameterType="String">
+		/* 상품 삭제 */
+		DELETE
+		FROM
+			tb_goods
+		WHERE
+			goods_code = #{goodsCode};
+	</delete>
+	
     <!-- 상품 수정 -->
-	<update id="modifyGoods" parameterType="Goods">
-		UPDATE tb_Goods
-		<trim prefix="SET" prefixOverrides=",">		
-			<if test="goodsSmallCategory != null and goodsSmallCategory != ''">
-			    goods_small_category       	= #{goodsSmallCategory}
-			</if>
-			<if test="sellerId != null and sellerId != ''">
-			    seller_id       	= #{sellerId}
-			</if>
-			<if test="goodsName != null and goodsName != ''">
-			    ,goods_name       	= #{goodsName}
-			</if>
-			<if test="goodsContent != null and goodsContent != ''">
-			    ,goods_content       	= #{goodsContent}
-			</if>
-			<if test="goodsPrice != null and goodsPrice != ''">			
-			   ,goods_price     	= #{goodsPrice}
-			</if>
-			<if test="goodsDiscountRate != null and goodsDiscountRate != ''">			
-			   ,goods_discount_rate     	= #{goodsDiscountRate}
-			</if>
-			<if test="goodsPostPrice != null and goodsPostPrice != ''">			
-			   ,goods_post_price     	= #{goodsPostPrice}
-			</if>
-			<if test="goodsStock != null and goodsStock != ''">			
-			   ,goods_stock     	= #{goodsStock}
-			</if>
-			<if test="soldoutCheck != null and soldoutCheck != ''">
-			   ,soldout_check    	= #{soldoutCheck}
-			</if>
-			<if test="stopSaleCheck != null and stopSaleCheck != ''">
-			   ,stop_sale_check     	= #{stopSaleCheck}
-			</if>
-			<if test="stopSaleCheck != null and stopSaleCheck != ''">
-			   ,stop_sale_check     	= #{stopSaleCheck}
-			</if>
-			<if test="packagePostCheck != null and packagePostCheck != ''">
-			   ,package_post_check     	= #{packagePostCheck}
-			</if>
-			<if test="regularDeliverCheck != null and regularDeliverCheck != ''">
-			   ,regular_deliver_check     	= #{regularDeliverCheck}
-			</if>
-			<if test="goodsReportAmount != null and goodsReportAmount != ''">
-			   ,goods_report_amount     	= #{goodsReportAmount}
-			</if>
-			<if test="imageFile != null and imageFile != ''">
-			   ,image_file     	= #{imageFile}
-			</if>
+	<update id="goodsModify" parameterType="Goods">
+		/* 상품 수정 */
+		UPDATE tb_goods
+		<trim prefix="SET" prefixOverrides=",">
+			<if test="goodsCode != null and goodsCode != ''">goods_code = #{goodsCode}</if>
+			<if test="goodsSmallCategory != null and goodsSmallCategory != ''">,goods_small_category = #{goodsSmallCategory}</if>
+			<if test="sellerId != null and sellerId != ''">,seller_id = #{sellerId}</if>
+			<if test="goodsName != null and goodsName != ''">,goods_name = #{goodsName}</if>
+			<if test="goodsContent != null and goodsContent != ''">,goods_content = #{goodsContent}</if>
+			<if test="goodsPrice != null and goodsPrice != ''">,goods_price = #{goodsPrice}</if>
+			<if test="goodsDiscountRate != null and goodsDiscountRate != ''">,goods_discount_rate = #{goodsDiscountRate}</if>
+			<if test="goodsPostPrice != null and goodsPostPrice != ''">,goods_post_price = #{goodsPostPrice}</if>
+			<if test="goodsStock != null and goodsStock != ''">,goods_stock = #{goodsStock}</if>
+			<if test="soldoutCheck != null and soldoutCheck != ''">,soldout_check = #{soldoutCheck}</if>
+			<if test="stopSaleCheck != null and stopSaleCheck != ''">,stop_sale_check = #{stopSaleCheck}</if>
+			<if test="packagePostCheck != null and packagePostCheck != ''">,package_post_check = #{packagePostCheck}</if>
+			<if test="regularDeliverCheck != null and regularDeliverCheck != ''">,regular_deliver_check = #{regularDeliverCheck}</if>
+			<if test="goodsReportAmount != null and goodsReportAmount != ''">,goods_report_amount = #{goodsReportAmount}</if>
 		</trim>
 		WHERE
-		   goods_code = #{goodsCode};
+			goods_code = #{goodsCode};
 	</update>
+	<!--  	
+			<where>
+			<if test="goodsCode != null and goodsCode != ''">goods_code=#{goodsCode}</if>
+		</where>
+		WHERE
+		   goods_code = #{goodsCode}; -->
+	<!-- 	<if test="goodsFile != null and goodsFile != ''">
+			   ,goods_file     	= #{goodsFile}
+			</if>  -->
 
 	<!-- 특정상품 조회 -->
 	<select id="getGoodsInfoByCode" parameterType="String" resultType="Goods">
-		/* 특정회원 조회 */
+		/* 특정상품 조회 */
 		SELECT
 			 g.goods_code  				AS goodsCode
 			,g.goods_small_category		AS goodsSmallCategory
@@ -114,12 +197,12 @@
 			,g.regular_deliver_check	AS regularDeliverCheck
 			,g.reg_date					AS regDate
 			,g.goods_report_amount		AS goodsReportAmount
-			,g.image_file				AS imageFile
 		FROM
 			tb_goods AS g
 		WHERE
-			g.goods_code = #{goodsCode};
+			goods_code = #{goodsCode};
 	</select>
+	<!--  	,g.goods_file				AS goodsFile -->
 	
 	<!-- 상품 목록 조회 -->
 	<select id="getGoodsList" resultMap="goodsResultMap" fetchSize="100" >
@@ -131,6 +214,7 @@
 			,g.goods_stock
 			,g.soldout_check
 			,g.stop_sale_check
+			,g.goods_discount_rate
 			,u.user_id
 			,g.goods_report_amount
 			,g.reg_date	

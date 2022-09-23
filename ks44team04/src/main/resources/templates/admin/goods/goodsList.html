@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/adminDefault}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
 
- <link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
- 
 <th:block layout:fragment="customTitle">
-    <title th:text="${title}"></title>
+	<title th:text="${title}"></title>
 </th:block>
+
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+	
+		</script>
+	</th:block>
 
 <th:block layout:fragment="customContents">
 	<div class="page-title">
 		<div class="title_left">
-		<h3>상품 목록</h3>
-		</div>
-		
-		<div class="title_right">
-			<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search"></div>
+			<h3>상품 목록</h3>
 		</div>
 	</div>
 
 	<div class="col-md-12 col-sm-12 col-xs-12">
- 		<div class="x_panel">
+		<div class="x_panel">
 			<div class="x_title">
-			<h5>검색 필터
-				<a class="collapse-link"><i class="fa fa-chevron-up" style="color: #b4b7ba;"></i></a></h5>
-			<div class="clearfix"></div>
+				<h5>
+					검색 필터 <a class="collapse-link"><i class="fa fa-chevron-up"
+						style="color: #b4b7ba;"></i></a>
+				</h5>
+				<div class="clearfix"></div>
 			</div>
-	              
+
 			<div class="x_content">
-	 			<div class="well" style="overflow: auto">
-					<div class="">
-	                    <label>대분류
-							<select class="form-control">
+				<div class="well" style="overflow: auto">
+					<div class="form-inline form-group" style="margin-bottom: -1px;">
+						<label class="control-label" for="qnaSearch" style="margin-right: 5px;">대분류</label>
+							<select class="form-control" style="font-weight: bold;">
 								<option>::</option>
 								<option value="F000">과일</option>
 								<option value="V000">채소</option>
@@ -41,82 +44,103 @@
 								<option value="UF00">못난이과일</option>
 								<option value="UV00">못난이채소</option>
 								<option value="Z000">기타</option>
-							</select></label>
-	                    <label>중분류
-							<select class="form-control" tabindex="-1">
+							</select>
+						<label class="control-label" for="qnaSearch" style="margin-left: 10px; margin-right: 5px;">중분류</label>
+							<select class="form-control" style="font-weight: bold;">
 								<option>::</option>
 								<option value="apple">사과</option>
-	                            <option value="pineapple">파인애플</option>
-	                            <option value="watermelon">수박</option>
-	                            <option value="strawberry">딸기</option>
-	                            <option value="kmelon">참외</option>
-	                            <option value="paprika">파프리카</option>
-	                            <option value="cucumber">오이</option>
-	                            <option value="carrot">당근</option>
-	                            <option value="tomato">토마토</option>
-	                            <option value="bracken">고사리</option>
-	                            <option value="brownrice">현미</option>
-	                            <option value="blackrice">흑미</option>
-	                            <option value="whiterice">백미</option>
-	                            <option value="millet">조</option>
-	                            <option value="kingoystermushroom">새송이버섯</option>
-	                            <option value="enokimushroom">팽이버섯</option>
-	                            <option value="uglypersimmon">못난이감</option>
-	                            <option value="uglyapple">못난이사과</option>
-	                            <option value="uglypotato">못난이감자</option>
-	                            <option value="uglycorn">못난이옥수수</option>
-							</select></label>
-	                    <label>상품코드<input type="text" class="form-control" size="12"></label>
-	                    <label>상품명<input type="text" class="form-control" size="12"></label>
-	                    <input type="checkbox" class="flat">품절
-	                    <input type="checkbox" class="flat">판매중지
-	                    <button type="button" class="btn btn-dark" style="margin-left: 7px;">검색</button>
-	                    <button type="reset" class="btn btn-dark"  style="margin-left: -3px;">초기화</button>
+								<option value="pineapple">파인애플</option>
+								<option value="watermelon">수박</option>
+								<option value="strawberry">딸기</option>
+								<option value="kmelon">참외</option>
+								<option value="paprika">파프리카</option>
+								<option value="cucumber">오이</option>
+								<option value="carrot">당근</option>
+								<option value="tomato">토마토</option>
+								<option value="bracken">고사리</option>
+								<option value="brownrice">현미</option>
+								<option value="blackrice">흑미</option>
+								<option value="whiterice">백미</option>
+								<option value="millet">조</option>
+								<option value="kingoystermushroom">새송이버섯</option>
+								<option value="enokimushroom">팽이버섯</option>
+								<option value="uglypersimmon">못난이감</option>
+								<option value="uglyapple">못난이사과</option>
+								<option value="uglypotato">못난이감자</option>
+								<option value="uglycorn">못난이옥수수</option>
+							</select>
+						<label style="margin-left: 10px;">상품코드
+							<input type="text" class="form-control" size="10" style="margin-left: 5px;">
+						</label>
+						<label style="margin-left: 10px;">상품명
+							<input type="text" class="form-control" size="10" style="margin-left: 5px;">
+						</label>
+						<label style="margin-left: 10px;">판매자
+							<input type="text" class="form-control" size="10" style="margin-left: 5px; margin-right: 9px;">
+						</label>
+						<input type="checkbox" class="flat">품절
+						<input type="checkbox" class="flat">판매중지
+					<div style="text-align: center; margin-top:5px;">
+						<button type="button" class="btn btn-dark">검색</button>
+						<button type="reset" class="btn btn-dark">초기화</button>
+					</div>
 					</div>
 				</div>
-			</div> 
-                  
+			</div>
+
 			<div class="x_content2">
-					<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action dataTable no-footer" role="grid" aria-describedby="datatable-checkbox_info">
-	                    <thead>
-	                      <tr role="row">
-							<th>상품코드</th>
+				<table id="datatable"
+					class="table table-striped table-bordered bulk_action dataTable no-footer"
+					role="grid">
+					<thead>
+						<tr role="row">
+							<th style="width: 100px;">상품코드</th>
 							<th>상품명</th>
-							<th>정가</th>
-							<th>재고</th>
-							<th>품절</th>
-							<th>판매중지</th>
-							<th>판매자</th>
-							<th>신고수</th>
-							<th>등록일</th>
-							<th style="width: 100px;">관리</th>
-						  </tr>
-						</thead>
-						<tbody>
-						  <tr th:if="${not #lists.isEmpty(goodsList)}" th:each="g : ${goodsList}">
+							<th style="width: 80px;">정가</th>
+							<th style="width: 60px;">할인율</th>
+							<th style="width: 80px;">할인가</th>
+							<th style="width: 60px;">재고</th>
+							<th style="width: 60px;">품절</th>
+							<th style="width: 80px;">판매중지</th>
+							<th style="width: 80px;">판매자</th>
+							<th style="width: 60px;">신고수</th>
+							<th style="width: 140px;">등록일</th>
+							<th>관리</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:if="${not #lists.isEmpty(goodsList)}"
+							th:each="g : ${goodsList}" id="goodsListTable">
 							<td th:text="${g.goodsCode}"></td>
 							<td th:text="${g.goodsName}"></td>
-							<td th:text="${g.goodsPrice}"></td>
+							<td th:text="${'₩' + #numbers.formatInteger(g.goodsPrice,3,'COMMA')}"></td>
+							<td th:text="${g.goodsDiscountRate}"></td>
+							<td th:text="${'₩'+ #numbers.formatInteger((g.goodsPrice-g.goodsPrice*g.goodsDiscountRate/100),3,'COMMA')}"></td>
 							<td th:text="${g.goodsStock}"></td>
 							<td th:text="${g.soldoutCheck}"></td>
 							<td th:text="${g.stopSaleCheck}"></td>
 							<td th:text="${g.userInfo.userId}"></td>
 							<td th:text="${g.goodsReportAmount}"></td>
 							<td th:text="${g.regDate}"></td>
-							<td style="text-align: center;">
-								<a th:href="@{/goods/modifyGoods(goodsCode=${g.goodsCode})}"><i class="fa fa-edit"></i> 수정</a>
-	                          	<!-- <a th:href="@{/goods/removeGoods(goodsCode=${l.goodsCode})}""><i class="fa fa-close"></i> 삭제</a>  -->
-	                          	<!-- <a href="#"><i class="fa fa-edit"></i> 수정</a> -->
-                        		<a href="#"><i class="fa fa-close"></i> 삭제</a>
-	                        </td>
-						  </tr>				
-						  <tr th:unless="${not #lists.isEmpty(goodsList)}">
-							<td colspan="7">등록된 상품이 없습니다.</td>
-						  </tr>		                       
-						</tbody>
-					</table>
+							<td style="text-align: center; width: 110px;">
+								<!-- <a th:href="@{/admin/goods/modifyGoods}"><i class="fa fa-edit"></i>수정</a> -->
+								<a th:href="@{/admin/goods/goodsModify(goodsCode=${g.goodsCode})}"><i class="fa fa-edit"></i> 수정</a>
+								<!-- <a href="#"><i class="fa fa-edit"></i> 수정</a> -->
+								<a th:href="@{/admin/goods/goodsRemove(goodsCode=${g.goodsCode})}"><i class="fa fa-close"></i> 삭제</a>
+							</td>
+						</tr>
+						<tr th:unless="${not #lists.isEmpty(goodsList)}">
+							<td colspan="11">등록된 상품이 없습니다.</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
 </th:block>
+<!-- <th:block layout:fragment="customJsScript">
+
+    <th:block th:replace="/fragments/adminJs :: datatablesFragment"></th:block>
+
+</th:block>  -->
 </html>

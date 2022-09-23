@@ -66,10 +66,4 @@ public class UserService {
         return loginUserInfo;
     }
     
-    //신고 리스트 
-    public List<Report> getReportList(){
-    	List<Report> reportList = userMapper.getReportList();
-		return reportList;
-	}
-
 }
