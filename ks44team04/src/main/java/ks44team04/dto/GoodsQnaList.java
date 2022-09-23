@@ -2,7 +2,7 @@ package ks44team04.dto;
 
 public class GoodsQnaList {
 
-    private String goodsQna;
+    private int goodsQna;
     private String goodsCode;
     private String goodsQnaCategory;
     private String buyerId;
@@ -40,11 +40,11 @@ public class GoodsQnaList {
 		this.goodsQnaCategoryInfo = goodsQnaCategoryInfo;
 	}
 	
-    public String getGoodsQna() {
+    public int getGoodsQna() {
         return goodsQna;
     }
 
-    public void setGoodsQna(String goodsQna) {
+    public void setGoodsQna(int goodsQna) {
         this.goodsQna = goodsQna;
     }
 

@@ -121,8 +121,8 @@
 							<td th:text="${l.userId}"></td>
 							<td th:text="${l.userName}"></td>
 							<td th:text="${l.userNickname}"></td>
-							<td th:text="${l.userId}"></td>
-							<td th:text="${l.userId}"></td>
+							<td th:text="${l.right}"></td>
+							<td th:text="${l.userNickname}"></td>
 							<td th:text="${l.userPhone}"></td>
 							<td th:text="${l.userEmail}"></td>
 							<td th:text="${l.userRegDate}"></td>
@@ -147,60 +147,6 @@
 			</div>
 		</div>
 	</div>
-
-
-	<!-- Modal -->
-	<div class="modal fade" id="userDetailModal" tabindex="-1"
-		role="dialog" aria-labelledby="userDetailModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="userDetailModalLabel">회원 상세정보</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<table class="table table-bordered">
-						<tbody>
-							<tr>
-								<td><b>회원아이디</b></td>
-								<td>seller01</td>
-								<td><b>비밀번호</b></td>
-								<td>pw001</td>
-							</tr>
-							<tr>
-								<td><b>주소</b></td>
-								<td>전북 전주시 금암동</td>
-								<td><b>정보보관기간</b></td>
-								<td>1년</td>
-							</tr>
-							<tr>
-								<td><b>최종포인트</b></td>
-								<td>19340원</td>
-								<td><b>벌점</b></td>
-								<td>0점</td>
-							</tr>
-							<tr>
-								<td><b>등록일시</b></td>
-								<td>2021-01-01 0:00:00</td>
-								<td><b>수정일시</b></td>
-								<td>2021-01-02 0:00:00</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">닫기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
 
 </th:block>
 </html>

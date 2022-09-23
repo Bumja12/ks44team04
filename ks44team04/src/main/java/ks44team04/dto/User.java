@@ -20,6 +20,12 @@ public class User {
     private String userInfoKeep;
     private String userLevel;
 
+	private Right levelDto;
+	
+	public Right getLevelDto() {
+		return levelDto;
+	}
+    
     public String getUserRightName() {
 		return userRightName;
 	}
