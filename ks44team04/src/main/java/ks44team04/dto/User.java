@@ -11,7 +11,7 @@ public class User {
     private String userPhone;
     private String userEmail;
     private String userRight;
-    private String userRightName;
+    private String userLevelName;
     private String userRegDate;
     private String userUpdateDate;
     private String userStatus;
@@ -20,18 +20,39 @@ public class User {
     private String userInfoKeep;
     private String userLevel;
 
-	private Right levelDto;
+    private LevelSellerCategory levelSeller;
+    public LevelSellerCategory getLevelSeller() {
+    	return levelSeller;
+    }
+    
+    public void setLevelSeller(LevelSellerCategory levelSeller) {
+    	this.levelSeller = levelSeller;
+    }
+    
+    private LevelBuyerCategory levelBuyer;
+    public LevelBuyerCategory getLevelBuyer() {
+    	return levelBuyer;
+    }
+    
+    public void setLevelBuyer(LevelBuyerCategory levelBuyer) {
+    	this.levelBuyer = levelBuyer;
+    }
+    
+	private Right rightDto;
+	public Right getRightDto() {
+		return rightDto;
+	}
 	
-	public Right getLevelDto() {
-		return levelDto;
+	public void setRightDto(Right rightDto) {
+		this.rightDto = rightDto;
 	}
     
-    public String getUserRightName() {
-		return userRightName;
+    public String getUserLevelName() {
+		return userLevelName;
 	}
 
-	public void setUserRightName(String userRightName) {
-		this.userRightName = userRightName;
+	public void setUserLevelName(String userLevelName) {
+		this.userLevelName = userLevelName;
 	}
 
 	public String getUserId() {
@@ -174,7 +195,7 @@ public class User {
                 ", userPhone='" + userPhone + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", userRight='" + userRight + '\'' +
-                ", userRightName='" + userRightName + '\'' +
+                ", userRightName='" + userLevelName + '\'' +
                 ", userRegDate='" + userRegDate + '\'' +
                 ", userUpdateDate='" + userUpdateDate + '\'' +
                 ", userStatus='" + userStatus + '\'' +
