@@ -1,7 +1,7 @@
 package ks44team04.admin.controller;
 
 import ks44team04.admin.service.UserService;
-import ks44team04.dto.Level;
+import ks44team04.dto.Right;
 import ks44team04.dto.Report;
 import ks44team04.dto.User;
 import org.slf4j.Logger;
@@ -44,9 +44,9 @@ public class UserController {
 	@GetMapping("/user/addUser")
 	public String addUserForm(Model model) {
 		
-		List<Level> LevelList = userService.getLevelList();
+		List<Right> RightList = userService.getRightList();
 		model.addAttribute("title", "회원가입");
-		model.addAttribute("LevelList", LevelList);
+		model.addAttribute("RightList", RightList);
 		
 		return "admin/user/addUser";
 	}

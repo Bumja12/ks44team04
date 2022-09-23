@@ -1,7 +1,7 @@
 package ks44team04.admin.service;
 
 import ks44team04.admin.mapper.UserMapper;
-import ks44team04.dto.Level;
+import ks44team04.dto.Right;
 import ks44team04.dto.Report;
 import ks44team04.dto.User;
 
@@ -26,10 +26,10 @@ public class UserService {
     }
     
     //레벨 조회
-	public List<Level> getLevelList() {
-		List<Level> LevelList = userMapper.getLevelList();
+	public List<Right> getRightList() {
+		List<Right> RightList = userMapper.getRightList();
 		
-		return LevelList;
+		return RightList;
 	}
     
 	//전체 회원 목록 조회

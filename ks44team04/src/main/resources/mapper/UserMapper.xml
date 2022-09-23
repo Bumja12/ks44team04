@@ -34,13 +34,13 @@
 	
 	
 	<!-- 회원 권한 조회 -->
-	<select id="getLevelList" resultType="Level">
+	<select id="getRightList" resultType="Right">
 		/* 회원 권한 조회 */
 		SELECT
-			 l.user_level		AS userRightGruop
-			,l.level_status		AS rightStatus
+			 l.user_right		AS userRightGruop
+			,l.right_status		AS rightStatus
 		FROM 
-			tb_level AS l
+			tb_right AS l
 	</select>
     
     <!-- 회원 목록 조회 -->
@@ -56,7 +56,7 @@
 			,u.user_phone
 			,u.user_email
 			,u.user_right
-			,l.level_status
+			,r.right_status
 			,u.user_reg_date
 			,u.user_update_date
 			,u.user_status
@@ -67,9 +67,15 @@
 		FROM 
 			tb_user AS u
 			INNER JOIN 
-			tb_level AS l
+			tb_right AS r
 			ON 
-			u.user_right = l.user_level;
+			u.user_right = r.user_right;
+		<trim prefix="where" prefixOverrides="AND |OR ">
+			<if test="searchValue != null and searchValue != ''">
+				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%');
+			</if>
+		</trim>
+		ORDER BY u.user_id
     </select>
 
     <select id="userLogin" parameterType="String" resultType="String">
