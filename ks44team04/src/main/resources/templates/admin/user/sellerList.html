@@ -104,23 +104,23 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr th:if="${not #lists.isEmpty(userList)}" th:each="l : ${userList}">
+                            <tr th:if="${not #lists.isEmpty(sellerList)}" th:each="l : ${sellerList}">
                               <td th:text="${l.userId}"></td>
-                              <td th:text="${l.userName}"></td>
-                              <td th:text="${l.userNickname}"></td>
-                              <td th:text="${l.userId}"></td>
-                              <td th:text="${l.userId}"></td>
-                              <td th:text="${l.userPhone}"></td>
-                              <td th:text="${l.userPhone}"></td>
-                              <td><a href="#">첨부파일명</a></td>
-                              <td><a href="#">첨부파일명</a></td>
-                              <td th:text="${l.userPhone}"></td>
+                              <td th:text="${l.storeName}"></td>
+                              <td th:text="${l.accountHolder}"></td>
+                              <td th:text="${l.bankName + l.account}"></td>
+                              <td th:text="${l.storeAddress}"></td>
+                              <td th:text="${l.storePhone}"></td>
+                              <td th:text="${l.storeEmail}"></td>
+                              <td th:text="${l.licenseImg}"></td>
+                              <td th:text="${l.onlineLicenceImg}"></td>
+                              <td th:text="${l.approveAskDate}"></td>
                               <td>
                                 <a href="#"><i class="fa fa-check"></i> 승인 </a>
                                 <a href="#"><i class="fa fa-times"></i> 승인거부 </a>
                               </td>
                             </tr>
-                            <tr th:unless="${not #lists.isEmpty(goodsList)}">
+                            <tr th:unless="${not #lists.isEmpty(sellerList)}">
                               <td colspan="11" style="text-align: center;">대기중인 신청이 없습니다.</td>
                             </tr>
                           </tbody>
@@ -150,17 +150,17 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:if="${not #lists.isEmpty(userList)}" th:each="l : ${userList}">
-                      <td th:text="${l.userId}"></td>
-                      <td th:text="${l.userName}"></td>
-                      <td th:text="${l.userNickname}"></td>
-                      <td th:text="${l.userId}"></td>
-                      <td th:text="${l.userId}"></td>
-                      <td th:text="${l.userPhone}"></td>
-                      <td th:text="${l.userEmail}"></td>
-                      <td th:text="${l.userRegDate}"></td>
-                      <td th:text="${l.userRegDate}"></td>
-                      <td th:text="${l.userName}"></td>
+                    <tr th:if="${not #lists.isEmpty(sellerList)}" th:each="l : ${sellerList}">
+                      <td th:text="${l.sellerCode}"></td>
+                      <td th:text="${l.sellerId}"></td>
+                      <td th:text="${l.storeName}"></td>
+                      <td th:text="${l.sellerSort}"></td>
+                      <td th:text="${l.storeAddress}"></td>
+                      <td th:text="${l.storePhone}"></td>
+                      <td th:text="${l.storeEmail}"></td>
+                      <td th:text="${l.approveAskDate}"></td>
+                      <td th:text="${l.approveDate}"></td>
+                      <td th:text="${l.approveId}"></td>
                       <td>
                         <a href="#">
                           <i class="fa fa-info-circle"></i> 상세
@@ -169,7 +169,7 @@
                         <a href="#"><i class="fa fa-close"></i> 삭제</a>
                       </td>
                     </tr>
-                    <tr th:unless="${not #lists.isEmpty(goodsList)}">
+                    <tr th:unless="${not #lists.isEmpty(sellerList)}">
                       <td class="text-center" colspan="11">등록된 판매자가 없습니다.</td>
                     </tr>
                   </tbody>
@@ -177,8 +177,6 @@
               </div>
             </div>
           </div>
-
-
 
 </th:block>
 </html>

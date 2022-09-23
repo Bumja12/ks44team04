@@ -2,6 +2,7 @@ package ks44team04.admin.controller;
 
 import ks44team04.admin.service.UserService;
 import ks44team04.dto.Right;
+import ks44team04.dto.Seller;
 import ks44team04.dto.Report;
 
 import ks44team04.dto.User;
@@ -50,6 +51,16 @@ public class UserController {
 		model.addAttribute("RightList", RightList);
 		
 		return "admin/user/addUser";
+	}
+	
+	@GetMapping("/user/sellerList")
+	public String getSellerList(Model model) {
+		List<Seller> sellerList = userService.getSellerList();
+		log.info("판매자 목록 ::: {}", sellerList);
+		model.addAttribute("sellerList", sellerList);
+		model.addAttribute("title", "판매자목록");
+		
+		return "admin/user/sellerList";
 	}
     
 	@GetMapping("/user/userList")

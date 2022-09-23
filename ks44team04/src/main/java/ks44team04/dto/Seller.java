@@ -19,6 +19,15 @@ public class Seller {
     private String approveDate;
     private String approveCheck;
     private String approveId;
+    
+    private Goods goodsInfo;
+    public Goods getGoodsInfo() {
+		return goodsInfo;
+	}
+
+	public void setGoodsInfo(Goods goodsInfo) {
+		this.goodsInfo = goodsInfo;
+	}
 
     public String getSellerCode() {
         return sellerCode;

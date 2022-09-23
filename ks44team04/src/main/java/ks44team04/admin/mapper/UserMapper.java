@@ -15,11 +15,11 @@ public interface UserMapper {
     public String userLogin(String userId);
     public User getLoginUserInfo(String userId);
     
-    //판매자 목록 조회
-    public List<Seller> getSellerList();
-    
 	//회원 가입
 	public int addUser(User user);
+	
+	//판매자 목록 조회
+	public List<Seller> getSellerList();
     
 	//회원 권한 조회
 	public List<Right> getRightList();
