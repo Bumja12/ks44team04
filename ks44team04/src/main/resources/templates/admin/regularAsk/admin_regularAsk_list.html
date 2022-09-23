@@ -98,19 +98,17 @@
 		                        	<td>2021-01-01 00:00:00</td>
 		                        	<td>2022-06-01 00:00:00</td>
 		                    	</tr>
-		                 		<tr>
+		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
 		                 			<td>
 										<input type="checkbox" id="check-all" >
 		             				</td>
-		             				<th:block style="cursor:pointer;" onClick="location.href='regularAskDetail'">
-	    								<td>regularAsk006</td>
-			                          	<td>포인트/할인쿠폰</td>
-			                          	<td>admin01</td>
-			                          	<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-			                            <td>Y</td>
-			                        	<td>2021-01-01 00:00:00</td>
-			                        	<td>2022-06-03 00:00:00</td>
-		             				</th:block>
+    								<td>regularAsk006</td>
+		                          	<td>포인트/할인쿠폰</td>
+		                          	<td>admin01</td>
+		                          	<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+		                            <td>Y</td>
+		                        	<td>2021-01-01 00:00:00</td>
+		                        	<td>2022-06-03 00:00:00</td>
 		                    	</tr>
 							</tbody>
 		        		</table>
@@ -120,8 +118,7 @@
            			<div class="row">
            				<div class="col-sm-12">
 	           				<div class="ml-auto">
-	           					<a class="btn btn-success" th:href="@{/admin/category/addCategory}" role="button">등록</a>
-	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
+	           					<a class="btn btn-success" th:href="@{/admin/regularAsk/addRegularAsk}" role="button">등록</a>
 	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
 	           				</div>
            				</div> <!-- </div class="col-sm-12"> -->

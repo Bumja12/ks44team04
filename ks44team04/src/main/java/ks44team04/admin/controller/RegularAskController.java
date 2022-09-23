@@ -15,7 +15,7 @@ public class RegularAskController {
 	public String removeRegularAsk () {
 		
 		// 카테고리 목록 화면으로 리다이렉트
-		return "admin/regularAsk/adming_regularAsk_remove";
+		return "admin/regularAsk/admin_regularAsk_remove";
 	}
 	
 	// 자주 묻는 질문 검색 처리

@@ -9,7 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "/admin/category")
 public class CategoryController {
-
+	
+	// 카테고리 검색 처리
+	@PostMapping("/searchCategory")
+	public String searchCategory () {
+		
+		return "redirect:/admin/category/categoryList";
+	}
+	
 	// 카테고리 삭제 처리
 	@GetMapping("/removeCategory")
 	public String removeCategory () {
