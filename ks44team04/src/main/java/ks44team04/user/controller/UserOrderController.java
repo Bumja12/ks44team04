@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user/order")
 public class UserOrderController {
 
-    @GetMapping("/")
-    public String order() {
+    @GetMapping("/checkout")
+    public String checkout() {
 
-        return "user/order/order";
+        return "user/order/checkout";
     }
 
     @GetMapping("/payment")
