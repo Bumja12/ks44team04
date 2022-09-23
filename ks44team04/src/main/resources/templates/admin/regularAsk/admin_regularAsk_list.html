@@ -26,7 +26,7 @@
 		    				<thead>
 		                    	<tr>
                 				    <th>
-										<input type="checkbox" id="check-all" >
+										<input type="checkbox" id="checkAllBtn" >
 									</th>
 			                        <th>자주 묻는 질문 PK</th>
 			                        <th>카테고리</th>
@@ -38,9 +38,9 @@
 		                    	</tr>
 		                   	</thead>
 							<tbody>
-		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
+		                 		<tr style="cursor:pointer;" onClick="mappingFunc(this)">
 		                 			<td>
-										<input type="checkbox" id="check-all" >
+										<input type="checkbox" class="checkAll">
 		             				</td>
 		                          	<td>regularAsk001</td>
 		                          	<td>회원/정보 관리</td>
@@ -50,9 +50,9 @@
 		                        	<td>2021-01-01 00:00:00</td>
 		                        	<td>2022-05-22 00:00:00</td>
 		                    	</tr>
-		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
+		                 		<tr style="cursor:pointer;" onClick="mappingFunc(this)">
 		                 			<td>
-										<input type="checkbox" id="check-all" >
+										<input type="checkbox" class="checkAll">
 		             				</td>
 		                          	<td>regularAsk002</td>
 		                          	<td>배송</td>
@@ -62,9 +62,9 @@
 		                        	<td>2021-01-01 00:00:00</td>
 		                        	<td>2022-05-15 00:00:00</td>
 		                    	</tr>
-		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
+		                 		<tr style="cursor:pointer;" onClick="mappingFunc(this)">
 		                 			<td>
-										<input type="checkbox" id="check-all" >
+										<input type="checkbox" class="checkAll">
 		             				</td>
 		                          	<td>regularAsk003</td>
 		                          	<td>반품/교환/환불</td>
@@ -74,9 +74,9 @@
 		                        	<td>2021-01-01 00:00:00</td>
 		                        	<td>2022-05-20 00:00:00</td>
 		                    	</tr>
-		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
+		                 		<tr style="cursor:pointer;" onClick="mappingFunc(this)">
 		                 			<td>
-										<input type="checkbox" id="check-all" >
+										<input type="checkbox" class="checkAll">
 		             				</td>
 		                          	<td>regularAsk004</td>
 		                          	<td>주문/결제</td>
@@ -86,9 +86,9 @@
 		                        	<td>2021-01-01 00:00:00</td>
 		                        	<td>2022-06-01 00:00:00</td>
 		                    	</tr>
-		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
+		                 		<tr style="cursor:pointer;" onClick="mappingFunc(this)">
 		                 			<td>
-										<input type="checkbox" id="check-all" >
+										<input type="checkbox" class="checkAll">
 		             				</td>
 		                          	<td>regularAsk005</td>
 		                          	<td>정기 배송</td>
@@ -98,9 +98,9 @@
 		                        	<td>2021-01-01 00:00:00</td>
 		                        	<td>2022-06-01 00:00:00</td>
 		                    	</tr>
-		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
+		                 		<tr style="cursor:pointer;" onClick="mappingFunc(this)">
 		                 			<td>
-										<input type="checkbox" id="check-all" >
+										<input type="checkbox" class="checkAll">
 		             				</td>
     								<td>regularAsk006</td>
 		                          	<td>포인트/할인쿠폰</td>
@@ -155,10 +155,40 @@
     <!-- 모달 기능 -->
    	<th:block layout:fragment="customJsScript">
 		<script type="text/javascript">
+			// 삭제 버튼 탐색
 			var deleteModal = document.getElementsByClassName('deleteModal');	
 			
+			// 전체 체크 버튼 탐색
+			let checkAllBtn = document.getElementById('checkAllBtn');	
+			
+			// 모든 체크박스 탐색
+			var checkAll = document.getElementsByClassName('checkAll');	
+			
+			checkAllBtn.addEventListener('click', function(){
+				
+				for(var i=0; i<checkAll.length; i++){
+					// 전체 체크 버튼의 checked 속성을 모든 체크박스에 대입함으로써 전체 체크 버튼을 누르면 모든 체크박스에가 체크/해체
+					checkAll[i].checked = this.checked;
+				}
+			});
+			
+			console.log(checkAll);
+			for(var i=0; i<checkAll.length; i++){
+				console.log(checkAll[i]);
+			}
+			
+			// 자주 묻는 질문 PK값 구해서 관리자 자주 묻는 질문 내역 화면으로 매핑하는 함수
+			function mappingFunc(e){
+				console.log('funtion1 호출');
+				console.log(e);
+				let td = e.getElementsByTagName('td');
+				let regularAskPK = td[1].innerText;
+				let mappingAddr = 'regularAskDetail?regular_ask=' + regularAskPK;
+				location.href='regularAskDetail?regular_ask=' + regularAskPK;
+			}
+			
+			// 삭제 모달 이벤트 등록
 			for(var i=0; i<deleteModal.length; i++){
-				console.log(deleteModal[i]);
 				deleteModal[i].addEventListener('click', function(){
 					console.log('deleteModal Event');
 					var deleteBtn = document.getElementById('deleteBtn');	
