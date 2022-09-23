@@ -58,43 +58,18 @@ th {
 					</thead>
 					<tbody>
 						<th:block th:if="${not #lists.isEmpty(paymentList)}" th:each="p : ${paymentList}">
-							<!-- <th:block th:if="${not #lists.isEmpty(p.orderUser)}" th:each="o, status : ${p.orderUser}"> -->
-							
-							
-							
-								<tr>
-<!-- 									<th:block th:if="${status.index == 0}">
-										<td th:rowspan="${status.size}" th:text="${p.orderNum}"></td>
-										<td th:rowspan="${status.size}" th:text="${p.orderId}"></td>
-									</th:block>
-									
-									 -->
-									
-<!-- 									
-									<td th:text="${p.orderNum}"></td>
-									<td th:text="${p.buyerId}"></td>
-									 -->
-									
-									
-									<td th:text="${p.orderUser.orderNum}"></td>
-									<td th:text="${p.orderUser.buyerId}"></td>
-									
-									
+								<tr>					
+									<td th:text="${p.paymentInfo.orderNum}"></td>
+									<td th:text="${p.paymentInfo.buyerId}"></td>
 									<td th:text="${p.goodsName}"></td>
 									<td th:text="${p.couponPrice}"></td>
 									<td th:text="${p.usePoint}"></td>
 									<td th:text="${p.savePoint}"></td>
 									<td th:text="${p.orderPrice}"><span th:text="${p.orderAmount}"></span></td>
 									<td><button type="button" onclick="location.href='#';">배송조회</button></td>
-									<td th:text="${p.orderUser.orderDate}"></td>
-
+									<td th:text="${p.paymentInfo.orderDate}"></td>
 									<td colspan="2">구매확정 <button>후기 작성</button></td>
-									
-									
 								</tr>
-							<!-- </th:block> -->
-							
-							
 						</th:block>
 					</tbody>
 				</table>

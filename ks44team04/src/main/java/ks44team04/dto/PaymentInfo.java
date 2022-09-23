@@ -1,8 +1,6 @@
 package ks44team04.dto;
 
-import java.util.List;
-
-public class OrderUser {
+public class PaymentInfo {
 	
 	private String orderNum;
     private String buyerId;
@@ -29,7 +27,7 @@ public class OrderUser {
 	
 	@Override
 	public String toString() {
-		return "OrderUser [orderNum=" + orderNum + ", buyerId=" + buyerId + ", orderDate=" + orderDate + "]";
+		return "PaymentInfo [orderNum=" + orderNum + ", buyerId=" + buyerId + ", orderDate=" + orderDate + "]";
 	}
 	
     
