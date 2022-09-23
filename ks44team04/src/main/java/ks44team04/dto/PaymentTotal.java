@@ -1,12 +1,30 @@
 package ks44team04.dto;
 
+import java.util.List;
+
 public class PaymentTotal {
 	
+	private OrderUser orderUser;
+
+    public OrderUser getOrderUser() {
+		return orderUser;
+	}
+	public void setOrderUser(OrderUser orderUser) {
+		this.orderUser = orderUser;
+	}
+	
+	//OrderUser 필드 임시 추가
+
+	
+	
 	//주문정보
-	private String orderNum;
-    private String buyerId;
-    private String couponCode;
-    private String orderDate;
+//	private String orderNum;
+//    private String buyerId;
+//    private String orderDate;
+    
+    
+
+	private String couponCode;
     private String orderStatus;
     private int totalSum;
     private int totalPrice;
@@ -48,30 +66,17 @@ public class PaymentTotal {
     private String refundBank;
     private String refundAccount;
     
-	public String getOrderNum() {
-		return orderNum;
-	}
-	public void setOrderNum(String orderNum) {
-		this.orderNum = orderNum;
-	}
-	public String getBuyerId() {
-		return buyerId;
-	}
-	public void setBuyerId(String buyerId) {
-		this.buyerId = buyerId;
-	}
+    private String goodsName;
+    
+    
+
 	public String getCouponCode() {
 		return couponCode;
 	}
 	public void setCouponCode(String couponCode) {
 		this.couponCode = couponCode;
 	}
-	public String getOrderDate() {
-		return orderDate;
-	}
-	public void setOrderDate(String orderDate) {
-		this.orderDate = orderDate;
-	}
+
 	public String getOrderStatus() {
 		return orderStatus;
 	}
@@ -265,24 +270,30 @@ public class PaymentTotal {
 		this.refundAccount = refundAccount;
 	}
 	
+	public String getGoodsName() {
+		return goodsName;
+	}
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
 	@Override
 	public String toString() {
-		return "PaymentTotal [orderNum=" + orderNum + ", buyerId=" + buyerId + ", couponCode=" + couponCode
-				+ ", orderDate=" + orderDate + ", orderStatus=" + orderStatus + ", totalSum=" + totalSum
-				+ ", totalPrice=" + totalPrice + ", couponPrice=" + couponPrice + ", usePoint=" + usePoint
-				+ ", goodsDiscountPrice=" + goodsDiscountPrice + ", postPrice=" + postPrice + ", totalOrderPrice="
-				+ totalOrderPrice + ", finalConfirmPrice=" + finalConfirmPrice + ", finalConfirmDate="
-				+ finalConfirmDate + ", postAddressList=" + postAddressList + ", orderDetailCode=" + orderDetailCode
-				+ ", goodsCode=" + goodsCode + ", orderAmount=" + orderAmount + ", orderOgPrice=" + orderOgPrice
-				+ ", orderPrice=" + orderPrice + ", postInfo=" + postInfo + ", refundCheck=" + refundCheck
-				+ ", autoConfirmDate=" + autoConfirmDate + ", orderConfirmDate=" + orderConfirmDate + ", savePoint="
-				+ savePoint + ", paymentCode=" + paymentCode + ", paymentMethod=" + paymentMethod
-				+ ", paymentGroupCode=" + paymentGroupCode + ", cardPaymentCode=" + cardPaymentCode + ", cardCompany="
-				+ cardCompany + ", cardNumber=" + cardNumber + ", approvePrice=" + approvePrice + ", approveDate="
-				+ approveDate + ", accountPaymentCode=" + accountPaymentCode + ", refundBank=" + refundBank
-				+ ", refundAccount=" + refundAccount + "]";
+		return "PaymentTotal [orderUser=" + orderUser + ", couponCode=" + couponCode + ", orderStatus=" + orderStatus
+				+ ", totalSum=" + totalSum + ", totalPrice=" + totalPrice + ", couponPrice=" + couponPrice
+				+ ", usePoint=" + usePoint + ", goodsDiscountPrice=" + goodsDiscountPrice + ", postPrice=" + postPrice
+				+ ", totalOrderPrice=" + totalOrderPrice + ", finalConfirmPrice=" + finalConfirmPrice
+				+ ", finalConfirmDate=" + finalConfirmDate + ", postAddressList=" + postAddressList
+				+ ", orderDetailCode=" + orderDetailCode + ", goodsCode=" + goodsCode + ", orderAmount=" + orderAmount
+				+ ", orderOgPrice=" + orderOgPrice + ", orderPrice=" + orderPrice + ", postInfo=" + postInfo
+				+ ", refundCheck=" + refundCheck + ", autoConfirmDate=" + autoConfirmDate + ", orderConfirmDate="
+				+ orderConfirmDate + ", savePoint=" + savePoint + ", paymentCode=" + paymentCode + ", paymentMethod="
+				+ paymentMethod + ", paymentGroupCode=" + paymentGroupCode + ", cardPaymentCode=" + cardPaymentCode
+				+ ", cardCompany=" + cardCompany + ", cardNumber=" + cardNumber + ", approvePrice=" + approvePrice
+				+ ", approveDate=" + approveDate + ", accountPaymentCode=" + accountPaymentCode + ", refundBank="
+				+ refundBank + ", refundAccount=" + refundAccount + ", goodsName=" + goodsName + "]";
 	}
+	
+	
 
 	
-    
 }

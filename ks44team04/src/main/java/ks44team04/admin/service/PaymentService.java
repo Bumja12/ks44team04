@@ -23,10 +23,22 @@ public class PaymentService {
 		log.info("paymentService bean 생성");
 	}
 	
+	//결제상세
+	public List<PaymentTotal> paymentDetailList(){
+		
+		List<PaymentTotal> paymentDetailList = paymentMapper.paymentDetailList();
+		
+		return paymentDetailList;
+	}
+	
+	//결제내역
 	public List<PaymentTotal> paymentList(){
 		
-		List<PaymentTotal> paymentTotal = paymentMapper.paymentList();
+		List<PaymentTotal> paymentList = paymentMapper.paymentList();
 		
-		return paymentTotal;
+		return paymentList;
+		
 	}
+	
+	
 }
