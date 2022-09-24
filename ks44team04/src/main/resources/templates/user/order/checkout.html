@@ -28,119 +28,140 @@
                         <div class="modal-body">
                             <div>
                                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                                    <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                        <li role="presentation" class="active"><a href="#tab_content1" id="home-tab"
-                                                                                  role="tab" data-toggle="tab"
-                                                                                  aria-expanded="true">배송지명</a>&nbsp;|&nbsp;
-                                        </li>
-                                        <li role="presentation" class=""><a href="#tab_content3" role="tab"
-                                                                            id="profile-tab2" data-toggle="tab"
-                                                                            aria-expanded="false">배송지등록</a>
-                                        </li>
-                                    </ul>
-                                    <div id="myTabContent" class="tab-content">
-                                        <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-                                            <th:block th:if="${not #lists.isEmpty(addressList)}" th:each="l, e : ${addressList}">
-                                                <ul>
-                                                    <li th:text="${l.addressName}">123</li>
-                                                    <li th:text="${l.receiverName}">123</li>
-                                                    <li th:text="${l.address}"></li>
-                                                    <li th:text="${l.address2}"></li>
-                                                    <li th:text="${l.phone}"></li>
-                                                    <li th:text="${l.phone2}"></li>
-                                                    <li>
-                                                        <a th:href="@{|/user/address/modify/${l.addressList}|}">수정</a>
-                                                    </li>
-                                                    <li class=" last">
-                                                        <a th:href="|javascript:deleteAddressFn('${l.addressList}')|">삭제</a>
-                                                    </li>
-                                                </ul>
-                                            </th:block>
-                                        </div>
+                                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                    <th:block th:if="${not #lists.isEmpty(addressList)}" th:each="l, e : ${addressList}">
+                                            <li role="presentation"
+                                                th:data-addressList="${l.addressList}"><a
+                                                    th:href="@{|#${l.addressName}|}"
+                                                    role="tab" data-toggle="tab"
+                                                    aria-expanded="true" th:text="${l.addressName}">배송지명</a>&nbsp;|&nbsp;
+                                            </li>
+                                    </th:block>
 
-                                        <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                                            <form th:action="@{/user/address/register}" method="post">
-                                                <div class="form-group">
-                                                    <label for="addressName">
-                                                        배송지명 <span class="required">*</span>
-                                                    </label>
-                                                    <div>
-                                                        <input type="text" id="addressName" name="addressName" required="required" class="form-control">
+                                            <li role="presentation" class=""><a href="#tab_content3" role="tab"
+                                                                                id="profile-tab2" data-toggle="tab"
+                                                                                aria-expanded="false">배송지등록</a>
+                                            </li>
+                                        </ul>
+                                        <div id="myTabContent" class="tab-content">
+                                    <th:block th:if="${not #lists.isEmpty(addressList)}" th:each="l, e : ${addressList}">
+                                            <div role="tabpanel" class="tab-pane fade active in"
+                                                 th:id="${l.addressName}"
+                                                 aria-labelledby="home-tab">
+                                                <ul class="d-flex list-inline list-unstyled">
+                                                    <li class="list-inline-item p-2">수령인</li>
+                                                    <li class="list-inline-item p-2 ml-auto" th:data-addressList="${l.addressList}"
+                                                        th:text="${l.receiverName}"></li>
+                                                </ul>
+                                                <ul class="d-flex list-inline list-unstyled">
+                                                    <li class="list-inline-item p-2">주소</li>
+                                                    <li class="list-inline-item p-2 ml-auto" th:data-addressList="${l.addressList}"
+                                                        th:text="${l.address}"></li>
+                                                </ul>
+                                                <ul class="d-flex list-inline list-unstyled">
+                                                    <li class="list-inline-item p-2">상세주소</li>
+                                                    <li class="list-inline-item p-2 ml-auto" th:data-addressList="${l.addressList}"
+                                                        th:text="${l.address2}"></li>
+                                                </ul>
+                                                <ul class="d-flex list-inline list-unstyled">
+                                                    <li class="list-inline-item p-2">연락처</li>
+                                                    <li class="list-inline-item p-2 ml-auto" th:data-addressList="${l.addressList}"
+                                                        th:text="${l.phone}"></li>
+                                                </ul>
+                                                <ul class="d-flex list-inline list-unstyled">
+                                                    <li class="list-inline-item p-2">연락처 2</li>
+                                                    <li class="list-inline-item p-2 ml-auto" th:data-addressList="${l.addressList}"
+                                                        th:text="${l.phone2}"></li>
+                                                </ul>
+                                            </div>
+                                    </th:block>
+
+                                            <div role="tabpanel" class="tab-pane fade" id="tab_content3"
+                                                 aria-labelledby="profile-tab">
+                                                <form th:action="@{/user/address/register}" method="post">
+                                                    <div class="form-group">
+                                                        <label for="addressName"> 배송지명 <span class="required">*</span>
+                                                        </label>
+                                                        <div>
+                                                            <input type="text" id="addressName" name="addressName"
+                                                                   required="required" class="form-control">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="receiverName">
-                                                        수령인 <span class="required">*</span>
-                                                    </label>
-                                                    <div>
-                                                        <input type="text" id="receiverName" name="receiverName" required="required" class="form-control">
+                                                    <div class="form-group">
+                                                        <label for="receiverName"> 수령인 <span class="required">*</span>
+                                                        </label>
+                                                        <div>
+                                                            <input type="text" id="receiverName" name="receiverName"
+                                                                   required="required" class="form-control">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="postalCode">
-                                                        우편번호 <span class="required">*</span>
-                                                    </label>
-                                                    <div class="form-inline">
-                                                        <input type="text" id="postalCode" name="postalCode" required="required" class="form-control" readonly>
-                                                        <span class="input-group-btn">
-                                                            <button id="addressSearchBtn" type="button" class="btn btn-dark">주소 검색</button>
+                                                    <div class="form-group">
+                                                        <label for="postalCode"> 우편번호 <span class="required">*</span>
+                                                        </label>
+                                                        <div class="form-inline">
+                                                            <input type="text" id="postalCode" name="postalCode"
+                                                                   required="required" class="form-control" readonly>
+                                                            <span class="input-group-btn">
+                                                            <button id="addressSearchBtn" type="button"
+                                                                    class="btn btn-dark">주소 검색</button>
                                                         </span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="address">
-                                                        주소 <span class="required">*</span>
-                                                    </label>
-                                                    <div>
-                                                        <input type="text" id="address" name="address" required="required" class="form-control" readonly>
+                                                    <div class="form-group">
+                                                        <label for="address"> 주소 <span class="required">*</span>
+                                                        </label>
+                                                        <div>
+                                                            <input type="text" id="address" name="address"
+                                                                   required="required" class="form-control" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="address2">
-                                                        상세주소 <span class="required">*</span>
-                                                    </label>
-                                                    <div>
-                                                        <input type="text" id="address2" name="address2" required="required" class="form-control">
+                                                    <div class="form-group">
+                                                        <label for="address2"> 상세주소 <span class="required">*</span>
+                                                        </label>
+                                                        <div>
+                                                            <input type="text" id="address2" name="address2"
+                                                                   required="required" class="form-control">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="phone">
-                                                        연락처 <span class="required">*</span>
-                                                    </label>
-                                                    <div>
-                                                        <input type="text" id="phone" name="phone" required="required" class="form-control">
+                                                    <div class="form-group">
+                                                        <label for="phone"> 연락처 <span class="required">*</span> </label>
+                                                        <div>
+                                                            <input type="text" id="phone" name="phone"
+                                                                   required="required" class="form-control">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="phone2">
-                                                        연락처 2
-                                                    </label>
-                                                    <div>
-                                                        <input id="phone2" class="form-control" type="text" name="phone2">
+                                                    <div class="form-group">
+                                                        <label for="phone2"> 연락처 2 </label>
+                                                        <div>
+                                                            <input id="phone2" class="form-control" type="text"
+                                                                   name="phone2">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="form-check-inline form-switch">
-                                                        <label class="form-check-label" for="defaultAddressCheck">기본배송지 설정</label>
-                                                        <input class="form-check-input" type="checkbox" id="defaultAddressCheck" name="defaultAddressCheck" checked>
+                                                    <div class="form-group">
+                                                        <div class="form-check-inline form-switch">
+                                                            <label class="form-check-label" for="defaultAddressCheck">기본배송지
+                                                                설정</label>
+                                                            <input class="form-check-input" type="checkbox"
+                                                                   id="defaultAddressCheck" name="defaultAddressCheck"
+                                                                   checked>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="ln_solid"></div>
-                                                <div class="form-group">
-                                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                        <button class="btn btn-default" type="reset">Reset</button>
-                                                        <button type="submit" class="btn btn-dark">Submit</button>
+                                                    <div class="ln_solid"></div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                            <button class="btn btn-default" type="reset">Reset</button>
+                                                            <button type="submit" class="btn btn-dark">Submit</button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </form>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                            <button type="button" class="btn btn-primary">배송지 선택</button>
                         </div>
 
                     </div>
