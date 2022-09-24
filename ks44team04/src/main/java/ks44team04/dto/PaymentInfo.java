@@ -1,6 +1,19 @@
 package ks44team04.dto;
 
+import java.util.List;
+
 public class PaymentInfo {
+	
+	private List<PaymentHistory> paymentHistory;
+	
+	
+	public List<PaymentHistory> getPaymentHistory() {
+		return paymentHistory;
+	}
+	public void setPaymentHistory(List<PaymentHistory> paymentHistory) {
+		this.paymentHistory = paymentHistory;
+	}
+
 	
 	private String orderNum;
     private String buyerId;
@@ -27,8 +40,9 @@ public class PaymentInfo {
 	
 	@Override
 	public String toString() {
-		return "PaymentInfo [orderNum=" + orderNum + ", buyerId=" + buyerId + ", orderDate=" + orderDate + "]";
+		return "PaymentInfo [paymentHistory=" + paymentHistory + ", orderNum=" + orderNum + ", buyerId=" + buyerId
+				+ ", orderDate=" + orderDate + "]";
 	}
-	
+
     
 }

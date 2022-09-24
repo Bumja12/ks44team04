@@ -26,6 +26,22 @@
 		<result column="order_date"			property="orderDate"/>
 	</resultMap> -->
 	
+	<!-- 결제내역페이지 -->
+	<resultMap type="PaymentInfo" id="paymentListMap">
+		<result 	column="order_num" 		property="orderNum"/>
+		<result column="buyer_id" 		property="buyerId"/>
+		<result column="order_date" 	property="orderDate"/>
+		<collection property="paymentHistory" javaType="list" ofType="PaymentHistory">
+			<result column="goods_name"			property="goodsName"/>
+			<result column="use_point"			property="usePoint"/>
+			<result column="save_point"			property="savePoint"/>
+			<result column="coupon_price"		property="couponPrice"/>
+			<result column="order_amount"		property="orderAmount"/>
+			<result column="order_status"		property="orderStatus"/>	
+			<result column="order_price" 		property="orderPrice"/>
+		</collection>
+	</resultMap>
+	
 	<!-- 결제페이지종합 -->
 	<resultMap type="PaymentTotal" id="paymentResultMap">
 		<result column="order_detail_code" 	property="orderDetailCode"/>
@@ -37,6 +53,7 @@
 		<result column="refund_account" 	property="refundAccount"/>
 		<result column="order_price" 		property="orderPrice"/>
 		<result column="approve_date"		property="approveDate"/>
+		<result column="approve_price"		property="approvePrice"/>
 		<result column="goods_name"			property="goodsName"/>
 		<result column="coupon_price"		property="couponPrice"/>
 		<result column="use_point"			property="usePoint"/>
@@ -65,7 +82,7 @@
 				,p.payment_method
 				,cp.card_company
 				,cp.card_number
-				,od.order_price
+				,cp.approve_price
 				,cp.approve_date
 			FROM
 				tb_order AS o
@@ -92,7 +109,7 @@
 				,p.payment_method
 				,ap.refund_bank
 				,ap.refund_account
-				,od.order_price
+				,ap.approve_price
 				,ap.approve_date
 			FROM
 				tb_order AS o
@@ -111,8 +128,8 @@
 			ORDER BY order_detail_code;
 	</select>
 	
-	<!-- 결제내역 -->
-	<select id="paymentList" resultMap="paymentResultMap" fetchSize="100">
+	<!-- 결제내역페이지 -->
+	<select id="paymentList" resultMap="paymentListMap" fetchSize="100">
 		SELECT
 			o.order_num
 			,o.buyer_id

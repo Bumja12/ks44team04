@@ -47,10 +47,11 @@ th {
 							<th>주문번호</th>
 							<th>회원아이디</th>
 							<th>상품정보</th>
+							<th>수량</th>
+							<th>적립금</th>
 							<th>쿠폰 할인</th>
 							<th>포인트 할인</th>
-							<th>적립금</th>
-							<th>주문금액(수량)</th>
+							<th>주문금액</th>
 							<th>배송정보</th>
 							<th>주문일시</th>
 							<th colspan="2">주문 상태</th>
@@ -58,19 +59,29 @@ th {
 					</thead>
 					<tbody>
 						<th:block th:if="${not #lists.isEmpty(paymentList)}" th:each="p : ${paymentList}">
-								<tr>					
-									<td th:text="${p.paymentInfo.orderNum}"></td>
-									<td th:text="${p.paymentInfo.buyerId}"></td>
-									<td th:text="${p.goodsName}"></td>
-									<td th:text="${p.couponPrice}"></td>
-									<td th:text="${p.usePoint}"></td>
-									<td th:text="${p.savePoint}"></td>
-									<td th:text="${p.orderPrice}"><span th:text="${p.orderAmount}"></span></td>
+							<th:block th:if="${not #lists.isEmpty(p.paymentHistory)}" th:each="ph, status : ${p.paymentHistory}">
+								<tr>
+									<th:block th:if="${status.index == 0}">				
+										<td th:rowspan="${status.size}" th:text="${p.orderNum}"></td>
+										<td th:rowspan="${status.size}" th:text="${p.buyerId}"></td>
+									</th:block>	
+									<td th:text="${ph.goodsName}"></td>
+									<td th:text="${ph.orderAmount}"></td>
+									<td th:text="'+ ' + ${ph.savePoint}"></td>
+									<td th:text="'- ' + ${ph.couponPrice}"></td>
+									<td th:text="'- ' + ${ph.usePoint}"></td>									
+									<td th:text="${'₩' + #numbers.formatInteger(ph.orderPrice, 3, 'COMMA')}"></td>
 									<td><button type="button" onclick="location.href='#';">배송조회</button></td>
-									<td th:text="${p.paymentInfo.orderDate}"></td>
+									<th:block th:if="${status.index == 0}">
+										<td th:rowspan="${status.size}" th:text="${p.orderDate}"></td>
+									</th:block>
 									<td colspan="2">구매확정 <button>후기 작성</button></td>
 								</tr>
+							</th:block>
 						</th:block>
+						<tr th:unless="${not #lists.isEmpty(paymentList)}">
+							<td colspan="11">등록된 상품이 없습니다.</td>
+						</tr>
 					</tbody>
 				</table>
 
