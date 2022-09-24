@@ -50,6 +50,8 @@ public class PaymentController {
 		
 		model.addAttribute("title", "결제내역");
 		model.addAttribute("paymentList", paymentList);
+
+		System.out.println(paymentList);
 		
 		return "admin/paymentList";
 	}

@@ -70,15 +70,14 @@ th, td {
 							<td th:text="${p.paymentMethod}"></td>
 							<td th:text="${p.cardCompany}"></td>
 							<td th:text="${p.cardNumber}"></td>
-							<td th:text="${'₩' + #numbers.formatInteger(p.orderPrice, 3, 'COMMA')}"></td>
+							<td th:text="${'₩' + #numbers.formatInteger(p.approvePrice, 3, 'COMMA')}"></td>
 							<td th:text="${p.approveDate}"></td>
 							<td colspan="2"><button type="button" onclick="location.href='#';">수정</button> 
 							<button type="button" onclick="location.href='#';">삭제</button></td>
 						</tr>
 						<tr th:unless="${not #lists.isEmpty(paymentDetailList)}">
-					<td colspan="8">등록된 상품이 없습니다.</td>
-				</tr>
-						
+							<td colspan="10">등록된 상품이 없습니다.</td>
+						</tr>
 					</tbody>
 				</table>
 
