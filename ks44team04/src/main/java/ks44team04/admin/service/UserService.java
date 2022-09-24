@@ -54,7 +54,6 @@ public class UserService {
 				String userLevel = user.getUserLevel();
 				String lvName = userLevel.substring(userLevel.length() - 2);
 				
-				
 				if(userLevel.contains("Buyer")) {
 					if(lvName.equals("01")) {
 						user.setUserLevelName("씨앗");

@@ -27,8 +27,5 @@ public interface UserMapper {
 	//회원 목록 조회
 	public List<User> getUserList();
     
-    //신고 리스트
-    public List<Report> getReportList();
-    
    
 }
