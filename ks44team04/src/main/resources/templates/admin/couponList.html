@@ -60,7 +60,7 @@ th {
 						<tr th:if="${not #lists.isEmpty(couponList)}" th:each="c : ${couponList}">
 							<td th:text="${c.couponName}"></td>
 							<td th:text="${'₩' + #numbers.formatInteger(c.discountPrice, 3, 'COMMA')}"></td>
-							<td th:text="${'₩' + #numbers.formatInteger(c.priceTerms, 3, 'COMMA')}"></td>
+							<td th:text="${'₩' + #numbers.formatInteger(c.priceTerms, 3, 'COMMA') + ' 이상'}"></td>
 							<td th:text="${c.endDate}"></td>
 							<td th:text="${c.regId}"></td>
 							<td th:text="${c.regDate}"></td>
