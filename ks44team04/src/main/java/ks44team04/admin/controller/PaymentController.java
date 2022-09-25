@@ -38,7 +38,9 @@ public class PaymentController {
 		
 		model.addAttribute("title", "결제상세내역");
 		model.addAttribute("paymentDetailList", paymentDetailList);
-
+		
+		System.out.println(paymentDetailList);
+		
 		return "admin/paymentDetail";
 	}
 	

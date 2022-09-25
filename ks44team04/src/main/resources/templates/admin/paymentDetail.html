@@ -58,7 +58,7 @@ th, td {
 							<th>카드번호/환불계좌</th>
 							<th>결제금액</th>
 							<th>결제일자</th>
-							<th colspan="2">수정/삭제</th>
+							<th>관리</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -72,8 +72,10 @@ th, td {
 							<td th:text="${p.cardNumber}"></td>
 							<td th:text="${'₩' + #numbers.formatInteger(p.approvePrice, 3, 'COMMA')}"></td>
 							<td th:text="${p.approveDate}"></td>
-							<td colspan="2"><button type="button" onclick="location.href='#';">수정</button> 
-							<button type="button" onclick="location.href='#';">삭제</button></td>
+							<td>
+								<a href="#"><i class="fa fa-edit"></i> 수정</a>
+								<a href="#"><i class="fa fa-close"></i>삭제</a>
+							</td>
 						</tr>
 						<tr th:unless="${not #lists.isEmpty(paymentDetailList)}">
 							<td colspan="10">등록된 상품이 없습니다.</td>
