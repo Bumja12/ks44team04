@@ -15,6 +15,64 @@
 			('#{userId}', '#{userPw}', '#{userName}', '#{userGender}', '#{userNickname}', '#{userAddress}', '#{userPhone}', '#{userEmail}', '#{userRight}', CURDATE(), CURDATE(), '#{userStatus}', #{userPenalty}, #{userPoint}, '#{userInfoKeep}', '#{userLevel}')
 	</insert>
 	
+	
+	<resultMap type="Login"						id="LoginResultMap">
+		<result column="log_code"				property="logCode" />
+		<result column="login_id"				property="loginId" />
+		<result column="login_date"				property="loginDate" />
+		<result column="logout_date"			property="logoutDate" />
+	</resultMap>
+	<!-- 휴면회원 목록 조회 -->
+	<select id="getLoginList" resultMap="LoginResultMap">
+		/* 로그 조회 */
+		SELECT 
+			 log_code
+			,login_id
+			,login_date
+			,logout_date
+		FROM 
+			tb_login
+	</select>	
+	
+	<resultMap type="Leave"						id="LeaveResultMap">
+		<result column="leave_code"				property="leaveCode" />
+		<result column="login_id"				property="loginId" />
+		<result column="leave_reason"			property="leaveReason" />
+		<result column="leave_date"				property="leaveDate" />
+		<result column="user_info_destroy"		property="userInfoDestroy" />
+	</resultMap>
+	<!-- 휴면회원 목록 조회 -->
+	<select id="getLeaveList" resultMap="LeaveResultMap">
+		/* 탈퇴회원 목록 조회 */
+		SELECT 
+			 leave_code
+			,login_id
+			,leave_reason
+			,leave_date
+			,user_info_destroy
+		FROM 
+			tb_leave
+	</select>
+	
+	<resultMap type="Dormant"					id="DormantResultMap">
+		<result column="dormant_code"			property="dormantCode" />
+		<result column="login_id"				property="loginId" />
+		<result column="dormant_status"			property="dormantStatus" />
+		<result column="dormant_change_date"	property="dormantChangeDate" />
+	</resultMap>
+	<!-- 휴면회원 목록 조회 -->
+	<select id="getDormantList" resultMap="DormantResultMap">
+		/* 휴면회원 목록 조회 */
+		SELECT 
+			 dormant_code
+			,login_id
+			,dormant_status
+			,dormant_change_date
+		FROM 
+			tb_dormant
+	</select>
+
+	
     <resultMap 	type="Seller" 				id="SellerResultMap">
 		<result column="seller_code" 		property="sellerCode" />
 		<result column="seller_id" 			property="sellerId" />
@@ -139,8 +197,7 @@
 				<result  column="level_code_npk" 	 	property="levelCodeNpk"/>
 		    </association>  
 	</resultMap>  
-	
-		<!-- 회원 권한 조회 -->
+	<!-- 회원 권한 조회 -->
 	<select id="getRightList" resultType="Right">
 		/* 회원 권한 조회 */
 		SELECT

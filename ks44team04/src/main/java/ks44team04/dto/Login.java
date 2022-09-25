@@ -2,17 +2,17 @@ package ks44team04.dto;
 
 public class Login {
 
-   private int loginCode;
+   private int logCode;
    private String loginId;
    private String loginDate;
    private String logoutDate;
 
-    public int getLoginCode() {
-        return loginCode;
+    public int getLogCode() {
+        return logCode;
     }
 
-    public void setLoginCode(int loginCode) {
-        this.loginCode = loginCode;
+    public void setLogCode(int logCode) {
+        this.logCode = logCode;
     }
 
     public String getLoginId() {
@@ -42,7 +42,7 @@ public class Login {
     @Override
     public String toString() {
         return "Login{" +
-                "loginCode=" + loginCode +
+                "loginCode=" + logCode +
                 ", loginId='" + loginId + '\'' +
                 ", loginDate='" + loginDate + '\'' +
                 ", logoutDate='" + logoutDate + '\'' +
