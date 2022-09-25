@@ -139,7 +139,7 @@
               </table>
             </div>
           </div>
-           <button type="button" class="btn btn-dark" data-toggle="modal" data-target=".report">신고하기</button>
+           <button type="button" class="btn btn-dark" data-toggle="modal" data-target=".report" id="reportModal" data-backdrop="static">신고하기</button>
           
           <div class="modal fade report" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
 		    <div class="modal-dialog modal-dialog-centered">
@@ -218,5 +218,10 @@
           reader.readAsDataURL(image);
         }
       }
+    </script>
+    <script type="text/javascript">
+    	$("#reportModal").modal({
+    		backdrop:'static'
+    	})
     </script>
 </html>

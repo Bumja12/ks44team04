@@ -11,6 +11,7 @@ th {
 
 .table > tbody > tr > td {
 	vertical-align: middle;
+	text-align: center;
 }
 </style>
 </th:block>
@@ -56,23 +57,20 @@ th {
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${not #lists.isEmpty(userList)}"
-							th:each="l : ${userList}">
-							<td th:text="${l.userId}"></td>
-							<td th:text="${l.userName}"></td>
-							<td th:text="${l.userNickname}"></td>
-							<td th:text="${l.rightDto.rightStatus}"></td>
-							<td th:text="${l.userLevelName}"></td>
-							<td th:text="${l.userPhone}"></td>
-							<td th:text="${l.userEmail}"></td>
-
+						<tr th:if="${not #lists.isEmpty(couponList)}" th:each="c : ${couponList}">
+							<td th:text="${c.couponName}"></td>
+							<td th:text="${'₩' + #numbers.formatInteger(c.discountPrice, 3, 'COMMA')}"></td>
+							<td th:text="${'₩' + #numbers.formatInteger(c.priceTerms, 3, 'COMMA')}"></td>
+							<td th:text="${c.endDate}"></td>
+							<td th:text="${c.regId}"></td>
+							<td th:text="${c.regDate}"></td>
 							<td>
-								<a href="#"><i class="fa fa-edit"></i> 수정</a> <a href="#">
-								<i class="fa fa-close"></i>삭제</a>
+								<a href="#"><i class="fa fa-edit"></i> 수정</a> 
+								<a href="#"><i class="fa fa-close"></i>삭제</a>
 							</td>
 						</tr>
-						<tr th:unless="${not #lists.isEmpty(userList)}">
-							<td colspan="7" style="text-align: center;">등록된 쿠폰이 없습니다.</td>
+						<tr th:unless="${not #lists.isEmpty(couponList)}">
+							<td colspan="7">등록된 쿠폰이 없습니다.</td>
 						</tr>
 					</tbody>
 				</table>
