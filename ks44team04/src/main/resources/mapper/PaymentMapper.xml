@@ -43,7 +43,7 @@
 	</resultMap>
 	
 	<!-- 결제페이지종합 -->
-	<resultMap type="PaymentTotal" id="paymentResultMap">
+	<resultMap type="PaymentTotal" id="paymentMap">
 		<result column="order_detail_code" 	property="orderDetailCode"/>
 		<result column="goods_code" 		property="goodsCode"/>
 		<result column="payment_method"		property="paymentMethod"/>
@@ -70,7 +70,7 @@
 	</resultMap>
 	
 	<!-- 결제상세목록 -->
-	<select id="paymentDetailList" resultType="PaymentTotal" resultMap="paymentResultMap" fetchSize="100">
+	<select id="paymentDetailList" resultType="PaymentTotal" resultMap="paymentMap" fetchSize="100">
 		SELECT
 			*
 		FROM
