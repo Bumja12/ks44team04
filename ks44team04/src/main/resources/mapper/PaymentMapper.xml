@@ -28,7 +28,7 @@
 	
 	<!-- 결제내역페이지 -->
 	<resultMap type="PaymentInfo" id="paymentListMap">
-		<result 	column="order_num" 		property="orderNum"/>
+		<result column="order_num" 		property="orderNum"/>
 		<result column="buyer_id" 		property="buyerId"/>
 		<result column="order_date" 	property="orderDate"/>
 		<collection property="paymentHistory" javaType="list" ofType="PaymentHistory">
