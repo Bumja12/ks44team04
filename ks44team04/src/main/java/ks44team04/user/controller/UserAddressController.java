@@ -50,7 +50,13 @@ public class UserAddressController {
         addressList.setBuyerId("buyer01");
         userAddressService.addressRegister(addressList);
 
-        return "redirect:/user/address/list";
+        return "redirect:/user/address/success";
+    }
+
+    @GetMapping("/success")
+    public String successClose() {
+
+        return "user/order/success";
     }
 
     @GetMapping("/modify/{addressList}")
@@ -74,6 +80,17 @@ public class UserAddressController {
     public String getAddressDelete(@PathVariable("addressList") String addressList) {
         userAddressService.addressDelete(addressList);
         return "redirect:/user/address/list";
+    }
+
+    @GetMapping("/checkoutlist")
+    @ResponseBody
+    public AddressList checkoutList(@RequestParam(value = "userId", required = false) String userId) {
+        userId = "buyer01";
+        Map<String, String> addressInfo = new HashMap<>();
+        addressInfo.put("userId", userId);
+        List<AddressList> addressLists = userAddressService.getAddressList(addressInfo);
+
+        return addressLists.get(addressLists.size() - 1);
     }
   
 }
