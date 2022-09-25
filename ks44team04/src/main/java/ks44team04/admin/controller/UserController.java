@@ -3,6 +3,9 @@ package ks44team04.admin.controller;
 import ks44team04.admin.service.UserService;
 import ks44team04.dto.Right;
 import ks44team04.dto.Seller;
+import ks44team04.dto.Dormant;
+import ks44team04.dto.Leave;
+import ks44team04.dto.Login;
 import ks44team04.dto.Report;
 
 import ks44team04.dto.User;
@@ -51,6 +54,36 @@ public class UserController {
 		model.addAttribute("RightList", RightList);
 		
 		return "admin/user/addUser";
+	}
+	
+	@GetMapping("/user/loginList")
+	public String getLoginList(Model model) {
+		List<Login> loginList = userService.getLoginList();
+		log.info("로그 목록 ::: {}", loginList);
+		model.addAttribute("loginList", loginList);
+		model.addAttribute("title", "로그조회");
+		
+		return "admin/user/loginList";
+	}
+	
+	@GetMapping("/user/leaveList")
+	public String getLeaveList(Model model) {
+		List<Leave> leaveList = userService.getLeaveList();
+		log.info("탈퇴회원 목록 ::: {}", leaveList);
+		model.addAttribute("leaveList", leaveList);
+		model.addAttribute("title", "탈퇴회원목록");
+		
+		return "admin/user/leaveList";
+	}
+	
+	@GetMapping("/user/dormantList")
+	public String getDormantList(Model model) {
+		List<Dormant> dormantList = userService.getDormantList();
+		log.info("휴면회원 목록 ::: {}", dormantList);
+		model.addAttribute("sellerList", dormantList);
+		model.addAttribute("title", "휴면회원목록");
+		
+		return "admin/user/dormantList";
 	}
 	
 	@GetMapping("/user/sellerList")

@@ -1,6 +1,9 @@
 package ks44team04.admin.service;
 
 import ks44team04.admin.mapper.UserMapper;
+import ks44team04.dto.Dormant;
+import ks44team04.dto.Leave;
+import ks44team04.dto.Login;
 import ks44team04.dto.Right;
 import ks44team04.dto.Seller;
 import ks44team04.dto.User;
@@ -28,6 +31,27 @@ public class UserService {
     public void addUser(User user) {
     	int result = userMapper.addUser(user);
     	System.out.println("회원가입 결과:" + result);
+    }
+    
+    //로그 조회
+    public List<Login> getLoginList() {
+    	List<Login> loginList = userMapper.getLoginList();
+    	
+    	return loginList;
+    }
+    
+    //탈퇴회원 목록 조회
+    public List<Leave> getLeaveList() {
+    	List<Leave> leaveList = userMapper.getLeaveList();
+    	
+    	return leaveList;
+    }
+    
+    //휴면회원 목록 조회
+    public List<Dormant> getDormantList() {
+    	List<Dormant> dormantList = userMapper.getDormantList();
+    	
+    	return dormantList;
     }
     
     //판매자 목록 조회
