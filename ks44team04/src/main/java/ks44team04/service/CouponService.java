@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ks44team04.mapper.CouponMapper;
 import ks44team04.dto.Coupon;
+import ks44team04.dto.CouponStatus;
 
 @Service
 public class CouponService {
@@ -27,6 +28,15 @@ public class CouponService {
 		log.info("couponService bean 생성");
 	}
 	
+	//회원쿠폰보유현황
+	public List<CouponStatus> couponStatus(){
+		
+		List<CouponStatus> couponStatus = couponMapper.couponStatus();
+		
+		return couponStatus;
+	}
+	
+	//쿠폰목록
 	public List<Coupon> couponList() {
 		
 		List<Coupon> couponList = couponMapper.couponList();

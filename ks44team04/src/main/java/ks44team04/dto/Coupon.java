@@ -1,8 +1,9 @@
 package ks44team04.dto;
 
-public class Coupon {
 
-    private String couponCode;
+public class Coupon {
+	
+	private String couponCode;
     private String couponName;
     private int discountPrice;
     private int priceTerms;
@@ -66,16 +67,12 @@ public class Coupon {
         this.regDate = regDate;
     }
 
-    @Override
-    public String toString() {
-        return "Coupon{" +
-                "couponCode='" + couponCode + '\'' +
-                ", couponName='" + couponName + '\'' +
-                ", discountPrice=" + discountPrice +
-                ", priceTerms=" + priceTerms +
-                ", endDate='" + endDate + '\'' +
-                ", regId='" + regId + '\'' +
-                ", regDate='" + regDate + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "Coupon [couponCode=" + couponCode + ", couponName=" + couponName + ", discountPrice=" + discountPrice
+				+ ", priceTerms=" + priceTerms + ", endDate=" + endDate + ", regId=" + regId + ", regDate=" + regDate
+				+ "]";
+	}
+
+    
 }
