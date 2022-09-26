@@ -14,7 +14,7 @@
 		$(function (){
 			$(".qnaToggle").click(function (){
 		  	//$(".toggle").toggle();
-		  	$(this).next().toggle();
+		  	$(this).next().next().toggle();
 			});
 		});
 	});
@@ -93,49 +93,48 @@
 								<th style="width:60px;">비밀글</th>
 								<th style="width:70px;">비밀번호</th>
 								<th style="width:80px;">작성자</th>
-								<th style="width:140px;">등록일</th>
+								<th style="width:140px;">작성일</th>
 								<th style="width:70px;">답변상태</th>
 								<th style="width:100px;">관리</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:if="${not #lists.isEmpty(goodsQnaList)}" th:each="q : ${goodsQnaList}" id="goodsQnaTable">
-								<td th:text="${q.goodsQna}"></td>
+							<tr th:if="${not #lists.isEmpty(goodsQna)}" th:each="q : ${goodsQna}" id="goodsQnaTable">
+								<td th:text="${q.goodsQnaNum}"></td>
 								<td th:text="${q.goodsQnaCategoryInfo.categoryName}"></td>
 								<td th:text="${q.goodsInfo.goodsCode}"></td>
 								<td th:text="${q.goodsInfo.goodsName}"></td>
 								<td>[[${q.goodsQnaContent}]]
 								<a href="javascript:void(0);" class="qnaToggle" style="color: gray; font-weight: bold; float:right;">답변보기</a>
-								<div class="toggle" style="display:none; margin-top:25px;">
-								<table id="datatable" class="table table-striped table-bordered bulk_action dataTable no-footer">
-								<thead>
-								 	<tr>
-										<th>작성자</th>
-										<th style="width:200px;">답변내용</th>
-										<th style="width:140px;">등록일</th>
-								 	</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td th:text="${q.sellerId}"></td>
-										<td th:text="${q.goodsQnaAnswer}"></td>
-										<td th:text="${q.answerDate}"></td>
-									</tr>
-								</tbody>
+								<br>
+								<table class="table table-striped table-bordered toggle" style="display:none; margin-top:20px; width: 100%;">
+									<thead>
+									 	<tr>
+											<th>작성자</th>
+											<th>답변내용</th>
+											<th>등록일</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td th:text="${q.userInfo.userId}"></td>
+											<td>ㅇㅇ</td>
+											<td th:text="${q.goodsQnaDate}"></td>
+										</tr>
+									</tbody>
 								</table>
-								</div>
-								</td>
+								
 								<td th:text="${q.secretCheck}"></td>
 								<td th:text="${q.goodsQnaPw}"></td>
 								<td th:text="${q.userInfo.userId}"></td>
 								<td th:text="${q.goodsQnaDate}"></td>
-								<td>ㅇㅇ</td>
+								<td th:text="${q.qnaStatus}"></td>
 								<td style="text-align: center; width: 110px;">
 									<a href="#"><i class="fa fa-edit"></i> 수정</a>
 									<a href="#"><i class="fa fa-close"></i> 삭제</a>
 								</td>
 							</tr>
-							<tr th:unless="${not #lists.isEmpty(goodsQnaList)}">
+							<tr th:unless="${not #lists.isEmpty(goodsQna)}">
 								<td colspan="10">등록된 상품이 없습니다.</td>
 							</tr>
 						</tbody>
