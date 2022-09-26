@@ -2,18 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head th:replace="/fragments/adminHead :: headFragment"></head>
+<head th:replace="fragments/adminHead :: headFragment"></head>
 
 <body class="nav-md">
 <div class="container body">
     <div class="main_container">
 
         <!-- start : left menu -->
-        <div th:replace="/fragments/leftmenu :: leftmenuFragment"></div>
+        <div th:replace="fragments/leftmenu :: leftmenuFragment"></div>
         <!-- end : left menu -->
 
         <!-- start : top navigation -->
-        <div th:replace="/fragments/adminNav :: topnaviFragment"></div>
+        <div th:replace="fragments/adminNav :: topnaviFragment"></div>
         <!-- end : top navigation -->
 
         <!-- page content -->
@@ -21,12 +21,12 @@
             <th:block layout:fragment="customContents"></th:block>
         </div>
 
-        <div th:replace="/fragments/adminFooter :: footerFragment"></div>
+        <div th:replace="fragments/adminFooter :: footerFragment"></div>
 
     </div>
 </div>
 
-<th:block th:replace="/fragments/adminJs :: jsFragment"></th:block>
+<th:block th:replace="fragments/adminJs :: jsFragment"></th:block>
 
 </th:block>
 <!-- 사용자 정의 JsScript 파일-->
