@@ -1,7 +1,13 @@
 package ks44team04.admin.controller;
 
 import ks44team04.admin.service.UserService;
-import ks44team04.dto.Level;
+import ks44team04.dto.Right;
+import ks44team04.dto.Seller;
+import ks44team04.dto.Dormant;
+import ks44team04.dto.Leave;
+import ks44team04.dto.Login;
+import ks44team04.dto.Report;
+
 import ks44team04.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,11 +49,51 @@ public class UserController {
 	@GetMapping("/user/addUser")
 	public String addUserForm(Model model) {
 		
-		List<Level> LevelList = userService.getLevelList();
+		List<Right> RightList = userService.getRightList();
 		model.addAttribute("title", "회원가입");
-		model.addAttribute("LevelList", LevelList);
+		model.addAttribute("RightList", RightList);
 		
 		return "admin/user/addUser";
+	}
+	
+	@GetMapping("/user/loginList")
+	public String getLoginList(Model model) {
+		List<Login> loginList = userService.getLoginList();
+		log.info("로그 목록 ::: {}", loginList);
+		model.addAttribute("loginList", loginList);
+		model.addAttribute("title", "로그조회");
+		
+		return "admin/user/loginList";
+	}
+	
+	@GetMapping("/user/leaveList")
+	public String getLeaveList(Model model) {
+		List<Leave> leaveList = userService.getLeaveList();
+		log.info("탈퇴회원 목록 ::: {}", leaveList);
+		model.addAttribute("leaveList", leaveList);
+		model.addAttribute("title", "탈퇴회원목록");
+		
+		return "admin/user/leaveList";
+	}
+	
+	@GetMapping("/user/dormantList")
+	public String getDormantList(Model model) {
+		List<Dormant> dormantList = userService.getDormantList();
+		log.info("휴면회원 목록 ::: {}", dormantList);
+		model.addAttribute("sellerList", dormantList);
+		model.addAttribute("title", "휴면회원목록");
+		
+		return "admin/user/dormantList";
+	}
+	
+	@GetMapping("/user/sellerList")
+	public String getSellerList(Model model) {
+		List<Seller> sellerList = userService.getSellerList();
+		log.info("판매자 목록 ::: {}", sellerList);
+		model.addAttribute("sellerList", sellerList);
+		model.addAttribute("title", "판매자목록");
+		
+		return "admin/user/sellerList";
 	}
     
 	@GetMapping("/user/userList")

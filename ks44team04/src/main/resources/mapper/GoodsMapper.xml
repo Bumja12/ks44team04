@@ -5,43 +5,6 @@
         
 <mapper namespace="ks44team04.admin.mapper.GoodsMapper">
 
-    <resultMap type="Goods" id="goodsResultMap">
-        <id 	column="goods_code" 			property="goodsCode"/>
-        <result column="goods_small_category" 	property="goodsSmallCategory"/>
-        <result column="seller_id" 				property="sellerId"/>
-        <result column="goods_name" 			property="goodsName"/>
-        <result column="goods_content" 			property="goodsContent"/>
-        <result column="goods_price" 			property="goodsPrice"/>
-        <result column="goods_discount_rate" 	property="goodsDiscountRate"/>
-        <result column="goods_post_price" 		property="goodsPostPrice"/>
-        <result column="goods_stock" 			property="goodsStock"/>
-        <result column="soldout_check" 			property="soldoutCheck"/>
-        <result column="stop_sale_check" 		property="stopSaleCheck"/>
-        <result column="package_post_check" 	property="packagePostCheck"/>
-        <result column="regular_deliver_check" 	property="regularDeliverCheck"/>
-        <result column="reg_date" 				property="regDate"/>
-        <result column="goods_report_amount"	property="goodsReportAmount"/>
-        <result column="goods_file" 			property="goodsFile"/>
-			<association property="userInfo" javaType="User">
-		        <id 	column="user_id" 			property="userId"/>
-		        <result column="user_pw" 			property="userPw"/>
-		        <result column="user_name" 			property="userName"/>
-		        <result column="user_gender" 		property="userGender"/>
-		        <result column="user_nickname" 		property="userNickname"/>
-		        <result column="user_address" 		property="userAddress"/>
-		        <result column="user_phone" 		property="userPhone"/>
-		        <result column="user_email" 		property="userEmail"/>
-		        <result column="user_right" 		property="userRight"/>
-		        <result column="user_reg_date" 		property="userRegDate"/>
-		        <result column="user_update_date"	property="userUpdateDate"/>
-		        <result column="user_status" 		property="userStatus"/>
-		        <result column="user_penalty" 		property="userPenalty"/>
-		        <result column="user_point" 		property="userPoint"/>
-		        <result column="user_info_keep" 	property="userInfoKeep"/>
-		        <result column="user_level" 		property="userLevel" />
-	        </association>
-    </resultMap>
-    
     <resultMap type="GoodsQnaList" id="goodsQnaMap">
         <id 	column="goods_qna" 			property="goodsQna"/>
         <result column="goods_qna_category" property="goodsQnaCategory"/>
@@ -134,6 +97,43 @@
 			q.buyer_id = u.user_id
 		ORDER BY q.goods_qna_date DESC;
 	</select>
+	
+	<resultMap type="Goods" id="goodsResultMap">
+        <id 	column="goods_code" 			property="goodsCode"/>
+        <result column="goods_small_category" 	property="goodsSmallCategory"/>
+        <result column="seller_id" 				property="sellerId"/>
+        <result column="goods_name" 			property="goodsName"/>
+        <result column="goods_content" 			property="goodsContent"/>
+        <result column="goods_price" 			property="goodsPrice"/>
+        <result column="goods_discount_rate" 	property="goodsDiscountRate"/>
+        <result column="goods_post_price" 		property="goodsPostPrice"/>
+        <result column="goods_stock" 			property="goodsStock"/>
+        <result column="soldout_check" 			property="soldoutCheck"/>
+        <result column="stop_sale_check" 		property="stopSaleCheck"/>
+        <result column="package_post_check" 	property="packagePostCheck"/>
+        <result column="regular_deliver_check" 	property="regularDeliverCheck"/>
+        <result column="reg_date" 				property="regDate"/>
+        <result column="goods_report_amount"	property="goodsReportAmount"/>
+        <result column="goods_file" 			property="goodsFile"/>
+			<association property="userInfo" javaType="User">
+		        <id 	column="user_id" 			property="userId"/>
+		        <result column="user_pw" 			property="userPw"/>
+		        <result column="user_name" 			property="userName"/>
+		        <result column="user_gender" 		property="userGender"/>
+		        <result column="user_nickname" 		property="userNickname"/>
+		        <result column="user_address" 		property="userAddress"/>
+		        <result column="user_phone" 		property="userPhone"/>
+		        <result column="user_email" 		property="userEmail"/>
+		        <result column="user_right" 		property="userRight"/>
+		        <result column="user_reg_date" 		property="userRegDate"/>
+		        <result column="user_update_date"	property="userUpdateDate"/>
+		        <result column="user_status" 		property="userStatus"/>
+		        <result column="user_penalty" 		property="userPenalty"/>
+		        <result column="user_point" 		property="userPoint"/>
+		        <result column="user_info_keep" 	property="userInfoKeep"/>
+		        <result column="user_level" 		property="userLevel" />
+	        </association>
+    </resultMap>
 
 	<!-- 상품 삭제 -->    
     	<delete id="goodsRemove" parameterType="String">
@@ -214,6 +214,7 @@
 			,g.goods_stock
 			,g.soldout_check
 			,g.stop_sale_check
+			,g.goods_discount_rate
 			,u.user_id
 			,g.goods_report_amount
 			,g.reg_date	

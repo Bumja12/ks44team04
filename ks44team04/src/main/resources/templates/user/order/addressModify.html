@@ -18,8 +18,8 @@
                 <div class="x_content">
                     <br/>
                     <form id="demo-form2" th:action="@{/user/address/modify}" method="post" data-parsley-validate class="form-horizontal form-label-left">
-                        <input type="hidden" id="addressList" name="addressList" th:value="*{addressList}">
                     <th:block th:object="${addressList}">
+                        <input type="hidden" id="addressList" name="addressList" th:value="*{addressList}">
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="addressName">
                                 배송지명 <span class="required">*</span>

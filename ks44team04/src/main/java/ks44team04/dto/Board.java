@@ -16,7 +16,23 @@ public class Board {
     private String modifyDate;
     private int reportAmount;
     private int savePoint;
+    
+	private User userInfo;
+	public User getUserInfo() {
+		return userInfo;
+	}
+	public void setUserInfo(User userInfo) {
+		this.userInfo = userInfo;
+	}
 
+	public BoardCategory boardCategoryInfo;
+	public BoardCategory getBoardCategoryInfo() {
+		return boardCategoryInfo;
+	}
+	public void setBoardCategoryInfo(BoardCategory boardCategoryInfo) {
+		this.boardCategoryInfo = boardCategoryInfo;
+	}
+	
     public String getBoardCode() {
         return boardCode;
     }

@@ -17,37 +17,44 @@ import ks44team04.dto.PaymentTotal;
 @Controller
 @RequestMapping("/admin")
 public class PaymentController {
-
+	
 	private static final Logger log = LoggerFactory.getLogger(PaymentController.class);
-
+	
 	private final PaymentService paymentService;
-
+	
 	public PaymentController(PaymentService paymentService) {
 		this.paymentService = paymentService;
 	}
-
+	
 	@PostConstruct
 	public void paymentControllerInit() {
 		log.info("paymentController Bean 생성");
 	}
-
-	// 결제내역
-	@GetMapping("/paymentList")
-	public String paymentList(Model model) {
-		List<PaymentTotal> paymentTotal = paymentService.paymentList();
-
-		model.addAttribute("paymentTotal", paymentTotal);
-		model.addAttribute("title", "결제내역");
-
-		return "admin/paymentList";
-	}
-
-	// 결제상세내역
+	
+	//결제상세
 	@GetMapping("/paymentDetail")
 	public String paymentDetail(Model model) {
-
+		List<PaymentTotal> paymentDetailList = paymentService.paymentDetailList();
+		
 		model.addAttribute("title", "결제상세내역");
-
+		model.addAttribute("paymentDetailList", paymentDetailList);
+		
+		System.out.println(paymentDetailList);
+		
 		return "admin/paymentDetail";
+	}
+	
+	//결제내역
+	@GetMapping("/paymentList")
+	public String paymentList(Model model) {
+		
+		List<PaymentTotal> paymentList = paymentService.paymentList();
+		
+		model.addAttribute("title", "결제내역");
+		model.addAttribute("paymentList", paymentList);
+
+		System.out.println(paymentList);
+		
+		return "admin/paymentList";
 	}
 }

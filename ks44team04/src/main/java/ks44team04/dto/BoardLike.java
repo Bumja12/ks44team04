@@ -7,6 +7,28 @@ public class BoardLike {
     private String userId;
     private String likeRegDate;
 
+	private User userInfo;
+	public User getUserInfo() {
+		return userInfo;
+	}
+	public void setUserInfo(User userInfo) {
+		this.userInfo = userInfo;
+	}
+	public BoardCategory boardCategoryInfo;
+	public BoardCategory getBoardCategoryInfo() {
+		return boardCategoryInfo;
+	}
+	public void setBoardCategoryInfo(BoardCategory boardCategoryInfo) {
+		this.boardCategoryInfo = boardCategoryInfo;
+	}
+	private Board boardInfo;
+	public Board getBoardInfo() {
+		return boardInfo;
+	}
+	public void setBoardInfo(Board boardInfo) {
+		this.boardInfo = boardInfo;
+	}
+   
     public String getBoardLike() {
         return boardLike;
     }

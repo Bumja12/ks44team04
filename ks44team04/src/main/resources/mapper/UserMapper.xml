@@ -4,24 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team04.admin.mapper.UserMapper">
 
-    <resultMap type="User" id="userResultMap">
-        <result column="user_id" property="userId"/>
-        <result column="user_pw" property="userPw"/>
-        <result column="user_name" property="userName"/>
-        <result column="user_gender" property="userGender"/>
-        <result column="user_nickname" property="userNickname"/>
-        <result column="user_address" property="userAddress"/>
-        <result column="user_phone" property="userPhone"/>
-        <result column="user_email" property="userEmail"/>
-        <result column="user_right" property="userRight"/>
-        <result column="user_reg_date" property="userRegDate"/>
-        <result column="user_update_date" property="userUpdateDate"/>
-        <result column="user_status" property="userStatus"/>
-        <result column="user_penalty" property="userPenalty"/>
-        <result column="user_point" property="userPoint"/>
-        <result column="user_info_keep" property="userInfoKeep"/>
-        <result column="user_level" property="userLevel"/>
-    </resultMap>
+    
     
     <!-- 회원 가입 -->
 	<insert id="addUser" parameterType="User">
@@ -33,18 +16,199 @@
 	</insert>
 	
 	
+	<resultMap type="Login"						id="LoginResultMap">
+		<result column="log_code"				property="logCode" />
+		<result column="login_id"				property="loginId" />
+		<result column="login_date"				property="loginDate" />
+		<result column="logout_date"			property="logoutDate" />
+	</resultMap>
+	<!-- 휴면회원 목록 조회 -->
+	<select id="getLoginList" resultMap="LoginResultMap">
+		/* 로그 조회 */
+		SELECT 
+			 log_code
+			,login_id
+			,login_date
+			,logout_date
+		FROM 
+			tb_login
+	</select>	
+	
+	<resultMap type="Leave"						id="LeaveResultMap">
+		<result column="leave_code"				property="leaveCode" />
+		<result column="login_id"				property="loginId" />
+		<result column="leave_reason"			property="leaveReason" />
+		<result column="leave_date"				property="leaveDate" />
+		<result column="user_info_destroy"		property="userInfoDestroy" />
+	</resultMap>
+	<!-- 휴면회원 목록 조회 -->
+	<select id="getLeaveList" resultMap="LeaveResultMap">
+		/* 탈퇴회원 목록 조회 */
+		SELECT 
+			 leave_code
+			,login_id
+			,leave_reason
+			,leave_date
+			,user_info_destroy
+		FROM 
+			tb_leave
+	</select>
+	
+	<resultMap type="Dormant"					id="DormantResultMap">
+		<result column="dormant_code"			property="dormantCode" />
+		<result column="login_id"				property="loginId" />
+		<result column="dormant_status"			property="dormantStatus" />
+		<result column="dormant_change_date"	property="dormantChangeDate" />
+	</resultMap>
+	<!-- 휴면회원 목록 조회 -->
+	<select id="getDormantList" resultMap="DormantResultMap">
+		/* 휴면회원 목록 조회 */
+		SELECT 
+			 dormant_code
+			,login_id
+			,dormant_status
+			,dormant_change_date
+		FROM 
+			tb_dormant
+	</select>
+
+	
+    <resultMap 	type="Seller" 				id="SellerResultMap">
+		<result column="seller_code" 		property="sellerCode" />
+		<result column="seller_id" 			property="sellerId" />
+		<result column="store_name" 		property="storeName" />
+		<result column="seller_sort" 		property="sellerSort" />
+		<result column="bank_name" 			property="bankName" />
+		<result column="account" 			property="account" />
+		<result column="account_holder" 	property="accountHolder" />
+		<result column="license_num" 		property="licenseNum" />
+		<result column="store_address" 		property="storeAddress" />
+		<result column="store_phone" 		property="storePhone" />
+		<result column="store_email" 		property="storeEmail" />
+		<result column="license_img" 		property="licenseImg" />
+		<result column="online_licence_img" property="onlineLicenceImg" />
+		<result column="approve_ask_date" 	property="approveAskDate" />
+		<result column="approve_date" 		property="approveDate" />
+		<result column="approve_check" 		property="approveCheck" />
+		<result column="approve_id" 		property="approveId" />
+		    <association property="goodsInfo" 			javaType="Goods">
+				<id 	column="goods_code" 			property="goodsCode"/>
+				<result column="goods_small_category"	property="goodsSmallCategory"/>
+				<result column="seller_id" 				property="sellerId"/>
+				<result column="goods_name" 			property="goodsName"/>
+				<result column="goods_content" 			property="goodsContent"/>
+				<result column="goods_price" 			property="goodsPrice"/>
+				<result column="goods_discount_rate" 	property="goodsDiscountRate"/>
+				<result column="goods_post_price"		property="goodsPostPrice"/>
+				<result column="goods_stock" 	 		property="goodsStock"/>
+				<result column="soldout_check" 	 		property="soldoutCheck"/>
+				<result column="stop_sale_check" 	 	property="stopSaleCheck"/>
+				<result column="package_post_check" 	property="packagePostCheck"/>
+				<result column="regular_deliver_check" 	property="regularDeliverCheck"/>
+				<result column="reg_date" 	 			property="regDate"/>
+				<result column="goods_report_amount" 	property="goodsReportAmount"/>
+				<result column="image_file" 	 		property="imageFile"/>
+		    </association>
+    </resultMap>
+    
+	<!-- 판매자 목록 조회 -->
+    <select id="getSellerList" resultMap="SellerResultMap">
+    	/* 판매자 목록 조회 */
+    	SELECT 
+			 s.seller_code
+			,s.seller_id
+			,s.store_name
+			,s.seller_sort
+			,s.bank_name
+			,s.account
+			,s.account_holder
+			,s.license_num
+			,s.store_address
+			,s.store_phone
+			,s.store_email
+			,s.license_img
+			,s.online_licence_img
+			,s.approve_ask_date
+			,s.approve_date
+			,s.approve_check
+			,s.approve_id
+			,g.goods_code
+			,g.goods_name
+			,g.goods_price
+			,g.goods_stock
+			,g.reg_date
+		FROM 
+			tb_seller AS s
+			LEFT JOIN
+			tb_goods AS g
+			ON
+			s.seller_id = g.seller_id
+		<trim prefix="where" prefixOverrides="AND |OR ">
+			<if test="searchValue != null and searchValue != ''">
+				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%');
+			</if>
+		</trim>
+    </select>
+    
+    
+    <resultMap 	type="User" 				id="UserResultMap">
+        <result column="user_id" 			property="userId"/>
+        <result column="user_pw" 			property="userPw"/>
+        <result column="user_name" 			property="userName"/>
+        <result column="user_gender" 		property="userGender"/>
+        <result column="user_nickname" 		property="userNickname"/>
+        <result column="user_address" 		property="userAddress"/>
+        <result column="user_phone" 		property="userPhone"/>
+        <result column="user_email" 		property="userEmail"/>
+        <result column="user_right" 		property="userRight"/>
+        <result column="user_reg_date" 		property="userRegDate"/>
+        <result column="user_update_date" 	property="userUpdateDate"/>
+        <result column="user_status" 		property="userStatus"/>
+        <result column="user_penalty" 		property="userPenalty"/>
+        <result column="user_point" 		property="userPoint"/>
+        <result column="user_info_keep" 	property="userInfoKeep"/>
+        <result column="user_level" 		property="userLevel"/>
+	        <association property="rightDto" 		javaType="Right">
+				<id 	 column="user_right" 		property="userRight"/>
+				<result  column="right_status" 		property="rightStatus"/>
+				<result  column="reg_id" 			property="regId"/>
+				<result  column="reg_date" 			property="regDate"/>
+				<result  column="use_check" 		property="useCheck"/>
+		    </association>
+	        <association property="levelBuyer" 			javaType="LevelBuyerCategory">
+				<id 	 column="level_code" 			property="levelCode"/>
+				<result  column="level_name" 			property="levelName"/>
+				<result  column="reg_id" 				property="regId"/>
+				<result  column="level_reg_date" 		property="levelRegDate"/>
+				<result  column="use_check" 			property="useCheck"/>
+				<result  column="buyer_price_terms" 	property="buyerPriceTerms"/>
+				<result  column="save_rate" 			property="saveRate"/>
+				<result  column="level_code_npk" 		property="levelCodeNpk"/>
+		    </association>
+	        <association property="levelSeller" 		javaType="LevelSellerCategory">
+				<id 	 column="level_code" 			property="levelCode"/>
+				<result  column="level_name" 			property="levelName"/>
+				<result  column="reg_id" 				property="regId"/>
+				<result  column="level_reg_date" 		property="levelRegDate"/>
+				<result  column="use_check" 			property="useCheck"/>
+				<result  column="seller_price_terms" 	property="sellerPriceTerms"/>
+				<result  column="seller_score_terms" 	property="sellerScoreTerms"/>
+				<result  column="seller_review_terms"	property="sellerReviewTerms"/>
+				<result  column="level_code_npk" 	 	property="levelCodeNpk"/>
+		    </association>  
+	</resultMap>  
 	<!-- 회원 권한 조회 -->
-	<select id="getLevelList" resultType="Level">
+	<select id="getRightList" resultType="Right">
 		/* 회원 권한 조회 */
 		SELECT
-			 l.user_level		AS userRightGruop
-			,l.level_status		AS rightStatus
+			 r.user_right		AS userRightGruop
+			,r.right_status		AS rightStatus
 		FROM 
-			tb_level AS l
+			tb_right AS r
 	</select>
-    
+	
     <!-- 회원 목록 조회 -->
-    <select id="getUserList" resultMap="userResultMap">
+    <select id="getUserList" resultMap="UserResultMap">
     	/* 회원 목록 조회 */
     	SELECT
 			 u.user_id
@@ -56,7 +220,7 @@
 			,u.user_phone
 			,u.user_email
 			,u.user_right
-			,l.level_status
+			,r.right_status
 			,u.user_reg_date
 			,u.user_update_date
 			,u.user_status
@@ -67,9 +231,15 @@
 		FROM 
 			tb_user AS u
 			INNER JOIN 
-			tb_level AS l
+			tb_right AS r
 			ON 
-			u.user_right = l.user_level;
+			u.user_right = r.user_right
+		<trim prefix="where" prefixOverrides="AND |OR ">
+			<if test="searchValue != null and searchValue != ''">
+				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%');
+			</if>
+		</trim>
+		ORDER BY u.user_id
     </select>
 
     <select id="userLogin" parameterType="String" resultType="String">
@@ -78,7 +248,7 @@
         WHERE user_id = #{userId};
     </select>
 
-    <select id="getLoginUserInfo" parameterType="String" resultMap="userResultMap">
+    <select id="getLoginUserInfo" parameterType="String" resultMap="UserResultMap">
         SELECT user_name,
                user_right
         FROM tb_user

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<!-- 검색바 -->
 	<div th:fragment="categorySearchFragment">
-		<form action="#"  method="post">
+		<form th:action="@{/admin/category/searchCategory}"  method="post">
 			<select name="searchKey">
 				<option value="memberId">PK</option>
 				<option value="memberName">카테고리명</option>
