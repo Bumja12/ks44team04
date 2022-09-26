@@ -4,7 +4,7 @@
 <div th:fragment="reportModal">
 
       <button type="button" class="btn btn-dark" data-toggle="modal" data-target=".report" id="reportModal" data-backdrop="static">신고하기</button>
-          <form th:action="@{/admin/report/report}" method="get">
+          <form id="setReport" th:action="@{/admin/report/report}" method="get">
           <div class="modal fade report" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
 		    <div class="modal-dialog modal-dialog-centered">
 		        <div class="modal-content">
@@ -14,30 +14,31 @@
 		            </div>
 		            <div class="modal-body">
 		                <h3>신고 대상 ID 및 내용</h3> 
+		                
 		                <input type="hidden" name="reportedId" value="seller01">
 		                <input type="hidden" name="reportCategory" value="4">
 		                <input type="hidden" name="reportWhat" value="board006">
 		                <input type="hidden" name="reportResult" value="대기중">
-			          <input type="text" name="reportReason" style="width: 500px; height: 200px; font-size: 20px;">
+			          <input type="text" id="reportReason" name="reportReason" style="width: 500px; height: 200px; font-size: 20px;">
 			         
 				         <h3>신고 사유 </h3>
 				         <div style="font-size: 23px;">
 				          <label style="margin-right: 40px;">
-				            <input type="radio" name="reportReason" value="report_reason_1" >스팸/도배글
+				            <input type="radio" id="reportCode" name="reportCode" value="report_reason_1" >스팸/도배글
 				          </label>
 				          <label>
-				            <input type="radio" name="reportReason" value="report_reason_2">타인 개인정보 노출
+				            <input type="radio" id="reportCode" name="reportCode" value="report_reason_2">타인 개인정보 노출
 				          </label>
 				          <br>
 				          <label style="margin-right: 93px;"> 
-				            <input type="radio" name="reportReason" value="report_reason_3">음란물
+				            <input type="radio" id="reportCode" name="reportCode" value="report_reason_3">음란물
 				          </label>
 				          <label> 
-				            <input type="radio" name="reportReason" value="report_reason_4">불쾌한 표현
+				            <input type="radio" id="reportCode" name="reportCode" value="report_reason_4">불쾌한 표현
 				          </label>
 				          <br>
 				          <label> 
-				            <input type="radio" name="reportReason" value="report_reason_5">욕설/생명경시/혐호표현
+				            <input type="radio" id="reportCode" name="reportCode" value="report_reason_5">욕설/생명경시/혐호표현
 				          </label>
 				         </div>
 				
@@ -51,8 +52,8 @@
 					 </div>
         			 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="submit"  class="btn btn-primary" id="reportAdd">Save changes</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+						<button type="submit"  class="btn btn-primary" id="reportAdd">신고</button>
 					</div>
 				</div>
 			</div>
