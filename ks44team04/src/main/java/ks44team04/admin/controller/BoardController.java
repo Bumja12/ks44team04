@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ks44team04.admin.service.BoardService;
+import ks44team04.service.BoardService;
 import ks44team04.dto.Board;
 import ks44team04.dto.BoardComment;
 import ks44team04.dto.BoardLike;

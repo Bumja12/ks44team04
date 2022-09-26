@@ -17,7 +17,7 @@ public class Goods {
     private String regularDeliverCheck;
     private String regDate;
     private int goodsReportAmount;
-    private String imageFile;
+    private String goodsFile;
     
 	private User userInfo;
 	public User getUserInfo() {
@@ -148,12 +148,12 @@ public class Goods {
         this.goodsReportAmount = goodsReportAmount;
     }
 
-    public String getImageFile() {
-        return imageFile;
+    public String getGoodsFile() {
+        return goodsFile;
     }
 
-    public void setImageFile(String imageFile) {
-        this.imageFile = imageFile;
+    public void setGoodsFile(String goodsFile) {
+        this.goodsFile = goodsFile;
     }
 
     @Override
@@ -174,7 +174,7 @@ public class Goods {
                 ", regularDeliverCheck='" + regularDeliverCheck + '\'' +
                 ", regDate='" + regDate + '\'' +
                 ", goodsReportAmount=" + goodsReportAmount +
-                ", imageFile='" + imageFile + '\'' +
+                ", goodsFile='" + goodsFile + '\'' +
                 '}';
     }
 }

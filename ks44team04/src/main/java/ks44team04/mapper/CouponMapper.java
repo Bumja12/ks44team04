@@ -1,4 +1,4 @@
-package ks44team04.admin.mapper;
+package ks44team04.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;

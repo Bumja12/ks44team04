@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ks44team04.admin.service.GoodsService;
+import ks44team04.service.GoodsService;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsQnaList;
 
