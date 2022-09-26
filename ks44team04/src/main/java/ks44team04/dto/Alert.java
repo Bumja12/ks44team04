@@ -8,7 +8,7 @@ public class Alert {
     private String regDate;
     private String modifyId;
     private String modifyDate;
-
+    
     public String getAlertCode() {
         return alertCode;
     }

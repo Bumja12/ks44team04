@@ -8,6 +8,15 @@ public class AlertSend {
     private String sendId;
     private String receiveDate;
     private String sendDate;
+    
+    private Alert alertInfo;
+    public Alert getAlertInfo() {
+    	return alertInfo;
+    }
+    
+    public void setAlertInfo(Alert alertInfo) {
+    	this.alertInfo = alertInfo;
+    }
 
     public String getAlertSend() {
         return alertSend;
