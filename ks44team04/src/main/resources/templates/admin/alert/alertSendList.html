@@ -48,7 +48,7 @@
 						<table class=" table table-bordered" style="background-color: white;">
 							<tbody>
 								<tr>
-									<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>알림선택</b></td>
+									<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>알림제목</b></td>
 									<td class="col-md-10">
 										<div class="form-inline">
 											<div class="form-group">
@@ -56,7 +56,7 @@
 													<select class="form-control" id="alertSearchOption" style="width: 250px;">
 														<option selected>- 전체검색 -</option>
 														<th:block  th:if="${not #lists.isEmpty(alertList)}" th:each="l : ${alertList}">														
-															<option th:value="${l.alertCode}">[[${l.alertContent}]]</option>
+															<option th:value="${l.alertCode}">[[${l.alertTitle}]]</option>
 														</th:block>
 													</select>
 												</div>
@@ -114,7 +114,7 @@
 								<input type="checkbox" id="checkAll" class="flat">
 							</th>
 							<th>알림전송</th>
-							<th>알림코드</th>
+							<th>제목</th>
 							<th>수신자</th>
 							<th>발신자</th>
 							<th>수신일시</th>
@@ -123,16 +123,16 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${not #lists.isEmpty(alertSendList)}" th:each="a : ${alertSendList}">
+						<tr th:if="${not #lists.isEmpty(alertSendList)}" th:each="l : ${alertSendList}">
 							<td>
 								<input type="checkbox" class="indivChecks flat">
 							</td>
-							<td th:text="${a.alertSend}"></td>
-							<td th:text="${a.alertCode}"></td>
-							<td th:text="${a.receiveId}"></td>
-							<td th:text="${a.sendId}"></td>
-							<td th:text="${a.receiveDate}"></td>
-							<td th:text="${a.sendDate}"></td>
+							<td th:text="${l.alertSend}"></td>
+							<td th:text="${l.alertInfo.alertTitle}"></td>
+							<td th:text="${l.receiveId}"></td>
+							<td th:text="${l.sendId}"></td>
+							<td th:text="${l.receiveDate}"></td>
+							<td th:text="${l.sendDate}"></td>
 							<td>
 								<a href="#"><i class="fa fa-close"></i> 삭제</a>
 							</td>
