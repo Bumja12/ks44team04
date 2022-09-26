@@ -11,7 +11,7 @@
     <groupId>ks44team04</groupId>
     <artifactId>ks44team04</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>ks44team04</name>
     <description>ks44team04</description>
     <properties>
