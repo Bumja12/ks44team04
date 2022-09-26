@@ -1,12 +1,11 @@
 package ks44team04.admin.controller;
 
-import ks44team04.admin.service.UserService;
+import ks44team04.service.UserService;
 import ks44team04.dto.Right;
 import ks44team04.dto.Seller;
 import ks44team04.dto.Dormant;
 import ks44team04.dto.Leave;
 import ks44team04.dto.Login;
-import ks44team04.dto.Report;
 
 import ks44team04.dto.User;
 import org.slf4j.Logger;

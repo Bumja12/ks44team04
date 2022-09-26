@@ -1,6 +1,6 @@
 package ks44team04.admin.controller;
 
-import ks44team04.admin.service.ReportService;
+import ks44team04.service.ReportService;
 import ks44team04.dto.Report;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class ReportController {
     
     @PostMapping("/report/report")
     public String report(Report report){
-    	reportService.report(report);
+    	reportService.setReport(report);
     
     	return "redirect:/admin/report/reportList";
     }

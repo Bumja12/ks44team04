@@ -1,4 +1,4 @@
-package ks44team04.admin.service;
+package ks44team04.service;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import ks44team04.admin.mapper.CouponMapper;
+import ks44team04.mapper.CouponMapper;
 import ks44team04.dto.Coupon;
 
 @Service
