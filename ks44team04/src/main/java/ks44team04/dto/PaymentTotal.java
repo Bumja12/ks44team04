@@ -138,6 +138,16 @@ public class PaymentTotal {
 		this.refundAccount = refundAccount;
 	}
 
+	@Override
+	public String toString() {
+		return "PaymentTotal [orderDetailCode=" + orderDetailCode + ", couponPrice=" + couponPrice + ", usePoint="
+				+ usePoint + ", orderStatus=" + orderStatus + ", goodsCode=" + goodsCode + ", goodsName=" + goodsName
+				+ ", savePoint=" + savePoint + ", orderPrice=" + orderPrice + ", orderAmount=" + orderAmount
+				+ ", paymentMethod=" + paymentMethod + ", cardCompany=" + cardCompany + ", cardNumber=" + cardNumber
+				+ ", approvePrice=" + approvePrice + ", refundBank=" + refundBank + ", refundAccount=" + refundAccount
+				+ "]";
+	}
+
 	
 
 	
