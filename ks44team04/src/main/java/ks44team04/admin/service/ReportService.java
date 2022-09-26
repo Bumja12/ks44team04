@@ -15,6 +15,7 @@ public class ReportService {
     public ReportService(ReportMapper reportMapper) {
         this.reportMapper = reportMapper;
     }
+    
     //신고하기
     public void report(Report report) {
     	   int result = reportMapper.report(report);
