@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}"></title>
+</head>
+<body>
+	<a href="/">메인화면으로</a><br><br>
+	
+	<table border="1">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>파일이름</th>
+				<th>다운로드</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${not #lists.isEmpty(fileList)}" th:each="l, index : ${fileList}">
+				<td th:text="${index.count}"></td>
+				<td th:text="${l.fileOriginalName}"></td>
+				<td>
+					<a th:href="@{/file/download(fileIdx=${l.fileIdx})}">다운로드</a>
+				</td>
+				<td>
+					<img th:src="@{'/' + ${l.filePath}}" th:alt="${l.fileOriginalName}" style="width: 100px;"/>
+				</td>
+			</tr>
+			<tr th:unless="${not #lists.isEmpty(fileList)}">
+				<td colspan="3">목록이 없습니다.</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
