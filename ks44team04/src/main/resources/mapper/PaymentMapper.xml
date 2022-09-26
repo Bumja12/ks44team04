@@ -50,33 +50,7 @@
 			<result column="approve_price"		property="approvePrice"/>
 		</collection>
 	</resultMap>
-	
-	<!-- 결제페이지종합 -->
-	<resultMap type="PaymentTotal" id="paymentMap">
-		<result column="order_detail_code" 	property="orderDetailCode"/>
-		<result column="goods_code" 		property="goodsCode"/>
-		<result column="payment_method"		property="paymentMethod"/>
-		<result column="card_company" 		property="cardCompany"/>
-		<result column="card_number" 		property="cardNumber"/>
-		<result column="refund_bank" 		property="refundBank"/>
-		<result column="refund_account" 	property="refundAccount"/>
-		<result column="order_price" 		property="orderPrice"/>
-		<result column="approve_date"		property="approveDate"/>
-		<result column="approve_price"		property="approvePrice"/>
-		<result column="goods_name"			property="goodsName"/>
-		<result column="coupon_price"		property="couponPrice"/>
-		<result column="use_point"			property="usePoint"/>
-		<result column="save_point"			property="savePoint"/>
-		<result column="order_amount"		property="orderAmount"/>
-		<result column="order_status"		property="orderStatus"/>		
-		<association property="paymentInfo" 	javaType="PaymentInfo">
-			<id 	column="order_num" 		property="orderNum"/>
-			<result column="buyer_id" 		property="buyerId"/>
-			<result column="order_date" 	property="orderDate"/>
-		</association>
 
-		
-	</resultMap>
 	
 	<!-- 결제상세목록 -->
 	<select id="paymentDetailList" resultMap="paymentResultMap" fetchSize="100">
