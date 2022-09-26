@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<!-- 검색바 -->
 	<div th:fragment="regularAskSearchFragment">
-		<form action="#"  method="post">
+		<form th:action="@{/admin/regularAsk/searchRegularAsk}"  method="post">
 			<select name="searchKey">
 				<option value="regularAskCategory">카테고리</option>
 				<option value="regularAskTitle">제목</option>
