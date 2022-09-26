@@ -23,7 +23,7 @@
 
 	<div class="page-title">
 		<div class="title_left">
-			<h3>탈퇴회원 목록</h3>
+			<h3>알림 전송 내역</h3>
 		</div>
 
 		<div class="title_right">
@@ -36,8 +36,8 @@
 		<div class="x_panel">
 			<div class="x_title">
 				<h5>
-					검색 필터 <a class="collapse-link"><i class="fa fa-chevron-up"
-						style="color: #b4b7ba;"></i></a>
+					검색 필터 
+					<a class="collapse-link"><i class="fa fa-chevron-up" style="color: #b4b7ba;"></i></a>
 				</h5>
 				<div class="clearfix"></div>
 			</div>
@@ -48,11 +48,18 @@
 						<table class=" table table-bordered" style="background-color: white;">
 							<tbody>
 								<tr>
-									<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>회원아이디</b></td>
+									<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>알림선택</b></td>
 									<td class="col-md-10">
 										<div class="form-inline">
 											<div class="form-group">
-												<input type="text" class="form-control text" style="padding: 0px;">
+												<div class="form-group">
+													<select class="form-control" id="alertSearchOption" style="width: 250px;">
+														<option selected>- 전체검색 -</option>
+														<th:block  th:if="${not #lists.isEmpty(alertList)}" th:each="l : ${alertList}">														
+															<option th:value="${l.alertCode}">[[${l.alertContent}]]</option>
+														</th:block>
+													</select>
+												</div>
 											</div>
 										</div>
 									</td>
@@ -106,30 +113,32 @@
 							<th style="width: 30px;">
 								<input type="checkbox" id="checkAll" class="flat">
 							</th>
-							<th>탈퇴코드</th>
-							<th>회원아이디</th>
-							<th>탈퇴사유</th>
-							<th>탈퇴일시</th>
-							<th>정보파기날짜</th>
+							<th>알림전송</th>
+							<th>알림코드</th>
+							<th>수신자</th>
+							<th>발신자</th>
+							<th>수신일시</th>
+							<th>발신일시</th>
 							<th>관리</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${not #lists.isEmpty(leaveList)}" th:each="l : ${leaveList}">
+						<tr th:if="${not #lists.isEmpty(alertSendList)}" th:each="a : ${alertSendList}">
 							<td>
 								<input type="checkbox" class="indivChecks flat">
 							</td>
-							<td th:text="${l.leaveCode}"></td>
-							<td th:text="${l.loginId}"></td>
-							<td th:text="${l.leaveReason}"></td>
-							<td th:text="${l.leaveDate}"></td>
-							<td th:text="${l.userInfoDestroy}"></td>
+							<td th:text="${a.alertSend}"></td>
+							<td th:text="${a.alertCode}"></td>
+							<td th:text="${a.receiveId}"></td>
+							<td th:text="${a.sendId}"></td>
+							<td th:text="${a.receiveDate}"></td>
+							<td th:text="${a.sendDate}"></td>
 							<td>
 								<a href="#"><i class="fa fa-close"></i> 삭제</a>
 							</td>
 						</tr>
-						<tr th:unless="${not #lists.isEmpty(leaveList)}">
-							<td colspan="7" class="text-center">탈퇴한 회원이 없습니다.</td>
+						<tr th:unless="${not #lists.isEmpty(alertSendList)}">
+							<td colspan="7" class="text-center">알림 전송 내역이 없습니다.</td>
 						</tr>
 					</tbody>
 				</table>

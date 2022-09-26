@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ks44team04.admin.mapper.ReportMapper">
+<mapper namespace="ks44team04.mapper.ReportMapper">
 
     <resultMap type="Report" id="reportListResultMap">
         <result column="report_history_code" property="reportHistoryCode"/>
@@ -25,10 +25,10 @@
     
     
      <!-- 신고 하기 -->
-     <insert id="getReport">
+     <insert id="setReport" parameterType="Report">
      INSERT INTO tb_report
 	(report_history_code, reported_id, reporting_id, report_category, report_code, report_what, report_reason, board_file, report_date, report_result, report_result_reason, report_result_date, report_approve_id, penalty_point, total_penalty_point, ban_date)
-	VALUES ('#{reportHistoryCode}', '#{reportedId}', '#{reportingId}', '#{reportCategory}', '#{reportCode}', '#{reportWhat}', '#{reportReason}', '#{boardFile}', NOW(), '#{reportResult}', '#{reportResultReason}', NOW(), '#{reportApproveId}', 0, 0, 0)
+	VALUES (#{reportHistoryCode}, #{reportedId}, #{reportingId}, #{reportCategory}, #{reportCode}, #{reportWhat}, #{reportReason}, #{boardFile}, NOW(), #{reportResult}, #{reportResultReason}, NOW(), #{reportApproveId}, 0, 0, 0)
      </insert>
      
     <!-- 신고 목록 조회 -->

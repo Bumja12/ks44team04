@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ks44team04.admin.mapper.UserMapper">
+<mapper namespace="ks44team04.mapper.UserMapper">
 
     
     
@@ -107,7 +107,7 @@
 				<result column="regular_deliver_check" 	property="regularDeliverCheck"/>
 				<result column="reg_date" 	 			property="regDate"/>
 				<result column="goods_report_amount" 	property="goodsReportAmount"/>
-				<result column="image_file" 	 		property="imageFile"/>
+				<result column="goods_file" 	 		property="goodsFile"/>
 		    </association>
     </resultMap>
     
