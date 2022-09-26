@@ -1,10 +1,128 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title th:text="${title}"></title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/userDefault}">
 
-</body>
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<!-- 상단 이미지 -->
+	<div class="hero-wrap hero-bread" style="background-image: url('/user/images/bg_1.jpg');">
+    	<div class="container">
+        	<div class="row no-gutters slider-text align-items-center justify-content-center">
+          		<div class="col-md-9 ftco-animate text-center">
+          			<p class="breadcrumbs"><span class="mr-2"><a href="http://localhost/user">Home</a></span></p>
+            		<h1 class="mb-0 bread">자주 묻는 질문</h1>
+          		</div>
+        	</div>
+    	</div>
+    </div>
+    
+    <!-- 자주 묻는 질문 목록 -->
+	<section class="ftco-section">
+    	<div class="container">
+    		<div class="row justify-content-center">
+    			<div class="col-md-12 mb-5 text-center">
+    				<ul class="product-category">
+    					<li><a href="#" class="active">전체</a></li>
+    					<li><a href="#">회원/정보 관리</a></li>
+    					<li><a href="#" style="">배송</a></li>
+    					<li><a href="#">반품/교환/환불</a></li>
+    					<li><a href="#">주문/결제</a></li>
+    					<li><a href="#">정기 배송</a></li>
+    					<li><a href="#">포인트/할인쿠폰</a></li>
+    				</ul>
+    			</div>
+    		</div>
+    		
+    		
+    		<div class="row">
+				<div class="col-md-12 col-sm-12">
+             		<div class="x_panel">
+             			<div class="x_content">
+               				<!--아코디언 시작 -->
+               				<div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+			           	   	 	<!-- 자주 묻는 질문 제목 1 -->
+			                	<div class="panel">
+				                 	<h4 class="panel-title">
+					                    <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" 
+					                    href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: rgb(34, 34, 34);">
+				                     	자주 묻는 질문 제목 1
+				                     	</a>
+				                     </h4>
+				                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+				                     	<div class="panel-body mt-3">
+				                   			<p>자주 묻는 질문 내용 1</p>
+				                     	</div>
+				                 	 </div>
+                				</div>
+				                <!-- 자주 묻는 질문 제목 2 -->
+				                <div class="panel">
+					            	<h4 class="panel-title">
+				                    	<a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" 
+				                     	href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: rgb(34, 34, 34);">
+					                 	자주 묻는 질문 제목 2
+					                 	</a>
+					                </h4>
+				                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+				                    	<div class="panel-body mt-3">
+									 		<p>자주 묻는 질문 내용 2</p>                     
+								 		</div>
+				                 	</div>
+				                </div>
+                 				<!-- 자주 묻는 질문 제목 3 -->
+				                <div class="panel">
+				                	<h4 class="panel-title">
+				                		<a class="panel-heading collapsed" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" 
+				                		href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="color: rgb(34, 34, 34);">
+				                		자주 묻는 질문 제목 3
+				                   		</a>
+				                   	</h4>
+				                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+				                    	<div class="panel-body mt-3">
+				                        	<p>자주 묻는 질문 내용 3</p>     
+				                     	</div>
+				                    </div>
+				                </div> <!-- </div class="panel"> -->
+			                </div> <!-- </div class="accordion" id="accordion" role="tablist" aria-multiselectable="true"> -->
+               				<!-- 아코디언 끝 -->
+
+           				</div> <!-- </div class="x_content"> -->
+          			</div> <!-- </div class="x_panel"> -->
+       			</div> <!-- </div class="col-md-12 col-sm-12"> -->
+			</div> <!-- <div class="row"> -->
+			
+			<div class="row mt-5">
+		    	<div class="col text-center">
+		        	<div class="block-27">
+		            	<ul>
+		                	<li><a href="#">&lt;</a></li>
+			                <li class="active"><span>1</span></li>
+			                <li><a href="#">2</a></li>
+			                <li><a href="#">3</a></li>
+			                <li><a href="#">4</a></li>
+			                <li><a href="#">5</a></li>
+			                <li><a href="#">&gt;</a></li>
+		             	</ul>
+		           </div>
+		    	</div>
+	        </div> <!-- <div class="row mt-5"> -->
+	        
+    	</div> <!-- </div class="container"> -->	
+	</section>
+</th:block>
 </html>
+
+
+
+
+
+
+
+
+
+
+
