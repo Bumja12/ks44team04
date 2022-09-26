@@ -29,26 +29,39 @@
 </style>
 </th:block>
 
-
-<th:block layout:fragment="customTopJs">
+  <th:block layout:fragment="customTopJs">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script>
 	$(function() {
 		$('#removeModal').on('show.bs.modal', function (event) {
 			  var button = $(event.relatedTarget)
-			  var recipient = button.data('whatever')
+			//var recipient = button.data('whatever')
 			  var modal = $(this)
 			  var modalDialog = $(this).find(".modal-dialog");
-		    }
-			  modal.find('.modal-title').text('삭제하시겠습니까?')
-			  modal.find('.modal-body input').val(recipient)
+			//modal.find('.modal-title').text('삭제하시겠습니까?')
+			//modal.find('.modal-body input').val(recipient)
 			});
 		$('#removeModal').on('hidden.bs.modal', function (event) {
-			$(this).find('form')[0].reset()
+			 var modal = $(this)
+			 $(this).find('form')[0].reset()
+			 $('#pwCheck').text('');
+		});
+		$('#removeBtn').click(function(){
+			var adminPw = $('input[name="adminPw"]').val();
+			
+			if(typeof adminPw == 'undefined' || adminPw == null || adminPw == ''){
+				$('#pwCheck').text('비밀번호를 입력해주세요.');
+				$('input[name="adminPw"]').focus()
+				return false;
+			}
+			
+			if(adminPw){
+				$('#goodsDeleteForm').submit();
+			}
 		});
 	});
 	</script>
-</th:block>
+</th:block> 
 
 <th:block layout:fragment="customContents">
 	<div class="page-title">
@@ -182,24 +195,20 @@
         <h5 class="modal-title" id="removeModalLabel" style="font-weight: bold;">삭제하시겠습니까?</h5>
       </div>
       <div class="modal-body">
-        <form>
+        <form id="goodsDeleteForm" method="post">
           <div class="form-group">
             <label for="adminPw" class="col-form-label">관리자 비밀번호</label>
-            <input type="password" class="form-control" id="recipient-name">
+            <input type="password" class="form-control" id="adminPw" name="adminPw">
+            <p id="pwCheck" style="color:gray; font-weight: bold;"> </p>
           </div>
         </form>
       </div>
       <div class="modal-footer" style="text-align: center;">
-        <button type="button" class="btn btn-dark">확인</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-dark" id="removeBtn">확인</button>
+        <button type="button" class="btn btn-secondary" id='closeBtn' data-dismiss="modal">닫기</button>
       </div>
     </div>
   </div>
 </div>
 </th:block>
-<!-- <th:block layout:fragment="customJsScript">
-
-    <th:block th:replace="/fragments/adminJs :: datatablesFragment"></th:block>
-
-</th:block>  -->
 </html>

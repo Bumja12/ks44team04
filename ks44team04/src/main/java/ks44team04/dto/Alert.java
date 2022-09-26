@@ -3,12 +3,13 @@ package ks44team04.dto;
 public class Alert {
 
     private String alertCode;
+    private String alertTitle;
     private String alertContent;
     private String regId;
     private String regDate;
     private String modifyId;
     private String modifyDate;
-
+    
     public String getAlertCode() {
         return alertCode;
     }
@@ -17,7 +18,15 @@ public class Alert {
         this.alertCode = alertCode;
     }
 
-    public String getAlertContent() {
+    public String getAlertTitle() {
+		return alertTitle;
+	}
+
+	public void setAlertTitle(String alertTitle) {
+		this.alertTitle = alertTitle;
+	}
+
+	public String getAlertContent() {
         return alertContent;
     }
 
@@ -61,6 +70,7 @@ public class Alert {
     public String toString() {
         return "Alert{" +
                 "alertCode='" + alertCode + '\'' +
+                ", alertTitle='" + alertTitle + '\'' +
                 ", alertContent='" + alertContent + '\'' +
                 ", regId='" + regId + '\'' +
                 ", regDate='" + regDate + '\'' +

@@ -3,103 +3,227 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/adminDefault}">
 
-<th:block layout:fragment="customTitle">
-    <title th:text="${title}"></title>
-</th:block>
+	<th:block layout:fragment="customTitle">
+	    <title th:text="${title}"></title>
+	</th:block>
 
-<th:block layout:fragment="customContents">
+	<th:block layout:fragment="customContents">
+	
+		<div class="row" style="display: block;">
+			<div class="col-sm-12">
+	        	<div class="x_panel">
+	            	<div class="x_title">
+	                	<h2>자주 묻는 질문 목록</h2>
+	                    <div class="clearfix"></div>
+	            	</div>
+	            	<div class="x_content">
+	            		<!-- 검색 조각 -->
+		            	<div th:include="admin/regularAsk/regularAsk_search :: regularAskSearchFragment" style="margin-bottom: 10px"></div>
+		            	<div class="clearfix"></div>
+		            	<!-- 테이블 -->
+						<div class="card-box table-responsive">
+			            	<table id="datatable-checkbox" class="table table-hover table-bordered bulk_action" style="width:100%">
+			    				<thead>
+			                    	<tr>
+	                				    <th>
+											<input type="checkbox" id="checkAllBtn" >
+										</th>
+				                        <th>자주 묻는 질문 PK</th>
+				                        <th>카테고리</th>
+				                        <th>회원 아이디 FK(작성자)</th>
+				                        <th>제목</th>
+				                        <th>사용 여부</th>
+			                         	<th>등록일</th>
+			                        	<th>수정일</th>
+			                    	</tr>
+			                   	</thead>
+								<tbody>
+			                 		<tr style="cursor:pointer;">
+			                 			<td>
+											<input type="checkbox" class="checkAll" name="checkAll1">
+			             				</td>
+			                          	<td class="moveToDetail">regularAsk001</td>
+			                          	<td class="moveToDetail">회원/정보 관리</td>
+			                          	<td class="moveToDetail">admin01</td>
+			                          	<td class="moveToDetail">제목1</td>
+			                            <td class="moveToDetail">Y</td>
+			                        	<td class="moveToDetail">2021-01-01 00:00:00</td>
+			                        	<td class="moveToDetail">2022-05-22 00:00:00</td>
+			                    	</tr>
+			                 		<tr style="cursor:pointer;">
+			                 			<td>
+											<input type="checkbox" class="checkAll" name="checkAll2">
+			             				</td>
+			                          	<td class="moveToDetail">regularAsk002</td>
+			                          	<td class="moveToDetail">배송</td>
+			                          	<td class="moveToDetail">admin01</td>
+			                          	<td class="moveToDetail">제목2</td>
+			                            <td class="moveToDetail">Y</td>
+			                        	<td class="moveToDetail">2021-01-01 00:00:00</td>
+			                        	<td class="moveToDetail">2022-05-15 00:00:00</td>
+			                    	</tr>
+			                 		<tr style="cursor:pointer;">
+			                 			<td>
+											<input type="checkbox" class="checkAll" name="checkAll3">
+			             				</td>
+			                          	<td class="moveToDetail">regularAsk003</td>
+			                          	<td class="moveToDetail">반품/교환/환불</td>
+			                          	<td class="moveToDetail">admin01</td>
+			                          	<td class="moveToDetail">제목3</td>
+			                            <td class="moveToDetail">Y</td>
+			                        	<td class="moveToDetail">2021-01-01 00:00:00</td>
+			                        	<td class="moveToDetail">2022-05-20 00:00:00</td>
+			                    	</tr>
+			                 		<tr style="cursor:pointer;">
+			                 			<td>
+											<input type="checkbox" class="checkAll" name="checkAll4">
+			             				</td>
+			                          	<td class="moveToDetail">regularAsk004</td>
+			                          	<td class="moveToDetail">주문/결제</td>
+			                          	<td class="moveToDetail">admin01</td>
+			                          	<td class="moveToDetail">제목4</td>
+			                            <td class="moveToDetail">Y</td>
+			                        	<td class="moveToDetail">2021-01-01 00:00:00</td>
+			                        	<td class="moveToDetail">2022-06-01 00:00:00</td>
+			                    	</tr>
+			                 		<tr style="cursor:pointer;" >
+			                 			<td>
+											<input type="checkbox" class="checkAll" name="checkAll5">
+			             				</td>
+			                          	<td class="moveToDetail">regularAsk005</td>
+			                          	<td class="moveToDetail">정기 배송</td>
+			                          	<td class="moveToDetail">admin01</td>
+			                          	<td class="moveToDetail">제목5</td>
+			                            <td class="moveToDetail">Y</td>
+			                        	<td class="moveToDetail">2021-01-01 00:00:00</td>
+			                        	<td class="moveToDetail">2022-06-01 00:00:00</td>
+			                    	</tr>
+			                 		<tr style="cursor:pointer;">
+			                 			<td>
+											<input type="checkbox" class="checkAll" name="checkAll6">
+			             				</td>
+	    								<td class="moveToDetail">regularAsk006</td>
+			                          	<td class="moveToDetail">포인트/할인쿠폰</td>
+			                          	<td class="moveToDetail">admin01</td>
+			                          	<td class="moveToDetail">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+			                            <td class="moveToDetail">Y</td>
+			                        	<td class="moveToDetail">2021-01-01 00:00:00</td>
+			                        	<td class="moveToDetail">2022-06-03 00:00:00</td>
+			                    	</tr>
+								</tbody>
+			        		</table>
+						</div> <!-- </div class="card-box table-responsive"> -->
+						
+						<!-- 등록, 삭제 버튼 -->
+	           			<div class="row">
+	           				<div class="col-sm-12">
+		           				<div class="ml-auto">
+		           					<a class="btn btn-success" th:href="@{/admin/regularAsk/addRegularAsk}" role="button">등록</a>
+		           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+		           				</div>
+	           				</div> <!-- </div class="col-sm-12"> -->
+	           			</div> <!-- </div class="row"> -->
+						
+						<div class="clearfix"></div>
+	           			
+	            	</div> <!-- </div class="x_content"> -->
+	            </div> <!-- </div class="x_panel"> -->
+	            
+			</div> <!-- </div class="col-md-12 col-sm-12"> -->
+		</div> <!-- </div class="row"> -->
+		
+		<!-- 삭제 모달 -->
+	    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+	    	<div class="modal-dialog modal-lg">
+	        	<div class="modal-content">
+		        	<div class="modal-header">
+			        	<h4 class="modal-title" id="myModalLabel">자주 묻는 질문 삭제</h4>
+			            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+			            </button>
+		          	</div>
+		            <div class="modal-body">
+		            	<h4>정말 자주 묻는 질문을 삭제하시겠습니까?</h4>
+		            </div>
+		            <div class="modal-footer">
+			            <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+			            <button type="button" id="deleteBtn" class="btn btn-danger ">삭제</button>
+		            </div>
+	        	</div>
+	      	</div>
+	    </div>
+	    
+	    <!-- 모달 기능 -->
+	 
+		
+	</th:block>
 
-	<div class="row" style="display: block;">
-		<div class="col-sm-12">
-        	<div class="x_panel">
-            	<div class="x_title">
-                	<h2>자주 묻는 질문 목록</h2>
-                    <div class="clearfix"></div>
-            	</div>
-            	<div class="x_content">
-            		<!-- 검색 조각 -->
-	            	<div th:include="admin/regularAsk/regularAsk_search :: regularAskSearchFragment" style="margin-bottom: 10px"></div>
-	            	<div class="clearfix"></div>
-	            	<!-- 테이블 -->
-					<div class="card-box table-responsive">
-		            	<table id="datatable-checkbox" class="table table-hover table-bordered bulk_action" style="width:100%">
-		    				<thead>
-		                    	<tr>
-			                        <th>자주 묻는 질문 PK</th>
-			                        <th>자주 묻는 질문 FK</th>
-			                        <th>회원 아이디 FK(작성자)</th>
-			                        <th>제목</th>
-			                        <th>사용 여부</th>
-		                         	<th>등록일</th>
-		                        	<th>수정일</th>
-		                    	</tr>
-		                   	</thead>
-							<tbody>
-		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
-		                          	<td>regularAsk001</td>
-		                          	<td>regularAskCategory01</std>
-		                          	<td>admin01</td>
-		                          	<td>제목1</td>
-		                            <td>Y</td>
-		                        	<td>2021-01-01 00:00:00</td>
-		                        	<td>2022-05-22 00:00:00</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
-		                          	<td>regularAsk002</td>
-		                          	<td>regularAskCategory02</td>
-		                          	<td>admin01</td>
-		                          	<td>제목2</td>
-		                            <td>Y</td>
-		                        	<td>2021-01-01 00:00:00</td>
-		                        	<td>2022-05-15 00:00:00</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
-		                          	<td>regularAsk003</td>
-		                          	<td>regularAskCategory03</td>
-		                          	<td>admin01</td>
-		                          	<td>제목3</td>
-		                            <td>Y</td>
-		                        	<td>2021-01-01 00:00:00</td>
-		                        	<td>2022-05-20 00:00:00</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
-		                          	<td>regularAsk004</td>
-		                          	<td>regularAskCategory04</td>
-		                          	<td>admin01</td>
-		                          	<td>제목4</td>
-		                            <td>Y</td>
-		                        	<td>2021-01-01 00:00:00</td>
-		                        	<td>2022-06-01 00:00:00</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
-		                          	<td>regularAsk005</td>
-		                          	<td>regularAskCategory05</td>
-		                          	<td>admin01</td>
-		                          	<td>제목5</td>
-		                            <td>Y</td>
-		                        	<td>2021-01-01 00:00:00</td>
-		                        	<td>2022-06-01 00:00:00</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;" onClick="location.href='regularAskDetail'">
-    								<td>regularAsk006</td>
-		                          	<td>regularAskCategory06</td>
-		                          	<td>admin01</td>
-		                          	<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-		                            </td>
-		                            <td>Y</td>
-		                        	<td>2021-01-01 00:00:00</td>
-		                        	<td>2022-06-03 00:00:00</td>
-		                    	</tr>
-							</tbody>
-		        		</table>
-					</div> <!-- </div class="card-box table-responsive"> -->
-					<div class="clearfix"></div>
-           			
-            	</div> <!-- </div class="x_content"> -->
-            </div> <!-- </div class="x_panel"> -->
-            
-		</div> <!-- </div class="col-md-12 col-sm-12"> -->
-	</div> <!-- </div class="row"> -->
-
-</th:block>
+	<th:block layout:fragment="customJsScript">
+		<script type="text/javascript">
+			// 삭제 버튼 탐색
+			var deleteModal = document.getElementsByClassName('deleteModal');	
+			
+			// 전체 체크 버튼 탐색
+			let checkAllBtn = document.getElementById('checkAllBtn');	
+			
+			// 모든 체크박스 탐색
+			var checkAll = document.getElementsByClassName('checkAll');	
+			
+			// 삭제할 자주 묻는 질문 PK 담는 배열 객체 선언			
+			var removeElement =  [];
+			
+			// 전체 체크 버튼에 이벤트 등록
+			checkAllBtn.addEventListener('click', function(){
+				for(var i=0; i<checkAll.length; i++){
+					// 전체 체크 버튼의 checked 속성을 모든 체크박스에 대입함으로써 전체 체크 버튼을 누르면 모든 체크박스에가 체크/해체
+					checkAll[i].checked = this.checked;
+				}
+			});
+			
+			// 삭제 모달 이벤트 등록
+			for(var i=0; i<deleteModal.length; i++){
+				deleteModal[i].addEventListener('click', function(){
+					console.log('deleteModal Event');
+					var deleteBtn = document.getElementById('deleteBtn');	
+					deleteBtn.addEventListener('click', function(){
+						console.log(deleteBtn);
+						location.href='removeRegularAsk';
+					});
+				});
+			}
+			
+			// 자주 묻는 질문 PK값 구해서 관리자 자주 묻는 질문 내역 화면으로 매핑하는 함수
+			$(function(){
+				// moveToDetail 클래스를 가지고 있는 모든 <td> 탐색
+				var $moveToDetail = $('.moveToDetail');
+				
+				// 모든 체크박스 탐색
+				var $checkAll = $('.checkAll');
+				
+				// 자주 묻는 질문 PK값을 저장하는 배열 객체 removeElement 선언
+				var removeElement = [];
+				
+				// moveToDetail 클래스를 가지고 있는 모든 <td>에 이벤트 등록
+				$moveToDetail.each(function(i){
+					$(this).click(function(){
+						 var $allTd = $(this).parent().children();
+						console.log($allTd[1].innerText); // String type
+						var $regularAskPK = $allTd[1].innerText
+						location.href='regularAskDetail?regular_ask=' + $regularAskPK;
+					});
+				});
+				
+				
+				$checkAll.each(function(i){
+					$(this).click(function(){
+						var $regularAskPK = $(this).parent().next().Text();
+						console.log($regularAskPK);
+// 						removeElement.push($regularAskPK);
+// 						console.log(removeElement);
+					});
+				});
+				
+                
+			});
+		</script>
+	</th:block>
 </html>

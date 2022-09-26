@@ -1,12 +1,11 @@
 package ks44team04.admin.controller;
 
-import ks44team04.admin.service.UserService;
+import ks44team04.service.UserService;
 import ks44team04.dto.Right;
 import ks44team04.dto.Seller;
 import ks44team04.dto.Dormant;
 import ks44team04.dto.Leave;
 import ks44team04.dto.Login;
-import ks44team04.dto.Report;
 
 import ks44team04.dto.User;
 import org.slf4j.Logger;
@@ -18,8 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -90,7 +91,18 @@ public class UserController {
 	public String getSellerList(Model model) {
 		List<Seller> sellerList = userService.getSellerList();
 		log.info("판매자 목록 ::: {}", sellerList);
-		model.addAttribute("sellerList", sellerList);
+		List<Seller> sellerListY = sellerList.stream()
+											 .filter(t -> StringUtils.equals("Y", t.getApproveCheck()))
+											 .collect(Collectors.toList());
+		List<Seller> sellerListN = sellerList.stream()
+											 .filter(t -> StringUtils.equals("N", t.getApproveCheck()))
+											 .collect(Collectors.toList());
+		
+		log.info("판매자 목록 Y ::: {}", sellerListY);
+		log.info("판매자 목록 N ::: {}", sellerListN);
+		
+		model.addAttribute("sellerListY", sellerListY);
+		model.addAttribute("sellerListN", sellerListN);
 		model.addAttribute("title", "판매자목록");
 		
 		return "admin/user/sellerList";

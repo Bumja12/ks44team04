@@ -12,7 +12,7 @@
 	<script>
 		$(function() {
 			let $checks = $('.indivChecks');
-			$('#rowAllCheck').click(function() {
+			$('checkAll').click(function() {
 				$checks.prop('checked', $(this).prop('checked'));
 			});
 		});
@@ -104,7 +104,7 @@
 					<thead>
 						<tr>
 							<th style="width: 30px;">
-								<input type="checkbox" id="check-all" class="flat">
+								<input type="checkbox" id="checkAll" class="flat">
 							</th>
 							<th>탈퇴코드</th>
 							<th>회원아이디</th>
@@ -117,7 +117,7 @@
 					<tbody>
 						<tr th:if="${not #lists.isEmpty(leaveList)}" th:each="l : ${leaveList}">
 							<td>
-								<input type="checkbox" class="flat" name="table_records">
+								<input type="checkbox" class="indivChecks flat">
 							</td>
 							<td th:text="${l.leaveCode}"></td>
 							<td th:text="${l.loginId}"></td>

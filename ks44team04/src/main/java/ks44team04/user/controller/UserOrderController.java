@@ -1,12 +1,11 @@
 package ks44team04.user.controller;
 
 import ks44team04.dto.AddressList;
-import ks44team04.user.service.UserAddressService;
+import ks44team04.service.UserAddressService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;

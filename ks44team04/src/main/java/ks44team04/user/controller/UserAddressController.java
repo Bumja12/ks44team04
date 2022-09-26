@@ -1,7 +1,7 @@
 package ks44team04.user.controller;
 
 import ks44team04.dto.AddressList;
-import ks44team04.user.service.UserAddressService;
+import ks44team04.service.UserAddressService;
 import ks44team04.util.CodeIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

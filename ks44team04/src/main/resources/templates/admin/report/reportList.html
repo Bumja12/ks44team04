@@ -139,67 +139,40 @@
               </table>
             </div>
           </div>
-           <button type="button" class="btn btn-dark" data-toggle="modal" data-target=".report" id="reportModal" data-backdrop="static">신고하기</button>
-          
-          <div class="modal fade report" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-		    <div class="modal-dialog modal-dialog-centered">
-		        <div class="modal-content">
-		
-		            <div class="modal-header" style="font-size: 30PX; background-color: #2A3F54; color: white ; text-align: center;">
-		              	신고 하기 
-		            </div>
-		            <div class="modal-body">
-		                <h3>신고 대상 ID 및 내용</h3> 
-			          <input type="text" style="width: 500px; height: 200px; font-size: 20px;">
-			         
-				         <h3>신고 사유 </h3>
-				         <div style="font-size: 23px;">
-				          <label style="margin-right: 40px;">
-				            <input type="radio" name="reportCheck" value="스팸/도배글" >스팸/도배글
-				          </label>
-				          <label>
-				            <input type="radio" name="reportCheck" value="타인 개인정보 노출">타인 개인정보 노출
-				          </label>
-				          <br>
-				          <label style="margin-right: 93px;"> 
-				            <input type="radio" name="reportCheck" value="음란물">음란물
-				          </label>
-				          <label> 
-				            <input type="radio" name="reportCheck" value="불쾌한 표현">불쾌한 표현
-				          </label>
-				          <br>
-				          <label> 
-				            <input type="radio" name="reportCheck" value="욕설/생명경시/혐호표현">욕설/생명경시/혐호표현
-				          </label>
-				         </div>
-				
-				        <h3 style="margin-top: 30px;">증거사진 첨부<i class="fa fa-image" style="margin-left: 5px;"></i></h3> 
-				        <label>  <input type="file" id="reportImage" accept="image/*" onchange="setreportImage(event);" multiple/>
-				          <div id="image_container"></div></label>
-					</div>
-					 <br>
-					 <div style="text-align: center;">
-        				 <i class="fa fa-exclamation" ></i>  신고해주신 내용은 관리자 검토 후 내부정책에 의거 조치가 진행됩니다.
-					 </div>
-        			 
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
-					</div>
-				</div>
-			</div>
-		</div>
+          <!-- reportModel 불러오기  -->
+          <div th:include="admin/report/report :: reportModal"></div>
 		</div>
          
           
 </th:block>
-
+<!-- jQuery -->
+    <th:block layout:fragment="customScript">
+	    <script>
+		    function setreportImage(event) {
+			    for (var image of event.target.files) {
+			          var reader = new FileReader();
+			
+			          reader.onload = function(event) {
+			            var img = document.createElement("img");
+			            img.setAttribute("src", event.target.result);
+			            document.querySelector("div#image_container").appendChild(img);
+			          };
+			
+			          console.log(image);
+			          reader.readAsDataURL(image);
+			        }
+			      }
+				});
+	
+	    </script>
+	        </th:block>
 <th:block layout:fragment="customJsScript">
 
-    <th:block th:replace="/fragments/adminJs :: datatablesFragment"></th:block>
+    <th:block th:replace="fragments/adminJs :: datatablesFragment"></th:block>
 
 </th:block>
 
+	
 
 
  <script src="../vendors/jquery/dist/jquery.min.js"></script>
