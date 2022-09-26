@@ -81,6 +81,7 @@
 								<input type="checkbox" id="checkAll" class="flat">
 							</th>
 							<th>알림코드</th>
+							<th>알림제목</th>
 							<th>상세내용</th>
 							<th>아이디(등록)</th>
 							<th>등록일시</th>
@@ -95,6 +96,7 @@
 								<input type="checkbox" class="indivChecks flat">
 							</td>
 							<td th:text="${l.alertCode}"></td>
+							<td th:text="${l.alertTitle}"></td>
 							<td th:text="${l.alertContent}"></td>
 							<td th:text="${l.regId}"></td>
 							<td th:text="${l.regDate}"></td>

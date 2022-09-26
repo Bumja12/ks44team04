@@ -31,8 +31,19 @@ public class AlertController {
 
 		log.info("알림전송내역 ::: {}", alertSendList);
 		model.addAttribute("alertList", alertList);
-		model.addAttribute("alertList", alertSendList);
+		model.addAttribute("alertSendList", alertSendList);
 		model.addAttribute("title", "알림전송내역");
+		
+		/*
+		 * if(alertSendList != null) { for(AlertSend alertSend : alertSendList) { String
+		 * alertCode = alertSend.getAlertCode(); for(Alert alert : alertList) {
+		 * if(alertCode.contains("0001")) {
+		 * alertSend.setAlertCode(alert.getAlertTitle()); }else
+		 * if(alertCode.contains("0002")) {
+		 * alertSend.setAlertCode(alert.getAlertTitle());
+		 * 
+		 * } } } }
+		 */
 		
 		return "admin/alert/alertSendList";
 	}

@@ -1,8 +1,8 @@
 package ks44team04.dto;
 
-public class GoodsQnaList {
+public class GoodsQna {
 
-    private int goodsQna;
+    private int goodsQnaNum;
     private String goodsCode;
     private String goodsQnaCategory;
     private String buyerId;
@@ -11,9 +11,7 @@ public class GoodsQnaList {
     private String goodsQnaDate;
     private String secretCheck;
     private int goodsQnaPw;
-    private String sellerId;
-    private String goodsQnaAnswer;
-    private String answerDate;
+    private String qnaStatus;
     
     
 	private User userInfo;
@@ -40,12 +38,12 @@ public class GoodsQnaList {
 		this.goodsQnaCategoryInfo = goodsQnaCategoryInfo;
 	}
 	
-    public int getGoodsQna() {
-        return goodsQna;
+    public int getGoodsQnaNum() {
+        return goodsQnaNum;
     }
 
-    public void setGoodsQna(int goodsQna) {
-        this.goodsQna = goodsQna;
+    public void setGoodsQnaNum(int goodsQnaNum) {
+        this.goodsQnaNum = goodsQnaNum;
     }
 
     public String getGoodsCode() {
@@ -112,34 +110,18 @@ public class GoodsQnaList {
         this.goodsQnaPw = goodsQnaPw;
     }
 
-    public String getSellerId() {
-        return sellerId;
+    public String getQnaStatus() {
+        return qnaStatus;
     }
 
-    public void setSellerId(String sellerId) {
-        this.sellerId = sellerId;
-    }
-
-    public String getGoodsQnaAnswer() {
-        return goodsQnaAnswer;
-    }
-
-    public void setGoodsQnaAnswer(String goodsQnaAnswer) {
-        this.goodsQnaAnswer = goodsQnaAnswer;
-    }
-
-    public String getAnswerDate() {
-        return answerDate;
-    }
-
-    public void setAnswerDate(String answerDate) {
-        this.answerDate = answerDate;
+    public void setQnaStatus(String qnaStatus) {
+        this.qnaStatus = qnaStatus;
     }
 
     @Override
     public String toString() {
         return "GoodsQndList{" +
-                "goodsQna='" + goodsQna + '\'' +
+                "goodsQnaNum='" + goodsQnaNum + '\'' +
                 ", goodsCode='" + goodsCode + '\'' +
                 ", goodsQnaCategory='" + goodsQnaCategory + '\'' +
                 ", buyerId='" + buyerId + '\'' +
@@ -148,9 +130,7 @@ public class GoodsQnaList {
                 ", goodsQnaDate='" + goodsQnaDate + '\'' +
                 ", secretCheck='" + secretCheck + '\'' +
                 ", goodsQnaPw=" + goodsQnaPw +
-                ", sellerId='" + sellerId + '\'' +
-                ", goodsQnaAnswer='" + goodsQnaAnswer + '\'' +
-                ", answerDate='" + answerDate + '\'' +
+                ", qnaStatus='" + qnaStatus + '\'' +
                 '}';
     }
 }
