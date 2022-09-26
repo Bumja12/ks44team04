@@ -5,8 +5,34 @@
         
 <mapper namespace="ks44team04.mapper.GoodsMapper">
 
-    <resultMap type="GoodsQnaList" id="goodsQnaMap">
-        <id 	column="goods_qna" 			property="goodsQna"/>
+	<resultMap type="GoodsAnswer" id="goodsAnswerMap">
+        <id 	column="goods_qna_answer" 			property="goodsQnaAnswer"/>
+        <result column="goods_qna_num" 				property="goodsQnaNum"/>
+        <result column="seller_id" 					property="sellerId"/>
+        <result column="goods_answer_comment" 		property="goodsAnswerComment"/>
+        <result column="answer_date" 				property="answerDate"/>
+    </resultMap>	
+    
+    <!-- 상품 답변 조회
+    <select id="getGoodsQnaAnswer" resultMap="goodsQnaAnswerMap" fetchSize="100" >
+    SELECT
+		 qa.goods_qna_answer
+		,gq.goods_qna_num
+		,qa.seller_id
+		,qa.goods_answer_content
+		,qa.answer_date
+	FROM
+		tb_goods_qna_answer AS qa
+		INNER JOIN
+		tb_goods_qna AS gq
+		ON
+		qa.goods_qna_num = gq.goods_qna_num;
+    
+     -->
+    
+
+    <resultMap type="GoodsQna" id="goodsQnaMap">
+        <id 	column="goods_qna_num" 			property="goodsQnaNum"/>
         <result column="goods_qna_category" property="goodsQnaCategory"/>
         <result column="goods_code" 		property="goodsCode"/>
         <result column="buyer_id" 			property="buyerId"/>
@@ -15,9 +41,7 @@
         <result column="goods_qna_date" 	property="goodsQnaDate"/>
         <result column="secret_check" 		property="secretCheck"/>
         <result column="goods_qna_pw" 		property="goodsQnaPw"/>
-        <result column="seller_id" 			property="sellerId"/>
-        <result column="goods_qna_answer" 	property="goodsQnaAnswer"/>
-        <result column="answer_date" 		property="answerDate"/>
+        <result column="qna_status" 		property="qnaStatus"/>
 			<association property="goodsInfo" javaType="Goods">
 		        <id 	column="goods_code" 			property="goodsCode"/>
 		        <result column="goods_small_category" 	property="goodsSmallCategory"/>
@@ -64,10 +88,10 @@
     </resultMap>
     
     <!-- 상품 문의 조회 -->
-    <select id="getGoodsQnaList" resultMap="goodsQnaMap" fetchSize="100" >
+    <select id="getGoodsQna" resultMap="goodsQnaMap" fetchSize="100" >
 		/* 상품 문의 조회 */
 		SELECT
-			 q.goods_qna
+			 q.goods_qna_num
 			,g.goods_code
 			,g.goods_name
 			,q.goods_qna_category
@@ -77,12 +101,10 @@
 			,q.goods_qna_date
 			,q.secret_check
 			,q.goods_qna_pw
-			,g.seller_id
-			,q.goods_qna_answer
-			,q.answer_date
+			,q.qna_status
 			,qc.category_name
 		FROM
-			tb_goods_qna_list AS q
+			tb_goods_qna AS q
 			INNER JOIN
 			tb_goods AS g
 			ON
