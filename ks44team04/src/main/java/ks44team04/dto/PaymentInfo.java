@@ -4,22 +4,27 @@ import java.util.List;
 
 public class PaymentInfo {
 	
-	private List<PaymentHistory> paymentHistory;
+	private List<PaymentTotal> paymentTotal;
 	
-	
-	public List<PaymentHistory> getPaymentHistory() {
-		return paymentHistory;
+	public List<PaymentTotal> getPaymentTotal() {
+		return paymentTotal;
 	}
-	public void setPaymentHistory(List<PaymentHistory> paymentHistory) {
-		this.paymentHistory = paymentHistory;
+	public void setPaymentTotal(List<PaymentTotal> paymentTotal) {
+		this.paymentTotal = paymentTotal;
 	}
-
 	
 	private String orderNum;
     private String buyerId;
     private String orderDate;
+    private String approveDate;
     
-    public String getOrderNum() {
+    public String getApproveDate() {
+		return approveDate;
+	}
+	public void setApproveDate(String approveDate) {
+		this.approveDate = approveDate;
+	}
+	public String getOrderNum() {
 		return orderNum;
 	}
 	public void setOrderNum(String orderNum) {
@@ -37,12 +42,11 @@ public class PaymentInfo {
 	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
-	
 	@Override
 	public String toString() {
-		return "PaymentInfo [paymentHistory=" + paymentHistory + ", orderNum=" + orderNum + ", buyerId=" + buyerId
-				+ ", orderDate=" + orderDate + "]";
+		return "PaymentInfo [paymentTotal=" + paymentTotal + ", orderNum=" + orderNum + ", buyerId=" + buyerId
+				+ ", orderDate=" + orderDate + ", approveDate=" + approveDate + "]";
 	}
-
+	
     
 }

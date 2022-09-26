@@ -61,23 +61,23 @@ th {
 					</thead>
 					<tbody>
 						<th:block th:if="${not #lists.isEmpty(paymentList)}" th:each="p : ${paymentList}">
-							<th:block th:if="${not #lists.isEmpty(p.paymentHistory)}" th:each="ph, status : ${p.paymentHistory}">
+							<th:block th:if="${not #lists.isEmpty(p.paymentTotal)}" th:each="pt, status : ${p.paymentTotal}">
 								<tr>
 									<th:block th:if="${status.index == 0}">				
 										<td th:rowspan="${status.size}" th:text="${p.orderNum}"></td>
 										<td th:rowspan="${status.size}" th:text="${p.buyerId}"></td>
 									</th:block>	
-									<td th:text="${ph.goodsName}"></td>
-									<td style="width: 60px" th:text="${ph.orderAmount}"></td>
-									<td th:text="'+ ' + ${ph.savePoint}"></td>
-									<td th:text="'- ' + ${ph.couponPrice}"></td>
-									<td th:text="'- ' + ${ph.usePoint}"></td>									
-									<td th:text="${'₩' + #numbers.formatInteger(ph.orderPrice, 3, 'COMMA')}"></td>
+									<td th:text="${pt.goodsName}"></td>
+									<td style="width: 60px" th:text="${pt.orderAmount}"></td>
+									<td th:text="'+ ' + ${pt.savePoint}"></td>
+									<td th:text="'- ' + ${pt.couponPrice}"></td>
+									<td th:text="'- ' + ${pt.usePoint}"></td>									
+									<td th:text="${'₩' + #numbers.formatInteger(pt.orderPrice, 3, 'COMMA')}"></td>
 									<td><a href="#"><i class="fa fa-truck"></i> 배송정보</a></td>
 									<th:block th:if="${status.index == 0}">
 										<td th:rowspan="${status.size}" th:text="${p.orderDate}"></td>
 									</th:block>
-									<td th:text="${ph.orderStatus}"></td>
+									<td th:text="${pt.orderStatus}"></td>
 									<td>
 										<a href="#"><i class="fa fa-edit"></i> 수정</a>
 										<a href="#"><i class="fa fa-close"></i>삭제</a>

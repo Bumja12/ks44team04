@@ -2,22 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head th:replace="/fragments/userHead :: headFragment"></head>
+<head th:replace="fragments/userHead :: headFragment"></head>
 
 <body class="goto-here">
 
         <!-- start : top navigation -->
-        <div th:replace="/fragments/userNav :: navFragment"></div>
+        <div th:replace="fragments/userNav :: navFragment"></div>
         <!-- end : top navigation -->
 
         <!-- page content -->
             <th:block layout:fragment="customContents"></th:block>
 
-        <div th:replace="/fragments/userFooter :: footerFragment"></div>
+        <div th:replace="fragments/userFooter :: footerFragment"></div>
 
-<th:block th:replace="/fragments/userJs :: jsFragment"></th:block>
+<th:block th:replace="fragments/userJs :: jsFragment"></th:block>
 
-</th:block>
 <!-- 사용자 정의 JsScript 파일-->
 <th:block layout:fragment="customJsScript"></th:block>
 <!-- 사용자 정의 Script-->
