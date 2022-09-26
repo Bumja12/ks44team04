@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ks44team04.admin.mapper.CouponMapper">
+<mapper namespace="ks44team04.mapper.CouponMapper">
 	
 	<resultMap type="Coupon" id="couponListMapper">
 		<id 	column="coupon_code" 		property="couponCode"/>
