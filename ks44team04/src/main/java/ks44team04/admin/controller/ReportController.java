@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -26,12 +25,7 @@ public class ReportController {
         this.reportService = reportService;
     }
     
-    @PostMapping("/report/report")
-    public String report(Report report){
-    	reportService.setReport(report);
-    
-    	return "redirect:/admin/report/reportList";
-    }
+ 
     
     @GetMapping("/report/report")
     public String getReport(Report report) {
