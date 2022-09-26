@@ -8,15 +8,7 @@ public class AlertSend {
     private String sendId;
     private String receiveDate;
     private String sendDate;
-    
     private Alert alertInfo;
-    public Alert getAlertInfo() {
-    	return alertInfo;
-    }
-    
-    public void setAlertInfo(Alert alertInfo) {
-    	this.alertInfo = alertInfo;
-    }
 
     public String getAlertSend() {
         return alertSend;
@@ -66,6 +58,14 @@ public class AlertSend {
         this.sendDate = sendDate;
     }
 
+    public Alert getAlertInfo() {
+        return alertInfo;
+    }
+
+    public void setAlertInfo(Alert alertInfo) {
+        this.alertInfo = alertInfo;
+    }
+
     @Override
     public String toString() {
         return "AlertSend{" +
@@ -75,6 +75,7 @@ public class AlertSend {
                 ", sendId='" + sendId + '\'' +
                 ", receiveDate='" + receiveDate + '\'' +
                 ", sendDate='" + sendDate + '\'' +
+                ", alertInfo=" + alertInfo +
                 '}';
     }
 }
