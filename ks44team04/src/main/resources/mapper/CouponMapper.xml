@@ -4,6 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team04.mapper.CouponMapper">
 	
+	<resultMap type="CouponStatus" id="couponStatusMapper">
+		<id 	column="coupon_status_code" 	property="couponStatusCode"/>
+		<result column="buyer_id" 				property="buyerId"/>
+		<result column="admin_id" 				property="adminId"/>
+		<result column="coupon_issue_date" 		property="couponIssueDate"/>
+		<collection property="coupon" javaType="list" ofType="Coupon">
+			<result column="coupon_code" 		property="couponCode"/>
+			<result column="coupon_name" 		property="couponName"/>
+			<result column="discount_price" 	property="discountPrice"/>
+			<result column="price_terms" 		property="priceTerms"/>
+			<result column="end_date" 			property="endDate"/>
+			<result column="reg_id" 			property="regId"/>
+			<result column="reg_date" 			property="regDate"/>
+		</collection>
+	</resultMap>
+	
 	<resultMap type="Coupon" id="couponListMapper">
 		<id 	column="coupon_code" 		property="couponCode"/>
 		<result column="coupon_name" 		property="couponName"/>
@@ -14,6 +30,29 @@
 		<result column="reg_date" 			property="regDate"/>
 	</resultMap>
 	
+	<!-- 회원쿠폰보유현황 -->
+	<select id="couponStatus" resultMap="couponStatusMapper">
+		SELECT
+			c.coupon_code
+			,c.coupon_name
+			,c.discount_price
+			,c.price_terms
+			,c.end_date
+			,cs.coupon_status_code
+			,cs.coupon_code
+			,cs.buyer_id
+			,cs.admin_id
+			,cs.coupon_issue_date
+		FROM
+			tb_coupon AS c
+			INNER JOIN
+			tb_coupon_status AS cs
+			ON
+			c.coupon_code = cs.coupon_code
+		ORDER BY cs.coupon_issue_date;
+	</select>
+	
+	<!-- 쿠폰목록 -->
 	<select id="couponList" resultMap="couponListMapper">
 		SELECT
 			*

@@ -117,25 +117,23 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:if="${not #lists.isEmpty(sellerList)}" th:each="l : ${sellerList}">
-											<th:block th:if="${l.approveCheck == 'N'}">
-												<td th:text="${l.sellerId}"></td>
-												<td th:text="${l.storeName}"></td>
-												<td th:text="${l.accountHolder}"></td>
-												<td th:text="${l.bankName + l.account}"></td>
-												<td th:text="${l.storeAddress}"></td>
-												<td th:text="${l.storePhone}"></td>
-												<td th:text="${l.storeEmail}"></td>
-												<td th:text="${l.licenseImg}"></td>
-												<td th:text="${l.onlineLicenceImg}"></td>
-												<td th:text="${l.approveAskDate}"></td>
-												<td>
-													<a href="#"><i class="fa fa-check"></i> 승인 </a>
-													<a href="#"><i class="fa fa-times"></i> 승인거부 </a>
-												</td>
-											</th:block>
+										<tr th:if="${not #lists.isEmpty(sellerListN)}" th:each="l : ${sellerListN}">
+											<td th:text="${l.sellerId}"></td>
+											<td th:text="${l.storeName}"></td>
+											<td th:text="${l.accountHolder}"></td>
+											<td th:text="${l.bankName + l.account}"></td>
+											<td th:text="${l.storeAddress}"></td>
+											<td th:text="${l.storePhone}"></td>
+											<td th:text="${l.storeEmail}"></td>
+											<td th:text="${l.licenseImg}"></td>
+											<td th:text="${l.onlineLicenceImg}"></td>
+											<td th:text="${l.approveAskDate}"></td>
+											<td>
+												<a href="#"><i class="fa fa-check"></i> 승인 </a>
+												<a href="#"><i class="fa fa-times"></i> 승인거부 </a>
+											</td>
 										</tr>
-										<tr th:unless="${not #lists.isEmpty(sellerList)}">
+										<tr th:unless="${not #lists.isEmpty(sellerListN)}">
 											<td colspan="11" style="text-align: center;">대기중인 신청이 없습니다.</td>
 										</tr>
 									</tbody>
@@ -163,8 +161,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${not #lists.isEmpty(sellerList)}" th:each="l : ${sellerList}">
-							<th:block th:if="${l.approveCheck == 'Y'}">
+						<tr th:if="${not #lists.isEmpty(sellerListY)}" th:each="l : ${sellerListY}">
 								<td th:text="${l.sellerCode}"></td>
 								<td th:text="${l.sellerId}"></td>
 								<td th:text="${l.storeName}"></td>
@@ -180,9 +177,8 @@
 									<a href="#"><i class="fa fa-edit"></i> 수정</a>
 									<a href="#"><i class="fa fa-close"></i> 삭제</a>
 								</td>
-							</th:block>
 						</tr>
-						<tr th:unless="${not #lists.isEmpty(sellerList)}">
+						<tr th:unless="${not #lists.isEmpty(sellerListY)}">
 							<td class="text-center" colspan="11">등록된 판매자가 없습니다.</td>
 						</tr>
 					</tbody>

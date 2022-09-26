@@ -29,7 +29,7 @@
 		    				<thead>
 		                    	<tr>
 			                        <th>
-										<input type="checkbox" id="check-all" >
+										<input type="checkbox" class="checkAllBtn" >
 									</th>
 			                        <th>등급 코드 PK</th>
 			                        <th>등급 이름</th>
@@ -44,7 +44,7 @@
 							<tbody>
 		                 		<tr>
 		                		    <td>
-										<input type="checkbox" id="check-all" >
+										<input type="checkbox" class="checkAll">
 		             				</td>
 		                          	<td>levelBuyer01</td>
 		                          	<td>씨앗</td>
@@ -57,7 +57,7 @@
 		                    	</tr>
 		                 		<tr>
 		                		    <td>
-										<input type="checkbox" id="check-all" >
+										<input type="checkbox" class="checkAll">
 		             				</td>
 		                          	<td>levelBuyer02</td>
 		                          	<td>새싹</td>
@@ -70,7 +70,7 @@
 		                    	</tr>
 		                 		<tr>
 		                		    <td>
-										<input type="checkbox" id="check-all" >
+										<input type="checkbox" class="checkAll">
 		             				</td>
 		                          	<td>levelBuyer03</td>
 		                          	<td>잎새</td>
@@ -83,7 +83,7 @@
 		                    	</tr>
 		                 		<tr>
 		                		    <td>
-										<input type="checkbox" id="check-all" >
+										<input type="checkbox" class="checkAll">
 		             				</td>
 		                          	<td>levelBuyer04</td>
 		                          	<td>열매</td>
@@ -1145,13 +1145,15 @@
       	</div>
     </div>
     
-	<!-- 모달 기능 -->
-	<th:block layout:fragment="customJsScript">
-		<script type="text/javascript">
+</th:block> <!-- </th:block layout:fragment="customContents"> -->
+
+<th:block layout:fragment="customJsScript">
+	<script type="text/javascript">
+			<!-- 모달 기능 -->
+			// 목록 내에 삭제 버튼 탐색
 			var deleteModal = document.getElementsByClassName('deleteModal');	
 			
 			for(var i=0; i<deleteModal.length; i++){
-				console.log(deleteModal[i]);
 				deleteModal[i].addEventListener('click', function(){
 					console.log('deleteModal Event');
 					var deleteBtn = document.getElementById('deleteBtn');	
@@ -1162,8 +1164,33 @@
 				});
 			}
 			
+			$(function(){
+				
+				// 모든 체크박스 탐색
+				var $checkAll = $('.checkAll');
+				// 전체 체크 버튼 탐색
+				var $checkAllBtn = $('.checkAllBtn');
+				
+				// 자주 묻는 질문 PK값을 저장하는 배열 객체 removeElement 선언
+// 				var removeElement = [];
+				
+				$checkAllBtn.each(function(i){
+					$(this).click(function(){
+						let $table = $(this).parent().parent().parent().parent();
+						console.log($('$table.children()[1]' > 'tr'));
+						
+					});
+				});
+			});
+			
+			// 전체 체크 버튼에 이벤트 등록
+// 			checkAllBtn.addEventListener('click', function(){
+// 				for(var i=0; i<checkAll.length; i++){
+// 					// 전체 체크 버튼의 checked 속성을 모든 체크박스에 대입함으로써 전체 체크 버튼을 누르면 모든 체크박스에가 체크/해체
+// 					checkAll[i].checked = this.checked;
+// 				}
+// 			});
+
 		</script>
-	</th:block>
-	
 </th:block>
 </html>

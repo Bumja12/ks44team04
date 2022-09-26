@@ -17,8 +17,6 @@ public class PaymentTotal {
     private int approvePrice;
     private String refundBank;
     private String refundAccount;
-	private String approveDate;
-	private PaymentInfo paymentInfo;
 
 	public String getOrderDetailCode() {
 		return orderDetailCode;
@@ -140,42 +138,17 @@ public class PaymentTotal {
 		this.refundAccount = refundAccount;
 	}
 
-	public String getApproveDate() {
-		return approveDate;
-	}
-
-	public void setApproveDate(String approveDate) {
-		this.approveDate = approveDate;
-	}
-
-	public PaymentInfo getPaymentInfo() {
-		return paymentInfo;
-	}
-
-	public void setPaymentInfo(PaymentInfo paymentInfo) {
-		this.paymentInfo = paymentInfo;
-	}
-
 	@Override
 	public String toString() {
-		return "PaymentTotal{" +
-				"orderDetailCode='" + orderDetailCode + '\'' +
-				", couponPrice=" + couponPrice +
-				", usePoint=" + usePoint +
-				", orderStatus='" + orderStatus + '\'' +
-				", goodsCode='" + goodsCode + '\'' +
-				", goodsName='" + goodsName + '\'' +
-				", savePoint=" + savePoint +
-				", orderPrice=" + orderPrice +
-				", orderAmount=" + orderAmount +
-				", paymentMethod='" + paymentMethod + '\'' +
-				", cardCompany='" + cardCompany + '\'' +
-				", cardNumber='" + cardNumber + '\'' +
-				", approvePrice=" + approvePrice +
-				", refundBank='" + refundBank + '\'' +
-				", refundAccount='" + refundAccount + '\'' +
-				", approveDate='" + approveDate + '\'' +
-				", paymentInfo=" + paymentInfo +
-				'}';
+		return "PaymentTotal [orderDetailCode=" + orderDetailCode + ", couponPrice=" + couponPrice + ", usePoint="
+				+ usePoint + ", orderStatus=" + orderStatus + ", goodsCode=" + goodsCode + ", goodsName=" + goodsName
+				+ ", savePoint=" + savePoint + ", orderPrice=" + orderPrice + ", orderAmount=" + orderAmount
+				+ ", paymentMethod=" + paymentMethod + ", cardCompany=" + cardCompany + ", cardNumber=" + cardNumber
+				+ ", approvePrice=" + approvePrice + ", refundBank=" + refundBank + ", refundAccount=" + refundAccount
+				+ "]";
 	}
+
+	
+
+	
 }
