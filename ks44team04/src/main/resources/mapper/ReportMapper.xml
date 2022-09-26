@@ -47,6 +47,12 @@
 			tb_report AS r
 
     </select>
+    
+    <select id="getReportHistoryCode" resultType="String">
+	    SELECT report_history_code
+		FROM tb_report
+		ORDER BY report_history_code DESC LIMIT 1
+    </select>
    
 
    

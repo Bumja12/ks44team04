@@ -7,11 +7,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class ReportService {
-
-    private final ReportMapper	reportMapper;
-    
+	 private final ReportMapper	reportMapper;
+ 
     public ReportService(ReportMapper reportMapper) {
         this.reportMapper = reportMapper;
     }
@@ -28,5 +28,10 @@ public class ReportService {
     	System.out.println("신고리스트");
 		return reportList;
 	}
+    
+    public String getReportHistoryCode() {
+    	String reportHistoryCode = reportMapper.getReportHistoryCode();
+    	return reportHistoryCode;
+    }
 
 }

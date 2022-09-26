@@ -1,6 +1,7 @@
 package ks44team04.admin.controller;
 
 import ks44team04.service.ReportService;
+import ks44team04.util.CodeIndex;
 import ks44team04.dto.Report;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,13 +32,16 @@ public class ReportController {
     }
     
     @GetMapping("/report/report")
-    public String getReport(Model model) {
-    	log.info("/admin/repor getReport ReportController.java");
-    	List<Report> reportList = reportService.getReportList();
-    	
-    	model.addAttribute("title", "신고하기");
-		model.addAttribute("reportList", reportList);
-    	return "/admin/report/report";
+    public String getReport(Report report) {
+		 
+    	String repoterId = "buyer01";
+    	String reportHistoryCode = reportService.getReportHistoryCode();
+    	CodeIndex codeIndex = new CodeIndex();
+    	reportHistoryCode = codeIndex.codeIndex(reportHistoryCode, 15);
+    	log.info("---------------------------------, {}",reportHistoryCode);
+		/* model.addAttribute("title", "신고하기"); */
+		/* model.addAttribute("reportList", reportList); */
+    	return "redirect:/admin/report/reportList";
     }
 
     @GetMapping("/report/reportList")
@@ -48,7 +52,8 @@ public class ReportController {
     	model.addAttribute("title", "신고목록");
 		model.addAttribute("reportList", reportList);
 
-    	return "/admin/report/reportList";
+    	return "admin/report/reportList";
     }
   
+ 
 }

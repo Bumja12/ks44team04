@@ -16,5 +16,5 @@ public interface ReportMapper {
     //신고 하기 
     public int setReport(Report report);
     
-   
+    public String getReportHistoryCode();
 }
