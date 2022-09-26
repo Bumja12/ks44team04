@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ocltest.mapper.MemberMapper">
+
+	<resultMap type="Member" id="memberResultMap">
+		<result property="memberId" 		column="m_id"/>
+		<result property="memberPw" 		column="m_pw"/>
+		<result property="memberName" 		column="m_name"/>
+		<result property="memberLevel" 		column="m_level"/>
+		<result property="memberEmail" 		column="m_email"/>
+		<result property="memberAddr" 		column="m_addr"/>
+		<result property="memberRegDate" 	column="m_reg_date"/>
+	</resultMap>
+	<select id="getMemberList" parameterType="map" resultType="Member" fetchSize="1000">
+		SELECT 
+			 m_id			AS memberId
+			,m_pw			AS memberPw
+			,m_name			AS memberName
+			,m_level		AS memberLevel
+			,m_email		AS memberEmail
+			,m_addr			AS memberAddr
+			,m_reg_date		AS memberRegDate
+		FROM 
+			tb_member
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchKey != null and searchKey != ''.toString()">
+				${searchKey} LIKE CONCAT('%', #{searchValue} ,'%');
+			</if>
+		</trim>
+	</select>
+</mapper>

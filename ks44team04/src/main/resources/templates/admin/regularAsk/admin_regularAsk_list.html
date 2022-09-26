@@ -104,7 +104,7 @@
 			             				</td>
 	    								<td class="moveToDetail">regularAsk006</td>
 			                          	<td class="moveToDetail">포인트/할인쿠폰</td>
-			                          	<td>admin01</td>
+			                          	<td class="moveToDetail">admin01</td>
 			                          	<td class="moveToDetail">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
 			                            <td class="moveToDetail">Y</td>
 			                        	<td class="moveToDetail">2021-01-01 00:00:00</td>
@@ -169,7 +169,7 @@
 			var checkAll = document.getElementsByClassName('checkAll');	
 			
 			// 삭제할 자주 묻는 질문 PK 담는 배열 객체 선언			
-			var deleteElements =  [];
+			var removeElement =  [];
 			
 			// 전체 체크 버튼에 이벤트 등록
 			checkAllBtn.addEventListener('click', function(){
@@ -215,12 +215,14 @@
 				
 				$checkAll.each(function(i){
 					$(this).click(function(){
-						var $regularAskPK = $(this).parent().next().innerText;
+						var $regularAskPK = $(this).parent().next().Text();
 						console.log($regularAskPK);
 // 						removeElement.push($regularAskPK);
 // 						console.log(removeElement);
 					});
 				});
+				
+                
 			});
 		</script>
 	</th:block>
