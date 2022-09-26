@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ks44team04.user.mapper.UserAddressMapper">
+<mapper namespace="ks44team04.mapper.UserAddressMapper">
 
     <resultMap type="Order" id="orderResultMap">
         <result column="order_num" property="orderNum"/>
@@ -39,12 +39,12 @@
 
     <resultMap type="OrderCancel" id="orderCancelResultMap">
         <result column="order_cancel_code" property="orderDetailCode"/>
-        <result column="order_detail_code" property="orderNum"/>
-        <result column="payment_code" property="goodsCode"/>
-        <result column="buyer_id" property="orderAmount"/>
-        <result column="cancel_ask_date" property="orderOgPrice"/>
-        <result column="cancel_reason" property="orderPrice"/>
-        <result column="approve_date" property="orderStatus"/>
+        <result column="order_detail_code" property="orderDetailCode"/>
+        <result column="payment_code" property="paymentCode"/>
+        <result column="buyer_id" property="buyerId"/>
+        <result column="cancel_ask_date" property="cancelAskDate"/>
+        <result column="cancel_reason" property="cancelReason"/>
+        <result column="approve_date" property="approveDate"/>
     </resultMap>
 
     <resultMap type="OrderExchange" id="orderExchangeResultMap">
