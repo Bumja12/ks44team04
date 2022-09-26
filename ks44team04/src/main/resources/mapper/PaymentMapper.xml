@@ -27,11 +27,14 @@
 	</resultMap> -->
 	
 	<!-- 결제내역페이지 -->
-	<resultMap type="PaymentInfo" id="paymentListMap">
+	<resultMap type="PaymentInfo" id="paymentResultMap">
 		<result column="order_num" 		property="orderNum"/>
 		<result column="buyer_id" 		property="buyerId"/>
 		<result column="order_date" 	property="orderDate"/>
-		<collection property="paymentHistory" javaType="list" ofType="PaymentHistory">
+		<result column="approve_date"		property="approveDate"/>
+		<collection property="paymentTotal" javaType="list" ofType="PaymentTotal">
+			<result column="order_detail_code" 	property="orderDetailCode"/>
+			<result column="goods_code" 		property="goodsCode"/>
 			<result column="goods_name"			property="goodsName"/>
 			<result column="use_point"			property="usePoint"/>
 			<result column="save_point"			property="savePoint"/>
@@ -39,6 +42,12 @@
 			<result column="order_amount"		property="orderAmount"/>
 			<result column="order_status"		property="orderStatus"/>	
 			<result column="order_price" 		property="orderPrice"/>
+			<result column="payment_method"		property="paymentMethod"/>
+			<result column="card_company" 		property="cardCompany"/>
+			<result column="card_number" 		property="cardNumber"/>
+			<result column="refund_bank" 		property="refundBank"/>
+			<result column="refund_account" 	property="refundAccount"/>
+			<result column="approve_price"		property="approvePrice"/>
 		</collection>
 	</resultMap>
 	
@@ -70,7 +79,7 @@
 	</resultMap>
 	
 	<!-- 결제상세목록 -->
-	<select id="paymentDetailList" resultType="PaymentTotal" resultMap="paymentMap" fetchSize="100">
+	<select id="paymentDetailList" resultMap="paymentResultMap" fetchSize="100">
 		SELECT
 			*
 		FROM
@@ -78,6 +87,7 @@
 				o.order_num
 				,od.order_detail_code
 				,od.goods_code
+				,g.goods_name
 				,o.buyer_id
 				,p.payment_method
 				,cp.card_company
@@ -90,6 +100,10 @@
 				tb_order_detail AS od
 				ON
 				o.order_num = od.order_num
+				INNER JOIN
+				tb_goods AS g
+				ON
+				od.goods_code = g.goods_code
 				INNER JOIN
 				tb_payment AS p
 				ON
@@ -105,6 +119,7 @@
 				o.order_num
 				,od.order_detail_code
 				,od.goods_code
+				,g.goods_name
 				,o.buyer_id
 				,p.payment_method
 				,ap.refund_bank
@@ -118,6 +133,10 @@
 				ON
 				o.order_num = od.order_num
 				INNER JOIN
+				tb_goods AS g
+				ON
+				od.goods_code = g.goods_code
+				INNER JOIN
 				tb_payment AS p
 				ON
 				od.order_num = p.order_num
@@ -129,7 +148,7 @@
 	</select>
 	
 	<!-- 결제내역페이지 -->
-	<select id="paymentList" resultMap="paymentListMap" fetchSize="100">
+	<select id="paymentList" resultMap="paymentResultMap" fetchSize="100">
 		SELECT
 			o.order_num
 			,o.buyer_id
