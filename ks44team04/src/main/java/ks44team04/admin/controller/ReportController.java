@@ -1,7 +1,10 @@
 package ks44team04.admin.controller;
 
 import ks44team04.service.ReportService;
+import ks44team04.util.CodeIndex;
 import ks44team04.dto.Report;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,7 +20,7 @@ import java.util.List;
 public class ReportController {
 
     private ReportService reportService;
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    private static final Logger log = LoggerFactory.getLogger(ReportController.class);
 
     public ReportController(ReportService reportService) {
         this.reportService = reportService;
@@ -31,13 +34,21 @@ public class ReportController {
     }
     
     @GetMapping("/report/report")
-    public String getReport(Model model) {
-    	log.info("/admin/repor getReport ReportController.java");
-    	List<Report> reportList = reportService.getReportList();
+    public String getReport(Report report) {
+		 
+    	String repoterId = "buyer01";
+    	String reportHistoryCode = reportService.getReportHistoryCode();
+    	CodeIndex codeIndex = new CodeIndex();
+    	reportHistoryCode = codeIndex.codeIndex(reportHistoryCode, 15);
+    	log.info("---------------------------------사용자가 입력한 정보",report);
+    	report.setReportHistoryCode(reportHistoryCode);
+    	report.setReportingId(repoterId);
+    	reportService.setReport(report);
+    	log.info("---------------------------------, {}",reportHistoryCode);
     	
-    	model.addAttribute("title", "신고하기");
-		model.addAttribute("reportList", reportList);
-    	return "/admin/report/report";
+		/* model.addAttribute("title", "신고하기"); */
+		/* model.addAttribute("reportList", reportList); */
+    	return "redirect:/admin/report/reportList";
     }
 
     @GetMapping("/report/reportList")
@@ -48,7 +59,8 @@ public class ReportController {
     	model.addAttribute("title", "신고목록");
 		model.addAttribute("reportList", reportList);
 
-    	return "/admin/report/reportList";
+    	return "admin/report/reportList";
     }
   
+ 
 }
