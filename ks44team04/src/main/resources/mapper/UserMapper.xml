@@ -16,13 +16,14 @@
 	</insert>
 	
 	
+	
 	<resultMap type="Login"						id="LoginResultMap">
 		<result column="log_code"				property="logCode" />
 		<result column="login_id"				property="loginId" />
 		<result column="login_date"				property="loginDate" />
 		<result column="logout_date"			property="logoutDate" />
 	</resultMap>
-	<!-- 휴면회원 목록 조회 -->
+	<!-- 로그 조회 -->
 	<select id="getLoginList" resultMap="LoginResultMap">
 		/* 로그 조회 */
 		SELECT 
@@ -111,7 +112,43 @@
 		    </association>
     </resultMap>
     
-	<!-- 판매자 목록 조회 -->
+    <!-- 특정 판매자 조회 -->
+	<select id="getSellerInfoById" resultType="Seller">
+		/* 특정 판매자 조회 */
+    	SELECT 
+			 s.seller_code				AS sellerCode
+			,s.seller_id				AS sellerId
+			,s.store_name				AS storeName
+			,s.seller_sort				AS sellerSort
+			,s.bank_name				AS bankName
+			,s.account					AS account
+			,s.account_holder			AS accountHolder
+			,s.license_num				AS licenseNum
+			,s.store_address			AS storeAddress
+			,s.store_phone				AS storePhone
+			,s.store_email				AS storeEmail
+			,s.license_img				AS licenseImg
+			,s.online_licence_img		AS onlineLicenceImg
+			,s.approve_ask_date			AS approveAskDate
+			,s.approve_date				AS approveDate
+			,s.approve_check			AS approveCheck
+			,s.approve_id				AS approveId
+			,g.goods_code				AS goodsCode
+			,g.goods_name				AS goodsName
+			,g.goods_price				AS goodsPrice
+			,g.goods_stock				AS goodsStock
+			,g.reg_date					AS regDate
+		FROM 
+			tb_seller AS s
+			LEFT JOIN
+			tb_goods AS g
+			ON
+			s.seller_id = g.seller_id
+		WHERE
+			s.seller_id = #{sellerId}
+	</select>
+    
+    <!-- 판매자 목록 조회 -->
     <select id="getSellerList" resultMap="SellerResultMap">
     	/* 판매자 목록 조회 */
     	SELECT 
@@ -150,7 +187,6 @@
 		</trim>
     </select>
     
-    
     <resultMap 	type="User" 				id="UserResultMap">
         <result column="user_id" 			property="userId"/>
         <result column="user_pw" 			property="userPw"/>
@@ -158,6 +194,7 @@
         <result column="user_gender" 		property="userGender"/>
         <result column="user_nickname" 		property="userNickname"/>
         <result column="user_address" 		property="userAddress"/>
+        <result column="user_address2" 		property="userAddress2"/>
         <result column="user_phone" 		property="userPhone"/>
         <result column="user_email" 		property="userEmail"/>
         <result column="user_right" 		property="userRight"/>
@@ -177,7 +214,7 @@
 		    </association>
 	        <association property="levelBuyer" 			javaType="LevelBuyerCategory">
 				<id 	 column="level_code" 			property="levelCode"/>
-				<result  column="level_name" 			property="levelName"/>
+				<result  column="b_level_name" 			property="levelName"/>
 				<result  column="reg_id" 				property="regId"/>
 				<result  column="level_reg_date" 		property="levelRegDate"/>
 				<result  column="use_check" 			property="useCheck"/>
@@ -187,7 +224,7 @@
 		    </association>
 	        <association property="levelSeller" 		javaType="LevelSellerCategory">
 				<id 	 column="level_code" 			property="levelCode"/>
-				<result  column="level_name" 			property="levelName"/>
+				<result  column="s_level_name" 			property="levelName"/>
 				<result  column="reg_id" 				property="regId"/>
 				<result  column="level_reg_date" 		property="levelRegDate"/>
 				<result  column="use_check" 			property="useCheck"/>
@@ -196,7 +233,49 @@
 				<result  column="seller_review_terms"	property="sellerReviewTerms"/>
 				<result  column="level_code_npk" 	 	property="levelCodeNpk"/>
 		    </association>  
-	</resultMap>  
+	</resultMap> 
+	
+	
+	<!-- 특정회원 조회 -->
+	<select id="getUserInfoById" parameterType="String" resultMap="UserResultMap">
+		/* 특정회원 조회 */
+		SELECT
+		     u.user_id
+			,u.user_pw			
+			,u.user_name		
+			,u.user_gender			
+			,u.user_nickname		
+			,u.user_address			
+			,u.user_address2		
+			,u.user_phone			
+			,u.user_email			
+			,u.user_right	
+			,u.user_reg_date	
+			,u.user_update_date		
+			,u.user_status			
+			,u.user_penalty			
+			,u.user_point			
+			,u.user_info_keep		
+			,u.user_level
+			,r.right_status
+			,lb.level_name 		AS b_level_name
+			,ls.level_name 		AS s_level_name
+		FROM
+		    tb_user u
+		    INNER JOIN 
+		    tb_right r
+		    USING (user_right)
+		    LEFT JOIN 
+		    tb_level_buyer_category AS lb
+		    ON 
+		    u.user_level = lb.level_code
+		    LEFT JOIN 
+		    tb_level_seller_category AS ls
+		    ON 
+		    u.user_level = ls.level_code
+		WHERE u.user_id = #{userId}
+	</select>
+	 
 	<!-- 회원 권한 조회 -->
 	<select id="getRightList" resultType="Right">
 		/* 회원 권한 조회 */
@@ -217,6 +296,7 @@
 			,u.user_gender
 			,u.user_nickname
 			,u.user_address
+			,u.user_address2
 			,u.user_phone
 			,u.user_email
 			,u.user_right

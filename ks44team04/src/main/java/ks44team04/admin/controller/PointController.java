@@ -15,7 +15,7 @@ import ks44team04.service.PointService;
 import ks44team04.dto.PointDeal;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/point")
 public class PointController {
 	
 	
@@ -40,6 +40,6 @@ public class PointController {
 		model.addAttribute("title", "포인트내역");
 		model.addAttribute("pointHistory", pointHistory);
 		
-		return "admin/pointHistory";
+		return "admin/point/pointHistory";
 	}
 }

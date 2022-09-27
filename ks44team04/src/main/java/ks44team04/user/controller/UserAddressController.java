@@ -1,7 +1,7 @@
 package ks44team04.user.controller;
 
 import ks44team04.dto.AddressList;
-import ks44team04.service.UserAddressService;
+import ks44team04.service.AddressService;
 import ks44team04.util.CodeIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +17,11 @@ import java.util.Map;
 @RequestMapping("/user/address")
 public class UserAddressController {
 
-    private final UserAddressService userAddressService;
+    private final AddressService addressService;
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    public UserAddressController(UserAddressService userAddressService) {
-        this.userAddressService = userAddressService;
+    public UserAddressController(AddressService addressService) {
+        this.addressService = addressService;
     }
 
     @GetMapping("/list")
@@ -29,7 +29,7 @@ public class UserAddressController {
         userId = "buyer01";
         Map<String, String> addressInfo = new HashMap<>();
         addressInfo.put("userId", userId);
-        List<AddressList> addressLists = userAddressService.getAddressList(addressInfo);
+        List<AddressList> addressLists = addressService.getAddressList(addressInfo);
         model.addAttribute("addressList", addressLists);
         return "user/order/addressList";
     }
@@ -43,12 +43,12 @@ public class UserAddressController {
     public String addressRegister(AddressList addressList) {
         CodeIndex codeIndex = new CodeIndex();
 
-        String addressListCode = userAddressService.getAddressListCode();
+        String addressListCode = addressService.getAddressListCode();
         addressListCode = codeIndex.codeIndex(addressListCode, 13);
 
         addressList.setAddressList(addressListCode);
         addressList.setBuyerId("buyer01");
-        userAddressService.addressRegister(addressList);
+        addressService.addressRegister(addressList);
 
         return "redirect:/user/address/success";
     }
@@ -64,21 +64,21 @@ public class UserAddressController {
                                 Model model) {
         Map<String, String> addressInfo = new HashMap<>();
         addressInfo.put("addressList", addressList);
-        AddressList addressLists = userAddressService.getAddressList(addressInfo).get(0);
+        AddressList addressLists = addressService.getAddressList(addressInfo).get(0);
         model.addAttribute("addressList", addressLists);
         return "user/order/addressModify";
     }
 
     @PostMapping("/modify")
     public String addressModify(AddressList addressList) {
-        userAddressService.addressModify(addressList);
+        addressService.addressModify(addressList);
         log.info("userAddress.addressList, {}", addressList.getAddressList());
         return "redirect:/user/address/list";
     }
 
     @GetMapping("/delete/{addressList}")
     public String getAddressDelete(@PathVariable("addressList") String addressList) {
-        userAddressService.addressDelete(addressList);
+        addressService.addressDelete(addressList);
         return "redirect:/user/address/list";
     }
 
@@ -88,7 +88,7 @@ public class UserAddressController {
         userId = "buyer01";
         Map<String, String> addressInfo = new HashMap<>();
         addressInfo.put("userId", userId);
-        List<AddressList> addressLists = userAddressService.getAddressList(addressInfo);
+        List<AddressList> addressLists = addressService.getAddressList(addressInfo);
 
         return addressLists.get(addressLists.size() - 1);
     }

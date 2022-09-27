@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +12,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<form id="addressRegisterForm" th:action="@{/user/address/register}" method="post" class="">
+<form id="addressRegisterForm" th:action="@{/user/address/register}" method="post" class="" onsubmit="submitCheck();">
 
     <div class="form-group">
         <label class="" for="addressName"> 배송지명 <span class="required">*</span> </label>
@@ -82,6 +81,10 @@
             }
         }).open();
     });
+
+    const submitCheck = function () {
+        opener.document.querySelector('#submitCheck').classList.add('submit');
+    };
 </script>
 
 </body>

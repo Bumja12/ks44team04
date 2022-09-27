@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 
 import ks44team04.mapper.PointMapper;
 import ks44team04.dto.PointDeal;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class PointService {
 	
-	private static final Logger log = LoggerFactory.getLogger(PointService.class);
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	private final PointMapper pointMapper;
 	
 	
@@ -33,6 +35,10 @@ public class PointService {
 		
 		return pointHistory;
 		
+	}
+
+	public int getUserPoint(String userId) {
+		return pointMapper.getUserPoint(userId);
 	}
 	
 	

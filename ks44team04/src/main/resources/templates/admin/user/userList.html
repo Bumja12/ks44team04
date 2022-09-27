@@ -124,7 +124,7 @@
 							<td th:text="${l.userUpdateDate}"></td>
 							<td th:text="${l.userStatus}"></td>
 							<td>
-								<a href="#" data-toggle="modal" data-target="#userDetailModal"> 
+								<a th:href="@{/admin/user/userDetail(userId=${l.userId})}"> 
 									<i class="fa fa-info-circle"></i> 상세 &nbsp;
 								</a> 
 								<a href="#"><i class="fa fa-edit"></i> 수정 &nbsp;</a> 

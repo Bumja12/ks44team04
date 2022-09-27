@@ -24,7 +24,7 @@
                                aria-expanded="true" th:text="${l.addressName}">배송지명</a>&nbsp;|&nbsp;
                         </li>
                     </th:block>
-                    <li role="presentation" class="">
+                    <li role="presentation" id="submitCheck" class="">
                         <!--<a href="javascript:void(0);" data-toggle="modal" data-target=".addressSelect"
                            role="tab">배송지등록</a>-->
                         <a href="javascript:pop()">배송지등록</a>
@@ -61,19 +61,21 @@
                 </div>
                 <div class="d-flex p-2">
                     <span class="p-2 mr-auto">쿠폰사용</span>
-                    <button type="button" class="p-2">선택</button>
+                    <button type="button" id="selectCoupon" class="p-2">선택</button>
                 </div>
                 <div class="d-flex p-2">
                     <span class="p-2 mr-auto">쿠폰할인</span>
-                    <span class="p-2">5000원</span>
+                    <span id="couponPrice" class="p-2">0원</span>
                 </div>
                 <div class="d-flex p-2">
-                    <span class="p-2 mr-auto">포인트사용</span>
-                    <input type="text" class="p-2"/>
+                    <label for="pointInput" class="p-2 mr-auto">포인트사용</label>
+                    <input type="text" id="pointInput" class="p-2"
+                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                    <button class="p2" type="button">사용</button>
                 </div>
                 <div class="d-flex p-2">
                     <span class="p-2 mr-auto">보유포인트</span>
-                    <span class="p-2">5000원</span>
+                    <span class="p-2" th:text="${userPoint} + '원'">5000원</span>
                 </div>
             </div>
             <div>
@@ -107,43 +109,41 @@
 <th:block layout:fragment="customScript">
 
     <script>
-
-
         let pop = function () {
-
             let addressPop = window.open('/user/address/register', 'addressPop', '_blank');
             let popInterval = window.setInterval(function () {
                 if (addressPop !== undefined) {
                     if (addressPop.closed) {
-                        fetch('/user/address/checkoutlist')
-                            .then((response) => response.json())
-                            .then((data) => {
-                                let addressList = data.addressList;
-                                let addressName = data.addressName;
-                                let receiverName = data.receiverName;
-                                let address = data.address;
-                                let address2 = data.address2;
-                                let phone = data.phone;
-                                let phone2 = data.phone2;
-                                let addressSelect = `<li role="presentation " data-addressList="${addressList}"> <a href="#${addressName}" role="tab" data-toggle="tab" aria-expanded="true">${addressName}</a>&nbsp;|&nbsp; </li>`;
-                                let addressContent = `<div role="tabpanel" class="tab-pane fade" id="${addressName}"><div>${receiverName}</div>` +
-                                    `<div> <span>${phone}</span> <span> | </span> <span>${phone2}</span> </div>` +
-                                    `<div>${address}</div> <div>${address2}</div> </div>`;
+                        if (document.querySelector('#submitCheck').classList.contains('submit')) {
+                            fetch('/user/address/checkoutlist')
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    let addressList = data.addressList;
+                                    let addressName = data.addressName;
+                                    let receiverName = data.receiverName;
+                                    let address = data.address;
+                                    let address2 = data.address2;
+                                    let phone = data.phone;
+                                    let phone2 = data.phone2;
+                                    let addressSelect = `<li role="presentation " data-addressList="${addressList}"> <a href="#${addressName}" role="tab" data-toggle="tab" aria-expanded="true">${addressName}</a>&nbsp;|&nbsp; </li>`;
+                                    let addressContent = `<div role="tabpanel" class="tab-pane fade" id="${addressName}"><div>${receiverName}</div>` +
+                                        `<div> <span>${phone}</span> <span> | </span> <span>${phone2}</span> </div>` +
+                                        `<div>${address}</div> <div>${address2}</div> </div>`;
+                                    let addressSelectLi = document.querySelectorAll('#addressSelect li');
+                                    addressSelectLi[addressSelectLi.length - 1].insertAdjacentHTML('beforebegin', addressSelect);
 
-                                let addressSelectLi = document.querySelectorAll('#addressSelect li');
-                                addressSelectLi[addressSelectLi.length - 1].insertAdjacentHTML('beforebegin', addressSelect);
-
-                                document.querySelector('#addressSelectContent').insertAdjacentHTML('beforeend', addressContent);
-
-                            })
+                                    document.querySelector('#addressSelectContent').insertAdjacentHTML('beforeend', addressContent);
+                                })
+                        }
                         window.clearInterval(popInterval);
                     }
-
                 }
             }, 1000);
-
         }
 
+        document.querySelector('#selectCoupon').addEventListener('click', function () {
+            let selectCouponPop = window.open('/user/order/couponlist', 'couponList', '_blank');
+        });
 
     </script>
 

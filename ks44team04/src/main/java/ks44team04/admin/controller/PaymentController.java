@@ -10,12 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ks44team04.service.PaymentService;
 import ks44team04.dto.PaymentTotal;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/payment")
 public class PaymentController {
 	
 	private static final Logger log = LoggerFactory.getLogger(PaymentController.class);
@@ -31,6 +32,20 @@ public class PaymentController {
 		log.info("paymentController Bean 생성");
 	}
 	
+	//특정결제상세번호 조회
+	@GetMapping("/modifyPaymentDetail")
+	public String ModifyPaymentDetail(@RequestParam(value="orderDetailCode", required = false) String orderDetailCode,
+										Model model) {
+		
+		PaymentTotal paymentTotal = paymentService.getPaymentDetail(orderDetailCode);
+		
+		model.addAttribute("title", "결제상세내역 수정");
+		model.addAttribute("paymentTotal", paymentTotal);
+		
+		return "admin/payment/modifyPaymentDetail";
+		
+	}
+	
 	//결제상세
 	@GetMapping("/paymentDetail")
 	public String paymentDetail(Model model) {
@@ -41,7 +56,7 @@ public class PaymentController {
 		
 		System.out.println(paymentDetailList);
 		
-		return "admin/paymentDetail";
+		return "admin/payment/paymentDetail";
 	}
 	
 	//결제내역
@@ -55,6 +70,6 @@ public class PaymentController {
 
 		System.out.println(paymentList);
 		
-		return "admin/paymentList";
+		return "admin/payment/paymentList";
 	}
 }

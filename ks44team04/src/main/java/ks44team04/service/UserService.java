@@ -33,6 +33,25 @@ public class UserService {
     	System.out.println("회원가입 결과:" + result);
     }
     
+	//회원수정
+	public void modifyUser(User user) {
+		userMapper.modifyUser(user);
+	}
+    
+	//특정 판매자 정보 조회
+	public Seller getSellerInfoById(String sellerId) {
+		Seller seller = userMapper.getSellerInfoById(sellerId);
+		
+		return seller;
+	}
+	
+	//특정 회원 정보 조회
+	public User getUserInfoById(String userId) {
+		User user = userMapper.getUserInfoById(userId);
+		
+		return user;
+	}
+    
     //로그 조회
     public List<Login> getLoginList() {
     	List<Login> loginList = userMapper.getLoginList();

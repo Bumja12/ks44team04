@@ -5,8 +5,8 @@ public class GoodsAnswer {
     private String goodsQnaAnswer;
     private int goodsQnaNum;
     private String sellerId;
-    private String goodsAnswerComment;
-    private int answerDate;
+    private String goodsAnswerContent;
+    private String answerDate;
     
     
 	private User userInfo;
@@ -57,19 +57,19 @@ public class GoodsAnswer {
         this.sellerId = sellerId;
     }
     
-    public String getGoodsAnswerComment() {
-    	return goodsAnswerComment;
+    public String getGoodsAnswerContent() {
+    	return goodsAnswerContent;
     }
     
-    public void setGoodsAnswerComment(String goodsAnswerComment) {
-    	this.goodsAnswerComment = goodsAnswerComment;
+    public void setGoodsAnswerContent(String goodsAnswerContent) {
+    	this.goodsAnswerContent = goodsAnswerContent;
     }
     
-    public int getAnswerDate() {
+    public String getAnswerDate() {
     	return answerDate;
     }
     
-    public void setAnswerDate(int answerDate) {
+    public void setAnswerDate(String answerDate) {
     	this.answerDate = answerDate;
     }
     
@@ -79,7 +79,7 @@ public class GoodsAnswer {
                 "goodsQnaAnswer='" + goodsQnaAnswer + '\'' +
                 ", goodsQnaNum='" + goodsQnaNum + '\'' +
                 ", sellerId='" + sellerId + '\'' +
-                ", goodsAnswerComment='" + goodsAnswerComment + '\'' +
+                ", goodsAnswerContent='" + goodsAnswerContent + '\'' +
                 ", answerDate='" + answerDate + '\'' +
                 '}';
     }

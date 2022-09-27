@@ -30,6 +30,15 @@
 		<result column="reg_id" 			property="regId"/>
 		<result column="reg_date" 			property="regDate"/>
 	</resultMap>
+
+	<resultMap id="couponStatusResultMap" type="CouponStatus">
+		<id 	column="coupon_status_code" 	property="couponStatusCode"/>
+		<result column="buyer_id" 				property="buyerId"/>
+		<result column="admin_id" 				property="adminId"/>
+		<result column="coupon_issue_date" 		property="couponIssueDate"/>
+		<association property="couponInfo" resultMap="couponListMapper"/>
+	</resultMap>
+
 	
 	<!-- 쿠폰보유현황 -->
 	<select id="couponStatus" resultMap="couponUserMap">
@@ -59,5 +68,14 @@
 		FROM
 			tb_coupon AS c
 		ORDER BY c.coupon_code
+	</select>
+
+	<!-- 범현 -->
+	<select id="getCouponStatus" resultMap="couponStatusResultMap" parameterType="String">
+		select *
+		from tb_coupon_status as tcs
+			inner join tb_coupon tc
+			on tcs.coupon_code = tc.coupon_code
+			where buyer_id = #{userId}
 	</select>
 </mapper>

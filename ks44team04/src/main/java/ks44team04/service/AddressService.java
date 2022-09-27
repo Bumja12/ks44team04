@@ -10,11 +10,11 @@ import java.util.Map;
 
 @Service
 @Transactional
-public class UserAddressService {
+public class AddressService {
 
     private final UserAddressMapper userAddressMapper;
 
-    public UserAddressService(UserAddressMapper userAddressMapper) {
+    public AddressService(UserAddressMapper userAddressMapper) {
         this.userAddressMapper = userAddressMapper;
     }
 

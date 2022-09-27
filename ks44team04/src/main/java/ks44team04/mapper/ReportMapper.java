@@ -1,6 +1,7 @@
 package ks44team04.mapper;
 
 import ks44team04.dto.Report;
+import ks44team04.dto.UserSuspend;
 
 import java.util.List;
 
@@ -16,5 +17,10 @@ public interface ReportMapper {
     //신고 하기 
     public int setReport(Report report);
     
+    //신고등록 코드 증가 
     public String getReportHistoryCode();
+    
+    //정지 리스트
+    public List<UserSuspend> getUserSuspendList();
+    
 }
