@@ -235,7 +235,6 @@
 		    </association>  
 	</resultMap> 
 	
-	
 	<!-- 특정회원 조회 -->
 	<select id="getUserInfoById" parameterType="String" resultMap="UserResultMap">
 		/* 특정회원 조회 */
