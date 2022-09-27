@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ks44team04.service.PaymentService;
 import ks44team04.dto.PaymentTotal;
@@ -29,6 +30,20 @@ public class PaymentController {
 	@PostConstruct
 	public void paymentControllerInit() {
 		log.info("paymentController Bean 생성");
+	}
+	
+	//특정결제상세번호 조회
+	@GetMapping("/modifyPaymentDetail")
+	public String ModifyPaymentDetail(@RequestParam(value="orderDetailCode", required = false) String orderDetailCode,
+										Model model) {
+		
+		PaymentTotal paymentTotal = paymentService.getPaymentDetail(orderDetailCode);
+		
+		model.addAttribute("title", "결제상세내역 수정");
+		model.addAttribute("paymentTotal", paymentTotal);
+		
+		return "admin/payment/modifyPaymentDetail";
+		
 	}
 	
 	//결제상세

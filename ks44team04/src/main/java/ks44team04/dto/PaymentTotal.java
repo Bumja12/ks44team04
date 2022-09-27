@@ -2,6 +2,16 @@ package ks44team04.dto;
 
 public class PaymentTotal {
 	
+	private PaymentInfo paymentInfo;
+	
+	public PaymentInfo getPaymentInfo() {
+		return paymentInfo;
+	}
+
+	public void setPaymentInfo(PaymentInfo paymentInfo) {
+		this.paymentInfo = paymentInfo;
+	}
+
 	private String orderDetailCode;
 	private int couponPrice;
 	private int usePoint;
@@ -140,12 +150,12 @@ public class PaymentTotal {
 
 	@Override
 	public String toString() {
-		return "PaymentTotal [orderDetailCode=" + orderDetailCode + ", couponPrice=" + couponPrice + ", usePoint="
-				+ usePoint + ", orderStatus=" + orderStatus + ", goodsCode=" + goodsCode + ", goodsName=" + goodsName
-				+ ", savePoint=" + savePoint + ", orderPrice=" + orderPrice + ", orderAmount=" + orderAmount
-				+ ", paymentMethod=" + paymentMethod + ", cardCompany=" + cardCompany + ", cardNumber=" + cardNumber
-				+ ", approvePrice=" + approvePrice + ", refundBank=" + refundBank + ", refundAccount=" + refundAccount
-				+ "]";
+		return "PaymentTotal [paymentInfo=" + paymentInfo + ", orderDetailCode=" + orderDetailCode + ", couponPrice="
+				+ couponPrice + ", usePoint=" + usePoint + ", orderStatus=" + orderStatus + ", goodsCode=" + goodsCode
+				+ ", goodsName=" + goodsName + ", savePoint=" + savePoint + ", orderPrice=" + orderPrice
+				+ ", orderAmount=" + orderAmount + ", paymentMethod=" + paymentMethod + ", cardCompany=" + cardCompany
+				+ ", cardNumber=" + cardNumber + ", approvePrice=" + approvePrice + ", refundBank=" + refundBank
+				+ ", refundAccount=" + refundAccount + "]";
 	}
 
 	
