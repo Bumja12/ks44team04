@@ -178,7 +178,7 @@
 									<button type="button" class="btn btn-primary modifyBtn">수정</button>
 									<button class="btn btn-info" id="resetBtn" type="reset">초기화</button>
 									<button class="btn btn-warning cancelBtn" type="button">취소</button>
-									<button class="btn btn-danger" type="button">삭제</button>
+		           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
 								</div>
 							</div>
 						</form> <!-- <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"> -->
@@ -188,19 +188,53 @@
             
 			</div> <!-- </div class="col-md-12 col-sm-12"> -->
 		</div> <!-- </div class="row"> -->
+	
+		<!-- 삭제 모달 -->
+	    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+	    	<div class="modal-dialog modal-lg">
+	        	<div class="modal-content">
+		        	<div class="modal-header">
+			        	<h4 class="modal-title" id="myModalLabel">문의 답변 삭제</h4>
+			            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+			            </button>
+		          	</div>
+		            <div class="modal-body">
+		            	<h4>정말 문의 답변을 삭제하시겠습니까?</h4>
+		            </div>
+		            <div class="modal-footer">
+			            <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+			            <button type="button" id="deleteBtn" class="btn btn-danger ">삭제</button>
+		            </div>
+	        	</div>
+	      	</div>
+	    </div>
+	    <!-- 모달 기능 -->	
+	    
 	</th:block>
 
 	<th:block layout:fragment="customJsScript">
 		<script type="text/javascript">
 			// 수정 버튼 탐색
 			let modifyBtn = document.querySelector('#modifyBtn');
-			
 			// 수정할 요소 탐색 (자주 묻는 질문 카테고리 FK, 제목, 내용, 사용 여부 ) - 총 5개 요소
  			let updateContent = document.querySelectorAll('#customerAskCategory, #customerAskTitle, #customerAskContent, #customerAskFile');
-			
 			// 취소 버튼 탐색
 			let cancelBtn = document.querySelector('#cancelBtn');
-			// 수정 버튼에 이벤트 등록
+			// 삭제 버튼 탐색 
+			let deleteBtn = document.getElementById('deleteBtn'); 
+			
+			deleteBtn.addEventListener('click', function(){
+				location.href='removeAskAnswer';
+			});
+// 			addEventListener('click', function(){
+// 			}
+// 				console.log('deleteModal Event');
+// 				var deleteBtn = document.getElementById('deleteBtn');	
+// 				deleteBtn.addEventListener('click', function(){
+// 					console.log(deleteBtn);
+// 					location.href='removeCustomerAsk';
+// 				});
+// 			});
 			
 			$(function(){
 				let isAnswer = true;
@@ -217,18 +251,13 @@
 				// disabled 속성 조작할 요소들 탐색
 				let $disabledToAbled =  $('.disabledToAbled');
 				
-				let $askAnswer =  $('.askAnswer');
-				
 				// 관리자 답변 내역이 있다면
 				if(isAnswer){
-					console.log($askAnswerDetail);
 					$askAnswerDetail.removeClass('d-none');
 					$addAnswer.addClass('d-none');
-// 					console.log($askAnswer);
 				}else{ // 관리자 답변 내역이 없다면 
 					$askAnswerDetail.addClass('d-none');
 					$addAnswer.removeClass('d-none');
-// 					$addAnswer[0].style='display: ;'
 				}
 				
 				// 취소 버튼 각각에 클릭시 이벤트 등록
@@ -258,12 +287,9 @@
 							}
 						});
 						
-					});
-				});
-				
-				
-			});
-			
+					}); // $(this).click(function(){
+				}); // $modifyBtn.each(function(i){
+			}); // $(function(){
 			
 		</script>
 	</th:block>
