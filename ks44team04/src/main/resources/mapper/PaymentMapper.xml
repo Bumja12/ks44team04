@@ -26,7 +26,32 @@
 		<result column="order_date"			property="orderDate"/>
 	</resultMap> -->
 	
-	<!-- 결제내역페이지 -->
+	<!-- 특정결제상세번호 조회 -->
+	<resultMap type="PaymentTotal" id="paymentDetailMap">
+		<result column="order_detail_code" 	property="orderDetailCode"/>
+			<result column="goods_code" 		property="goodsCode"/>
+			<result column="goods_name"			property="goodsName"/>
+			<result column="use_point"			property="usePoint"/>
+			<result column="save_point"			property="savePoint"/>
+			<result column="coupon_price"		property="couponPrice"/>
+			<result column="order_amount"		property="orderAmount"/>
+			<result column="order_status"		property="orderStatus"/>	
+			<result column="order_price" 		property="orderPrice"/>
+			<result column="payment_method"		property="paymentMethod"/>
+			<result column="card_company" 		property="cardCompany"/>
+			<result column="card_number" 		property="cardNumber"/>
+			<result column="refund_bank" 		property="refundBank"/>
+			<result column="refund_account" 	property="refundAccount"/>
+			<result column="approve_price"		property="approvePrice"/>
+			<association property="paymentInfo" javaType="PaymentInfo" >
+				<result column="order_num" 		property="orderNum"/>
+				<result column="buyer_id" 		property="buyerId"/>
+				<result column="order_date" 	property="orderDate"/>
+				<result column="approve_date"		property="approveDate"/>
+			</association>
+	</resultMap>
+	
+	<!-- 결제내역페이지, 결제상세내역 -->
 	<resultMap type="PaymentInfo" id="paymentResultMap">
 		<result column="order_num" 		property="orderNum"/>
 		<result column="buyer_id" 		property="buyerId"/>
@@ -51,6 +76,77 @@
 		</collection>
 	</resultMap>
 
+	<!-- 특정결제상세번호 조회 -->
+	<select id="getPaymentDetail"  parameterType="String" resultMap="paymentDetailMap">
+		SELECT
+			*
+		FROM
+			(SELECT 
+				o.order_num
+				,od.order_detail_code
+				,od.goods_code
+				,g.goods_name
+				,o.buyer_id
+				,p.payment_method
+				,cp.card_company
+				,cp.card_number
+				,cp.approve_price
+				,cp.approve_date
+			FROM
+				tb_order AS o
+				INNER JOIN
+				tb_order_detail AS od
+				ON
+				o.order_num = od.order_num
+				INNER JOIN
+				tb_goods AS g
+				ON
+				od.goods_code = g.goods_code
+				INNER JOIN
+				tb_payment AS p
+				ON
+				od.order_num = p.order_num
+				INNER JOIN
+				tb_card_payment AS cp
+				ON
+				p.payment_group_code = cp.card_payment_code
+				WHERE
+				od.order_detail_code = #{orderDetailCode}) AS a
+				
+				UNION
+				
+				SELECT 
+				o.order_num
+				,od.order_detail_code
+				,od.goods_code
+				,g.goods_name
+				,o.buyer_id
+				,p.payment_method
+				,ap.refund_bank
+				,ap.refund_account
+				,ap.approve_price
+				,ap.approve_date
+			FROM
+				tb_order AS o
+				INNER JOIN
+				tb_order_detail AS od
+				ON
+				o.order_num = od.order_num
+				INNER JOIN
+				tb_goods AS g
+				ON
+				od.goods_code = g.goods_code
+				INNER JOIN
+				tb_payment AS p
+				ON
+				od.order_num = p.order_num
+				INNER JOIN
+				tb_account_payment AS ap
+				ON
+				p.payment_group_code = ap.account_payment_code
+			WHERE
+				od.order_detail_code = '20220301001_1';
+	</select>
 	
 	<!-- 결제상세목록 -->
 	<select id="paymentDetailList" resultMap="paymentResultMap" fetchSize="100">

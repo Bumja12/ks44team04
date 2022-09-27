@@ -1,9 +1,5 @@
 package ks44team04.admin.controller;
-
 import java.util.List;
-
-import javax.annotation.PostConstruct;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +19,6 @@ public class BoardController {
 	public BoardController(BoardService boardService) {
 		this.boardService = boardService;
 	}
-	
-	@PostConstruct
-	public void BoardControllerInit() {
-	}
-	
 	
 	//좋아요 조회
 	@GetMapping("/board/boardLike")
