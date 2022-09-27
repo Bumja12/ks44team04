@@ -53,30 +53,31 @@ th {
 							<th>할인금액</th>
 							<th>사용조건금액</th>
 							<th>만료일자</th>
-							<th>지급인</th>
+							<th>발급인</th>
 							<th>지급일시</th>
 							<th style="width: 140px">관리</th>
 						</tr>
 					</thead>
 					<tbody>
 						<th:block th:if="${not #lists.isEmpty(couponStatus)}" th:each="c : ${couponStatus}">
-							<th:block th:if="${not #lists.isEmpty(c.coupon)}" th:each="cc, status : ${c.coupon}">
-								<tr>
-									<th:block th:if="${status.index == 0}">	
-										<td th:text="${c.buyerId}"></td>
-									</th:block>
-									<td th:text="${cc.couponCode}"></td>
-									<td th:text="${cc.couponName}"></td>
-									<td th:text="${'₩' + #numbers.formatInteger(cc.discountPrice, 3, 'COMMA')}"></td>
-									<td th:text="${'₩' + #numbers.formatInteger(cc.priceTerms, 3, 'COMMA') + ' 이상'}"></td>
-									<td th:text="${cc.endDate}"></td>
-									<td th:text="${c.adminId}"></td>
-									<td th:text="${c.couponIssueDate}"></td>
-									<td>
-										<a href="#"><i class="fa fa-edit"></i> 수정</a> 
-										<a href="#"><i class="fa fa-close"></i>삭제</a>
-									</td>
-								</tr>
+							<th:block th:if="${not #lists.isEmpty(c.couponNow)}" th:each="cn : ${c.couponNow}">
+									<tr>
+										<th:block th:if="${cnStat.index == 0}">	
+											<td th:rowspan="${cnStat.size}" th:text="${c.buyerId}"></td>
+										</th:block>
+										<td th:text="${cn.couponCode}"></td>
+										<td th:text="${cn.couponName}"></td>
+										<td th:text="${'₩' + #numbers.formatInteger(cn.discountPrice, 3, 'COMMA')}"></td>
+										<td th:text="${'₩' + #numbers.formatInteger(cn.priceTerms, 3, 'COMMA') + ' 이상'}"></td>
+										<td th:text="${cn.endDate}"></td>
+										<td th:text="${cn.adminId}"></td>
+										<td th:text="${cn.couponIssueDate}"></td>
+										<td>
+											<a href="#"><i class="fa fa-edit"></i> 수정</a> 
+											<a href="#"><i class="fa fa-close"></i>삭제</a>
+										</td>
+									</tr>
+								</th:block>
 							</th:block>
 						</th:block>
 						<tr th:unless="${not #lists.isEmpty(couponStatus)}">

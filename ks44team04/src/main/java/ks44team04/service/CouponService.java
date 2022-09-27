@@ -28,7 +28,7 @@ public class CouponService {
 		log.info("couponService bean 생성");
 	}
 	
-	//회원쿠폰보유현황
+	//쿠폰보유현황
 	public List<CouponStatus> couponStatus(){
 		
 		List<CouponStatus> couponStatus = couponMapper.couponStatus();

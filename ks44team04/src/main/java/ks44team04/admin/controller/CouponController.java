@@ -34,7 +34,7 @@ public class CouponController {
 		this.couponService = couponService;
 	}
 	
-	//회원쿠폰보유현황
+	//쿠폰보유현황
 	@GetMapping("/couponStatus")
 	public String CouponStatus(Model model) {
 		
