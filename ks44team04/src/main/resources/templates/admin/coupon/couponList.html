@@ -25,7 +25,7 @@ th {
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					포인트내역 <small>Admin</small>
+					쿠폰목록 <small>Admin</small>
 				</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -41,36 +41,39 @@ th {
 				</ul>
 				<div class="clearfix"></div>
 			</div>
-			<div class="x_content">
-				<table class="table table-hover">
+			<div class="x_content2">
+				<table id="datatable-checkbox"
+					class="table table-striped table-bordered table-hover dataTable no-footer"
+					role="grid">
 					<thead>
 						<tr>
-							<th>회원아이디</th>
-							<th>구분</th>
-							<th style="width: 170px">포인트</th>
-							<th style="width: 110px">포인트거래내용</th>
-							<th>거래일시</th>
-							<th>관리</th>
+							<th>쿠폰명</th>
+							<th>할인금액</th>
+							<th>사용조건금액</th>
+							<th>만료일자</th>
+							<th>등록자</th>
+							<th>등록일시</th>
+							<th style="width: 140px">관리</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${not #lists.isEmpty(pointHistory)}" th:each="p : ${pointHistory}">
-							<td th:text="${p.userId}"></td>
-							<td th:text="${p.status}"></td>
-							<td th:text="${p.pointDealPrice}"></td>
-							<td th:text="${p.pointDealReason}"></td>
-							<td th:text="${p.pointDealDate}"></td>
+						<tr th:if="${not #lists.isEmpty(couponList)}" th:each="c : ${couponList}">
+							<td th:text="${c.couponName}"></td>
+							<td th:text="${'₩' + #numbers.formatInteger(c.discountPrice, 3, 'COMMA')}"></td>
+							<td th:text="${'₩' + #numbers.formatInteger(c.priceTerms, 3, 'COMMA') + ' 이상'}"></td>
+							<td th:text="${c.endDate}"></td>
+							<td th:text="${c.regId}"></td>
+							<td th:text="${c.regDate}"></td>
 							<td>
-								<a href="#"><i class="fa fa-edit"></i> 수정</a> 
-								<a href="#"><i class="fa fa-close"></i>삭제</a>
+								<span style="cursor:pointer;"><i class="fa fa-edit"></i> 수정  </span>
+								<span style="cursor:pointer;"><i class="fa fa-close"></i> 삭제</span>
 							</td>
 						</tr>
-						<tr th:unless="${not #lists.isEmpty(pointHistory)}">
-							<td colspan="5">등록된 쿠폰이 없습니다.</td>
+						<tr th:unless="${not #lists.isEmpty(couponList)}">
+							<td colspan="7">등록된 쿠폰이 없습니다.</td>
 						</tr>
 					</tbody>
 				</table>
-
 			</div>
 		</div>
 	</div>

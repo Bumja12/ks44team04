@@ -16,7 +16,7 @@ import ks44team04.dto.Coupon;
 import ks44team04.dto.CouponStatus;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/coupon")
 public class CouponController {
 	
 	
@@ -44,7 +44,7 @@ public class CouponController {
 		model.addAttribute("couponStatus", couponStatus);
 		System.out.println(couponStatus);
 		
-		return "/admin/couponStatus";
+		return "/admin/coupon/couponStatus";
 	}
 	
 	//쿠폰목록
@@ -56,7 +56,7 @@ public class CouponController {
 		model.addAttribute("title", "쿠폰목록");
 		model.addAttribute("couponList", couponList);
 		
-		return "/admin/couponList";
+		return "/admin/coupon/couponList";
 	}
 	
 }

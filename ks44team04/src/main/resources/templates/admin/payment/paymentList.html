@@ -79,8 +79,8 @@ th {
 									</th:block>
 									<td th:text="${pt.orderStatus}"></td>
 									<td>
-										<a href="#"><i class="fa fa-edit"></i> 수정  </a>
-										<a href="#"><i class="fa fa-close"></i> 삭제</a>
+										<span class="cancelBtn" style="cursor:pointer;"><i class="fa fa-edit"></i> 수정  </span>
+										<span class="deleteBtn" style="cursor:pointer;"><i class="fa fa-close"></i> 삭제</span>
 									</td>
 								</tr>
 							</th:block>
@@ -95,8 +95,14 @@ th {
 	</div>
 </th:block>
 
-	<script type="text/javascript">
-		
-	</script>
+	<th:block layout:fragment="customJsScript">
+		<script type="text/javascript">
+			$(function(){
+				$('.cancelBtn').click(function(){
+					console.log(this);
+				});
+			})
+		</script>
+	</th:block>
 
 </html>

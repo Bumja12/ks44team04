@@ -15,7 +15,7 @@ import ks44team04.service.PaymentService;
 import ks44team04.dto.PaymentTotal;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/payment")
 public class PaymentController {
 	
 	private static final Logger log = LoggerFactory.getLogger(PaymentController.class);
@@ -41,7 +41,7 @@ public class PaymentController {
 		
 		System.out.println(paymentDetailList);
 		
-		return "admin/paymentDetail";
+		return "admin/payment/paymentDetail";
 	}
 	
 	//결제내역
@@ -55,6 +55,6 @@ public class PaymentController {
 
 		System.out.println(paymentList);
 		
-		return "admin/paymentList";
+		return "admin/payment/paymentList";
 	}
 }
