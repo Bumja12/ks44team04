@@ -11,5 +11,7 @@ public interface CouponMapper {
 	public List<Coupon> couponList();
 	
 	public List<CouponStatus> couponStatus();
+
+	public List<CouponStatus> getCouponStatus(String userId);
 	
 }

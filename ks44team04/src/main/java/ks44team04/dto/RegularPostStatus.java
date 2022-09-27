@@ -2,7 +2,7 @@ package ks44team04.dto;
 
 public class RegularPostStatus {
 
-    private String regularPostStatus;
+    private String regularPostStatusCode;
     private String goodsCode;
     private String buyerId;
     private String postList;
@@ -16,12 +16,12 @@ public class RegularPostStatus {
     private String postPassCheck;
     private String paymentHistoryCode;
 
-    public String getRegularPostStatus() {
-        return regularPostStatus;
+    public String getRegularPostStatusCode() {
+        return regularPostStatusCode;
     }
 
-    public void setRegularPostStatus(String regularPostStatus) {
-        this.regularPostStatus = regularPostStatus;
+    public void setRegularPostStatusCode(String regularPostStatusCode) {
+        this.regularPostStatusCode = regularPostStatusCode;
     }
 
     public String getGoodsCode() {
@@ -123,7 +123,7 @@ public class RegularPostStatus {
     @Override
     public String toString() {
         return "RegularPostStatus{" +
-                "regularPostStatus='" + regularPostStatus + '\'' +
+                "regularPostStatusCode='" + regularPostStatusCode + '\'' +
                 ", goodsCode='" + goodsCode + '\'' +
                 ", buyerId='" + buyerId + '\'' +
                 ", postList='" + postList + '\'' +

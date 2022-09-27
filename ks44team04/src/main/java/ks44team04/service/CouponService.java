@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import ks44team04.mapper.CouponMapper;
 import ks44team04.dto.Coupon;
 import ks44team04.dto.CouponStatus;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class CouponService {
 
 	private static final Logger log = LoggerFactory.getLogger(CouponService.class);
@@ -43,6 +45,10 @@ public class CouponService {
 		
 		return couponList;
 		
+	}
+
+	public List<CouponStatus> getCouponStatus(String userId) {
+		return couponMapper.getCouponStatus(userId);
 	}
 	
 }

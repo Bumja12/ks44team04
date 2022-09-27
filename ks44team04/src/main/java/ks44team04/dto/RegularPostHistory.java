@@ -2,18 +2,20 @@ package ks44team04.dto;
 
 public class RegularPostHistory {
 
-    private String regularPostHistory;
+    private String regularPostHistoryCode;
     private String regularPostStatus;
     private String orderNum;
     private String paymentHistoryCode;
     private String postRegDate;
+    private RegularPostStatus regularPostStatusInfo;
+    private OrderDetail orderDetail;
 
-    public String getRegularPostHistory() {
-        return regularPostHistory;
+    public String getRegularPostHistoryCode() {
+        return regularPostHistoryCode;
     }
 
-    public void setRegularPostHistory(String regularPostHistory) {
-        this.regularPostHistory = regularPostHistory;
+    public void setRegularPostHistoryCode(String regularPostHistoryCode) {
+        this.regularPostHistoryCode = regularPostHistoryCode;
     }
 
     public String getRegularPostStatus() {
@@ -48,14 +50,32 @@ public class RegularPostHistory {
         this.postRegDate = postRegDate;
     }
 
+    public RegularPostStatus getRegularPostStatusInfo() {
+        return regularPostStatusInfo;
+    }
+
+    public void setRegularPostStatusInfo(RegularPostStatus regularPostStatusInfo) {
+        this.regularPostStatusInfo = regularPostStatusInfo;
+    }
+
+    public OrderDetail getOrderDetail() {
+        return orderDetail;
+    }
+
+    public void setOrderDetail(OrderDetail orderDetail) {
+        this.orderDetail = orderDetail;
+    }
+
     @Override
     public String toString() {
         return "RegularPostHistory{" +
-                "regularPostHistory='" + regularPostHistory + '\'' +
+                "regularPostHistoryCode='" + regularPostHistoryCode + '\'' +
                 ", regularPostStatus='" + regularPostStatus + '\'' +
                 ", orderNum='" + orderNum + '\'' +
                 ", paymentHistoryCode='" + paymentHistoryCode + '\'' +
                 ", postRegDate='" + postRegDate + '\'' +
+                ", regularPostStatusInfo=" + regularPostStatusInfo +
+                ", orderDetail=" + orderDetail +
                 '}';
     }
 }
