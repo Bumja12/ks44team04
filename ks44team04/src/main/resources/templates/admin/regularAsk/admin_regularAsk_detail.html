@@ -20,7 +20,7 @@
 			<div class="col-sm-12">
         		<div class="x_panel">
             		<div class="x_title">
-                		<h2>구매자 등급 카테고리</h2>
+                		<h2 style="font-size: 17px;">자주 묻는 질문 내역</h2>
                     	<div class="clearfix"></div>
             		</div>
             		<div class="x_content">
@@ -36,7 +36,7 @@
 							</div>
 							<!-- 자주 묻는 질문 카테고리 FK -->
 							<div class="form-group row">
-								<label class="col-form-label col-md-3 col-sm-3 label-align" for="regular_ask_category">자주 묻는 질문 카테고리 FK
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="regular_ask_category">자주 묻는 질문 카테고리 
 								</label>
 								<div class="col-md-6 col-sm-6 ">
 									<select class="select2_single form-control"  id="regular_ask_category" disabled="disabled" required="required" tabindex="-1">
@@ -103,9 +103,9 @@
 							<div class="ln_solid"></div>
 							<div class="item form-group">
 								<div class="col-md-6 col-sm-6 offset-md-3">
-									<button type="button" id="modifyBtn" class="btn btn-success">수정</button>
-									<button class="btn btn-primary" id="resetBtn" type="reset">초기화</button>
-									<button id="cancelBtn" class="btn btn-primary" type="button">취소</button>
+									<button type="button" id="modifyBtn" class="btn btn-primary">수정</button>
+									<button class="btn btn-success" id="resetBtn" type="reset">초기화</button>
+									<button id="cancelBtn" class="btn btn-info" type="button">취소</button>
 								</div>
 							</div>
 						</form> <!-- <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"> -->
@@ -115,7 +115,6 @@
             
 			</div> <!-- </div class="col-md-12 col-sm-12"> -->
 		</div> <!-- </div class="row"> -->
-	
 	</th:block>
 
 	<th:block layout:fragment="customJsScript">
@@ -143,7 +142,7 @@
 			cancelBtn.addEventListener('click', function(){
 				console.log(location.href);
 				// 자주 묻는 질문 목록으로 리다이렉트
-				window.location = 'http://localhost:80/admin/regularAsk/regularAskList';
+				window.location = 'http://localhost:8088/admin/regularAsk/regularAskList';
 			
 			});
 			

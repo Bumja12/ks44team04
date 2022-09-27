@@ -3,12 +3,12 @@
 	<!-- 검색바 -->
 	<div th:fragment="regularAskSearchFragment">
 		<form th:action="@{/admin/regularAsk/searchRegularAsk}"  method="post">
-			<select name="searchKey">
+			<select name="searchKey" style="height: 25px;">
 				<option value="regularAskCategory">카테고리</option>
 				<option value="regularAskTitle">제목</option>
 			</select>
-			<input type="text" name="searchValue" placeholder="검색어를 입력해주세요.">
-			<button type="submit">검색</button>
+			<input type="text" name="searchValue" placeholder="검색어를 입력해주세요." style="height: 25px;">
+			<button type="submit" style="height: 25px;">검색</button>
 		</form>
 	</div>
 </html>
