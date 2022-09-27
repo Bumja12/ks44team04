@@ -26,6 +26,14 @@ public class PaymentService {
 		log.info("paymentService bean 생성");
 	}
 	
+	//특정결제상세번호 조회
+	public PaymentTotal getPaymentDetail(String orderDetailCode) {
+		
+		PaymentTotal paymentTotal = paymentMapper.getPaymentDetail(orderDetailCode);
+		
+		return paymentTotal;
+	}
+	
 	//결제상세
 	public List<PaymentTotal> paymentDetailList(){
 		
