@@ -16,6 +16,7 @@ public class Goods {
     private String packagePostCheck;
     private String regularDeliverCheck;
     private String regDate;
+    private String modifyDate;
     private int goodsReportAmount;
     private String goodsFile;
     
@@ -138,6 +139,14 @@ public class Goods {
 
     public void setRegDate(String regDate) {
         this.regDate = regDate;
+    }
+    
+    public String getModifyDate() {
+    	return modifyDate;
+    }
+    
+    public void setModifyDate(String modifyDate) {
+    	this.modifyDate = modifyDate;
     }
 
     public int getGoodsReportAmount() {

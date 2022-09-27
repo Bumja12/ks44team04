@@ -5,16 +5,16 @@
         
 <mapper namespace="ks44team04.mapper.GoodsMapper">
 
-	<resultMap type="GoodsAnswer" id="goodsAnswerMap">
+ 	<resultMap type="GoodsAnswer" id="goodsAnswerMap">
         <id 	column="goods_qna_answer" 			property="goodsQnaAnswer"/>
         <result column="goods_qna_num" 				property="goodsQnaNum"/>
         <result column="seller_id" 					property="sellerId"/>
         <result column="goods_answer_comment" 		property="goodsAnswerComment"/>
         <result column="answer_date" 				property="answerDate"/>
-    </resultMap>	
+	</resultMap>
     
-    <!-- 상품 답변 조회
-    <select id="getGoodsQnaAnswer" resultMap="goodsQnaAnswerMap" fetchSize="100" >
+   	<!-- 상품 답변 조회  --> 
+    <select id="getGoodsAnswer" resultMap="goodsAnswerMap" fetchSize="100">
     SELECT
 		 qa.goods_qna_answer
 		,gq.goods_qna_num
@@ -27,8 +27,7 @@
 		tb_goods_qna AS gq
 		ON
 		qa.goods_qna_num = gq.goods_qna_num;
-    
-     -->
+    </select> 
     
 
     <resultMap type="GoodsQna" id="goodsQnaMap">
@@ -42,6 +41,13 @@
         <result column="secret_check" 		property="secretCheck"/>
         <result column="goods_qna_pw" 		property="goodsQnaPw"/>
         <result column="qna_status" 		property="qnaStatus"/>
+			<association property="goodsAnswerInfo" javaType="GoodsAnswer">
+                <id 	column="goods_qna_answer" 			property="goodsQnaAnswer"/>
+		        <result column="goods_qna_num" 				property="goodsQnaNum"/>
+		        <result column="seller_id" 					property="sellerId"/>
+		        <result column="goods_answer_content" 		property="goodsAnswerContent"/>
+		        <result column="answer_date" 				property="answerDate"/>
+		    </association>
 			<association property="goodsInfo" javaType="Goods">
 		        <id 	column="goods_code" 			property="goodsCode"/>
 		        <result column="goods_small_category" 	property="goodsSmallCategory"/>
@@ -92,27 +98,33 @@
 		/* 상품 문의 조회 */
 		SELECT
 			 q.goods_qna_num
+			,qc.category_name
 			,g.goods_code
 			,g.goods_name
-			,q.goods_qna_category
-			,u.user_id
 			,q.goods_qna_title
 			,q.goods_qna_content
-			,q.goods_qna_date
 			,q.secret_check
 			,q.goods_qna_pw
+			,q.goods_qna_date
+			,u.user_id
 			,q.qna_status
-			,qc.category_name
+			,qa.seller_id
+			,qa.goods_answer_content
+			,qa.answer_date
 		FROM
 			tb_goods_qna AS q
-			INNER JOIN
-			tb_goods AS g
-			ON
-			q.goods_code = g.goods_code
 			INNER JOIN
 			tb_goods_qna_category AS qc
 			ON
 			q.goods_qna_category = qc.goods_qna_category
+			INNER JOIN
+			tb_goods AS g
+			ON
+			q.goods_code = g.goods_code
+			LEFT JOIN
+			tb_goods_qna_answer AS qa
+			ON
+			q.goods_qna_num = qa.goods_qna_num
 			INNER JOIN
 			tb_user AS u
 			ON
@@ -135,6 +147,7 @@
         <result column="package_post_check" 	property="packagePostCheck"/>
         <result column="regular_deliver_check" 	property="regularDeliverCheck"/>
         <result column="reg_date" 				property="regDate"/>
+        <result column="modify_date" 			property="modifyDate"/>
         <result column="goods_report_amount"	property="goodsReportAmount"/>
         <result column="goods_file" 			property="goodsFile"/>
 			<association property="userInfo" javaType="User">
@@ -158,7 +171,7 @@
     </resultMap>
 
 	<!-- 상품 삭제 -->    
-    	<delete id="goodsRemove" parameterType="String">
+    <delete id="goodsRemove" parameterType="String">
 		/* 상품 삭제 */
 		DELETE
 		FROM
@@ -166,6 +179,15 @@
 		WHERE
 			goods_code = #{goodsCode};
 	</delete>
+	
+	<!-- 상품 등록 -->
+	<insert id="goodsAdd" parameterType="Goods">
+		/* 상품 등록  */
+		INSERT INTO tb_goods
+			(goods_code, goods_small_category, seller_id, goods_name, goods_content, goods_price, goods_discount_rate, goods_post_price, goods_stock, soldout_check, stop_sale_check, package_post_check, regular_deliver_check, reg_date, goods_report_amount, goods_file)
+		VALUES
+			('#{goodsCode}', '#{goodsSmallCategory}', '#{sellerId}', '#{goodsName}', '#{goodsContent}', '#{goodsPrice}', '#{goodsDiscountRate}', '#{goodsPostPrice}', '#{goodsStock}', '#{stopSaleCheck}', '#{packagePostCheck}', '#{regularDeliverCheck}', CURDATE(), '#{goodsReportAmount}', '#{goodsFile}')
+	</insert>
 	
     <!-- 상품 수정 -->
 	<update id="goodsModify" parameterType="Goods">
@@ -185,42 +207,39 @@
 			<if test="stopSaleCheck != null and stopSaleCheck != ''">,stop_sale_check = #{stopSaleCheck}</if>
 			<if test="packagePostCheck != null and packagePostCheck != ''">,package_post_check = #{packagePostCheck}</if>
 			<if test="regularDeliverCheck != null and regularDeliverCheck != ''">,regular_deliver_check = #{regularDeliverCheck}</if>
+			modify_reg_date = NOW(),
 			<if test="goodsReportAmount != null and goodsReportAmount != ''">,goods_report_amount = #{goodsReportAmount}</if>
+			<if test="goodsFile != null and goodsFile != ''">,goods_file = #{goodsFile}</if>
 		</trim>
 		WHERE
 			goods_code = #{goodsCode};
 	</update>
-	<!--  	
-			<where>
-			<if test="goodsCode != null and goodsCode != ''">goods_code=#{goodsCode}</if>
-		</where>
-		WHERE
-		   goods_code = #{goodsCode}; -->
-	<!-- 	<if test="goodsFile != null and goodsFile != ''">
-			   ,goods_file     	= #{goodsFile}
-			</if>  -->
 
 	<!-- 특정상품 조회 -->
-	<select id="getGoodsInfoByCode" parameterType="String" resultType="Goods">
+	<select id="getGoodsInfoByCode" parameterType="String" resultMap="goodsResultMap">
 		/* 특정상품 조회 */
 		SELECT
-			 g.goods_code  				AS goodsCode
-			,g.goods_small_category		AS goodsSmallCategory
-			,g.seller_id				AS sellerId
-			,g.goods_name				AS goodsName
-			,g.goods_content			AS goodsContent
-			,g.goods_price				AS goodsPrice
-			,g.goods_discount_rate		AS goodsDiscountRate
-			,g.goods_post_price			AS goodsPostPrice
-			,g.goods_stock				AS goodsStock
-			,g.soldout_check			AS soldoutCheck
-			,g.stop_sale_check			AS stopSaleCheck
-			,g.package_post_check		AS packagePostCheck
-			,g.regular_deliver_check	AS regularDeliverCheck
-			,g.reg_date					AS regDate
-			,g.goods_report_amount		AS goodsReportAmount
+			 g.goods_code  				
+			,g.goods_small_category		
+			,g.seller_id				AS user_id
+			,g.goods_name				
+			,g.goods_content			
+			,g.goods_price				
+			,g.goods_discount_rate		
+			,g.goods_post_price			
+			,g.goods_stock				
+			,g.soldout_check			
+			,g.stop_sale_check			
+			,g.package_post_check		
+			,g.regular_deliver_check	
+			,g.reg_date					
+			,g.goods_report_amount		
 		FROM
 			tb_goods AS g
+			INNER JOIN
+			tb_user AS u
+			ON
+			g.seller_id = u.user_id
 		WHERE
 			goods_code = #{goodsCode};
 	</select>

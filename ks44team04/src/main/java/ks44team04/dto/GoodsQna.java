@@ -14,13 +14,21 @@ public class GoodsQna {
     private String qnaStatus;
     
     
-	private User userInfo;
-	public User getUserInfo() {
-		return userInfo;
-	}
-	public void setUserInfo(User userInfo) {
-		this.userInfo = userInfo;
-	}
+    private GoodsAnswer goodsAnswerInfo;
+    public GoodsAnswer getGoodsAnswerInfo() {
+    	return goodsAnswerInfo;
+    }
+    public void setGoodsAnswerInfoo(GoodsAnswer goodsAnswerInfo) {
+    	this.goodsAnswerInfo = goodsAnswerInfo;
+    }
+    
+    private User userInfo;
+    public User getUserInfo() {
+    	return userInfo;
+    }
+    public void setUserInfo(User userInfo) {
+    	this.userInfo = userInfo;
+    }
 	
 	private Goods goodsInfo;
 	public Goods getGoodsInfo() {
