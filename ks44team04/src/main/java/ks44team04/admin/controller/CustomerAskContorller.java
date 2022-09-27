@@ -10,12 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/admin/customerAsk")
 public class CustomerAskContorller {
 
-	// 관리자 자주 묻는 질문 수정 처리 
+	// 관리자 문의 답변 수정 처리 
+	@PostMapping("/modifyAskAnswer")
+	public String modifyAskAnswerAction() {
+		
+		// 수정 처리 후 관리자 고객 문의 내역 화면으로 리다이렉트
+		return "redirect:/admin/customerAsk/customerAskDetail";
+	}
+	
+	// 관리자 고객 문의 수정 처리 
 	@PostMapping("/modifyCustomerAsk")
 	public String modifyCustomerAskAction() {
 		
-		// 수정 처리 후 관리자 자주 묻는 질문 목록 화면으로 리다이렉트
-		return "redirect:/admin/customerAsk/customerAskList";
+		// 수정 처리 후 관리자 고객 문의 내역 화면으로 리다이렉트
+		return "redirect:/admin/customerAsk/customerAskDetail";
 	}
 	
 	// 고객 문의 삭제 처리

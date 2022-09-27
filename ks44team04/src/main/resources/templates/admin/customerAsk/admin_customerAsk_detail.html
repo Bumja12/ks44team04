@@ -7,10 +7,10 @@
 	    <title th:text="${title}"></title>
 	</th:block>
 
-	<th:block layout:fragment="customCSS">
+	<th:block layout:fragment="customCss">
 		<style>
-			#regular_ask_content{
-				resize: none;
+			.d-none{
+				display: none;
 			}
 		</style>
 	</th:block>
@@ -107,9 +107,9 @@
 							<div class="item form-group">
 								<div class="col-md-6 col-sm-6 offset-md-3">
 									<button type="button" class="btn btn-primary modifyBtn">수정</button>
-									<button type="button" class="btn btn-success">답변 등록하기</button>
+									<button type="button" id="addAnswer" class="btn btn-success">답변 등록하기</button>
 									<button class="btn btn-info" id="resetBtn" type="reset">초기화</button>
-									<button id="cancelBtn" class="btn btn-warning" type="button">취소</button>
+									<button class="btn btn-warning cancelBtn" type="button">취소</button>
 								</div>
 							</div>
 						</form> <!-- <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"> -->
@@ -121,7 +121,7 @@
 		</div> <!-- </div class="row"> -->
 		
 		<!-- 문의 답변 내역 -->
-		<div class="row">
+		<div class="row d-none" id="askAnswerDetail">
 			<div class="col-sm-12">
         		<div class="x_panel">
             		<div class="x_title">
@@ -130,7 +130,7 @@
             		</div>
             		<div class="x_content">
      					<br/>
-						<form class="form-horizontal form-label-left" th:action="@{/admin/customerAsk/modifyCustomerAsk}" method="post">
+						<form class="form-horizontal form-label-left" th:action="@{/admin/customerAsk/modifyAskAnswer}" method="post">
 							<!-- 문의 답변 PK -->
 							<div class="form-group row ">
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="askAnswerPK">답변 PK
@@ -177,7 +177,7 @@
 								<div class="col-md-6 col-sm-6 offset-md-3">
 									<button type="button" class="btn btn-primary modifyBtn">수정</button>
 									<button class="btn btn-info" id="resetBtn" type="reset">초기화</button>
-									<button id="cancelBtn" class="btn btn-warning" type="button">취소</button>
+									<button class="btn btn-warning cancelBtn" type="button">취소</button>
 									<button class="btn btn-danger" type="button">삭제</button>
 								</div>
 							</div>
@@ -202,39 +202,47 @@
 			let cancelBtn = document.querySelector('#cancelBtn');
 			// 수정 버튼에 이벤트 등록
 			
-// 			modifyBtn.addEventListener('click', function(){
-// 				for(var i=0; i<updateContent.length; i++){
-// 					// 수정할 요소가 disabled 상태라면 원래대로 바꾼다. 
-// 					if(updateContent[i].disabled){
-// 						updateContent[i].disabled = false;
-// 					}
-// 				}
-// 				// 그리고 수정 버튼을 전송 버튼으로 바꾼다.
-// 				modifyBtn.addEventListener('click', function(){
-// 					this.type = 'submit';
-// 				});
-// 			});
-			
-			// 취소 버튼에 이벤트 등록
-			cancelBtn.addEventListener('click', function(){
-				console.log(location.href);
-				// 자주 묻는 질문 목록으로 리다이렉트
-				window.location = 'http://localhost:8088/admin/customerAsk/customerAskList';
-			
-			});
-			
 			$(function(){
+				let isAnswer = true;
+				
 				// 수정 버튼 탐색
 				let $modifyBtn =  $('.modifyBtn');
+				// 취소 버튼 탐색
+				let $cancelBtn =  $('.cancelBtn');
+				// 답변 등록 버튼 탐색
+				let $addAnswer =  $('#addAnswer');
+				// 문의 답변 내역 탐색
+				let $askAnswerDetail =  $('#askAnswerDetail');
+				askAnswerDetail
 				// disabled 속성 조작할 요소들 탐색
 				let $disabledToAbled =  $('.disabledToAbled');
+				
+				let $askAnswer =  $('.askAnswer');
+				
+				// 관리자 답변 내역이 있다면
+				if(isAnswer){
+					console.log($askAnswerDetail);
+					$askAnswerDetail.removeClass('d-none');
+					$addAnswer.addClass('d-none');
+// 					console.log($askAnswer);
+				}else{ // 관리자 답변 내역이 없다면 
+					$askAnswerDetail.addClass('d-none');
+					$addAnswer.removeClass('d-none');
+// 					$addAnswer[0].style='display: ;'
+				}
+				
+				// 취소 버튼 각각에 클릭시 이벤트 등록
+				$cancelBtn.each(function(i){
+					$(this).click(function(){
+						window.location = 'http://localhost:8088/admin/customerAsk/customerAskList';
+					});
+				});
 				
 				// 수정 버튼 각각에 클릭시 이벤트 등록
 				$modifyBtn.each(function(i){
 					$(this).click(function(){
 						// disabled 속성 조작할 요소들을 담을 배열 객체 switchDisabledArray 선언
 						var switchDisabledArray = $(this).parent().parent().parent().find(".disabledToAbled")
-// 						console.log(switchDisabledArray);
 						for(var i=0; i<switchDisabledArray.length; i++){
 							// Disabled 되었는지 확인
 							var isDisabled = switchDisabledArray[i].disabled;
@@ -246,7 +254,6 @@
 						// 중첩 이벤트 등록
 						$(this).click(function(){
 							for(var i=0; i<$(this).length; i++){
-								console.log();
 								$(this)[i].type = 'submit';
 							}
 						});
