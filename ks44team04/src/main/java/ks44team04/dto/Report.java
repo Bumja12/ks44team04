@@ -18,8 +18,27 @@ public class Report {
     private int penaltyPoint;
     private int totalPenaltyPoint;
     private int banDate;
+    private ReportCategory reportCategoryDto;
+    private ReportRule reportRuleDto;
+    
 
-    public String getReportHistoryCode() {
+    public ReportRule getReportRuleDto() {
+		return reportRuleDto;
+	}
+
+	public void setReportRuleDto(ReportRule reportRuleDto) {
+		this.reportRuleDto = reportRuleDto;
+	}
+
+	public ReportCategory getReportCategoryDto() {
+		return reportCategoryDto;
+	}
+
+	public void setReportCategoryDto(ReportCategory reportCategoryDto) {
+		this.reportCategoryDto = reportCategoryDto;
+	}
+
+	public String getReportHistoryCode() {
         return reportHistoryCode;
     }
 
@@ -148,24 +167,13 @@ public class Report {
     }
 
     @Override
-    public String toString() {
-        return "Report{" +
-                "reportHistoryCode='" + reportHistoryCode + '\'' +
-                ", reportedId='" + reportedId + '\'' +
-                ", reportingId='" + reportingId + '\'' +
-                ", reportCategory='" + reportCategory + '\'' +
-                ", reportCode='" + reportCode + '\'' +
-                ", reportWhat='" + reportWhat + '\'' +
-                ", reportReason='" + reportReason + '\'' +
-                ", boardFile='" + boardFile + '\'' +
-                ", reportDate='" + reportDate + '\'' +
-                ", reportResult='" + reportResult + '\'' +
-                ", reportResultReason='" + reportResultReason + '\'' +
-                ", reportResultDate='" + reportResultDate + '\'' +
-                ", reportApproveId='" + reportApproveId + '\'' +
-                ", penaltyPoint=" + penaltyPoint +
-                ", totalPenaltyPoint=" + totalPenaltyPoint +
-                ", banDate=" + banDate +
-                '}';
-    }
+	public String toString() {
+		return "Report [reportHistoryCode=" + reportHistoryCode + ", reportedId=" + reportedId + ", reportingId="
+				+ reportingId + ", reportCategory=" + reportCategory + ", reportCode=" + reportCode + ", reportWhat="
+				+ reportWhat + ", reportReason=" + reportReason + ", boardFile=" + boardFile + ", reportDate="
+				+ reportDate + ", reportResult=" + reportResult + ", reportResultReason=" + reportResultReason
+				+ ", reportResultDate=" + reportResultDate + ", reportApproveId=" + reportApproveId + ", penaltyPoint="
+				+ penaltyPoint + ", totalPenaltyPoint=" + totalPenaltyPoint + ", banDate=" + banDate
+				+ ", reportCategoryDto=" + reportCategoryDto + ", reportRuleDto=" + reportRuleDto + "]";
+	}
 }

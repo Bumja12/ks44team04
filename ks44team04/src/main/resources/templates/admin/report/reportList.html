@@ -38,29 +38,39 @@
               <table class="table table-striped jambo_table bulk_action">
                 <thead>
                   <tr class="headings">
-                    <th class="column-title">회원신고기록코드 </th>
-                    <th class="column-title">신고 대상 아이디 </th>
-                    <th class="column-title">신고자 아이디</th>
-                    <th class="column-title">신고 카테고리 </th>
-                    <th class="column-title">신고 사유 코드 </th>
-                    <th class="column-title">신고 시간 </th>
-                    <th class="column-title">처리상태</th>
-                    <th class="bulk-actions" colspan="8">
+                 	<th style="text-align: center;" class="column-title">회원신고기록코드 </th>
+                    <th style="text-align: center;" class="column-title">신고 대상 아이디 </th>
+                    <th style="text-align: center;" class="column-title">신고자 아이디</th>
+                    <th style="text-align: center;" class="column-title">신고 카테고리 </th>
+                    <th style="text-align: center;" class="column-title">신고 사유명 </th>
+                    <th style="text-align: center;" class="column-title">신고 대상 코드 </th>
+                    <th style="text-align: center;" class="column-title">신고 세부내용 </th>
+                    <th style="text-align: center;" class="column-title">첨부파일 </th>
+                    <th style="text-align: center;" class="column-title">신고시간</th>
+                    <th style="text-align: center;" class="column-title">처리상태</th>
+                    <th style="text-align: center;" class="column-title">처리</th>
+                   
+                    <th class="bulk-actions" colspan="11">
                       <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">
                         </span> ) <i class="fa fa-chevron-down"></i></a>
                     </th>
                   </tr>
                 </thead>
 
-                <tbody >
+                <tbody style="text-align: center;" >
                   <tr th:if="${l.reportResult == '대기중' }" th:each="l : ${reportList}"  class="even pointer">
                     <td th:text="${l.reportHistoryCode}"></td>
-                    <td th:text="${l.reportedId}"></td>
-                    <td th:text="${l.reportingId}"> </td>
+                    <td th:text="${l.reportingId}"></td>
+                    <td th:text="${l.reportedId}"> </td>
+                    <td th:text="${l.reportCategoryDto.categoryName}"></td>
+                    <td th:text="${l.reportRuleDto.reportReason}"></td>
                     <td th:text="${l.reportWhat}"></td>
                     <td th:text="${l.reportReason}"></td>
+                    <td th:text="${l.boardFile}"></td>
                     <td th:text="${l.reportDate}"></td>
                     <td th:text="${l.reportResult}"></td>
+                    <td style="padding: 0px; "><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">처리</button></td>
+                    
                   </tr>
                 </tbody>
               </table>
@@ -108,31 +118,47 @@
               <table class="table table-striped jambo_table bulk_action">
                 <thead>
                   <tr class="headings">
-                    <th class="column-title">회원신고기록코드 </th>
-                    <th class="column-title">신고 대상 아이디 </th>
-                    <th class="column-title">신고자 아이디</th>
-                    <th class="column-title">신고 카테고리 </th>
-                    <th class="column-title">신고 사유 코드 </th>
-                    <th class="column-title">신고 시간 </th>
-                    <th class="column-title">처리 시간 </th>
-                    <th class="column-title">처리상태</th>
-                    <th class="bulk-actions" colspan="8">
+                    <th style="text-align: center;" class="column-title">회원신고기록코드 </th>
+                    <th style="text-align: center;" class="column-title">신고 대상 아이디 </th>
+                    <th style="text-align: center;" class="column-title">신고자 아이디</th>
+                    <th style="text-align: center;" class="column-title">신고 카테고리 </th>
+                    <th style="text-align: center;" class="column-title">신고 사유명 </th>
+                    <th style="text-align: center;" class="column-title">신고 대상 코드 </th>
+                    <th style="text-align: center;" class="column-title">신고 세부내용 </th>
+                    <th style="text-align: center;" class="column-title">첨부파일 </th>
+                    <th style="text-align: center;"class="column-title">신고시간</th>
+                    <th style="text-align: center;" class="column-title">처리상태</th>
+                    <th style="text-align: center;" class="column-title">신고승인/반려사유</th>
+                    <th style="text-align: center;" class="column-title">처리시간</th>
+                    <th style="text-align: center;" class="column-title">승인자 아이디</th>
+                    <th style="text-align: center;" class="column-title">벌점부여</th>
+                    <th style="text-align: center;" class="column-title">누적 벌점</th>
+                    <th style="text-align: center;" class="column-title">정지일수</th>
+                    <th style="text-align: center;" class="bulk-actions" colspan="16">
                       <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">
                         </span> <i class="fa fa-chevron-down"></i></a>
                     </th>
                   </tr>
                 </thead>
 
-                <tbody>
+                <tbody style="text-align: center;">
                   <tr th:if="${not #lists.isEmpty(reportList)}" th:each="l : ${reportList}"  class="even pointer">
                     <td th:text="${l.reportHistoryCode}"></td>
-                    <td th:text="${l.reportedId}"></td>
-                    <td th:text="${l.reportingId}"> </td>
+                    <td th:text="${l.reportingId}"></td>
+                    <td th:text="${l.reportedId}"> </td>
+                    <td th:text="${l.reportCategoryDto.categoryName}"></td>
+                    <td th:text="${l.reportRuleDto.reportReason}"></td>
                     <td th:text="${l.reportWhat}"></td>
                     <td th:text="${l.reportReason}"></td>
+                    <td th:text="${l.boardFile}"></td>
                     <td th:text="${l.reportDate}"></td>
-                    <td th:text="${l.reportResultDate}"></td>
                     <td th:text="${l.reportResult}"></td>
+                    <td th:text="${l.reportResultReason}"> </td>
+                    <td th:text="${l.reportResultDate}"></td>
+                    <td th:text="${l.reportApproveId}"></td>
+                    <td th:text="${l.reportRuleDto.penaltyPoint} + '점'"></td>
+                    <td th:text="${l.totalPenaltyPoint} + '점'"></td>
+                    <td th:text="${l.banDate} + '일'"></td>
                   </tr>
                   
                 </tbody>
@@ -146,27 +172,6 @@
           
 </th:block>
 <!-- jQuery -->
-    <th:block layout:fragment="customScript">
-	    <script>
-		    function setreportImage(event) {
-			    for (var image of event.target.files) {
-			          var reader = new FileReader();
-			
-			          reader.onload = function(event) {
-			            var img = document.createElement("img");
-			            img.setAttribute("src", event.target.result);
-			            document.querySelector("div#image_container").appendChild(img);
-			          };
-			
-			          console.log(image);
-			          reader.readAsDataURL(image);
-			        }
-			      }
-				});
-	
-	    </script>
-	        </th:block>
-<th:block layout:fragment="customJsScript">
 
     <th:block th:replace="fragments/adminJs :: datatablesFragment"></th:block>
 
@@ -176,25 +181,5 @@
 
 
  <script src="../vendors/jquery/dist/jquery.min.js"></script>
-    <script>
-      function setreportImage(event) {
-        for (var image of event.target.files) {
-          var reader = new FileReader();
 
-          reader.onload = function(event) {
-            var img = document.createElement("img");
-            img.setAttribute("src", event.target.result);
-            document.querySelector("div#image_container").appendChild(img);
-          };
-
-          console.log(image);
-          reader.readAsDataURL(image);
-        }
-      }
-    </script>
-    <script type="text/javascript">
-    	$("#reportModal").modal({
-    		backdrop:'static'
-    	})
-    </script>
 </html>
