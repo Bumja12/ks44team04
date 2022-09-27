@@ -58,13 +58,10 @@
 							</select>
 					</div>
 					<div class="form-inline control-group controls">
-						<label class="control-label" for="qnaSearchDate"
-							style="margin-right: 26px;">등록일</label>
+						<label class="control-label" for="qnaSearchDate" style="margin-right: 26px;">등록일</label>
 						<div class="input-prepend input-group" style="margin-top:9px;">
-							<span class="add-on input-group-addon"><i
-								class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-								<input type="text" style="width: 200px;" name="reservation"
-								id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
+							<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+								<input type="text" style="width: 200px;" name="reservation" id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
 						</div>
 						<div class="btn-group  btn-group-sm">
 	                        <button class="btn btn-default" type="button" name="filterDate" value="today">오늘</button>
@@ -104,8 +101,8 @@
 								<td th:text="${q.goodsQnaCategoryInfo.categoryName}"></td>
 								<td th:text="${q.goodsInfo.goodsCode}"></td>
 								<td th:text="${q.goodsInfo.goodsName}"></td>
-								<td>[[${q.goodsQnaContent}]]
-								<a href="javascript:void(0);" class="qnaToggle" style="color: gray; font-weight: bold; float:right;">답변보기</a>
+								<td><b>[[${q.goodsQnaTitle}]]</b>&nbsp;&nbsp;&nbsp;[[${q.goodsQnaContent}]]
+								<a href="javascript:void(0);" class="qnaToggle badge" style="color: gray; background-color:#ECECEC; font-weight: bold; float:right;">답변보기</a>
 								<br>
 								<table class="table table-striped table-bordered toggle" style="display:none; margin-top:20px; width: 100%;">
 									<thead>
@@ -116,14 +113,17 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td th:text="${q.userInfo.userId}"></td>
-											<td>ㅇㅇ</td>
-											<td th:text="${q.goodsQnaDate}"></td>
+										<tr th:if="${q.qnaStatus} == '답변완료'">
+											<td th:text="${q.goodsAnswerInfo.sellerId}"></td>
+											<td th:text="${q.goodsAnswerInfo.goodsAnswerContent}"></td>
+											<td th:text="${q.goodsAnswerInfo.answerDate}"></td>
+										</tr>
+										<tr th:unless="${q.qnaStatus} == '답변완료'">
+											<td colspan="3">등록된 답변이 없습니다.</td>
 										</tr>
 									</tbody>
 								</table>
-								
+								</td>
 								<td th:text="${q.secretCheck}"></td>
 								<td th:text="${q.goodsQnaPw}"></td>
 								<td th:text="${q.userInfo.userId}"></td>
@@ -135,7 +135,7 @@
 								</td>
 							</tr>
 							<tr th:unless="${not #lists.isEmpty(goodsQna)}">
-								<td colspan="10">등록된 상품이 없습니다.</td>
+								<td colspan="11">등록된  문의가 없습니다.</td>
 							</tr>
 						</tbody>
 					</table>
