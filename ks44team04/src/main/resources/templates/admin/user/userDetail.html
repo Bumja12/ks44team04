@@ -85,53 +85,53 @@
 									<td class="tableOdd col-md-1">회원권한</td>
 									<td class="tableEven">
 										<div class="form-inline">
-											<input type="text" class="form-control text" id="userRight" name="userRight" th:value="${userInfo.userRight}" readonly="readonly" />
+											<input type="text" class="form-control text" id="userRight" name="userRight" th:value="*{rightDto.rightStatus}" readonly="readonly" />
 										</div>
 									</td>
 									<td class="tableOdd col-md-1">회원등급</td>
 									<td class="tableEven">
-										<input type="text" class="form-control text" id="userLevel" name="userLevel" th:value="${userInfo.userLevel}" readonly="readonly" />
+										<input type="text" class="form-control text" id="userLevel" name="userLevel" th:value="*{userLevel}" readonly="readonly" />
 									</td>
 								</tr>
 								<tr>
 									<td class="tableOdd">아이디</td>
 									<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="userId" name="userId" th:value="${userInfo.userId}" readonly="readonly" />
+										<input type="text" class="form-control text" id="userId" name="userId" th:value="*{userId}" readonly="readonly" />
 									</td>
 									<td class="tableOdd">닉네임</td>
 									<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="userNickname" name="userNickname" th:value="${userInfo.userNickname}" readonly="readonly" />
+										<input type="text" class="form-control text" id="userNickname" name="userNickname" th:value="*{userNickname}" readonly="readonly" />
 									</td>
 								</tr>
 								<tr>
 									<td class="tableOdd">이름</td>
 									<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="userName" name="userName" th:value="${userInfo.userName}" readonly="readonly" />
+										<input type="text" class="form-control text" id="userName" name="userName" th:value="*{userName}" readonly="readonly" />
 									</td>
 									<td class="tableOdd">비밀번호</td>
 									<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="userPw" name="userPw" th:value="${userInfo.userPw}" readonly="readonly" />
+										<input type="text" class="form-control text" id="userPw" name="userPw" th:value="*{userPw}" readonly="readonly" />
 									</td>
 								</tr>
 								<tr>
 									<td class="tableOdd">이메일</td>
 									<td class="tableEven col-md-4">
 										<div class="form-inline">
-											<input type="text" class="form-control text" id="userEmail" name="userEmail" th:value="${userInfo.userEmail}" readonly="readonly" />
+											<input type="text" class="form-control text" id="userEmail" name="userEmail" th:value="*{userEmail}" readonly="readonly" />
 										</div>
 									</td>
 									<td class="tableOdd">휴대폰번호</td>
 									<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="userPhone" name="userPhone" th:value="${userInfo.userPhone}" readonly="readonly" />
+										<input type="text" class="form-control text" id="userPhone" name="userPhone" th:value="*{userPhone}" readonly="readonly" />
 									</td>
 								</tr>
 								<tr>
 									<td class="tableOdd">주소</td>
 									<td class="tableEven col-md-4" colspan="3">
 										<div class="form-inline">
-											<input type="text" class="form-control Text" id="userAddr" style="width: 350px; margin-right: 6px;" th:value="${userInfo.userAddress}" readonly="readonly" /> 
+											<input type="text" class="form-control Text" id="userAddr" style="width: 350px; margin-right: 6px;" th:value="*{userAddress}" readonly="readonly" /> 
 											<input type="text" class="form-control Text" id="userAddrDetail" name="userAddrDetail"
-												   style="width: 350px; margin-right: 6px;" th:value="${userInfo.userAddress2}" readonly="readonly" />
+												   style="width: 350px; margin-right: 6px;" th:value="*{userAddress2}" readonly="readonly" />
 										</div>
 									</td>
 								</tr>
@@ -139,34 +139,34 @@
 									<td class="tableOdd">포인트</td>
 									<td class="tableEven col-md-4">
 										<div class="form-inline">
-											<input type="text" class="form-control text" id="userPoint" name="userPoint" th:value="${#numbers.formatInteger(userInfo.userPoint,3,'COMMA')}" readonly="readonly" /> 점
+											<input type="text" class="form-control text" id="userPoint" name="userPoint" th:value="*{#numbers.formatInteger(userPoint,3,'COMMA')}" readonly="readonly" />점
 										</div>
 									</td>
 									<td class="tableOdd">벌점</td>
 									<td class="tableEven col-md-4">
 										<div class="form-inline">
-											<input type="text" class="form-control text" id="userPenalty" name="userPenalty" th:value="${userInfo.userPenalty}" readonly="readonly" /> 점
+											<input type="text" class="form-control text" id="userPenalty" name="userPenalty" th:value="*{userPenalty}" readonly="readonly" />점
 										</div>
 									</td>
 								</tr>
 								<tr>
 									<td class="tableOdd">상태</td>
 									<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="userStatus" name="userStatus" th:value="${userInfo.userStatus}" readonly="readonly" />
+										<input type="text" class="form-control text" id="userStatus" name="userStatus" th:value="*{userStatus}" readonly="readonly" />
 									</td>
 									<td class="tableOdd">정보보관기간</td>
 									<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="userInfoKeep" name="userInfoKeep" th:value="${userInfo.userInfoKeep}" readonly="readonly" />
+										<input type="text" class="form-control text" id="userInfoKeep" name="userInfoKeep" th:value="*{userInfoKeep}" readonly="readonly" />
 									</td>
 								</tr>
 								<tr>
 									<td class="tableOdd">등록일시</td>
 									<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="userRegDate" name="userRegDate" th:value="${userInfo.userRegDate}" readonly="readonly" />
+										<input type="text" class="form-control text" id="userRegDate" name="userRegDate" th:value="*{userRegDate}" readonly="readonly" />
 									</td>
 									<td class="tableOdd">최종수정</td>
 									<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="userUpdateDate" name="userUpdateDate" th:value="${userInfo.userUpdateDate}" readonly="readonly" />
+										<input type="text" class="form-control text" id="userUpdateDate" name="userUpdateDate" th:value="*{userUpdateDate}" readonly="readonly" />
 									</td>
 								</tr>
 							</tbody>

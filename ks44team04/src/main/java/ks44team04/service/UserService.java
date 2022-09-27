@@ -38,7 +38,14 @@ public class UserService {
 		userMapper.modifyUser(user);
 	}
     
-	//특정회원 조회
+	//특정 판매자 정보 조회
+	public Seller getSellerInfoById(String sellerId) {
+		Seller seller = userMapper.getSellerInfoById(sellerId);
+		
+		return seller;
+	}
+	
+	//특정 회원 정보 조회
 	public User getUserInfoById(String userId) {
 		User user = userMapper.getUserInfoById(userId);
 		
