@@ -1,8 +1,10 @@
 package ks44team04.dto;
 
+import java.util.List;
+
 public class CouponStatus {
 
-	  private String couponStatusCode;
+    private String couponStatusCode;
     private String couponCode;
     private String buyerId;
     private String adminId;
@@ -16,7 +18,7 @@ public class CouponStatus {
 
     public void setCouponStatusCode(String couponStatusCode) {
         this.couponStatusCode = couponStatusCode;
-    }	
+    }
 
     public String getCouponCode() {
         return couponCode;
