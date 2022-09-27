@@ -25,10 +25,40 @@
     
     
      <!-- 신고 하기 -->
-     <insert id="setReport" parameterType="Report">
+     <insert id="setReport" parameterType="Report" >
      INSERT INTO tb_report
-	(report_history_code, reported_id, reporting_id, report_category, report_code, report_what, report_reason, board_file, report_date, report_result, report_result_reason, report_result_date, report_approve_id, penalty_point, total_penalty_point, ban_date)
-	VALUES (#{reportHistoryCode}, #{reportedId}, #{reportingId}, #{reportCategory}, #{reportCode}, #{reportWhat}, #{reportReason}, #{boardFile}, NOW(), #{reportResult}, #{reportResultReason}, NOW(), #{reportApproveId}, 0, 0, 0)
+		(report_history_code
+		 ,reported_id
+		 ,reporting_id
+		 ,report_category
+		 ,report_code
+		 ,report_what
+		 ,report_reason
+		 ,board_file
+		 ,report_date
+		 ,report_result
+		 ,report_result_reason
+		 ,report_result_date
+		 ,report_approve_id
+		 ,penalty_point
+		 ,total_penalty_point
+		 ,ban_date)
+     VALUES (#{reportHistoryCode}
+    		,#{reportedId}
+    		,#{reportingId}
+    		,#{reportCategory}
+    		,#{reportCode}
+    		,#{reportWhat}
+    		,#{reportReason}
+    		,#{boardFile}
+    		,NOW()
+    		,#{reportResult}
+    		,#{reportResultReason}
+    		,NOW()
+    		,#{reportApproveId}
+    		,0
+    		,0
+    		,0)
      </insert>
      
     <!-- 신고 목록 조회 -->
@@ -46,6 +76,12 @@
 		FROM 
 			tb_report AS r
 
+    </select>
+    
+    <select id="getReportHistoryCode" resultType="String">
+	    SELECT report_history_code
+		FROM tb_report
+		ORDER BY report_history_code DESC LIMIT 1
     </select>
    
 
