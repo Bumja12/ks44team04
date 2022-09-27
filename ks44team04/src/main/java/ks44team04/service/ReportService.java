@@ -26,9 +26,16 @@ public class ReportService {
     public List<Report> getReportList(){
     	List<Report> reportList = reportMapper.getReportList();
     	System.out.println("신고리스트");
+    	
+    	
+    	
+    	
+    	
+    	
 		return reportList;
 	}
     
+    //신고 등록 코드 증가 
     public String getReportHistoryCode() {
     	String reportHistoryCode = reportMapper.getReportHistoryCode();
     	return reportHistoryCode;
