@@ -14,7 +14,7 @@ public class RegularAskController {
 	@GetMapping("/removeRegularAsk")
 	public String removeRegularAsk () {
 		
-		// 카테고리 목록 화면으로 리다이렉트
+		// 카테고리 삭제 화면으로 이동
 		return "admin/regularAsk/admin_regularAsk_remove";
 	}
 	

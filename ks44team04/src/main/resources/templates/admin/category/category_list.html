@@ -1176,9 +1176,9 @@
 				
 				$checkAllBtn.each(function(i){
 					$(this).click(function(){
-						let $table = $(this).parent().parent().parent().parent();
-						console.log($('$table.children()[1]' > 'tr'));
-						
+						// <tbody>까지 접근
+						let $table = $(this).parent().parent().parent().parent().children()[1];
+						console.log($table);
 					});
 				});
 			});

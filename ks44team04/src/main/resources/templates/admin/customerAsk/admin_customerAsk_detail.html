@@ -1,10 +1,152 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title th:text="${title}"></title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminDefault}">
 
-</body>
+	<th:block layout:fragment="customTitle">
+	    <title th:text="${title}"></title>
+	</th:block>
+
+	<th:block layout:fragment="customCSS">
+		<style>
+			#regular_ask_content{
+				resize: none;
+			}
+		</style>
+	</th:block>
+	
+	<th:block layout:fragment="customContents">
+		<div class="row">
+			<div class="col-sm-12">
+        		<div class="x_panel">
+            		<div class="x_title">
+                		<h2>고객 문의 내역</h2>
+                    	<div class="clearfix"></div>
+            		</div>
+            		<div class="x_content">
+     					<br/>
+						<form class="form-horizontal form-label-left" th:action="@{/admin/customerAsk/modifyCustomerAsk}" method="post">
+							<!-- 자주 묻는 질문 PK -->
+							<div class="form-group row ">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="customerAskPK">문의 PK
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="customerAskPK" value="customerAskPK001" disabled="disabled" required="required" class="form-control" maxlength="15">
+								</div>
+							</div>
+							<!-- 자주 묻는 질문 카테고리 FK -->
+							<div class="form-group row">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="customerAskCategory">문의 카테고리
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<select class="select2_single form-control"  id="customerAskCategory" disabled="disabled" required="required" tabindex="-1">
+										<option></option>
+										<option value="customerAskCategory01" selected="selected">결제 관련 문의</option>
+										<option value="customerAskCategory02">정기 배송 문의</option>
+										<option value="customerAskCategory03">배송 관련 문의</option>
+										<option value="customerAskCategory04">홈페이지 오류 신고</option>
+										<option value="customerAskCategory05">판매 문의</option>
+									</select>
+								</div>
+							</div>
+							<!-- 회원 아이디 FK(작성자) -->
+							<div class="form-group row ">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="customerId">회원 아이디(문의자)
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="customerId" value="buyer01" disabled="disabled" required="required" class="form-control" maxlength="15">
+								</div>
+							</div>
+							<!-- 제목 -->
+							<div class="form-group row ">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="customerAskTitle">제목
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="customerAskTitle" value="제목01" disabled="disabled" required="required" class="form-control" maxlength="15">
+								</div>
+							</div>
+							<!-- 내용 -->
+							<div class="form-group row">
+								<label class="col-form-label col-md-3 col-sm-3" for="customerAskContent">내용
+								</label>
+								<div class="col-md-6 col-sm-6" >
+									<textarea id="customerAskContent" class="form-control" rows="3" required="required" disabled="disabled" placeholder="내용01" style="resize: none; overflow-y: scroll; height: 300px;">내용1
+									</textarea>
+								</div>
+							</div>
+							<!-- 첨부 파일 -->
+							<div class="form-group row ">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="customerAskFile">첨부 파일
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="customerAskFile" value="첨부파일 01" disabled="disabled" required="required" class="form-control" maxlength="15">
+								</div>
+							</div>
+							<!-- 등록일 -->
+							<div class="item form-group">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="regDate">등록일
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="datetime" id="regDate" disabled="disabled" value="2022-05-22 00:00:00" required="required" class="form-control" maxlength="15">
+								</div>
+							</div>
+							<!-- 수정일 -->
+							<div class="item form-group">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="updateDate">수정일
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="datetime" id="updateDate" disabled="disabled" value="2022-05-23 00:00:00" required="required" class="form-control" maxlength="15">
+								</div>
+							</div>
+							<div class="ln_solid"></div>
+							<div class="item form-group">
+								<div class="col-md-6 col-sm-6 offset-md-3">
+									<button type="button" id="modifyBtn" class="btn btn-primary">수정</button>
+									<button type="button" class="btn btn-success">답변 등록하기</button>
+									<button class="btn btn-info" id="resetBtn" type="reset">초기화</button>
+									<button id="cancelBtn" class="btn btn-warning" type="button">취소</button>
+								</div>
+							</div>
+						</form> <!-- <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"> -->
+           				
+           			</div> <!-- </div class="x_content"> -->
+            	</div> <!-- </div class="x_panel"> -->
+            
+			</div> <!-- </div class="col-md-12 col-sm-12"> -->
+		</div> <!-- </div class="row"> -->
+	
+	</th:block>
+
+	<th:block layout:fragment="customJsScript">
+		<script type="text/javascript">
+			// 수정 버튼 탐색
+			let modifyBtn = document.querySelector('#modifyBtn');
+			// 수정할 요소 탐색 (자주 묻는 질문 카테고리 FK, 제목, 내용, 사용 여부 ) - 총 5개 요소
+ 			let updateContent = document.querySelectorAll('#customerAskCategory, #customerAskTitle, #customerAskContent, #customerAskFile');
+			// 취소 버튼 탐색
+			let cancelBtn = document.querySelector('#cancelBtn');
+			// 수정 버튼에 이벤트 등록
+			modifyBtn.addEventListener('click', function(){
+				for(var i=0; i<updateContent.length; i++){
+					// 수정할 요소가 disabled 상태라면 원래대로 바꾼다. 
+					if(updateContent[i].disabled){
+						updateContent[i].disabled = false;
+					}
+				}
+				// 그리고 수정 버튼을 전송 버튼으로 바꾼다.
+				modifyBtn.addEventListener('click', function(){
+					this.type = 'submit';
+				});
+			});
+			// 취소 버튼에 이벤트 등록
+			cancelBtn.addEventListener('click', function(){
+				console.log(location.href);
+				// 자주 묻는 질문 목록으로 리다이렉트
+				window.location = 'http://localhost:8088/admin/customerAsk/customerAskList';
+			
+			});
+			
+		</script>
+	</th:block>
+
 </html>
