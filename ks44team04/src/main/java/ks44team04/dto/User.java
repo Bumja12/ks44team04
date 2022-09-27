@@ -20,8 +20,10 @@ public class User {
     private int userPoint;
     private String userInfoKeep;
     private String userLevel;
+    private LevelSellerCategory levelSeller;
+    private LevelBuyerCategory levelBuyer;
+    private Right rightDto;
 
-	private LevelSellerCategory levelSeller;
     public LevelSellerCategory getLevelSeller() {
     	return levelSeller;
     }
@@ -30,7 +32,6 @@ public class User {
     	this.levelSeller = levelSeller;
     }
     
-    private LevelBuyerCategory levelBuyer;
     public LevelBuyerCategory getLevelBuyer() {
     	return levelBuyer;
     }
@@ -39,7 +40,6 @@ public class User {
     	this.levelBuyer = levelBuyer;
     }
     
-	private Right rightDto;
 	public Right getRightDto() {
 		return rightDto;
 	}

@@ -58,11 +58,23 @@ public class UserController {
 		return "admin/user/addUser";
 	}
 	
-	//회원상세정보
+	//특정 판매자 상세정보
+	@GetMapping("/user/sellerDetail")
+	public String sellerDetail(@RequestParam(value="sellerId", required = false) String sellerId
+							  ,Model model) {
+        Seller sellerInfo = userService.getSellerInfoById(sellerId);
+		model.addAttribute("title", "판매자상세정보");
+		model.addAttribute("sellerInfo", sellerInfo);
+		
+		return "admin/user/sellerDetail";
+	}
+	
+	//특정 회원 상세정보
 	@GetMapping("/user/userDetail")
 	public String userDetail(@RequestParam(value="userId", required = false) String userId
 							  ,Model model) {
         User userInfo = userService.getUserInfoById(userId);
+        log.info("{}",userInfo);
 		model.addAttribute("title", "회원상세정보");
 		model.addAttribute("userInfo", userInfo);
 		
