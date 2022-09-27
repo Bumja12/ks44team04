@@ -5,6 +5,8 @@ import ks44team04.dto.Right;
 import ks44team04.dto.Seller;
 import ks44team04.dto.Dormant;
 import ks44team04.dto.Leave;
+import ks44team04.dto.LevelBuyerCategory;
+import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.Login;
 
 import ks44team04.dto.User;
@@ -74,7 +76,19 @@ public class UserController {
 	public String userDetail(@RequestParam(value="userId", required = false) String userId
 							  ,Model model) {
         User userInfo = userService.getUserInfoById(userId);
-        log.info("{}",userInfo);
+        
+        String userLevel = userInfo.getUserLevel();
+        LevelBuyerCategory levelBuyer = userInfo.getLevelBuyer();
+        LevelSellerCategory levelSeller = userInfo.getLevelSeller();
+        if(userLevel.contains("Buyer")) {
+        	userInfo.setUserLevel(levelBuyer.getLevelName());
+        }else if(userLevel.contains("Seller")) {
+        	userInfo.setUserLevel(levelSeller.getLevelName());
+        }else if(userLevel.equals("")) {
+        	userInfo.setUserLevel("없음");
+        }
+        
+        log.info("로그 목록 ::: {}",userInfo);
 		model.addAttribute("title", "회원상세정보");
 		model.addAttribute("userInfo", userInfo);
 		
