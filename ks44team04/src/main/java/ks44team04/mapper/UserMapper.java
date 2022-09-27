@@ -20,6 +20,12 @@ public interface UserMapper {
 	//회원 가입
 	public int addUser(User user);
     
+	//회원 수정
+	public int modifyUser(User user);
+	
+	//특정 회원 정보 조회
+	public User getUserInfoById(String userId);
+	
 	//로그 조회
 	public List<Login> getLoginList();
 	
@@ -31,7 +37,7 @@ public interface UserMapper {
     
 	//판매자 목록 조회
 	public List<Seller> getSellerList();
-    
+
 	//회원 권한 조회
 	public List<Right> getRightList();
 	
