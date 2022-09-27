@@ -16,13 +16,14 @@
 	</insert>
 	
 	
+	
 	<resultMap type="Login"						id="LoginResultMap">
 		<result column="log_code"				property="logCode" />
 		<result column="login_id"				property="loginId" />
 		<result column="login_date"				property="loginDate" />
 		<result column="logout_date"			property="logoutDate" />
 	</resultMap>
-	<!-- 휴면회원 목록 조회 -->
+	<!-- 로그 조회 -->
 	<select id="getLoginList" resultMap="LoginResultMap">
 		/* 로그 조회 */
 		SELECT 
@@ -158,6 +159,7 @@
         <result column="user_gender" 		property="userGender"/>
         <result column="user_nickname" 		property="userNickname"/>
         <result column="user_address" 		property="userAddress"/>
+        <result column="user_address2" 		property="userAddress2"/>
         <result column="user_phone" 		property="userPhone"/>
         <result column="user_email" 		property="userEmail"/>
         <result column="user_right" 		property="userRight"/>
@@ -196,7 +198,36 @@
 				<result  column="seller_review_terms"	property="sellerReviewTerms"/>
 				<result  column="level_code_npk" 	 	property="levelCodeNpk"/>
 		    </association>  
-	</resultMap>  
+	</resultMap> 
+	
+	
+	<!-- 특정회원 조회 -->
+	<select id="getUserInfoById" resultType="User">
+		/* 특정회원 조회 */
+    	SELECT
+			 u.user_id				AS userId
+			,u.user_pw				AS userPw
+			,u.user_name			AS userName
+			,u.user_gender			AS userGender
+			,u.user_nickname		AS userNickname
+			,u.user_address			AS userAddress
+			,u.user_address2		AS userAddress2
+			,u.user_phone			AS userPhone
+			,u.user_email			AS userEmail
+			,u.user_right			AS userRight
+			,u.user_reg_date		AS userRegDate
+			,u.user_update_date		AS userUpdateDate
+			,u.user_status			AS userStatus
+			,u.user_penalty			AS userPenalty
+			,u.user_point			AS userPoint
+			,u.user_info_keep		AS userInfoKeep
+			,u.user_level			AS userLevel
+		FROM 
+			tb_user AS u
+		WHERE
+			u.user_id = #{userId}
+	</select>
+	 
 	<!-- 회원 권한 조회 -->
 	<select id="getRightList" resultType="Right">
 		/* 회원 권한 조회 */
@@ -217,6 +248,7 @@
 			,u.user_gender
 			,u.user_nickname
 			,u.user_address
+			,u.user_address2
 			,u.user_phone
 			,u.user_email
 			,u.user_right

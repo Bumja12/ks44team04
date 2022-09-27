@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.StringUtils;
 
@@ -57,6 +58,18 @@ public class UserController {
 		return "admin/user/addUser";
 	}
 	
+	//회원상세정보
+	@GetMapping("/user/userDetail")
+	public String userDetail(@RequestParam(value="userId", required = false) String userId
+							  ,Model model) {
+        User userInfo = userService.getUserInfoById(userId);
+		model.addAttribute("title", "회원상세정보");
+		model.addAttribute("userInfo", userInfo);
+		
+		return "admin/user/userDetail";
+	}
+	
+	//로그 목록
 	@GetMapping("/user/loginList")
 	public String getLoginList(Model model) {
 		List<Login> loginList = userService.getLoginList();

@@ -8,6 +8,7 @@ public class User {
     private String userGender;
     private String userNickname;
     private String userAddress;
+    private String userAddress2;
     private String userPhone;
     private String userEmail;
     private String userRight;
@@ -101,6 +102,14 @@ public class User {
 
     public void setUserAddress(String userAddress) {
         this.userAddress = userAddress;
+    }
+    
+    public String getUserAddress2() {
+        return userAddress2;
+    }
+
+    public void setUserAddress2(String userAddress2) {
+        this.userAddress2 = userAddress2;
     }
 
     public String getUserPhone() {
