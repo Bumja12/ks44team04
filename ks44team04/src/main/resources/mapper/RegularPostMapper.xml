@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team04.mapper.RegularPostMapper">
+    <resultMap id="regularPostHistoryResultMap" type="RegularPostHistory">
+        <id column="regular_post_history_code" property="regularPostHistoryCode"/>
+        <result column="regular_post_status" property="regularPostStatus"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="payment_history_code" property="paymentHistoryCode"/>
+        <result column="post_reg_date" property="postRegDate"/>
+        <association property="regularPostStatusInfo" resultMap="regularPostStatusResultMap"/>
+        <association property="orderDetail" javaType="orderDetail">
+            <result column="order_detail_code" property="orderDetailCode"/>
+            <result column="order_status" property="orderStatus"/>
+            <result column="order_amount" property="orderAmount"/>
+            <result column="order_price" property="orderPrice"/>
+            <result column="post_info" property="postInfo"/>
+            <result column="post_info" property="postInfo"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="regularPostStatusResultMap" type="RegularPostStatus">
+        <id column="regular_post_status_code" property="regularPostStatusCode"/>
+        <result column="goods_code" property="goodsCode"/>
+        <result column="buyer_id" property="buyerId"/>
+        <result column="post_list" property="postList"/>
+        <result column="payment_plan" property="paymentPlan"/>
+        <result column="order_amount" property="orderAmount"/>
+        <result column="reg_date" property="regDate"/>
+        <result column="modify_date" property="modifyDate"/>
+        <result column="next_post_date" property="nextPostDate"/>
+        <result column="status" property="status"/>
+        <result column="post_cycle" property="postCycle"/>
+        <result column="post_pass_check" property="postPassCheck"/>
+        <result column="payment_history_code" property="paymentHistoryCode"/>
+    </resultMap>
+
+    <select id="getRegularPostHistory" parameterType="String" resultMap="regularPostHistoryResultMap">
+        select *
+        from tb_regular_post_history as trph
+                 inner join tb_regular_post_status as trps
+                            on trph.regular_post_status = trps.regular_post_status_code
+                 inner join tb_order_detail as tod
+                            on trph.order_num = tod.order_num
+        where trps.buyer_id = #{userId}
+    </select>
+
+</mapper>

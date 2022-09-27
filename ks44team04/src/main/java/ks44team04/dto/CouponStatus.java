@@ -2,19 +2,21 @@ package ks44team04.dto;
 
 public class CouponStatus {
 
-	private String couponStatusCode;
+	  private String couponStatusCode;
     private String couponCode;
     private String buyerId;
     private String adminId;
     private String couponIssueDate;
+    private Coupon couponInfo;
+    private List<Coupon> coupon;
 
     public String getCouponStatusCode() {
-		return couponStatusCode;
-	}
+        return couponStatusCode;
+    }
 
-	public void setCouponStatusCode(String couponStatusCode) {
-		this.couponStatusCode = couponStatusCode;
-	}
+    public void setCouponStatusCode(String couponStatusCode) {
+        this.couponStatusCode = couponStatusCode;
+    }	
 
     public String getCouponCode() {
         return couponCode;
@@ -48,11 +50,32 @@ public class CouponStatus {
         this.couponIssueDate = couponIssueDate;
     }
 
-	@Override
-	public String toString() {
-		return "CouponStatus [couponStatusCode=" + couponStatusCode + ", couponCode=" + couponCode + ", buyerId="
-				+ buyerId + ", adminId=" + adminId + ", couponIssueDate=" + couponIssueDate + "]";
-	}
+    public Coupon getCouponInfo() {
+        return couponInfo;
+    }
 
-   
+    public void setCouponInfo(Coupon couponInfo) {
+        this.couponInfo = couponInfo;
+    }
+
+    public List<Coupon> getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(List<Coupon> coupon) {
+        this.coupon = coupon;
+    }
+
+    @Override
+    public String toString() {
+        return "CouponStatus{" +
+                "couponStatusCode='" + couponStatusCode + '\'' +
+                ", couponCode='" + couponCode + '\'' +
+                ", buyerId='" + buyerId + '\'' +
+                ", adminId='" + adminId + '\'' +
+                ", couponIssueDate='" + couponIssueDate + '\'' +
+                ", couponInfo=" + couponInfo +
+                ", coupon=" + coupon +
+                '}';
+    }
 }
