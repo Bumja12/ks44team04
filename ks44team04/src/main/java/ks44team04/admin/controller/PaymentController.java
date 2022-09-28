@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ks44team04.service.PaymentService;
 import ks44team04.dto.PaymentTotal;
@@ -33,37 +34,57 @@ public class PaymentController {
 	public void paymentControllerInit() {
 		log.info("paymentController Bean 생성");
 	}
+	
+	/*
+	@PostMapping("/removePaymentDetail")
+	public String removePaymentDetail(RedirectAttributes reAttr) {
+			
+		System.out.println();
+
+			return "redirect:/admin/payment/paymentDetail";
 
 	
+	}
+	*/
+	
+
 	@PostMapping("/removePaymentDetail")
-	public String removeMember(@RequestParam(value = "orderDetailCode") String orderDetailCode,
-			RedirectAttributes reAttr, Model model) {
+	public String removePaymentDetail(@RequestParam(value = "orderDetailCode") String orderDetailCode
+										,RedirectAttributes reAttr) {
 
-		model.addAttribute("title", "회원탈퇴");
+		log.info(orderDetailCode);
+		if(orderDetailCode != null) {
+			
+			return "redirect:/admin/payment/paymentDetail";
 
-		return "redirect:/admin/payment/paymentDetail";
+		}else {
+
+			return "redirect:/admin/payment/paymentDetail";
+
+		}
 	}
 	
-
-	/*
-	 * @ResponseBody
-	 * 
-	 * @PostMapping("/deleteCheck") public boolean deleteCheck(@RequestParam(value =
-	 * "btnCheck") boolean btnCheck) {
-	 * 
-	 * boolean deleteCheck = false;
-	 * 
-	 * if(btnCheck=true) { deleteCheck = true; }else if(btnCheck=false) {
-	 * deleteCheck = false; } return deleteCheck; }
-	 */
-
+	
+	@GetMapping("/paymentDetailRemoveCheck")
+	@ResponseBody
+	public boolean removeCheck(@RequestParam(value = "orderDetailCode") String orderDetailCode) {
+		
+		log.info(orderDetailCode);
+		if(orderDetailCode != null) {
+			
+			return true;
+		}else {
+			
+			return false;
+		}
+	}
 
 	// 주문상세번호 삭제
 	@GetMapping("/remove/{orderDetailCode}")
 	public String removeMember(@PathVariable(value = "orderDetailCode") String orderDetailCode, Model model) {
 
 		PaymentTotal paymentTotal = paymentService.getPaymentDetail(orderDetailCode);
-		model.addAttribute("title", "회원탈퇴");
+		model.addAttribute("title", "주문상세삭제: " + orderDetailCode);
 		model.addAttribute("paymentTotal", paymentTotal);
 
 		return "admin/payment/removePaymentDetail";
@@ -72,7 +93,7 @@ public class PaymentController {
 	// 특정주문상세번호 조회
 	@GetMapping("/modifyPaymentDetail")
 	public String ModifyPaymentDetail(@RequestParam(value = "orderDetailCode", required = false) String orderDetailCode,
-			Model model) {
+										Model model) {
 
 		PaymentTotal paymentTotal = paymentService.getPaymentDetail(orderDetailCode);
 
