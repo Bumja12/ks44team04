@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CustomerAskContorller {
 
 	// 문의 답변 삭제 처리
-	@GetMapping("/removeAskAnswer")
+	@PostMapping("/removeAskAnswer")
 	public String removeAskAnswer () {
 		
 		// 관리자 고개 문의 삭제 화면으로 이동
@@ -35,7 +35,7 @@ public class CustomerAskContorller {
 	}
 	
 	// 고객 문의 삭제 처리
-	@GetMapping("/removeCustomerAsk")
+	@PostMapping("/removeCustomerAsk")
 	public String removeCustomerAsk () {
 		
 		// 관리자 고개 문의 삭제 화면으로 이동
