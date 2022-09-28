@@ -4,7 +4,10 @@ import ks44team04.service.UserService;
 import ks44team04.dto.Right;
 import ks44team04.dto.Seller;
 import ks44team04.dto.Dormant;
+import ks44team04.dto.Goods;
 import ks44team04.dto.Leave;
+import ks44team04.dto.LevelBuyerCategory;
+import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.Login;
 
 import ks44team04.dto.User;
@@ -57,6 +60,62 @@ public class UserController {
 		return "admin/user/addUser";
 	}
 	
+	/*
+	//특정 판매자 판매상품목록 조회
+	@GetMapping("/user/sellerDetail")
+	public String getGoodsList(Model model) {
+		List<Goods> goodsList = userService.getGoodsList();
+		log.info("특정판매자 판매상품목록 ::: {}", goodsList);
+		model.addAttribute("goodsList", goodsList);
+		
+		return "admin/user/goodsList";
+	}
+	*/
+	
+	//특정 판매자 상세정보 조회
+	@GetMapping("/user/sellerDetail")
+	public String sellerDetail(@RequestParam(value="sellerId", required = false) String sellerId
+							  ,Model model) {
+        Seller userInfoS = userService.getUserInfoByIdS(sellerId);
+        Seller sellerInfo = userService.getSellerInfoById(sellerId);
+        List<Goods> goodsList = userService.getGoodsList();
+        
+        log.info("특정 회원 상세정보 조회(판매자만) ::: {}",userInfoS);
+        log.info("특정 판매자 상세정보 조회 ::: {}",sellerInfo);
+        log.info("특정 판매자 판매상품 목록 ::: {}",goodsList);
+		model.addAttribute("title", "판매자회원상세정보");
+		model.addAttribute("userInfoS", userInfoS);
+		model.addAttribute("sellerInfo", sellerInfo);
+		model.addAttribute("goodsList", goodsList);
+		
+		return "admin/user/sellerDetail";
+	}
+	
+	//특정 회원 상세정보
+	@GetMapping("/user/userDetail")
+	public String userDetail(@RequestParam(value="userId", required = false) String userId
+							  ,Model model) {
+        User userInfo = userService.getUserInfoById(userId);
+        
+        String userLevel = userInfo.getUserLevel();
+        LevelBuyerCategory levelBuyer = userInfo.getLevelBuyer();
+        LevelSellerCategory levelSeller = userInfo.getLevelSeller();
+        if(userLevel.contains("Buyer")) {
+        	userInfo.setUserLevel(levelBuyer.getLevelName());
+        }else if(userLevel.contains("Seller")) {
+        	userInfo.setUserLevel(levelSeller.getLevelName());
+        }else if(userLevel.equals("")) {
+        	userInfo.setUserLevel("없음");
+        }
+        
+        log.info("로그 목록 ::: {}",userInfo);
+		model.addAttribute("title", "회원상세정보");
+		model.addAttribute("userInfo", userInfo);
+		
+		return "admin/user/userDetail";
+	}
+	
+	//로그 목록
 	@GetMapping("/user/loginList")
 	public String getLoginList(Model model) {
 		List<Login> loginList = userService.getLoginList();

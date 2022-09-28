@@ -23,7 +23,13 @@
 			tb_point_deal AS p
 		ORDER BY p.point_deal_date;
 	</select>
-	
+
+	<select id="getUserPoint" parameterType="String" resultType="int">
+		select sum(point_deal_detail)
+		from tb_point_detail
+		where user_id = 'buyer01'
+		group by  user_id;
+	</select>
 	
 	
 </mapper>

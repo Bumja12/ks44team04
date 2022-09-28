@@ -4,6 +4,7 @@
 	layout:decorate="~{layout/adminDefault}">
 
 <title th:text="${title}"></title>
+
 </th:block>
 
 <!-- <th:block layout:fragment="customJsScript">
@@ -102,7 +103,7 @@
 								</div>
 								<label for="sellerId" class="col-sm-2 control-label" style="margin-left: -3px;">판매자</label>
 								<div class="col-sm-1">
-									<input type="text" class="form-control" id="sellerId" name="sellerId" th:value="*{sellerId}" style="margin-left: -8px;" placeholder="Default Input" readonly="readonly">
+									<input type="text" class="form-control" id="sellerId" name="sellerId" th:value="*{userInfo.userId}" style="margin-left: -8px;" placeholder="Default Input" readonly="readonly">
 								</div>
 							</div>
 

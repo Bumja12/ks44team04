@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RegularAskController {
 	
 	// 자주 묻는 질문 삭제 처리
-	@GetMapping("/removeRegularAsk")
+	@PostMapping("/removeRegularAsk")
 	public String removeRegularAsk () {
 		
-		// 카테고리 목록 화면으로 리다이렉트
+		// 카테고리 삭제 화면으로 이동
 		return "admin/regularAsk/admin_regularAsk_remove";
 	}
 	

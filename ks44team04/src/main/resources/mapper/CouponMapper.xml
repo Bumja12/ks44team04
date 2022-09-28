@@ -4,12 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team04.mapper.CouponMapper">
 	
-	<resultMap type="CouponStatus" id="couponStatusMapper">
-		<id 	column="coupon_status_code" 	property="couponStatusCode"/>
-		<result column="buyer_id" 				property="buyerId"/>
-		<result column="admin_id" 				property="adminId"/>
-		<result column="coupon_issue_date" 		property="couponIssueDate"/>
-		<collection property="coupon" javaType="list" ofType="Coupon">
+	<!-- 쿠폰보유현황 -->
+	<resultMap type="CouponUser" id="couponUserMap">
+		<result 	column="buyer_id" property="buyerId"/>
+		<collection property="couponNow" javaType="list" ofType="CouponTotal">
+			<result column="coupon_status_code" 	property="couponStatusCode"/>
+			<result column="admin_id" 				property="adminId"/>
+			<result column="coupon_issue_date" 		property="couponIssueDate"/>	
 			<result column="coupon_code" 		property="couponCode"/>
 			<result column="coupon_name" 		property="couponName"/>
 			<result column="discount_price" 	property="discountPrice"/>
@@ -29,12 +30,20 @@
 		<result column="reg_id" 			property="regId"/>
 		<result column="reg_date" 			property="regDate"/>
 	</resultMap>
+
+	<resultMap id="couponStatusResultMap" type="CouponStatus">
+		<id 	column="coupon_status_code" 	property="couponStatusCode"/>
+		<result column="buyer_id" 				property="buyerId"/>
+		<result column="admin_id" 				property="adminId"/>
+		<result column="coupon_issue_date" 		property="couponIssueDate"/>
+		<association property="couponInfo" resultMap="couponListMapper"/>
+	</resultMap>
+
 	
-	<!-- 회원쿠폰보유현황 -->
-	<select id="couponStatus" resultMap="couponStatusMapper">
+	<!-- 쿠폰보유현황 -->
+	<select id="couponStatus" resultMap="couponUserMap">
 		SELECT
-			c.coupon_code
-			,c.coupon_name
+			c.coupon_name
 			,c.discount_price
 			,c.price_terms
 			,c.end_date
@@ -59,5 +68,14 @@
 		FROM
 			tb_coupon AS c
 		ORDER BY c.coupon_code
+	</select>
+
+	<!-- 범현 -->
+	<select id="getCouponStatus" resultMap="couponStatusResultMap" parameterType="String">
+		select *
+		from tb_coupon_status as tcs
+			inner join tb_coupon tc
+			on tcs.coupon_code = tc.coupon_code
+			where buyer_id = #{userId}
 	</select>
 </mapper>

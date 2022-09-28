@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customCss">
+	<style>
+th {
+	text-align: center;
+}
+
+.table > tbody > tr > td {
+	vertical-align: middle;
+	text-align: center;
+}
+</style>
+</th:block>
+
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>
+					결제내역 <small>Admin</small>
+				</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Settings 1</a> <a
+								class="dropdown-item" href="#">Settings 2</a>
+						</div></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<table class="table table-hover" style="text-align: center;">
+					<thead>
+						<tr>
+							<th>주문번호</th>
+							<th>회원아이디</th>
+							<th>상품정보</th>
+							<th>수량</th>
+							<th>적립금</th>
+							<th>쿠폰 할인</th>
+							<th>포인트 할인</th>
+							<th>주문금액</th>
+							<th>배송정보</th>
+							<th>주문일시</th>
+							<th>주문 상태</th>
+							<th>관리</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:if="${not #lists.isEmpty(paymentList)}" th:each="p : ${paymentList}">
+							<th:block th:if="${not #lists.isEmpty(p.paymentTotal)}" th:each="pt, status : ${p.paymentTotal}">
+								<tr>
+									<th:block th:if="${status.index == 0}">				
+										<td th:rowspan="${status.size}" th:text="${p.orderNum}"></td>
+										<td th:rowspan="${status.size}" th:text="${p.buyerId}"></td>
+									</th:block>	
+									<td th:text="${pt.goodsName}"></td>
+									<td style="width: 60px" th:text="${pt.orderAmount}"></td>
+									<td th:text="'+ ' + ${pt.savePoint}"></td>
+									<td th:text="'- ' + ${pt.couponPrice}"></td>
+									<td th:text="'- ' + ${pt.usePoint}"></td>									
+									<td th:text="${'₩' + #numbers.formatInteger(pt.orderPrice, 3, 'COMMA')}"></td>
+									<td><a href="#"><i class="fa fa-truck"></i> 배송정보</a></td>
+									<th:block th:if="${status.index == 0}">
+										<td th:rowspan="${status.size}" th:text="${p.orderDate}"></td>
+									</th:block>
+									<td th:text="${pt.orderStatus}"></td>
+									<td>
+										<span class="cancelBtn" style="cursor:pointer;"><i class="fa fa-edit"></i> 수정  </span>
+										<span class="deleteBtn" style="cursor:pointer;"><i class="fa fa-close"></i> 삭제</span>
+									</td>
+								</tr>
+							</th:block>
+						</th:block>
+						<tr th:unless="${not #lists.isEmpty(paymentList)}">
+							<td colspan="11">등록된 상품이 없습니다.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+	<th:block layout:fragment="customJsScript">
+		<script type="text/javascript">
+			$(function(){
+				$('.cancelBtn').click(function(){
+					console.log(this);
+				});
+			})
+		</script>
+	</th:block>
+
+</html>

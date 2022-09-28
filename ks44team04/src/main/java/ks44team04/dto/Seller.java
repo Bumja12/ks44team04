@@ -9,26 +9,21 @@ public class Seller {
     private String bankName;
     private String account;
     private String accountHolder;
-    private String licenseNum;
+    private String licenceNum;
     private String storeAddress;
     private String storePhone;
     private String storeEmail;
-    private String licenseImg;
+    private String licenceImg;
     private String onlineLicenceImg;
     private String approveAskDate;
     private String approveDate;
     private String approveCheck;
     private String approveId;
-    
+    private User userInfo;
     private Goods goodsInfo;
-    public Goods getGoodsInfo() {
-		return goodsInfo;
-	}
-
-	public void setGoodsInfo(Goods goodsInfo) {
-		this.goodsInfo = goodsInfo;
-	}
-
+    private LevelSellerCategory levelSeller;
+    private Right rightDto;
+    
     public String getSellerCode() {
         return sellerCode;
     }
@@ -85,12 +80,12 @@ public class Seller {
         this.accountHolder = accountHolder;
     }
 
-    public String getLicenseNum() {
-        return licenseNum;
+    public String getLicenceNum() {
+        return licenceNum;
     }
 
-    public void setLicenseNum(String licenseNum) {
-        this.licenseNum = licenseNum;
+    public void setLicenceNum(String licenceNum) {
+        this.licenceNum = licenceNum;
     }
 
     public String getStoreAddress() {
@@ -117,12 +112,12 @@ public class Seller {
         this.storeEmail = storeEmail;
     }
 
-    public String getLicenseImg() {
-        return licenseImg;
+    public String getLicenceImg() {
+        return licenceImg;
     }
 
-    public void setLicenseImg(String licenseImg) {
-        this.licenseImg = licenseImg;
+    public void setLicenceImg(String licenceImg) {
+        this.licenceImg = licenceImg;
     }
 
     public String getOnlineLicenceImg() {
@@ -164,6 +159,38 @@ public class Seller {
     public void setApproveId(String approveId) {
         this.approveId = approveId;
     }
+    
+    public User getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(User userInfo) {
+		this.userInfo = userInfo;
+	}
+    
+    public Goods getGoodsInfo() {
+		return goodsInfo;
+	}
+
+	public void setGoodsInfo(Goods goodsInfo) {
+		this.goodsInfo = goodsInfo;
+	}
+	
+    public LevelSellerCategory getLevelSeller() {
+    	return levelSeller;
+    }
+    
+    public void setLevelSeller(LevelSellerCategory levelSeller) {
+    	this.levelSeller = levelSeller;
+    }
+    
+	public Right getRightDto() {
+		return rightDto;
+	}
+	
+	public void setRightDto(Right rightDto) {
+		this.rightDto = rightDto;
+	}
 
     @Override
     public String toString() {
@@ -175,16 +202,20 @@ public class Seller {
                 ", bankName='" + bankName + '\'' +
                 ", account='" + account + '\'' +
                 ", accountHolder='" + accountHolder + '\'' +
-                ", licenseNum='" + licenseNum + '\'' +
+                ", licenseNum='" + licenceNum + '\'' +
                 ", storeAddress='" + storeAddress + '\'' +
                 ", storePhone='" + storePhone + '\'' +
                 ", storeEmail='" + storeEmail + '\'' +
-                ", licenseImg='" + licenseImg + '\'' +
+                ", licenseImg='" + licenceImg + '\'' +
                 ", onlineLicenceImg='" + onlineLicenceImg + '\'' +
                 ", approveAskDate='" + approveAskDate + '\'' +
                 ", approveDate='" + approveDate + '\'' +
                 ", approveCheck='" + approveCheck + '\'' +
                 ", approveId='" + approveId + '\'' +
+                ", userInfo='" + userInfo + '\'' +
+                ", goodsInfo='" + goodsInfo + '\'' +
+                ", rightDto='" + rightDto + '\'' +
+                ", levelSeller='" + levelSeller + '\'' +
                 '}';
     }
 }

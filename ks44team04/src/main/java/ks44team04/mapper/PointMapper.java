@@ -10,5 +10,7 @@ import ks44team04.dto.PointDeal;
 public interface PointMapper {
 	
 	public List<PointDeal> pointHistory();
+
+	public int getUserPoint(String userId);
 	
 }

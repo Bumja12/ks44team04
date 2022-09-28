@@ -8,8 +8,17 @@ public class UserSuspend {
     private int suspendDay;
     private String startSuspend;
     private String endSuspend;
+    private String suspendResult;
 
-    public String getUserSuspendCode() {
+    public String getSuspendResult() {
+		return suspendResult;
+	}
+
+	public void setSuspendResult(String suspendResult) {
+		this.suspendResult = suspendResult;
+	}
+
+	public String getUserSuspendCode() {
         return userSuspendCode;
     }
 
@@ -58,14 +67,9 @@ public class UserSuspend {
     }
 
     @Override
-    public String toString() {
-        return "UserSuspend{" +
-                "userSuspendCode='" + userSuspendCode + '\'' +
-                ", suspendId='" + suspendId + '\'' +
-                ", approveId='" + approveId + '\'' +
-                ", suspendDay=" + suspendDay +
-                ", startSuspend='" + startSuspend + '\'' +
-                ", endSuspend='" + endSuspend + '\'' +
-                '}';
-    }
+	public String toString() {
+		return "UserSuspend [userSuspendCode=" + userSuspendCode + ", suspendId=" + suspendId + ", approveId="
+				+ approveId + ", suspendDay=" + suspendDay + ", startSuspend=" + startSuspend + ", endSuspend="
+				+ endSuspend + ", suspendResult=" + suspendResult + "]";
+	}
 }

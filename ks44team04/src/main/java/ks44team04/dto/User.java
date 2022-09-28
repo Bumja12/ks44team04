@@ -8,6 +8,7 @@ public class User {
     private String userGender;
     private String userNickname;
     private String userAddress;
+    private String userAddress2;
     private String userPhone;
     private String userEmail;
     private String userRight;
@@ -19,33 +20,9 @@ public class User {
     private int userPoint;
     private String userInfoKeep;
     private String userLevel;
-
-	private LevelSellerCategory levelSeller;
-    public LevelSellerCategory getLevelSeller() {
-    	return levelSeller;
-    }
-    
-    public void setLevelSeller(LevelSellerCategory levelSeller) {
-    	this.levelSeller = levelSeller;
-    }
-    
+    private LevelSellerCategory levelSeller;
     private LevelBuyerCategory levelBuyer;
-    public LevelBuyerCategory getLevelBuyer() {
-    	return levelBuyer;
-    }
-    
-    public void setLevelBuyer(LevelBuyerCategory levelBuyer) {
-    	this.levelBuyer = levelBuyer;
-    }
-    
-	private Right rightDto;
-	public Right getRightDto() {
-		return rightDto;
-	}
-	
-	public void setRightDto(Right rightDto) {
-		this.rightDto = rightDto;
-	}
+    private Right rightDto;
     
     public String getUserLevelName() {
 		return userLevelName;
@@ -101,6 +78,14 @@ public class User {
 
     public void setUserAddress(String userAddress) {
         this.userAddress = userAddress;
+    }
+    
+    public String getUserAddress2() {
+        return userAddress2;
+    }
+
+    public void setUserAddress2(String userAddress2) {
+        this.userAddress2 = userAddress2;
     }
 
     public String getUserPhone() {
@@ -182,6 +167,30 @@ public class User {
     public void setUserLevel(String userLevel) {
         this.userLevel = userLevel;
     }
+    
+    public LevelSellerCategory getLevelSeller() {
+    	return levelSeller;
+    }
+    
+    public void setLevelSeller(LevelSellerCategory levelSeller) {
+    	this.levelSeller = levelSeller;
+    }
+    
+    public LevelBuyerCategory getLevelBuyer() {
+    	return levelBuyer;
+    }
+    
+    public void setLevelBuyer(LevelBuyerCategory levelBuyer) {
+    	this.levelBuyer = levelBuyer;
+    }
+    
+	public Right getRightDto() {
+		return rightDto;
+	}
+	
+	public void setRightDto(Right rightDto) {
+		this.rightDto = rightDto;
+	}
 
     @Override
     public String toString() {
@@ -195,7 +204,7 @@ public class User {
                 ", userPhone='" + userPhone + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", userRight='" + userRight + '\'' +
-                ", userRightName='" + userLevelName + '\'' +
+                ", userLevelName='" + userLevelName + '\'' +
                 ", userRegDate='" + userRegDate + '\'' +
                 ", userUpdateDate='" + userUpdateDate + '\'' +
                 ", userStatus='" + userStatus + '\'' +
@@ -203,6 +212,9 @@ public class User {
                 ", userPoint=" + userPoint +
                 ", userInfoKeep='" + userInfoKeep + '\'' +
                 ", userLevel='" + userLevel + '\'' +
+                ", rightDto='" + rightDto + '\'' +
+                ", levelBuyer='" + levelBuyer + '\'' +
+                ", levelSeller='" + levelSeller + '\'' +
                 '}';
     }
 }

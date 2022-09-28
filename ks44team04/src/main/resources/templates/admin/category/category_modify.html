@@ -12,7 +12,7 @@
 			<div class="col-sm-12">
         		<div class="x_panel">
             		<div class="x_title">
-                		<h2>구매자 등급 카테고리</h2>
+                		<h2 style="font-size: 17px;">구매자 등급 카테고리</h2>
                     	<div class="clearfix"></div>
             		</div>
             		<div class="x_content">
@@ -57,8 +57,8 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="radio" class="flat" name="gender" id="genderM" value="M" checked="checked" required /> Y
-											<input type="radio" class="flat" name="gender" id="genderF" value="F" /> N
+											<input type="radio" class="flat" name="gender" id="useCheckY" value="Y" checked="checked" required="required"/> Y
+											<input type="radio" class="flat" name="gender" id="useCheckN" value="N" required="required"/> N
 										</div>
 									</div>
 									<!-- 구매자 구매 금액 조건(6개월) -->
@@ -120,6 +120,27 @@
 				console.log(location.href);
 				window.location = 'http://localhost:8088/admin/category/categoryList';
 			
+			});
+			
+			$(function(){
+				// 초기화 버튼 탐색
+				let $cancleBtn =  $('button:reset');
+				// 체크가 되있는 상태인 라디오 버튼 탐색
+				let $radioBtn =  $('input[checked*=checked]');
+				console.log($radioBtn.prop('id'));
+				console.log($cancleBtn);
+				$cancleBtn.click(function(){
+					// 모든 라디오 버튼 탐색
+					let $radioBtn =  $('input:radio');
+					$radioBtn.each(function(i){
+						console.log($(this).prop('id'));
+// 						if($(this).prop('id') != $radioBtn){
+// 							console.log('다르다');
+// 						}else{
+// 							console.log('같다.');
+// 						}
+					});
+				});
 			});
 		</script>
 	</th:block>

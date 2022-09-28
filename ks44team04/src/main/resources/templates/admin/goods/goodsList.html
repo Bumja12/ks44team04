@@ -9,6 +9,7 @@
 </th:block>
 
 <th:block layout:fragment="customCss">
+
 <style>
 .modal {
   text-align: center;
@@ -30,6 +31,12 @@
 </th:block>
 
   <th:block layout:fragment="customTopJs">
+  <!-- 섬머노트 -->
+  <script src="/js/summernote/summernote-lite.js"></script>
+	<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js">
+
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script>
 	$(function() {
