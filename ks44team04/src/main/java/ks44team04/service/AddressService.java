@@ -1,6 +1,6 @@
 package ks44team04.service;
 
-import ks44team04.mapper.UserAddressMapper;
+import ks44team04.mapper.AddressMapper;
 import ks44team04.dto.AddressList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,32 +12,32 @@ import java.util.Map;
 @Transactional
 public class AddressService {
 
-    private final UserAddressMapper userAddressMapper;
+    private final AddressMapper addressMapper;
 
-    public AddressService(UserAddressMapper userAddressMapper) {
-        this.userAddressMapper = userAddressMapper;
+    public AddressService(AddressMapper addressMapper) {
+        this.addressMapper = addressMapper;
     }
 
     public List<AddressList> getAddressList(Map addressInfo) {
-        List<AddressList> addressLists = userAddressMapper.getAddressList(addressInfo);
+        List<AddressList> addressLists = addressMapper.getAddressList(addressInfo);
         return addressLists;
     }
 
     public String getAddressListCode() {
-        String addressListCode = userAddressMapper.getAddressListCode();
+        String addressListCode = addressMapper.getAddressListCode();
         return addressListCode;
     }
 
     public void addressRegister(AddressList addressList) {
-        userAddressMapper.addressRegister(addressList);
+        addressMapper.addressRegister(addressList);
     }
 
     public void addressModify(AddressList addressList) {
-        userAddressMapper.addressModify(addressList);
+        addressMapper.addressModify(addressList);
     }
 
     public void addressDelete(String addressList) {
-        userAddressMapper.addressDelete(addressList);
+        addressMapper.addressDelete(addressList);
     }
 
 

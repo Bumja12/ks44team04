@@ -18,9 +18,16 @@ public interface ReportMapper {
     public int setReport(Report report);
     
     //신고등록 코드 증가 
-    public String getReportHistoryCode();
+    public String getHistoryCode();
     
     //정지 리스트
     public List<UserSuspend> getUserSuspendList();
+    
+    //특정 신고리스트 
+    public Report getReportHostryCode(String reportHistoryCode);
+    
+    //신고 처리 
+    public int reportProcessing(Report report);
+    
     
 }

@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,20 +26,37 @@ public class ReportController {
 	public ReportController(ReportService reportService) {
 		this.reportService = reportService;
 	}
-
+	
+	/*
+	 * @PostMapping("/report/reportProcessing") public String
+	 * reportProcessing(Report report) {
+	 * 
+	 * 
+	 * return "redirect:/admin/report/reportList"; }
+	 */
+	
+	//신고 처리
+	@GetMapping("/report/reportProcessing")
+	public String reportProcessing(Model model) {
+		
+		model.addAttribute("titel", "신고처리");
+		
+		return "admin/report/reportProcessing";
+	}
+	
 	// 신고등록
 	@GetMapping("/report/report")
 	public String getReport(Report report) {
 
 		String repoterId = "buyer01";
-		String reportHistoryCode = reportService.getReportHistoryCode();
+		String HistoryCode = reportService.getHistoryCode();
 		CodeIndex codeIndex = new CodeIndex();
-		reportHistoryCode = codeIndex.codeIndex(reportHistoryCode, 15);
+		HistoryCode = codeIndex.codeIndex(HistoryCode, 15);
 		log.info("---------------------------------사용자가 입력한 정보", report);
-		report.setReportHistoryCode(reportHistoryCode);
+		report.setReportHistoryCode(HistoryCode);
 		report.setReportingId(repoterId);
 		reportService.setReport(report);
-		log.info("---------------------------------, {}", reportHistoryCode);
+		log.info("---------------------------------, {}", HistoryCode);
 
 		/* model.addAttribute("title", "신고하기"); */
 		/* model.addAttribute("reportList", reportList); */

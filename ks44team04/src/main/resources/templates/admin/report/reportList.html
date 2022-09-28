@@ -69,7 +69,7 @@
                     <td th:text="${l.boardFile}"></td>
                     <td th:text="${l.reportDate}"></td>
                     <td th:text="${l.reportResult}"></td>
-                    <td style="padding: 0px; "><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">처리</button></td>
+                    <td style="padding: 0px; "><a th:href="@{/admin/report/reportProcessing(reportHistoryCode=${l.reportHistoryCode})}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">처리</button></a></td>
                     
                   </tr>
                 </tbody>

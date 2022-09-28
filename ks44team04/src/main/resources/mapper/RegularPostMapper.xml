@@ -10,14 +10,9 @@
         <result column="payment_history_code" property="paymentHistoryCode"/>
         <result column="post_reg_date" property="postRegDate"/>
         <association property="regularPostStatusInfo" resultMap="regularPostStatusResultMap"/>
-        <association property="orderDetail" javaType="orderDetail">
-            <result column="order_detail_code" property="orderDetailCode"/>
-            <result column="order_status" property="orderStatus"/>
-            <result column="order_amount" property="orderAmount"/>
-            <result column="order_price" property="orderPrice"/>
-            <result column="post_info" property="postInfo"/>
-            <result column="post_info" property="postInfo"/>
-        </association>
+        <association property="order" resultMap="ks44team04.mapper.OrderMapper.orderResultMap"/>
+        <association property="orderDetail" resultMap="ks44team04.mapper.OrderMapper.orderDetailResultMap"/>
+        <association property="goods" resultMap="ks44team04.mapper.GoodsMapper.goodsResultMap"/>
     </resultMap>
 
     <resultMap id="regularPostStatusResultMap" type="RegularPostStatus">
@@ -43,6 +38,10 @@
                             on trph.regular_post_status = trps.regular_post_status_code
                  inner join tb_order_detail as tod
                             on trph.order_num = tod.order_num
+                 inner join tb_goods tg
+                            on tod.goods_code = tg.goods_code
+                 inner join tb_order t
+                            on tod.order_num = t.order_num
         where trps.buyer_id = #{userId}
     </select>
 

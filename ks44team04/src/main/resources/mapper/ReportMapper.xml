@@ -80,6 +80,7 @@
     	,0)
      </insert>
      
+
     <!-- 신고 목록 조회 -->
     <select id="getReportList" resultMap="reportListResultMap">
     	/* 신고 목록 조회 */
@@ -118,7 +119,7 @@
     </select>
     
     <!-- 신고등록시 코드 증가 -->
-    <select id="getReportHistoryCode" resultType="String">
+    <select id="getHistoryCode" resultType="String">
     /* 신고등록시 코드 증가*/
 	SELECT 
 		report_history_code
