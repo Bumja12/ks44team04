@@ -40,11 +40,12 @@ public class UserService {
 	}
     
 	//특정 판매자 판매상품 조회
-	public List<Goods> getGoodsList() {
-    	List<Goods> goodsList = userMapper.getGoodsList();
+	public List<Goods> getGoodsList(String sellerId) {
+    	List<Goods> goodsList = userMapper.getGoodsList(sellerId);
     	
     	return goodsList;
     }
+	
 
 	//특정 판매자 상세정보 조회
 	public Seller getSellerInfoById(String sellerId) {

@@ -25,7 +25,7 @@ public interface UserMapper {
 	public int modifyUser(User user);
 	
 	//특정 판매자 판매상품 조회
-	public List<Goods> getGoodsList();
+	public List<Goods> getGoodsList(String sellerId);
 	
 	//특정 판매자 상세정보 조회
 	public Seller getSellerInfoById(String sellerId);
