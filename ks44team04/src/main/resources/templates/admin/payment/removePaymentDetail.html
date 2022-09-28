@@ -60,20 +60,20 @@
 							<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">주문번호 <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 "	>
-								<input type="text" id="first-name" th:value="${paymentTotal.paymentInfo.orderNum}"  required="required" class="form-control ">
+								<input type="text" id="first-name" th:value="${paymentTotal.paymentInfo.orderNum}"  required="required" class="form-control" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
-							<label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">주문상세번호 <span class="required">*</span>
+							<label class="col-form-label col-md-3 col-sm-3 label-align" for="orderDetailCode">주문상세번호 <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input type="text" id="last-name" th:value="${paymentTotal.orderDetailCode}"  name="last-name" required="required" class="form-control">
+								<input type="text" id="orderDetailCode" th:value="${paymentTotal.orderDetailCode}"  name="last-name" required="required" class="form-control" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
 							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">상품정보</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.goodsName}"  name="middle-name">
+								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.goodsName}"  name="middle-name" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
@@ -92,50 +92,33 @@
 						<div class="item form-group">
 							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">영업사</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.cardCompany}" name="middle-name">
+								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.cardCompany}" name="middle-name" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
 							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">카드번호 / 환불계좌</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.cardNumber}" name="middle-name">
-							</div>
-						</div>
-						<div class="item form-group">
-							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">결제금액</label>
-							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.approvePrice}" name="middle-name">
+								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.cardNumber}" name="middle-name" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
 							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">주문금액</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.orderPrice}" name="middle-name">
+								<input id="middle-name" class="form-control" type="text" th:value="${'₩' + #numbers.formatInteger(paymentTotal.orderPrice, 3, 'COMMA')}" name="middle-name" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
-						<div class="birthdayBox">
-							<label class="col-form-label col-md-3 col-sm-3 label-align">승인일시 / 입금일시 <span class="required">*</span>
-							</label>
-							<div class="col-md-6 col-sm-6">
-								<input id="birthday" class="date-picker form-control" placeholder="dd-mm-yyyy"  type="text" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
-								<input type="time" class="date-picker form-control" required="required" style="margin-top: 12px;"/>
-								<script>
-									function timeFunctionLong(input) {
-										setTimeout(function() {
-											input.type = 'text';
-										}, 60000);
-									}
-								</script>
-							</div>
+							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">결제일자 / 승인일자</label>
+							<div class="col-md-6 col-sm-6 ">
+								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.paymentInfo.approveDate}" name="middle-name" readonly="readonly">
 							</div>
 						</div>
+						
 						<div class="ln_solid"></div>
 						<div class="item form-group">
 							<div class="col-md-6 col-sm-6 offset-md-3">
-								<button class="btn btn-danger" type="button">취소</button>
-								<button class="btn btn-warning" type="reset">초기화</button>
-								<button type="submit" class="btn btn-success">저장</button>
+								<button value="0" class="btn btn-danger btnCheck" type="button">취소</button>
+								<button value="1" class="btn btn-success btnCheck" type="button">삭제</button>
 							</div>
 						</div>
 
@@ -147,6 +130,48 @@
 </th:block>
 
 <th:block layout:fragment="customJsScript">
+	<script type="text/javascript">
+		$(function(){
+			console.log('2');
+		});
+		
+		$(function(){
+			console.log('2');
+			$('.btnCheck').click(function(){
+				console.log(this.value);
+				if(this.value == 0){
+					
+					
+				}else if(this.value == 1){
+					
+					let orderDetailCode = (#'orderDetailCode').value
+					console.log(orderDetailCode);
+					
+					if(confirm("정말 삭제하시겠습니까?")){
+						var request = $.ajax({
+							  url: "/admin/payment/removePaymentDetail",
+							  method: "POST",
+							  data: { 'orderDetailCode' : orderDetailCode },
+							  dataType: "json" 
+							});
+
+							request.done(function( data ) { 
+								console.log(data);
+								if(data){
+									
+							});
+
+							request.fail(function( jqXHR, textStatus ) {
+							  alert( "Request failed: " + textStatus );
+							});
+						})
+					}else{
+						//삭제안할거임 그럼 그냥 취소임
+					}
+				}
+			}
+		});
+	</script>
 </th:block>
 
 </html>
