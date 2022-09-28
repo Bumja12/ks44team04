@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReportService {
+	//의존성 주입
 	 private final ReportMapper	reportMapper;
 	 
 	private static final Logger log = LoggerFactory.getLogger(ReportService.class);

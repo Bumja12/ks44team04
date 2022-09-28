@@ -31,7 +31,7 @@
 	</div>
 
 
-<form >
+<form id="reportProcessingForm" th:action="@{/admin/report/reportProcessing}" method="get">
 	<div class="col-md-12 col-sm-12  ">
 		<div class="x_panel">
 			<div class="x_title">
@@ -52,48 +52,46 @@
 				<div class="clearfix"></div>
 			</div>
 
-			<div class="x_content">
-				<table class="table">
-					<thead>
+			<div class="x_content" >
+				<table class="table" th:object="${Report}">
+					<thead >
 						<tr>
-							<th class="processing" scope="col">회원 신고 코드</th>
-							<th scope="col" colspan="5">report_history_1</th>
+							<th class="processing" scope="col"> 회원 신고 코드</th>
+							<th scope="col" colspan="5" ><input type="text" style="border: none; "th:value="*{reportHistoryCode}" readonly="readonly"> </th>
 						</tr>
 					</thead>
 					<tbody>
 
 						<tr>
 							<th class="processing" scope="row">신고자 아이디</th>
-							<td>buyer01</td>
+							<td><input type="text" style="border: none; "th:value="*{reportingId}" readonly="readonly"></td>
 							<th class="processing">신고 시간</th>
-							<td style="text-align: center;" colspan="3">2021.06.01</td>
+							<td  ><input type="text" style="border: none; "th:value="*{reportDate}" readonly="readonly"></td>
+							<th class="processing">상태</th>
+							<td  ><input type="text" style="border: none; "th:value="*{reportResult}" readonly="readonly"></td>
 						</tr>
 						<tr>
 							<th class="processing" scope="row">신고 카테고리</th>
-							<td>게시글</td>
+							<td><input type="text" style="border: none; "th:value="*{reportCategoryDto.categoryName}" readonly="readonly"></td>
 							<th class="processing">신고 사유 코드</th>
-							<td>타인 개인정보 노출</td>
+							<td><input type="text" style="border: none; "th:value="*{reportRuleDto.reportReason}" readonly="readonly"></td>
 							<th class="processing">신고 대상 코드</th>
-							<td>board004</td>
+							<td><input type="text" style="border: none; "th:value="*{reportWhat}" readonly="readonly"></td>
 
 
 						</tr>
 						<tr>
 							<th class="processing" scope="row">신고대상 아이디</th>
-							<td>buyer03</td>
-							<th rowspan="2" class="processing" style="padding: 30px;">
-								신고내용</th>
-							<td rowspan="2" colspan="3">이사람이 나쁜 사람임</td>
+							<td><input type="text" style="border: none; "th:value="*{reportedId}" readonly="readonly"></td>
+							<th rowspan="2" class="processing" style="padding: 30px;">신고내용</th>
+							<td rowspan="2" colspan="3"><input type="text" style="border: none; "th:value="*{reportReason}" readonly="readonly"></td>
 
-						</tr>
-						<tr>
-							<th class="processing" scope="row">신고대상자 누적 벌점</th>
-							<td>0점</td>
 						</tr>
 						<tr>
 							<th class="processing" scope="row">첨부파일</th>
 							<td colspan="6">파일 이름 넣을 예정 - 파일이름 클릭시 사진 나오게</td>
 						</tr>
+						
 						<tr>
 							<th style="padding: 0px;" colspan="8"></th>
 						</tr>
@@ -121,39 +119,40 @@
 			</div>
 			<!-- 처리 -->
 			<div class="x_content">
-				<table class="table">
+				<table class="table" th:object="${Report}">
 					<thead>
 						<tr>
 							<th class="processing" scope="col">회원 신고 코드</th>
-							<th scope="col" colspan="5">report_history_1</th>
+							<th scope="col" colspan="5"><input type="text" style="border: none; "th:value="*{reportHistoryCode}" readonly="readonly"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<th class="processing" scope="row">관리자 아이디</th>
-							<td>admin01</td>
+							<td><input type="text" style="border: none; "th:text="${session.LEVEL}" readonly="readonly"></td>
 							<th class="processing">신고대상 아이디</th>
-							<td style="text-align: left;" colspan="3">buyer03</td>
+							<td style="text-align: left;" colspan="3"><input type="text" style="border: none; "th:value="*{reportingId}" readonly="readonly"></td>
 						</tr>
 						<tr>
 							<th class="processing" scope="row">신고 카테고리</th>
-							<td>게시글</td>
+							<td><input type="text" style="border: none; "th:value="*{reportCategoryDto.categoryName}" readonly="readonly"></td>
 							<th class="processing">신고 사유 코드</th>
-							<td>타인 개인정보 노출</td>
+							<td><input type="text" style="border: none; "th:value="*{reportRuleDto.reportReason}" readonly="readonly"></td>
 							<th class="processing">신고 대상 코드</th>
-							<td>board004</td>
+							<td><input type="text" style="border: none; "th:value="*{reportWhat}" readonly="readonly"></td>
 						</tr>
 						<tr>
 							<th class="processing" scope="row">승인 반려 사유</th>
-							<td colspan="7"><input type="text"
-								style="border: none; width: 1400px;"></td>
+							<td colspan="7">
+							<input type="text" style="border: none; width: 1400px;">
+								</td>
 						</tr>
 						<tr>
 							<th style="padding: 0px; text-align: right;" colspan="8"><label><i
 									class="glyphicon glyphicon-ok"></i>
-									<button type="button" class="btn btn-link" value="승인">승인</button></label>
+									<button type="submit" class="btn btn-link"  value="승인">승인</button></label>
 								<label><i class="glyphicon glyphicon-remove"></i>
-									<button type="button" class="btn btn-link" value="반려">반려</button></label>
+									<button type="submit" class="btn btn-link" value="반려">반려</button></label>
 							</th>
 						</tr>
 					</tbody>
