@@ -90,8 +90,6 @@
                         </tbody>
                     </table>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -99,7 +97,8 @@
 
 <th:block layout:fragment="customJsScript">
     <th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
-        <script>
+    <script>
+
             function deleteAddressFn(href) {
                 if(confirm("정말로 삭제하시겠습니까?")){
                     location.href = `/user/address/delete/${href}`;

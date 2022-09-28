@@ -9,6 +9,8 @@ public class RegularPostHistory {
     private String postRegDate;
     private RegularPostStatus regularPostStatusInfo;
     private OrderDetail orderDetail;
+    private Goods goods;
+    private Order order;
 
     public String getRegularPostHistoryCode() {
         return regularPostHistoryCode;
@@ -66,6 +68,22 @@ public class RegularPostHistory {
         this.orderDetail = orderDetail;
     }
 
+    public Goods getGoods() {
+        return goods;
+    }
+
+    public void setGoods(Goods goods) {
+        this.goods = goods;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
     @Override
     public String toString() {
         return "RegularPostHistory{" +
@@ -76,6 +94,8 @@ public class RegularPostHistory {
                 ", postRegDate='" + postRegDate + '\'' +
                 ", regularPostStatusInfo=" + regularPostStatusInfo +
                 ", orderDetail=" + orderDetail +
+                ", goods=" + goods +
+                ", order=" + order +
                 '}';
     }
 }

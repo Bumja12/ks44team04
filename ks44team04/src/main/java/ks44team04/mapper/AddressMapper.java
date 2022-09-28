@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 @Mapper
-public interface UserAddressMapper {
+public interface AddressMapper {
 
 
 
