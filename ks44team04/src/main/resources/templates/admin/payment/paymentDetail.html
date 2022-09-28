@@ -75,13 +75,14 @@ th, td {
 									<td th:text="${pt.paymentMethod}"></td>
 									<td th:text="${pt.cardCompany}"></td>
 									<td th:text="${pt.cardNumber}"></td>
-									<td th:text="${'₩' + #numbers.formatInteger(pt.approvePrice, 3, 'COMMA')}"></td>
+									<td th:text="${'₩' + #numbers.formatInteger(pt.orderPrice, 3, 'COMMA')}"></td>
 									<th:block th:if="${status.index == 0}">
+										<td th:rowspan="${status.size}" th:text="${'₩' + #numbers.formatInteger(pt.approvePrice, 3, 'COMMA')}"></td>
 										<td th:rowspan="${status.size}" th:text="${p.approveDate}"></td>
 									</th:block>
 									<td>
 										<a th:href="@{/admin/payment/modifyPaymentDetail(orderDetailCode=${pt.orderDetailCode})}"><i class="fa fa-edit"></i> 수정</a> 
-										<a href="#"><i class="fa fa-close"></i>삭제</a>
+										<a th:href="@{|/admin/payment/remove/${pt.orderDetailCode}|}"><i class="fa fa-close"></i>삭제</a>
 									</td>
 								</tr>
 							</th:block>
