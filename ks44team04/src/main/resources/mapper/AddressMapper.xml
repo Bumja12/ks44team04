@@ -19,6 +19,14 @@
         <result column="default_address_check" property="defaultAddressCheck"/>
     </resultMap>
 
+    <resultMap id="postInfo" type="PostInfo">
+        <id column="post_info" property="postInfo"/>
+        <result column="post_list" property="postList"/>
+        <result column="reg_date" property="regDate"/>
+        <result column="post_company_name" property="postCompanyName"/>
+        <result column="invoice_number" property="invoiceNumber"/>
+    </resultMap>
+
     <select id="getAddressList" resultMap="addressListResultMap" parameterType="map">
         SELECT
             address_list,
@@ -92,5 +100,11 @@
     <delete id="addressDelete" parameterType="String">
         DELETE FROM tb_address_list WHERE address_list = #{addressList}
     </delete>
+
+    <select id="getPostInfo" resultMap="postInfo" parameterType="String">
+        select *
+        from tb_post_info
+        where post_info = #{postCode}
+    </select>
 
 </mapper>
