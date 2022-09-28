@@ -173,7 +173,9 @@
 								<td th:text="${l.approveDate}"></td>
 								<td th:text="${l.approveId}"></td>
 								<td>
-									<a href="#"><i class="fa fa-info-circle"></i> 상세 </a>
+									<a th:href="@{/admin/user/sellerDetail(sellerId=${l.sellerId})}">
+										<i class="fa fa-info-circle"></i> 상세 
+									</a>
 									<a href="#"><i class="fa fa-edit"></i> 수정</a>
 									<a href="#"><i class="fa fa-close"></i> 삭제</a>
 								</td>

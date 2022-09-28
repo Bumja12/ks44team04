@@ -23,30 +23,6 @@ public class User {
     private LevelSellerCategory levelSeller;
     private LevelBuyerCategory levelBuyer;
     private Right rightDto;
-
-    public LevelSellerCategory getLevelSeller() {
-    	return levelSeller;
-    }
-    
-    public void setLevelSeller(LevelSellerCategory levelSeller) {
-    	this.levelSeller = levelSeller;
-    }
-    
-    public LevelBuyerCategory getLevelBuyer() {
-    	return levelBuyer;
-    }
-    
-    public void setLevelBuyer(LevelBuyerCategory levelBuyer) {
-    	this.levelBuyer = levelBuyer;
-    }
-    
-	public Right getRightDto() {
-		return rightDto;
-	}
-	
-	public void setRightDto(Right rightDto) {
-		this.rightDto = rightDto;
-	}
     
     public String getUserLevelName() {
 		return userLevelName;
@@ -191,6 +167,30 @@ public class User {
     public void setUserLevel(String userLevel) {
         this.userLevel = userLevel;
     }
+    
+    public LevelSellerCategory getLevelSeller() {
+    	return levelSeller;
+    }
+    
+    public void setLevelSeller(LevelSellerCategory levelSeller) {
+    	this.levelSeller = levelSeller;
+    }
+    
+    public LevelBuyerCategory getLevelBuyer() {
+    	return levelBuyer;
+    }
+    
+    public void setLevelBuyer(LevelBuyerCategory levelBuyer) {
+    	this.levelBuyer = levelBuyer;
+    }
+    
+	public Right getRightDto() {
+		return rightDto;
+	}
+	
+	public void setRightDto(Right rightDto) {
+		this.rightDto = rightDto;
+	}
 
     @Override
     public String toString() {
@@ -204,7 +204,7 @@ public class User {
                 ", userPhone='" + userPhone + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", userRight='" + userRight + '\'' +
-                ", userRightName='" + userLevelName + '\'' +
+                ", userLevelName='" + userLevelName + '\'' +
                 ", userRegDate='" + userRegDate + '\'' +
                 ", userUpdateDate='" + userUpdateDate + '\'' +
                 ", userStatus='" + userStatus + '\'' +
@@ -212,6 +212,9 @@ public class User {
                 ", userPoint=" + userPoint +
                 ", userInfoKeep='" + userInfoKeep + '\'' +
                 ", userLevel='" + userLevel + '\'' +
+                ", rightDto='" + rightDto + '\'' +
+                ", levelBuyer='" + levelBuyer + '\'' +
+                ", levelSeller='" + levelSeller + '\'' +
                 '}';
     }
 }

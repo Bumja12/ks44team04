@@ -4,6 +4,7 @@ import ks44team04.service.UserService;
 import ks44team04.dto.Right;
 import ks44team04.dto.Seller;
 import ks44team04.dto.Dormant;
+import ks44team04.dto.Goods;
 import ks44team04.dto.Leave;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.StringUtils;
 
@@ -60,13 +60,45 @@ public class UserController {
 		return "admin/user/addUser";
 	}
 	
-	//특정 판매자 상세정보
+	//특정 판매자 판매상품목록 조회
 	@GetMapping("/user/sellerDetail")
-	public String sellerDetail(@RequestParam(value="sellerId", required = false) String sellerId
-							  ,Model model) {
-        Seller sellerInfo = userService.getSellerInfoById(sellerId);
-		model.addAttribute("title", "판매자상세정보");
+	public String getGoodsList(Model model) {
+		List<Goods> goodsList = userService.getGoodsList();
+		log.info("특정판매자 판매상품목록 ::: {}", goodsList);
+		model.addAttribute("goodsList", goodsList);
+		
+		return "admin/user/goodsList";
+	}
+	
+	
+	//특정 판매자 판매자 신청 정보 조회
+	@GetMapping("/user/sellerDetail")
+	public String sellerDetail(@RequestParam(value="userId", required = false) String userId
+			  				   ,Model model) {
+		Seller sellerInfo = userService.getSellerInfoById(userId);
+		log.info("판매자신청상세정보 ::: {}",sellerInfo);
 		model.addAttribute("sellerInfo", sellerInfo);
+		
+		return "admin/user/sellerDetail";
+	}
+	
+	//특정 판매자 회원 상세정보 조회
+	@GetMapping("/user/sellerDetail")
+	public String userDetailS(@RequestParam(value="userId", required = false) String userId
+							  ,Model model) {
+        User userInfo = userService.getUserInfoById(userId);
+        
+        String userLevel = userInfo.getUserLevel();
+        LevelSellerCategory levelSeller = userInfo.getLevelSeller();
+        if(userLevel.equals("")) {
+        	userInfo.setUserLevel("없음");
+        }else {
+        	userInfo.setUserLevel(levelSeller.getLevelName());
+        }
+        
+        log.info("판매자회원상세정보 ::: {}",userInfo);
+		model.addAttribute("title", "판매자회원상세정보");
+		model.addAttribute("userInfo", userInfo);
 		
 		return "admin/user/sellerDetail";
 	}

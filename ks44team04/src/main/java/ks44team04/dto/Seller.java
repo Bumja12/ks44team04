@@ -19,16 +19,11 @@ public class Seller {
     private String approveDate;
     private String approveCheck;
     private String approveId;
-    
+    private User userInfo;
     private Goods goodsInfo;
-    public Goods getGoodsInfo() {
-		return goodsInfo;
-	}
-
-	public void setGoodsInfo(Goods goodsInfo) {
-		this.goodsInfo = goodsInfo;
-	}
-
+    private LevelSellerCategory levelSeller;
+    private Right rightDto;
+    
     public String getSellerCode() {
         return sellerCode;
     }
@@ -164,6 +159,38 @@ public class Seller {
     public void setApproveId(String approveId) {
         this.approveId = approveId;
     }
+    
+    public User getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(User userInfo) {
+		this.userInfo = userInfo;
+	}
+    
+    public Goods getGoodsInfo() {
+		return goodsInfo;
+	}
+
+	public void setGoodsInfo(Goods goodsInfo) {
+		this.goodsInfo = goodsInfo;
+	}
+	
+    public LevelSellerCategory getLevelSeller() {
+    	return levelSeller;
+    }
+    
+    public void setLevelSeller(LevelSellerCategory levelSeller) {
+    	this.levelSeller = levelSeller;
+    }
+    
+	public Right getRightDto() {
+		return rightDto;
+	}
+	
+	public void setRightDto(Right rightDto) {
+		this.rightDto = rightDto;
+	}
 
     @Override
     public String toString() {
@@ -185,6 +212,10 @@ public class Seller {
                 ", approveDate='" + approveDate + '\'' +
                 ", approveCheck='" + approveCheck + '\'' +
                 ", approveId='" + approveId + '\'' +
+                ", userInfo='" + userInfo + '\'' +
+                ", goodsInfo='" + goodsInfo + '\'' +
+                ", rightDto='" + rightDto + '\'' +
+                ", levelSeller='" + levelSeller + '\'' +
                 '}';
     }
 }

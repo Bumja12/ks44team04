@@ -2,6 +2,7 @@ package ks44team04.mapper;
 
 import ks44team04.dto.Right;
 import ks44team04.dto.Dormant;
+import ks44team04.dto.Goods;
 import ks44team04.dto.Leave;
 import ks44team04.dto.Login;
 import ks44team04.dto.Seller;
@@ -22,6 +23,9 @@ public interface UserMapper {
     
 	//회원 수정
 	public int modifyUser(User user);
+	
+	//특정 판매자 판매상품 조회
+	public List<Goods> getGoodsList();
 	
 	//특정 판매자 정보 조회
 	public Seller getSellerInfoById(String sellerId);
