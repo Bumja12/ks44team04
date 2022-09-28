@@ -119,7 +119,7 @@
     </select>
     
     <!-- 신고등록시 코드 증가 -->
-    <select id="getReportHistoryCode" resultType="String">
+    <select id="getHistoryCode" resultType="String">
     /* 신고등록시 코드 증가*/
 	SELECT 
 		report_history_code

@@ -25,7 +25,6 @@ public interface ReportMapper {
     
     //특정 신고리스트 
     public Report getReportHostryCode(String reportHistoryCode);
-
     
     //신고 처리 
     public int reportProcessing(Report report);
