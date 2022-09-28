@@ -72,6 +72,31 @@
 			tb_dormant
 	</select>
 	
+	<resultMap 	type="Goods" 					id="GoodsResultMap">
+		<id 	 column="goods_code" 			property="goodsCode"/>
+		<result  column="g_seller_id" 			property="sellerId"/>
+		<result  column="goods_name" 			property="goodsName"/>
+		<result  column="goods_price" 			property="goodsPrice"/>
+		<result  column="soldout_check" 	 	property="soldoutCheck"/>
+		<result  column="reg_date" 	 			property="regDate"/>
+	</resultMap>
+	
+	<!-- 특정 판매자 판매상품 조회 -->
+    <select id="getGoodsList" parameterType="String" resultMap="GoodsResultMap">
+    	/* getGoodsList */
+    	SELECT
+			 g.seller_id
+			,g.goods_code
+			,g.goods_name
+			,g.goods_price
+			,g.reg_date
+		FROM
+			tb_goods g
+		WHERE
+			g.seller_id = #{sellerId}
+		ORDER BY g.reg_date
+	</select>
+	
     <resultMap 	type="Seller" 					id="SellerResultMap">
 		<id		column="seller_code" 			property="sellerCode" />
 		<result column="s_seller_id" 			property="sellerId" />
@@ -130,25 +155,7 @@
 	    </association>
     </resultMap>
     
-    <!-- 특정 판매자 판매상품 조회 -->
-    <select id="getGoodsList" parameterType="String" resultMap="SellerResultMap">
-    	/* getGoodsList */
-    	SELECT
-			 s.seller_id	AS s_seller_id
-			,g.seller_id	AS g_seller_id
-			,g.goods_code
-			,g.goods_name
-			,g.goods_price
-			,g.reg_date
-		FROM
-			tb_seller s
-			LEFT JOIN
-			tb_goods g
-			ON
-			s.seller_id = g.seller_id
-		WHERE
-			s.seller_id = #{sellerId}
-	</select>
+
     
     <!-- 특정 판매자 상세정보 조회 -->
     <select id="getSellerInfoById" parameterType="String" resultMap="SellerResultMap">
