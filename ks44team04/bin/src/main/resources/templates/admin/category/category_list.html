@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+	<!-- 구매자 등급 카테고리 -->
+	<div class="row">
+		<div class="col-sm-12">
+        	<div class="x_panel">
+            	<div class="x_title">
+                	<h2 style="font-size: 17px;">구매자 등급 카테고리</h2>
+           	        <ul class="nav navbar-right panel_toolbox">
+                      <li style="float: right;"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+            	</div>
+            	<div class="x_content">
+	            	<div th:include="admin/category/category_search :: categorySearchFragment" style="margin-bottom: 10px"></div>
+                   	<div class="clearfix"></div>
+					<div class="card-box table-responsive">
+		            	<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" style="width:100%">
+		    				<thead>
+		                    	<tr>
+			                        <th>
+										<input type="checkbox" class="checkAllBtn" >
+									</th>
+			                        <th>등급 코드 PK</th>
+			                        <th>등급 이름</th>
+			                        <th>회원 아이디(등록)</th>
+			                        <th>등급 생성일</th>
+			                        <th>사용 여부</th>
+			                        <th>구매자 구매 금액 조건(6개월)</th>
+		                         	<th>적립율(%)</th>
+		                        	<th>등급 코드</th>
+		                    	</tr>
+		                   	</thead>
+							<tbody>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" class="checkAll">
+		             				</td>
+		                          	<td>levelBuyer01</td>
+		                          	<td>씨앗</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                        	<td>0</td>
+		                        	<td>0.5</td>
+		                        	<td>levelBuyer01</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" class="checkAll">
+		             				</td>
+		                          	<td>levelBuyer02</td>
+		                          	<td>새싹</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                        	<td>200000</td>
+		                        	<td>1</td>
+		                        	<td>levelBuyer02</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" class="checkAll">
+		             				</td>
+		                          	<td>levelBuyer03</td>
+		                          	<td>잎새</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                        	<td>400000</td>
+		                        	<td>1.5</td>
+		                        	<td>levelBuyer03</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" class="checkAll">
+		             				</td>
+		                          	<td>levelBuyer04</td>
+		                          	<td>열매</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                        	<td>700000</td>
+		                        	<td>2</td>
+		                        	<td>levelBuyer04</td>
+		                    	</tr>
+							</tbody>
+		        		</table>
+					</div> <!-- </div class="card-box table-responsive"> -->
+           			<div class="row">
+           				<div class="col-sm-12">
+	           				<div class="ml-auto">
+	           					<a class="btn btn-success" th:href="@{/admin/category/addCategory}" role="button">등록</a>
+	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+	           				</div>
+           				</div> <!-- </div class="col-sm-12"> -->
+           			</div> <!-- </div class="row"> -->
+           			
+            	</div> <!-- </div class="x_content"> -->
+            </div> <!-- </div class="x_panel"> -->
+            
+		</div> <!-- </div class="col-md-12 col-sm-12"> -->
+	</div> <!-- </div class="row"> -->
+	
+	<!-- 판매자 등급 카테고리 -->
+	<div class="row">
+		<div class="col-sm-12">
+        	<div class="x_panel">
+            	<div class="x_title">
+                	<h2 style="font-size: 17px;">판매자 등급 카테고리</h2>
+           	        <ul class="nav navbar-right panel_toolbox">
+                      <li style="float: right;"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+            	</div>
+            	<div class="x_content">
+	            	<div th:include="admin/category/category_search :: categorySearchFragment" style="margin-bottom: 10px"></div>
+                   	<div class="clearfix"></div>
+					<div class="card-box table-responsive">
+		            	<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" style="width:100%">
+		    				<thead>
+		                    	<tr>
+			                        <th>
+										<input type="checkbox" id="check-all" >
+									</th>
+			                        <th>등급 코드 PK</th>
+			                        <th>등급 이름</th>
+			                        <th>회원 아이디(등록)</th>
+			                        <th>등급 생성일</th>
+			                        <th>사용 여부</th>
+			                        <th>1년 누적판매금액</th>
+		                         	<th>1년 누적판매건수</th>
+		                         	<th>6개월 평균 리뷰평점</th>
+		                        	<th>등급 코드</th>
+		                    	</tr>
+		                   	</thead>
+							<tbody>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>levelSeller01</td>
+		                          	<td>물방울</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                        	<td>0</td>
+		                        	<td>0</td>
+		                        	<td> </td>
+		                        	<td>levelSeller01</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>levelSeller02</td>
+		                          	<td>시냇물</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                        	<td>2000000</td>
+		                        	<td>100</td>
+		                        	<td> </td>
+		                        	<td>levelSeller02</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>levelSeller03</td>
+		                          	<td>호수</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                        	<td>3000000</td>
+		                        	<td>300</td>
+		                        	<td> </td>
+		                        	<td>levelSeller03</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>levelSeller04</td>
+		                          	<td>강</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                        	<td>3000000 </td>
+		                        	<td>500</td>
+		                        	<td>4.5</td>
+		                        	<td>levelSeller04</td>
+		                    	</tr>
+							</tbody>
+		        		</table>
+					</div> <!-- </div class="card-box table-responsive"> -->
+           			<div class="row">
+           				<div class="col-sm-12">
+	           				<div class="ml-auto">
+	           					<a class="btn btn-success" th:href="@{/admin/category/addCategory}" role="button">등록</a>
+	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+	           				</div>
+           				</div> <!-- </div class="col-sm-12"> -->
+           			</div> <!-- </div class="row"> -->
+           			
+            	</div> <!-- </div class="x_content"> -->
+            </div> <!-- </div class="x_panel"> -->
+            
+		</div> <!-- </div class="col-md-12 col-sm-12"> -->
+	</div> <!-- </div class="row"> -->
+	
+	<!-- 고객 문의 카테고리 -->
+	<div class="row">
+		<div class="col-sm-12">
+        	<div class="x_panel">
+            	<div class="x_title">
+                	<h2 style="font-size: 17px;">고객 문의 카테고리</h2>
+           	        <ul class="nav navbar-right panel_toolbox">
+                      <li style="float: right;"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+            	</div>
+            	<div class="x_content">
+	            	<div th:include="admin/category/category_search :: categorySearchFragment" style="margin-bottom: 10px"></div>
+                   	<div class="clearfix"></div>
+					<div class="card-box table-responsive">
+		            	<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" style="width:100%">
+		    				<thead>
+		                    	<tr>
+			                        <th>
+										<input type="checkbox" id="check-all" >
+									</th>
+			                        <th>문의 카테고리 PK</th>
+			                        <th>회원 아이디 FK(등)</th>
+			                        <th>카테고리명</th>
+			                        <th>등록일시</th>
+			                        <th>사용 여부</th>
+		                    	</tr>
+		                   	</thead>
+							<tbody>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>askCategory001</td>
+		                          	<td>buyer01</td>
+		                          	<td>결제 관련 문의</td>
+		                            <td>2022-05-22 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>askCategory002</td>
+		                          	<td>buyer01</td>
+		                          	<td>정기 배송 문의</td>
+		                            <td>2022-05-15 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>askCategory003</td>
+		                          	<td>buyer01</td>
+		                          	<td>배송 관련 문의</td>
+		                            <td>2022-05-20 00:00:00</td>
+		                            <td>N</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>askCategory004</td>
+		                          	<td>seller01</td>
+		                          	<td>홈페이지 오류 신고</td>
+		                            <td>2022-06-01 00:00:00</td>
+		                            <td>N</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>askCategory005</td>
+		                          	<td>seller01</td>
+		                          	<td>판매 문의</td>
+		                            <td>2022-06-03 00:00:00</td>
+		                            <td>N</td>
+		                    	</tr>
+							</tbody>
+		        		</table>
+					</div> <!-- </div class="card-box table-responsive"> -->
+           			<div class="row">
+           				<div class="col-sm-12">
+	           				<div class="ml-auto">
+	           					<a class="btn btn-success" th:href="@{/admin/category/addCategory}" role="button">등록</a>
+	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+	           				</div>
+           				</div> <!-- </div class="col-sm-12"> -->
+           			</div> <!-- </div class="row"> -->
+           			
+            	</div> <!-- </div class="x_content"> -->
+            </div> <!-- </div class="x_panel"> -->
+            
+		</div> <!-- </div class="col-md-12 col-sm-12"> -->
+	</div> <!-- </div class="row"> -->
+	
+	<!-- 자주 묻는 질문 카테고리 -->
+	<div class="row">
+		<div class="col-sm-12">
+        	<div class="x_panel">
+            	<div class="x_title">
+                	<h2 style="font-size: 17px;">자주 묻는 질문 카테고리</h2>
+           	        <ul class="nav navbar-right panel_toolbox">
+                      <li style="float: right;"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+            	</div>
+            	<div class="x_content">
+	            	<div th:include="admin/category/category_search :: categorySearchFragment" style="margin-bottom: 10px"></div>
+                   	<div class="clearfix"></div>
+					<div class="card-box table-responsive">
+		            	<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" style="width:100%">
+		    				<thead>
+		                    	<tr>
+			                        <th>
+										<input type="checkbox" id="check-all" >
+									</th>
+			                        <th>자주 묻는 질문 카테고리 PK</th>
+			                        <th>회원 아이디 FK(등)</th>
+			                        <th>자주 묻는 질문 카테고리명</th>
+			                        <th>등록일시</th>
+			                        <th>사용 여부</th>
+		                    	</tr>
+		                   	</thead>
+							<tbody>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>regularAskCategory01</td>
+		                          	<td>admin01</td>
+		                          	<td>회원/정보 관리</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>regularAskCategory02</td>
+		                          	<td>admin01</td>
+		                          	<td>배송</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>regularAskCategory03</td>
+		                          	<td>admin01</td>
+		                          	<td>반품/교환/환불</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>regularAskCategory04</td>
+		                          	<td>admin01</td>
+		                          	<td>주문/결제</td>
+		                            <td>2022-01-01 00:00:00	</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>regularAskCategory05</td>
+		                          	<td>admin01</td>
+		                          	<td>정기 배송</td>
+		                            <td>2022-01-01 00:00:00	</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>regularAskCategory06</td>
+		                          	<td>admin01</td>
+		                          	<td>포인트/할인쿠폰</td>
+		                            <td>2022-01-01 00:00:00	</td>
+		                            <td>Y</td>
+		                    	</tr>
+							</tbody>
+		        		</table>
+					</div> <!-- </div class="card-box table-responsive"> -->
+           			<div class="row">
+           				<div class="col-sm-12">
+	           				<div class="ml-auto">
+	           					<a class="btn btn-success" th:href="@{/admin/category/addCategory}" role="button">등록</a>
+	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>	     
+         					</div>
+          				</div> <!-- </div class="col-sm-12"> -->
+           			</div> <!-- </div class="row"> -->
+           			
+            	</div> <!-- </div class="x_content"> -->
+            </div> <!-- </div class="x_panel"> -->
+            
+		</div> <!-- </div class="col-md-12 col-sm-12"> -->
+	</div> <!-- </div class="row"> -->
+	
+	<!-- 게시판 카테고리 -->
+	<div class="row">
+		<div class="col-sm-12">
+        	<div class="x_panel">
+            	<div class="x_title">
+                	<h2 style="font-size: 17px;">게시판 카테고리</h2>
+           	        <ul class="nav navbar-right panel_toolbox">
+                      <li style="float: right;"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+            	</div>
+            	<div class="x_content">
+	            	<div th:include="admin/category/category_search :: categorySearchFragment" style="margin-bottom: 10px"></div>
+                   	<div class="clearfix"></div>
+					<div class="card-box table-responsive">
+		            	<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" style="width:100%">
+		    				<thead>
+		                    	<tr>
+			                        <th>
+										<input type="checkbox" id="check-all" >
+									</th>
+			                        <th>게시판 카테고리 PK</th>
+			                        <th>카테고리명</th>
+			                        <th>회원 아이디 FK(등록)</th>
+			                        <th>등록일시</th>
+			                        <th>사용 여부</th>
+		                    	</tr>
+		                   	</thead>
+							<tbody>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>boardCategory001</td>
+		                          	<td>레시피</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>boardCategory002</td>
+		                          	<td>자유 게시판</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>boardCategory003</td>
+		                          	<td>농촌체험</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>boardCategory004</td>
+		                          	<td>맛집추천</td>
+		                          	<td>admin01</td>
+		                            <td>2022-01-01 00:00:00	</td>
+		                            <td>N</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>boardCategory005</td>
+		                          	<td>행사</td>
+		                          	<td>admin01</td>
+		                            <td>2022-01-01 00:00:00	</td>
+		                            <td>N</td>
+		                    	</tr>
+							</tbody>
+		        		</table>
+					</div> <!-- </div class="card-box table-responsive"> -->
+           			<div class="row">
+           				<div class="col-sm-12">
+	           				<div class="ml-auto">
+	           					<a class="btn btn-success" th:href="@{/admin/category/addCategory}" role="button">등록</a>
+           						<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>	           				</div>
+           				</div> <!-- </div class="col-sm-12"> -->
+           			</div> <!-- </div class="row"> -->
+           			
+            	</div> <!-- </div class="x_content"> -->
+            </div> <!-- </div class="x_panel"> -->
+            
+		</div> <!-- </div class="col-md-12 col-sm-12"> -->
+	</div> <!-- </div class="row"> -->
+	
+	<!-- 신고 대상 카테고리 -->
+	<div class="row">
+		<div class="col-sm-12">
+        	<div class="x_panel">
+            	<div class="x_title">
+                	<h2 style="font-size: 17px;">신고 대상 카테고리</h2>
+           	        <ul class="nav navbar-right panel_toolbox">
+                      <li style="float: right;"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+            	</div>
+            	<div class="x_content">
+	            	<div th:include="admin/category/category_search :: categorySearchFragment" style="margin-bottom: 10px"></div>
+                   	<div class="clearfix"></div>
+					<div class="card-box table-responsive">
+		            	<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" style="width:100%">
+		    				<thead>
+		                    	<tr>
+			                        <th>
+										<input type="checkbox" id="check-all" >
+									</th>
+			                        <th>신고 카테고리 PK</th>
+			                        <th>카테고리명</th>
+			                        <th>회원 아이디 FK(등록)</th>
+			                        <th>등록일시</th>
+			                        <th>사용 여부</th>
+		                    	</tr>
+		                   	</thead>
+							<tbody>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>1</td>
+		                          	<td>판매 상품</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>2</td>
+		                          	<td>후기</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>3</td>
+		                          	<td>후기 댓글</td>
+		                          	<td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>4</td>
+		                          	<td>게시글</td>
+		                          	<td>admin01</td>
+		                            <td>2022-01-01 00:00:00	</td>
+		                            <td>N</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>5</td>
+		                          	<td>게시글 댓글</td>
+		                          	<td>admin01</td>
+		                            <td>2022-01-01 00:00:00	</td>
+		                            <td>N</td>
+		                    	</tr>
+							</tbody>
+		        		</table>
+					</div> <!-- </div class="card-box table-responsive"> -->
+           			<div class="row">
+           				<div class="col-sm-12">
+	           				<div class="ml-auto">
+	           					<a class="btn btn-success" th:href="@{/admin/category/addCategory}" role="button">등록</a>
+	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+	           				</div>
+           				</div> <!-- </div class="col-sm-12"> -->
+           			</div> <!-- </div class="row"> -->
+           			
+            	</div> <!-- </div class="x_content"> -->
+            </div> <!-- </div class="x_panel"> -->
+            
+		</div> <!-- </div class="col-md-12 col-sm-12"> -->
+	</div> <!-- </div class="row"> -->
+	
+	<!-- 판매 상품 카테고리 대분류 -->
+	<div class="row">
+		<div class="col-sm-12">
+        	<div class="x_panel">
+            	<div class="x_title">
+                	<h2 style="font-size: 17px;">판매 상품 카테고리 대분류</h2>
+           	        <ul class="nav navbar-right panel_toolbox">
+                      <li style="float: right;"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+            	</div>
+            	<div class="x_content">
+	            	<div th:include="admin/category/category_search :: categorySearchFragment" style="margin-bottom: 10px"></div>
+                   	<div class="clearfix"></div>
+					<div class="card-box table-responsive">
+		            	<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" style="width:100%">
+		    				<thead>
+		                    	<tr>
+			                        <th>
+										<input type="checkbox" id="check-all" >
+									</th>
+			                        <th>판매 상품 카테고리 대분류 PK</th>
+			                        <th>카테고리 대분류</th>
+			                        <th>회원 아이디 FK(작성자)</th>
+			                        <th>등록일시</th>
+			                        <th>사용 여부</th>
+		                    	</tr>
+		                   	</thead>
+							<tbody>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>F000</td>
+		                          	<td>과일</td>
+		                          	<td>admin01</td>
+		                            <td>Y</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>V000</td>
+		                          	<td>채소</td>
+		                          	<td>admin01</td>
+		                            <td>Y</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>G000</td>
+		                          	<td>쌀/잡곡</td>
+		                          	<td>admin01</td>
+		                            <td>Y</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>M000</td>
+		                          	<td>버섯</td>
+		                          	<td>admin01</td>
+		                            <td>Y</td>
+		                            <td>2022-01-01 00:00:00	</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>UF00</td>
+		                          	<td>못난이 과일</td>
+		                          	<td>admin01</td>
+		                            <td>Y</td>
+		                            <td>2022-01-01 00:00:00	</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>UV00</td>
+		                          	<td>못난이채소</td>
+		                          	<td>admin01</td>
+		                            <td>Y</td>
+		                            <td>2022-01-01 00:00:00	</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>Z000</td>
+		                          	<td>기타</td>
+		                          	<td>admin01</td>
+		                            <td>Y</td>
+		                            <td>2022-01-01 00:00:00	</td>
+		                    	</tr>
+							</tbody>
+		        		</table>
+					</div> <!-- </div class="card-box table-responsive"> -->
+           			<div class="row">
+           				<div class="col-sm-12">
+	           				<div class="ml-auto">
+	           					<a class="btn btn-success" th:href="@{/admin/category/addCategory}" role="button">등록</a>
+	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>	           				</div>
+           				</div> <!-- </div class="col-sm-12"> -->
+           			</div> <!-- </div class="row"> -->
+           			
+            	</div> <!-- </div class="x_content"> -->
+            </div> <!-- </div class="x_panel"> -->
+            
+		</div> <!-- </div class="col-md-12 col-sm-12"> -->
+	</div> <!-- </div class="row"> -->
+	
+	<!-- 판매 상품 카테고리 소분류 -->
+	<div class="row">
+		<div class="col-sm-12">
+        	<div class="x_panel">
+            	<div class="x_title">
+                	<h2 style="font-size: 17px;">판매 상품 카테고리 소분류</h2>
+           	        <ul class="nav navbar-right panel_toolbox">
+                      <li style="float: right;"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+            	</div>
+            	<div class="x_content">
+	            	<div th:include="admin/category/category_search :: categorySearchFragment" style="margin-bottom: 10px"></div>
+                   	<div class="clearfix"></div>
+					<div class="card-box table-responsive">
+		            	<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" style="width:100%">
+		    				<thead>
+		                    	<tr>
+			                        <th>
+										<input type="checkbox" id="check-all" >
+									</th>
+			                        <th>판매 상품 카테고리 소분류 PK</th>
+			                        <th>판매 상품 카테고리 대분류 FK</th>
+			                        <th>판매 상품 소분류</th>
+			                        <th>회원 아이디 FK(작성자)</th>
+			                        <th>등록일시</th>
+			                        <th>사용 여부</th>
+		                    	</tr>
+		                   	</thead>
+							<tbody>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>apple</td>
+		                          	<td>F000</td>
+		                          	<td>사과</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>pineapple</td>
+		                          	<td>F000</td>
+		                          	<td>파인애플</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>watermelon</td>
+		                          	<td>F000</td>
+		                          	<td>수박</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>apple</td>
+		                          	<td>F000</td>
+		                          	<td>사과</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>strawberry</td>
+		                          	<td>F000</td>
+		                          	<td>딸기</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>kmelon</td>
+		                          	<td>F000</td>
+		                          	<td>참외</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>paprika</td>
+		                          	<td>V000</td>
+		                          	<td>파프리카</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>cucumber</td>
+		                          	<td>V000</td>
+		                          	<td>오이</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>carrot</td>
+		                          	<td>V000</td>
+		                          	<td>당근</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>tomato</td>
+		                          	<td>V000</td>
+		                          	<td>토마토</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>bracken</td>
+		                          	<td>V000</td>
+		                          	<td>고사리</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>brownrice</td>
+		                          	<td>G000</td>
+		                          	<td>현미</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>blackrice</td>
+		                          	<td>G000</td>
+		                          	<td>흑미</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>whiterice</td>
+		                          	<td>G000</td>
+		                          	<td>백미</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>millet</td>
+		                          	<td>G000</td>
+		                          	<td>조</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>kingoystermushroom</td>
+		                          	<td>M000</td>
+		                          	<td>새송이버섯</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>enokimushroom</td>
+		                          	<td>M000</td>
+		                          	<td>팽이버섯</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>uglypersimmon</td>
+		                          	<td>UF00</td>
+		                          	<td>못난이 감</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>uglyapple</td>
+		                          	<td>UF00</td>
+		                          	<td>못난이 사과</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>uglypotato</td>
+		                          	<td>UV00</td>
+		                          	<td>못난이 감자</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>uglycorn</td>
+		                          	<td>UV00</td>
+		                          	<td>못난이 옥수수</td>
+		                            <td>admin01</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+							</tbody>
+		        		</table>
+					</div> <!-- </div class="card-box table-responsive"> -->
+           			<div class="row">
+           				<div class="col-sm-12">
+	           				<div class="ml-auto">
+	           					<a class="btn btn-success" th:href="@{/admin/category/addCategory}" role="button">등록</a>
+	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+	           				</div>
+           				</div> <!-- </div class="col-sm-12"> -->
+           			</div> <!-- </div class="row"> -->
+           			
+            	</div> <!-- </div class="x_content"> -->
+            </div> <!-- </div class="x_panel"> -->
+            
+		</div> <!-- </div class="col-md-12 col-sm-12"> -->
+	</div> <!-- </div class="row"> -->
+	
+	<!-- 상품 문의 카테고리 -->
+	<div class="row">
+		<div class="col-sm-12">
+        	<div class="x_panel">
+            	<div class="x_title">
+                	<h2 style="font-size: 17px;">상품 문의 카테고리</h2>
+           	        <ul class="nav navbar-right panel_toolbox">
+                      <li style="float: right;"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+            	</div>
+            	<div class="x_content">
+	            	<div th:include="admin/category/category_search :: categorySearchFragment" style="margin-bottom: 10px"></div>
+                   	<div class="clearfix"></div>
+					<div class="card-box table-responsive">
+		            	<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" style="width:100%">
+		    				<thead>
+		                    	<tr>
+			                        <th>
+										<input type="checkbox" id="check-all" >
+									</th>
+			                        <th>상품 문의 카테고리 PK</th>
+			                        <th>회원 아이디 FK(등록)</th>
+			                        <th>카테고리명</th>
+			                        <th>등록일시</th>
+			                        <th>사용 여부</th>
+		                    	</tr>
+		                   	</thead>
+							<tbody>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>goodsQnaCategory001</td>
+		                          	<td>admin01</td>
+		                          	<td>상품</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>goodsQnaCategory002</td>
+		                          	<td>admin01</td>
+		                          	<td>배송</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>goodsQnaCategory003</td>
+		                          	<td>admin01</td>
+		                          	<td>반품</td>
+		                            <td>2021-01-01 00:00:00</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>goodsQnaCategory004</td>
+		                          	<td>admin01</td>
+		                          	<td>교환</td>
+		                            <td>2022-01-01 00:00:00	</td>
+		                            <td>Y</td>
+		                    	</tr>
+		                 		<tr>
+		                		    <td>
+										<input type="checkbox" id="check-all" >
+		             				</td>
+		                          	<td>goodsQnaCategory005</td>
+		                          	<td>admin01</td>
+		                          	<td>기타</td>
+		                            <td>2022-01-01 00:00:00	</td>
+		                            <td>Y</td>
+		                    	</tr>
+							</tbody>
+		        		</table>
+					</div> <!-- </div class="card-box table-responsive"> -->
+           			<div class="row">
+           				<div class="col-sm-12">
+	           				<div class="ml-auto">
+	           					<a class="btn btn-success" th:href="@{/admin/category/addCategory}" role="button">등록</a>
+	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
+	           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+	           				</div>
+           				</div> <!-- </div class="col-sm-12"> -->
+           			</div> <!-- </div class="row"> -->
+           			
+            	</div> <!-- </div class="x_content"> -->
+            </div> <!-- </div class="x_panel"> -->
+            
+		</div> <!-- </div class="col-md-12 col-sm-12"> -->
+	</div> <!-- </div class="row"> -->
+	
+	<!-- 삭제 모달 -->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    	<div class="modal-dialog modal-lg">
+        	<div class="modal-content">
+	        	<div class="modal-header">
+		        	<h4 class="modal-title" id="myModalLabel">게시판 대분류 카테고리 삭제</h4>
+		            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+		            </button>
+	          	</div>
+	            <div class="modal-body">
+	            	<h4>정말 게시판 대분류 카테고리를 삭제하시겠습니까?</h4>
+	            </div>
+	            <div class="modal-footer">
+		            <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+		            <button type="button" id="deleteBtn" class="btn btn-danger ">삭제</button>
+	            </div>
+        	</div>
+      	</div>
+    </div>
+    
+</th:block> <!-- </th:block layout:fragment="customContents"> -->
+
+<th:block layout:fragment="customJsScript">
+	<script type="text/javascript">
+			<!-- 모달 기능 -->
+			// 목록 내에 삭제 버튼 탐색
+			var deleteModal = document.getElementsByClassName('deleteModal');	
+			
+			for(var i=0; i<deleteModal.length; i++){
+				deleteModal[i].addEventListener('click', function(){
+					console.log('deleteModal Event');
+					var deleteBtn = document.getElementById('deleteBtn');	
+					deleteBtn.addEventListener('click', function(){
+						console.log(deleteBtn);
+						location.href='removeCategory';
+					});
+				});
+			}
+			
+			$(function(){
+				
+				// 모든 체크박스 탐색
+				var $checkAll = $('.checkAll');
+				// 전체 체크 버튼 탐색
+				var $checkAllBtn = $('.checkAllBtn');
+				
+				// 자주 묻는 질문 PK값을 저장하는 배열 객체 removeElement 선언
+// 				var removeElement = [];
+				
+				$checkAllBtn.each(function(i){
+					$(this).click(function(){
+						// <tbody>까지 접근
+						let $table = $(this).parent().parent().parent().parent().children()[1];
+						console.log($table);
+					});
+				});
+			});
+			
+			// 전체 체크 버튼에 이벤트 등록
+// 			checkAllBtn.addEventListener('click', function(){
+// 				for(var i=0; i<checkAll.length; i++){
+// 					// 전체 체크 버튼의 checked 속성을 모든 체크박스에 대입함으로써 전체 체크 버튼을 누르면 모든 체크박스에가 체크/해체
+// 					checkAll[i].checked = this.checked;
+// 				}
+// 			});
+
+		</script>
+</th:block>
+</html>

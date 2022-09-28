@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team04.mapper.UserAddressMapper">
+
+    <resultMap type="Order" id="orderResultMap">
+        <result column="order_num" property="orderNum"/>
+        <result column="buyer_id" property="buyerId"/>
+        <result column="coupon_code" property="couponCode"/>
+        <result column="order_date" property="orderDate"/>
+        <result column="order_status" property="orderStatus"/>
+        <result column="total_sum" property="totalSum"/>
+        <result column="total_price" property="totalPrice"/>
+        <result column="coupon_price" property="couponPrice"/>
+        <result column="use_point" property="usePoint"/>
+        <result column="goods_discount_price" property="goodsDiscountPrice"/>
+        <result column="post_price" property="postPrice"/>
+        <result column="total_order_price" property="totalOrderPrice"/>
+        <result column="final_confirm_price" property="finalConfirmPrice"/>
+        <result column="final_confirm_date" property="finalConfirmDate"/>
+        <result column="post_address_list" property="postAddressList"/>
+    </resultMap>
+
+    <resultMap type="OrderDetail" id="orderDetailResultMap">
+        <result column="order_detail_code" property="orderDetailCode"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="goods_code" property="goodsCode"/>
+        <result column="order_amount" property="orderAmount"/>
+        <result column="order_og_price" property="orderOgPrice"/>
+        <result column="order_price" property="orderPrice"/>
+        <result column="order_status" property="orderStatus"/>
+        <result column="post_info" property="postInfo"/>
+        <result column="refund_check" property="refundCheck"/>
+        <result column="auto_confirm_date" property="autoConfirmDate"/>
+        <result column="order_confirm_date" property="orderConfirmDate"/>
+        <result column="save_point" property="savePoint"/>
+    </resultMap>
+
+    <resultMap type="OrderCancel" id="orderCancelResultMap">
+        <result column="order_cancel_code" property="orderDetailCode"/>
+        <result column="order_detail_code" property="orderDetailCode"/>
+        <result column="payment_code" property="paymentCode"/>
+        <result column="buyer_id" property="buyerId"/>
+        <result column="cancel_ask_date" property="cancelAskDate"/>
+        <result column="cancel_reason" property="cancelReason"/>
+        <result column="approve_date" property="approveDate"/>
+    </resultMap>
+
+    <resultMap type="OrderExchange" id="orderExchangeResultMap">
+        <result column="exchange_ask_code" property="exchangeAskCode"/>
+        <result column="order_detail_code" property="orderDetailCode"/>
+        <result column="buyer_id" property="buyerId"/>
+        <result column="post_info" property="postInfo"/>
+        <result column="exchange_ask_date" property="exchangeAskDate"/>
+        <result column="exchange_reason" property="exchangeReason"/>
+        <result column="approve_check" property="approveCheck"/>
+        <result column="approve_date" property="approveDate"/>
+        <result column="post_company" property="postCompany"/>
+        <result column="invoice_number" property="invoiceNumber"/>
+    </resultMap>
+
+    <resultMap type="OrderReturn" id="orderReturnResultMap">
+        <result column="order_return_code" property="orderReturnCode"/>
+        <result column="order_detail_code" property="orderDetailCode"/>
+        <result column="payment_code" property="paymentCode"/>
+        <result column="buyer_id" property="buyerId"/>
+        <result column="return_ask_date" property="returnAskDate"/>
+        <result column="cancel_reason" property="cancelReason"/>
+        <result column="permit_date" property="permitDate"/>
+        <result column="post_company" property="postCompany"/>
+        <result column="invoice_number" property="invoiceNumber"/>
+    </resultMap>
+
+    <resultMap type="AddressList" id="addressListResultMap">
+        <result column="address_list" property="addressList"/>
+        <result column="buyer_id" property="buyerId"/>
+        <result column="address_name" property="addressName"/>
+        <result column="receiver_name" property="receiverName"/>
+        <result column="postal_code" property="postalCode"/>
+        <result column="address" property="address"/>
+        <result column="address2" property="address2"/>
+        <result column="phone" property="phone"/>
+        <result column="phone2" property="phone2"/>
+        <result column="reg_date" property="regDate"/>
+        <result column="modify_reg_date" property="modifyRegDate"/>
+        <result column="default_address_check" property="defaultAddressCheck"/>
+    </resultMap>
+
+    <select id="getAddressList" resultMap="addressListResultMap" parameterType="map">
+        SELECT
+            address_list,
+            buyer_id,
+            address_name,
+            receiver_name,
+            postal_code,
+            address,
+            address2,
+            phone,
+            phone2,
+            reg_date,
+            modify_reg_date,
+            default_address_check
+        FROM tb_address_list
+        WHERE
+        <choose>
+            <when test="userId != null">
+                buyer_id LIKE #{userId}
+            </when>
+            <when test="addressList != null">
+                address_list LIKE #{addressList}
+            </when>
+            <otherwise>
+                1 = 2
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getAddressListCode" resultType="String">
+        SELECT MAX(address_list)
+        FROM tb_address_list;
+    </select>
+
+    <insert id="addressRegister" parameterType="AddressList">
+        INSERT INTO tb_address_list
+            (address_list, buyer_id, address_name, receiver_name, postal_code, address, address2, phone, phone2, reg_date, modify_reg_date, default_address_check)
+            VALUES (#{addressList}, #{buyerId}, #{addressName}, #{receiverName}, #{postalCode}, #{address}, #{address2}, #{phone}, #{phone2}, NOW(), NOW(), #{defaultAddressCheck});
+    </insert>
+
+    <update id="addressModify" parameterType="AddressList">
+        UPDATE tb_address_list
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="addressName != null and addressName != ''">
+                address_name = #{addressName},
+            </if>
+            <if test="receiverName != null and receiverName != ''">
+                receiver_name = #{receiverName},
+            </if>
+            <if test="postalCode != null and postalCode != ''">
+                postal_code = #{postalCode},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="address2 != null and address2 != ''">
+                address2 = #{address2},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            phone2 = #{phone2},
+            modify_reg_date = NOW(),
+            <if test="defaultAddressCheck != null and defaultAddressCheck != ''">
+                default_address_check = #{defaultAddressCheck}
+            </if>
+        </trim>
+        WHERE address_list = #{addressList};
+    </update>
+
+    <delete id="addressDelete" parameterType="String">
+        DELETE FROM tb_address_list WHERE address_list = #{addressList}
+    </delete>
+
+</mapper>
