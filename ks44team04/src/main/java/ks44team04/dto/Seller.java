@@ -9,11 +9,11 @@ public class Seller {
     private String bankName;
     private String account;
     private String accountHolder;
-    private String licenseNum;
+    private String licenceNum;
     private String storeAddress;
     private String storePhone;
     private String storeEmail;
-    private String licenseImg;
+    private String licenceImg;
     private String onlineLicenceImg;
     private String approveAskDate;
     private String approveDate;
@@ -80,12 +80,12 @@ public class Seller {
         this.accountHolder = accountHolder;
     }
 
-    public String getLicenseNum() {
-        return licenseNum;
+    public String getLicenceNum() {
+        return licenceNum;
     }
 
-    public void setLicenseNum(String licenseNum) {
-        this.licenseNum = licenseNum;
+    public void setLicenceNum(String licenceNum) {
+        this.licenceNum = licenceNum;
     }
 
     public String getStoreAddress() {
@@ -112,12 +112,12 @@ public class Seller {
         this.storeEmail = storeEmail;
     }
 
-    public String getLicenseImg() {
-        return licenseImg;
+    public String getLicenceImg() {
+        return licenceImg;
     }
 
-    public void setLicenseImg(String licenseImg) {
-        this.licenseImg = licenseImg;
+    public void setLicenceImg(String licenceImg) {
+        this.licenceImg = licenceImg;
     }
 
     public String getOnlineLicenceImg() {
@@ -202,11 +202,11 @@ public class Seller {
                 ", bankName='" + bankName + '\'' +
                 ", account='" + account + '\'' +
                 ", accountHolder='" + accountHolder + '\'' +
-                ", licenseNum='" + licenseNum + '\'' +
+                ", licenseNum='" + licenceNum + '\'' +
                 ", storeAddress='" + storeAddress + '\'' +
                 ", storePhone='" + storePhone + '\'' +
                 ", storeEmail='" + storeEmail + '\'' +
-                ", licenseImg='" + licenseImg + '\'' +
+                ", licenseImg='" + licenceImg + '\'' +
                 ", onlineLicenceImg='" + onlineLicenceImg + '\'' +
                 ", approveAskDate='" + approveAskDate + '\'' +
                 ", approveDate='" + approveDate + '\'' +
