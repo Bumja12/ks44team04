@@ -80,6 +80,7 @@
     	,0)
      </insert>
      
+
     <!-- 신고 목록 조회 -->
     <select id="getReportList" resultMap="reportListResultMap">
     	/* 신고 목록 조회 */
