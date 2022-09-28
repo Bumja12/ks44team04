@@ -11,6 +11,7 @@ public class RegularPostHistory {
     private OrderDetail orderDetail;
     private Goods goods;
     private Order order;
+    private PostInfo postInfo;
 
     public String getRegularPostHistoryCode() {
         return regularPostHistoryCode;
@@ -84,6 +85,14 @@ public class RegularPostHistory {
         this.order = order;
     }
 
+    public PostInfo getPostInfo() {
+        return postInfo;
+    }
+
+    public void setPostInfo(PostInfo postInfo) {
+        this.postInfo = postInfo;
+    }
+
     @Override
     public String toString() {
         return "RegularPostHistory{" +
@@ -96,6 +105,7 @@ public class RegularPostHistory {
                 ", orderDetail=" + orderDetail +
                 ", goods=" + goods +
                 ", order=" + order +
+                ", postInfo=" + postInfo +
                 '}';
     }
 }
