@@ -107,9 +107,53 @@
 							<div class="item form-group">
 								<div class="col-md-6 col-sm-6 offset-md-3">
 									<button type="button" class="btn btn-primary modifyBtn">수정</button>
-									<button type="button" id="addAnswer" class="btn btn-success">답변 등록하기</button>
+									<button type="button" id="addAnswer" class="btn btn-success">답변 등록</button>
 									<button class="btn btn-info" id="resetBtn" type="reset">초기화</button>
-									<button class="btn btn-warning cancelBtn" type="button">취소</button>
+									<button class="btn btn-warning returnToListBtn" type="button">목록</button>
+								</div>
+							</div>
+						</form> <!-- <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"> -->
+           				
+           			</div> <!-- </div class="x_content"> -->
+            	</div> <!-- </div class="x_panel"> -->
+            
+			</div> <!-- </div class="col-md-12 col-sm-12"> -->
+		</div> <!-- </div class="row"> -->
+		
+		<!-- 문의 답변 등록 폼 -->
+		<div class="row d-none" id="addAskAnswerForm">
+			<div class="col-sm-12">
+        		<div class="x_panel">
+            		<div class="x_title">
+                		<h2 style="font-size: 17px;">문의 답변 등록</h2>
+                    	<div class="clearfix"></div>
+            		</div>
+            		<div class="x_content">
+     					<br/>
+						<form class="form-horizontal form-label-left" th:action="@{/admin/customerAsk/modifyAskAnswer}" method="post">
+							<!-- 문의 FK -->
+							<div class="form-group row ">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="customerAsk">문의 FK
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="customerAsk" value="customerAsk001" disabled="disabled" required="required" class="form-control" maxlength="15">
+								</div>
+							</div>
+							<!-- 답변 내용 -->
+							<div class="form-group row">
+								<label class="col-form-label col-md-3 col-sm-3" for="askAnswerContent">답변 내용
+								</label>
+								<div class="col-md-6 col-sm-6" >
+									<textarea id="askAnswerContent" class="form-control" rows="3" required="required" style="resize: none; overflow-y: scroll; height: 300px;">
+									</textarea>
+								</div>
+							</div>
+							<div class="ln_solid"></div>
+							<div class="item form-group">
+								<div class="col-md-6 col-sm-6 offset-md-3">
+									<button type="button" id="addAskAnswerBtn" class="btn btn-primary">등록</button>
+									<button class="btn btn-info" id="resetBtn" type="reset">초기화</button>
+									<button class="btn btn-warning cancleBtn" type="button">취소</button>
 								</div>
 							</div>
 						</form> <!-- <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"> -->
@@ -177,7 +221,7 @@
 								<div class="col-md-6 col-sm-6 offset-md-3">
 									<button type="button" class="btn btn-primary modifyBtn">수정</button>
 									<button class="btn btn-info" id="resetBtn" type="reset">초기화</button>
-									<button class="btn btn-warning cancelBtn" type="button">취소</button>
+<!-- 									<button class="btn btn-warning returnToListBtn" type="button">목록</button> -->
 		           					<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
 								</div>
 							</div>
@@ -226,6 +270,7 @@
 			deleteBtn.addEventListener('click', function(){
 				location.href='removeAskAnswer';
 			});
+			
 // 			addEventListener('click', function(){
 // 			}
 // 				console.log('deleteModal Event');
@@ -241,13 +286,19 @@
 				
 				// 수정 버튼 탐색
 				let $modifyBtn =  $('.modifyBtn');
+				// 목록 버튼 탐색
+				let $returnToListBtn =  $('.returnToListBtn');
 				// 취소 버튼 탐색
-				let $cancelBtn =  $('.cancelBtn');
+				let $cancleBtn =  $('.cancleBtn');
 				// 답변 등록 버튼 탐색
 				let $addAnswer =  $('#addAnswer');
+				// 등록 버튼 탐색
+				let $addAskAnswerBtn =  $('#addAskAnswerBtn');
+				// 문의 답변 등록 폼 검색
+				let $addAskAnswerForm =  $('#addAskAnswerForm');
 				// 문의 답변 내역 탐색
 				let $askAnswerDetail =  $('#askAnswerDetail');
-				askAnswerDetail
+				
 				// disabled 속성 조작할 요소들 탐색
 				let $disabledToAbled =  $('.disabledToAbled');
 				
@@ -260,10 +311,38 @@
 					$addAnswer.removeClass('d-none');
 				}
 				
-				// 취소 버튼 각각에 클릭시 이벤트 등록
-				$cancelBtn.each(function(i){
+				// 답변 등록 버튼 클릭 이벤트
+				$addAnswer.click(function(){
+					console.log($addAskAnswerForm);
+					// 관리자 답변 내역이 있다면
+					if(isAnswer){
+// 						$askAnswerDetail.removeClass('d-none');
+						$addAskAnswerForm.addClass('d-none');
+					}else{ // 관리자 답변 내역이 없다면 
+// 						$askAnswerDetail.addClass('d-none');
+						$addAskAnswerForm.removeClass('d-none');
+					}
+				});
+				
+				// 등록 버튼 클릭 시에 등록 처리
+				$addAskAnswerBtn.click(function(){
+					window.location = 'http://localhost:8088/admin/customerAsk/customerAskDetail?isAnswer=true';
+					isAnswer = true; // true -> 답변이 있다.
+					console.log(isAnswer);
+					
+				});
+				
+				// 목록 버튼 각각에 클릭시 이벤트 등록
+				$returnToListBtn.each(function(i){
 					$(this).click(function(){
 						window.location = 'http://localhost:8088/admin/customerAsk/customerAskList';
+					});
+				});
+				
+				// 취소 버튼 각각에 클릭시 이벤트 등록
+				$cancleBtn.each(function(i){
+					$(this).click(function(){
+						window.location = 'http://localhost:8088/admin/customerAsk/customerAskDetail';
 					});
 				});
 				

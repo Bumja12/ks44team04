@@ -10,6 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/admin/customerAsk")
 public class CustomerAskContorller {
 
+	// 문의 답변 삭제 처리
+	@GetMapping("/removeAskAnswer")
+	public String removeAskAnswer () {
+		
+		// 관리자 고개 문의 삭제 화면으로 이동
+		return "admin/customerAsk/admin_askAnswer_remove";
+	}
+	
 	// 관리자 문의 답변 수정 처리 
 	@PostMapping("/modifyAskAnswer")
 	public String modifyAskAnswerAction() {
