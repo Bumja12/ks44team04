@@ -14,7 +14,7 @@
 		$(function (){
 			$(".qnaToggle").click(function (){
 		  	//$(".toggle").toggle();
-		  	$(this).next().next().toggle();
+		  		$(this).next().next().toggle();
 			});
 		});
 	});
@@ -84,12 +84,12 @@
 							<tr>
 								<th style="width:20px;">No</th>
 								<th style="width:70px;">카테고리</th>
-								<th style="width:100px;">상품코드</th>
-								<th style="width:150px;">상품명</th>
+								<th style="width:70px;">상품코드</th>
+								<th style="width:110px;">상품명</th>
 								<th>문의내용</th>
 								<th style="width:60px;">비밀글</th>
 								<th style="width:70px;">비밀번호</th>
-								<th style="width:80px;">작성자</th>
+								<th style="width:60px;">작성자</th>
 								<th style="width:140px;">작성일</th>
 								<th style="width:70px;">답변상태</th>
 								<th style="width:100px;">관리</th>
@@ -97,8 +97,8 @@
 						</thead>
 						<tbody>
 							<tr th:if="${not #lists.isEmpty(goodsQna)}" th:each="q : ${goodsQna}" id="goodsQnaTable">
-								<td th:text="${q.goodsQnaNum}"></td>
-								<td th:text="${q.goodsQnaCategoryInfo.categoryName}"></td>
+								<td th:text="${q.goodsQnaNum}" style="text-align: center;"></td>
+								<td th:text="${q.goodsQnaCategoryInfo.categoryName}" style="text-align: center;"></td>
 								<td th:text="${q.goodsInfo.goodsCode}"></td>
 								<td th:text="${q.goodsInfo.goodsName}"></td>
 								<td><b>[[${q.goodsQnaTitle}]]</b>&nbsp;&nbsp;&nbsp;[[${q.goodsQnaContent}]]
@@ -129,7 +129,7 @@
 								<td th:text="${q.userInfo.userId}"></td>
 								<td th:text="${q.goodsQnaDate}"></td>
 								<td th:text="${q.qnaStatus}"></td>
-								<td style="text-align: center; width: 110px;">
+								<td style="text-align: center;">
 									<a href="#"><i class="fa fa-edit"></i> 수정</a>
 									<a href="#"><i class="fa fa-close"></i> 삭제</a>
 								</td>

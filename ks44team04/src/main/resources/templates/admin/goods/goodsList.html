@@ -31,13 +31,7 @@
 </th:block>
 
   <th:block layout:fragment="customTopJs">
-  <!-- 섬머노트 -->
-  <script src="/js/summernote/summernote-lite.js"></script>
-	<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
-  
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js">
-
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+ 
 	<script>
 	$(function() {
 		$('#removeModal').on('show.bs.modal', function (event) {
@@ -161,7 +155,7 @@
 							<th style="width: 80px;">판매자</th>
 							<th style="width: 60px;">신고수</th>
 							<th style="width: 140px;">등록일</th>
-							<th>관리</th>
+							<th style="width: 100px;">관리</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -170,7 +164,7 @@
 							<td th:text="${g.goodsCode}"></td>
 							<td th:text="${g.goodsName}"></td>
 							<td th:text="${'₩' + #numbers.formatInteger(g.goodsPrice,3,'COMMA')}"></td>
-							<td th:text="${g.goodsDiscountRate}"></td>
+							<td th:text="${g.goodsDiscountRate + '%'}"></td>
 							<td th:text="${'₩'+ #numbers.formatInteger((g.goodsPrice-g.goodsPrice*g.goodsDiscountRate/100),3,'COMMA')}"></td>
 							<td th:text="${g.goodsStock}"></td>
 							<td th:text="${g.soldoutCheck}"></td>
@@ -178,7 +172,7 @@
 							<td th:text="${g.userInfo.userId}"></td>
 							<td th:text="${g.goodsReportAmount}"></td>
 							<td th:text="${g.regDate}"></td>
-							<td style="text-align: center; width: 110px;">
+							<td style="text-align: center;">
 								<!-- <a th:href="@{/admin/goods/modifyGoods}"><i class="fa fa-edit"></i>수정</a> -->
 								<a th:href="@{/admin/goods/goodsModify(goodsCode=${g.goodsCode})}"><i class="fa fa-edit"></i> 수정</a>
 								<!-- <a href="#"><i class="fa fa-edit"></i> 수정</a> -->

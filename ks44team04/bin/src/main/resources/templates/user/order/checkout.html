@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/userDefault}">
+
+<th:block layout:fragment="customCss">
+
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+    <div th:replace="/fragments/userHeader :: headerFragment"></div>
+
+    <div class="container" style="padding: 80px 0">
+        <div>주문서 작성</div>
+        <div>
+            <h3>배송지</h3>
+            <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                <ul id="addressSelect" class="nav nav-tabs" role="tablist">
+                    <th:block th:if="${not #lists.isEmpty(addressList)}"
+                              th:each="l, e : ${addressList}">
+                        <li role="presentation" th:data-addressList="${l.addressList}">
+                            <a th:href="@{|#${l.addressName}|}" role="tab" data-toggle="tab"
+                               aria-expanded="true" th:text="${l.addressName}">배송지명</a>&nbsp;|&nbsp;
+                        </li>
+                    </th:block>
+                    <li role="presentation" id="submitCheck" class="">
+                        <!--<a href="javascript:void(0);" data-toggle="modal" data-target=".addressSelect"
+                           role="tab">배송지등록</a>-->
+                        <a href="javascript:pop()">배송지등록</a>
+                    </li>
+                </ul>
+                <div id="addressSelectContent" class="tab-content">
+                    <th:block th:if="${not #lists.isEmpty(addressList)}" th:each="l, e : ${addressList}">
+                        <div role="tabpanel" class="tab-pane fade" th:id="${l.addressName}">
+                            <div>[[${l.receiverName}]]</div>
+                            <div>
+                                <span>[[${l.phone}]]</span> <span> | </span> <span>[[${l.phone2}]]</span>
+                            </div>
+                            <div>[[${l.address}]]</div>
+                            <div>[[${l.address2}]]</div>
+                        </div>
+                    </th:block>
+                </div>
+
+
+            </div>
+            <div>
+                <h3>상품정보</h3>
+                <div class="d-flex">
+                    <div class="p-2">상품이미지</div>
+                    <div class="p-2">상품설명</div>
+                    <div class="p-2 ml-auto">가격정보</div>
+                </div>
+            </div>
+            <div>
+                <h3>쿠폰/할인/포인트</h3>
+                <div class="d-flex p-2">
+                    <span class="p-2 mr-auto">상품할인</span>
+                    <span class="p-2">5000원</span>
+                </div>
+                <div class="d-flex p-2">
+                    <span class="p-2 mr-auto">쿠폰사용</span>
+                    <button type="button" id="selectCoupon" class="p-2">선택</button>
+                </div>
+                <div class="d-flex p-2">
+                    <span class="p-2 mr-auto">쿠폰할인</span>
+                    <span id="couponPrice" class="p-2">0원</span>
+                </div>
+                <div class="d-flex p-2">
+                    <label for="pointInput" class="p-2 mr-auto">포인트사용</label>
+                    <input type="text" id="pointInput" class="p-2"
+                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                    <button class="p2" type="button">사용</button>
+                </div>
+                <div class="d-flex p-2">
+                    <span class="p-2 mr-auto">보유포인트</span>
+                    <span class="p-2" th:text="${userPoint} + '원'">5000원</span>
+                </div>
+            </div>
+            <div>
+                <h3>최종결제금액</h3>
+                <div class="d-flex p-2">
+                    <span class="p-2 mr-auto">상품금액</span>
+                    <span class="p-2">5000원</span>
+                </div>
+                <div class="d-flex p-2">
+                    <span class="p-2 mr-auto">할인합계</span>
+                    <span type="text" class="p-2">5000원</span>
+                </div>
+                <div class="d-flex p-2">
+                    <span class="p-2 mr-auto">결제금액</span>
+                    <span class="p-2">5000원</span>
+                </div>
+            </div>
+            <div>
+                <h3>결제정보</h3>
+                <button type="button" class="btn btn-dark col-4">신용카드</button>
+                <button type="button" class="btn btn-dark col-4">계좌이체</button>
+            </div>
+            <div class="mt-3">
+                <button type="button" class="btn btn-warning col-12">결제하기</button>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="customScript">
+
+    <script>
+        let pop = function () {
+            let addressPop = window.open('/user/address/register', 'addressPop', '_blank');
+            let popInterval = window.setInterval(function () {
+                if (addressPop !== undefined) {
+                    if (addressPop.closed) {
+                        if (document.querySelector('#submitCheck').classList.contains('submit')) {
+                            fetch('/user/address/checkoutlist')
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    let addressList = data.addressList;
+                                    let addressName = data.addressName;
+                                    let receiverName = data.receiverName;
+                                    let address = data.address;
+                                    let address2 = data.address2;
+                                    let phone = data.phone;
+                                    let phone2 = data.phone2;
+                                    let addressSelect = `<li role="presentation " data-addressList="${addressList}"> <a href="#${addressName}" role="tab" data-toggle="tab" aria-expanded="true">${addressName}</a>&nbsp;|&nbsp; </li>`;
+                                    let addressContent = `<div role="tabpanel" class="tab-pane fade" id="${addressName}"><div>${receiverName}</div>` +
+                                        `<div> <span>${phone}</span> <span> | </span> <span>${phone2}</span> </div>` +
+                                        `<div>${address}</div> <div>${address2}</div> </div>`;
+                                    let addressSelectLi = document.querySelectorAll('#addressSelect li');
+                                    addressSelectLi[addressSelectLi.length - 1].insertAdjacentHTML('beforebegin', addressSelect);
+
+                                    document.querySelector('#addressSelectContent').insertAdjacentHTML('beforeend', addressContent);
+                                })
+                        }
+                        window.clearInterval(popInterval);
+                    }
+                }
+            }, 1000);
+        }
+
+        document.querySelector('#selectCoupon').addEventListener('click', function () {
+            let selectCouponPop = window.open('/user/order/couponlist', 'couponList', '_blank');
+        });
+
+    </script>
+
+</th:block>
+
+</html>

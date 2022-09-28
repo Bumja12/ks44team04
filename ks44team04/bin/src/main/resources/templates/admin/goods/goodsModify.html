@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<title th:text="${title}"></title>
+</th:block>
+
+<!-- <th:block layout:fragment="customJsScript">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+	<script>
+	
+		$(function(){
+			$(document).on('click', '.goodsModifyBtn', function() {
+				$.ajax({
+        		    url: "/admin/goods/goodsModify",
+        		    type: "POST",
+        		    dataType: "text",
+        		    data: $('#goodsModifyForm').serialize(),
+        		    success: function(data){
+        		    	swal(
+        		    	        '상품 수정',
+        		    	        '<b style="color:green;">수정완료</b> 되었습니다!',
+        		    	        'success'
+        		    	      ).then((result) => {
+        				          if (result.value) {
+        				              window.location = data;
+        				          }
+        		    	      });
+        		    },
+        		    error: function (request, status, error){        
+        		    }
+		    	});
+			});
+		});
+	</script>
+</th:block>	  -->
+	
+<th:block layout:fragment="customContents">
+
+
+	<div class="page-title">
+		<div class="title_left">
+			<h3>상품 수정</h3>
+		</div>
+	</div>
+
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+
+			<div class="x_content">
+				<div class="well">
+					<div class="">
+						<form id="goodsModifyForm" th:action="@{/admin/goods/goodsModify}" th:object="${goodsInfo}" class="form-horizontal" method="post">
+							<div class="form-inline form-group">
+								<label class="col-sm-2 control-label">카테고리 대분류</label>
+								<div class="col-sm-1">
+									<select class="form-control" style="margin-left: -8px; font-weight: bold;">
+										<option>::</option>
+										<option value="F000">과일</option>
+										<option value="V000">채소</option>
+										<option value="G000">쌀/잡곡</option>
+										<option value="M000">버섯</option>
+										<option value="UF00">못난이과일</option>
+										<option value="UV00">못난이채소</option>
+										<option value="Z000">기타</option>
+									</select>
+								</div>
+
+								<label class="col-sm-1 control-label" style="margin-left: 3px;">중분류</label>
+								<div class="col-sm-1">
+									<select class="form-control" tabindex="-1" style="margin-left: -8px; font-weight: bold;">
+										<option>::</option>
+										<option value="apple">사과</option>
+										<option value="pineapple">파인애플</option>
+										<option value="watermelon">수박</option>
+										<option value="strawberry">딸기</option>
+										<option value="kmelon">참외</option>
+										<option value="paprika">파프리카</option>
+										<option value="cucumber">오이</option>
+										<option value="carrot">당근</option>
+										<option value="tomato">토마토</option>
+										<option value="bracken">고사리</option>
+										<option value="brownrice">현미</option>
+										<option value="blackrice">흑미</option>
+										<option value="whiterice">백미</option>
+										<option value="millet">조</option>
+										<option value="kingoystermushroom">새송이버섯</option>
+										<option value="enokimushroom">팽이버섯</option>
+										<option value="uglypersimmon">못난이감</option>
+										<option value="uglyapple">못난이사과</option>
+										<option value="uglypotato">못난이감자</option>
+										<option value="uglycorn">못난이옥수수</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-inline form-group">
+								<label for="goodsCode" class="col-sm-2 control-label">상품코드</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control" id="goodsCode" name="goodsCode" th:value="*{goodsCode}" style="margin-left: -8px;" placeholder="Default Input" readonly="readonly">
+								</div>
+								<label for="sellerId" class="col-sm-2 control-label" style="margin-left: -3px;">판매자</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control" id="sellerId" name="sellerId" th:value="*{userInfo.userId}" style="margin-left: -8px;" placeholder="Default Input" readonly="readonly">
+								</div>
+							</div>
+
+							<div class="form-inline form-group">
+								<label for="goodsName" class="col-sm-2 control-label">상품명</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="goodsName" name="goodsName" th:value="*{goodsName}" style="margin-left: -8px;" placeholder="Default Input">
+								</div>
+							</div>
+
+							<div class="form-inline form-group">
+								<label for="goodsContent" class="col-sm-2 control-label">상품내용</label>
+								<div class="col-sm-10">
+									<textarea class="form-control" id="goodsContent" name="goodsContent" th:value="*{goodsContent}" th:text="*{goodsContent}" rows="3" cols="51" style="margin-left: -8px;"></textarea>
+								</div>
+							</div>
+
+							<div class="form-inline form-group">
+								<label for="goodsPrice" class="col-sm-2 control-label">가격</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control" id="goodsPrice" name="goodsPrice" th:value="*{goodsPrice}" style="margin-left: -8px;" placeholder="Default Input">
+								</div>
+								<label for="goodsDiscountRate" class="col-sm-2 control-label" style="margin-left: -3px;">할인율</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control" id="goodsDiscountRate" name="goodsDiscountRate" th:value="*{goodsDiscountRate}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+								</div>
+							</div>
+
+							<div class="form-inline form-group">
+								<label for="goodsStock" class="col-sm-2 control-label">재고</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control" id="goodsStock" name="goodsStock" th:value="*{goodsStock}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+								</div>
+								<label for="goodsPostPrice" class="col-sm-2 control-label" style="margin-left: -3px;">배송비</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control" id="goodsPostPrice" name="goodsPostPrice" th:value="*{goodsPostPrice}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+								</div>
+							</div>
+
+							<div class="form-inline form-group">
+								<label for="goodsReportAmount" class="col-sm-2 control-label">누적신고수</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="goodsReportAmount" name="goodsReportAmount" th:value="*{goodsReportAmount}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+								</div>
+							</div>
+							<div class="form-inline form-group">
+								<label for="soldoutCheck" class="col-sm-3 control-label">
+									품절여부 <input type="checkbox" class="flat" id="soldoutCheck" name="soldoutCheck" th:value="*{soldoutCheck}">
+								</label>
+								<label for="stopSaleCheck" class="control-label">
+									판매중지여부 <input type="checkbox" class="flat" id="stopSaleCheck" name="stopSaleCheck" th:value="*{stopSaleCheck}">
+								</label>
+								<label for="packagePostCheck" class="control-label">
+									묶음배송여부 <input type="checkbox" class="flat" id="packagePostCheck" name="packagePostCheck" th:value="*{packagePostCheck}">
+								</label>
+								<label for="regularDeliverCheck" class="control-label">
+									정기배송여부 <input type="checkbox" class="flat" id="regularDeliverCheck" name="regularDeliverCheck" th:value="*{regularDeliverCheck}">
+								</label>
+							</div>
+
+							<div class="ln_solid"></div>
+							<div class="form-inline form-group">
+								<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+									<button type="button" class="btn btn-dark" id="goodsModifyCancel" th:onclick="|location.href='@{/admin/goods/goodsList}'|">취소</button>
+									<button type="reset" class="btn btn-dark" id="goodsModifyReset">초기화</button>
+									<button type="submit" class="btn btn-dark" id="goodsModifyBtn">수정</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="customJsScript">
+
+    <th:block th:replace="/fragments/adminJs :: datatablesFragment"></th:block>
+
+</th:block>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+<th:block layout:fragment="customContents">
+	index 화면입니다. hello!<br>
+	<ul>
+		<li>
+			<a href="/file/upload">업로드폼</a>
+		</li>
+		<li>
+			<a href="/file/downloadView">다운로드 리스트</a>
+		</li>
+	</ul>
+</th:block>
+</html>
