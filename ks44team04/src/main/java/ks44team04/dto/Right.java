@@ -3,7 +3,7 @@ package ks44team04.dto;
 public class Right {
 
     private String userRight;
-    private String RightStatus;
+    private String rightStatus;
     private String regId;
     private String regDate;
     private String useCheck;
@@ -20,12 +20,12 @@ public class Right {
 
 
 	public String getRightStatus() {
-		return RightStatus;
+		return rightStatus;
 	}
 
 
 	public void setRightStatus(String rightStatus) {
-		RightStatus = rightStatus;
+		this.rightStatus = rightStatus;
 	}
 
 
@@ -61,9 +61,9 @@ public class Right {
 
 	@Override
     public String toString() {
-        return "Level{" +
-                "userLevel='" + userRight + '\'' +
-                ", levelStatus='" + RightStatus + '\'' +
+        return "Right{" +
+                "userRight='" + userRight + '\'' +
+                ", rightStatus='" + rightStatus + '\'' +
                 ", regId='" + regId + '\'' +
                 ", regDate='" + regDate + '\'' +
                 ", useCheck='" + useCheck + '\'' +

@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team04.mapper.UserMapper">
-
     
     
     <!-- 회원 가입 -->
@@ -72,7 +71,6 @@
 		FROM 
 			tb_dormant
 	</select>
-
 	
     <resultMap 	type="Seller" 				id="SellerResultMap">
 		<result column="seller_code" 		property="sellerCode" />
@@ -92,60 +90,50 @@
 		<result column="approve_date" 		property="approveDate" />
 		<result column="approve_check" 		property="approveCheck" />
 		<result column="approve_id" 		property="approveId" />
+			<association property="userInfo" 		javaType="User">
+		        <id		column="user_id" 			property="userId"/>
+		        <result column="user_pw" 			property="userPw"/>
+		        <result column="user_name" 			property="userName"/>
+		        <result column="user_gender" 		property="userGender"/>
+		        <result column="user_nickname" 		property="userNickname"/>
+		        <result column="user_address" 		property="userAddress"/>
+		        <result column="user_address2" 		property="userAddress2"/>
+		        <result column="user_phone" 		property="userPhone"/>
+		        <result column="user_email" 		property="userEmail"/>
+		        <result column="user_right" 		property="userRight"/>
+		        <result column="user_reg_date" 		property="userRegDate"/>
+		        <result column="user_update_date" 	property="userUpdateDate"/>
+		        <result column="user_status" 		property="userStatus"/>
+		        <result column="user_penalty" 		property="userPenalty"/>
+		        <result column="user_point" 		property="userPoint"/>
+		        <result column="user_info_keep" 	property="userInfoKeep"/>
+		        <result column="user_level" 		property="userLevel"/>
+		    </association>
 		    <association property="goodsInfo" 			javaType="Goods">
 				<id 	column="goods_code" 			property="goodsCode"/>
-				<result column="goods_small_category"	property="goodsSmallCategory"/>
 				<result column="seller_id" 				property="sellerId"/>
 				<result column="goods_name" 			property="goodsName"/>
-				<result column="goods_content" 			property="goodsContent"/>
 				<result column="goods_price" 			property="goodsPrice"/>
-				<result column="goods_discount_rate" 	property="goodsDiscountRate"/>
-				<result column="goods_post_price"		property="goodsPostPrice"/>
-				<result column="goods_stock" 	 		property="goodsStock"/>
 				<result column="soldout_check" 	 		property="soldoutCheck"/>
-				<result column="stop_sale_check" 	 	property="stopSaleCheck"/>
-				<result column="package_post_check" 	property="packagePostCheck"/>
-				<result column="regular_deliver_check" 	property="regularDeliverCheck"/>
 				<result column="reg_date" 	 			property="regDate"/>
-				<result column="goods_report_amount" 	property="goodsReportAmount"/>
-				<result column="goods_file" 	 		property="goodsFile"/>
+		    </association>
+		    <association property="rightDto" 			javaType="Right">
+				<id 	 column="user_right" 			property="userRight"/>
+				<result  column="right_status" 			property="rightStatus"/>
+				<result  column="reg_id" 				property="regId"/>
+				<result  column="reg_date" 				property="regDate"/>
+				<result  column="use_check" 			property="useCheck"/>
+		    </association>
+	        <association property="levelSeller" 		javaType="LevelSellerCategory">
+				<id 	 column="level_code" 			property="levelCode"/>
+				<result  column="level_name" 			property="levelName"/>
 		    </association>
     </resultMap>
     
-    <!-- 특정 판매자 조회 -->
-	<select id="getSellerInfoById" resultType="Seller">
-		/* 특정 판매자 조회 */
-    	SELECT 
-			 s.seller_code				AS sellerCode
-			,s.seller_id				AS sellerId
-			,s.store_name				AS storeName
-			,s.seller_sort				AS sellerSort
-			,s.bank_name				AS bankName
-			,s.account					AS account
-			,s.account_holder			AS accountHolder
-			,s.license_num				AS licenseNum
-			,s.store_address			AS storeAddress
-			,s.store_phone				AS storePhone
-			,s.store_email				AS storeEmail
-			,s.license_img				AS licenseImg
-			,s.online_licence_img		AS onlineLicenceImg
-			,s.approve_ask_date			AS approveAskDate
-			,s.approve_date				AS approveDate
-			,s.approve_check			AS approveCheck
-			,s.approve_id				AS approveId
-			,g.goods_code				AS goodsCode
-			,g.goods_name				AS goodsName
-			,g.goods_price				AS goodsPrice
-			,g.goods_stock				AS goodsStock
-			,g.reg_date					AS regDate
-		FROM 
-			tb_seller AS s
-			LEFT JOIN
-			tb_goods AS g
-			ON
-			s.seller_id = g.seller_id
-		WHERE
-			s.seller_id = #{sellerId}
+    <!-- 특정 판매자 회원 상세정보 조회 -->
+	<select id="getSellerInfoById" parameterType="String" resultMap="SellerResultMap">
+		/* 특정 판매자 회원 상세정보 조회 */
+
 	</select>
     
     <!-- 판매자 목록 조회 -->
