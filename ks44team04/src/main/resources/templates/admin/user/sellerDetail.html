@@ -299,19 +299,18 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:if="${not #lists.isEmpty(GoodsList)}"
-									th:each="l : ${GoodsList}">
+ 								<!-- <tr th:if="${not #lists.isEmpty(goodsList)}" th:each="l : ${goodsList}">
 									<td th:text="${l.goodsCode}"></td>
 									<td th:text="${l.goodsName}"></td>
-									<td th:text="${l.goodsPrice}"></td>
+									<td th:text="${'￦' + #numbers.formatInteger(l.goodsPrice, 3, 'COMMA')}"></td>
 									<td th:text="${l.regDate}"></td>
 									<td>
 										<a href="#"><i class="fa fa-external-link"></i> 상품 관리로 이동</a>
 									</td>
 								</tr>
-								<tr th:unless="${not #lists.isEmpty(GoodsList)}">
+								<tr th:unless="${not #lists.isEmpty(goodsList)}">
 									<td colspan="12" class="text-center">등록된 상품이 없습니다.</td>
-								</tr>
+								</tr> -->
 							</tbody>
 						</table>
 					</div>

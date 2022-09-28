@@ -60,30 +60,21 @@ public class UserController {
 		return "admin/user/addUser";
 	}
 	
-	/*
-	//특정 판매자 판매상품목록 조회
-	@GetMapping("/user/sellerDetail")
-	public String getGoodsList(Model model) {
-		List<Goods> goodsList = userService.getGoodsList();
-		log.info("특정판매자 판매상품목록 ::: {}", goodsList);
-		model.addAttribute("goodsList", goodsList);
-		
-		return "admin/user/goodsList";
-	}
-	*/
-	
 	//특정 판매자 상세정보 조회
 	@GetMapping("/user/sellerDetail")
 	public String sellerDetail(@RequestParam(value="sellerId", required = false) String sellerId
 							  ,Model model) {
         Seller userInfoS = userService.getUserInfoByIdS(sellerId);
-        Seller sellerInfo = userService.getSellerInfoById(sellerId);
-        List<Goods> goodsList = userService.getGoodsList();
+        log.info("회원 상세정보 조회(판매자만) ::: {}",userInfoS);
         
-        log.info("특정 회원 상세정보 조회(판매자만) ::: {}",userInfoS);
-        log.info("특정 판매자 상세정보 조회 ::: {}",sellerInfo);
-        log.info("특정 판매자 판매상품 목록 ::: {}",goodsList);
-		model.addAttribute("title", "판매자회원상세정보");
+        Seller sellerInfo = userService.getSellerInfoById(sellerId);
+        log.info("판매자 상세정보 조회 ::: {}",sellerInfo);
+        
+        List<Goods> goodsList = userService.getGoodsList(sellerId);
+        log.info("판매자 판매상품 목록 ::: {}",goodsList);
+
+        
+		model.addAttribute("title", "판매자 상세정보");
 		model.addAttribute("userInfoS", userInfoS);
 		model.addAttribute("sellerInfo", sellerInfo);
 		model.addAttribute("goodsList", goodsList);
