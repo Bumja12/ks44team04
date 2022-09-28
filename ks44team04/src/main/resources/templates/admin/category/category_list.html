@@ -1129,22 +1129,21 @@
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     	<div class="modal-dialog modal-lg">
         	<div class="modal-content" style="text-align: center;">
-	        	<div class="modal-header">
-		        	<h4 class="modal-title" id="myModalLabel" style="padding-top: 35px;">게시판 대분류 카테고리 삭제</h4>
+	        	<div class="modal-header" style="padding-top: 35px;">
+		        	<h4 class="modal-title" id="myModalLabel">게시판 대분류 카테고리 삭제</h4>
 		            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
 		            </button>
 	          	</div>
-        		<form class="eventRemove" action="#"  method="POST">
+        		<form class="eventRemove" action="removeCategory"  method="POST">
         	    	<div class="modal-body">
 	            		<h4>비밀번호 확인</h4>
-	            	    <input type="text" placeholder="비밀번호를 입력하시길 바랍니다." style="height: 30px; width: 250px;">
+	            	    <input type="text" id="pwInput" placeholder="비밀번호를 입력하시길 바랍니다." style="height: 30px; width: 250px;">
 	            	</div>
 		            <div class="modal-footer">
 			            <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
-			            <button type="submit" id="deleteBtn" class="btn btn-danger ">삭제</button>
+			            <button type="button" id="deleteBtn1" class="btn btn-danger" onclick="passCheck(this)">삭제</button>
 		            </div>
 	           	</form>
-
         	</div>
       	</div>
     </div>
@@ -1157,35 +1156,27 @@
 			// 목록 내에 삭제 버튼 탐색
 			var deleteModal = document.getElementsByClassName('deleteModal');	
 			
-			for(var i=0; i<deleteModal.length; i++){
-				deleteModal[i].addEventListener('click', function(){
-					console.log('deleteModal Event');
-					var deleteBtn = document.getElementById('deleteBtn');	
-					deleteBtn.addEventListener('click', function(){
-						console.log(deleteBtn);
-						location.href='removeCategory';
-					});
-				});
-			}
+			// 관리자 비밀번호
+			let userPw = 'pw001';
 			
 			/*유효성 검사*/
-			function delCheck(){
+			function passCheck(i){
 				 
-				var pwDelCheck = document.getElementById("pwDelCheck");
-				var pwDelCheck2 = document.getElementById("pwDelCheck2");
+				var pwInput = document.getElementById("pwInput");
 				
-				if(pwDelCheck.value == ""){
+				if(pwInput.value == ""){
 					alert("비밀번호를 입력하세요.")
-					pwDelCheck.focus();
-					return false;
-				}
-				else if(pwDelCheck.value !== pwDelCheck2.value){
-						alert("비밀번호를 확인하세요.")
-						pwDelCheck.focus();
-						return false;
+					pwInput.focus();
+					
+				}else if(pwInput.value != userPw){
+						alert("비밀번호를 확인하시길 바랍니다.")
+						pwInput.focus();
 						
+				}else if(pwInput.value == userPw){
+					console.log(i.type);
+					i.type = 'submit';
 				}
-				return true;				 
+				
 			}
 			
 			$(function(){

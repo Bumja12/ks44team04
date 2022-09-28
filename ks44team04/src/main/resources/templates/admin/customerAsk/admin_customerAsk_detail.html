@@ -110,6 +110,7 @@
 									<button type="button" id="addAnswer" class="btn btn-success">답변 등록</button>
 									<button class="btn btn-info" id="resetBtn" type="reset">초기화</button>
 									<button class="btn btn-warning returnToListBtn" type="button">목록</button>
+									<button type="button" class="btn btn-danger" data-toggle="modal" data-target=".removeCustomerAskModal">삭제</button>
 								</div>
 							</div>
 						</form> <!-- <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"> -->
@@ -233,22 +234,57 @@
 			</div> <!-- </div class="col-md-12 col-sm-12"> -->
 		</div> <!-- </div class="row"> -->
 	
-		<!-- 삭제 모달 -->
+		<!-- 문의 답변 삭제 모달 -->
 	    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	    	<div class="modal-dialog modal-lg">
-	        	<div class="modal-content">
-		        	<div class="modal-header">
-			        	<h4 class="modal-title" id="myModalLabel">문의 답변 삭제</h4>
-			            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-			            </button>
+	        	<div class="modal-content" style="text-align: center;">
+    				<div class="modal-header">
+		        		<div class="row">
+		        			<div class="col-md-12 col-sm-12" style="padding-top: 35px;">
+					        	<h4 class="modal-title" id="myModalLabel">문의 답변 삭제</h4>
+					            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+					            </button>
+		        			</div>
+		        		</div>
 		          	</div>
-		            <div class="modal-body">
-		            	<h4>정말 문의 답변을 삭제하시겠습니까?</h4>
-		            </div>
-		            <div class="modal-footer">
-			            <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
-			            <button type="button" id="deleteBtn" class="btn btn-danger ">삭제</button>
-		            </div>
+	        		<form class="eventRemove" action="removeAskAnswer"  method="POST">
+	        	    	<div class="modal-body">
+		            		<h4>비밀번호 확인</h4>
+		            	    <input type="text" id="pwInput" placeholder="비밀번호를 입력하시길 바랍니다." style="height: 30px; width: 250px;">
+		            	</div>
+			            <div class="modal-footer">
+				            <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+				            <button type="button" id="deleteBtn" class="btn btn-danger" onclick="passCheck(this)">삭제</button>
+			            </div>
+		           	</form>
+	        	</div>
+	      	</div>
+	    </div>
+	    <!-- 모달 기능 -->	
+	    
+   		<!-- 고객 문의 삭제 모달 -->
+	    <div class="modal fade removeCustomerAskModal" tabindex="-1" role="dialog" aria-hidden="true">
+	    	<div class="modal-dialog modal-lg">
+	        	<div class="modal-content" style="text-align: center;">
+    				<div class="modal-header">
+		        		<div class="row">
+		        			<div class="col-md-12 col-sm-12" style="padding-top: 35px;">
+					        	<h4 class="modal-title" id="myModalLabel">고객 문의 삭제</h4>
+					            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+					            </button>
+		        			</div>
+		        		</div>
+		          	</div>
+	        		<form class="eventRemove" action="removeCustomerAsk"  method="POST">
+	        	    	<div class="modal-body">
+		            		<h4>비밀번호 확인</h4>
+		            	    <input type="text" id="pwInput2" placeholder="비밀번호를 입력하시길 바랍니다." style="height: 30px; width: 250px;">
+		            	</div>
+			            <div class="modal-footer">
+				            <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+				            <button type="button" id="deleteBtn2" class="btn btn-danger" onclick="passCheck2(this)">삭제</button>
+			            </div>
+		           	</form>
 	        	</div>
 	      	</div>
 	    </div>
@@ -267,19 +303,48 @@
 			// 삭제 버튼 탐색 
 			let deleteBtn = document.getElementById('deleteBtn'); 
 			
-			deleteBtn.addEventListener('click', function(){
-				location.href='removeAskAnswer';
-			});
+			// 관리자 비밀번호
+			let userPw = 'pw001';
 			
-// 			addEventListener('click', function(){
-// 			}
-// 				console.log('deleteModal Event');
-// 				var deleteBtn = document.getElementById('deleteBtn');	
-// 				deleteBtn.addEventListener('click', function(){
-// 					console.log(deleteBtn);
-// 					location.href='removeCustomerAsk';
-// 				});
-// 			});
+			/* 유효성 검사 */
+			function passCheck(i){
+				 
+				var pwInput = document.getElementById("pwInput");
+				
+				if(pwInput.value == ""){
+					alert("비밀번호를 입력하세요.")
+					pwInput.focus();
+					
+				}else if(pwInput.value != userPw){
+						alert("비밀번호를 확인하시길 바랍니다.")
+						pwInput.focus();
+						
+				}else if(pwInput.value == userPw){
+					console.log(i.type);
+					i.type = 'submit';
+				}
+				
+			}
+			
+			/* 유효성 검사 */
+			function passCheck2(i){
+				 
+				var pwInput = document.getElementById("pwInput2");
+				
+				if(pwInput.value == ""){
+					alert("비밀번호를 입력하세요.")
+					pwInput.focus();
+					
+				}else if(pwInput.value != userPw){
+						alert("비밀번호를 확인하시길 바랍니다.")
+						pwInput.focus();
+						
+				}else if(pwInput.value == userPw){
+					console.log(i.type);
+					i.type = 'submit';
+				}
+				
+			}
 			
 			$(function(){
 				let isAnswer = true;
