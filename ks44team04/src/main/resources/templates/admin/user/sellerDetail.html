@@ -299,7 +299,7 @@
 								</tr>
 							</thead>
 							<tbody>
- 								<!-- <tr th:if="${not #lists.isEmpty(goodsList)}" th:each="l : ${goodsList}">
+ 								<tr th:if="${not #lists.isEmpty(goodsList)}" th:each="l : ${goodsList}">
 									<td th:text="${l.goodsCode}"></td>
 									<td th:text="${l.goodsName}"></td>
 									<td th:text="${'￦' + #numbers.formatInteger(l.goodsPrice, 3, 'COMMA')}"></td>
@@ -310,7 +310,7 @@
 								</tr>
 								<tr th:unless="${not #lists.isEmpty(goodsList)}">
 									<td colspan="12" class="text-center">등록된 상품이 없습니다.</td>
-								</tr> -->
+								</tr>
 							</tbody>
 						</table>
 					</div>
