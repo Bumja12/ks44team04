@@ -76,5 +76,17 @@
         </table>
     </div>
 </div>
+
+<script>
+    document.querySelector('button').tagName
+    document.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON') {
+            const postCode = e.target.dataset.postCode;
+            if (postCode !== undefined) {
+                location.href = `/user/regularpost/postcheck/${postCode}`;
+            }
+        }
+    });
+</script>
 </body>
 </html>

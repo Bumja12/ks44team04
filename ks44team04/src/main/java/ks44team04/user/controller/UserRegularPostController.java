@@ -1,7 +1,16 @@
 package ks44team04.user.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import ks44team04.dto.PostInfo;
 import ks44team04.dto.RegularPostHistory;
+import ks44team04.service.AddressService;
 import ks44team04.service.RegularPostService;
+import ks44team04.service.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +23,17 @@ import java.util.List;
 @RequestMapping("/user/regularpost")
 public class UserRegularPostController {
 
-    RegularPostService regularPostService;
+    private final Logger log = LoggerFactory.getLogger(getClass());
+    private final RegularPostService regularPostService;
+    private final AddressService addressService;
+    private final Service service;
+    private final Gson gson;
 
-    public UserRegularPostController(RegularPostService regularPostService) {
+    public UserRegularPostController(RegularPostService regularPostService, AddressService addressService, Service service, Gson gson) {
         this.regularPostService = regularPostService;
+        this.addressService = addressService;
+        this.service = service;
+        this.gson = gson;
     }
 
     @GetMapping("/list")
@@ -27,10 +43,21 @@ public class UserRegularPostController {
     }
 
     @GetMapping("/postcheck/{postCode}")
-    public String postCheck(@PathVariable("postCode") String postCode) {
+    public String postCheck(@PathVariable(value = "postCode") String postInfo) {
+        PostInfo post = addressService.getPostInfo(postInfo);
+        String pcn = post.getPostCompanyName();
+        String in = post.getInvoiceNumber();
+        String company = "";
 
-
-        return "redirect:https://tracker.delivery/#/kr.cjlogistics/651348940725";
+        ResponseEntity<Object> companyObj = service.getData("https://apis.tracker.delivery/carriers");
+        JsonArray companyArray = gson.toJsonTree(companyObj.getBody()).getAsJsonArray();
+        for (JsonElement jsonElement : companyArray) {
+            log.info("{}", jsonElement);
+            if(jsonElement.getAsJsonObject().get("name").getAsString().contains(pcn)) {
+                company = jsonElement.getAsJsonObject().get("id").getAsString();
+            }
+        }
+        return "redirect:https://tracker.delivery/#/" + company + "/" + in;
     }
 
     @GetMapping("/history")

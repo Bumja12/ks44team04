@@ -13,6 +13,7 @@
         <association property="order" resultMap="ks44team04.mapper.OrderMapper.orderResultMap"/>
         <association property="orderDetail" resultMap="ks44team04.mapper.OrderMapper.orderDetailResultMap"/>
         <association property="goods" resultMap="ks44team04.mapper.GoodsMapper.goodsResultMap"/>
+        <!--<association property="postInfo" resultMap="ks44team04.mapper.AddressMapper.postInfo"/>-->
     </resultMap>
 
     <resultMap id="regularPostStatusResultMap" type="RegularPostStatus">

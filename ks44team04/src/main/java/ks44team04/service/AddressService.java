@@ -1,5 +1,6 @@
 package ks44team04.service;
 
+import ks44team04.dto.PostInfo;
 import ks44team04.mapper.AddressMapper;
 import ks44team04.dto.AddressList;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,10 @@ public class AddressService {
 
     public void addressDelete(String addressList) {
         addressMapper.addressDelete(addressList);
+    }
+
+    public PostInfo getPostInfo(String postInfo) {
+        return addressMapper.getPostInfo(postInfo);
     }
 
 
