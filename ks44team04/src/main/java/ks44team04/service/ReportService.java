@@ -33,9 +33,9 @@ public class ReportService {
     }
     
     //특정 신고 리스트 가져오기 
-    public Report getReportHostryCode(String reportHostryCode) {
-    
-    	return null;
+    public Report getReportHostryCode(String reportHistoryCode) {
+    	Report report = reportMapper.getReportHostryCode(reportHistoryCode);
+    	return report;
     }
 
     //신고 리스트 
