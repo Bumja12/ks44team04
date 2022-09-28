@@ -1128,19 +1128,23 @@
 	<!-- 삭제 모달 -->
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     	<div class="modal-dialog modal-lg">
-        	<div class="modal-content">
+        	<div class="modal-content" style="text-align: center;">
 	        	<div class="modal-header">
-		        	<h4 class="modal-title" id="myModalLabel">게시판 대분류 카테고리 삭제</h4>
+		        	<h4 class="modal-title" id="myModalLabel" style="padding-top: 35px;">게시판 대분류 카테고리 삭제</h4>
 		            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
 		            </button>
 	          	</div>
-	            <div class="modal-body">
-	            	<h4>정말 게시판 대분류 카테고리를 삭제하시겠습니까?</h4>
-	            </div>
-	            <div class="modal-footer">
-		            <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
-		            <button type="button" id="deleteBtn" class="btn btn-danger ">삭제</button>
-	            </div>
+        		<form class="eventRemove" action="#"  method="POST">
+        	    	<div class="modal-body">
+	            		<h4>비밀번호 확인</h4>
+	            	    <input type="text" placeholder="비밀번호를 입력하시길 바랍니다." style="height: 30px; width: 250px;">
+	            	</div>
+		            <div class="modal-footer">
+			            <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+			            <button type="submit" id="deleteBtn" class="btn btn-danger ">삭제</button>
+		            </div>
+	           	</form>
+
         	</div>
       	</div>
     </div>
@@ -1162,6 +1166,26 @@
 						location.href='removeCategory';
 					});
 				});
+			}
+			
+			/*유효성 검사*/
+			function delCheck(){
+				 
+				var pwDelCheck = document.getElementById("pwDelCheck");
+				var pwDelCheck2 = document.getElementById("pwDelCheck2");
+				
+				if(pwDelCheck.value == ""){
+					alert("비밀번호를 입력하세요.")
+					pwDelCheck.focus();
+					return false;
+				}
+				else if(pwDelCheck.value !== pwDelCheck2.value){
+						alert("비밀번호를 확인하세요.")
+						pwDelCheck.focus();
+						return false;
+						
+				}
+				return true;				 
 			}
 			
 			$(function(){
