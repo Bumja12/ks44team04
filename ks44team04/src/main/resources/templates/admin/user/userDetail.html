@@ -138,13 +138,13 @@
 									<td class="tableOdd">포인트</td>
 									<td class="tableEven col-md-4">
 										<div class="form-inline">
-											<input type="text" class="form-control text" id="userPoint" name="userPoint" th:value="*{#numbers.formatInteger(userPoint,3,'COMMA')}" readonly="readonly" />점
+											<input type="text" class="form-control text" id="userPoint" name="userPoint" th:value="*{#numbers.formatInteger(userPoint,3,'COMMA') + '점'}" readonly="readonly" />
 										</div>
 									</td>
 									<td class="tableOdd">벌점</td>
 									<td class="tableEven col-md-4">
 										<div class="form-inline">
-											<input type="text" class="form-control text" id="userPenalty" name="userPenalty" th:value="*{userPenalty}" readonly="readonly" />점
+											<input type="text" class="form-control text" id="userPenalty" name="userPenalty" th:value="*{userPenalty + '점'}" readonly="readonly" />
 										</div>
 									</td>
 								</tr>

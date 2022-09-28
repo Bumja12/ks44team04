@@ -60,6 +60,7 @@ public class UserController {
 		return "admin/user/addUser";
 	}
 	
+	/*
 	//특정 판매자 판매상품목록 조회
 	@GetMapping("/user/sellerDetail")
 	public String getGoodsList(Model model) {
@@ -69,36 +70,23 @@ public class UserController {
 		
 		return "admin/user/goodsList";
 	}
+	*/
 	
-	
-	//특정 판매자 판매자 신청 정보 조회
+	//특정 판매자 상세정보 조회
 	@GetMapping("/user/sellerDetail")
-	public String sellerDetail(@RequestParam(value="userId", required = false) String userId
-			  				   ,Model model) {
-		Seller sellerInfo = userService.getSellerInfoById(userId);
-		log.info("판매자신청상세정보 ::: {}",sellerInfo);
-		model.addAttribute("sellerInfo", sellerInfo);
-		
-		return "admin/user/sellerDetail";
-	}
-	
-	//특정 판매자 회원 상세정보 조회
-	@GetMapping("/user/sellerDetail")
-	public String userDetailS(@RequestParam(value="userId", required = false) String userId
+	public String sellerDetail(@RequestParam(value="sellerId", required = false) String sellerId
 							  ,Model model) {
-        User userInfo = userService.getUserInfoById(userId);
+        Seller userInfoS = userService.getUserInfoByIdS(sellerId);
+        Seller sellerInfo = userService.getSellerInfoById(sellerId);
+        List<Goods> goodsList = userService.getGoodsList();
         
-        String userLevel = userInfo.getUserLevel();
-        LevelSellerCategory levelSeller = userInfo.getLevelSeller();
-        if(userLevel.equals("")) {
-        	userInfo.setUserLevel("없음");
-        }else {
-        	userInfo.setUserLevel(levelSeller.getLevelName());
-        }
-        
-        log.info("판매자회원상세정보 ::: {}",userInfo);
+        log.info("특정 회원 상세정보 조회(판매자만) ::: {}",userInfoS);
+        log.info("특정 판매자 상세정보 조회 ::: {}",sellerInfo);
+        log.info("특정 판매자 판매상품 목록 ::: {}",goodsList);
 		model.addAttribute("title", "판매자회원상세정보");
-		model.addAttribute("userInfo", userInfo);
+		model.addAttribute("userInfoS", userInfoS);
+		model.addAttribute("sellerInfo", sellerInfo);
+		model.addAttribute("goodsList", goodsList);
 		
 		return "admin/user/sellerDetail";
 	}

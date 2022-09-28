@@ -45,10 +45,17 @@ public class UserService {
     	
     	return goodsList;
     }
-	
-	//특정 판매자 정보 조회
+
+	//특정 판매자 상세정보 조회
 	public Seller getSellerInfoById(String sellerId) {
 		Seller seller = userMapper.getSellerInfoById(sellerId);
+		
+		return seller;
+	}
+	
+	//특정 회원 상세정보 조회(판매자만)
+	public Seller getUserInfoByIdS(String sellerId) {
+		Seller seller = userMapper.getUserInfoByIdS(sellerId);
 		
 		return seller;
 	}
