@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+	<!-- Begin Header -->
+	<div id="header" th:fragment="headerFragment">
+		head.html<br>
+		상단메뉴<br><br>
+		<a href="#">01.회원가입</a>
+		<a th:href="@{/memberList}">02.회원전체검색</a>
+		<a href="#">03.상품등록</a>
+		<a href="#">04.상품전체검색</a>
+	</div>
+	<!-- End Header -->
+</html>
