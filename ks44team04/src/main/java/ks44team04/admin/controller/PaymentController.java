@@ -35,49 +35,52 @@ public class PaymentController {
 		log.info("paymentController Bean 생성");
 	}
 	
-	/*
-	@PostMapping("/removePaymentDetail")
-	public String removePaymentDetail(RedirectAttributes reAttr) {
-			
-		System.out.println();
-
-			return "redirect:/admin/payment/paymentDetail";
-
 	
-	}
-	*/
-	
-
 	@PostMapping("/removePaymentDetail")
-	public String removePaymentDetail(@RequestParam(value = "orderDetailCode") String orderDetailCode
+	public String removePaymentDetail(String orderDetailCode
 										,RedirectAttributes reAttr) {
-
-		log.info(orderDetailCode);
+		
+		System.out.println(orderDetailCode);
 		if(orderDetailCode != null) {
 			
-			return "redirect:/admin/payment/paymentDetail";
+			int removeDetailCode = paymentService.removeDetailCode(orderDetailCode);
+			
+			if(removeDetailCode > 0) {
+				return "redirect:/admin/payment/paymentDetail";
+			}else {
+				
+				reAttr.addAttribute("msg", "상세주문번호가 일치하지 않습니다.");
+
+				return "redirect:/admin/payment/remove/" + orderDetailCode;
+			}
+			
 
 		}else {
-
-			return "redirect:/admin/payment/paymentDetail";
+			
+			reAttr.addAttribute("msg", "상세주문번호가 일치하지 않습니다.");
+			return "redirect:/admin/payment/remove/" + orderDetailCode;
 
 		}
 	}
-	
-	
+
 	@GetMapping("/paymentDetailRemoveCheck")
 	@ResponseBody
 	public boolean removeCheck(@RequestParam(value = "orderDetailCode") String orderDetailCode) {
 		
-		log.info(orderDetailCode);
+		System.out.println(orderDetailCode);
 		if(orderDetailCode != null) {
 			
-			return true;
+			boolean detailCodeCheck = paymentService.detailCodeCheck(orderDetailCode);
+			if(detailCodeCheck = true) {				
+				return detailCodeCheck;
+			}else {
+				return detailCodeCheck;
+			}
 		}else {
-			
 			return false;
 		}
 	}
+	
 
 	// 주문상세번호 삭제
 	@GetMapping("/remove/{orderDetailCode}")

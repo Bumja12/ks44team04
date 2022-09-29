@@ -75,7 +75,75 @@
 			<result column="approve_price"		property="approvePrice"/>
 		</collection>
 	</resultMap>
-
+	
+	<!-- 결제상세번호 삭제 start -->
+	<delete id="removeCancel" parameterType="String">
+		DELETE
+			o
+		FROM
+			tb_order_cancel AS o
+		WHERE
+			o.order_detail_code = #{orderDetailCode};
+	</delete>
+	<delete id="removeExchange" parameterType="String">
+		DELETE
+			o
+		FROM
+			tb_order_exchange AS o
+		WHERE
+			o.order_detail_code = #{orderDetailCode};
+	</delete>
+	<delete id="removeReturn" parameterType="String">
+		DELETE
+			o
+		FROM
+			tb_order_return AS o
+		WHERE
+			o.order_detail_code = #{orderDetailCode};
+	</delete>
+	<delete id="removeReviewComment" parameterType="String">
+		DELETE
+			rc
+		FROM
+			tb_order_detail AS od
+			INNER JOIN 
+			tb_review AS r
+			ON
+			od.order_detail_code = r.order_detail_code
+			INNER JOIN
+			tb_review_comment AS rc
+			ON
+			r.review_list = rc.review_list
+			WHERE od.order_detail_code = #{orderDetailCode};
+	</delete>
+	<delete id="removeReview" parameterType="String">
+		DELETE
+			o
+		FROM
+			tb_review AS o
+		WHERE
+			o.order_detail_code = #{orderDetailCode};
+	</delete>
+	<delete id="removeDetailCode" parameterType="String">
+		DELETE
+			o
+		FROM
+			tb_order_detail AS o
+		WHERE
+			o.order_detail_code = #{orderDetailCode};
+	</delete>
+	<!-- 결제상세번호 삭제 end -->
+	
+	<!-- 결제상세번호만 조회 -->
+	<select id="detailCodeCheck" parameterType="String" resultType="boolean">
+		SELECT
+			count(od.order_detail_code)
+		FROM
+			tb_order_detail AS od
+		WHERE
+			od.order_detail_code = #{orderDetailCode};
+	</select>
+	
 	<!-- 특정결제상세번호 조회 -->
 	<select id="getPaymentDetail"  parameterType="String" resultMap="paymentDetailMap">
 		SELECT
