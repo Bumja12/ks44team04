@@ -42,22 +42,6 @@
 	 </style>
 </th:block>
 
-<th:block layout:fragment="customTopJs">
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script>
-      let text = document.querySelector('#userAddr');
-      document.querySelector('#searchBtn').addEventListener('click', function () {
-
-        new daum.Postcode({
-          oncomplete: function (data) {
-            text.value = data.address;
-          }
-        }).open();
-      });
-
-    </script>
-</th:block>
-
 <th:block layout:fragment="customContents">
 
 	<div class="page-title">
