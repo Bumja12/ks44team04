@@ -20,9 +20,18 @@ public class Report {
     private int banDate;
     private ReportCategory reportCategoryDto;
     private ReportRule reportRuleDto;
+    private User UserDto;
     
 
-    public ReportRule getReportRuleDto() {
+    public User getUserDto() {
+		return UserDto;
+	}
+
+	public void setUserDto(User userDto) {
+		UserDto = userDto;
+	}
+
+	public ReportRule getReportRuleDto() {
 		return reportRuleDto;
 	}
 
@@ -174,6 +183,7 @@ public class Report {
 				+ reportDate + ", reportResult=" + reportResult + ", reportResultReason=" + reportResultReason
 				+ ", reportResultDate=" + reportResultDate + ", reportApproveId=" + reportApproveId + ", penaltyPoint="
 				+ penaltyPoint + ", totalPenaltyPoint=" + totalPenaltyPoint + ", banDate=" + banDate
-				+ ", reportCategoryDto=" + reportCategoryDto + ", reportRuleDto=" + reportRuleDto + "]";
+				+ ", reportCategoryDto=" + reportCategoryDto + ", reportRuleDto=" + reportRuleDto + ", UserDto="
+				+ UserDto + "]";
 	}
 }
