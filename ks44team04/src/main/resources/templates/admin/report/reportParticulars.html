@@ -167,7 +167,7 @@
 						<tr>
 							<th style="padding: 0px; text-align: right;" colspan="8" >
 								<input type="hidden" id="penaltyPoint" name="penaltyPoint" th:value="*{reportRuleDto.penaltyPoint}">
-								<input type="hidden" name="totalPenaltyPoint" th:value="*{UserDto.userPenalty} + *{reportRuleDto.penaltyPoint}">
+								<input type="hidden" id="totalPenaltyPoint" name="totalPenaltyPoint" th:value="*{UserDto.userPenalty} + *{reportRuleDto.penaltyPoint}">
 								<input type="hidden" id="reportResult" name="reportResult" >
 								<label><i class="glyphicon glyphicon-ok"></i>
 									<button type="button" class=" btn btn-link "  value="승인">승인수정</button>
@@ -176,7 +176,7 @@
 									<button type="button" class=" btn btn-link " value="반려">반려수정</button>
 								</label>
 								<label><i class="glyphicon glyphicon-repeat"></i>
-									<button type="button" class=" btn btn-link " >돌아가기</button>
+									<button type="button" class=" btn btn-link " value="돌아가기">돌아가기</button>
 								</label>
 							</th>
 						</tr>
@@ -198,24 +198,26 @@
 	
 	<script type="text/javascript">
 	
-	 $(document).ready(function() {       
 	   //  $('.btn').on("click", function() {     //버튼 클릭시 호출되는 함수
 		   //$('table').on('click', '.btn', function() {
-		 $('.btn').each(function() {
-			 $(this).click(function() {
-	           if($(this).val() === '반려'){
-	    	 	$('#reportResult').val('반려');
-	    	 	
-	           $( '#reportProcessing' ).submit();
-	     	}else if($(this).val() === '승인'){
-	     		$('#reportResult').val('승인');
-	     		$( '#reportProcessing' ).submit();
-	     	}else {
-	     		$( '#reportProcessing' ).submit();
-	     	}
-	     });
-		 });
-	});
+	 	/*  $('.btn').each(function() {
+			 $(this).click(function() { */ 
+				 $(document).ready(function() {       
+				     $('.btn').on("click", function() {     //버튼 클릭시 호출되는 함수
+				           if($(this).val() === '반려'){
+				    	 	 $('#reportResult').val('반려');
+				             $( '#reportProcessing' ).submit();
+				     	}else if($(this).val() === '승인'){
+				     		$('#reportResult').val('승인');
+				     		$( '#reportProcessing' ).submit();
+				     	}else if($(this).val() === '돌아가기'){
+				     		$('#penaltyPoint').val(0);
+				     		$('#totalPenaltyPoint').val(0);
+				     		
+				     		$( '#reportProcessing' ).submit();
+				     	}
+				     });
+				});
 		 
 	</script>
 

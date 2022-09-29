@@ -86,6 +86,33 @@
      </insert>
      
      <!-- 신고 처리 -->
+     <update id="reportParticulars" parameterType="Report">
+     UPDATE tb_report
+     <trim prefix="SET" prefixOverrides=",">
+		<if test="reportResult != null and reportResult != ''">
+			 report_result= #{reportResult}
+		</if>
+		<if test="reportResultReason != null and reportResultReason != ''">
+			,report_result_reason = #{reportResultReason}
+		</if>
+			,report_result_date = NOW()
+		<if test="reportApproveId != null and reportApproveId != ''">
+			,report_approve_id = #{reportApproveId}
+		</if>
+		<if test="penaltyPoint != null and penaltyPoint != ''">
+			,penalty_point = #{penaltyPoint}
+		</if>
+		<if test="totalPenaltyPoint != null and totalPenaltyPoint != ''">
+			,total_penalty_point = #{totalPenaltyPoint}
+		</if>
+		
+	</trim>
+		WHERE 
+			report_history_code= #{reportHistoryCode};
+     
+     </update>
+     
+     <!-- 신고 처리 -->
      <update id="reportProcessing" parameterType="Report">
      UPDATE tb_report
      <trim prefix="SET" prefixOverrides=",">
@@ -102,6 +129,10 @@
 		<if test="penaltyPoint != null and penaltyPoint != ''">
 			,penalty_point = #{penaltyPoint}
 		</if>
+		<if test="reportResult == '반려'">
+			,penalty_point = 0
+		</if>
+		
 		<if test="totalPenaltyPoint != null and totalPenaltyPoint != ''">
 			,total_penalty_point = #{totalPenaltyPoint}
 		</if>
@@ -131,12 +162,12 @@
 			,r.report_result_reason
 			,r.report_result_date
 			,r.report_approve_id
+			,r.penalty_point AS r_penalty_point
 			,u.penalty_point
 			,r.total_penalty_point
 			,r.ban_date
 			,r.report_approve_id 
 			,s.user_penalty
-			,r.penalty_point AS r_penalty_point
 			,s.user_name
 		FROM 
 			tb_report_category AS c
