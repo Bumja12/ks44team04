@@ -224,7 +224,23 @@
 						 var $allTd = $(this).parent().children();
 						console.log($allTd[1].innerText); // String type
 						var $regularAskPK = $allTd[1].innerText
-						location.href='regularAskDetail?regular_ask=' + $regularAskPK;
+						
+			  			var request = $.ajax({
+				  			  url: "/admin/regularAsk/regularAskDetail", //요청 페이지 주소
+				  			  method: "POST", //요청 방식
+				  			  data: { regularAskPK : $regularAskPK}, 
+			                  //요청 페이지에 전달할 데이터 {key: value}
+				  			  dataType: "text" //요청 페이지에서 응답할 방식
+				  			});
+				  			//정상적인 응답이 왔을 경우 실행되는 메서드
+				  			request.done(function( data ) {
+				  				console.log('응답 성공');
+				  				location.href='regularAskDetail?regularAskPK=' + $regularAskPK;
+				  			});
+				  			//비정상적인 응답이나 요청 후 응답 실패시 실행되는 메서드
+				  			request.fail(function( jqXHR, textStatus ) {
+				  			  alert( "Request failed: " + textStatus );
+				  			});
 					});
 				});
 				

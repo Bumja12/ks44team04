@@ -36,16 +36,28 @@ public class RegularAskController {
 	@ResponseBody
 	@PostMapping("/modifyRegularAsk")
 	public String modifyRegularAskAction(@RequestParam(value="regularAskPK") String regularAskPK
-										) {
+				                        ,Model model) {
+		model.addAttribute("regularAskPK", regularAskPK);
 		log.info(regularAskPK);
 		
 		// 수정 처리 후 관리자 자주 묻는 질문 목록 화면으로 리다이렉트
 		return "redirect:/admin/regularAsk/regularAskList";
 	}
 	
+	// 에이젝스 
+	@PostMapping("/regularAskDetail")
+	@ResponseBody()
+	public String ajaxRegularAskDetail (@RequestParam(value="regularAskPK") String regularAskPK,
+										Model model) {
+		log.info(regularAskPK);
+		model.addAttribute("title", "관리자 자주 묻는 질문 내역 화면");
+		return "admin/regularAsk/admin_regularAsk_detail";
+	}
+	
 	// 관리자 자주 묻는 질문 내역 화면
 	@GetMapping("/regularAskDetail")
-	public String getRegularAskDetail (Model model) {
+	public String getRegularAskDetail (
+			Model model) {
 		
 		model.addAttribute("title", "관리자 자주 묻는 질문 내역 화면");
 		return "admin/regularAsk/admin_regularAsk_detail";
