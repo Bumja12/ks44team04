@@ -41,10 +41,9 @@ public class UserAddressController {
     }
     @PostMapping("/register")
     public String addressRegister(AddressList addressList) {
-        CodeIndex codeIndex = new CodeIndex();
 
         String addressListCode = addressService.getAddressListCode();
-        addressListCode = codeIndex.codeIndex(addressListCode, 13);
+        addressListCode = CodeIndex.codeIndex(addressListCode, 13);
 
         addressList.setAddressList(addressListCode);
         addressList.setBuyerId("buyer01");

@@ -114,8 +114,7 @@ public class ReportController {
 
 		String repoterId = "buyer01";
 		String HistoryCode = reportService.getHistoryCode();
-		CodeIndex codeIndex = new CodeIndex();
-		HistoryCode = codeIndex.codeIndex(HistoryCode, 15);
+		HistoryCode = CodeIndex.codeIndex(HistoryCode, 15);
 		log.info("---------------------------------사용자가 입력한 정보", report);
 		report.setReportHistoryCode(HistoryCode);
 		report.setReportingId(repoterId);
