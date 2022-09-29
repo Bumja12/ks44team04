@@ -53,27 +53,27 @@
 							<label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">회원아이디 <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input type="text" th:value="${paymentTotal.paymentInfo.buyerId}" id="last-name" name="last-name" required="required" class="form-control" readonly="readonly">
+								<input type="text" id="last-name" th:value="${paymentTotal.paymentInfo.buyerId}"  name="last-name" class="form-control" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
 							<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">주문번호 <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 "	>
-								<input type="text" id="first-name" required="required" class="form-control ">
+								<input type="text" id="first-name" th:value="${paymentTotal.paymentInfo.orderNum}"  required="required" class="form-control ">
 							</div>
 						</div>
 						<div class="item form-group">
 							<label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">주문상세번호 <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input type="text" id="last-name" name="last-name" required="required" class="form-control">
+								<input type="text" id="last-name" th:value="${paymentTotal.orderDetailCode}"  name="last-name" required="required" class="form-control">
 							</div>
 						</div>
 						<div class="item form-group">
 							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">상품정보</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" name="middle-name">
+								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.goodsName}"  name="middle-name">
 							</div>
 						</div>
 						<div class="item form-group">
@@ -81,10 +81,10 @@
 							<div class="col-md-6 col-sm-6 ">
 								<div id="paymentMethod" class="btn-group" data-toggle="buttons">
 									<label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-										<input type="radio" name="gender" value="male" class="join-btn"> &nbsp; 카드 &nbsp;
+										<input type="radio" value="카드"> &nbsp; 카드 &nbsp;
 									</label>
 									<label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-										<input type="radio" name="gender" value="카드" class="join-btn"> 계좌이체
+										<input type="radio" value="계좌이체"> 계좌이체
 									</label>
 								</div>
 							</div>
@@ -92,19 +92,25 @@
 						<div class="item form-group">
 							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">영업사</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" name="middle-name">
+								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.cardCompany}" name="middle-name">
 							</div>
 						</div>
 						<div class="item form-group">
 							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">카드번호 / 환불계좌</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" name="middle-name">
+								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.cardNumber}" name="middle-name">
 							</div>
 						</div>
 						<div class="item form-group">
 							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">결제금액</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" name="middle-name">
+								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.approvePrice}" name="middle-name">
+							</div>
+						</div>
+						<div class="item form-group">
+							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">주문금액</label>
+							<div class="col-md-6 col-sm-6 ">
+								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.orderPrice}" name="middle-name">
 							</div>
 						</div>
 						<div class="item form-group">

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+   <div class="row" style="display: inline-block;">
+      <div class="tile_count">
+            <h1>정지관리</h1>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12  ">
+          
+          <div class="x_panel">
+
+            <!-- 검색 시작-->
+            <div class="x_content">
+				<div class="well" style="overflow: auto">
+					<div class="">
+						<table class=" table table-bordered" style="background-color: white;">
+							<tbody>
+								<tr>
+									<td class="col-md-2 col-sm-2" style="font-size: 18px; padding-top: 20px;"	><b>검색어</b></td>
+									<td class="col-md-4">
+										<div class="form-inline" style="padding-top: 7px;">
+											<div class="form-group">
+												<select class="form-control" id="userSearchOption" style="width: 200px;">
+													<option selected>- 전체검색 -</option>
+													<option value="">회원정지코드</option>
+													<option value="">회원아이디</option>
+													<option value="">승인자아이디</option>
+													<option value="">상태</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<input type="text" class="form-control text" placeholder="검색어를 입력해주세요">
+											</div>
+										</div>
+									</td>
+									<td class="col-md-2 col-sm-2" style="font-size: 18px; padding-top: 20px;" ><b >날짜</b></td>
+									<td class="col-md-4" style="padding-top: 13px; width: 200px;">
+								   	  <fieldset style="padding: 0px;">
+			                            <div class="control-group ">
+			                              <div class="controls">
+			                                <div class="input-prepend input-group">
+			                                  <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+			                                  <input type="text" style="width: 200px" name="reservation" id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
+			                                </div>
+			                              </div>
+			                            </div>
+			                          </fieldset>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div style="text-align: center;">
+							<button type="reset" class="btn btn-dark">초기화</button>
+							<button type="button" class="btn btn-dark">검색</button>
+						</div>
+					</div>
+				</div>
+			</div>
+            <!-- 검색 끝-->
+
+            <div class="x_title">
+              <h2>신고 리스트</h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                      class="fa fa-wrench"></i></a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Settings 1</a>
+                    <a class="dropdown-item" href="#">Settings 2</a>
+                  </div>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+              <table class="table table-striped jambo_table bulk_action">
+                <thead>
+                  <tr class="headings">
+                    <th style="text-align: center;" class="column-title">회원정지코드 </th>
+                    <th style="text-align: center;" class="column-title">회원아이디 </th>
+                    <th style="text-align: center;" class="column-title">승인자 아이디</th>
+                    <th style="text-align: center;" class="column-title">정지일수 </th>
+                    <th style="text-align: center;" class="column-title">정지 시작일 </th>
+                    <th style="text-align: center;" class="column-title">정지 해제일</th>
+                    <th style="text-align: center;" class="column-title">상태</th>
+                    <th style="text-align: center;" class="column-title">수정</th>
+                    <th style="text-align: center;" class="bulk-actions" colspan="7">
+                      <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">
+                        </span> ) <i class="fa fa-chevron-down"></i></a>
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody style="text-align: center;">
+                  <tr th:if="${not #lists.isEmpty(userSuspendList)}" th:each="usl : ${userSuspendList}"  class="even pointer">
+                    <td th:text="${usl.userSuspendCode}"></td>
+                    <td th:text="${usl.suspendId}"></td>
+                    <td th:text="${usl.approveId}"> </td>
+                    <td th:text="${usl.suspendDay} + '일'"></td>
+                    <td th:text="${usl.startSuspend}"></td>
+                    <td th:text="${usl.endSuspend}"></td>
+                    <td th:text="${usl.suspendResult}"></td>
+                    <td style="padding: 0px; "><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">수정</button></td>
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
+          </div>
+         </div>
+         
+          
+</th:block>
+<!-- jQuery -->
+
+
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script>
+		$(function() {
+			let $checks = $('.indivChecks');
+			$('#rowAllCheck').click(function() {
+				$checks.prop('checked', $(this).prop('checked'));
+			});
+		});
+	</script>
+</th:block>
+	
+
+
+
+</html>

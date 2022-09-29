@@ -29,26 +29,26 @@
 	<!-- 특정결제상세번호 조회 -->
 	<resultMap type="PaymentTotal" id="paymentDetailMap">
 		<result column="order_detail_code" 	property="orderDetailCode"/>
-			<result column="goods_code" 		property="goodsCode"/>
-			<result column="goods_name"			property="goodsName"/>
-			<result column="use_point"			property="usePoint"/>
-			<result column="save_point"			property="savePoint"/>
-			<result column="coupon_price"		property="couponPrice"/>
-			<result column="order_amount"		property="orderAmount"/>
-			<result column="order_status"		property="orderStatus"/>	
-			<result column="order_price" 		property="orderPrice"/>
-			<result column="payment_method"		property="paymentMethod"/>
-			<result column="card_company" 		property="cardCompany"/>
-			<result column="card_number" 		property="cardNumber"/>
-			<result column="refund_bank" 		property="refundBank"/>
-			<result column="refund_account" 	property="refundAccount"/>
-			<result column="approve_price"		property="approvePrice"/>
-			<association property="paymentInfo" javaType="PaymentInfo" >
-				<result column="order_num" 		property="orderNum"/>
-				<result column="buyer_id" 		property="buyerId"/>
-				<result column="order_date" 	property="orderDate"/>
-				<result column="approve_date"		property="approveDate"/>
-			</association>
+		<result column="goods_code" 		property="goodsCode"/>
+		<result column="goods_name"			property="goodsName"/>
+		<result column="use_point"			property="usePoint"/>
+		<result column="save_point"			property="savePoint"/>
+		<result column="coupon_price"		property="couponPrice"/>
+		<result column="order_amount"		property="orderAmount"/>
+		<result column="order_status"		property="orderStatus"/>	
+		<result column="order_price" 		property="orderPrice"/>
+		<result column="payment_method"		property="paymentMethod"/>
+		<result column="card_company" 		property="cardCompany"/>
+		<result column="card_number" 		property="cardNumber"/>
+		<result column="refund_bank" 		property="refundBank"/>
+		<result column="refund_account" 	property="refundAccount"/>
+		<result column="approve_price"		property="approvePrice"/>
+		<association property="paymentInfo" javaType="PaymentInfo" >
+			<result column="order_num" 		property="orderNum"/>
+			<result column="buyer_id" 		property="buyerId"/>
+			<result column="order_date" 	property="orderDate"/>
+			<result column="approve_date"		property="approveDate"/>
+		</association>
 	</resultMap>
 	
 	<!-- 결제내역페이지, 결제상세내역 -->
@@ -90,6 +90,7 @@
 				,p.payment_method
 				,cp.card_company
 				,cp.card_number
+				,od.order_price
 				,cp.approve_price
 				,cp.approve_date
 			FROM
@@ -124,6 +125,7 @@
 				,p.payment_method
 				,ap.refund_bank
 				,ap.refund_account
+				,od.order_price
 				,ap.approve_price
 				,ap.approve_date
 			FROM
@@ -145,7 +147,7 @@
 				ON
 				p.payment_group_code = ap.account_payment_code
 			WHERE
-				od.order_detail_code = '20220301001_1';
+				od.order_detail_code = #{orderDetailCode};
 	</select>
 	
 	<!-- 결제상세목록 -->
@@ -162,6 +164,7 @@
 				,p.payment_method
 				,cp.card_company
 				,cp.card_number
+				,od.order_price
 				,cp.approve_price
 				,cp.approve_date
 			FROM
@@ -194,6 +197,7 @@
 				,p.payment_method
 				,ap.refund_bank
 				,ap.refund_account
+				,od.order_price
 				,ap.approve_price
 				,ap.approve_date
 			FROM

@@ -2,6 +2,7 @@ package ks44team04.service;
 
 import ks44team04.mapper.UserMapper;
 import ks44team04.dto.Dormant;
+import ks44team04.dto.Goods;
 import ks44team04.dto.Leave;
 import ks44team04.dto.Login;
 import ks44team04.dto.Right;
@@ -38,9 +39,24 @@ public class UserService {
 		userMapper.modifyUser(user);
 	}
     
-	//특정 판매자 정보 조회
+	//특정 판매자 판매상품 조회
+	public List<Goods> getGoodsList(String sellerId) {
+    	List<Goods> goodsList = userMapper.getGoodsList(sellerId);
+    	
+    	return goodsList;
+    }
+	
+
+	//특정 판매자 상세정보 조회
 	public Seller getSellerInfoById(String sellerId) {
 		Seller seller = userMapper.getSellerInfoById(sellerId);
+		
+		return seller;
+	}
+	
+	//특정 회원 상세정보 조회(판매자만)
+	public Seller getUserInfoByIdS(String sellerId) {
+		Seller seller = userMapper.getUserInfoByIdS(sellerId);
 		
 		return seller;
 	}

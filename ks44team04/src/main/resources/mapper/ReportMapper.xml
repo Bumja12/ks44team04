@@ -80,6 +80,43 @@
     	,0)
      </insert>
      
+     
+     
+     <!-- 특정 신고 코드 조회 -->
+     <select id="getReportHostryCode" parameterType="String" resultMap="reportListResultMap">
+     /* 특정 신고 목록 조회 */
+     SELECT 
+			r.report_history_code
+			,r.reporting_id
+			,r.reported_id
+			,c.category_name
+			,u.report_reason
+			,r.report_what
+			,r.report_reason AS r_report_reason
+			,r.board_file
+			,r.report_date
+			,r.report_result
+			,r.report_result_reason
+			,r.report_result_date
+			,r.report_approve_id
+			,u.penalty_point
+			,r.total_penalty_point
+			,r.ban_date
+			,r.report_approve_id 
+		FROM 
+			tb_report_category AS c
+			INNER JOIN 
+			tb_report AS r 
+			on
+			c.report_category = r.report_category
+			INNER JOIN 
+			tb_report_rule AS u
+			on
+			r.report_code = u.report_code
+		where
+			r.report_history_code = #{reportHistoryCode};
+     </select>
+     
 
     <!-- 신고 목록 조회 -->
     <select id="getReportList" resultMap="reportListResultMap">

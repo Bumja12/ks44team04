@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+   <div class="row" style="display: inline-block;">
+      <div class="tile_count">
+        <h1>장부관리</h1>
+      </div>
+   </div>
+       
+
+         
+          
+</th:block>
+<!-- jQuery -->
+    <th:block layout:fragment="customScript">
+
+	        </th:block>
+<th:block layout:fragment="customJsScript">
+
+    <th:block th:replace="fragments/adminJs :: datatablesFragment"></th:block>
+
+</th:block>
+
+	
+
+
+ <script src="../vendors/jquery/dist/jquery.min.js"></script>
+   
+</html>
