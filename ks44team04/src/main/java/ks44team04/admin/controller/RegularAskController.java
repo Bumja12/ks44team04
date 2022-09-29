@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,21 +46,23 @@ public class RegularAskController {
 	}
 	
 	// 에이젝스 
+	@ResponseBody
 	@PostMapping("/regularAskDetail")
-	@ResponseBody()
-	public String ajaxRegularAskDetail (@RequestParam(value="regularAskPK") String regularAskPK,
-										Model model) {
+	public String ajaxRegularAskDetail (@RequestParam(value="regularAskPK") String regularAskPK
+										,Model model) {
 		log.info(regularAskPK);
+		
 		model.addAttribute("title", "관리자 자주 묻는 질문 내역 화면");
-		return "admin/regularAsk/admin_regularAsk_detail";
+		return "regularAskDetail/" + regularAskPK;
 	}
 	
 	// 관리자 자주 묻는 질문 내역 화면
-	@GetMapping("/regularAskDetail")
-	public String getRegularAskDetail (
-			Model model) {
+	@GetMapping("/regularAskDetail/{regularAskPK}")
+	public String getRegularAskDetail (@PathVariable(value = "regularAskPK") String regularAskPK
+									   ,Model model) {
 		
 		model.addAttribute("title", "관리자 자주 묻는 질문 내역 화면");
+		log.info(regularAskPK);
 		return "admin/regularAsk/admin_regularAsk_detail";
 	}
 	

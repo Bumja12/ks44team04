@@ -20,35 +20,34 @@ public class CouponService {
 	private static final Logger log = LoggerFactory.getLogger(CouponService.class);
 	private final CouponMapper couponMapper;
 
-	
 	public CouponService(CouponMapper couponMapper) {
 		this.couponMapper = couponMapper;
 	}
-	
+
 	@PostConstruct
 	public void couponService() {
 		log.info("couponService bean 생성");
 	}
-	
-	//쿠폰보유현황
-	public List<CouponStatus> couponStatus(){
-		
+
+	// 쿠폰보유현황
+	public List<CouponStatus> couponStatus() {
+
 		List<CouponStatus> couponStatus = couponMapper.couponStatus();
-		
+
 		return couponStatus;
 	}
-	
-	//쿠폰목록
+
+	// 쿠폰목록
 	public List<Coupon> couponList() {
-		
+
 		List<Coupon> couponList = couponMapper.couponList();
-		
+
 		return couponList;
-		
+
 	}
 
 	public List<CouponStatus> getCouponStatus(String userId) {
 		return couponMapper.getCouponStatus(userId);
 	}
-	
+
 }

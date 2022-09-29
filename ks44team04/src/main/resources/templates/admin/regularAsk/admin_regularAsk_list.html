@@ -235,7 +235,9 @@
 				  			//정상적인 응답이 왔을 경우 실행되는 메서드
 				  			request.done(function( data ) {
 				  				console.log('응답 성공');
-				  				location.href='regularAskDetail?regularAskPK=' + $regularAskPK;
+				  				console.log(data);
+				  				
+				  				location.href=data;
 				  			});
 				  			//비정상적인 응답이나 요청 후 응답 실패시 실행되는 메서드
 				  			request.fail(function( jqXHR, textStatus ) {

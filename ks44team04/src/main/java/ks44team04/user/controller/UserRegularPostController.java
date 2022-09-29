@@ -23,66 +23,67 @@ import java.util.List;
 @RequestMapping("/user/regularpost")
 public class UserRegularPostController {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
-    private final RegularPostService regularPostService;
-    private final AddressService addressService;
-    private final Service service;
-    private final Gson gson;
+	private final Logger log = LoggerFactory.getLogger(getClass());
+	private final RegularPostService regularPostService;
+	private final AddressService addressService;
+	private final Service service;
+	private final Gson gson;
 
-    public UserRegularPostController(RegularPostService regularPostService, AddressService addressService, Service service, Gson gson) {
-        this.regularPostService = regularPostService;
-        this.addressService = addressService;
-        this.service = service;
-        this.gson = gson;
-    }
+	public UserRegularPostController(RegularPostService regularPostService, AddressService addressService,
+			Service service, Gson gson) {
+		this.regularPostService = regularPostService;
+		this.addressService = addressService;
+		this.service = service;
+		this.gson = gson;
+	}
 
-    @GetMapping("/list")
-    public String regularPostList(Model model) {
+	@GetMapping("/list")
+	public String regularPostList(Model model) {
 
-        return "user/regularPost/regularPostList";
-    }
+		return "user/regularPost/regularPostList";
+	}
 
-    @GetMapping("/postcheck/{postCode}")
-    public String postCheck(@PathVariable(value = "postCode") String postInfo) {
-        PostInfo post = addressService.getPostInfo(postInfo);
-        String pcn = post.getPostCompanyName();
-        String in = post.getInvoiceNumber();
-        String company = "";
+	@GetMapping("/postcheck/{postCode}")
+	public String postCheck(@PathVariable(value = "postCode") String postInfo) {
+		PostInfo post = addressService.getPostInfo(postInfo);
+		String pcn = post.getPostCompanyName();
+		String in = post.getInvoiceNumber();
+		String company = "";
 
-        ResponseEntity<Object> companyObj = service.getData("https://apis.tracker.delivery/carriers");
-        JsonArray companyArray = gson.toJsonTree(companyObj.getBody()).getAsJsonArray();
-        for (JsonElement jsonElement : companyArray) {
-            log.info("{}", jsonElement);
-            if(jsonElement.getAsJsonObject().get("name").getAsString().contains(pcn)) {
-                company = jsonElement.getAsJsonObject().get("id").getAsString();
-            }
-        }
-        return "redirect:https://tracker.delivery/#/" + company + "/" + in;
-    }
+		ResponseEntity<Object> companyObj = service.getData("https://apis.tracker.delivery/carriers");
+		JsonArray companyArray = gson.toJsonTree(companyObj.getBody()).getAsJsonArray();
+		for (JsonElement jsonElement : companyArray) {
+			log.info("{}", jsonElement);
+			if (jsonElement.getAsJsonObject().get("name").getAsString().contains(pcn)) {
+				company = jsonElement.getAsJsonObject().get("id").getAsString();
+			}
+		}
+		return "redirect:https://tracker.delivery/#/" + company + "/" + in;
+	}
 
-    @GetMapping("/history")
-    public String regularPostHistory(Model model) {
-        String userId = "buyer01";
-        List<RegularPostHistory> regularPostHistory = regularPostService.getRegularPostHistory(userId);
-        model.addAttribute("regularPostHistory", regularPostHistory);
-        return "user/regularPost/regularPostHistory";
-    }
+	@GetMapping("/history")
+	public String regularPostHistory(Model model) {
+		String userId = "buyer01";
+		List<RegularPostHistory> regularPostHistory = regularPostService.getRegularPostHistory(userId);
+		model.addAttribute("regularPostHistory", regularPostHistory);
+		return "user/regularPost/regularPostHistory";
+	}
 
-    @GetMapping("/modify")
-    public String regularPostModify(Model model) {
+	@GetMapping("/modify")
+	public String regularPostModify(Model model) {
 
-        return "user/regularPost/regularPostModify";
-    }
+		return "user/regularPost/regularPostModify";
+	}
 
-    @GetMapping("/delete")
-    public String regularPostDelete(Model model) {
+	@GetMapping("/delete")
+	public String regularPostDelete(Model model) {
 
-        return "user/regularPost/regularPostDelete";
-    }
+		return "user/regularPost/regularPostDelete";
+	}
 
-    @GetMapping("/skip")
-    public String regularPostSkip(Model model) {
+	@GetMapping("/skip")
+	public String regularPostSkip(Model model) {
 
-        return "user/regularPost/regularPostSkip";
-    }
+		return "user/regularPost/regularPostSkip";
+	}
 }

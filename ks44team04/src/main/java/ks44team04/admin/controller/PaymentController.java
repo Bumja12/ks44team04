@@ -34,29 +34,26 @@ public class PaymentController {
 	public void paymentControllerInit() {
 		log.info("paymentController Bean 생성");
 	}
-	
-	
+
 	@PostMapping("/removePaymentDetail")
-	public String removePaymentDetail(String orderDetailCode
-										,RedirectAttributes reAttr) {
-		
+	public String removePaymentDetail(String orderDetailCode, RedirectAttributes reAttr) {
+
 		System.out.println(orderDetailCode);
-		if(orderDetailCode != null) {
-			
+		if (orderDetailCode != null) {
+
 			int removeDetailCode = paymentService.removeDetailCode(orderDetailCode);
-			
-			if(removeDetailCode > 0) {
+
+			if (removeDetailCode > 0) {
 				return "redirect:/admin/payment/paymentDetail";
-			}else {
-				
+			} else {
+
 				reAttr.addAttribute("msg", "상세주문번호가 일치하지 않습니다.");
 
 				return "redirect:/admin/payment/remove/" + orderDetailCode;
 			}
-			
 
-		}else {
-			
+		} else {
+
 			reAttr.addAttribute("msg", "상세주문번호가 일치하지 않습니다.");
 			return "redirect:/admin/payment/remove/" + orderDetailCode;
 
@@ -66,21 +63,20 @@ public class PaymentController {
 	@GetMapping("/paymentDetailRemoveCheck")
 	@ResponseBody
 	public boolean removeCheck(@RequestParam(value = "orderDetailCode") String orderDetailCode) {
-		
+
 		System.out.println(orderDetailCode);
-		if(orderDetailCode != null) {
-			
+		if (orderDetailCode != null) {
+
 			boolean detailCodeCheck = paymentService.detailCodeCheck(orderDetailCode);
-			if(detailCodeCheck = true) {				
+			if (detailCodeCheck = true) {
 				return detailCodeCheck;
-			}else {
+			} else {
 				return detailCodeCheck;
 			}
-		}else {
+		} else {
 			return false;
 		}
 	}
-	
 
 	// 주문상세번호 삭제
 	@GetMapping("/remove/{orderDetailCode}")
@@ -96,7 +92,7 @@ public class PaymentController {
 	// 특정주문상세번호 조회
 	@GetMapping("/modifyPaymentDetail")
 	public String ModifyPaymentDetail(@RequestParam(value = "orderDetailCode", required = false) String orderDetailCode,
-										Model model) {
+			Model model) {
 
 		PaymentTotal paymentTotal = paymentService.getPaymentDetail(orderDetailCode);
 
