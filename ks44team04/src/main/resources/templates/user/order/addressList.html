@@ -1,109 +1,220 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/adminDefault}">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/build/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css"
+          integrity="sha384-jbCTJB16Q17718YM9U22iJkhuGbS0Gd2LjaWb4YJEZToOPmnKDjySVa323U+W7Fv" crossorigin="anonymous">
+    <style>
+        body {
+            margin-top: 20px;
+            background: #eee;
+        }
 
-<th:block layout:fragment="customTitle">
-    <title th:text="${title}"></title>
-</th:block>
+        /* My Account */
+        .payments-item img.mr-3 {
+            width: 47px;
+        }
 
-<th:block layout:fragment="customContents">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Table design <small>Custom design</small></h2>
-                <div class="clearfix"></div>
-            </div>
+        .order-list .btn {
+            border-radius: 2px;
+            min-width: 121px;
+            font-size: 13px;
+            padding: 7px 0 7px 0;
+        }
 
-            <div class="x_content">
+        .osahan-account-page-left .nav-link {
+            padding: 18px 20px;
+            border: none;
+            font-weight: 600;
+            color: #535665;
+        }
 
-                <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p>
+        .osahan-account-page-left .nav-link i {
+            width: 28px;
+            height: 28px;
+            background: #535665;
+            display: inline-block;
+            text-align: center;
+            line-height: 29px;
+            font-size: 15px;
+            border-radius: 50px;
+            margin: 0 7px 0 0px;
+            color: #fff;
+        }
 
-                <div class="table-responsive">
-                    <table class="table table-striped jambo_table bulk_action">
-                        <thead>
-                        <tr class="headings">
-                            <th>
-                                <input type="checkbox" id="check-all" class="flat">
-                            </th>
-                            <th class="column-title">배송지 이름</th>
-                            <th class="column-title">수령인</th>
-                            <th class="column-title">주소</th>
-                            <th class="column-title">상세주소</th>
-                            <th class="column-title">연락처 1</th>
-                            <th class="column-title">연락처 2</th>
-                            <th class="column-title">수정</th>
-                            <th class="column-title no-link last addressDelete"><span class="nobr">삭제</span>
-                            </th>
-                            <th class="bulk-actions" colspan="9">
-                                <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span
-                                        class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                            </th>
-                        </tr>
-                        </thead>
+        .osahan-account-page-left .nav-link.active {
+            background: #f3f7f8;
+            color: #282c3f !important;
+        }
 
-                        <tbody>
-                        <th:block th:if="${not #lists.isEmpty(addressList)}" th:each="l, e : ${addressList}">
-                            <tr class="even pointer" th:if="${(e.index % 2) == 0}">
-                                <td class="a-center ">
-                                    <input type="checkbox" class="flat" name="table_records">
-                                </td>
-                                <td class=" " th:text="${l.addressName}">May 23</td>
-                                <td class=" " th:text="${l.receiverName}">121000210 <i
-                                        class="success fa fa-long-arrow-up"></i></td>
-                                <td class=" " th:text="${l.address}">John Blank L</td>
-                                <td class=" " th:text="${l.address2}">Paid</td>
-                                <td class=" " th:text="${l.phone}">Paid</td>
-                                <td class=" " th:text="${l.phone2}">Paid</td>
-                                <td class="a-right a-right ">
-                                    <a th:href="@{|/user/address/modify/${l.addressList}|}">수정</a>
-                                </td>
-                                <td class=" last">
-                                    <a th:href="|javascript:deleteAddressFn('${l.addressList}')|">삭제</a>
-                                </td>
-                            </tr>
-                            <tr class="odd pointer" th:if="${(e.index % 2) == 1}">
-                                <td class="a-center ">
-                                    <input type="checkbox" class="flat" name="table_records">
-                                </td>
-                                <td class=" " th:text="${l.addressName}">May 23</td>
-                                <td class=" " th:text="${l.receiverName}">121000210
-                                    <i class="success fa fa-long-arrow-up"></i>
-                                </td>
-                                <td class=" " th:text="${l.address}">John Blank L</td>
-                                <td class=" " th:text="${l.address2}">Paid</td>
-                                <td class=" " th:text="${l.phone}">Paid</td>
-                                <td class=" " th:text="${l.phone2}">Paid</td>
-                                <td class="a-right a-right ">
-                                    <a th:href="@{|/user/address/modify/${l.addressList}|}">수정</a>
-                                </td>
-                                <td class=" last">
-                                    <a th:href="|javascript:deleteAddressFn('${l.addressList}')|">삭제</a>
-                                </td>
-                            </tr>
+        .osahan-account-page-left .nav-link.active i {
+            background: #282c3f !important;
+        }
+
+        .osahan-user-media img {
+            width: 90px;
+        }
+
+        .card offer-card h5.card-title {
+            border: 2px dotted #000;
+        }
+
+        .card.offer-card h5 {
+            border: 1px dotted #daceb7;
+            display: inline-table;
+            color: #17a2b8;
+            margin: 0 0 19px 0;
+            font-size: 15px;
+            padding: 6px 10px 6px 6px;
+            border-radius: 2px;
+            background: #fffae6;
+            position: relative;
+        }
+
+        .card.offer-card h5 img {
+            height: 22px;
+            object-fit: cover;
+            width: 22px;
+            margin: 0 8px 0 0;
+            border-radius: 2px;
+        }
+
+        .card.offer-card h5:after {
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-bottom: 4px solid #daceb7;
+            content: "";
+            left: 30px;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .card.offer-card h5:before {
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid #daceb7;
+            content: "";
+            left: 30px;
+            position: absolute;
+            top: 0;
+        }
+
+        .payments-item .media {
+            align-items: center;
+        }
+
+        .payments-item .media img {
+            margin: 0 40px 0 11px !important;
+        }
+
+        .reviews-members .media .mr-3 {
+            width: 56px;
+            height: 56px;
+            object-fit: cover;
+        }
+
+        .order-list img.mr-4 {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+            border-radius: 2px;
+        }
+
+        .osahan-cart-item p.text-gray.float-right {
+            margin: 3px 0 0 0;
+            font-size: 12px;
+        }
+
+        .osahan-cart-item .food-item {
+            vertical-align: bottom;
+        }
+
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        .h5,
+        .h6,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: #000000;
+        }
+
+        .shadow-sm {
+            box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+        }
+
+        .rounded-pill {
+            border-radius: 50rem !important;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
+    <script th:src="@{/build/js/bootstrap.min.js}"></script>
+    <script th:src="@{/build/js/jquery-3.6.1.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="osahan-account-page-right shadow-sm bg-white p-4 h-100">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade  active show" id="addresses" role="tabpanel" aria-labelledby="addresses-tab">
+                    <h4 class="font-weight-bold mt-0 mb-4">Manage Addresses</h4>
+                    <div class="row pt-2 pb-2">
+                        <th:block th:if="${not #lists.isEmpty(addressList)}">
+                            <div class="col-md-10" th:each="l, e : ${addressList}">
+                                <div class="bg-white card addresses-item mb-4  shadow-sm">
+                                    <div class="gold-members p-4">
+                                        <div class="media">
+                                            <div class="mr-3"><i class="icofont-location-pin icofont-3x"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="mb-1" th:text="${l.addressName}">범자</h6>
+                                                <p>
+                                                    <span class="d-block" th:text="${l.receiverName}">김범현</span>
+                                                    <span class="d-block">[[${l.address}]] [[${l.address2}]]</span>
+                                                    <span class="d-block">[[${l.phone}]]
+                                                        <th:block th:if="${not #strings.isEmpty(l.phone2)}"> | [[${l.phone2}]]</th:block>
+                                                    </span>
+                                                </p>
+                                                <p class="mb-0 text-black font-weight-bold"><a
+                                                        class="text-default mr-1 btn-sm btn-primary"
+                                                        data-toggle="modal" data-target="#add-address-modal" href="#"><i
+                                                        class="icofont-ui-edit"></i> 수정</a> <a
+                                                        class="text-default btn-sm btn-danger"
+                                                        data-toggle="modal" data-target="#delete-address-modal"
+                                                        href="#"><i
+                                                        class="icofont-ui-delete"></i> 삭제</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </th:block>
-                        <th:block>
-                            <tr th:unless="${not #lists.isEmpty(addressList)}">
-                                <td colspan="10">등록된 배송지가 없습니다.</td>
-                            </tr>
-                        </th:block>
-                        </tbody>
-                    </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</th:block>
+</div>
 
-<th:block layout:fragment="customJsScript">
-    <th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
-    <script>
 
-            function deleteAddressFn(href) {
-                if(confirm("정말로 삭제하시겠습니까?")){
-                    location.href = `/user/address/delete/${href}`;
-                }
-            }
-        </script>
-    </th:block>
+<script>
+    function deleteAddressFn(href) {
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            location.href = `/user/address/delete/${href}`;
+        }
+    }
+</script>
+
+</body>
 </html>

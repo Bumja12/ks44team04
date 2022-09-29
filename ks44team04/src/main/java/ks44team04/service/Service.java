@@ -20,7 +20,7 @@ public class Service {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     public ResponseEntity<Object> getData(String url ) {
-        //Spring restTemplate
+
         HashMap<String, Object> result = new HashMap<String, Object>();
         ResponseEntity<Object> resultMap = new ResponseEntity<>(null, null, 200);
 
