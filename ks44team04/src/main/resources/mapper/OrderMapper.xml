@@ -55,8 +55,6 @@
         <result column="exchange_reason" property="exchangeReason"/>
         <result column="approve_check" property="approveCheck"/>
         <result column="approve_date" property="approveDate"/>
-        <result column="post_company" property="postCompany"/>
-        <result column="invoice_number" property="invoiceNumber"/>
     </resultMap>
 
     <resultMap type="OrderReturn" id="orderReturnResultMap">
@@ -70,6 +68,17 @@
         <result column="post_company" property="postCompany"/>
         <result column="invoice_number" property="invoiceNumber"/>
     </resultMap>
+
+    <insert id="setOrderExchange" parameterType="OrderExchange">
+        INSERT INTO tb_order_exchange
+        (exchange_ask_code, order_detail_code, buyer_id, post_info, exchange_ask_date, exchange_reason)
+        VALUES (#{exchangeAskCode}, #{orderDetailCode}, #{buyerId}, #{postInfo}, NOW(), #{exchangeReason})
+    </insert>
+
+    <select id="getOrderExchangeMaxCode" resultType="String">
+        SELECT MAX(exchange_ask_code)
+        FROM tb_order_exchange
+    </select>
 
 
 </mapper>

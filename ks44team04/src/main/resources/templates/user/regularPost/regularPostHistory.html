@@ -4,18 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
-            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/build/css/bootstrap.min.css}">
+    <script th:src="@{/build/js/bootstrap.min.js}"></script>
+    <script th:src="@{/build/js/jquery-3.6.1.min.js}"></script>
 
     <style>
         .orderBtn {
             width: 82px;
-        }    </style>
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -66,7 +63,7 @@
                         </button>
                     </td>
                     <td th:case="배송완료">
-                        <button type="button" class="btn-sm orderBtn orderReplace"
+                        <button type="button" class="btn-sm orderBtn orderExchange"
                                 th:data-order-detail-code="${l.orderDetail.orderDetailCode}">교환요청
                         </button>
                         <button type="button" class="btn-sm orderBtn orderRefund"
@@ -103,7 +100,7 @@
             if (e.target.classList.contains('orderCancel')) {
 
             }
-            if (e.target.classList.contains('orderReplace')) {
+            if (e.target.classList.contains('orderExchange')) {
 
             }
             if (e.target.classList.contains('orderRefund')) {
@@ -115,7 +112,7 @@
                         .catch(() => {
                             alert('구매확정을 실패했습니다. 다시 시도해주세요')
                         })
-                        .finally(() => { location.reload(); });
+                        .finally(() => { location.replace(location.href); });
                 }
             }
             if (e.target.classList.contains('writeReview')) {
