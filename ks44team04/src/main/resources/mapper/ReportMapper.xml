@@ -27,7 +27,7 @@
         <result column="report_result_reason" 	property="reportResultReason"/>
         <result column="report_result_date" 	property="reportResultDate"/>
         <result column="report_approve_id"	 	property="reportApproveId"/>
-        <result column="penalty_point" 			property="penaltyPoint"/>
+        <result column="r_penalty_point" 		property="penaltyPoint"/>
         <result column="total_penalty_point" 	property="totalPenaltyPoint"/>
         <result column="ban_date" 				property="banDate"/>
         <association property="reportCategoryDto" javaType="ReportCategory" >
@@ -38,6 +38,11 @@
         	<id     column="report_code" 	property="reportCode"/>
         	<result column="report_reason"  property="reportReason"/>
         	<result column="penalty_point"  property="penaltyPoint"/>
+        </association>
+        <association property="UserDto" javaType="User" >
+        	<id     column="user_id" 		property="userId"/>
+        	<result column="user_penalty"  	property="userPenalty"/>
+        	<result column="user_name" 		property="userName"/>
         </association>
     </resultMap>
     
@@ -80,6 +85,33 @@
     	,0)
      </insert>
      
+     <!-- 신고 처리 -->
+     <update id="reportProcessing" parameterType="Report">
+     UPDATE tb_report
+     <trim prefix="SET" prefixOverrides=",">
+		<if test="reportResult != null and reportResult != ''">
+			 report_result= #{reportResult}
+		</if>
+		<if test="reportResultReason != null and reportResultReason != ''">
+			,report_result_reason = #{reportResultReason}
+		</if>
+			,report_result_date = NOW()
+		<if test="reportApproveId != null and reportApproveId != ''">
+			,report_approve_id = #{reportApproveId}
+		</if>
+		<if test="penaltyPoint != null and penaltyPoint != ''">
+			,penalty_point = #{penaltyPoint}
+		</if>
+		<if test="totalPenaltyPoint != null and totalPenaltyPoint != ''">
+			,total_penalty_point = #{totalPenaltyPoint}
+		</if>
+		
+	</trim>
+		WHERE 
+			report_history_code= #{reportHistoryCode};
+     
+     </update>
+     
      
      
      <!-- 특정 신고 코드 조회 -->
@@ -103,6 +135,9 @@
 			,r.total_penalty_point
 			,r.ban_date
 			,r.report_approve_id 
+			,s.user_penalty
+			,r.penalty_point AS r_penalty_point
+			,s.user_name
 		FROM 
 			tb_report_category AS c
 			INNER JOIN 
@@ -113,6 +148,10 @@
 			tb_report_rule AS u
 			on
 			r.report_code = u.report_code
+			INNER JOIN 
+			tb_user AS s
+			on
+			r.reported_id = s.user_id
 		where
 			r.report_history_code = #{reportHistoryCode};
      </select>
@@ -135,6 +174,7 @@
 			,r.report_result_reason
 			,r.report_result_date
 			,r.report_approve_id
+			,r.penalty_point AS r_penalty_point
 			,u.penalty_point
 			,r.total_penalty_point
 			,r.ban_date
