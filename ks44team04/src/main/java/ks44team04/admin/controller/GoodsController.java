@@ -1,18 +1,19 @@
 package ks44team04.admin.controller;
-import java.util.List;
+
+import ks44team04.dto.Goods;
+import ks44team04.dto.GoodsQna;
+import ks44team04.service.GoodsService;
+import ks44team04.util.CodeIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ks44team04.service.GoodsService;
-import ks44team04.util.CodeIndex;
-import ks44team04.dto.Goods;
-import ks44team04.dto.GoodsQna;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/goods")
@@ -74,8 +75,7 @@ public class GoodsController {
 			
 		// goodsCode 생성
 		String goodsNewCode = goodsService.getGoodsNewCode(sellerId);
-		CodeIndex codeIndex = new CodeIndex();
-		goodsNewCode = codeIndex.codeIndex(goodsNewCode, 5);
+		goodsNewCode = CodeIndex.codeIndex(goodsNewCode, 5);
 			
 		log.info("상품 증가 코드 :::{}" , goodsNewCode);
 			
