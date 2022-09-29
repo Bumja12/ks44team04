@@ -26,7 +26,32 @@ public class PaymentService {
 		log.info("paymentService bean 생성");
 	}
 	
-	//특정결제상세번호 조회
+	//주문번호삭제
+	public int removeDetailCode(String orderDetailCode) {
+		
+		int removeDetailCode = 0;
+		
+		if(orderDetailCode != null) {
+		removeDetailCode += paymentMapper.removeCancel(orderDetailCode);
+		removeDetailCode += paymentMapper.removeExchange(orderDetailCode);
+		removeDetailCode += paymentMapper.removeReturn(orderDetailCode);
+		removeDetailCode += paymentMapper.removeReviewComment(orderDetailCode);
+		removeDetailCode += paymentMapper.removeReview(orderDetailCode);
+		removeDetailCode += paymentMapper.removeDetailCode(orderDetailCode);
+		
+		}
+		return removeDetailCode;
+	}
+	
+	//결제상세번호만 조회
+	public boolean detailCodeCheck(String orderDetailCode) {
+		
+		boolean detailCodeCheck = paymentMapper.detailCodeCheck(orderDetailCode);
+		
+		return detailCodeCheck;
+	}
+	
+	//특정결제상세번호로 조회
 	public PaymentTotal getPaymentDetail(String orderDetailCode) {
 		
 		PaymentTotal paymentTotal = paymentMapper.getPaymentDetail(orderDetailCode);
