@@ -93,8 +93,17 @@ public class GoodsController {
 		
 	//상품 삭제
 	@GetMapping("/goodsRemove")
-	public String goodsRemove(@RequestParam(value = "goodsCode") String goodsCode) {
-		goodsService.goodsRemove(goodsCode);
+	public String goodsRemove(@RequestParam(value = "goodsCode") String goodsCode
+							 ,@RequestParam(name = "adminPw") String userPw) {
+		
+		//비밀번호 확인
+		String adminPw = goodsService.getAdminPw(userPw);
+		
+		if(adminPw != null) {
+			if(adminPw.equals(userPw)) {
+				goodsService.goodsRemove(goodsCode);
+			}
+		}
 
 		return "redirect:/admin/goods/goodsList";
 	}	

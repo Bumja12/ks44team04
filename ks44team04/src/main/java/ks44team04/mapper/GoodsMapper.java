@@ -27,6 +27,9 @@ public interface GoodsMapper {
 	//상품 삭제
 	public void goodsRemove(String goodsCode);
 	
+	//상품 삭제를 위한 관리자 비밀번호
+	public String getAdminPw(String userPw);
+	
 	//상품 문의 조회
 	public List<GoodsQna> getGoodsQna();
 	

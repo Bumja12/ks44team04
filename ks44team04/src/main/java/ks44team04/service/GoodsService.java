@@ -51,6 +51,12 @@ public class GoodsService {
 		goodsMapper.goodsRemove(goodsCode);
 	}
 	
+	//상품 삭제를 위한 관리자 비밀번호
+	public String getAdminPw(String userPw) {
+		String adminPw = goodsMapper.getAdminPw(userPw);
+		return adminPw;
+	}
+	
 	//상품 문의 조회
 	public List<GoodsQna> getGoodsQna() {
 		List<GoodsQna> goodsQna = goodsMapper.getGoodsQna();
