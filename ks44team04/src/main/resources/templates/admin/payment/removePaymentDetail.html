@@ -50,30 +50,30 @@
 					<br />
 					<form id="deleteForm" th:action="@{/admin/payment/removePaymentDetail}" method="post" data-parsley-validate class="form-horizontal form-label-left">
 						<div class="item form-group">
-							<label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">회원아이디 <span class="required">*</span>
+							<label for="buyerId"class="col-form-label col-md-3 col-sm-3 label-align">회원아이디 <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input type="text" id="last-name" th:value="${paymentTotal.paymentInfo.buyerId}"  name="last-name" class="form-control" readonly="readonly">
+								<input type="text" id="buyerId" th:value="${paymentTotal.paymentInfo.buyerId}" class="form-control" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
-							<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">주문번호 <span class="required">*</span>
+							<label for="orderNum" class="col-form-label col-md-3 col-sm-3 label-align">주문번호 <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 "	>
-								<input type="text" id="first-name" th:value="${paymentTotal.paymentInfo.orderNum}"  required="required" class="form-control" readonly="readonly">
+								<input type="text" id="orderNum" th:value="${paymentTotal.paymentInfo.orderNum}"  required="required" class="form-control" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
-							<label class="col-form-label col-md-3 col-sm-3 label-align" for="orderDetailCode">주문상세번호 <span class="required">*</span>
+							<label for="orderDetailCode" class="col-form-label col-md-3 col-sm-3 label-align">주문상세번호 <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input type="text" id="orderDetailCode" th:value="${paymentTotal.orderDetailCode}" required="required" class="form-control" readonly="readonly">
+								<input type="text" id="orderDetailCode" name="orderDetailCode" th:value="${paymentTotal.orderDetailCode}" required="required" class="form-control" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
-							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">상품정보</label>
+							<label for="goodsName" class="col-form-label col-md-3 col-sm-3 label-align">상품정보</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.goodsName}"  name="middle-name" readonly="readonly">
+								<input type="text" id="goodsName" class="form-control" th:value="${paymentTotal.goodsName}" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
@@ -81,36 +81,36 @@
 							<div class="col-md-6 col-sm-6 ">
 								<div id="paymentMethod" class="btn-group" data-toggle="buttons">
 									<label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-										<input type="radio" value="카드"> &nbsp; 카드 &nbsp;
+										<input type="radio" th:value="${paymentTotal.paymentMethod}"> &nbsp; 카드 &nbsp;
 									</label>
 									<label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-										<input type="radio" value="계좌이체"> 계좌이체
+										<input type="radio" th:value="${paymentTotal.paymentMethod}"> 계좌이체
 									</label>
 								</div>
 							</div>
 						</div>
 						<div class="item form-group">
-							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">영업사</label>
+							<label for="cardCompany" class="col-form-label col-md-3 col-sm-3 label-align">영업사</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.cardCompany}" name="middle-name" readonly="readonly">
+								<input id="cardCompany" class="form-control" type="text" th:value="${paymentTotal.cardCompany}" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
-							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">카드번호 / 환불계좌</label>
+							<label for="cardNumber" class="col-form-label col-md-3 col-sm-3 label-align">카드번호 / 환불계좌</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.cardNumber}" name="middle-name" readonly="readonly">
+								<input id="cardNumber" class="form-control" type="text" th:value="${paymentTotal.cardNumber}" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
-							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">주문금액</label>
+							<label for="orderPrice" class="col-form-label col-md-3 col-sm-3 label-align">주문금액</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" th:value="${'₩' + #numbers.formatInteger(paymentTotal.orderPrice, 3, 'COMMA')}" name="middle-name" readonly="readonly">
+								<input id="orderPrice" class="form-control" type="text" th:value="${'₩' + #numbers.formatInteger(paymentTotal.orderPrice, 3, 'COMMA')}" readonly="readonly">
 							</div>
 						</div>
 						<div class="item form-group">
-							<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">결제일자 / 승인일자</label>
+							<label for="approveDate" class="col-form-label col-md-3 col-sm-3 label-align">결제일자 / 승인일자</label>
 							<div class="col-md-6 col-sm-6 ">
-								<input id="middle-name" class="form-control" type="text" th:value="${paymentTotal.paymentInfo.approveDate}" name="middle-name" readonly="readonly">
+								<input id="approveDate" class="form-control" type="text" th:value="${paymentTotal.paymentInfo.approveDate}" readonly="readonly">
 							</div>
 						</div>
 						
@@ -129,12 +129,18 @@
 </th:block>
 
 <th:block layout:fragment="customJsScript">
-	<script type="text/javascript">
+	<script type="text/javascript" th:inline="javascript">
 		$(function(){
+			
+			var msg =/*[[${msg}]]*/
+				
+			if(msg != null) alert(msg);
+			
 			$('.btnCheck').click(function(){
 				
 				if(this.value == 0){
-					console.log('취소눌렀음');
+					location.href = "/admin/payment/paymentDetail"
+					return false;
 					
 				}else if(this.value == 1){
 					
@@ -142,31 +148,32 @@
 					orderDetailCode = $('#orderDetailCode').val();
 					console.log(orderDetailCode);
 					
-					if(confirm("정말 삭제하시겠습니까?")){
 						var request = $.ajax({
 							url: "/admin/payment/paymentDetailRemoveCheck",
 							method: 'GET',
 							data: { 'orderDetailCode' : orderDetailCode },
 							dataType: "json" 
 						});
-
+	
 						request.done(function( data ) { 
 							console.log(data);
 							if(data){
-								$('#deleteForm').submit();
+								if(confirm("정말 삭제하시겠습니까?")){
+									$('#deleteForm').submit();
+								}else{
+									return false;
+								}
 							}
 						});
 							
 						request.fail(function( jqXHR, textStatus ) {	
 							alert( "Request failed: " + textStatus );
 						});
-							
-					}else{
-						console.log('안해');
-					}
+
 				}
 			})
 		});
+		
 	</script>
 </th:block>
 
