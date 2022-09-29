@@ -50,7 +50,6 @@ public class ReportController {
 		log.info("totalPenaltyPoint ::::::::::: {}",totalPenaltyPoint);
 		
 		if("반려".equals(reportResult)) {
-			report.setPenaltyPoint(0);
 			report.setTotalPenaltyPoint(totalPenaltyPoint - penaltyPoint);
 			
 		}
