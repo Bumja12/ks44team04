@@ -1,15 +1,21 @@
 package ks44team04.admin.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value = "/admin/regularAsk")
 public class RegularAskController {
 	
+	private static final Logger log = LoggerFactory.getLogger(RegularAskController.class);
+
 	// 자주 묻는 질문 삭제 처리
 	@PostMapping("/removeRegularAsk")
 	public String removeRegularAsk () {
@@ -27,8 +33,11 @@ public class RegularAskController {
 	} 
 	
 	// 관리자 자주 묻는 질문 수정 처리 
+	@ResponseBody
 	@PostMapping("/modifyRegularAsk")
-	public String modifyRegularAskAction() {
+	public String modifyRegularAskAction(@RequestParam(value="regularAskPK") String regularAskPK
+										) {
+		log.info(regularAskPK);
 		
 		// 수정 처리 후 관리자 자주 묻는 질문 목록 화면으로 리다이렉트
 		return "redirect:/admin/regularAsk/regularAskList";
