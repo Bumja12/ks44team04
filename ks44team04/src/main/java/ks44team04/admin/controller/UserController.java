@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,8 +59,14 @@ public class UserController {
 		log.info("판매자 레벨 ::: {}",levelSeller);
 		List<Right> rightList = userService.getRightList();
 		log.info("권한 ::: {}",rightList);
-
-		model.addAttribute("title", "회원가입");
+		
+		/*
+		 * List<String> rights = new ArrayList<String>();
+		 * 
+		 * rights.add(rightList.get(0));
+		 */
+		
+		model.addAttribute("title", "회원등록");
 		model.addAttribute("levelBuyer", levelBuyer);
 		model.addAttribute("levelSeller", levelSeller);
 		model.addAttribute("rightList", rightList);
@@ -70,16 +77,13 @@ public class UserController {
 	//특정 판매자 상세정보 조회
 	@GetMapping("/user/sellerDetail")
 	public String sellerDetail(@RequestParam(value="sellerId", required = false) String sellerId
-							  ,Model model) {
+							   ,Model model) {
         Seller userInfoS = userService.getUserInfoByIdS(sellerId);
         log.info("회원 상세정보 조회(판매자만) ::: {}",userInfoS);
-        
         Seller sellerInfo = userService.getSellerInfoById(sellerId);
         log.info("판매자 상세정보 조회 ::: {}",sellerInfo);
-        
         List<Goods> goodsList = userService.getGoodsList(sellerId);
         log.info("판매자 판매상품 목록 ::: {}",goodsList);
-
         
 		model.addAttribute("title", "판매자 상세정보");
 		model.addAttribute("userInfoS", userInfoS);

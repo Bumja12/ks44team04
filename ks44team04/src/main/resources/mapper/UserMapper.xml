@@ -376,7 +376,7 @@
 			 ls.level_code		AS s_level_code
 			,ls.level_name		AS s_level_name
 		FROM
-			tb_level_buyer_category ls
+			tb_level_seller_category ls
 	</select>
 	
 	<!-- 권한 조회 -->
@@ -387,6 +387,8 @@
 			,r.right_status
 		FROM
 			tb_right r
+		WHERE
+			right_status = '구매자' OR right_status = '판매자 승인 전'
 	</select>
 	
 	<!-- 로그인 -->
