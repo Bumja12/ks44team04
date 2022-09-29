@@ -46,4 +46,16 @@
         where trps.buyer_id = #{userId}
     </select>
 
+    <update id="setOrderConfirm" parameterType="String">
+        update tb_order
+        set order_status = '구매확정',
+            final_confirm_date = now()
+        where order_num = #{orderNum}
+    </update>
+
+    <update id="setOrderDetailStatus" parameterType="Map">
+        call set_order_status(#{orderDetailCode}, #{orderStatus})
+    </update>
+
+
 </mapper>

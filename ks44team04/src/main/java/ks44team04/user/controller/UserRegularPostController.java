@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user/regularpost")
@@ -66,6 +68,15 @@ public class UserRegularPostController {
         List<RegularPostHistory> regularPostHistory = regularPostService.getRegularPostHistory(userId);
         model.addAttribute("regularPostHistory", regularPostHistory);
         return "user/regularPost/regularPostHistory";
+    }
+
+    @GetMapping("/confirm/{orderdetailcode}")
+    public String regularPostConfirm(@PathVariable(value = "orderdetailcode") String orderDetailCode) {
+        Map<String, String> orderProcess = new HashMap<>();
+        orderProcess.put("orderDetailCode", orderDetailCode);
+        orderProcess.put("orderStatus", "구매확정");
+        regularPostService.setOrderDetailStatus(orderProcess);
+        return "redirect:/user/regularPostHistory";
     }
 
     @GetMapping("/modify")
