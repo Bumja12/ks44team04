@@ -129,7 +129,7 @@
 					<tbody>
 						<tr>
 							<th class="processing" scope="row">관리자 아이디</th>
-							<td><input type="text" style="border: none; "th:text="${session.LEVEL}" readonly="readonly"></td>
+							<td><input type="text" style="border: none; "th:value="${session.SID}" readonly="readonly"></td>
 							<th class="processing">신고대상 아이디</th>
 							<td style="text-align: left;" colspan="3"><input type="text" style="border: none; "th:value="*{reportingId}" readonly="readonly"></td>
 						</tr>
