@@ -21,7 +21,7 @@ th {
 </th:block>
 
 <th:block layout:fragment="customContents">
-	<div class="col-md-12 col-sm-12 col-xs-12">
+	<div class="col-md-12 col-sm-12 col-xs-12" style="overflow: scroll; width:100%; height:700px;">
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
@@ -42,6 +42,7 @@ th {
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
+				<div th:replace="fragments/orderSearch :: orderSearchFragment"></div>
 				<table class="table table-hover" style="text-align: center;">
 					<thead>
 						<tr>
@@ -97,6 +98,8 @@ th {
 
 	<th:block layout:fragment="customJsScript">
 		<script type="text/javascript">
+
+			
 			$(function(){
 				$('.cancelBtn').click(function(){
 					console.log(this);

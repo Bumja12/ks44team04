@@ -114,8 +114,16 @@
 		<result  column="level_code_npk" 	 	property="levelCodeNpk"/>
 	</resultMap>
 
+	<!-- 판매자신청 -->
+	<insert id="addSeller" parameterType="Seller">
+		/* 회원 가입 */
+		INSERT INTO tb_user
+			(user_id, user_pw, user_name, user_gender, user_nickname, user_address, user_address2, user_phone, user_email, user_right, user_reg_date, user_update_date, user_status, user_penalty, user_point, user_info_keep, user_level)
+		VALUES 
+			('#{userId}', '#{userPw}', '#{userName}', '#{userGender}', '#{userNickname}', '#{userAddress}', '#{userAddress2}', '#{userPhone}', '#{userEmail}', '#{userRight}', CURDATE(), CURDATE(), '#{userStatus}', #{userPenalty}, #{userPoint}, '#{userInfoKeep}', '#{userLevel}')
+	</insert>
 
-	<!-- 회원가입 -->
+	<!-- 회원등록 -->
 	<insert id="addUser" parameterType="User">
 		/* 회원 가입 */
 		INSERT INTO tb_user
