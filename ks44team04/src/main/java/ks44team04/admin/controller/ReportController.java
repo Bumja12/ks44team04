@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -127,38 +126,78 @@ public class ReportController {
 		/* model.addAttribute("reportList", reportList); */
 		return "redirect:/admin/report/reportList";
 	}
+	
+	//신고 리스트 검색 
 	@PostMapping("/report/reportList")
-	public String getReportSearch(Model model) {
+	public String getReportSearch(@RequestParam(name="reportSearchKey")String sk 
+								 ,@RequestParam(name="reportSearchValue")String sv
+								 , Model model) {
+		if("reportHistoryCode".equals(sk)) {
+			sk= "report_history_code";
+		}else if("reportedId".equals(sk)) {
+			sk= "reported_id";
+		}else if("reportApproveId".equals(sk)) {
+			sk= "report_approve_id";
+		}else if("reportResult".equals(sk)) {
+			sk= "report_result";
+		}else if("reportReason".equals(sk)) {
+			sk= "report_reason";
+		}
 		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("sk", sk);
+		paramMap.put("sv", sv);
+		
+		List<Report> reportList = reportService.getReportSearch(paramMap);
+	
 		model.addAttribute("title", "신고목록조회");
+		model.addAttribute("reportList", reportList);
 		
 		return "admin/report/reportList";
 	}
-	
-	
-	
-	
-	
 	
 	// 신고리스트
 	@GetMapping("/report/reportList")
 	public String getReportList(Model model) {
 		log.info("/admin/reportList getReportList ReportController.java");
-		List<Report> reportList = reportService.getReportList();
-
+		List<Report> reportList = reportService.getReportSearch(null);
+		log.info("신고목록  :::: {}", reportList);
 		model.addAttribute("title", "신고목록");
 		model.addAttribute("reportList", reportList);
 
 		return "admin/report/reportList";
 	}
-
+	//신고 리스트 검색 
+	@PostMapping("/report/userSuspendList")
+	public String getSuspendSearch(@RequestParam(name="reportSearchKey")String sk 
+								 ,@RequestParam(name="reportSearchValue")String sv
+								 , Model model) {
+		if("userSuspendCode".equals(sk)) {
+			sk= "user_suspend_code";
+		}else if("suspendId".equals(sk)) {
+			sk= "suspend_id";
+		}else if("approveId".equals(sk)) {
+			sk= "approve_id";
+		}else if("suspendResult".equals(sk)) {
+			sk= "suspend_result";
+		}
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("sk", sk);
+		paramMap.put("sv", sv);
+		
+		List<UserSuspend> userSuspendList = reportService.getSuspendSearch(paramMap);
+	
+		model.addAttribute("title", "정정 조회");
+		model.addAttribute("userSuspendList", userSuspendList);
+		
+		return "admin/report/userSuspendList";
+	}
 	// 정지리스트
 	@GetMapping("/report/userSuspendList")
 	public String getUserSuspendList(Model model) {
 		
-		
-		
-		  List<UserSuspend> userSuspendList = reportService.getuserSuspendList();
+		  List<UserSuspend> userSuspendList = reportService.getSuspendSearch(null);
 		  log.info("/admin/report/suspendList userSuspendList ReportController.java");
 		  
 		  model.addAttribute("title", "정지목록"); model.addAttribute("userSuspendList",

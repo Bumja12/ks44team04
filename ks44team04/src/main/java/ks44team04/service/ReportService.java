@@ -72,4 +72,9 @@ public class ReportService {
     	return userSuspendList;
     }
 
+    //정지 검색
+    public List<UserSuspend> getSuspendSearch(Map<String, Object> paramMap){
+    	List<UserSuspend> SuspendList = reportMapper.getSuspendSearch(paramMap);
+    	return SuspendList;
+    }
 }

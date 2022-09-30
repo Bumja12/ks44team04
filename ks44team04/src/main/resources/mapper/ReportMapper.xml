@@ -252,8 +252,66 @@
 		tb_user_suspend AS s
 	ORDER BY s.user_suspend_code DESC 
     </select>
-   
-
-   
+   <!-- 신고 검색  -->
+	<select id="getReportSearch" parameterType="map" resultMap="reportListResultMap" fetchSize="100">
+	/* 신고 검색  */
+		SELECT 
+			r.report_history_code
+			,r.reporting_id
+			,r.reported_id
+			,c.category_name
+			,u.report_reason
+			,r.report_what
+			,r.report_reason AS r_report_reason
+			,r.board_file
+			,r.report_date
+			,r.report_result
+			,r.report_result_reason
+			,r.report_result_date
+			,r.report_approve_id
+			,r.penalty_point AS r_penalty_point
+			,u.penalty_point
+			,r.total_penalty_point
+			,r.ban_date
+		FROM 
+			tb_report_category AS c
+			INNER JOIN 
+			tb_report AS r 
+			on
+			c.report_category = r.report_category
+			INNER JOIN 
+			tb_report_rule AS u
+			on
+			r.report_code = u.report_code
+		   <trim prefix="WHERE" prefixOverrides="AND |OR ">
+			   	<if test="sv != null and sv != ''">
+			   		${sk} LIKE CONCAT('%',#{sv},'%')
+			   	</if>
+			   	
+			   
+		   </trim>
+		   ORDER BY r.report_history_code DESC 
+	</select>
+	
+       <!-- 정지 검색  -->
+	<select id="getSuspendSearch" parameterType="map" resultMap="userSuspendListResultMap" fetchSize="100">
+	/* 정지검색  */
+		 SELECT 
+			 s.user_suspend_code
+			,s.suspend_id
+			,s.approve_id
+			,s.suspend_day
+			,s.start_suspend
+			,s.end_suspend
+			,s.suspend_result
+		FROM 
+			tb_user_suspend AS s
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%',#{sv},'%')
+			</if>
+	   </trim>
+		 ORDER BY s.user_suspend_code DESC 
+	</select>
     
 </mapper>

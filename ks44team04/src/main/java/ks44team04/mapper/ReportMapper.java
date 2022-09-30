@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+
 @Mapper
 public interface ReportMapper {
 
@@ -31,6 +32,9 @@ public interface ReportMapper {
     
     //신고 검색 
     public List<Report> getReportSearch(Map<String, Object> searchMap);
+    
+    //정지 검색 
+    public List<UserSuspend> getSuspendSearch(Map<String, Object> searchMap);
     
 
 }

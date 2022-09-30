@@ -13,9 +13,44 @@
         <h3>신고 관리</h3>
       </div>
    </div>
+   <!-- 검색  -->
+   <div class="x_panel">
+    <!-- 검색 시작-->
+	<form method="post" action="/admin/report/reportList">
+		<div class="">
+			<table class=" table table-bordered" style="background-color: white;  ">
+				<tbody >
+					<tr>
+						<td class="col-md-2 col-sm-2" style="padding-top: 10px; text-align:right; border-color: white; width: 60px;"><b >검색어</b></td>
+						<td class="col-md-4"style=" border-color: white; padding: 0px; width: 360px;">
+							<div class="form-inline" style="text-align: center;">
+								<div class="form-group" >
+									<select class="form-control" name="reportSearchKey" style="width: 150px;">
+										<option selected value="''">- 전체검색 -</option>
+										<option value="reportHistoryCode">회원신고기록코드</option>
+										<option value="reportedId">신고 대상 아이디</option>
+										<option value="reportApproveId">승인자 아이디</option>
+										<option value="reportResult">처리상태</option>
+										<option value="reportReason">신고내용</option>
+										
+									</select>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control text"  name="reportSearchValue" value="" placeholder="검색어를 입력해주세요">
+								</div>
+							</div>
+						</td>
+						<td style=" border-color: white; padding: 0px;">
+							<button type="submit" class="btn btn-dark">검색</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+        </form>
+        <!-- 검색 끝 -->
         <div class="col-md-12 col-sm-12 ">
           <div class="x_panel">
-
             <div class="x_title">
               <h2>처리 대기중</h2>
               <ul class="nav navbar-right panel_toolbox">
@@ -57,7 +92,8 @@
                 </thead>
 
                 <tbody style="text-align: center;" >
-                  <tr th:if="${l.reportResult == '대기중' }" th:each="l : ${reportList}"  class="even pointer">
+                <th:block th:if="${l.reportResult == '대기중' }" th:each="l : ${reportList}"  >
+                  <tr class="even pointer">
                     <td th:text="${l.reportHistoryCode}"></td>
                     <td th:text="${l.reportingId}"></td>
                     <td th:text="${l.reportedId}"> </td>
@@ -68,8 +104,11 @@
                     <td th:text="${l.reportDate}"></td>
                     <td th:text="${l.reportResult}"></td>
                     <td style="padding: 0px; "><a th:href="@{/admin/report/reportProcessing(reportHistoryCode=${l.reportHistoryCode})}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">처리</button></a></td>
-                    
                   </tr>
+                </th:block>
+                   <tr th:unless="${not #lists.isEmpty(reportList)}">
+					<td colspan="12">못찾겠다 꾀꼬리</td>
+				  </tr>
                 </tbody>
               </table>
             </div>
@@ -98,7 +137,7 @@
               <div class="clearfix"></div>
             </div>
             <!-- 검색 창 -->
-          <div th:include="admin/report/reportSearch :: reportSearch"></div>
+          
              
 
             <div class="x_content">
@@ -149,6 +188,7 @@
                 </tbody>
               </table>
             </div>
+          </div>
           </div>
           <!-- reportModel 불러오기  -->
           <div th:include="admin/report/report :: reportModal"></div>
