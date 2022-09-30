@@ -5,6 +5,7 @@ import ks44team04.dto.Report;
 import ks44team04.dto.UserSuspend;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,11 +48,19 @@ public class ReportService {
 		return reportList;
 	}
     
+    //신고 검색
+    public List<Report> getReportSearch(Map<String, Object> paramMap){
+    	List<Report> reportList = reportMapper.getReportSearch(paramMap);
+    	return reportList;
+    }
+    
+    
     //신고 등록 코드 증가 
     public String getHistoryCode() {
     	String HistoryCode = reportMapper.getHistoryCode();
     	return HistoryCode;
     }
+    
     
     //정지 리스트 
     public List<UserSuspend> getuserSuspendList(){

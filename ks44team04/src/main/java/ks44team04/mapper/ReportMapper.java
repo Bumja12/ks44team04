@@ -4,6 +4,7 @@ import ks44team04.dto.Report;
 import ks44team04.dto.UserSuspend;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -29,5 +30,7 @@ public interface ReportMapper {
     //신고 처리 
     public int reportProcessing(Report report);
     
+    //신고 검색 
+    public List<Report> getReportSearch(Map<String, Object> searchMap);
     
 }
