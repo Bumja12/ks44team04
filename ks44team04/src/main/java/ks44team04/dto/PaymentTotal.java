@@ -1,9 +1,9 @@
 package ks44team04.dto;
 
 public class PaymentTotal {
-	
+
 	private PaymentInfo paymentInfo;
-	
+
 	public PaymentInfo getPaymentInfo() {
 		return paymentInfo;
 	}
@@ -23,10 +23,10 @@ public class PaymentTotal {
 	private int orderAmount;
 	private String paymentMethod;
 	private String cardCompany;
-    private String cardNumber;
-    private int approvePrice;
-    private String refundBank;
-    private String refundAccount;
+	private String cardNumber;
+	private int approvePrice;
+	private String refundBank;
+	private String refundAccount;
 
 	public String getOrderDetailCode() {
 		return orderDetailCode;
@@ -158,7 +158,4 @@ public class PaymentTotal {
 				+ ", refundAccount=" + refundAccount + "]";
 	}
 
-	
-
-	
 }

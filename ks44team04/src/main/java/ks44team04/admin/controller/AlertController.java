@@ -16,14 +16,14 @@ import ks44team04.dto.AlertSend;
 @Controller
 @RequestMapping("/admin")
 public class AlertController {
-	
-	private AlertService alertService;
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
-    public AlertController(AlertService alertService) {
-    	this.alertService = alertService;
-    }
-    
+	private AlertService alertService;
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	public AlertController(AlertService alertService) {
+		this.alertService = alertService;
+	}
+
 	@GetMapping("/alert/alertSendList")
 	public String getAlertSendList(Model model) {
 		List<AlertSend> alertSendList = alertService.getAlertSendList();
@@ -33,7 +33,7 @@ public class AlertController {
 		model.addAttribute("alertList", alertList);
 		model.addAttribute("alertSendList", alertSendList);
 		model.addAttribute("title", "알림전송내역");
-		
+
 		/*
 		 * if(alertSendList != null) { for(AlertSend alertSend : alertSendList) { String
 		 * alertCode = alertSend.getAlertCode(); for(Alert alert : alertList) {
@@ -44,17 +44,17 @@ public class AlertController {
 		 * 
 		 * } } } }
 		 */
-		
+
 		return "admin/alert/alertSendList";
 	}
-	
+
 	@GetMapping("/alert/alertList")
 	public String getAlertList1(Model model) {
 		List<Alert> alertList = alertService.getAlertList();
 		log.info("알림 목록 ::: {}", alertList);
 		model.addAttribute("alertList", alertList);
 		model.addAttribute("title", "알림목록");
-		
+
 		return "admin/alert/alertList";
 	}
 
