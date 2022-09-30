@@ -8,6 +8,7 @@ import ks44team04.service.PointService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
@@ -81,8 +82,8 @@ public class UserOrderController {
         return "user/order/orderCancel";
     }
 
-    @GetMapping("/exchange")
-    public String orderExchange() {
+    @GetMapping("/exchange/{orderdetailnum}")
+    public String orderExchange(@PathVariable("orderdetailnum") String orderDetailNum) {
 
         return "user/order/orderExchange";
     }

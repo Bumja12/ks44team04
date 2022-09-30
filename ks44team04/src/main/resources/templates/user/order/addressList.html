@@ -165,11 +165,11 @@
 </head>
 <body>
 <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="osahan-account-page-right shadow-sm bg-white p-4 h-100">
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade  active show" id="addresses" role="tabpanel" aria-labelledby="addresses-tab">
-                    <h4 class="font-weight-bold mt-0 mb-4">Manage Addresses</h4>
+                <div class="tab-pane fade  active show" id="addresses" role="tabpanel">
+                    <h4 class="font-weight-bold mt-0 mb-4">배송지 관리</h4>
                     <div class="row pt-2 pb-2">
                         <th:block th:if="${not #lists.isEmpty(addressList)}">
                             <div class="col-md-10" th:each="l, e : ${addressList}">
@@ -186,14 +186,16 @@
                                                         <th:block th:if="${not #strings.isEmpty(l.phone2)}"> | [[${l.phone2}]]</th:block>
                                                     </span>
                                                 </p>
-                                                <p class="mb-0 text-black font-weight-bold"><a
-                                                        class="text-default mr-1 btn-sm btn-primary"
-                                                        data-toggle="modal" data-target="#add-address-modal" href="#"><i
-                                                        class="icofont-ui-edit"></i> 수정</a> <a
-                                                        class="text-default btn-sm btn-danger"
-                                                        data-toggle="modal" data-target="#delete-address-modal"
-                                                        href="#"><i
-                                                        class="icofont-ui-delete"></i> 삭제</a></p>
+                                                <p class="mb-0 text-black font-weight-bold">
+                                                    <a type="button" class="text-default mr-1 btn-sm btn-primary"
+                                                       th:href="|javascript:modifyAddress('${l.addressList}')|">
+                                                        <i class="icofont-ui-edit"></i> 수정
+                                                    </a>
+                                                    <a type="button" class="text-default btn-sm btn-danger"
+                                                       th:href="|javascript:deleteAddress('${l.addressList}')|">
+                                                        <i class="icofont-ui-delete"></i> 삭제
+                                                    </a>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -207,11 +209,110 @@
     </div>
 </div>
 
+<div id="addressModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content col-6">
+            <form id="addressRegisterForm" th:action="@{/user/address/modify}" method="post" class=""
+                  onsubmit="submitCheck();">
+                <div class="modal-body">
+                    <input type="hidden" id="addressList" name="addressList" value=""/>
+                    <div class="form-group">
+                        <label class="" for="addressName"> 배송지명 <span class="required">*</span> </label>
+                        <div class="">
+                            <input type="text" id="addressName" name="addressName" required="required" class="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="receiverName"> 수령인 <span class="required">*</span> </label>
+                        <div class="">
+                            <input type="text" id="receiverName" name="receiverName" required="required" class="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="postalCode"> 우편번호 <span class="required">*</span> </label>
+                        <div class="">
+                            <input type="text" id="postalCode" name="postalCode" required="required" class="col-7 px-0"
+                                   readonly>
+                            <button id="addressSearchBtn" type="button" class="btn-sm btn-secondary">주소 검색</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="address"> 주소 <span class="required">*</span> </label>
+                        <div class="">
+                            <input type="text" id="address" name="address" required="required" class="" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="address2"> 상세주소 <span class="required">*</span> </label>
+                        <div class="">
+                            <input type="text" id="address2" name="address2" required="required" class="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="phone"> 연락처 <span class="required">*</span> </label>
+                        <div class="">
+                            <input type="text" id="phone" name="phone" required="required" class="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone2" class=""> 연락처 2 </label>
+                        <div class="">
+                            <input id="phone2" class="" type="text" name="phone2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="defaultAddressCheck"> 기본배송지 설정 </label>
+                        <input type="checkbox" id="defaultAddressCheck" name="defaultAddressCheck" class=""
+                               checked="checked"
+                               value="Y">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" onclick="closeModal();">취소</button>
+                    <button class="btn btn-secondary" type="reset">리셋</button>
+                    <button id="addressRegisterBtn" type="submit" class="btn btn-dark">수정</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+
+<script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
 <script>
-    function deleteAddressFn(href) {
+    // 주소검색 api 설정
+    document.querySelector('#addressSearchBtn').addEventListener('click', function () {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                document.querySelector('#postalCode').value = data.zonecode;
+                document.querySelector('#address').value = data.address;
+            }
+        }).open();
+    });
+
+    const modifyAddress = function (addressList) {
+        fetch(`/user/address/modify/${addressList}`)
+            .then((response) => response.json())
+            .then((data) => {
+                for (let key in data) {
+                    let input = document.querySelector('#' + key);
+                    if (input !== null) {
+                        input.value = data[key];
+                    }
+                }
+            });
+        document.querySelector('#addressList').value = addressList;
+        document.querySelector('#addressModal').style.display = 'block';
+    }
+
+    const closeModal = function () {
+        document.querySelector('#addressModal').style.display = 'none';
+        document.querySelector('#addressRegisterForm').reset();
+    }
+
+    function deleteAddress(addressList) {
         if (confirm("정말로 삭제하시겠습니까?")) {
-            location.href = `/user/address/delete/${href}`;
+            location.href = `/user/address/delete/${addressList}`;
         }
     }
 </script>

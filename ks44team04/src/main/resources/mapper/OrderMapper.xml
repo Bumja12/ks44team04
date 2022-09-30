@@ -80,5 +80,13 @@
         FROM tb_order_exchange
     </select>
 
+    <select id="getOrderDetailByODC" parameterType="String" resultType="orderDetail">
+        select *
+        from tb_order_detail
+        where order_detail_code = #{orderDetailCode}
+    </select>
+
 
 </mapper>
+
+        

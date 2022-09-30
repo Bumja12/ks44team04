@@ -54,7 +54,7 @@ public class UserRegularPostController {
     @GetMapping("/modify")
     public String regularPostModify(Model model) {
 
-        return "user/regularPost/regularPostModify";
+        return "regularPostExchange";
     }
 
     @GetMapping("/delete")
