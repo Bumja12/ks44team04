@@ -34,7 +34,9 @@ public class PaymentController {
 	public void paymentControllerInit() {
 		log.info("paymentController Bean 생성");
 	}
-
+	
+	
+	
 	@PostMapping("/removePaymentDetail")
 	public String removePaymentDetail(String orderDetailCode, RedirectAttributes reAttr) {
 
