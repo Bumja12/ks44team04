@@ -1,6 +1,7 @@
 package ks44team04.admin.controller;
 
 import ks44team04.dto.Goods;
+import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
 import ks44team04.service.GoodsService;
 import ks44team04.util.CodeIndex;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -31,8 +33,12 @@ public class GoodsController {
 		List<Goods> goodsList = goodsService.getGoodsList();
 		log.info("등록된 상품 리스트 ::: {}", goodsList);
 		
+		List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
+		log.info("카테고리 대분류 리스트 ::: {}", largeCategoryList);
+		
 		model.addAttribute("title", "상품목록");
 		model.addAttribute("goodsList", goodsList);
+		model.addAttribute("largeCategoryList", largeCategoryList);
 		
 		return "/admin/goods/goodsList";
 	}
@@ -106,7 +112,18 @@ public class GoodsController {
 		}
 
 		return "redirect:/admin/goods/goodsList";
-	}	
+	}
+	
+	@PostMapping("/pwCheck")
+	@ResponseBody
+	public int pwCheck(@RequestParam(value = "userPw") String userPw) {
+		//String userId = "admin01";
+		String adminPw = goodsService.getAdminPw(userPw);
+		if(userPw.equals(adminPw)) {
+			return 1;
+		}
+		return 0;
+	}
 		
 	
 	//상품문의 & 상품문의 답변
