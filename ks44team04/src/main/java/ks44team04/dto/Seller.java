@@ -11,6 +11,7 @@ public class Seller {
     private String accountHolder;
     private String licenceNum;
     private String storeAddress;
+    private String storeAddress2;
     private String storePhone;
     private String storeEmail;
     private String licenceImg;
@@ -94,6 +95,14 @@ public class Seller {
 
 	public void setStoreAddress(String storeAddress) {
 		this.storeAddress = storeAddress;
+	}
+
+	public String getStoreAddress2() {
+		return storeAddress2;
+	}
+
+	public void setStoreAddress2(String storeAddress2) {
+		this.storeAddress2 = storeAddress2;
 	}
 
 	public String getStorePhone() {
@@ -204,6 +213,7 @@ public class Seller {
                 ", accountHolder='" + accountHolder + '\'' +
                 ", licenseNum='" + licenceNum + '\'' +
                 ", storeAddress='" + storeAddress + '\'' +
+                ", storeAddress2='" + storeAddress2 + '\'' +
                 ", storePhone='" + storePhone + '\'' +
                 ", storeEmail='" + storeEmail + '\'' +
                 ", licenseImg='" + licenceImg + '\'' +

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,18 +35,75 @@ public class ReportController {
 	 * 
 	 * return "redirect:/admin/report/reportList"; }
 	 */
-	 
+	
+
+	
+	//상세 처리  
+	@PostMapping("/report/reportParticulars")
+	public String reportParticulars(@RequestParam(value = "reportResult" , required = false) String reportResult, 
+										@RequestParam(value = "penaltyPoint", required = false) int penaltyPoint, 
+										@RequestParam(value = "totalPenaltyPoint" , required = false) int totalPenaltyPoint, Report report) {
+											
+			
+		log.info("reportResult ::::::::::: {}",reportResult);
+		log.info("penaltyPoint ::::::::::: {}",penaltyPoint);
+		log.info("totalPenaltyPoint ::::::::::: {}",totalPenaltyPoint);
+		
+		if("반려".equals(reportResult)) {
+			report.setPenaltyPoint(0);
+			report.setTotalPenaltyPoint(totalPenaltyPoint - penaltyPoint);
+			
+		}
+		reportService.reportProcessing(report);
+		
+		return "redirect:/admin/report/reportList";
+	}
+	
+	//상세 처리  
+	@GetMapping("/report/reportParticulars")
+	public String reportParticulars(@RequestParam(value = "reportHistoryCode" , required = false) String
+            reportHistoryCode, Report report, Model model) {
+		
+		//특정 신고목록
+		Report Report = reportService.getReportHostryCode(reportHistoryCode);
+		model.addAttribute("titel", "신고상세수정");
+		model.addAttribute("Report", Report);
+		
+		
+		return "admin/report/reportParticulars";
+	}
+	
+	//신고 처리  
+	@PostMapping("/report/reportProcessing")
+	public String getreportProcessing(@RequestParam(value = "reportResult" , required = false) String reportResult, 
+										@RequestParam(value = "penaltyPoint", required = false) int penaltyPoint, 
+										@RequestParam(value = "totalPenaltyPoint" , required = false) int totalPenaltyPoint, Report report) {
+											
+			
+		log.info("reportResult ::::::::::: {}",reportResult);
+		log.info("penaltyPoint ::::::::::: {}",penaltyPoint);
+		log.info("totalPenaltyPoint ::::::::::: {}",totalPenaltyPoint);
+		
+		if("반려".equals(reportResult)) {
+			report.setPenaltyPoint(0);
+			report.setTotalPenaltyPoint(totalPenaltyPoint - penaltyPoint);
+			
+		}
+		reportService.reportProcessing(report);
+		
+		return "redirect:/admin/report/reportList";
+	}
 	
 	//신고 처리
 	@GetMapping("/report/reportProcessing")
 	public String getreportProcessing(@RequestParam(value = "reportHistoryCode" , required = false) String
-            reportHistoryCode,Model model) {
+            reportHistoryCode, Report report ,Model model) {
+		
+		//특정 신고목록
 		Report Report = reportService.getReportHostryCode(reportHistoryCode);
-		List<Report> reportList = reportService.getReportList();
 		
 		model.addAttribute("titel", "신고처리");
 		model.addAttribute("Report", Report);
-		model.addAttribute("reportList", reportList);
 		
 		return "admin/report/reportProcessing";
 	}

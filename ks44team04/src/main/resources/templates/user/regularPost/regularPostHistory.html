@@ -15,8 +15,7 @@
     <style>
         .orderBtn {
             width: 82px;
-        }
-    </style>
+        }    </style>
 </head>
 <body>
 <div class="container">
@@ -49,7 +48,9 @@
                     </ul>
                 </td>
                 <td th:text="${#strings.substring(l.order.orderDate, 0, 10)}">2022.09.26</td>
-                <td th:text="${l.order.orderNum}">12311234</td>
+                <td>
+                    <a class="text-decoration-none text-black-50" th:href="'/user/regularPost/' + ${l.order.orderNum}">[[${l.order.orderNum}]]</a>
+                </td>
                 <td>
                     <div class="" th:text="${l.orderDetail.orderPrice} + '원'">30000원</div>
                     <div class="" th:text="${l.orderDetail.orderAmount} + '개'">1개</div>
@@ -60,15 +61,25 @@
                 </td>
                 <th:block th:switch="${l.orderDetail.orderStatus}">
                     <td th:case="결제완료">
-                        <button type="button" class="btn-sm orderBtn">주문취소</button>
+                        <button type="button" class="btn-sm orderBtn orderCancel"
+                                th:data-order-detail-code="${l.orderDetail.orderDetailCode}">주문취소
+                        </button>
                     </td>
                     <td th:case="배송완료">
-                        <button type="button" class="btn-sm orderBtn">교환요청</button>
-                        <button type="button" class="btn-sm orderBtn">환불요청</button>
-                        <button type="button" class="btn-sm orderBtn">구매확정</button>
+                        <button type="button" class="btn-sm orderBtn orderReplace"
+                                th:data-order-detail-code="${l.orderDetail.orderDetailCode}">교환요청
+                        </button>
+                        <button type="button" class="btn-sm orderBtn orderRefund"
+                                th:data-order-detail-code="${l.orderDetail.orderDetailCode}">환불요청
+                        </button>
+                        <button type="button" class="btn-sm orderBtn orderConfirm"
+                                th:data-order-detail-code="${l.orderDetail.orderDetailCode}">구매확정
+                        </button>
                     </td>
                     <td th:case="구매확정">
-                        <button type="button" class="btn-sm orderBtn">리뷰작성</button>
+                        <button type="button" class="btn-sm orderBtn writeReview"
+                                th:data-order-detail-code="${l.orderDetail.orderDetailCode}">리뷰작성
+                        </button>
                     </td>
                 </th:block>
             </tr>
@@ -78,15 +89,44 @@
 </div>
 
 <script>
+
+
     document.querySelector('button').tagName
     document.addEventListener('click', (e) => {
         if (e.target.tagName === 'BUTTON') {
             const postCode = e.target.dataset.postCode;
+            const orderDetailCode = e.target.dataset.orderDetailCode;
             if (postCode !== undefined) {
-                location.href = `/user/regularpost/postcheck/${postCode}`;
+                const url = `/user/regularpost/postcheck/${postCode}`;
+                window.open(url, 'postCheck', '_blank');
+            }
+            if (e.target.classList.contains('orderCancel')) {
+
+            }
+            if (e.target.classList.contains('orderReplace')) {
+
+            }
+            if (e.target.classList.contains('orderRefund')) {
+
+            }
+            if (e.target.classList.contains('orderConfirm')) {
+                if (confirm('구매확정하시겠습니까?')) {
+                    fetch(`/user/regularpost/confirm/${orderDetailCode}`)
+                        .catch(() => {
+                            alert('구매확정을 실패했습니다. 다시 시도해주세요')
+                        })
+                        .finally(() => { location.reload(); });
+                }
+            }
+            if (e.target.classList.contains('writeReview')) {
+
             }
         }
     });
+
+    const buyConfirm = function () {
+        this.dataset
+    }
 </script>
 </body>
 </html>

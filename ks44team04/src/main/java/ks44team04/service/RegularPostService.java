@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -19,5 +20,9 @@ public class RegularPostService {
 
     public List<RegularPostHistory> getRegularPostHistory(String userId) {
         return regularPostMapper.getRegularPostHistory(userId);
+    }
+
+    public void setOrderDetailStatus(Map<String, String> orderProcess) {
+        regularPostMapper.setOrderDetailStatus(orderProcess);
     }
 }

@@ -1,7 +1,6 @@
 package ks44team04.admin.controller;
 
 import ks44team04.service.UserService;
-import ks44team04.dto.Right;
 import ks44team04.dto.Seller;
 import ks44team04.dto.Dormant;
 import ks44team04.dto.Goods;
@@ -9,7 +8,7 @@ import ks44team04.dto.Leave;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.Login;
-
+import ks44team04.dto.Right;
 import ks44team04.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,9 +52,17 @@ public class UserController {
 	@GetMapping("/user/addUser")
 	public String addUserForm(Model model) {
 		
-		List<Right> RightList = userService.getRightList();
+		List<LevelBuyerCategory> levelBuyer = userService.getLevelBuyer();
+        log.info("구매자 레벨 ::: {}",levelBuyer);
+		List<LevelSellerCategory> levelSeller = userService.getLevelSeller();
+		log.info("판매자 레벨 ::: {}",levelSeller);
+		List<Right> rightList = userService.getRightList();
+		log.info("권한 ::: {}",rightList);
+
 		model.addAttribute("title", "회원가입");
-		model.addAttribute("RightList", RightList);
+		model.addAttribute("levelBuyer", levelBuyer);
+		model.addAttribute("levelSeller", levelSeller);
+		model.addAttribute("rightList", rightList);
 		
 		return "admin/user/addUser";
 	}

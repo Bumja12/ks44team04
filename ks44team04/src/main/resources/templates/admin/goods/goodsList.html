@@ -30,40 +30,6 @@
 </style>
 </th:block>
 
-  <th:block layout:fragment="customTopJs">
- 
-	<script>
-	$(function() {
-		$('#removeModal').on('show.bs.modal', function (event) {
-			  var button = $(event.relatedTarget)
-			//var recipient = button.data('whatever')
-			  var modal = $(this)
-			  var modalDialog = $(this).find(".modal-dialog");
-			//modal.find('.modal-title').text('삭제하시겠습니까?')
-			//modal.find('.modal-body input').val(recipient)
-			});
-		$('#removeModal').on('hidden.bs.modal', function (event) {
-			 var modal = $(this)
-			 $(this).find('form')[0].reset()
-			 $('#pwCheck').text('');
-		});
-		$('#removeBtn').click(function(){
-			var adminPw = $('input[name="adminPw"]').val();
-			
-			if(typeof adminPw == 'undefined' || adminPw == null || adminPw == ''){
-				$('#pwCheck').text('비밀번호를 입력해주세요.');
-				$('input[name="adminPw"]').focus()
-				return false;
-			}
-			
-			if(adminPw){
-				$('#goodsDeleteForm').submit();
-			}
-		});
-	});
-	</script>
-</th:block> 
-
 <th:block layout:fragment="customContents">
 	<div class="page-title">
 		<div class="title_left">
@@ -155,7 +121,7 @@
 							<th style="width: 80px;">판매자</th>
 							<th style="width: 60px;">신고수</th>
 							<th style="width: 140px;">등록일</th>
-							<th style="width: 100px;">관리</th>
+							<th style="width: 110px;">관리</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -173,10 +139,8 @@
 							<td th:text="${g.goodsReportAmount}"></td>
 							<td th:text="${g.regDate}"></td>
 							<td style="text-align: center;">
-								<!-- <a th:href="@{/admin/goods/modifyGoods}"><i class="fa fa-edit"></i>수정</a> -->
 								<a th:href="@{/admin/goods/goodsModify(goodsCode=${g.goodsCode})}"><i class="fa fa-edit"></i> 수정</a>
-								<!-- <a href="#"><i class="fa fa-edit"></i> 수정</a> -->
-								<a href="javascript:void(0);" class="Modal" data-toggle="modal" data-target="#removeModal"><i class="fa fa-close"></i> 삭제</a>
+								<a href="javascript:void(0);" class="Modal removeBtn" th:data-goods-code="${g.goodsCode}" data-toggle="modal" data-target="#removeModal"><i class="fa fa-close"></i> 삭제</a>
 							</td>
 						</tr>
 						<tr th:unless="${not #lists.isEmpty(goodsList)}">
@@ -188,7 +152,8 @@
 		</div>
 	</div>
 	
-<div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
+<form id="goodsDeleteForm" method="get" th:action="@{/admin/goods/goodsRemove}">
+<div class="removeModal modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
   <!-- <div class="modal-dialog modal-dialog-centered modal-sm" role="document"> -->
 	<div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
@@ -196,20 +161,60 @@
         <h5 class="modal-title" id="removeModalLabel" style="font-weight: bold;">삭제하시겠습니까?</h5>
       </div>
       <div class="modal-body">
-        <form id="goodsDeleteForm" method="post">
           <div class="form-group">
             <label for="adminPw" class="col-form-label">관리자 비밀번호</label>
             <input type="password" class="form-control" id="adminPw" name="adminPw">
             <p id="pwCheck" style="color:gray; font-weight: bold;"> </p>
           </div>
-        </form>
       </div>
       <div class="modal-footer" style="text-align: center;">
-        <button type="button" class="btn btn-dark" id="removeBtn">확인</button>
+      	<input type="hidden" name="goodsCode" id="goodsCode">
+        <button type="button" class="btn btn-dark" id="removeBtnCheck">확인</button>
         <button type="button" class="btn btn-secondary" id='closeBtn' data-dismiss="modal">닫기</button>
       </div>
     </div>
   </div>
 </div>
+</form>
 </th:block>
+
+
+<th:block layout:fragment="customScript">
+
+	<script>
+	
+	 $(function() {
+		$('#removeModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget)
+			var modal = $(this)
+			var modalDialog = $(this).find(".modal-dialog");
+		}); 
+		/* 모달 닫을 때 안에 있는 데이터 초기화 */
+		$('.removeModal').on('hidden.bs.modal', function (event) {
+			 $(this).find('form')[0].reset()
+			// $('#goodsDeleteForm').reset();
+			 //$('#pwCheck').text('');
+		});
+		
+		$('.removeBtn').each(function(){
+			$(this).click(function(){
+				var goodsCode =  $(this).data("goods-code");
+				$('#goodsCode').val( goodsCode );
+			});
+		});			
+			
+		$('#removeBtnCheck').click(function(){
+			/*var adminPw = $('input[name="adminPw"]').val();
+				
+			if(typeof adminPw == 'undefined' || adminPw == null || adminPw == ''){
+				$('#pwCheck').text('비밀번호를 입력해주세요.');
+				$('input[name="adminPw"]').focus()
+				return false;
+			}*/
+			$('#goodsDeleteForm').submit();
+		});
+	});
+		//});
+	</script>
+</th:block> 
 </html>

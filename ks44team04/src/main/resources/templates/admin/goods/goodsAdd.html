@@ -50,6 +50,7 @@
 		</div>
 	</div>
 
+<form id="goodsAddForm" th:action="@{/admin/goods/goodsAdd}" method="post">
 	<div class="x_panel">
 		<div>
 			<h5>
@@ -89,8 +90,8 @@
 		<div class="x_content2">
 			<div class="well well-sm">
 				<div class="firstMenu form-inline">
-					<label class="addTitle control-label">상품명</label>
-						<input type="text" class="form-control" size="30">
+					<label class="addTitle control-label" for="goodsName">상품명</label>
+						<input type="text" class="form-control" id="goodsName" name="goodsName" required="required" size="30">
 						<p class="explain">
 							상품명 최대 30글자까지 입력가능하며, 일부 특수문자를 포함한 금칙어는 상품명으로 사용할 수 없습니다.<br>
 							판매 상품과 직접 관련이 없는 다른 상품명, 스팸성 키워드 입력 시 관리자에 의해 판매 금지될 수 있습니다.</p>
@@ -108,16 +109,17 @@
 		<div class="x_content2">
 			<div class="well well-sm">
 				<div class="firstMenu form-inline">
-					<label class="addTitle numberTitle control-label">판매가</label>
+					<label class="addTitle numberTitle control-label" for="goodsPrice">판매가</label>
 					<div class="input-group">
-						<input type="text" class="salePrice numberInput form-control" size="12" placeholder="숫자만 입력 가능">
+					<input type="hidden" id="hiddenGoodsPrice" value="0">
+						<input type="text" class="salePrice numberInput form-control" id="goodsPrice" name="goodsPrice" size="12" placeholder="숫자만 입력 가능">
 						<span class="input-group-addon">원</span>
 					</div>
 				</div>
 				<div class="firstMenu form-inline">
-					<label class="addTitle numberTitle control-label">할인율</label>
+					<label class="addTitle numberTitle control-label" for="discountRate">할인율</label>
 					<div class="input-group">
-						<input type="text" name="rate" class="discountRate numberInput form-control" size="3">
+						<input type="text" class="disRate numberInput form-control" id="discountRate" name="discountRate" size="3">
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
@@ -125,9 +127,11 @@
 				<div class="firstMenu form-inline">
 					<label class="addTitle numberTitle control-label">할인가</label>
 					<div class="form-group" id="resultDiv" style="margin-top: -10px;">
+						<input type="hidden" id="hiddenPrice" value="0">
 						<span class="discountPrice" style="font-size: 25px;">0</span>
 						<span style="font-size: 20px;">원</span>
 						<span class="priceChange" style="margin-left: 5px;">(</span>
+						<input type="hidden" id="hiddenDiscount" value="0">
 						<span class="discountVal priceChange" style="margin-left: -4px;">0</span>
 						<span class="priceChange" style="margin-left: -3px;">원 할인)</span>
 					</div>
@@ -146,9 +150,9 @@
 		<div class="x_content2">
 			<div class="well well-sm">
 				<div class="firstMenu form-inline">
-					<label class="addTitle numberTitle control-label">재고수량</label>
+					<label class="addTitle numberTitle control-label" for="goodsStock">재고수량</label>
 					<div class="input-group">
-						<input type="text" class="numberInput form-control" size="5">
+						<input type="text" class="numberInput form-control" id="goodsStock" name="goodsStock" size="5">
 						<span class="input-group-addon">개</span>
 					</div>
 					<p class="explain">
@@ -156,22 +160,30 @@
 				</div>
 				<hr class="hrStyle" align="left">
 				<div class="firstMenu form-inline">
-					<label class="addTitle control-label">묶음배송</label>
-						<div class="input-group" style="margin-top: 8px;">
-                        	<input type="checkbox" class="flat"> 가능
-                            <input type="checkbox" class="flat"> 불가능
-                        </div>
-				</div>
-				<div class="firstMenu form-inline">
-					<label class="control-label" style="margin-right: 17px; margin-left: 5px; margin-top: -8px;">배송비</label>
+					<label class="control-label" for="goodsPostPrice" style="margin-right: 17px; margin-left: 5px; margin-top: -8px;">배송비</label>
 					<div class="addTitle input-group">
-						<input type="text" class="numberInput form-control" size="5">
+						<input type="text" class="postPrice numberInput form-control" id="goodsPostPrice" name="goodsPostPrice" size="5">
 						<span class="input-group-addon">원</span>
 					</div>
 					<input type="checkbox" class="flat"> 무료배송
 				</div>
 				<p class="explain">
 					무료배송 체크 시, 자동으로 배송비는 0원으로 변경됩니다.</p>
+					
+				<div class="firstMenu form-inline">
+					<label class="addTitle control-label" for="packagePostCheck">묶음배송</label>
+						<div class="input-group" style="margin-top: 8px;">
+                        	<input type="checkbox" class="flat" id="packagePostCheck" name="packagePostCheck"> 가능
+                            <input type="checkbox" class="flat" id="packagePostCheck" name="packagePostCheck"> 불가능
+                        </div>
+				</div>
+				<div class="firstMenu form-inline">
+					<label class="addTitle control-label" for="regularDeliverCheck">정기배송</label>
+						<div class="input-group" style="margin-top: 8px;">
+                        	<input type="checkbox" class="flat" id="regularDeliverCheck" name="regularDeliverCheck"> 가능
+                            <input type="checkbox" class="flat" id="regularDeliverCheck" name="regularDeliverCheck"> 불가능
+                        </div>
+				</div>
 			</div>
 		</div>
 
@@ -185,8 +197,8 @@
 		<div class="x_content2">
 			<div class="well well-sm">
 				<div class="firstMenu form-inline">
-					<label class="imgTitle control-label">대표이미지</label>
-					<img src="gom.png" class="img img-thumbnail" alt="대표이미지">
+					<label class="imgTitle control-label" for="goodsFile">대표이미지</label>
+					<img src="gom.png" class="img img-thumbnail" alt="대표이미지" id="goodsFile" name="goodsFile">
 				</div>
 				<p class="imgExplain">권장 크기 : 640 x 640 (윈도대상 750 x 1000)</p>
 
@@ -214,7 +226,7 @@
 		<div class="x_content2">
 			<div class="well well-sm">
 				<div class="form-inline form-group" style="margin-top: 20px;">
- 					<textarea class="summernote" ></textarea>
+ 					<textarea class="summernote" id="goodsContent" name="goodsContent"></textarea>
  				</div>
  				<p class="explain">
  					상세설명 권장 크기 : 가로 860px <br>
@@ -224,10 +236,12 @@
 		</div>
 			
 		<div style="text-align: center;">
-			<button type="button" class="btn btn-dark">등록</button>
+			<button type="button" class="btn btn-dark" th:onclick="|location.href='@{/admin/goods/goodsList}'|">취소</button>
 			<button type="reset" class="btn btn-dark">초기화</button>
+			<button type="submit" class="btn btn-dark" id="goodsAddBtn">등록</button>
 		</div>
 	</div>
+</form>
 </th:block>
 
 <th:block layout:fragment="customJsScript">
@@ -237,8 +251,8 @@
     <script>history.scrollRestoration = "manual"</script>
     
 	<script>
+    
 	$(function(){
-	   
 	    /* 섬머노트 설정 */
 		$(document).ready(function() {
 	    	$('.summernote').summernote({
@@ -260,32 +274,48 @@
 			});
 		});
 	    	
-		/* 숫자 천단위 콤마 찍기 & 숫자만 입력 */
+		/* 숫자만 입력  & 숫자 천단위 콤마 찍기  */
 		$('.numberInput').on('input',function(){
 			$(this).val($(this).val().replace(/[^0-9.]/g,'').replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,'));
 		});
 	    	
 		/* input 할인율 숫자 99까지만 입력 가능하게 하기 */
-		$('.discountRate').on("keyup",function() {
+		$('.disRate').on("keyup",function() {
 			var val= $(this).val();
 			if(val < 1 || val > 99) {
 			$(this).val('');
 			}
 		});
 	    	
-	    /* 판매가에 할인율 입력 시 할인가 자동 계산 */
-		$('.discountRate, .salePrice').on('change',function(){
+	    /* 판매가, 할인율 입력 시 자동 계산 후 할인가 입력 */
+		$('.disRate, .salePrice').on('change',function(){
 			if ($('.salePrice').val() != null && $('.goodsPrice').val() != '') {
 				var salePrice = Number($('.salePrice').val().replace(/,/g, ""));
-				var discountRate = Number($('.discountRate').val());
-				var discounted = salePrice * discountRate / 100;
-				
-				$('.discountVal').text( discounted );
-				$('.discountPrice').text( salePrice - discounted ).replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+				var disRate = Number($('.disRate').val());
+				var discounted = salePrice * disRate / 100;
+				//할인가 콤마 넣기
+				$('#hiddenDiscount').val(discounted);
+				var hiddenDiscount = $('#hiddenDiscount').val().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+				$('.discountVal').text( hiddenDiscount );
+				//할인금액 콤마 넣기
+				$('#hiddenPrice').val(salePrice - discounted);
+				var hiddenPrice = $('#hiddenPrice').val().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+				$('.discountPrice').text( hiddenPrice );
 	    	} 
 		});
+	   
+	    /* form 전송 */ 
+		$('#goodsAddForm').submit(function(event) {
+		});
+		  
+		$('#goodsAddBtn').click(function () {
+			//판매가, 배송비 결과값 콤마 없애기
+			$('.salePrice').val( Number($('.salePrice').val().replace(/,/g, "")) );
+			$('.postPrice').val( Number($('.postPrice').val().replace(/,/g, "")) );
+		 
+			$('#goodsAddForm').submit();
+		});
 	    
-	}); 
 	</script>
 </th:block>
 </html>

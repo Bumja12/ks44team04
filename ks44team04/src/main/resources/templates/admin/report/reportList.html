@@ -10,7 +10,7 @@
 <th:block layout:fragment="customContents">
    <div class="row" style="display: inline-block;">
       <div class="tile_count">
-        <h1>신고 관리</h1>
+        <h3>신고 관리</h3>
       </div>
    </div>
         <div class="col-md-12 col-sm-12 ">
@@ -175,7 +175,8 @@
                     <th style="text-align: center;" class="column-title">벌점부여</th>
                     <th style="text-align: center;" class="column-title">누적 벌점</th>
                     <th style="text-align: center;" class="column-title">정지일수</th>
-                    <th style="text-align: center;" class="bulk-actions" colspan="16">
+                    <th style="text-align: center;" class="column-title">조회</th>
+                    <th style="text-align: center;" class="bulk-actions" colspan="18">
                       <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">
                         </span> <i class="fa fa-chevron-down"></i></a>
                     </th>
@@ -197,9 +198,10 @@
                     <td th:text="${l.reportResultReason}"> </td>
                     <td th:text="${l.reportResultDate}"></td>
                     <td th:text="${l.reportApproveId}"></td>
-                    <td th:text="${l.reportRuleDto.penaltyPoint} + '점'"></td>
+                    <td th:text="${l.penaltyPoint} + '점'"></td>
                     <td th:text="${l.totalPenaltyPoint} + '점'"></td>
                     <td th:text="${l.banDate} + '일'"></td>
+                    <td><a th:href="@{/admin/report/reportParticulars(reportHistoryCode=${l.reportHistoryCode})}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">조회</button></a></td>
                   </tr>
                   
                 </tbody>

@@ -3,25 +3,128 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team04.mapper.UserMapper">
-    
-    
-    <!-- 회원 가입 -->
+	
+	<resultMap 	id="LoginResultMap"			type="Login">
+		<id		column="log_code"			property="logCode" />
+		<result column="login_id"			property="loginId" />
+		<result column="login_date"			property="loginDate" />
+		<result column="logout_date"		property="logoutDate" />
+	</resultMap>
+	
+	<resultMap 	id="UserResultMap"			type="User">
+        <result column="user_id" 			property="userId"/>
+        <result column="user_pw" 			property="userPw"/>
+        <result column="user_name" 			property="userName"/>
+        <result column="user_gender" 		property="userGender"/>
+        <result column="user_nickname" 		property="userNickname"/>
+        <result column="user_address" 		property="userAddress"/>
+        <result column="user_address2" 		property="userAddress2"/>
+        <result column="user_phone" 		property="userPhone"/>
+        <result column="user_email" 		property="userEmail"/>
+        <result column="user_right" 		property="userRight"/>
+        <result column="user_reg_date" 		property="userRegDate"/>
+        <result column="user_update_date" 	property="userUpdateDate"/>
+        <result column="user_status" 		property="userStatus"/>
+        <result column="user_penalty" 		property="userPenalty"/>
+        <result column="user_point" 		property="userPoint"/>
+        <result column="user_info_keep" 	property="userInfoKeep"/>
+        <result column="user_level" 		property="userLevel"/>
+        <association property="rightDto"		resultMap="RightResultMap"/>
+        <association property="levelBuyer"		resultMap="LevelBuyerResultMap"/>
+        <association property="levelSeller"		resultMap="LevelSellerResultMap"/>
+	</resultMap>
+	
+	<resultMap 	id="SellerResultMap" 			type="Seller">
+		<id		column="seller_code" 			property="sellerCode" />
+		<result column="s_seller_id" 			property="sellerId" />
+		<result column="store_name" 			property="storeName" />
+		<result column="seller_sort" 			property="sellerSort" />
+		<result column="bank_name" 				property="bankName" />
+		<result column="account" 				property="account" />
+		<result column="account_holder" 		property="accountHolder" />
+		<result column="licence_num" 			property="licenceNum" />
+		<result column="store_address" 			property="storeAddress" />
+		<result column="store_address2" 		property="storeAddress2" />
+		<result column="store_phone" 			property="storePhone" />
+		<result column="store_email" 			property="storeEmail" />
+		<result column="licence_img" 			property="licenceImg" />
+		<result column="online_licence_img" 	property="onlineLicenceImg" />
+		<result column="approve_ask_date" 		property="approveAskDate" />
+		<result column="approve_date" 			property="approveDate" />
+		<result column="approve_check" 			property="approveCheck" />
+		<result column="approve_id" 			property="approveId" />
+		<association property="userInfo" 		resultMap="UserResultMap"/>
+		<association property="goodsList"		resultMap="GoodsResultMap"/>
+		<association property="rightDto"		resultMap="RightResultMap"/>
+		<association property="levelSeller"		resultMap="LevelSellerResultMap"/>
+	</resultMap>
+	
+	<resultMap 	id="DormantResultMap"			type="Dormant">
+		<id	 	column="dormant_code"			property="dormantCode" />
+		<result column="login_id"				property="loginId" />
+		<result column="dormant_status"			property="dormantStatus" />
+		<result column="dormant_change_date"	property="dormantChangeDate" />
+	</resultMap>
+	
+	<resultMap 	id="LeaveResultMap"				type="Leave">
+		<id		column="leave_code"				property="leaveCode" />
+		<result column="login_id"				property="loginId" />
+		<result column="leave_reason"			property="leaveReason" />
+		<result column="leave_date"				property="leaveDate" />
+		<result column="user_info_destroy"		property="userInfoDestroy" />
+	</resultMap>
+	
+	<resultMap 	id="GoodsResultMap"			type="Goods">
+		<id 	column="goods_code" 		property="goodsCode"/>
+		<result column="g_seller_id" 		property="sellerId"/>
+		<result column="goods_name" 		property="goodsName"/>
+		<result column="goods_price" 		property="goodsPrice"/>
+		<result column="soldout_check" 	 	property="soldoutCheck"/>
+		<result column="reg_date" 	 		property="regDate"/>
+	</resultMap>
+	
+	<resultMap 	id="RightResultMap" 		type="Right">
+		<id 	column="user_right" 		property="userRight"/>
+		<result column="right_status" 		property="rightStatus"/>
+		<result column="reg_id" 			property="regId"/>
+		<result column="reg_date" 			property="regDate"/>
+		<result column="use_check" 			property="useCheck"/>
+	</resultMap>
+	
+	<resultMap 	id="LevelBuyerResultMap" 	type="LevelBuyerCategory">
+		<id 	column="b_level_code" 		property="levelCode"/>
+		<result column="b_level_name" 		property="levelName"/>
+		<result column="reg_id" 			property="regId"/>
+		<result column="level_reg_date" 	property="levelRegDate"/>
+		<result column="use_check" 			property="useCheck"/>
+		<result column="buyer_price_terms" 	property="buyerPriceTerms"/>
+		<result column="save_rate" 			property="saveRate"/>
+		<result column="level_code_npk" 	property="levelCodeNpk"/>
+	</resultMap>
+	
+	<resultMap id="LevelSellerResultMap" 		type="LevelSellerCategory">
+		<id 	 column="s_level_code" 			property="levelCode"/>
+		<result  column="s_level_name" 			property="levelName"/>
+		<result  column="reg_id" 				property="regId"/>
+		<result  column="level_reg_date" 		property="levelRegDate"/>
+		<result  column="use_check" 			property="useCheck"/>
+		<result  column="seller_price_terms" 	property="sellerPriceTerms"/>
+		<result  column="seller_score_terms" 	property="sellerScoreTerms"/>
+		<result  column="seller_review_terms"	property="sellerReviewTerms"/>
+		<result  column="level_code_npk" 	 	property="levelCodeNpk"/>
+	</resultMap>
+
+
+	<!-- 회원가입 -->
 	<insert id="addUser" parameterType="User">
 		/* 회원 가입 */
 		INSERT INTO tb_user
-			(user_id, user_pw, user_name, user_gender, user_nickname, user_address, user_phone, user_email, user_right, user_reg_date, user_update_date, user_status, user_penalty, user_point, user_info_keep, user_level)
+			(user_id, user_pw, user_name, user_gender, user_nickname, user_address, user_address2, user_phone, user_email, user_right, user_reg_date, user_update_date, user_status, user_penalty, user_point, user_info_keep, user_level)
 		VALUES 
-			('#{userId}', '#{userPw}', '#{userName}', '#{userGender}', '#{userNickname}', '#{userAddress}', '#{userPhone}', '#{userEmail}', '#{userRight}', CURDATE(), CURDATE(), '#{userStatus}', #{userPenalty}, #{userPoint}, '#{userInfoKeep}', '#{userLevel}')
+			('#{userId}', '#{userPw}', '#{userName}', '#{userGender}', '#{userNickname}', '#{userAddress}', '#{userAddress2}', '#{userPhone}', '#{userEmail}', '#{userRight}', CURDATE(), CURDATE(), '#{userStatus}', #{userPenalty}, #{userPoint}, '#{userInfoKeep}', '#{userLevel}')
 	</insert>
 	
 	
-	
-	<resultMap type="Login"						id="LoginResultMap">
-		<id		column="log_code"				property="logCode" />
-		<result column="login_id"				property="loginId" />
-		<result column="login_date"				property="loginDate" />
-		<result column="logout_date"			property="logoutDate" />
-	</resultMap>
 	<!-- 로그 조회 -->
 	<select id="getLoginList" resultMap="LoginResultMap">
 		/* 로그 조회 */
@@ -34,13 +137,6 @@
 			tb_login
 	</select>	
 	
-	<resultMap type="Leave"						id="LeaveResultMap">
-		<id		column="leave_code"				property="leaveCode" />
-		<result column="login_id"				property="loginId" />
-		<result column="leave_reason"			property="leaveReason" />
-		<result column="leave_date"				property="leaveDate" />
-		<result column="user_info_destroy"		property="userInfoDestroy" />
-	</resultMap>
 	<!-- 휴면회원 목록 조회 -->
 	<select id="getLeaveList" resultMap="LeaveResultMap">
 		/* 탈퇴회원 목록 조회 */
@@ -54,12 +150,6 @@
 			tb_leave
 	</select>
 	
-	<resultMap type="Dormant"					id="DormantResultMap">
-		<id	 	column="dormant_code"			property="dormantCode" />
-		<result column="login_id"				property="loginId" />
-		<result column="dormant_status"			property="dormantStatus" />
-		<result column="dormant_change_date"	property="dormantChangeDate" />
-	</resultMap>
 	<!-- 휴면회원 목록 조회 -->
 	<select id="getDormantList" resultMap="DormantResultMap">
 		/* 휴면회원 목록 조회 */
@@ -72,14 +162,6 @@
 			tb_dormant
 	</select>
 	
-	<resultMap 	type="Goods" 					id="GoodsResultMap">
-		<id 	 column="goods_code" 			property="goodsCode"/>
-		<result  column="g_seller_id" 			property="sellerId"/>
-		<result  column="goods_name" 			property="goodsName"/>
-		<result  column="goods_price" 			property="goodsPrice"/>
-		<result  column="soldout_check" 	 	property="soldoutCheck"/>
-		<result  column="reg_date" 	 			property="regDate"/>
-	</resultMap>
 	
 	<!-- 특정 판매자 판매상품 조회 -->
     <select id="getGoodsList" parameterType="String" resultMap="GoodsResultMap">
@@ -96,66 +178,6 @@
 			g.seller_id = #{sellerId}
 		ORDER BY g.reg_date
 	</select>
-	
-    <resultMap 	type="Seller" 					id="SellerResultMap">
-		<id		column="seller_code" 			property="sellerCode" />
-		<result column="s_seller_id" 			property="sellerId" />
-		<result column="store_name" 			property="storeName" />
-		<result column="seller_sort" 			property="sellerSort" />
-		<result column="bank_name" 				property="bankName" />
-		<result column="account" 				property="account" />
-		<result column="account_holder" 		property="accountHolder" />
-		<result column="licence_num" 			property="licenceNum" />
-		<result column="store_address" 			property="storeAddress" />
-		<result column="store_phone" 			property="storePhone" />
-		<result column="store_email" 			property="storeEmail" />
-		<result column="licence_img" 			property="licenceImg" />
-		<result column="online_licence_img" 	property="onlineLicenceImg" />
-		<result column="approve_ask_date" 		property="approveAskDate" />
-		<result column="approve_date" 			property="approveDate" />
-		<result column="approve_check" 			property="approveCheck" />
-		<result column="approve_id" 			property="approveId" />
-		<association property="userInfo" 		javaType="User">
-	        <id		column="user_id" 			property="userId"/>
-	        <result column="user_pw" 			property="userPw"/>
-	        <result column="user_name" 			property="userName"/>
-	        <result column="user_gender" 		property="userGender"/>
-	        <result column="user_nickname" 		property="userNickname"/>
-	        <result column="user_address" 		property="userAddress"/>
-	        <result column="user_address2" 		property="userAddress2"/>
-	        <result column="user_phone" 		property="userPhone"/>
-	        <result column="user_email" 		property="userEmail"/>
-	        <result column="user_right" 		property="userRight"/>
-	        <result column="user_reg_date" 		property="userRegDate"/>
-	        <result column="user_update_date" 	property="userUpdateDate"/>
-	        <result column="user_status" 		property="userStatus"/>
-	        <result column="user_penalty" 		property="userPenalty"/>
-	        <result column="user_point" 		property="userPoint"/>
-	        <result column="user_info_keep" 	property="userInfoKeep"/>
-	        <result column="user_level" 		property="userLevel"/>
-	    </association>
-	    <association property="goodsList" 			javaType="Goods">
-			<id 	 column="goods_code" 			property="goodsCode"/>
-			<result  column="g_seller_id" 			property="sellerId"/>
-			<result  column="goods_name" 			property="goodsName"/>
-			<result  column="goods_price" 			property="goodsPrice"/>
-			<result  column="soldout_check" 	 	property="soldoutCheck"/>
-			<result  column="reg_date" 	 			property="regDate"/>
-	    </association>
-	    <association property="rightDto" 			javaType="Right">
-			<id 	 column="user_right" 			property="userRight"/>
-			<result  column="right_status" 			property="rightStatus"/>
-			<result  column="reg_id" 				property="regId"/>
-			<result  column="reg_date" 				property="regDate"/>
-			<result  column="use_check" 			property="useCheck"/>
-	    </association>
-        <association property="levelSeller" 		javaType="LevelSellerCategory">
-			<id 	 column="level_code" 			property="levelCode"/>
-			<result  column="level_name" 			property="levelName"/>
-	    </association>
-    </resultMap>
-    
-
     
     <!-- 특정 판매자 상세정보 조회 -->
     <select id="getSellerInfoById" parameterType="String" resultMap="SellerResultMap">
@@ -170,6 +192,7 @@
 			,s.account_holder
 			,s.licence_num
 			,s.store_address
+			,s.store_address2
 			,s.store_phone
 			,s.store_email
 			,s.licence_img
@@ -182,7 +205,6 @@
 		WHERE
 			s.seller_id = #{sellerId}
     </select>
-    
     
     <!-- 특정 회원 상세정보 조회(판매자만) -->
 	<select id="getUserInfoByIdS" resultMap="SellerResultMap">
@@ -207,7 +229,7 @@
 			,u.user_point
 			,u.user_info_keep
 			,u.user_level
-			,ls.level_name
+			,ls.level_name		AS s_level_name
 		FROM
 			tb_user u
 			INNER JOIN
@@ -234,7 +256,7 @@
     <select id="getSellerList" resultMap="SellerResultMap">
     	/* 판매자 목록 조회 */
     	SELECT 
-			 s.seller_code
+			 s.seller_code		
 			,s.seller_id		AS s_seller_id
 			,s.store_name
 			,s.seller_sort
@@ -243,6 +265,7 @@
 			,s.account_holder
 			,s.licence_num
 			,s.store_address
+			,s.store_address2
 			,s.store_phone
 			,s.store_email
 			,s.licence_img
@@ -259,54 +282,6 @@
 			</if>
 		</trim>
     </select>
-    
-    <resultMap 	type="User" 				id="UserResultMap">
-        <result column="user_id" 			property="userId"/>
-        <result column="user_pw" 			property="userPw"/>
-        <result column="user_name" 			property="userName"/>
-        <result column="user_gender" 		property="userGender"/>
-        <result column="user_nickname" 		property="userNickname"/>
-        <result column="user_address" 		property="userAddress"/>
-        <result column="user_address2" 		property="userAddress2"/>
-        <result column="user_phone" 		property="userPhone"/>
-        <result column="user_email" 		property="userEmail"/>
-        <result column="user_right" 		property="userRight"/>
-        <result column="user_reg_date" 		property="userRegDate"/>
-        <result column="user_update_date" 	property="userUpdateDate"/>
-        <result column="user_status" 		property="userStatus"/>
-        <result column="user_penalty" 		property="userPenalty"/>
-        <result column="user_point" 		property="userPoint"/>
-        <result column="user_info_keep" 	property="userInfoKeep"/>
-        <result column="user_level" 		property="userLevel"/>
-        <association property="rightDto" 		javaType="Right">
-			<id 	 column="user_right" 		property="userRight"/>
-			<result  column="right_status" 		property="rightStatus"/>
-			<result  column="reg_id" 			property="regId"/>
-			<result  column="reg_date" 			property="regDate"/>
-			<result  column="use_check" 		property="useCheck"/>
-	    </association>
-        <association property="levelBuyer" 			javaType="LevelBuyerCategory">
-			<id 	 column="level_code" 			property="levelCode"/>
-			<result  column="b_level_name" 			property="levelName"/>
-			<result  column="reg_id" 				property="regId"/>
-			<result  column="level_reg_date" 		property="levelRegDate"/>
-			<result  column="use_check" 			property="useCheck"/>
-			<result  column="buyer_price_terms" 	property="buyerPriceTerms"/>
-			<result  column="save_rate" 			property="saveRate"/>
-			<result  column="level_code_npk" 		property="levelCodeNpk"/>
-	    </association>
-        <association property="levelSeller" 		javaType="LevelSellerCategory">
-			<id 	 column="level_code" 			property="levelCode"/>
-			<result  column="s_level_name" 			property="levelName"/>
-			<result  column="reg_id" 				property="regId"/>
-			<result  column="level_reg_date" 		property="levelRegDate"/>
-			<result  column="use_check" 			property="useCheck"/>
-			<result  column="seller_price_terms" 	property="sellerPriceTerms"/>
-			<result  column="seller_score_terms" 	property="sellerScoreTerms"/>
-			<result  column="seller_review_terms"	property="sellerReviewTerms"/>
-			<result  column="level_code_npk" 	 	property="levelCodeNpk"/>
-	    </association>  
-	</resultMap> 
 	
 	<!-- 특정회원 조회 -->
 	<select id="getUserInfoById" parameterType="String" resultMap="UserResultMap">
@@ -347,16 +322,6 @@
 		    u.user_level = ls.level_code
 		WHERE u.user_id = #{userId}
 	</select>
-	 
-	<!-- 회원 권한 조회 -->
-	<select id="getRightList" resultType="Right">
-		/* 회원 권한 조회 */
-		SELECT
-			 r.user_right		AS userRightGruop
-			,r.right_status		AS rightStatus
-		FROM 
-			tb_right AS r
-	</select>
 	
     <!-- 회원 목록 조회 -->
     <select id="getUserList" resultMap="UserResultMap">
@@ -393,7 +358,38 @@
 		</trim>
 		ORDER BY u.user_id
     </select>
-
+	
+	<!-- 구매자 등급 조회 -->
+	<select id="getLevelBuyer" resultMap="LevelBuyerResultMap">
+		/* 구매자 등급 조회 */
+		SELECT
+			 lb.level_code		AS b_level_code
+			,lb.level_name		AS b_level_name
+		FROM
+			tb_level_buyer_category lb
+	</select>
+	
+	<!-- 판매자 등급 조회 -->
+	<select id="getLevelSeller" resultMap="LevelSellerResultMap">
+		/* 판매자 등급 조회 */
+		SELECT
+			 ls.level_code		AS s_level_code
+			,ls.level_name		AS s_level_name
+		FROM
+			tb_level_buyer_category ls
+	</select>
+	
+	<!-- 권한 조회 -->
+	<select id="getRightList" resultMap="RightResultMap">
+		/* 권한 조회 */
+		SELECT
+			 r.user_right
+			,r.right_status
+		FROM
+			tb_right r
+	</select>
+	
+	<!-- 로그인 -->
     <select id="userLogin" parameterType="String" resultType="String">
         SELECT IF(COUNT(*) = 1, user_pw, 'none')
         FROM tb_user

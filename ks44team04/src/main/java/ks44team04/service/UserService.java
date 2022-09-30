@@ -4,6 +4,8 @@ import ks44team04.mapper.UserMapper;
 import ks44team04.dto.Dormant;
 import ks44team04.dto.Goods;
 import ks44team04.dto.Leave;
+import ks44team04.dto.LevelBuyerCategory;
+import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.Login;
 import ks44team04.dto.Right;
 import ks44team04.dto.Seller;
@@ -97,12 +99,24 @@ public class UserService {
     }
     
     //레벨 조회
-	public List<Right> getRightList() {
-		List<Right> RightList = userMapper.getRightList();
+	public List<LevelBuyerCategory> getLevelBuyer() {
+		List<LevelBuyerCategory> levelBuyer = userMapper.getLevelBuyer();
 		
-		return RightList;
+		return levelBuyer;
+	}
+	public List<LevelSellerCategory> getLevelSeller() {
+		List<LevelSellerCategory> levelSeller = userMapper.getLevelSeller();
+		
+		return levelSeller;
 	}
     
+    //권한 조회
+	public List<Right> getRightList() {
+		List<Right> rightList = userMapper.getRightList();
+		
+		return rightList;
+	}
+	
 	//전체 회원 목록 조회
 	public List<User> getUserList() {
 		List<User> userList = userMapper.getUserList();

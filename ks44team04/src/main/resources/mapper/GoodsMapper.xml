@@ -63,6 +63,7 @@
 		        <result column="package_post_check" 	property="packagePostCheck"/>
 		        <result column="regular_deliver_check" 	property="regularDeliverCheck"/>
 		        <result column="reg_date" 				property="regDate"/>
+		        <result column="modify_date" 			property="modifyDate"/>
 		        <result column="goods_report_amount"	property="goodsReportAmount"/>
 		        <result column="goods_file" 			property="goodsFile"/>
 	        </association>
@@ -174,19 +175,24 @@
     <delete id="goodsRemove" parameterType="String">
 		/* 상품 삭제 */
 		DELETE
-		FROM
-			tb_goods
-		WHERE
-			goods_code = #{goodsCode};
+		FROM tb_goods
+		WHERE goods_code = #{goodsCode};
 	</delete>
+	
+	<!-- 마지막 상품코드 (코드증가) -->
+	<select id="getGoodsNewCode" parameterType="String" resultType="String">
+		SELECT  MAX(goods_code)
+		FROM 	tb_goods
+		WHERE   seller_id = #{SellerId};
+    </select>
 	
 	<!-- 상품 등록 -->
 	<insert id="goodsAdd" parameterType="Goods">
 		/* 상품 등록  */
 		INSERT INTO tb_goods
-			(goods_code, goods_small_category, seller_id, goods_name, goods_content, goods_price, goods_discount_rate, goods_post_price, goods_stock, soldout_check, stop_sale_check, package_post_check, regular_deliver_check, reg_date, goods_report_amount, goods_file)
+			(goods_code, goods_small_category, seller_id, goods_name, goods_content, goods_price, goods_discount_rate, goods_post_price, goods_stock, package_post_check, regular_deliver_check, reg_date, goods_file)
 		VALUES
-			('#{goodsCode}', '#{goodsSmallCategory}', '#{sellerId}', '#{goodsName}', '#{goodsContent}', '#{goodsPrice}', '#{goodsDiscountRate}', '#{goodsPostPrice}', '#{goodsStock}', '#{stopSaleCheck}', '#{packagePostCheck}', '#{regularDeliverCheck}', CURDATE(), '#{goodsReportAmount}', '#{goodsFile}')
+			(#{goodsCode}, #{goodsSmallCategory}, #{sellerId}, #{goodsName}, #{goodsContent}, #{goodsPrice}, #{goodsDiscountRate}, #{goodsPostPrice}, #{goodsStock}, #{packagePostCheck}, #{regularDeliverCheck}, CURDATE(), #{goodsFile})
 	</insert>
 	
     <!-- 상품 수정 -->
@@ -207,7 +213,7 @@
 			<if test="stopSaleCheck != null and stopSaleCheck != ''">,stop_sale_check = #{stopSaleCheck}</if>
 			<if test="packagePostCheck != null and packagePostCheck != ''">,package_post_check = #{packagePostCheck}</if>
 			<if test="regularDeliverCheck != null and regularDeliverCheck != ''">,regular_deliver_check = #{regularDeliverCheck}</if>
-			modify_reg_date = NOW(),
+			,modify_date = NOW()
 			<if test="goodsReportAmount != null and goodsReportAmount != ''">,goods_report_amount = #{goodsReportAmount}</if>
 			<if test="goodsFile != null and goodsFile != ''">,goods_file = #{goodsFile}</if>
 		</trim>

@@ -1,10 +1,12 @@
 package ks44team04.mapper;
 
-import ks44team04.dto.Right;
 import ks44team04.dto.Dormant;
 import ks44team04.dto.Goods;
 import ks44team04.dto.Leave;
+import ks44team04.dto.LevelBuyerCategory;
+import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.Login;
+import ks44team04.dto.Right;
 import ks44team04.dto.Seller;
 import ks44team04.dto.User;
 
@@ -48,6 +50,10 @@ public interface UserMapper {
 	//판매자 목록 조회
 	public List<Seller> getSellerList();
 
+	//회원 레벨 조회
+	public List<LevelBuyerCategory> getLevelBuyer();
+	public List<LevelSellerCategory> getLevelSeller();
+	
 	//회원 권한 조회
 	public List<Right> getRightList();
 	
