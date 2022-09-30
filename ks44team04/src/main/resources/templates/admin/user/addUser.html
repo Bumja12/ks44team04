@@ -24,7 +24,7 @@
 		.tableOdd {
 			background-color: #f6f6f6;
 			font-weight: bold;
-			padding-top: 17px !important;
+			padding-top: 20px !important;
 		}
   
 		.tableEven .text {
@@ -32,8 +32,9 @@
 			margin: 3px;
 		}
   
-		.tableEven select {
+		.tableEven .select {
 			width: 230px;
+			margin: 3px;
 		}
 
 		.tableEven label {
@@ -49,27 +50,11 @@
 			margin-right: 6px;
 		}
 		
-		.radioClass {
+		.radioDiv {
 			margin-left: 5px;
-			margin-top: 8px;		
+			margin-top: 6px;		
 		}
 	</style>
-</th:block>
-
-<th:block layout:fragment="customTopJs">
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script>
-      let text = document.querySelector('#userAddr');
-      document.querySelector('#addrSearchBtn').addEventListener('click', function () {
-
-        new daum.Postcode({
-          oncomplete: function (data) {
-            text.value = data.address;
-          }
-        }).open();
-      });
-
-    </script>
 </th:block>
 
 <th:block layout:fragment="customContents">
@@ -91,32 +76,41 @@
 									<tr>
 										<td class="tableOdd col-md-1">권한</td>
 										<td class="tableEven">
-<!--   											<div th:each="r : ${rightList}" class="form-check form-check-inline">
-		  										<input type="radio" class="flat" name="userRight" th:field="${Right.rightList}" th:value="${r.userRight}" /> &nbsp; &nbsp; &nbsp;
-		  										<label th:for="#ids.prev('rightList')" th:text="${r.rightStatus}" class="form-check-label"></label>
-  											</div>
- -->											<label>
-  												<!-- <input type="radio" class="flat" name="userRight" />  -->
-											</label>
+											<!-- 
+   											<th:block th:if="${not #lists.isEmpty(rightList)}" th:each="rl : ${rightList}" class="form-check form-check-inline">
+		  										<input type="radio" class="flat" th:field="${rl.rightStatus}" th:value="${rl.rightStatus}" />
+ 		  										<label th:for="${#ids.prev('rightStatus')}" th:text="${r.rightStatus}" class="form-check-label"></label>
+ 											</th:block>
+ 											 -->
+ 											<div class="radioDiv">
+												<label>
+	  												<input type="radio" class="flat" id="buyerRdo" name="userRight" value="구매자"/> 구매자 &nbsp; &nbsp; &nbsp;
+												</label>
+												<label>
+	  												<input type="radio" class="flat" id="sellerRdo" name="userRight" value="판매자 승인 전"/> 판매자 승인 전 
+												</label>
+											</div>
 										</td>
 										<td class="tableOdd col-md-1">회원등급</td>
 										<td class="tableEven">
-<!-- 											<select class="form-control">
-												<th:block th:unless="${#lists.isEmpty(levelBuyer)}" th:each="lb : ${levelBuyer}">
-													<option th:value="${lb.bLevelCode}" th:text="${lb.bLevelName}">등급선택</option>
-												</th:block>
-												<th:block th:if="${#lists.isEmpty(levelBuyer)}">
-													<option th:value="">등록된 회원등급이 없습니다.</option>
-												</th:block>
-											</select>
-											<select class="form-control">
-												<th:block th:unless="${#lists.isEmpty(levelSeller)}" th:each="ls : ${levelSeller}">
-													<option th:value="${ls.sLevelCode}" th:text="${ls.sLevelName}">등급선택</option>
-												</th:block>
-												<th:block th:if="${#lists.isEmpty(levelSeller)}">
-													<option th:value="">등록된 회원등급이 없습니다.</option>
-												</th:block>
-											</select> -->
+											<div class="form-inline">
+	 											<select class="select form-control">
+													<th:block th:unless="${#lists.isEmpty(levelBuyer)}" th:each="lb : ${levelBuyer}">
+														<option th:value="${lb.LevelCode}" th:text="${lb.LevelName}">등급선택</option>
+													</th:block>
+													<th:block th:if="${#lists.isEmpty(levelBuyer)}">
+														<option th:value="">등록된 회원등급이 없습니다.</option>
+													</th:block>
+												</select>
+												<select class="select form-control">
+													<th:block th:unless="${#lists.isEmpty(levelSeller)}" th:each="ls : ${levelSeller}">
+														<option th:value="${ls.LevelCode}" th:text="${ls.LevelName}">등급선택</option>
+													</th:block>
+													<th:block th:if="${#lists.isEmpty(levelSeller)}">
+														<option th:value="">등록된 회원등급이 없습니다.</option>
+													</th:block>
+												</select>
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -168,8 +162,8 @@
 										<td class="tableOdd">주소</td>
 										<td class="tableEven col-md-4" colspan="3">
 											<div class="form-inline">
-												<input type="text" class="userAddr form-control Text" id="userAddr" name="userAddr" placeholder="주소를 검색해주세요" readonly="readonly" /> 
-												<input type="text" class="userAddr form-control Text" id="userAddr2" name="userAddr2" placeholder="상세주소를 입력해주세요" />
+												<input type="text" class="userAddr form-control text" id="userAddr" name="userAddr" placeholder="주소를 검색해주세요" readonly="readonly" /> 
+												<input type="text" class="userAddr form-control text" id="userAddr2" name="userAddr2" placeholder="상세주소를 입력해주세요" />
 												<button type="button" class="btn" id="addrSearchBtn">주소검색</button>
 											</div>
 										</td>
@@ -187,11 +181,15 @@
 									<tr>
 										<td class="tableOdd">상태</td>
 										<td class="tableEven col-md-4">
-											<input type="text" class="form-control text" id="userStatus" name="userStatus" />
+											<select class="select form-control">
+												<option value="정상">정상</option>
+												<option value="휴면">휴면</option>
+												<option value="정지">정지</option>
+											</select>
 										</td>
 										<td class="tableOdd">정보보관기간</td>
 										<td class="tableEven col-md-4">
-											<div class="radioClass">
+											<div class="radioDiv">
 												<label>
 													<input type="radio" class="flat" name="userInfoKeep" /> 탈퇴시까지 &nbsp; &nbsp; &nbsp;
 												</label>
@@ -206,8 +204,8 @@
 							
 							<div class="form-group">
 		                        <div style="text-align:center; margin: 30px;" >
-									<button class="btn btn">취소</button>
-									<button type="button" class="btn btn-dark btn">등록</button>
+									<button type="button" class="btn btn" th:onclick="|location.href='@{/admin/user/userList}'|">취소</button>
+									<button type="submit" class="btn btn-dark btn">등록</button>
 								</div>
 							</div>
 							
@@ -218,4 +216,26 @@
 		</div>
 	</form>
 </th:block>
+
+<th:block layout:fragment="customJsScript">
+	<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+		let text = document.querySelector('#userAddr');
+		document.querySelector('#addrSearchBtn').addEventListener('click', function () {
+
+			new daum.Postcode({
+				oncomplete: function (data) {
+				text.value = data.address;
+				}
+			}).open();
+		});
+		
+		$('#userAddForm').submit(function(event) {});
+
+    </script>
+    
+</th:block>
+
 </html>

@@ -17,43 +17,45 @@ import java.util.HashMap;
 @org.springframework.stereotype.Service
 public class Service {
 
-	private final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
-	public ResponseEntity<Object> getData(String url) {
-		// Spring restTemplate
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		ResponseEntity<Object> resultMap = new ResponseEntity<>(null, null, 200);
+    public ResponseEntity<Object> getData(String url ) {
 
-		try {
-			RestTemplate restTemplate = new RestTemplate();
+        HashMap<String, Object> result = new HashMap<String, Object>();
+        ResponseEntity<Object> resultMap = new ResponseEntity<>(null, null, 200);
 
-			HttpHeaders header = new HttpHeaders();
-			HttpEntity<?> entity = new HttpEntity<>(header);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
 
-			UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
+            HttpHeaders header = new HttpHeaders();
+            HttpEntity<?> entity = new HttpEntity<>(header);
 
-			resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Object.class);
+            UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
 
-			result.put("statusCode", resultMap.getStatusCodeValue()); // http status code를 확인
-			result.put("header", resultMap.getHeaders()); // 헤더 정보 확인
-			result.put("body", resultMap.getBody()); // 실제 데이터 정보 확인
+            resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Object.class);
 
-		} catch (HttpClientErrorException | HttpServerErrorException e) {
-			result.put("statusCode", e.getRawStatusCode());
-			result.put("body", e.getStatusText());
-			log.info(e.toString());
+            result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
+            result.put("header", resultMap.getHeaders()); //헤더 정보 확인
+            result.put("body", resultMap.getBody()); //실제 데이터 정보 확인
 
-			return resultMap;
-		} catch (Exception e) {
-			result.put("statusCode", "999");
-			result.put("body", "Excpetion 발생");
-			log.info(e.toString());
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
+            result.put("statusCode", e.getRawStatusCode());
+            result.put("body"  , e.getStatusText());
+            log.info(e.toString());
 
-			return resultMap;
+            return resultMap;
+        }
+        catch (Exception e) {
+            result.put("statusCode", "999");
+            result.put("body"  , "Excpetion 발생");
+            log.info(e.toString());
 
-		}
+            return resultMap;
 
-		return resultMap;
+        }
 
-	}
+        return resultMap;
+
+
+    }
 }
