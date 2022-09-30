@@ -136,39 +136,31 @@
 				$moveToDetail.each(function(i){
 					$(this).click(function(){
 						var $allTd = $(this).parent().children();
-						console.log($allTd[1].innerText); // String type
+						console.log($allTd[0].innerText); // String type
 						var $customerAskPK = $allTd[0].innerText
-						location.href='customerAskDetail?customerAsk=' + $customerAskPK;
-					});
-				});
-				
-				$checkAll.each(function(i){
-					$(this).click(function(){
-						var $customerAskPK = $(this).parent().next().text();
-// 						console.log($regularAskPK);
-
-						// 체크박스가 체크되었는지 확인
-						var isChecked = $(this)[0].checked;
-						if(isChecked){
-							// 체크가 됬을 때만 배열 객체에 PK값을 저장한다.
-							removeElement.push($customerAskPK);
-							
-						} else{
-							for(var i=0; i<removeElement.length; i++){
-								// 배열 객체의 인덱스마다 어떤값이 저장되어 있는지 확인
-								// console.log(removeElement[i]);
-								// 만약 i번째 인덱스의 담긴 값이 PK갑과 같다면
-								if(removeElement[i] == $customerAskPK){
-									// 확실하게 같은지 확인한다.
-									// console.log('배열 객체의 ' + i + '번째 요소의 값이 PK값과 같음');
-									// 배열 객체에 담긴 PK값 삭제
-									removeElement.splice(i, 1);
- 									// console.log('삭제 처리 후 배열' + removeElement);
-								}
-							}
-						}
 						
-						console.log(removeElement);
+			  			var request = $.ajax({
+				  			  url: "/user/customerAsk/customerAskDetail", //요청 페이지 주소
+				  			  method: "POST", //요청 방식
+				  			  data: { customerAskPK : $customerAskPK}, 
+			                  //요청 페이지에 전달할 데이터 {key: value}
+				  			  dataType: "text" //요청 페이지에서 응답할 방식
+			  			});
+						
+			  			//정상적인 응답이 왔을 경우 실행되는 메서드
+			  			request.done(function( data ) {
+			  				console.log('응답 성공');
+			  				console.log(data);
+			  				
+			  				location.href=data;
+			  			});
+			  			//비정상적인 응답이나 요청 후 응답 실패시 실행되는 메서드
+			  			request.fail(function( jqXHR, textStatus ) {
+			  			  alert( "Request failed: " + textStatus );
+			  			});
+				  			
+						
+// 						location.href='customerAskDetail?customerAsk=' + $customerAskPK;
 					});
 				});
 				
