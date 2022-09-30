@@ -45,7 +45,6 @@
                     <th style="text-align: center;" class="column-title">신고 사유명 </th>
                     <th style="text-align: center;" class="column-title">신고 대상 코드 </th>
                     <th style="text-align: center;" class="column-title">신고 세부내용 </th>
-                    <th style="text-align: center;" class="column-title">첨부파일 </th>
                     <th style="text-align: center;" class="column-title">신고시간</th>
                     <th style="text-align: center;" class="column-title">처리상태</th>
                     <th style="text-align: center;" class="column-title">처리</th>
@@ -66,7 +65,6 @@
                     <td th:text="${l.reportRuleDto.reportReason}"></td>
                     <td th:text="${l.reportWhat}"></td>
                     <td th:text="${l.reportReason}"></td>
-                    <td th:text="${l.boardFile}"></td>
                     <td th:text="${l.reportDate}"></td>
                     <td th:text="${l.reportResult}"></td>
                     <td style="padding: 0px; "><a th:href="@{/admin/report/reportProcessing(reportHistoryCode=${l.reportHistoryCode})}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">처리</button></a></td>
@@ -80,62 +78,7 @@
 
           </div>
           <div class="x_panel">
-
-            <!-- 검색 시작-->
-         <div class="x_content">
-				<div class="well" style="overflow: auto">
-					<div class="">
-						<table class=" table table-bordered" style="background-color: white;">
-							<tbody>
-								<tr>
-									<td class="col-md-2 col-sm-2" style="font-size: 18px; padding-top: 20px;"	><b>검색어</b></td>
-									<td class="col-md-4">
-										<div class="form-inline" style="padding-top: 7px;">
-											<div class="form-group">
-												<select class="form-control" id="userSearchOption" style="width: 200px;">
-													<option selected>- 전체검색 -</option>
-													<option value="">신고코드</option>
-													<option value="">신고대상 아이디</option>
-													<option value="">신고자 아이디</option>
-													<option value="">카테고리</option>
-													<option value="">카테고리</option>
-													<option value="">신고 사유명</option>
-													<option value="">신고 대상 코드</option>
-													<option value="">처리상태</option>
-													<option value="">승인자 아이디</option>
-												</select>
-											</div>
-											<div class="form-group">
-												<input type="text" class="form-control text" placeholder="검색어를 입력해주세요">
-											</div>
-										</div>
-									</td>
-									<td class="col-md-2 col-sm-2" style="font-size: 18px; padding-top: 20px;" ><b >날짜</b></td>
-									<td class="col-md-4" style="padding-top: 13px; width: 200px;">
-								   	  <fieldset style="padding: 0px;">
-			                            <div class="control-group ">
-			                              <div class="controls">
-			                                <div class="input-prepend input-group">
-			                                  <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-			                                  <input type="text" style="width: 200px" name="reservation" id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
-			                                </div>
-			                              </div>
-			                            </div>
-			                          </fieldset>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-
-						<div style="text-align: center;">
-							<button type="reset" class="btn btn-dark">초기화</button>
-							<button type="button" class="btn btn-dark">검색</button>
-						</div>
-					</div>
-				</div>
-			</div>
-            <!-- 검색 끝-->
-
+           
             <div class="x_title">
               <h2>신고 리스트</h2>
               <ul class="nav navbar-right panel_toolbox">
@@ -154,6 +97,9 @@
               </ul>
               <div class="clearfix"></div>
             </div>
+            <!-- 검색 창 -->
+          <div th:include="admin/report/reportSearch :: reportSearch"></div>
+             
 
             <div class="x_content">
               <table class="table table-striped jambo_table bulk_action">
@@ -161,22 +107,17 @@
                   <tr class="headings">
                     <th style="text-align: center;" class="column-title">회원신고기록코드 </th>
                     <th style="text-align: center;" class="column-title">신고 대상 아이디 </th>
-                    <th style="text-align: center;" class="column-title">신고자 아이디</th>
                     <th style="text-align: center;" class="column-title">신고 카테고리 </th>
-                    <th style="text-align: center;" class="column-title">신고 사유명 </th>
                     <th style="text-align: center;" class="column-title">신고 대상 코드 </th>
                     <th style="text-align: center;" class="column-title">신고 세부내용 </th>
-                    <th style="text-align: center;" class="column-title">첨부파일 </th>
                     <th style="text-align: center;" class="column-title">신고시간</th>
-                    <th style="text-align: center;" class="column-title">처리상태</th>
-                    <th style="text-align: center;" class="column-title">승인/반려사유</th>
                     <th style="text-align: center;" class="column-title">처리시간</th>
                     <th style="text-align: center;" class="column-title">승인자 아이디</th>
                     <th style="text-align: center;" class="column-title">벌점부여</th>
                     <th style="text-align: center;" class="column-title">누적 벌점</th>
-                    <th style="text-align: center;" class="column-title">정지일수</th>
+                    <th style="text-align: center;" class="column-title">처리상태</th>
                     <th style="text-align: center;" class="column-title">조회</th>
-                    <th style="text-align: center;" class="bulk-actions" colspan="18">
+                    <th style="text-align: center;" class="bulk-actions" colspan="12">
                       <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">
                         </span> <i class="fa fa-chevron-down"></i></a>
                     </th>
@@ -184,25 +125,26 @@
                 </thead>
 
                 <tbody style="text-align: center;">
-                  <tr th:if="${not #lists.isEmpty(reportList)}" th:each="l : ${reportList}"  class="even pointer">
-                    <td th:text="${l.reportHistoryCode}"></td>
-                    <td th:text="${l.reportingId}"></td>
-                    <td th:text="${l.reportedId}"> </td>
-                    <td th:text="${l.reportCategoryDto.categoryName}"></td>
-                    <td th:text="${l.reportRuleDto.reportReason}"></td>
-                    <td th:text="${l.reportWhat}"></td>
-                    <td th:text="${l.reportReason}"></td>
-                    <td th:text="${l.boardFile}"></td>
-                    <td th:text="${l.reportDate}"></td>
-                    <td th:text="${l.reportResult}"></td>
-                    <td th:text="${l.reportResultReason}"> </td>
-                    <td th:text="${l.reportResultDate}"></td>
-                    <td th:text="${l.reportApproveId}"></td>
-                    <td th:text="${l.penaltyPoint} + '점'"></td>
-                    <td th:text="${l.totalPenaltyPoint} + '점'"></td>
-                    <td th:text="${l.banDate} + '일'"></td>
-                    <td><a th:href="@{/admin/report/reportParticulars(reportHistoryCode=${l.reportHistoryCode})}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">조회</button></a></td>
-                  </tr>
+	                <th:block th:if="${not #lists.isEmpty(reportList)}" th:each="l : ${reportList}">
+	                  <tr class="even pointer">
+	                    <td th:text="${l.reportHistoryCode}"></td>
+	                    <td th:text="${l.reportedId}"> </td>
+	                    <td th:text="${l.reportCategoryDto.categoryName}"></td>
+	                    <td th:text="${l.reportWhat}"></td>
+	                    <td th:text="${l.reportReason}"></td>
+	                    <td th:text="${l.reportDate}"></td>
+	                    <td th:text="${l.reportResultDate}"></td>
+	                    <td th:text="${l.reportApproveId}"></td>
+	                    <td th:text="${l.penaltyPoint} + '점'"></td>
+	                    <td th:text="${l.totalPenaltyPoint} + '점'"></td>
+	                    <td th:text="${l.reportResult}"></td>
+	                    
+	                    <td style="padding: 0px; "><a th:if="${l.reportResult} != '대기중'" th:href="@{/admin/report/reportParticulars(reportHistoryCode=${l.reportHistoryCode})}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">조회</button></a></td>
+	                  </tr>
+	                </th:block>
+                  <tr th:unless="${not #lists.isEmpty(reportList)}">
+					<td colspan="12">못찾겠다 꾀꼬리</td>
+				  </tr>
                   
                 </tbody>
               </table>
