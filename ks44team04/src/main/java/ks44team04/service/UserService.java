@@ -30,10 +30,16 @@ public class UserService {
         this.userMapper = userMapper;
     }
     
+    //판매자 신청
+    public void addSeller(Seller seller) {
+    	int addSellerResult = userMapper.addSeller(seller);
+    	System.out.println("회원가입 결과:" + addSellerResult);
+    }
+    
     //회원가입
     public void addUser(User user) {
-    	int result = userMapper.addUser(user);
-    	System.out.println("회원가입 결과:" + result);
+    	int addUserResult = userMapper.addUser(user);
+    	System.out.println("회원가입 결과:" + addUserResult);
     }
     
 	//회원수정

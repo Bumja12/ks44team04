@@ -10,12 +10,24 @@
 <th:block layout:fragment="customTopJs">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script>
-		$(function() {
-			let $checks = $('.indivChecks');
-			$('#rowAllCheck').click(function() {
-				$checks.prop('checked', $(this).prop('checked'));
-			});
-		});
+	
+		//체크박스 전체선택, 해제
+		function checkSelectAll(checkbox)  {
+			const selectAll = document.querySelector('input[name="rowAllCheck"]');
+			  
+			if(checkbox.checked === false)  {
+				selectAll.checked = false;
+			}
+		}
+		function selectAll(selectAll)  {
+			const checkboxes = document.getElementsByName('indivChecks');
+			  
+			checkboxes.forEach((checkbox) => {
+				checkbox.checked = selectAll.checked
+			})
+		}
+		
+		
 	</script>
 </th:block>
 
@@ -64,16 +76,16 @@
 									<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>회원등급</b></td>
 									<td class="col-md-4" style="padding-top: 14px;">
 										<label class="form-check">
-											<input type="checkbox" class="form-check-input" id="rowAllCheck" name="rowAllCheck" /> 전체
+											<input type="checkbox" onclick='selectAll(this)' class="form-check-input" id="rowAllCheck" name="rowAllCheck" /> 전체
 										</label>
 										<label>
-											<input type="checkbox" class="indivChecks form-check-input" name="indivChecks" /> 구매자
+											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks" /> 구매자
 										</label>
 										<label>
-											<input type="checkbox" class="indivChecks form-check-input" name="indivChecks" /> 판매자
+											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks" /> 판매자
 										</label>
 										<label> 
-											<input type="checkbox" class="indivChecks form-check-input" name="indivChecks" /> 관리자
+											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks" /> 관리자
 										</label>
 									</td>
 								</tr>
