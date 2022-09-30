@@ -11,7 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ReportMapper {
 
-
     //신고 리스트
     public List<Report> getReportList();
     
@@ -33,4 +32,5 @@ public interface ReportMapper {
     //신고 검색 
     public List<Report> getReportSearch(Map<String, Object> searchMap);
     
+
 }
