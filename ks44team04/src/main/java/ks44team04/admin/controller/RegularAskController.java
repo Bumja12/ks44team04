@@ -34,13 +34,10 @@ public class RegularAskController {
 	} 
 	
 	// 관리자 자주 묻는 질문 수정 처리 
-	@ResponseBody
 	@PostMapping("/modifyRegularAsk")
-	public String modifyRegularAskAction(@RequestParam(value="regularAskPK") String regularAskPK
-				                        ,Model model) {
-		model.addAttribute("regularAskPK", regularAskPK);
-		log.info(regularAskPK);
+	public String modifyRegularAskAction() {
 		
+		log.info("modifyRegularAskAction");
 		// 수정 처리 후 관리자 자주 묻는 질문 목록 화면으로 리다이렉트
 		return "redirect:/admin/regularAsk/regularAskList";
 	}
