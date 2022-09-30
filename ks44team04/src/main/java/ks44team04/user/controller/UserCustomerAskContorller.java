@@ -9,6 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/user/customerAsk")
 public class UserCustomerAskContorller {
 
+	// 구매자 고객 문의 등록 화면
+	@GetMapping("/addCustomerAsk")
+	public String addCustomerAsk (Model model) {
+		
+		model.addAttribute("title", "구매자 고객 문의 등록 화면");
+		return "user/customerAsk/user_customerAsk_add";
+	}
+	
 	// 구매자 고객 문의 목록 화면
 	@GetMapping("/customerAskList")
 	public String getCustomerAskList (Model model) {

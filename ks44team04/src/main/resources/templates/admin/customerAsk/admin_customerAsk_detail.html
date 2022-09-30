@@ -131,7 +131,7 @@
             		</div>
             		<div class="x_content">
      					<br/>
-						<form class="form-horizontal form-label-left" th:action="@{/admin/customerAsk/modifyAskAnswer}" method="post">
+						<form class="form-horizontal form-label-left" th:action="@{/admin/customerAsk/addAskAnswer}" method="post">
 							<!-- 문의 FK -->
 							<div class="form-group row ">
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="customerAsk">문의 FK
@@ -145,7 +145,7 @@
 								<label class="col-form-label col-md-3 col-sm-3" for="askAnswerContent">답변 내용
 								</label>
 								<div class="col-md-6 col-sm-6" >
-									<textarea id="askAnswerContent" class="form-control" rows="3" required="required" style="resize: none; overflow-y: scroll; height: 300px;">
+									<textarea id="addAskAnswerContent" class="form-control" rows="3" required="required" style="resize: none; overflow-y: scroll; height: 300px;">
 									</textarea>
 								</div>
 							</div>
@@ -347,7 +347,7 @@
 			}
 			
 			$(function(){
-				let isAnswer = true;
+				let isAnswer = false;
 				
 				// 수정 버튼 탐색
 				let $modifyBtn =  $('.modifyBtn');
@@ -391,7 +391,24 @@
 				
 				// 등록 버튼 클릭 시에 등록 처리
 				$addAskAnswerBtn.click(function(){
-					window.location = 'http://localhost:8088/admin/customerAsk/customerAskDetail?isAnswer=true';
+ 					// window.location = 'http://localhost:8080/admin/customerAsk/addAskAnswer';
+ 					
+					// 답변 내용 탐색
+					let $addAskAnswerContent =  $('#addAskAnswerContent');
+					console.log($addAskAnswerContent);
+// 					if(pwInput.value == ""){
+// 						alert("비밀번호를 입력하세요.")
+// 						pwInput.focus();
+						
+// 					}else if(pwInput.value != userPw){
+// 							alert("비밀번호를 확인하시길 바랍니다.")
+// 							pwInput.focus();
+							
+// 					}else if(pwInput.value == userPw){
+// 						console.log(i.type);
+// 						i.type = 'submit';
+// 					}
+					
 					isAnswer = true; // true -> 답변이 있다.
 					console.log(isAnswer);
 					
@@ -400,14 +417,14 @@
 				// 목록 버튼 각각에 클릭시 이벤트 등록
 				$returnToListBtn.each(function(i){
 					$(this).click(function(){
-						window.location = 'http://localhost:8088/admin/customerAsk/customerAskList';
+						window.location = 'http://130.162.131.42/admin/customerAsk/customerAskList';
 					});
 				});
 				
 				// 취소 버튼 각각에 클릭시 이벤트 등록
 				$cancleBtn.each(function(i){
 					$(this).click(function(){
-						window.location = 'http://localhost:8088/admin/customerAsk/customerAskDetail';
+						window.location = 'http://130.162.131.42/admin/customerAsk/customerAskDetail';
 					});
 				});
 				

@@ -31,7 +31,7 @@
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="regularAskPK">자주 묻는 질문 PK
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="text" id="regularAskPK" value="regularAsk001" disabled="disabled" required="required" class="form-control" maxlength="15">
+									<input type="text" id="regularAskPK" name="" value="regularAsk001" disabled="disabled" required="required" class="form-control" maxlength="15">
 								</div>
 							</div>
 							<!-- 자주 묻는 질문 카테고리 FK -->
@@ -145,7 +145,7 @@
 			cancelBtn.addEventListener('click', function(){
 				console.log(location.href);
 				// 자주 묻는 질문 목록으로 리다이렉트
-				window.location = 'http://localhost:8088/admin/regularAsk/regularAskList';
+				window.location = 'http://130.162.131.42/admin/regularAsk/regularAskList';
 			
 			});
 			
