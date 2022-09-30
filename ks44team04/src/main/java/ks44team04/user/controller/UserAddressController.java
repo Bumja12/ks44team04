@@ -58,14 +58,14 @@ public class UserAddressController {
         return "user/order/success";
     }
 
-    @GetMapping("/modify/{addressList}")
-    public String getAddressModify(@PathVariable(value = "addressList", required = false) String addressList,
+    @GetMapping("/modify/{addressList}") // 배송지 수정 클릭 시 값 받아와서 화면에 뿌림
+    @ResponseBody
+    public AddressList getAddressModify(@PathVariable(value = "addressList", required = false) String addressList,
                                 Model model) {
         Map<String, String> addressInfo = new HashMap<>();
         addressInfo.put("addressList", addressList);
         AddressList addressLists = addressService.getAddressList(addressInfo).get(0);
-        model.addAttribute("addressList", addressLists);
-        return "user/order/addressModify";
+        return addressLists;
     }
 
     @PostMapping("/modify")
@@ -81,7 +81,7 @@ public class UserAddressController {
         return "redirect:/user/address/list";
     }
 
-    @GetMapping("/checkoutlist")
+    @GetMapping("/checkoutlist") // 체크아웃 화면에서 배송지 등록 시 처리 후 화면에 보여줌
     @ResponseBody
     public AddressList checkoutList(@RequestParam(value = "userId", required = false) String userId) {
         userId = "buyer01";
