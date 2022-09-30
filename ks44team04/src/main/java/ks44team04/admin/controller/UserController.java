@@ -39,6 +39,17 @@ public class UserController {
     }
 
     
+    @PostMapping("/user/addSeller")
+    public String addSeller(Seller seller) {
+    	
+    	log.info("사용자가 입력한 회원의 정보 ::: {}", seller);
+    	
+    	System.out.println("사용자가 입력한 회원의 정보 -> " + seller);
+    	userService.addSeller(seller);
+    	
+    	return "redirect:/admin/user/sellerList";
+    }
+    
 	@PostMapping("/user/addUser")
     public String addUser(User user) {
 		

@@ -20,6 +20,9 @@ public interface UserMapper {
     public String userLogin(String userId);
     public User getLoginUserInfo(String userId);
     
+    //판매자 신청
+    public int addSeller(Seller seller);
+    
 	//회원 가입
 	public int addUser(User user);
     
