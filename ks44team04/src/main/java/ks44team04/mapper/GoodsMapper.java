@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsAnswer;
+import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
 
 @Mapper
@@ -14,6 +15,9 @@ public interface GoodsMapper {
 	
 	//특정 상품 정보 조회
 	public Goods getGoodsInfoByCode(String goodsCode);
+	
+	//카테고리 대분류 조회
+	public List<GoodsLargeCategory> goodsLargeCategoryList();
 	
 	//상품 수정
 	public int goodsModify(Goods goods);

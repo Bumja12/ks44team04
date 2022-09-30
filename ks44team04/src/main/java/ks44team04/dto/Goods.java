@@ -28,6 +28,22 @@ public class Goods {
 		this.userInfo = userInfo;
 	}
 
+	private GoodsSmallCategory goodsSmallCategoryInfo;
+	public GoodsSmallCategory getGoodsSmallCategoryInfo() {
+		return goodsSmallCategoryInfo;
+	}
+	public void setGoodsSmallCategoryInfo(GoodsSmallCategory goodsSmallCategoryInfo) {
+		this.goodsSmallCategoryInfo = goodsSmallCategoryInfo;
+	}
+	
+	private GoodsLargeCategory goodsLargeCategoryInfo;
+	public GoodsLargeCategory getGoodsLargeCategoryInfo() {
+		return goodsLargeCategoryInfo;
+	}
+	public void setGoodsLargeCategoryInfo(GoodsLargeCategory goodsLargeCategoryInfo) {
+		this.goodsLargeCategoryInfo = goodsLargeCategoryInfo;
+	}
+	
 	
 	public String getGoodsCode() {
         return goodsCode;
