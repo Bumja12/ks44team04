@@ -50,40 +50,18 @@
 			<div class="x_content">
 				<div class="well" style="overflow: auto">
 					<div class="form-inline form-group" style="margin-bottom: -1px;">
-						<label class="control-label" for="qnaSearch" style="margin-right: 5px;">대분류</label>
-							<select class="form-control" style="font-weight: bold;">
-								<option>::</option>
-								<option value="F000">과일</option>
-								<option value="V000">채소</option>
-								<option value="G000">쌀/잡곡</option>
-								<option value="M000">버섯</option>
-								<option value="UF00">못난이과일</option>
-								<option value="UV00">못난이채소</option>
-								<option value="Z000">기타</option>
+						<label class="control-label" style="margin-right: 5px;">대분류</label>
+							<select class="form-control">
+						 		<th:block th:if="${not #lists.isEmpty(largeCategoryList)}" th:each="lcl : ${largeCategoryList}">
+									<option th:value="${lcl.goodsLargeCategory}" th:text="${lcl.goodsCategory}">::</option>
+								</th:block>
+								<th:block th:unless="${not #lists.isEmpty(largeCategoryList)}">
+									<option th:value="">등록된 카테고리가 없습니다.</option>
+								</th:block>
 							</select>
 						<label class="control-label" for="qnaSearch" style="margin-left: 10px; margin-right: 5px;">중분류</label>
-							<select class="form-control" style="font-weight: bold;">
+							<select class="form-control">
 								<option>::</option>
-								<option value="apple">사과</option>
-								<option value="pineapple">파인애플</option>
-								<option value="watermelon">수박</option>
-								<option value="strawberry">딸기</option>
-								<option value="kmelon">참외</option>
-								<option value="paprika">파프리카</option>
-								<option value="cucumber">오이</option>
-								<option value="carrot">당근</option>
-								<option value="tomato">토마토</option>
-								<option value="bracken">고사리</option>
-								<option value="brownrice">현미</option>
-								<option value="blackrice">흑미</option>
-								<option value="whiterice">백미</option>
-								<option value="millet">조</option>
-								<option value="kingoystermushroom">새송이버섯</option>
-								<option value="enokimushroom">팽이버섯</option>
-								<option value="uglypersimmon">못난이감</option>
-								<option value="uglyapple">못난이사과</option>
-								<option value="uglypotato">못난이감자</option>
-								<option value="uglycorn">못난이옥수수</option>
 							</select>
 						<label style="margin-left: 10px;">상품코드
 							<input type="text" class="form-control" size="10" style="margin-left: 5px;">
@@ -103,6 +81,12 @@
 					</div>
 				</div>
 			</div>
+				
+	   <!-- <select th:each="lcl : ${largeCategoryList}">
+				<th:block th:each="lsl : ${lcl.goodsSmallCategoryInfo}">
+					<option th:text="${lsl.smallCategoryName}"></option>
+				</th:block>
+			</select> -->
 
 			<div class="x_content2">
 				<table id="datatable"
@@ -125,8 +109,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${not #lists.isEmpty(goodsList)}"
-							th:each="g : ${goodsList}" id="goodsListTable">
+						<tr th:if="${not #lists.isEmpty(goodsList)}" th:each="g : ${goodsList}" id="goodsListTable">
 							<td th:text="${g.goodsCode}"></td>
 							<td th:text="${g.goodsName}"></td>
 							<td th:text="${'₩' + #numbers.formatInteger(g.goodsPrice,3,'COMMA')}"></td>
@@ -182,7 +165,7 @@
 
 <th:block layout:fragment="customScript">
 
-	<script>
+	<script th:inline="javascript">
 	
 	 $(function() {
 		 /* 모달 열릴 때 이벤트 */
@@ -206,21 +189,71 @@
 			});
 		});			
 		/* 모달에서 확인 버튼 클릭 시 관리자 비밀번호 확인 유효성 검사 */
-		$('#removeBtnCheck').click(function(){
+/*		$('#removeBtnCheck').click(function(){
 			var adminPw = $('input[name="adminPw"]').val();
 			
 			if(typeof adminPw == 'undefined' || adminPw == null || adminPw == ''){
 				$('#pwCheck').text('! 비밀번호를 입력해주세요.');
 				$('input[name="adminPw"]').focus()
 				return false;
-				}if (typeof adminPw != 'adminPw'){
+				}if (adminPw != 'adminPw'){
 					$('#pwCheck').text('! 비밀번호가 맞지 않습니다.');
 					return false;
-			}else if(typeof adminPw == 'adminPw'){
+			}else if(adminPw == 'adminPw'){
 				$('#goodsDeleteForm').submit();
 			}
+		}); 
+	 });
+	 
+ 	 $(document).ready(function(){
+								
+	
+		
+		$('#removeBtnCheck').click(function(){
+			var adminPw = $('input[name="adminPw"]').val();
+			
+			var request = $.ajax({ 
+			  	url: "goodsList.html",
+			 	method: "POST",
+			 	data: { "userPw":$('#adminPw').val() },
+			 	success:function(result){
+			 		if(result == 0){
+			 			alert("실패");
+			 			return false;
+			 		}else {
+			 			window.location.href = "/goods/goodsList"
+			 		}
+			 	error : function(jqXHR, status, error){
+			 		alert("알 수 없는 에러 ["+ error +"]");
+			 	}
+			});
 		});
-	});
+	}); 
+	 
+	 
+
+
+ //var largeCategoryList = /*[[${largeCategoryList}]]*/;
+/*	 console.log(largeCategoryList)
+	 
+	 for(var small of largeCategoryList) {
+		 console.log('LargeCategory : ' + small.goodsCategory);
+		 //if(small.goodsCategory == '선택된 옵션') {
+			 //console.log(small.goodsSmallCategoryInfo);
+			 for(var smallName of small.goodsSmallCategoryInfo) {
+				console.log('name : ' + smallName.smallCategoryName);
+				console.log('value : ' + smallName.goodsSmallCategory);
+				var name = smallName.smallCategoryName;
+				var value = goodsSmallCategory;
+				var option = `<option value:${value}>${name}</option>`
+				$('#select').append(option);
+				//만들고 append
+		 	}
+		 //}
+	 }    */
+	 
+	 
+	 
 	</script>
 </th:block> 
 </html>

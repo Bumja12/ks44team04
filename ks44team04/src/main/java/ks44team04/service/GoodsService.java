@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ks44team04.mapper.GoodsMapper;
 import ks44team04.dto.Goods;
+import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
 
 @Service
@@ -21,6 +22,12 @@ public class GoodsService {
 	public List<Goods> getGoodsList() {
 		List<Goods> goodsList = goodsMapper.getGoodsList();
 		return goodsList;
+	}
+	
+	//카테고리 대분류 조회
+	public List<GoodsLargeCategory> goodsLargeCategoryList(){
+		List<GoodsLargeCategory> largeCategoryList = goodsMapper.goodsLargeCategoryList();
+		return largeCategoryList;
 	}
 	
 	//특정상품 조회

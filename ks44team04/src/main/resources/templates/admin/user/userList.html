@@ -10,12 +10,23 @@
 <th:block layout:fragment="customTopJs">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script>
-		$(function() {
-			let $checks = $('.indivChecks');
-			$('#rowAllCheck').click(function() {
-				$checks.prop('checked', $(this).prop('checked'));
-			});
-		});
+		
+		//체크박스 전체선택, 해제
+		function checkSelectAll(checkbox)  {
+			const selectAll = document.querySelector('input[name="rowAllCheck"]');
+			  
+			if(checkbox.checked === false)  {
+				selectAll.checked = false;
+			}
+		}
+		function selectAll(selectAll)  {
+			const checkboxes = document.getElementsByName('indivChecks');
+			  
+			checkboxes.forEach((checkbox) => {
+				checkbox.checked = selectAll.checked
+			})
+		}
+		
 	</script>
 </th:block>
 
@@ -70,16 +81,16 @@
 									<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>권한</b></td>
 									<td class="col-md-4" style="padding-top: 13px;">
 										<label class="form-check"> 
-											<input type="checkbox" class="form-check-input" id="rowAllCheck" name="rowAllCheck"> 전체 &nbsp;
+											<input type="checkbox" onclick='selectAll(this)' class="form-check-input" id="rowAllCheck" name="rowAllCheck"> 전체 &nbsp;
 										</label>
 										<label> 
-											<input type="checkbox" class="indivChecks form-check-input" name="indivChecks"> 구매자 &nbsp;
+											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks"> 구매자 &nbsp;
 										</label>
 										<label> 
-											<input type="checkbox" class="indivChecks form-check-input" name="indivChecks"> 판매자 &nbsp;
+											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks"> 판매자 &nbsp;
 										</label>
 										<label> 
-											<input type="checkbox" class="indivChecks form-check-input" name="indivChecks"> 관리자 &nbsp;
+											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks"> 관리자 &nbsp;
 										</label>
 									</td>
 								</tr>

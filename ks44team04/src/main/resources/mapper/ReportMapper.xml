@@ -78,7 +78,7 @@
     	,NOW()
     	,#{reportResult}
     	,#{reportResultReason}
-    	,NOW()
+    	,null
     	,#{reportApproveId}
     	,0
     	,0
@@ -219,13 +219,14 @@
 			tb_report_rule AS u
 			on
 			r.report_code = u.report_code
+			
 		ORDER BY r.report_history_code DESC 
 		
-			
-	
-	
     </select>
-    
+   
+
+   
+   
     <!-- 신고등록시 코드 증가 -->
     <select id="getHistoryCode" resultType="String">
     /* 신고등록시 코드 증가*/

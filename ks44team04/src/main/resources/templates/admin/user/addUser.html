@@ -76,37 +76,18 @@
 									<tr>
 										<td class="tableOdd col-md-1">권한</td>
 										<td class="tableEven">
-											<!-- 
-   											<th:block th:if="${not #lists.isEmpty(rightList)}" th:each="rl : ${rightList}" class="form-check form-check-inline">
-		  										<input type="radio" class="flat" th:field="${rl.rightStatus}" th:value="${rl.rightStatus}" />
- 		  										<label th:for="${#ids.prev('rightStatus')}" th:text="${r.rightStatus}" class="form-check-label"></label>
- 											</th:block>
- 											 -->
- 											<div class="radioDiv">
-												<label>
-	  												<input type="radio" class="flat" id="buyerRdo" name="userRight" value="구매자"/> 구매자 &nbsp; &nbsp; &nbsp;
-												</label>
-												<label>
-	  												<input type="radio" class="flat" id="sellerRdo" name="userRight" value="판매자 승인 전"/> 판매자 승인 전 
-												</label>
+ 											<div>
+	  											<input type="text" class="form-control text" id="userRight" name="userRight" value="구매자" readonly="readonly" />
 											</div>
 										</td>
 										<td class="tableOdd col-md-1">회원등급</td>
 										<td class="tableEven">
 											<div class="form-inline">
-	 											<select class="select form-control">
+	 											<select class="select form-control" id="levelBuyer">
 													<th:block th:unless="${#lists.isEmpty(levelBuyer)}" th:each="lb : ${levelBuyer}">
 														<option th:value="${lb.LevelCode}" th:text="${lb.LevelName}">등급선택</option>
 													</th:block>
 													<th:block th:if="${#lists.isEmpty(levelBuyer)}">
-														<option th:value="">등록된 회원등급이 없습니다.</option>
-													</th:block>
-												</select>
-												<select class="select form-control">
-													<th:block th:unless="${#lists.isEmpty(levelSeller)}" th:each="ls : ${levelSeller}">
-														<option th:value="${ls.LevelCode}" th:text="${ls.LevelName}">등급선택</option>
-													</th:block>
-													<th:block th:if="${#lists.isEmpty(levelSeller)}">
 														<option th:value="">등록된 회원등급이 없습니다.</option>
 													</th:block>
 												</select>
@@ -222,6 +203,7 @@
 
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
+    	//주소검색
 		let text = document.querySelector('#userAddr');
 		document.querySelector('#addrSearchBtn').addEventListener('click', function () {
 
@@ -232,7 +214,101 @@
 			}).open();
 		});
 		
-		$('#userAddForm').submit(function(event) {});
+		
+		/*
+		$(function(){
+	  				
+			function vaildationCheck(data) {
+				var isValid = true;	 
+				
+					//유효성검사
+					if(typeof data == 'object'){
+						$.each(data, function(){
+							var inputValue = $(this).val();
+							if(typeof inputValue == 'undefined' || inputValue == null || inputValue == '') {
+  								isValid = false;
+  								var inputId = $(this).attr('id');
+  								var alertMsg = $('label[for="'+ inputId +'"]').text();
+  								alert(alertMsg + '를 입력해주세요');
+  								$(this).focus();
+  								return false; //이벤트를 종료시키기 위함
+  							}
+  						});
+  					}
+  					
+  					if(typeof data == 'string'){
+  						if(typeof data == 'undefined' || data == null || data == '') {
+								isValid = false;
+								return false;
+							}
+  					}
+  					return isValid;
+  				}
+  				
+  				$('#memberId').on('keydown change input keyup blur', function(){
+  					$('#idCheckBtn').attr('data-isChecked', false);
+  				});
+  						
+  				$(document).on('click', '#joinBtn', function(){
+  					
+  					var isChecked = $('#idCheckBtn').attr('data-ischecked');
+  					 
+  					isChecked = (isChecked == 'true');
+  					
+  					if(!isChecked) {
+  						alert('아이디 중복체크 후 회원가입이 가능합니다.');
+  						return false;
+  					}
+  					
+  					var inputObj = $('#addMemberForm input');
+
+  					var isValid = vaildationCheck(inputObj);
+  					
+  					if(isValid) $('#addMemberForm').submit();
+  				});
+  				
+  				$('#idCheckBtn').click(function(){
+  					//var isChecked = $(this).attr('data-isChecked');
+  					var memberId = $('#memberId').val();
+  					var result = vaildationCheck(memberId);
+  					
+  					if(!result) {
+  						alert('회원아이디를 입력해주세요');
+  						return false;
+  					}
+  					console.log(typeof memberId);
+  					
+  					var request = $.ajax({
+  					  url: '/member/idCheck', //http://localhost/member/idCheck
+  					  method: 'GET',
+  					  data: { 'memberId' : memberId },
+  					  dataType: "json"  //String이면 text   //text, json, xml, html
+  					});
+  					 
+	  					request.done(function( data ) {
+  						if(data) {
+  							alert('가입된 회원입니다.');
+  							$('#memberId').focus();
+  						}else {
+  							$('#idCheckBtn').attr('data-isChecked', true);
+  							$('#addMemberForm input').prop('disabled', false);
+  							$('#addMemberForm select').prop('disabled', false);
+  							$('#addMemberForm button').prop('disabled', false);
+
+  						}	
+  					});
+  					
+  					request.fail(function( jqXHR, textStatus ) {
+  					  alert( "Request failed: " + textStatus );
+  					});
+  				});
+			});
+		*/
+		
+		
+		
+		
+		//$('#userAddForm').submit(function(event) {});
 
     </script>
     

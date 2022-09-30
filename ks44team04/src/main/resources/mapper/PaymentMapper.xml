@@ -76,6 +76,9 @@
 		</collection>
 	</resultMap>
 	
+	<!-- 검색기능 -->
+	
+	
 	<!-- 결제상세번호 삭제 start -->
 	<delete id="removeCancel" parameterType="String">
 		DELETE

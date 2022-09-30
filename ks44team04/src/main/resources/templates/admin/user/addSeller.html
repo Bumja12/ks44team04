@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customCss">
+	<style>
+.loginInput {
+	margin-bottom: 10px;
+}
+
+.userDetail td {
+	padding-left: 12px !important;
+}
+
+.userDetail button {
+	margin: 5px 3px 5px;
+}
+
+.tableOdd {
+	background-color: #f6f6f6;
+	font-weight: bold;
+	padding-top: 20px !important;
+}
+
+.tableEven .text {
+	width: 230px;
+	margin: 3px;
+}
+
+.tableEven .select {
+	width: 230px;
+	margin: 3px;
+}
+
+.tableEven label {
+	padding-top: 4px;
+}
+
+.text {
+	margin-right: 6px;
+}
+
+.userAddr {
+	width: 350px !important;
+	margin-right: 6px;
+}
+
+.radioDiv {
+	margin-left: 5px;
+	margin-top: 6px;
+}
+</style>
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+	<form id="addUserForm" th:action="@{/admin/user/addUser}" method="post">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>회원등록</h3>
+			</div>
+
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="x_panel" style="padding-top: 30px;">
+						<div class="x_content">
+							<table class="userDetail table table-responsive" style="border-collapse: separate;">
+								<tbody>
+									<tr>
+										<td class="tableOdd col-md-1">판매자 대표코드</td>
+										<td class="tableEven col-md-4">
+											<input type="text" class="form-control text" id="sellerCode" name="sellerCode" readonly="readonly" />
+										</td>
+										<td class="tableOdd col-md-1">분류코드</td>
+										<td class="tableEven col-md-4">
+											<input type="text" class="form-control text" id="selleSort" name="selleSort" readonly="readonly" />
+										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd">상호명</td>
+										<td class="tableEven col-md-4">
+											<input type="text" class="form-control text" id="storeName" name="storeName" readonly="readonly" />
+										</td>
+										<td class="tableOdd">계좌정보</td>
+										<td class="tableEven col-md-4" colspan="3">
+											<div class="form-inline">
+												<input type="text" class="form-control text" style="width: 100px;" id="bankName" name="bankName" readonly="readonly"> 
+												<input type="text" class="form-control text" style="width: 230px;" id="account" name="account" readonly="readonly" />
+												<input type="text" class="form-control text" style="width: 150px;" id="accountholder" name="accountholder" readonly="readonly" />
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd">사업자 대표전화</td>
+										<td class="tableEven col-md-4">
+											<input type="text" class="form-control text" id="storePhone" name="storePhone" readonly="readonly" />
+										</td>
+										<td class="tableOdd">사업자 이메일</td>
+										<td class="tableEven col-md-4">
+											<input type="text" class="form-control text" id="storeEmail" name="storeEmail" readonly="readonly" />
+										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd">사업지 주소</td>
+										<td class="tableEven col-md-4" colspan="3">
+											<div class="form-inline">
+												<input type="text" class="userAddr form-control text" id="userAddr" name="userAddr" placeholder="주소를 검색해주세요" readonly="readonly" />
+												<input type="text" class="userAddr form-control text" id="userAddr2" name="userAddr2" placeholder="상세주소를 입력해주세요" readonly="readonly" />
+												<button type="button" class="btn" id="addrSearchBtn">주소검색</button>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd">사업자 등록번호</td>
+										<td class="tableEven col-md-4" colspan="3">
+											<input type="text" class="form-control text" id="licenceNum" name="licenceNum" readonly="readonly" />
+										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd">사업자등록증</td>
+										<td class="tableEven col-md-4" style="padding-top: 12px;">
+<!--   											<a th:href="/../static/images/license_img">[[${sellerInfo.licenceImg}]]</a>
+ -->										</td>
+										<td class="tableOdd">통신판매업신고증</td>
+										<td class="tableEven col-md-4" style="padding-top: 12px;">
+<!-- 											<a href="#">[[${sellerInfo.onlineLicenceImg}]]</a>
+ -->										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd">승인요청일시</td>
+										<td class="tableEven col-md-4">
+											<input type="text" class="form-control text" id="approveAskDate" name="approveAskDate" readonly="readonly" />
+										</td>
+										<td class="tableOdd">승인일시</td>
+										<td class="tableEven col-md-4">
+											<input type="text" class="form-control text" id="approveDate" name="approveDate" readonly="readonly" />
+										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd">승인여부</td>
+										<td class="tableEven col-md-4">
+											<label>
+												<input type="radio" class="flat" id="sellerCode" name="sellerApprove" checked /> 승인 &nbsp; &nbsp; &nbsp;
+											</label>
+											<label> 
+												<input type="radio" class="flat" name="sellerApprove" /> 미승인
+											</label>
+										</td>
+										<td class="tableOdd">승인자</td>
+										<td class="tableEven col-md-4">
+											<input type="text" class="form-control text" id="approveId" name="approveId" readonly="readonly" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<div class="form-group">
+								<div style="text-align: center; margin: 30px;">
+									<button type="button" class="btn btn"
+										th:onclick="|location.href='@{/admin/user/userList}'|">취소</button>
+									<button type="submit" class="btn btn-dark btn">등록</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</th:block>
+
+<th:block layout:fragment="customJsScript">
+	<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+		let text = document.querySelector('#userAddr');
+		document.querySelector('#addrSearchBtn').addEventListener('click', function () {
+
+			new daum.Postcode({
+				oncomplete: function (data) {
+				text.value = data.address;
+				}
+			}).open();
+		});
+		
+		
+		/*
+		function changeSelect() {
+			var rdoLength = document.getElementsByName("userRight").length;
+		    
+	        for (var i=0; i<rdoLength; i++) {
+	            if (document.getElementsByName("userRight")[i].checked == true) {
+	            	
+	            	var rightVal = document.getElementsByName("userRight")[i].value;
+					console.log(rightVal);            		
+				    
+		        	if(rightVal.includes('buyer')) {
+			        	$('#levelSeller').css('display', 'none');
+			        	$('#levelBuyer').css('display', '');
+					}else if(rightVal.includes('seller')) {
+			        	$('#levelBuyer').css('display', 'none');
+			        	$('#levelSeller').css('display', '');
+		        	}
+	            }
+	        }
+		}
+		*/
+		
+		/*
+		$(document).ready(function(){
+				
+		    $('#levelBuyer').css('display', 'none'); 
+		    $('#levelSeller').css('display', 'none');
+		    
+		    var rdoLength = $("input[name='userRight']").length;
+		    
+		    for(var i=0; i<rdoLength; i++) {
+	            if(document.getElementsByName("userRight")[i].checked == true) {
+		    
+					$("input[name='userRight']").change(function(){
+						
+						if($("input[name='userRight']:checked").val().includes('buyer')) {
+							$('#levelSeller').css('display', '');
+				        	$('#levelBuyer').css('display', 'none');
+				        	
+						}else if($("input[name='userRight']:checked").val().includes('seller')) {
+							$('#levelBuyer').css('display', 'none');
+				        	$('#levelSeller').css('display', '');
+						}
+					});
+	            }
+			}
+		*/
+		
+		
+		//$('#userAddForm').submit(function(event) {});
+
+    </script>
+
+</th:block>
+
+</html>
