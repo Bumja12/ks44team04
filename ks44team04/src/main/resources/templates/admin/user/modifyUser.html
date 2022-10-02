@@ -59,35 +59,32 @@
 
 <th:block layout:fragment="customContents">
 	
-	<form id="addUserForm" th:action="@{/admin/user/addUser}" method="post">
-		<div class="page-title">
-			<div class="title_left">
-				<h3>회원등록</h3>
-			</div>
+	<div class="page-title">
+		<div class="title_left">
+			<h3>회원정보 수정</h3>
+		</div>
 
-			<div class="clearfix"></div>
-			<div class="row">
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<div class="x_panel" style="padding-top: 30px;">
-						<div class="x_content">
-
+		<div class="clearfix"></div>
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel" style="padding-top: 30px;">
+					<div class="x_content">
+						<form id="addUserForm" th:action="@{/admin/user/modifyUser}" th:object="${userInfo}" method="post">
 							<table class="userDetail table table-responsive" style="border-collapse: separate;">
 								<tbody>
 									<tr>
 										<td class="tableOdd col-md-1">권한</td>
 										<td class="tableEven">
-										 	<select class="select form-control" id="userRight" name="userRight">
-												<th:block th:unless="${#lists.isEmpty(rightList)}" th:each="r : ${rightList}">
-													<option th:if="${r.rightStatus} == 구매자" th:text="${r.rightStatus}" th:value="${r.userRight}"></option>
-												</th:block>
-											</select>
+												<div>
+	  											<input type="text" class="form-control text" id="userRight" name="userRight" value="구매자" readonly="readonly" />
+											</div>
 										</td>
 										<td class="tableOdd col-md-1">회원등급</td>
 										<td class="tableEven">
 											<div class="form-inline">
-	 											<select class="select form-control" id="userLevel" name="userLevel">
+ 	 											<select class="select form-control" id="levelBuyer">
 													<th:block th:unless="${#lists.isEmpty(levelBuyer)}" th:each="lb : ${levelBuyer}">
-														<option th:text="${lb.levelName}" th:value="${lb.levelCode}"></option>
+														<option th:value="${lb.levelCode}" th:text="${lb.levelName}">등급선택</option>
 													</th:block>
 													<th:block th:if="${#lists.isEmpty(levelBuyer)}">
 														<option th:value="">등록된 회원등급이 없습니다.</option>
@@ -100,14 +97,14 @@
 										<td class="tableOdd">아이디</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text" id="userId" name="userId" data-ischecked="false" placeholder="아이디를 입력해주세요" />
+												<input type="text" class="form-control text" id="userId" name="userId" th:value="*{userId}" placeholder="Default Input" readonly="readonly" />
 												<button type="button" class="btn" id="idCheckBtn">중복확인</button>
 											</div>
 										</td>
 										<td class="tableOdd">비밀번호</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text" id="userPw" name="userPw" placeholder="비밀번호입력" />
+												<input type="text" class="form-control text" id="userPw" name="userPw" th:value="*{userPw}" placeholder="Default Input" />
 												<input type="text" class="form-control text" id="userPwCheck" name="userPwCheck" placeholder="비밀번호확인" />
 											</div>
 										</td>
@@ -115,12 +112,12 @@
 									<tr>
 										<td class="tableOdd">이름</td>
 										<td class="tableEven col-md-4">
-											<input type="text" class="form-control text" id="userName" name="userName" placeholder="이름을 입력해주세요" />
+											<input type="text" class="form-control text" id="userName" name="userName" th:value="*{userName}" placeholder="Default Input" />
 										</td>
 										<td class="tableOdd">닉네임</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text" id="userNickname" name="userNickname" placeholder="닉네임을 입력해주세요" />
+												<input type="text" class="form-control text" id="userNickname" name="userNickname" th:value="*{userNickname}" placeholder="Default Input" />
 												<button type="button" class="btn" id="nicknameCheckBtn">중복확인</button>
 											</div>
 										</td>
@@ -128,13 +125,15 @@
 									<tr>
 										<td class="tableOdd">성별</td>
 										<td class="tableEven col-md-4">
-											<div class="radioDiv">
-												<label>
-													<input type="radio" id="userGender" name="userGender" /> 여자 &nbsp; &nbsp; &nbsp;
-												</label>
-												<label>
-													<input type="radio" id="userGender" name="userGender" /> 남자
-												</label>
+											<div class="radioDiv" th:switch="${userInfo.userGender}">
+												<p th:case="여">
+													<input type="radio" name="usergender" th:value="여" checked /> 여자 &nbsp; &nbsp; &nbsp;
+													<input type="radio" name="usergender" th:value="남" /> 남자
+												</p>
+												<p th:case="남">
+													<input type="radio" name="usergender" th:value="여" /> 여자 &nbsp; &nbsp; &nbsp;
+													<input type="radio" name="usergender" th:value="남" checked /> 남자
+												</p>
 											</div> 
 										</td>
 									</tr>
@@ -142,14 +141,14 @@
 										<td class="tableOdd">이메일</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text" id="userEmail" name="userEmail" placeholder="이메일을 입력하세요" />
+												<input type="text" class="form-control text" id="userEmail" name="userEmail" th:value="*{userEmail}" placeholder="Default Input" />
 												<button type="button" class="btn" id="emailCheckBtn">중복확인</button>
 											</div>
 										</td>
 										<td class="tableOdd">휴대폰번호</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text" id="userPhone" name="userPhone" placeholder="휴대폰번호를 입력하세요" />
+												<input type="text" class="form-control text" id="userPhone" name="userPhone" th:value="*{userPhone}" placeholder="Default Input" />
 												<button type="button" class="btn" id="phoneCheck">중복확인</button>
 											</div>
 										</td>
@@ -158,8 +157,8 @@
 										<td class="tableOdd">주소</td>
 										<td class="tableEven col-md-4" colspan="3">
 											<div class="form-inline">
-												<input type="text" class="userAddr form-control addr" id="userAddress" name="userAddress" placeholder="주소를 검색해주세요" readonly="readonly" /> 
-												<input type="text" class="userAddr form-control addr" id="userAddress2" name="userAddress2" placeholder="상세주소를 입력해주세요" />
+												<input type="text" class="userAddr form-control text" id="userAddress" name="userAddress" th:value="*{userAddress}" placeholder="Default Input" readonly="readonly" /> 
+												<input type="text" class="userAddr form-control text" id="userAddress2" name="userAddress2" th:value="*{userAddress2}" placeholder="Default Input" />
 												<button type="button" class="btn" id="addrSearchBtn">주소검색</button>
 											</div>
 										</td>
@@ -167,17 +166,17 @@
 									<tr>
 										<td class="tableOdd">포인트</td>
 										<td class="tableEven col-md-4">
-											<input type="text" class="form-control text" id="userPoint" name="userPoint" />
+											<input type="text" class="form-control text" id="userPoint" name="userPoint" th:value="*{userPoint}" placeholder="Default Input"/>
 										</td>
 										<td class="tableOdd">벌점</td>
 										<td class="tableEven col-md-4">
-											<input type="text" class="form-control text" id="userPenalty" name="userPenalty" />
+											<input type="text" class="form-control text" id="userPenalty" name="userPenalty" th:value="*{userPenalty}" placeholder="Default Input"/>
 										</td>
 									</tr>
 									<tr>
 										<td class="tableOdd">상태</td>
 										<td class="tableEven col-md-4">
-											<select class="select form-control" id="userStatus" name="userStatus">
+											<select class="select form-control">
 												<option value="정상">정상</option>
 												<option value="휴면">휴면</option>
 												<option value="정지">정지</option>
@@ -187,37 +186,36 @@
 										<td class="tableEven col-md-4">
 											<div class="radioDiv">
 												<label>
-													<input type="radio" name="userInfoKeep" value="탈퇴시까지" /> 탈퇴시까지 &nbsp; &nbsp; &nbsp;
+													<input type="radio" name="userInfoKeep" /> 탈퇴시까지 &nbsp; &nbsp; &nbsp;
 												</label>
 												<label>
-													<input type="radio" name="userInfoKeep" value="1년" /> 1년
+													<input type="radio" name="userInfoKeep" /> 1년
 												</label>
 											</div> 
 										</td>
 									</tr>
 								</tbody>
 							</table>
-							
-							<div class="form-group">
-		                        <div style="text-align:center; margin: 30px;" >
-									<button type="button" class="btn btn" th:onclick="|location.href='@{/admin/user/userList}'|">취소</button>
-									<button type="submit" class="btn btn-dark btn">등록</button>
-								</div>
+						</form>
+						<div class="form-group">
+	                        <div style="text-align:center; margin: 30px;" >
+								<button type="button" class="btn btn" th:onclick="|location.href='@{/admin/user/userList}'|">취소</button>
+								<button type="submit" class="btn btn-dark btn">등록</button>
 							</div>
-							
 						</div>
+						
 					</div>
 				</div>
 			</div>
 		</div>
-	</form>
+	</div>
 </th:block>
 
 <th:block layout:fragment="customJsScript">
 	<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
 
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script>
+    <script th:inline="javascript">
     	//주소검색
 		let text = document.querySelector('#userAddress');
 		document.querySelector('#addrSearchBtn').addEventListener('click', function () {
@@ -229,7 +227,10 @@
 			}).open();
 		});
 		
+
 		
+		//$("#levelBuyer option:selected").val();
+		//$("#levelBuyer").val.prop("selected", true);
 		
 		/*
 		$(function(){
@@ -322,8 +323,9 @@
 		*/
 		
 		
-	
-		$('#addUserForm').submit(function(event) {});
+		
+		
+		$('#userAddForm').submit(function(event) {});
 
     </script>
     
