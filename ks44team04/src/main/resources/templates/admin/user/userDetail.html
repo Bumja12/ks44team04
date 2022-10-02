@@ -49,7 +49,7 @@
 			<h3>상세정보</h3>
 		</div>
 		<div>
-			<button type="button" class="btn btn-dark pull-right" style="margin-right: 10px;">수정</button>
+			<button type="button" class="btn btn-dark pull-right" th:onclick="|location.href='@{/admin/user/modifyUser(userId=${userInfo.userId})}'|" style="margin-right: 10px;">수정</button>
 			<button type="button" class="btn btn-default pull-right" th:onclick="|location.href='@{/admin/user/userList}'|" style="margin-right: 10px;">
 				<i class="fa fa-bars"> 회원목록</i>
 			</button>
