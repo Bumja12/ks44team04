@@ -2,8 +2,10 @@ package ks44team04.user.controller;
 
 import ks44team04.dto.AddressList;
 import ks44team04.dto.CouponStatus;
+import ks44team04.dto.OrderDetail;
 import ks44team04.service.AddressService;
 import ks44team04.service.CouponService;
+import ks44team04.service.OrderService;
 import ks44team04.service.PointService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +24,13 @@ public class UserOrderController {
     AddressService addressService;
     CouponService couponService;
     PointService pointService;
+    OrderService orderService;
 
-    public UserOrderController(AddressService addressService, CouponService couponService, PointService pointService) {
+    public UserOrderController(AddressService addressService, CouponService couponService, PointService pointService, OrderService orderService) {
         this.addressService = addressService;
         this.couponService = couponService;
         this.pointService = pointService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/checkout")
@@ -82,9 +86,12 @@ public class UserOrderController {
         return "user/order/orderCancel";
     }
 
-    @GetMapping("/exchange/{orderdetailnum}")
-    public String orderExchange(@PathVariable("orderdetailnum") String orderDetailNum) {
-
+    @GetMapping("/exchange/{orderdetailcode}")
+    public String orderExchange(@PathVariable("orderdetailcode") String orderDetailCode, Model model) {
+        Map<String, Object> orderMap = new HashMap<>();
+        orderMap.put("orderDetailCode", orderDetailCode);
+        OrderDetail orderDetail = orderService.getOrderDetail(orderMap);
+        model.addAttribute("orderDetail", orderDetail);
         return "user/order/orderExchange";
     }
 

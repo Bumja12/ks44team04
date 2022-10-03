@@ -10,7 +10,7 @@
 
     <style>
         .orderBtn {
-            width: 82px;
+            width: 90px;
         }
     </style>
 </head>
@@ -54,7 +54,8 @@
                 </td>
                 <td>
                     <div th:text="${l.orderDetail.orderStatus}">결제완료</div>
-                    <button type="button" class="btn-sm" th:data-post-code="${l.orderDetail.postInfo}">배송조회</button>
+                    <button type="button" class="btn-sm
+" th:data-post-code="${l.orderDetail.postInfo}">배송조회</button>
                 </td>
                 <th:block th:switch="${l.orderDetail.orderStatus}">
                     <td th:case="결제완료">
@@ -76,6 +77,11 @@
                     <td th:case="구매확정">
                         <button type="button" class="btn-sm orderBtn writeReview"
                                 th:data-order-detail-code="${l.orderDetail.orderDetailCode}">리뷰작성
+                        </button>
+                    </td>
+                    <td th:case="교환요청">
+                        <button type="button" class="btn-sm orderBtn writeReview"
+                                th:data-order-detail-code="${l.orderDetail.orderDetailCode}">배송지입력
                         </button>
                     </td>
                 </th:block>
@@ -101,7 +107,7 @@
 
             }
             if (e.target.classList.contains('orderExchange')) {
-                location.href = `/user/order/exchange/${orderDetailCode}`;
+                location.href = `/user/regularpost/exchange/${orderDetailCode}`;
             }
             if (e.target.classList.contains('orderRefund')) {
 

@@ -3,6 +3,7 @@ package ks44team04.user.controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import ks44team04.dto.OrderDetail;
 import ks44team04.dto.OrderExchange;
 import ks44team04.dto.PostInfo;
 import ks44team04.dto.RegularPostHistory;
@@ -95,29 +96,32 @@ public class UserRegularPostController {
 
     @GetMapping("/confirm/{orderdetailcode}")
     public String regularPostConfirm(@PathVariable(value = "orderdetailcode") String orderDetailCode) {
-        Map<String, String> orderProcess = new HashMap<>();
-        orderProcess.put("orderDetailCode", orderDetailCode);
-        orderProcess.put("orderStatus", "구매확정");
-        regularPostService.setOrderDetailStatus(orderProcess);
+        regularPostService.setOrderDetailStatus(orderDetailCode, "구매확정");
         return "redirect:/user/regularPostHistory";
     }
 
-    @GetMapping("/exchange/{orderdetailcode}/{postinfo}")
+    @GetMapping("/exchange/{orderdetailcode}")
     public String regularPostExchange(@PathVariable(value = "orderdetailcode") String orderDetailCode,
-                                      @PathVariable(value = "postinfo") String postInfo,
                                       Model model) {
-        model.addAttribute("orderDetailCode", orderDetailCode);
-        model.addAttribute("postInfo", postInfo);
-        return "user/order/exchange";
+        Map<String, Object> orderMap = new HashMap<>();
+        orderMap.put("orderDetailCode", orderDetailCode);
+        OrderDetail orderDetail = orderService.getOrderDetail(orderMap);
+        model.addAttribute("orderDetail", orderDetail);
+
+        return "user/regularPost/regularPostExchange";
     }
 
     @PostMapping("/exchange")
     public String regularPostExchange(OrderExchange orderExchange) {
-
         String orderExchangeMaxCode = orderService.getOrderExchangeMaxCode();
-        CodeIndex.codeIndex(orderExchangeMaxCode, 15);
-        log.info("=====================================================================");
-        log.info(orderExchangeMaxCode);
+        String exchangeAskCode = CodeIndex.codeIndex(orderExchangeMaxCode, 15);
+        String sessionId = "buyer01";
+
+        orderExchange.setExchangeAskCode(exchangeAskCode);
+        orderExchange.setBuyerId(sessionId);
+
+        orderService.setOrderExchange(orderExchange);
+        regularPostService.setOrderDetailStatus(orderExchange.getOrderDetailCode(), "교환요청");
 
         return "redirect:/user/regularpost/history";
     }

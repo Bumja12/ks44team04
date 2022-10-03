@@ -10,6 +10,8 @@ public class OrderExchange {
     private String exchangeReason;
     private String approveCheck;
     private String approveDate;
+    private String postCompany;
+    private String invoiceNumber;
 
     public String getExchangeAskCode() {
         return exchangeAskCode;
@@ -75,6 +77,22 @@ public class OrderExchange {
         this.approveDate = approveDate;
     }
 
+    public String getPostCompany() {
+        return postCompany;
+    }
+
+    public void setPostCompany(String postCompany) {
+        this.postCompany = postCompany;
+    }
+
+    public String getInvoiceNumber() {
+        return invoiceNumber;
+    }
+
+    public void setInvoiceNumber(String invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
+    }
+
     @Override
     public String toString() {
         return "OrderExchange{" +
@@ -86,6 +104,8 @@ public class OrderExchange {
                 ", exchangeReason='" + exchangeReason + '\'' +
                 ", approveCheck='" + approveCheck + '\'' +
                 ", approveDate='" + approveDate + '\'' +
+                ", postCompany='" + postCompany + '\'' +
+                ", invoiceNumber='" + invoiceNumber + '\'' +
                 '}';
     }
 }

@@ -14,6 +14,7 @@ public class OrderDetail {
     private String autoConfirmDate;
     private String orderConfirmDate;
     private int savePoint;
+    private Goods goods;
 
     public String getOrderDetailCode() {
         return orderDetailCode;
@@ -111,6 +112,14 @@ public class OrderDetail {
         this.savePoint = savePoint;
     }
 
+    public Goods getGoods() {
+        return goods;
+    }
+
+    public void setGoods(Goods goods) {
+        this.goods = goods;
+    }
+
     @Override
     public String toString() {
         return "OrderDetail{" +
@@ -126,6 +135,7 @@ public class OrderDetail {
                 ", autoConfirmDate='" + autoConfirmDate + '\'' +
                 ", orderConfirmDate='" + orderConfirmDate + '\'' +
                 ", savePoint=" + savePoint +
+                ", goods=" + goods +
                 '}';
     }
 }
