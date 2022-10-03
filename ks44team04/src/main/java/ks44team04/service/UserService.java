@@ -43,8 +43,8 @@ public class UserService {
     }
     
 	//회원수정
-	public void modifyUser(User user) {
-		userMapper.modifyUser(user);
+	public void modifyUser(User user, String userId) {
+		userMapper.modifyUser(user, userId);
 	}
     
 	//특정 판매자 판매상품 조회
@@ -53,7 +53,6 @@ public class UserService {
     	
     	return goodsList;
     }
-	
 
 	//특정 판매자 상세정보 조회
 	public Seller getSellerInfoById(String sellerId) {

@@ -53,9 +53,11 @@
         where order_num = #{orderNum}
     </update>
 
-    <update id="setOrderDetailStatus" parameterType="Map">
+    <update id="setOrderDetailStatus" parameterType="String">
         call set_order_status(#{orderDetailCode}, #{orderStatus})
     </update>
+
+
 
 
 </mapper>

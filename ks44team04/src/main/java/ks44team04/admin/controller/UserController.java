@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,23 +65,38 @@ public class UserController {
 		
 		List<LevelBuyerCategory> levelBuyer = userService.getLevelBuyer();
         log.info("구매자 레벨 ::: {}",levelBuyer);
-		List<LevelSellerCategory> levelSeller = userService.getLevelSeller();
-		log.info("판매자 레벨 ::: {}",levelSeller);
 		List<Right> rightList = userService.getRightList();
 		log.info("권한 ::: {}",rightList);
 		
-		/*
-		 * List<String> rights = new ArrayList<String>();
-		 * 
-		 * rights.add(rightList.get(0));
-		 */
-		
 		model.addAttribute("title", "회원등록");
 		model.addAttribute("levelBuyer", levelBuyer);
-		model.addAttribute("levelSeller", levelSeller);
 		model.addAttribute("rightList", rightList);
 		
 		return "admin/user/addUser";
+	}
+	
+	//회원 수정
+	@PostMapping("/user/modifyUser")
+	public String modifyUser(User user, String userId) {
+		
+		userService.modifyUser(user, userId);
+		
+		return "redirect:/admin/user/userDetail";
+	}
+	
+	//회원수정(저장된 정보 가져오기)
+	@GetMapping("/user/modifyUser")
+	public String modifyMember(@RequestParam(value="userId", required = false) String userId
+							  ,Model model) {
+        User userInfo = userService.getUserInfoById(userId);
+        log.info("회원정보 ::: {}",userInfo);
+        List<LevelBuyerCategory> levelBuyer = userService.getLevelBuyer();
+
+		model.addAttribute("title", "회원정보수정");
+		model.addAttribute("userInfo", userInfo);
+		model.addAttribute("levelBuyer", levelBuyer);
+		
+		return "admin/user/modifyUser";
 	}
 	
 	//특정 판매자 상세정보 조회
