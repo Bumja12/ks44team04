@@ -3,6 +3,7 @@ package ks44team04.admin.controller;
 import ks44team04.service.ReportService;
 import ks44team04.util.CodeIndex;
 import ks44team04.dto.Report;
+import ks44team04.dto.User;
 import ks44team04.dto.UserSuspend;
 
 import org.slf4j.Logger;
@@ -44,18 +45,15 @@ public class ReportController {
 	@PostMapping("/report/reportParticulars")
 	public String reportParticulars(@RequestParam(value = "reportResult" , required = false) String reportResult, 
 										@RequestParam(value = "penaltyPoint", required = false) int penaltyPoint, 
-										@RequestParam(value = "totalPenaltyPoint" , required = false) int totalPenaltyPoint, Report report) {
+										@RequestParam(value = "totalPenaltyPoint" , required = false) int totalPenaltyPoint, Report report , User user) {
 											
 			
 		log.info("reportResult ::::::::::: {}",reportResult);
 		log.info("penaltyPoint ::::::::::: {}",penaltyPoint);
 		log.info("totalPenaltyPoint ::::::::::: {}",totalPenaltyPoint);
 		
-		if("반려".equals(reportResult)) {
-			report.setTotalPenaltyPoint(totalPenaltyPoint - penaltyPoint);
-			
-		}
 		reportService.reportProcessing(report);
+		reportService.reportPoint(user);
 		
 		return "redirect:/admin/report/reportList";
 	}
@@ -78,19 +76,16 @@ public class ReportController {
 	@PostMapping("/report/reportProcessing")
 	public String getreportProcessing(@RequestParam(value = "reportResult" , required = false) String reportResult, 
 										@RequestParam(value = "penaltyPoint", required = false) int penaltyPoint, 
-										@RequestParam(value = "totalPenaltyPoint" , required = false) int totalPenaltyPoint, Report report) {
+										@RequestParam(value = "totalPenaltyPoint" , required = false) int totalPenaltyPoint, Report report, User user) {
 											
 			
 		log.info("reportResult ::::::::::: {}",reportResult);
 		log.info("penaltyPoint ::::::::::: {}",penaltyPoint);
 		log.info("totalPenaltyPoint ::::::::::: {}",totalPenaltyPoint);
 		
-		if("반려".equals(reportResult)) {
-			report.setPenaltyPoint(0);
-			report.setTotalPenaltyPoint(totalPenaltyPoint - penaltyPoint);
-			
-		}
+		
 		reportService.reportProcessing(report);
+		reportService.reportPoint(user);
 		
 		return "redirect:/admin/report/reportList";
 	}
@@ -167,7 +162,7 @@ public class ReportController {
 
 		return "admin/report/reportList";
 	}
-	//신고 리스트 검색 
+	//정지 리스트 검색 
 	@PostMapping("/report/userSuspendList")
 	public String getSuspendSearch(@RequestParam(name="reportSearchKey")String sk 
 								 ,@RequestParam(name="reportSearchValue")String sv

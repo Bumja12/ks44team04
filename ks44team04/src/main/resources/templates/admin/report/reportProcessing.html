@@ -139,7 +139,7 @@
 							<th class="processing" scope="row">관리자 아이디</th>
 							<td><input type="text" style="border: none;" id="reportApproveId" name="reportApproveId" th:value="${session.SID}" readonly="readonly"></td>
 							<th class="processing">신고대상 아이디</th>
-							<td style="text-align: left;" colspan="3"><input type="text" style="border: none; "th:value="*{reportingId}" readonly="readonly"></td>
+							<td style="text-align: left;" colspan="3"><input type="text" style="border: none; "th:value="*{reportedId}" readonly="readonly"></td>
 						</tr>
 						<tr>
 							<th class="processing" scope="row">신고 카테고리</th>
@@ -159,6 +159,8 @@
 							<th style="padding: 0px; text-align: right;" colspan="8" >
 								<input type="hidden" name="penaltyPoint" th:value="*{reportRuleDto.penaltyPoint}">
 								<input type="hidden" name="totalPenaltyPoint" th:value="*{UserDto.userPenalty} + *{reportRuleDto.penaltyPoint}">
+								<input type="hidden" name="userId" th:value="*{reportedId}">
+								<input type="hidden" id="userPenalty" name="userPenalty" th:value="*{UserDto.userPenalty} + *{reportRuleDto.penaltyPoint}">
 								<input type="hidden" id="reportResult" name="reportResult" >
 								<label><i class="glyphicon glyphicon-ok"></i>
 									<button type="button" class=" btn btn-link "  value="승인">승인</button>
@@ -190,6 +192,7 @@
 	     $('.btn').on("click", function() {     //버튼 클릭시 호출되는 함수
 	           if($(this).val() === '반려'){
 	    	 	$('#reportResult').val('반려');
+	    	 	$('#userPenalty').val([[${userPenalty}]]);
 	           $( '#reportProcessing' ).submit();
 	     	}else if($(this).val() === '승인'){
 	     		$('#reportResult').val('승인');

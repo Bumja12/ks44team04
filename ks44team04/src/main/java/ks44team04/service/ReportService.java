@@ -2,6 +2,7 @@ package ks44team04.service;
 
 import ks44team04.mapper.ReportMapper;
 import ks44team04.dto.Report;
+import ks44team04.dto.User;
 import ks44team04.dto.UserSuspend;
 
 import java.util.List;
@@ -33,6 +34,12 @@ public class ReportService {
     public void reportProcessing(Report report) {
     	reportMapper.reportProcessing(report);
     }
+    
+    //유저 벌점 업데이트 
+    public void reportPoint(User user) {
+    	reportMapper.reportPoint(user);
+    }
+    
     
     //특정 신고 리스트 가져오기 
     public Report getReportHostryCode(String reportHistoryCode) {

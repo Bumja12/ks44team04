@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team04.mapper.ReportMapper">
+
 	<resultMap type="UserSuspend" id="userSuspendListResultMap">
 		<id     column="user_suspend_code"  property="userSuspendCode"/>
 		<result column="suspend_id" 		property="suspendId"/>
@@ -46,6 +47,13 @@
         </association>
     </resultMap>
     
+    <resultMap type="User" id="userResultMap">
+    	<id     column="user_id" 		property="userId"/>
+        <result column="user_penalty"  	property="userPenalty"/>
+        <result column="user_name" 		property="userName"/>
+    </resultMap>
+   
+    
     
      <!-- 신고 하기 -->
      <insert id="setReport" parameterType="Report" >
@@ -85,32 +93,18 @@
     	,0)
      </insert>
      
-     <!-- 신고 처리 -->
-     <update id="reportParticulars" parameterType="Report">
-     UPDATE tb_report
-     <trim prefix="SET" prefixOverrides=",">
-		<if test="reportResult != null and reportResult != ''">
-			 report_result= #{reportResult}
-		</if>
-		<if test="reportResultReason != null and reportResultReason != ''">
-			,report_result_reason = #{reportResultReason}
-		</if>
-			,report_result_date = NOW()
-		<if test="reportApproveId != null and reportApproveId != ''">
-			,report_approve_id = #{reportApproveId}
-		</if>
-		<if test="penaltyPoint != null and penaltyPoint != ''">
-			,penalty_point = #{penaltyPoint}
-		</if>
-		<if test="totalPenaltyPoint != null and totalPenaltyPoint != ''">
-			,total_penalty_point = #{totalPenaltyPoint}
-		</if>
-		
-	</trim>
-		WHERE 
-			report_history_code= #{reportHistoryCode};
+        <update id="reportPoint" parameterType="User">
+        
+         UPDATE tb_user
+		<trim prefix="SET" prefixOverrides=",">
+				user_penalty = #{userPenalty}
+		</trim>
+			WHERE
+			  user_id = #{userId};
+        </update>
      
-     </update>
+    
+  
      
      <!-- 신고 처리 -->
      <update id="reportProcessing" parameterType="Report">
