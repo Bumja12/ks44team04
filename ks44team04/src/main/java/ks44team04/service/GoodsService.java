@@ -1,6 +1,8 @@
 package ks44team04.service;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ks44team04.mapper.GoodsMapper;
@@ -21,6 +23,12 @@ public class GoodsService {
 	//상품 목록 조회
 	public List<Goods> getGoodsList() {
 		List<Goods> goodsList = goodsMapper.getGoodsList();
+		return goodsList;
+	}
+	
+	//상품 검색
+	public List<Goods> getGoodsListSearch(Map<String,Object> paramMap) {
+		List<Goods> goodsList = goodsMapper.getGoodsListSearch(paramMap);
 		return goodsList;
 	}
 	
@@ -67,6 +75,12 @@ public class GoodsService {
 	//상품 문의 조회
 	public List<GoodsQna> getGoodsQna() {
 		List<GoodsQna> goodsQna = goodsMapper.getGoodsQna();
+		return goodsQna;
+	}
+	
+	//문의 검색
+	public List<GoodsQna> getGoodsQnaSearch(Map<String,Object> paramMap) {
+		List<GoodsQna> goodsQna = goodsMapper.getGoodsQnaSearch(paramMap);
 		return goodsQna;
 	}
 	

@@ -40,8 +40,8 @@
 	</resultMap>
 
 	<resultMap 	type="BoardCategory" 			id="BoardCategoryMap">
-		<id 	column="goods_qna_answer" 		property="boardCategory"/>
-		<result column="goods_qna_num" 			property="categoryName"/>
+		<id 	column="board_category" 		property="boardCategory"/>
+		<result column="category_name" 			property="categoryName"/>
 		<result column="reg_id" 				property="regId"/>
 		<result column="use_check" 				property="regDate"/>
 		<result column="reg_date" 				property="useCheck"/>

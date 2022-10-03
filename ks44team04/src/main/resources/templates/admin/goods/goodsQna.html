@@ -40,43 +40,46 @@
 
 			<div class="x_content">
 				<div class="well" style="overflow: auto">
-					<div class="form-inline form-group" style="margin-bottom: -1px;">
-						<label class="control-label" for="qnaSearch" style="margin-right: 10px;">문의 검색</label>
-							<select class="form-control" style="font-weight: bold;">
-								<option>::</option>
-								<option value="1">상품코드</option>
-								<option value="2">상품명</option>
-								<option value="3">문의내용</option>
-								<option value="4">작성자ID</option>
-							</select>
-								<input type="text" class="form-control" size="12">
-						<label class="control-label" for="qnaSearch" style="margin-left: 10px; margin-right: 10px;">답변 상태</label>
-							<select class="form-control" style="font-weight: bold;">
-								<option>::</option>
-								<option value="1">답변대기</option>
-								<option value="2">답변완료</option>
-							</select>
-					</div>
-					<div class="form-inline control-group controls">
-						<label class="control-label" for="qnaSearchDate" style="margin-right: 26px;">등록일</label>
-						<div class="input-prepend input-group" style="margin-top:9px;">
-							<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-								<input type="text" style="width: 200px;" name="reservation" id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
+					<form th:action="@{/admin/goods/goodsQna}" method="post">
+						<div class="form-inline form-group" style="margin-bottom: -1px;">
+							<label class="control-label" for="qnaSearch" style="margin-right: 10px;">문의 검색</label>
+								<select class="form-control" name="searchKey">
+									<option value="">::</option>
+									<option value="goodsCode">상품코드</option>
+									<option value="goodsName">상품명</option>
+									<option value="categoryName">카테고리</option>
+									<option value="goodsQnaContent">문의내용</option>
+									<option value="userId">작성자ID</option>
+								</select>
+									<input type="text"name="value" class="form-control" size="12">
+							<label class="control-label" for="qnaSearch" style="margin-left: 10px; margin-right: 10px;">답변 상태</label>
+								<select class="form-control">
+									<option value="">::</option>
+									<option value="1">답변대기</option>
+									<option value="2">답변완료</option>
+								</select>
 						</div>
-						<div class="btn-group  btn-group-sm">
-	                        <button class="btn btn-default" type="button" name="filterDate" value="today">오늘</button>
-	                        <button class="btn btn-default" type="button" name="filterDate" value="week">일주일</button>
-	                        <button class="btn btn-default" type="button" name="filterDate" value="month">한달</button>
-                      </div>
-					</div>
-					<div style="text-align: center; margin-bottom:-10px;">
-						<button type="button" class="btn btn-dark">검색</button>
-						<button type="reset" class="btn btn-dark">초기화</button>
-					</div>
+						<div class="form-inline control-group controls">
+							<label class="control-label" for="qnaSearchDate" style="margin-right: 26px;">등록일</label>
+							<div class="input-prepend input-group" style="margin-top:9px;">
+								<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+									<input type="text" style="width: 200px;" name="reservation" id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
+							</div>
+							<div class="btn-group  btn-group-sm">
+		                        <button class="btn btn-default" type="button" name="filterDate" value="today">오늘</button>
+		                        <button class="btn btn-default" type="button" name="filterDate" value="week">일주일</button>
+		                        <button class="btn btn-default" type="button" name="filterDate" value="month">한달</button>
+	                      </div>
+						</div>
+						<div style="text-align: center; margin-bottom:-10px;">
+							<button type="submit" class="btn btn-dark">검색</button>
+							<button type="reset" class="btn btn-dark">초기화</button>
+						</div>
+					</form>
 				</div>
-				</div>
+			</div>
 
-				<div class="x_content2">
+			<div class="x_content2">
 				<table id="datatable"
 					class="table table-striped table-bordered bulk_action dataTable no-footer"
 					role="grid">
