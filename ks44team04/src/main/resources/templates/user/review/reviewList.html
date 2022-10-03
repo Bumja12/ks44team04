@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/userDefault}">
+
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+<form >
+	<div>
+  		<h3>상품평</h3>
+  		<div style="text-align: center;"><small>사용자 총평</small></div>
+  		<div style="text-align: center; font-size: 50px;" > ★★★★★ </div>
+  		<hr style="border: solid 1px black;">
+  		<input type="text" style="border: none; font-size: 18px; " value="포토">
+  		<hr style="border: solid 1px black;">
+  		<div class="row">
+	  		<div class="row" style="float: left;">
+	  			<input type="text" style="border: none; font-size: 18px; " value="후기">
+	  		</div>
+			<div style="float: right;">
+		  		<select>
+		  			<option>최신순</option>
+		  			<option>평점 낮은 순</option>
+		  			<option>평점 놓은 순</option>
+		  			<option>추천수 높은 순</option>
+		  			<option>추천수 낮은 순</option>
+		  		</select>
+			</div>	  		
+  		</div>
+      <div class="row" style="margin-left: 180px; margin-top: 50px;">
+        <div  class="col-12">
+          	★★★★★ 
+        </div>
+        <div class="col-12">
+          	아이디 ○ 날짜 ○ 
+          <button type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
+          <button type="button"class="btn"  style="font-size: 13px; padding: 0px">삭제</button>
+        </div>
+        <div class="col-12">
+         <input type="text" style="border: none;" value="맛있어요">
+        </div>
+        <div class="col-12" style="text-align: right; padding-right: 180px;">
+         
+          ♥ 추천수 : 1개
+         </div>
+      </div>
+  		<hr align="center" style="border: solid 1px black; width: 80%;">
+	</div>	
+</form>		
+    </th:block>
+
+</html>

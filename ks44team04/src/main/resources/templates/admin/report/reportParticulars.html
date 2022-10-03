@@ -167,17 +167,23 @@
 						<tr>
 							<th style="padding: 0px; text-align: right;" colspan="8" >
 								<input type="hidden" id="penaltyPoint" name="penaltyPoint" th:value="*{reportRuleDto.penaltyPoint}">
-								<input type="hidden" id="totalPenaltyPoint" name="totalPenaltyPoint" th:value="*{UserDto.userPenalty} + *{reportRuleDto.penaltyPoint}">
 								<input type="hidden" id="reportResult" name="reportResult" >
+								<input type="hidden" name="userId" th:value="*{reportedId}">
+								
 								<label><i class="glyphicon glyphicon-ok"></i>
 									<button type="button" class=" btn btn-link "  value="승인">승인수정</button>
 								</label>
 								<label><i class="glyphicon glyphicon-remove"></i>
 									<button type="button" class=" btn btn-link " value="반려">반려수정</button>
 								</label>
-								<label><i class="glyphicon glyphicon-repeat"></i>
-									<button type="button" class=" btn btn-link " value="돌아가기">돌아가기</button>
-								</label>
+							</th>
+							<th  th:if="*{reportResult} == '반려'" >
+								<input type="hidden" name="userPenalty" th:value="*{totalPenaltyPoint} + *{reportRuleDto.penaltyPoint}">
+								<input type="hidden" name="totalPenaltyPoint" th:value="*{totalPenaltyPoint} + *{reportRuleDto.penaltyPoint}">
+							</th>
+							<th th:if="*{reportResult} == '승인'">
+								<input type="hidden" name="userPenalty" th:value="*{totalPenaltyPoint} - *{reportRuleDto.penaltyPoint}">
+								<input type="hidden" name="totalPenaltyPoint" th:value="*{totalPenaltyPoint} - *{reportRuleDto.penaltyPoint}">
 							</th>
 						</tr>
 					</tbody>
@@ -197,7 +203,7 @@
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	
 	<script type="text/javascript">
-	
+	var point = [[${userPenalty}]];D
 	   //  $('.btn').on("click", function() {     //버튼 클릭시 호출되는 함수
 		   //$('table').on('click', '.btn', function() {
 	 	/*  $('.btn').each(function() {
@@ -209,11 +215,6 @@
 				             $( '#reportProcessing' ).submit();
 				     	}else if($(this).val() === '승인'){
 				     		$('#reportResult').val('승인');
-				     		$( '#reportProcessing' ).submit();
-				     	}else if($(this).val() === '돌아가기'){
-				     		$('#penaltyPoint').val(0);
-				     		$('#totalPenaltyPoint').val(0);
-				     		
 				     		$( '#reportProcessing' ).submit();
 				     	}
 				     });
