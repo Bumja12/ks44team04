@@ -1,9 +1,12 @@
 package ks44team04.service;
 
+import ks44team04.dto.OrderDetail;
 import ks44team04.dto.OrderExchange;
 import ks44team04.mapper.OrderMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
 
 @Service
 @Transactional
@@ -22,5 +25,9 @@ public class OrderService {
 
     public String getOrderExchangeMaxCode() {
         return orderMapper.getOrderExchangeMaxCode();
+    }
+
+    public OrderDetail getOrderDetail(Map<String, Object> orderMap) {
+        return orderMapper.getOrderDetail(orderMap);
     }
 }

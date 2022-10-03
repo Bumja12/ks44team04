@@ -99,18 +99,8 @@
 	</select>
 	<!--  	,g.goods_file				AS goodsFile -->
 	
-	<resultMap 	type="GoodsLargeCategory" 		id="GoodsLargeCategoryMap">
-		<id 	column="goods_large_category" 	property="goodsLargeCategory"/>
-		<result column="goods_category" 		property="goodsCategory"/>
-		<collection property="goodsSmallCategoryInfo" javaType="List" ofType="GoodsSmallCategory">
-			<id 	column="goods_small_category" 	property="goodsSmallCategory"/>
-			<result column="goods_large_category" 	property="goodsLargeCategory"/>
-			<result column="small_category_name" 	property="smallCategoryName"/>
-		</collection>
-	</resultMap>
-	
 	<!-- 상품 카테고리 대분류 -->
-    <select id="goodsLargeCategoryList" resultMap="GoodsLargeCategoryMap">
+    <select id="goodsLargeCategoryList" resultMap="ks44team04.mapper.CategoryMapper.GoodsLargeCategoryMap">
     /* 상품 카테고리 대분류 조회 */
 	SELECT
 		 lc.goods_large_category
@@ -242,7 +232,7 @@
         <id 	column="goods_qna_answer" 		property="goodsQnaAnswer"/>
         <result column="goods_qna_num" 			property="goodsQnaNum"/>
         <result column="seller_id" 				property="sellerId"/>
-        <result column="goods_answer_comment" 	property="goodsAnswerComment"/>
+        <result column="goods_answer_content" 	property="goodsAnswerContent"/>
         <result column="answer_date" 			property="answerDate"/>
 	</resultMap>
     

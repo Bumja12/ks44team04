@@ -12,40 +12,11 @@ public class GoodsQna {
     private String secretCheck;
     private int goodsQnaPw;
     private String qnaStatus;
-    
-    
     private GoodsAnswer goodsAnswerInfo;
-    public GoodsAnswer getGoodsAnswerInfo() {
-    	return goodsAnswerInfo;
-    }
-    public void setGoodsAnswerInfoo(GoodsAnswer goodsAnswerInfo) {
-    	this.goodsAnswerInfo = goodsAnswerInfo;
-    }
-    
     private User userInfo;
-    public User getUserInfo() {
-    	return userInfo;
-    }
-    public void setUserInfo(User userInfo) {
-    	this.userInfo = userInfo;
-    }
-	
-	private Goods goodsInfo;
-	public Goods getGoodsInfo() {
-		return goodsInfo;
-	}
-	public void setGoodsInfo(Goods goodsInfo) {
-		this.goodsInfo = goodsInfo;
-	}
-	
-	public GoodsQnaCategory goodsQnaCategoryInfo;
-	public GoodsQnaCategory getGoodsQnaCategoryInfo() {
-		return goodsQnaCategoryInfo;
-	}
-	public void setGoodsQnaCategoryInfo(GoodsQnaCategory goodsQnaCategoryInfo) {
-		this.goodsQnaCategoryInfo = goodsQnaCategoryInfo;
-	}
-	
+    private Goods goodsInfo;
+    public GoodsQnaCategory goodsQnaCategoryInfo;
+
     public int getGoodsQnaNum() {
         return goodsQnaNum;
     }
@@ -126,10 +97,42 @@ public class GoodsQna {
         this.qnaStatus = qnaStatus;
     }
 
+    public GoodsAnswer getGoodsAnswerInfo() {
+        return goodsAnswerInfo;
+    }
+
+    public void setGoodsAnswerInfo(GoodsAnswer goodsAnswerInfo) {
+        this.goodsAnswerInfo = goodsAnswerInfo;
+    }
+
+    public User getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(User userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public Goods getGoodsInfo() {
+        return goodsInfo;
+    }
+
+    public void setGoodsInfo(Goods goodsInfo) {
+        this.goodsInfo = goodsInfo;
+    }
+
+    public GoodsQnaCategory getGoodsQnaCategoryInfo() {
+        return goodsQnaCategoryInfo;
+    }
+
+    public void setGoodsQnaCategoryInfo(GoodsQnaCategory goodsQnaCategoryInfo) {
+        this.goodsQnaCategoryInfo = goodsQnaCategoryInfo;
+    }
+
     @Override
     public String toString() {
-        return "GoodsQndList{" +
-                "goodsQnaNum='" + goodsQnaNum + '\'' +
+        return "GoodsQna{" +
+                "goodsQnaNum=" + goodsQnaNum +
                 ", goodsCode='" + goodsCode + '\'' +
                 ", goodsQnaCategory='" + goodsQnaCategory + '\'' +
                 ", buyerId='" + buyerId + '\'' +
@@ -139,6 +142,10 @@ public class GoodsQna {
                 ", secretCheck='" + secretCheck + '\'' +
                 ", goodsQnaPw=" + goodsQnaPw +
                 ", qnaStatus='" + qnaStatus + '\'' +
+                ", goodsAnswerInfo=" + goodsAnswerInfo +
+                ", userInfo=" + userInfo +
+                ", goodsInfo=" + goodsInfo +
+                ", goodsQnaCategoryInfo=" + goodsQnaCategoryInfo +
                 '}';
     }
 }
