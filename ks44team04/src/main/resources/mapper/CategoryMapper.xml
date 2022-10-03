@@ -21,14 +21,6 @@
 		<result column="use_check" 				property="useCheck"/>
 		<result column="reg_date" 				property="regDate"/>
 	</resultMap>
-	
-	<resultMap 	type="GoodsQnaAnswer" 			id="GoodsQnaAnswerMap">
-		<id 	column="goods_qna_answer" 		property="goodsQnaAnswer"/>
-		<result column="goods_qna_num" 			property="goodsQnaNum"/>
-		<result column="seller_id" 				property="sellerId"/>
-		<result column="goods_answer_content" 	property="goodsAnswerContent"/>
-		<result column="answer_date" 			property="answerDate"/>
-	</resultMap>
 
 	<resultMap type="GoodsQnaCategory" 			id="GoodsQnaCategoryMap">
 		<id column="goods_qna_category" 		property="goodsQnaCategory"/>
@@ -36,7 +28,6 @@
 		<result column="category_name" 			property="categoryName"/>
 		<result column="reg_date" 				property="regDate"/>
 		<result column="use_check" 				property="useCheck"/>
-
 	</resultMap>
 
 	<resultMap 	type="BoardCategory" 			id="BoardCategoryMap">
