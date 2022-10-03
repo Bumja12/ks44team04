@@ -142,7 +142,7 @@
 	<!--  	,g.goods_file				AS goodsFile -->
 	
 	<!-- 상품 카테고리 대분류 -->
-    <select id="goodsLargeCategoryList"  parameterType="map" resultMap="GoodsLargeCategoryMap">
+    <select id="goodsLargeCategoryList"  parameterType="map" resultMap="ks44team04.mapper.CategoryMapper.GoodsLargeCategoryMap">
     /* 상품 카테고리 대분류 조회 */
 	SELECT
 		 lc.goods_large_category
