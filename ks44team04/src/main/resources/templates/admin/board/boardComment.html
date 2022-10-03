@@ -26,44 +26,46 @@
 
 			<div class="x_content">
 				<div class="well" style="overflow: auto">
-					<div class="form-inline form-group" style="margin-bottom: -1px;">
-						<label class="control-label" for="qnaSearch" style="margin-right: 10px;">게시판</label>
-							<select class="form-control" style="font-weight: bold;">
-								<option>::</option>
-								<option value="1">레시피게시판</option>
-								<option value="2">자유게시판</option>
-								<option value="3">농촌체험</option>
-								<option value="4">맛집추천</option>
-								<option value="5">행사</option>
-							</select>
-						<label class="control-label" for="qnaSearch" style="margin-left: 10px; margin-right: 10px;">키워드</label>
-							<select class="form-control" style="font-weight: bold;">
-								<option>::</option>
-								<option value="1">내용</option>
-								<option value="2">작성자ID</option>
-							</select>
-								<input type="text" class="form-control" size="12">
-					</div>
-					<div class="form-inline control-group controls">
-						<label class="control-label" for="qnaSearchDate" style="margin-right: 10px; ">등록일</label>
-						<div class="input-prepend input-group" style="margin-top:9px;">
-							<span class="add-on input-group-addon"><i
-								class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-								<input type="text" style="width: 200px;" name="reservation"
-								id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
+					<form th:action="@{/admin/board/boardComment}" method="post">
+						<div class="form-inline form-group" style="margin-bottom: -1px;">
+							<label class="control-label" for="qnaSearch" style="margin-right: 10px;">게시판</label>
+								<select class="form-control" style="font-weight: bold;">
+									<option>::</option>
+									<option value="1">레시피게시판</option>
+									<option value="2">자유게시판</option>
+									<option value="3">농촌체험</option>
+									<option value="4">맛집추천</option>
+									<option value="5">행사</option>
+								</select>
+							<label class="control-label" for="qnaSearch" style="margin-left: 10px; margin-right: 10px;">키워드</label>
+								<select class="form-control" name="searchKey">
+									<option>::</option>
+									<option value="commentContent">내용</option>
+									<option value="userId">작성자ID</option>
+								</select>
+							<input type="text" name="searchValue" class="form-control" size="12">
 						</div>
-						<div class="btn-group  btn-group-sm">
-	                        <button class="btn btn-default" type="button" name="filterDate" value="today">오늘</button>
-	                        <button class="btn btn-default" type="button" name="filterDate" value="week">일주일</button>
-	                        <button class="btn btn-default" type="button" name="filterDate" value="month">한달</button>
-                     	</div>
-					</div>
-					<div style="text-align: center; margin-bottom:-10px;">
-						<button type="button" class="btn btn-dark">검색</button>
-						<button type="reset" class="btn btn-dark">초기화</button>
-					</div>
+						<div class="form-inline control-group controls">
+							<label class="control-label" for="qnaSearchDate" style="margin-right: 10px; ">등록일</label>
+							<div class="input-prepend input-group" style="margin-top:9px;">
+								<span class="add-on input-group-addon"><i
+									class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+									<input type="text" style="width: 200px;" name="reservation"
+									id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
+							</div>
+							<div class="btn-group  btn-group-sm">
+		                        <button class="btn btn-default" type="button" name="filterDate" value="today">오늘</button>
+		                        <button class="btn btn-default" type="button" name="filterDate" value="week">일주일</button>
+		                        <button class="btn btn-default" type="button" name="filterDate" value="month">한달</button>
+	                     	</div>
+						</div>
+						<div style="text-align: center; margin-bottom:-10px;">
+							<button type="submit" class="btn btn-dark">검색</button>
+							<button type="reset" class="btn btn-dark">초기화</button>
+						</div>	
+					</form>
 				</div>
-				</div>
+			</div>
 
 				<div class="x_content2">
                     <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action">
@@ -97,7 +99,7 @@
 								</td>
 							</tr>
 							<tr th:unless="${not #lists.isEmpty(boardCommentList)}">
-							<td colspan="8">등록된 상품이 없습니다.</td>
+							<td colspan="9">등록된 상품이 없습니다.</td>
 							</tr>
 						</tbody>
 					</table>

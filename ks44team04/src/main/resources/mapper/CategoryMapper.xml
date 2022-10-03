@@ -23,16 +23,16 @@
 	</resultMap>
 	
 	<resultMap 	type="GoodsQnaCategory" 		id="GoodsQnaCategoryMap">
-		<id 	column="goods_qna_answer" 		property="goodsQnaAnswer"/>
-		<result column="goods_qna_num" 			property="goodsQnaNum"/>
-		<result column="seller_id" 				property="sellerId"/>
-		<result column="goods_answer_content" 	property="goodsAnswerContent"/>
-		<result column="answer_date" 			property="answerDate"/>
+		<id 	column="goods_qna_category" 		property="goodsQnaCategory"/>
+		<result column="reg_id" 				property="regId"/>
+		<result column="category_name" 	property="categoryName"/>
+		<result column="reg_date" 			property="regDate"/>
+		<result column="use_check" 			property="useCheck"/>
 	</resultMap>
 	
 	<resultMap 	type="BoardCategory" 			id="BoardCategoryMap">
-		<id 	column="goods_qna_answer" 		property="boardCategory"/>
-		<result column="goods_qna_num" 			property="categoryName"/>
+		<id 	column="board_category" 		property="boardCategory"/>
+		<result column="category_name" 			property="categoryName"/>
 		<result column="reg_id" 				property="regId"/>
 		<result column="use_check" 				property="regDate"/>
 		<result column="reg_date" 				property="useCheck"/>

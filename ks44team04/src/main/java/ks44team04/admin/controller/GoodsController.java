@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/goods")
@@ -30,15 +32,51 @@ public class GoodsController {
 	//상품 목록 조회
 	@GetMapping("/goodsList")
 	public String getGoodsList(Model model) {
-		List<Goods> goodsList = goodsService.getGoodsList();
+		List<Goods> goodsList = goodsService.getGoodsListSearch(null);
 		log.info("등록된 상품 리스트 ::: {}", goodsList);
 		
 		List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
 		log.info("카테고리 대분류 리스트 ::: {}", largeCategoryList);
 		
-		model.addAttribute("title", "상품목록");
+		model.addAttribute("title", "상품 목록 조회");
 		model.addAttribute("goodsList", goodsList);
 		model.addAttribute("largeCategoryList", largeCategoryList);
+		
+		return "/admin/goods/goodsList";
+	}
+	
+	//상품 목록 검색
+	@PostMapping("/goodsList")
+	public String getGoodsListSearch(@RequestParam(name="searchKey", defaultValue = "goodsCode") String searchKey
+									,@RequestParam(name="searchValue", required = false, defaultValue = "") String searchValue
+									,@RequestParam(name="searchKey2", defaultValue = "goodsSmallCategory") String searchKey2
+									,@RequestParam(name="searchCate", required = false, defaultValue = "") String searchCate
+									,Model model) {
+		
+		
+		if("goodsCode".equals(searchKey)) {
+			searchKey = "goods_code";
+		}else if("goodsName".equals(searchKey)) {
+			searchKey = "goods_name";
+		}else if("userId".equals(searchKey)) {
+			searchKey = "user_id";
+		}
+
+		if("goodsSmallCategory".equals(searchKey2)) {
+			searchKey2 = "sc.goods_small_category";
+		}
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("searchKey", searchKey);
+		paramMap.put("searchValue", searchValue);
+		paramMap.put("searchKey2", searchKey2);
+		paramMap.put("searchCate", searchCate);
+		
+		List<Goods> goodsList = goodsService.getGoodsListSearch(paramMap);
+		
+		
+		model.addAttribute("title", "상품 목록 조회");
+		model.addAttribute("goodsList", goodsList);
 		
 		return "/admin/goods/goodsList";
 	}
@@ -99,17 +137,9 @@ public class GoodsController {
 		
 	//상품 삭제
 	@GetMapping("/goodsRemove")
-	public String goodsRemove(@RequestParam(value = "goodsCode") String goodsCode
-							 ,@RequestParam(name = "adminPw") String userPw) {
+	public String goodsRemove(@RequestParam(value = "goodsCode") String goodsCode) {
 		
-		//비밀번호 확인
-		String adminPw = goodsService.getAdminPw(userPw);
-		
-		if(adminPw != null) {
-			if(adminPw.equals(userPw)) {
-				goodsService.goodsRemove(goodsCode);
-			}
-		}
+		goodsService.goodsRemove(goodsCode);
 
 		return "redirect:/admin/goods/goodsList";
 	}
@@ -119,6 +149,7 @@ public class GoodsController {
 	public int pwCheck(@RequestParam(value = "userPw") String userPw) {
 		//String userId = "admin01";
 		String adminPw = goodsService.getAdminPw(userPw);
+		log.info("관리자 비밀번호 ::: {}", adminPw);
 		if(userPw.equals(adminPw)) {
 			return 1;
 		}
@@ -129,13 +160,43 @@ public class GoodsController {
 	//상품문의 & 상품문의 답변
     @GetMapping("/goodsQna")
     public String getGoodsQna(Model model) {
-    	List<GoodsQna> goodsQna = goodsService.getGoodsQna();
+    	List<GoodsQna> goodsQna = goodsService.getGoodsQnaSearch(null);
     	log.info("문의 정보 ::: {}", goodsQna);
 		model.addAttribute("title", "문의목록");
 		model.addAttribute("goodsQna", goodsQna);
 		
         return "admin/goods/goodsQna";
     }
+    
+	//문의 목록 검색
+	@PostMapping("/goodsQna")
+	public String getGoodsQnaSearch(@RequestParam(name="searchKey", defaultValue="goodsCode") String searchKey
+							  		,@RequestParam(name="value", required=false, defaultValue="") String value
+							  		,Model model) {
+		
+		if("goodsCode".equals(searchKey)) {
+			searchKey = "goods_code";
+		}else if("goodsName".equals(searchKey)) {
+			searchKey = "goods_name";
+		}else if("categoryName".equals(searchKey)) {
+			searchKey = "category_name";
+		}else if("goodsQnaContent".equals(searchKey)) {
+			searchKey = "goods_qna_content";
+		}else if("userId".equals(searchKey)) {
+			searchKey = "user_id";
+		}
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("searchKey", searchKey);
+		paramMap.put("value", value);
+		
+		List<GoodsQna> goodsQna = goodsService.getGoodsQnaSearch(paramMap);
+		
+		model.addAttribute("title", "상품 목록 조회");
+		model.addAttribute("goodsQna", goodsQna);
+		
+		return "/admin/goods/goodsQna";
+	}
 		
    //상품 문의 답변 
    //@GetMapping("/goods/goodsAnswer")
