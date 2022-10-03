@@ -27,6 +27,17 @@
 			})
 		}
 		
+		
+/* 		var userStatus = $('.userStatus').val();
+		alert(userStatus);
+			
+		if(userStatus === '탈퇴') {
+			$('#modifyBtn').click(function (e) {
+				e.preventDefault();
+			});
+		} */
+
+		
 	</script>
 </th:block>
 
@@ -127,18 +138,18 @@
 							<td th:text="${l.userId}"></td>
 							<td th:text="${l.userName}"></td>
 							<td th:text="${l.userNickname}"></td>
-							<td th:text="${l.rightDto.rightStatus}"></td>
+							<td th:text="${l.rightList.rightStatus}"></td>
 							<td th:text="${l.userLevelName}"></td>
 							<td th:text="${l.userPhone}"></td>
 							<td th:text="${l.userEmail}"></td>
 							<td th:text="${l.userRegDate}"></td>
 							<td th:text="${l.userUpdateDate}"></td>
-							<td th:text="${l.userStatus}"></td>
+							<td th:text="${l.userStatus}" th:value="${l.userStatus}" class="userStatus"></td>
 							<td>
 								<a th:href="@{/admin/user/userDetail(userId=${l.userId})}"> 
 									<i class="fa fa-info-circle"></i> 상세 &nbsp;
 								</a> 
-								<a th:href="@{/admin/user/modifyUser(userId=${l.userId})}">
+								<a th:href="@{/admin/user/modifyUser(userId=${l.userId})}" id="modifyBtn">
 									<i class="fa fa-edit"></i> 수정 &nbsp;
 								</a> 
 								<a href="#"><i class="fa fa-close"></i> 탈퇴 &nbsp;</a>

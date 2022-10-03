@@ -20,14 +20,14 @@ public interface UserMapper {
     public String userLogin(String userId);
     public User getLoginUserInfo(String userId);
     
-    //판매자 신청
+    //판매자 등록
     public int addSeller(Seller seller);
     
 	//회원 가입
 	public int addUser(User user);
     
 	//회원 수정
-	public int modifyUser(User user, String userId);
+	public int modifyUser(User user);
 	
 	//특정 판매자 판매상품 조회
 	public List<Goods> getGoodsList(String sellerId);
