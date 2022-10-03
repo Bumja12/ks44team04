@@ -68,12 +68,12 @@
 									<td class="tableOdd col-md-1">회원권한</td>
 									<td class="tableEven">
 										<div class="form-inline">
-											<input type="text" class="form-control text" id="userRight" name="userRight" th:value="*{rightDto.rightStatus}" readonly="readonly" />
+ 											<input type="text" class="form-control text" id="userRight" name="userRight" th:value="*{userRight}" readonly="readonly" />
 										</div>
 									</td>
 									<td class="tableOdd col-md-1">회원등급</td>
 									<td class="tableEven">
-										<input type="text" class="form-control text" id="userLevel" name="userLevel" th:value="*{userLevel}" readonly="readonly" />
+ 										<input type="text" class="form-control text" id="userLevel" name="userLevel" th:value="*{userLevel}" readonly="readonly" />
 									</td>
 								</tr>
 								<tr>
@@ -81,9 +81,9 @@
 									<td class="tableEven col-md-4">
 										<input type="text" class="form-control text" id="userId" name="userId" th:value="*{userId}" readonly="readonly" />
 									</td>
-									<td class="tableOdd">닉네임</td>
+									<td class="tableOdd">비밀번호</td>
 									<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="userNickname" name="userNickname" th:value="*{userNickname}" readonly="readonly" />
+										<input type="text" class="form-control text" id="userPw" name="userPw" th:value="*{userPw}" readonly="readonly" />
 									</td>
 								</tr>
 								<tr>
@@ -91,9 +91,15 @@
 									<td class="tableEven col-md-4">
 										<input type="text" class="form-control text" id="userName" name="userName" th:value="*{userName}" readonly="readonly" />
 									</td>
-									<td class="tableOdd">비밀번호</td>
+									<td class="tableOdd">닉네임</td>
 									<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="userPw" name="userPw" th:value="*{userPw}" readonly="readonly" />
+										<input type="text" class="form-control text" id="userNickname" name="userNickname" th:value="*{userNickname}" readonly="readonly" />
+									</td>
+								</tr>
+								<tr>
+									<td class="tableOdd">성별</td>
+									<td class="tableEven col-md-4" colspan="3">
+ 										<input type="text" class="form-control text" id="userGender" name="userGender" th:value="*{userGender}" readonly="readonly" />
 									</td>
 								</tr>
 								<tr>
@@ -122,7 +128,7 @@
 									<td class="tableOdd">포인트</td>
 									<td class="tableEven col-md-4">
 										<div class="form-inline">
-											<input type="text" class="form-control text" id="userPoint" name="userPoint" th:value="*{#numbers.formatInteger(userPoint,3,'COMMA') + '점'}" readonly="readonly" />
+											<input type="text" class="form-control text" id="userPoint" name="userPoint" th:value="*{#numbers.formatInteger(userPoint,1,'COMMA') + '점'}" readonly="readonly" />
 										</div>
 									</td>
 									<td class="tableOdd">벌점</td>
@@ -162,4 +168,22 @@
 	</div>
 		
 </th:block>
+<th:block layout:fragment="customJsScript">
+	<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+
+    <script th:inline="javascript">
+
+    	/* 회원등급 null일시 '-' 표시 */
+		$(document).ready(function() {
+			
+			var rightNull = $('#userLevel').val();
+			if(rightNull === "null") {
+				$('#userLevel').attr('value', "-");
+			}
+		});
+
+    </script>
+    
+</th:block>
+
 </html>

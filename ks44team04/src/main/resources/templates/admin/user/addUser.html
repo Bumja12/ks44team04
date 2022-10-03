@@ -78,7 +78,7 @@
 										<td class="tableEven">
 										 	<select class="select form-control" id="userRight" name="userRight">
 												<th:block th:unless="${#lists.isEmpty(rightList)}" th:each="r : ${rightList}">
-													<option th:if="${r.rightStatus} == 구매자" th:text="${r.rightStatus}" th:value="${r.userRight}"></option>
+													<option th:text="${r.rightStatus}" th:value="${r.userRight}"></option>
 												</th:block>
 											</select>
 										</td>
@@ -127,13 +127,13 @@
 									</tr>
 									<tr>
 										<td class="tableOdd">성별</td>
-										<td class="tableEven col-md-4">
-											<div class="radioDiv">
+										<td class="tableEven col-md-4" colspan="3">
+											<div class="radioDiv" style="margin-bottom: 5px;">
 												<label>
-													<input type="radio" id="userGender" name="userGender" /> 여자 &nbsp; &nbsp; &nbsp;
+													<input type="radio" id="userGender" name="userGender" value="여" /> 여자 &nbsp; &nbsp; &nbsp;
 												</label>
 												<label>
-													<input type="radio" id="userGender" name="userGender" /> 남자
+													<input type="radio" id="userGender" name="userGender" value="남" /> 남자
 												</label>
 											</div> 
 										</td>
@@ -221,16 +221,44 @@
     	//주소검색
 		let text = document.querySelector('#userAddress');
 		document.querySelector('#addrSearchBtn').addEventListener('click', function () {
-
+			
 			new daum.Postcode({
 				oncomplete: function (data) {
 				text.value = data.address;
 				}
 			}).open();
+			
+			//상세주소 초기화
+			var input = document.getElementById('userAddress2'); 
+			input.value = null;
 		});
 		
+		/* 권한 판매자 승인전 선택시 등급 select박스 제어 */
+		/*
+		$('#userRight').change(function() {
+			
+			 if($(this).val() == "buyer") {
+				 $('#userLevel,#userPoint,#userPenalty').removeAttr('disabled')
+				 $("#userLevel option[value='선택불가']").remove();
+				 
+			 }else if($(this).val() == "seller_before") {
+				 $('#userLevel,#userPoint,#userPenalty').attr('disabled', 'disabled');
+				 $("#userLevel").prepend("<option value='선택불가'>선택불가</option>");
+				 $("#userLevel").val("선택불가").prop("selected", true);
+				 //$('#userLevel').prop('value', 'null');
+				 $('#userPoint').prop('value', 0);
+				 $('#userPenalty').prop('value', 0);
+			 }
+		});
+		*/
 		
 		
+/* 			var userRight = $('#userRight option:selected').val();
+			console.log(userRight);
+			
+			if(userRight.includes('seller')) {
+				$('#userLevel').css('display', 'none');
+			} */
 		/*
 		$(function(){
 	  				

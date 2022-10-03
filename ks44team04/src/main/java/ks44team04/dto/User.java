@@ -22,7 +22,7 @@ public class User {
     private String userLevel;
     private LevelSellerCategory levelSeller;
     private LevelBuyerCategory levelBuyer;
-    private Right rightDto;
+    private Right rightList;
     
     public String getUserLevelName() {
 		return userLevelName;
@@ -184,12 +184,12 @@ public class User {
     	this.levelBuyer = levelBuyer;
     }
     
-	public Right getRightDto() {
-		return rightDto;
+	public Right getRightList() {
+		return rightList;
 	}
 	
-	public void setRightDto(Right rightDto) {
-		this.rightDto = rightDto;
+	public void setRightList(Right rightList) {
+		this.rightList = rightList;
 	}
 
     @Override
@@ -212,7 +212,7 @@ public class User {
                 ", userPoint=" + userPoint +
                 ", userInfoKeep='" + userInfoKeep + '\'' +
                 ", userLevel='" + userLevel + '\'' +
-                ", rightDto='" + rightDto + '\'' +
+                ", rightList='" + rightList + '\'' +
                 ", levelBuyer='" + levelBuyer + '\'' +
                 ", levelSeller='" + levelSeller + '\'' +
                 '}';

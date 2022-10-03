@@ -40,7 +40,6 @@ public class UserController {
     
     @PostMapping("/user/addSeller")
     public String addSeller(Seller seller) {
-    	
     	log.info("사용자가 입력한 회원의 정보 ::: {}", seller);
     	
     	System.out.println("사용자가 입력한 회원의 정보 -> " + seller);
@@ -51,7 +50,6 @@ public class UserController {
     
 	@PostMapping("/user/addUser")
     public String addUser(User user) {
-		
 		log.info("사용자가 입력한 회원의 정보 ::: {}", user);
 		
         System.out.println("사용자가 입력한 회원의 정보 -> " + user);
@@ -77,24 +75,27 @@ public class UserController {
 	
 	//회원 수정
 	@PostMapping("/user/modifyUser")
-	public String modifyUser(User user, String userId) {
+	public String modifyUser(User user) {
 		
-		userService.modifyUser(user, userId);
+		log.info("회원정보 수정 정보 ::: {}", user);
+		userService.modifyUser(user);
 		
-		return "redirect:/admin/user/userDetail";
+		return "redirect:/admin/user/userList";
 	}
 	
 	//회원수정(저장된 정보 가져오기)
 	@GetMapping("/user/modifyUser")
-	public String modifyMember(@RequestParam(value="userId", required = false) String userId
+	public String modifyUser(@RequestParam(value="userId", required = false) String userId
 							  ,Model model) {
         User userInfo = userService.getUserInfoById(userId);
         log.info("회원정보 ::: {}",userInfo);
         List<LevelBuyerCategory> levelBuyer = userService.getLevelBuyer();
-
+        List<Right> rightList = userService.getRightList();
+        
 		model.addAttribute("title", "회원정보수정");
 		model.addAttribute("userInfo", userInfo);
 		model.addAttribute("levelBuyer", levelBuyer);
+		model.addAttribute("rightList", rightList);
 		
 		return "admin/user/modifyUser";
 	}

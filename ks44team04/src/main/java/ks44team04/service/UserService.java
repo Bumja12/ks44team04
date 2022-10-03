@@ -30,7 +30,7 @@ public class UserService {
         this.userMapper = userMapper;
     }
     
-    //판매자 신청
+    //판매자 등록
     public void addSeller(Seller seller) {
     	int addSellerResult = userMapper.addSeller(seller);
     	System.out.println("회원가입 결과:" + addSellerResult);
@@ -43,8 +43,8 @@ public class UserService {
     }
     
 	//회원수정
-	public void modifyUser(User user, String userId) {
-		userMapper.modifyUser(user, userId);
+	public void modifyUser(User user) {
+		userMapper.modifyUser(user);
 	}
     
 	//특정 판매자 판매상품 조회

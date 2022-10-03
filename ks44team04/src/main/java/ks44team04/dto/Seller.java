@@ -23,7 +23,7 @@ public class Seller {
     private User userInfo;
     private Goods goodsList;
     private LevelSellerCategory levelSeller;
-    private Right rightDto;
+    private Right rightList;
 
     public String getSellerCode() {
 		return sellerCode;
@@ -193,12 +193,12 @@ public class Seller {
 		this.levelSeller = levelSeller;
 	}
 
-	public Right getRightDto() {
-		return rightDto;
+	public Right getRightList() {
+		return rightList;
 	}
 
-	public void setRightDto(Right rightDto) {
-		this.rightDto = rightDto;
+	public void setRightList(Right rightList) {
+		this.rightList = rightList;
 	}
 
 	@Override
@@ -224,7 +224,7 @@ public class Seller {
                 ", approveId='" + approveId + '\'' +
                 ", userInfo='" + userInfo + '\'' +
                 ", goodsList='" + goodsList + '\'' +
-                ", rightDto='" + rightDto + '\'' +
+                ", rightList='" + rightList + '\'' +
                 ", levelSeller='" + levelSeller + '\'' +
                 '}';
     }
