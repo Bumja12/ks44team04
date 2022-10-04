@@ -231,9 +231,4 @@ public class GoodsController {
    // return "/admin/goods/goodsQna";
    // }
     
-	//상품 후기
-    @GetMapping("/goodsReview")
-    public String goodsReview() {
-        return "/admin/goods/goodsReview";
-    }
 }

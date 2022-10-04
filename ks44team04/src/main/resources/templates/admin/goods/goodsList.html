@@ -11,6 +11,7 @@
 <th:block layout:fragment="customCss">
 
 <style>
+
 .searchTitle {
 	margin-left: 10px; margin-right: 5px;
 }
@@ -79,12 +80,11 @@
 			</div>
 
 			<div class="x_content2">
-				<table id="datatable"
-					class="table table-striped table-bordered bulk_action dataTable no-footer"
-					role="grid">
+				<table id="datatable" class="table table-striped table-bordered bulk_action dataTable no-footer" role="grid">
 					<thead>
-						<tr style="text-align:center;">
+						<tr>
 							<th style="width: 100px;">상품코드</th>
+							<th style="width: 120px;">카테고리</th>
 							<th>상품명</th>
 							<th style="width: 80px;">정가</th>
 							<th style="width: 60px;">할인율</th>
@@ -98,9 +98,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${not #lists.isEmpty(goodsList)}" th:each="g : ${goodsList}" id="goodsListTable">
+						<tr th:if="${not #lists.isEmpty(goodsList)}" th:each="g : ${goodsList}" id="goodsListTable" style="text-align:center;">
 							<td th:text="${g.goodsCode}"></td>
-							<td th:text="${g.goodsName}"></td>
+							<td th:text="${g.goodsSmallCategoryInfo.smallCategoryName}"></td>
+							<td th:text="${g.goodsName}" style="text-align:left;"></td>
 							<td th:text="${'₩' + #numbers.formatInteger(g.goodsPrice,3,'COMMA')}"></td>
 							<td th:text="${g.goodsDiscountRate + '%'}"></td>
 							<td th:text="${'₩'+ #numbers.formatInteger((g.goodsPrice-g.goodsPrice*g.goodsDiscountRate/100),3,'COMMA')}"></td>
