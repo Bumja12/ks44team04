@@ -66,9 +66,9 @@
     			<div class="col-md-12 mb-5 text-center">
 	    			<form class="p-5" th:action="@{/user/customerAsk/addCustomerAsk}" method="post">
 						<!-- 카테고리 -->
-						<div class="form-group row ChosunBg">
+						<div class="form-group row">
 					    	<div class="col-sm-4 d-table">
-					    		<label for="customerAskCategory" class="vertical-middle">카테고리</label>
+					    		<label for="customerAskCategory" class="vertical-middle ChosunBg">카테고리</label>
 					    	</div>
 						    <div class="col-sm-8">
 								<select id="customerAskCategory" class="form-control" required="required" tabindex="-1">
@@ -82,27 +82,27 @@
 						    </div>
 					    </div>
 					    <!-- 제목 -->
-						<div class="form-group row ChosunBg">
+						<div class="form-group row">
 				    		<div class="col-sm-4 d-table">
-							    <label for="customerAskTitle" class="vertical-middle">제목</label>
+							    <label for="customerAskTitle" class="vertical-middle ChosunBg">제목</label>
 				    		</div>
 				    		<div class="col-sm-8">
 				    			<input type="text" id="customerAskTitle" required="required" class="form-control">
 				    		</div>
 			    		</div>    
 			    		<!-- 내용 -->
-						<div class="form-group row ChosunBg">
+						<div class="form-group row">
 				    		<div class="col-sm-4 d-table">
-							    <label for="customerAskContent" class="vertical-middle">내용</label>
+							    <label for="customerAskContent" class="vertical-middle ChosunBg">내용</label>
 				    		</div>
 				    		<div class="col-sm-8">
 		 						<textarea id="customerAskContent" class="form-control" required="required" rows="" cols=""></textarea>
 				    		</div>
 			    		</div>    
 			    		<!-- 첨부 파일 -->
-						<div class="form-group row ChosunBg">
+						<div class="form-group row">
 				    		<div class="col-sm-4 d-table">
-							    <label for="customerAskFile" class="vertical-middle">첨부 파일</label>
+							    <label for="customerAskFile" class="vertical-middle ChosunBg">첨부 파일</label>
 				    		</div>
 				    		<div class="col-sm-8">
 				    			<input type="text" id="customerAskFile" class="form-control">
