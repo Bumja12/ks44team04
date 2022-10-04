@@ -44,6 +44,7 @@
                  inner join tb_order t
                             on tod.order_num = t.order_num
         where trps.buyer_id = #{userId}
+        order by tod.order_detail_code desc
     </select>
 
     <update id="setOrderConfirm" parameterType="String">
@@ -53,9 +54,7 @@
         where order_num = #{orderNum}
     </update>
 
-    <update id="setOrderDetailStatus" parameterType="String">
-        call set_order_status(#{orderDetailCode}, #{orderStatus})
-    </update>
+
 
 
 

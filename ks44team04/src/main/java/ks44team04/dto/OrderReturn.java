@@ -4,10 +4,9 @@ public class OrderReturn {
 
     private String orderReturnCode;
     private String orderDetailCode;
-    private String paymentCode;
     private String buyerId;
     private String returnAskDate;
-    private String cancelReason;
+    private String returnReason;
     private String permitDate;
     private String postCompany;
     private String invoiceNumber;
@@ -28,14 +27,6 @@ public class OrderReturn {
         this.orderDetailCode = orderDetailCode;
     }
 
-    public String getPaymentCode() {
-        return paymentCode;
-    }
-
-    public void setPaymentCode(String paymentCode) {
-        this.paymentCode = paymentCode;
-    }
-
     public String getBuyerId() {
         return buyerId;
     }
@@ -52,12 +43,12 @@ public class OrderReturn {
         this.returnAskDate = returnAskDate;
     }
 
-    public String getCancelReason() {
-        return cancelReason;
+    public String getReturnReason() {
+        return returnReason;
     }
 
-    public void setCancelReason(String cancelReason) {
-        this.cancelReason = cancelReason;
+    public void setReturnReason(String returnReason) {
+        this.returnReason = returnReason;
     }
 
     public String getPermitDate() {
@@ -89,10 +80,9 @@ public class OrderReturn {
         return "OrderReturn{" +
                 "orderReturnCode='" + orderReturnCode + '\'' +
                 ", orderDetailCode='" + orderDetailCode + '\'' +
-                ", paymentCode='" + paymentCode + '\'' +
                 ", buyerId='" + buyerId + '\'' +
                 ", returnAskDate='" + returnAskDate + '\'' +
-                ", cancelReason='" + cancelReason + '\'' +
+                ", returnReason='" + returnReason + '\'' +
                 ", permitDate='" + permitDate + '\'' +
                 ", postCompany='" + postCompany + '\'' +
                 ", invoiceNumber='" + invoiceNumber + '\'' +

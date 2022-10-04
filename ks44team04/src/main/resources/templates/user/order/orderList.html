@@ -36,7 +36,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:if="${not #lists.isEmpty(regularPostHistory)}" th:each="l: ${regularPostHistory}">
+            <tr th:if="${not #lists.isEmpty(orderList)}" th:each="l: ${orderList}">
                 <td class="row">
                     <div class="col-5">상품이미지</div>
                     <ul class="col-7 list-unstyled text-left">
@@ -46,47 +46,47 @@
                 </td>
                 <td th:text="${#strings.substring(l.order.orderDate, 0, 10)}">2022.09.26</td>
                 <td>
-                    <a class="text-decoration-none text-black-50" th:href="'/user/order/' + ${l.orderDetail.orderDetailCode}">[[${l.orderDetail.orderDetailCode}]]</a>
+                    <a class="text-decoration-none text-black-50" th:href="'/user/regularPost/' + ${l.orderDetailCode}">[[${l.orderDetailCode}]]</a>
                 </td>
                 <td>
-                    <div class="" th:text="${l.orderDetail.orderPrice} + '원'">30000원</div>
-                    <div class="" th:text="${l.orderDetail.orderAmount} + '개'">1개</div>
+                    <div class="" th:text="${l.orderPrice} + '원'">30000원</div>
+                    <div class="" th:text="${l.orderAmount} + '개'">1개</div>
                 </td>
                 <td>
-                    <div th:text="${l.orderDetail.orderStatus}">결제완료</div>
-                    <button type="button" class="btn-sm" th:data-post-code="${l.orderDetail.postInfo}">배송조회
+                    <div th:text="${l.orderStatus}">결제완료</div>
+                    <button type="button" class="btn-sm" th:data-post-code="${l.postInfo}">배송조회
                     </button>
                 </td>
-                <th:block th:switch="${l.orderDetail.orderStatus}">
+                <th:block th:switch="${l.orderStatus}">
                     <td th:case="결제완료">
                         <button type="button" class="btn-sm orderBtn orderCancel"
-                                th:data-order-detail-code="${l.orderDetail.orderDetailCode}">주문취소
+                                th:data-order-detail-code="${l.orderDetailCode}">주문취소
                         </button>
                     </td>
                     <td th:case="배송완료">
                         <button type="button" class="btn-sm orderBtn orderExchange"
-                                th:data-order-detail-code="${l.orderDetail.orderDetailCode}">교환요청
+                                th:data-order-detail-code="${l.orderDetailCode}">교환요청
                         </button>
-                        <button type="button" class="btn-sm orderBtn orderRefund"
-                                th:data-order-detail-code="${l.orderDetail.orderDetailCode}">환불요청
+                        <button type="button" class="btn-sm orderBtn orderReturn"
+                                th:data-order-detail-code="${l.orderDetailCode}">환불요청
                         </button>
                         <button type="button" class="btn-sm orderBtn orderConfirm"
-                                th:data-order-detail-code="${l.orderDetail.orderDetailCode}">구매확정
+                                th:data-order-detail-code="${l.orderDetailCode}">구매확정
                         </button>
                     </td>
                     <td th:case="구매확정">
                         <button type="button" class="btn-sm orderBtn writeReview"
-                                th:data-order-detail-code="${l.orderDetail.orderDetailCode}">리뷰작성
+                                th:data-order-detail-code="${l.orderDetailCode}">리뷰작성
                         </button>
                     </td>
                     <td th:case="교환요청">
                         <button type="button" class="btn-sm orderBtn openAddressModal" data-return="exchange"
-                                th:data-order-detail-code="${l.orderDetail.orderDetailCode}">배송지입력
+                                th:data-order-detail-code="${l.orderDetailCode}">배송지입력
                         </button>
                     </td>
                     <td th:case="환불요청">
                         <button type="button" class="btn-sm orderBtn openAddressModal" data-return="refund"
-                                th:data-order-detail-code="${l.orderDetail.orderDetailCode}">배송지입력
+                                th:data-order-detail-code="${l.orderDetailCode}">배송지입력
                         </button>
                     </td>
                 </th:block>
@@ -143,9 +143,17 @@
                     }
                 }, 500)
             }
-
-            if (e.target.classList.contains('orderRefund')) {
-
+            if (e.target.classList.contains('orderReturn')) {
+                let open = window.open(`/user/order/return/${orderDetailCode}`);
+                let openInterval = window.setInterval(function () {
+                    if (open.closed) {
+                        window.setTimeout(function () {
+                            open.close();
+                        }, 300);
+                        location.replace(location.href);
+                        window.clearInterval(openInterval);
+                    }
+                }, 500)
             }
             if (e.target.classList.contains('orderConfirm')) {
                 if (confirm('구매확정하시겠습니까?')) {

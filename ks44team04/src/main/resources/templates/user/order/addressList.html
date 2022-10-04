@@ -277,7 +277,6 @@
     </div>
 </div>
 
-
 <script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
 <script>
     // 주소검색 api 설정
@@ -300,9 +299,9 @@
                         input.value = data[key];
                     }
                 }
+            document.querySelector('#addressList').value = addressList;
+            document.querySelector('#addressModal').style.display = 'block';
             });
-        document.querySelector('#addressList').value = addressList;
-        document.querySelector('#addressModal').style.display = 'block';
     }
 
     const closeModal = function () {
