@@ -3,6 +3,7 @@ package ks44team04.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,12 @@ public class ReviewService {
 		
 		return reviewList;
 	}
+	
+	//리뷰 검색
+    public List<Review> reviewSerchList(Map<String, Object> paramMap){
+    	List<Review> reviewList = reviewMapper.reviewSerchList(paramMap);
+    	return reviewList;
+    }
 	
 	
 }
