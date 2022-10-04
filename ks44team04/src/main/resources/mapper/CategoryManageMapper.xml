@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team04.mapper.CategoryManageMapper">       
+	<select id="getRegularAskCategory" resultType="RegularAskCategory">
+		SELECT 
+			 rAskCate.regular_ask_category AS regularAskCategory
+			,rAskCate.reg_id 			   AS regId 
+			,rAskCate.category_name 	   AS categoryName    
+			,rAskCate.reg_date 			   AS regDate
+			,rAskCate.use_check 		   AS useCheck
+		FROM tb_regular_ask_category AS rAskCate; 
+	</select>
+</mapper>

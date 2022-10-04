@@ -11,12 +11,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ks44team04.service.RegularAskService;
+
 @Controller
 @RequestMapping(value = "/admin/regularAsk")
 public class RegularAskController {
 	
 	private static final Logger log = LoggerFactory.getLogger(RegularAskController.class);
-
+	
+	// RegularAskService 의존성 주입
+	private final RegularAskService regularAskService;
+	// 생성자 메소드
+	public RegularAskController(RegularAskService regularAskService) {
+		this.regularAskService = regularAskService;
+		
+	}
+	
 	// 자주 묻는 질문 삭제 처리
 	@PostMapping("/removeRegularAsk")
 	public String removeRegularAsk () {
@@ -75,6 +85,7 @@ public class RegularAskController {
 	@GetMapping("/regularAskList")
 	public String getRegularAskList (Model model) {
 		
+		regularAskService.getRegularAskCategory();
 		model.addAttribute("title", "관리자 자주 묻는 질문 목록 화면");
 		return "admin/regularAsk/admin_regularAsk_list";
 	}

@@ -2,14 +2,14 @@ package ks44team04.dto;
 
 public class RegularAsk {
 
-    private String regularAsk;
-    private String regularAskCategory;
-    private String regId;
-    private String regularAskTitle;
-    private String regularAskContent;
-    private String useCheck;
-    private String regDate;
-    private String updateDate;
+    private String regularAsk; // 자주 묻는 질문 PK
+    private String regularAskCategory; // 자주 묻는 질문 카테고리
+    private String regId; // 회원 아이디 FK(작성자)
+    private String regularAskTitle; // 제목
+    private String regularAskContent; // 내용
+    private String useCheck; // 사용 여부
+    private String regDate; // 등록일
+    private String updateDate; // 수정일
 
     public String getRegularAsk() {
         return regularAsk;
