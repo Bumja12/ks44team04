@@ -36,6 +36,30 @@
 	
 </select>
 
+<select id="reviewSerchList" resultMap="reviewListResultMap">
+	SELECT 
+		r.review_list
+		,r.goods_list
+		,r.buyer_id
+		,r.order_detail_code
+		,r.review_content
+		,r.review_img
+		,r.review_reg_date
+		,r.review_update_date
+		,r.save_point
+		,r.like_amount
+		,r.grade
+	FROM 
+		tb_review AS r 
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		   	<if test="sv != null and sv != ''">
+		   		${sk} LIKE CONCAT('%',#{sv},'%')
+		   	</if>
+	   </trim>
+	
+</select>
+
+
 
     
 </mapper>

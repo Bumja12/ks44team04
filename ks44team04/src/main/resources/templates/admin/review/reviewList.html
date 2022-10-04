@@ -10,13 +10,13 @@
 <th:block layout:fragment="customContents">
    <div class="row" style="display: inline-block;">
       <div class="tile_count">
-        <h3>신고 관리</h3>
+        <h3>후기 관리</h3>
       </div>
    </div>
    <!-- 검색  -->
    <div class="x_panel">
     <!-- 검색 시작-->
-	<form method="post" action="/admin/report/reportList">
+	<form method="post" action="/admin/review/reviewList">
 		<div class="">
 			<table class=" table table-bordered" style="background-color: white;  ">
 				<tbody >
@@ -27,11 +27,10 @@
 								<div class="form-group" >
 									<select class="form-control" name="reportSearchKey" style="width: 150px;">
 										<option selected value="''">- 전체검색 -</option>
-										<option value="reportHistoryCode">회원신고기록코드</option>
-										<option value="reportedId">신고 대상 아이디</option>
-										<option value="reportApproveId">승인자 아이디</option>
-										<option value="reportResult">처리상태</option>
-										<option value="reportReason">신고내용</option>
+										<option value="reviewList">후기목록</option>
+										<option value="goodsList">상품 코드</option>
+										<option value="buyerId">작성자 아이디</option>
+										<option value="reviewContent">후기내용</option>
 										
 									</select>
 								</div>
@@ -50,76 +49,11 @@
         </form>
         <!-- 검색 끝 -->
         <div class="col-md-12 col-sm-12 ">
-          <div class="x_panel">
-            <div class="x_title">
-              <h2>처리 대기중</h2>
-              <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
-                      class="fa fa-wrench"></i></a>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Settings 1</a>
-                    <a class="dropdown-item" href="#">Settings 2</a>
-                  </div>
-                </li>
-                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                </li>
-              </ul>
-              <div class="clearfix"></div>
-            </div>
 
-            <div class="x_content">
-              <table class="table table-striped jambo_table bulk_action">
-                <thead>
-                  <tr class="headings">
-                 	<th style="text-align: center;" class="column-title">회원신고기록코드 </th>
-                    <th style="text-align: center;" class="column-title">신고 대상 아이디 </th>
-                    <th style="text-align: center;" class="column-title">신고자 아이디</th>
-                    <th style="text-align: center;" class="column-title">신고 카테고리 </th>
-                    <th style="text-align: center;" class="column-title">신고 사유명 </th>
-                    <th style="text-align: center;" class="column-title">신고 대상 코드 </th>
-                    <th style="text-align: center;" class="column-title">신고 세부내용 </th>
-                    <th style="text-align: center;" class="column-title">신고시간</th>
-                    <th style="text-align: center;" class="column-title">처리상태</th>
-                    <th style="text-align: center;" class="column-title">처리</th>
-                   
-                    <th class="bulk-actions" colspan="11">
-                      <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">
-                        </span> ) <i class="fa fa-chevron-down"></i></a>
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody style="text-align: center;" >
-                <th:block th:if="${l.reportResult == '대기중' }" th:each="l : ${reportList}"  >
-                  <tr class="even pointer">
-                    <td th:text="${l.reportHistoryCode}"></td>
-                    <td th:text="${l.reportingId}"></td>
-                    <td th:text="${l.reportedId}"> </td>
-                    <td th:text="${l.reportCategoryDto.categoryName}"></td>
-                    <td th:text="${l.reportRuleDto.reportReason}"></td>
-                    <td th:text="${l.reportWhat}"></td>
-                    <td th:text="${l.reportReason}"></td>
-                    <td th:text="${l.reportDate}"></td>
-                    <td th:text="${l.reportResult}"></td>
-                    <td style="padding: 0px; "><a th:href="@{/admin/report/reportProcessing(reportHistoryCode=${l.reportHistoryCode})}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">처리</button></a></td>
-                  </tr>
-                </th:block>
-                   <tr th:unless="${not #lists.isEmpty(reportList)}">
-					<td colspan="12">못찾겠다 꾀꼬리</td>
-				  </tr>
-                </tbody>
-              </table>
-            </div>
-	
-
-
-          </div>
           <div class="x_panel">
            
             <div class="x_title">
-              <h2>신고 리스트</h2>
+              <h2>후기 리스트</h2>
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -144,18 +78,18 @@
               <table class="table table-striped jambo_table bulk_action">
                 <thead style="font-size: 12px;">
                   <tr class="headings">
-                    <th style="text-align: center;" class="column-title">회원신고기록코드 </th>
-                    <th style="text-align: center;" class="column-title">신고 대상 아이디 </th>
-                    <th style="text-align: center;" class="column-title">신고 카테고리 </th>
-                    <th style="text-align: center;" class="column-title">신고 대상 코드 </th>
-                    <th style="text-align: center;" class="column-title">신고 세부내용 </th>
-                    <th style="text-align: center;" class="column-title">신고시간</th>
-                    <th style="text-align: center;" class="column-title">처리시간</th>
-                    <th style="text-align: center;" class="column-title">승인자 아이디</th>
-                    <th style="text-align: center;" class="column-title">벌점부여</th>
-                    <th style="text-align: center;" class="column-title">누적 벌점</th>
-                    <th style="text-align: center;" class="column-title">처리상태</th>
-                    <th style="text-align: center;" class="column-title">조회</th>
+                    <th style="text-align: center;" class="column-title">후기목록 </th>
+                    <th style="text-align: center;" class="column-title">상품 코드 </th>
+                    <th style="text-align: center;" class="column-title">작성자 아이디</th>
+                    <th style="text-align: center;" class="column-title">주문상세번호 </th>
+                    <th style="text-align: center;" class="column-title">후기내용</th>
+                    <th style="text-align: center;" class="column-title">첨부 파일</th>
+                    <th style="text-align: center;" class="column-title">등록일시</th>
+                    <th style="text-align: center;" class="column-title">수정일시</th>
+                    <th style="text-align: center;" class="column-title">적립포인트</th>
+                    <th style="text-align: center;" class="column-title">추천수</th>
+                    <th style="text-align: center;" class="column-title">평점</th>
+                    <th style="text-align: center;" class="column-title">수정</th>
                     <th style="text-align: center;" class="bulk-actions" colspan="12">
                       <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">
                         </span> <i class="fa fa-chevron-down"></i></a>
@@ -164,24 +98,24 @@
                 </thead>
 
                 <tbody style="text-align: center;">
-	                <th:block 	>
+	                <th:block th:if="${not #lists.isEmpty(reviewList)}" th:each="l : ${reviewList}">
 	                  <tr class="even pointer">
-	                    <td th:text="${l.reportHistoryCode}"></td>
-	                    <td th:text="${l.reportedId}"> </td>
-	                    <td th:text="${l.reportCategoryDto.categoryName}"></td>
-	                    <td th:text="${l.reportWhat}"></td>
-	                    <td th:text="${l.reportReason}"></td>
-	                    <td th:text="${l.reportDate}"></td>
-	                    <td th:text="${l.reportResultDate}"></td>
-	                    <td th:text="${l.reportApproveId}"></td>
-	                    <td th:text="${l.penaltyPoint} + '점'"></td>
-	                    <td th:text="${l.totalPenaltyPoint} + '점'"></td>
-	                    <td th:text="${l.reportResult}"></td>
+	                    <td th:text="${l.reviewList}"></td>
+	                    <td th:text="${l.goodsList}"> </td>
+	                    <td th:text="${l.buyerId}"></td>
+	                    <td th:text="${l.orderDetailCode}"></td>
+	                    <td th:text="${l.reviewContent}"></td>
+	                    <td th:text="${l.reviewImg}"></td>
+	                    <td th:text="${l.reviewRegDate}"></td>
+	                    <td th:text="${l.reviewUpdateDate}"></td>
+	                    <td th:text="${l.savePoint}"></td>
+	                    <td th:text="${l.likeAmount}"></td>
+	                    <td th:text="${l.grade}"></td>
 	                    
-	                    <td style="padding: 0px; "><a th:if="${l.reportResult} != '대기중'" th:href="@{/admin/report/reportParticulars(reportHistoryCode=${l.reportHistoryCode})}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">조회</button></a></td>
+	                    <td style="padding: 0px; "><a  th:href="@{#}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">수정</button></a></td>
 	                  </tr>
 	                </th:block>
-                  <tr th:unless="${not #lists.isEmpty(reportList)}">
+                  <tr th:unless="${not #lists.isEmpty(reviewList)}">
 					<td colspan="12">못찾겠다 꾀꼬리</td>
 				  </tr>
                   
@@ -190,8 +124,6 @@
             </div>
           </div>
           </div>
-          <!-- reportModel 불러오기  -->
-          <div th:include="admin/report/report :: reportModal"></div>
 		</div>
          
           
