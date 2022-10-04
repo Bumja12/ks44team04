@@ -7,30 +7,6 @@
 	<title th:text="${title}"></title>
 </th:block>
 
-<th:block layout:fragment="customTopJs">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script>
-	
-		//체크박스 전체선택, 해제
-		function checkSelectAll(checkbox)  {
-			const selectAll = document.querySelector('input[name="rowAllCheck"]');
-			  
-			if(checkbox.checked === false)  {
-				selectAll.checked = false;
-			}
-		}
-		function selectAll(selectAll)  {
-			const checkboxes = document.getElementsByName('indivChecks');
-			  
-			checkboxes.forEach((checkbox) => {
-				checkbox.checked = selectAll.checked
-			})
-		}
-		
-		
-	</script>
-</th:block>
-
 <th:block layout:fragment="customContents">
 
 	<div class="page-title">
@@ -137,12 +113,13 @@
 											<td th:text="${l.storeAddress}"></td>
 											<td th:text="${l.storePhone}"></td>
 											<td th:text="${l.storeEmail}"></td>
-											<td th:text="${l.licenseImg}"></td>
+											<td th:text="${l.licenceImg}"></td>
 											<td th:text="${l.onlineLicenceImg}"></td>
 											<td th:text="${l.approveAskDate}"></td>
+											<td hidden="hidden" class="approveCheck" id="approveCheck" th:value="${l.approveCheck}"></td>
 											<td>
-												<a href="#"><i class="fa fa-check"></i> 승인 </a>
-												<a href="#"><i class="fa fa-times"></i> 승인거부 </a>
+												<a href="#" id="approveBtn"><i class="fa fa-check"></i> 승인 </a>
+												<a href="#" id="rejectBtn"><i class="fa fa-times"></i> 승인거부 </a>
 											</td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(sellerListN)}">
@@ -200,6 +177,108 @@
 			</div>
 		</div>
 	</div>
+</th:block>
 
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	
+		//체크박스 전체선택, 해제
+		function checkSelectAll(checkbox)  {
+			const selectAll = document.querySelector('input[name="rowAllCheck"]');
+			  
+			if(checkbox.checked === false)  {
+				selectAll.checked = false;
+			}
+		}
+		function selectAll(selectAll)  {
+			const checkboxes = document.getElementsByName('indivChecks');
+			  
+			checkboxes.forEach((checkbox) => {
+				checkbox.checked = selectAll.checked
+			})
+		}
+		
+		/* 판매자 신청 승인 */
+		/*
+		$(function() {
+			$('#approveBtn').click(function() {
+				$('#approveCheck').attr('value','Y');
+			});
+		});
+		*/
+		
+		/* 판매자 신청 승인 (ajax) 탁*/
+		/*
+		$(function(){
+			$('#idCheck').click(function(){
+				let id = $('#userId').val();
+				if(id.trim() == ''){
+					alert('아이디 값을 입력해주세요');
+					return;
+				}
+				var request = $.ajax({
+					url: "idCheck.jsp", 
+					method: "POST",
+					data: { id : id },
+					dataType: "json" 
+				});
+				
+				request.done(function( data ) {
+					console.log(data);
+					if(data.result){
+						alert('아이디 사용 불가');
+					}else {
+						alert('아이디 사용 가능');
+					}
+				});
+				
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				});
+			});
+		});
+		*/
+		
+		
+		/* 판매자 신청 승인 (ajax) 홍*/
+		/*
+ 		$(function() {
+ 			
+			$('#approveBtn').click(function(){
+				
+ 				var sellerList = '[[${sellerListN}]]';
+				approveCheck = sellerList[0].approveCheck;
+				console.log(approveCheck);
+				
+				console.log($('#approveCheck').val());
+				$('#approveCheck').prop('value','Y');
+				console.log($('#approveCheck').val());
+				return;
+			
+ 				var request = $.ajax({
+					url: '/admin/user/sellerList', //http://localhost/member/idCheck
+	 				method: 'POST',
+					data: { 'approveCheck' : approveCheck },
+					dataType: "json"  //String이면 text   //text, json, xml, html
+				});
+	  					 
+				request.done(function( data ) {
+					if(data) {
+						alert("승인되었습니다.");
+					}	
+				});
+  					
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				});
+			});
+		});
+		*/
+
+		
+	/*]]>*/
+	</script>
 </th:block>
 </html>

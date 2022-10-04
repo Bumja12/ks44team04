@@ -50,11 +50,17 @@
 		</div>
 		<div>
 			<button type="button" id="addSellerBtn" class="btn btn-dark pull-right" 
-					th:if="${userInfo.userRight == 'seller_before'}"
+					th:if="${userInfo.userRight == 'seller_before' and userInfo.userStatus == '정상'}"
 					th:onclick="|location.href='@{/admin/user/addSeller(userId=${userInfo.userId})}'|" 
 					style="margin-right: 10px;">판매자등록
 			</button>
-			<button type="button" id="modifyBtn" class="btn btn-dark pull-right" th:onclick="|location.href='@{/admin/user/modifyUser(userId=${userInfo.userId})}'|" style="margin-right: 10px;">수정</button>
+			<!-- 			
+			<button type="button" id="addSellerBtn_leave" class="btn btn-dark pull-right" 
+					th:if="${userInfo.userStatus == '탈퇴'}"
+					style="margin-right: 10px;">판매자등록</button>
+ 			<button type="button" id="modifyBtn_leave" class="btn btn-dark pull-right" th:if="${userInfo.userStatus == '탈퇴'}" style="margin-right: 10px;">수정</button>
+ 			-->			
+ 			<button type="button" id="modifyBtn" class="btn btn-dark pull-right" th:unless="${userInfo.userStatus == '탈퇴'}" th:onclick="|location.href='@{/admin/user/modifyUser(userId=${userInfo.userId})}'|" style="margin-right: 10px;">수정</button>
 			<button type="button" class="btn btn-default pull-right" th:onclick="|location.href='@{/admin/user/userList}'|" style="margin-right: 10px;">
 				<i class="fa fa-bars"> 회원목록</i>
 			</button>
@@ -187,24 +193,14 @@
 			}
 		});
     	
-		$(function() {
-			$("#btn-hello")
-				.click(function() { alert("Hello"); });
-			$("#btn-world")
-				.click(function() { alert("World"); })
-				.prop("disabled", true);
-			});
-    	
+		/* 탈퇴회원 정보 수정 불가 */
+		/*
     	$(function() {
-    		
-    		var userStatus = $('#userStatus').val();
-    		if(userStatus === '탈퇴') {
-    			$("#modifyBtn") .click(function() {
-    				alert("탈퇴한 회원의 정보는 수정할 수 없습니다.");
-					this.prop("disabled", true);
-    			});
-    		}
+   			$("#modifyBtn_leave") .click(function() {
+   				alert("탈퇴한 회원의 정보는 수정할 수 없습니다.");
+   			});
     	});
+		*/
     	
 
     </script>
