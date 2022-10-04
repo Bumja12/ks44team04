@@ -17,6 +17,9 @@ th {
 	color: highlight;
 	text-decoration: underline;
 }
+.deleteDetail{
+	color: red;
+}
 </style>
 </th:block>
 
@@ -69,8 +72,8 @@ th {
 							<th:block th:if="${not #lists.isEmpty(p.paymentTotal)}" th:each="pt, status : ${p.paymentTotal}">
 								<tr>
 									<th:block th:if="${status.index == 0}">				
-										<td class="orderNum" th:rowspan="${status.size}">
-											<a class="orderNumValue" href="searchPaymentDetail" data-toggle="modal" data-target="#searchPaymentDetail" th:attr="data-ordernum=${p.orderNum}" th:text="${p.orderNum}"></a>
+										<td th:rowspan="${status.size}">
+											<a class="orderNum" href="searchPaymentDetail" data-toggle="modal" data-target="#searchPaymentDetail" th:attr="data-ordernum=${p.orderNum}" th:text="${p.orderNum}"></a>
 										</td>
 										<td th:rowspan="${status.size}" th:text="${p.buyerId}"></td>
 									</th:block>	
@@ -80,13 +83,15 @@ th {
 									<td th:text="'- ' + ${pt.couponPrice}"></td>
 									<td th:text="'- ' + ${pt.usePoint}"></td>									
 									<td th:text="${'₩' + #numbers.formatInteger(pt.orderPrice, 3, 'COMMA')}"></td>
-									<td id="postInfo"><a href="#"><i class="fa fa-truck"></i> 배송정보</a></td>
+									<td><a id="postInfo" href="#"><i class="fa fa-truck"></i> 배송정보</a></td>
 									<th:block th:if="${status.index == 0}">
 										<td th:rowspan="${status.size}" th:text="${p.orderDate}"></td>
 									</th:block>
 									<td th:text="${pt.orderStatus}"></td>
 									<td>
-										<a th:href="@{|/admin/payment/remove/${pt.orderDetailCode}|}"><i class="fa fa-close"></i>삭제</a>
+										<!-- <a th:if="${pt.orderStatus == '구매확정'}" th:href="@{|/admin/payment/remove/${pt.orderDetailCode}|}"><i class="fa fa-close"></i>삭제불가</a> -->
+										<!-- <a th:unless="${pt.orderStatus == '구매확정'}" th:href="@{|/admin/payment/remove/${pt.orderDetailCode}|}"><i class="fa fa-close"></i>삭제</a> -->
+										<a class="deleteDetail" th:href="@{|/admin/payment/remove/${pt.orderDetailCode}|}"><i class="fa fa-close"></i> 삭제</a>
 									</td>
 								</tr>
 							</th:block>
@@ -104,7 +109,7 @@ th {
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="searchPaymentDetailTitle"></h5>
+        <h2 class="modal-title" id="searchPaymentDetailTitle"></h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -125,20 +130,11 @@ th {
 						</tr>
 					</thead>
 					<tbody class="paymentDetail">
-						<tr>
-							<td id="orderDetailCode"></td>
-							<td id="goodsName"></td>
-							<td id="paymentMethod"></td>
-							<td id="cardCompany"></td>
-							<td id="cardNumber"></td>
-							<td id="orderPrice"></td>
-							<td id="approveDate"></td>
-						</tr>
 					</tbody>
 				</table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary closeModal" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -147,10 +143,11 @@ th {
 
 	<th:block layout:fragment="customJsScript">
 		<script type="text/javascript">
-			$(function(){
+			$(function(){				
 				$('.orderNum').click(function(){
-					let orderNum = $(this).find('.orderNumValue').attr('data-ordernum');
+					let orderNum = $(this).attr('data-ordernum');
 					console.log(orderNum);
+					$('#searchPaymentDetailTitle').text("주문서 상세보기:   " + orderNum);
 					
 					var request = $.ajax({
 						url: "/admin/payment/selectPaymentDetail",
@@ -164,19 +161,30 @@ th {
 						console.log(data[0].paymentTotal[0]);
 						console.log(data[0].paymentTotal[1]);
 						console.log(data[0].paymentTotal[2]);
+						let paymentDetail = "";
 						let paymentTotal = data[0].paymentTotal
+						
 						$.each(paymentTotal, function(index, item){
 							console.log(paymentTotal[index].orderDetailCode);
-							$('#orderDetailCode').text(paymentTotal[index].orderDetailCode);
-							$('#goodsName').text(paymentTotal[index].goodsName);
-							$('#paymentMethod').text(paymentTotal[index].paymentMethod);
-							$('#cardCompany').text(paymentTotal[index].cardCompany);
-							$('#cardNumber').text(paymentTotal[index].cardNumber);
-							$('#orderPrice').text(paymentTotal[index].orderPrice);
-							$('#approveDate').text(paymentTotal[index].approveDate);
-
+							paymentDetail += "<tr>"
+							paymentDetail += "<td>" + paymentTotal[index].orderDetailCode + "</td>"
+							paymentDetail += "<td>" + paymentTotal[index].goodsName + "</td>"
+							paymentDetail += "<td>" + paymentTotal[index].paymentMethod + "</td>"
+							paymentDetail += "<td>" + paymentTotal[index].cardCompany + "</td>"
+							paymentDetail += "<td>" + paymentTotal[index].cardNumber + "</td>"
+							let orderPrice = paymentTotal[index].orderPrice.toLocaleString('ko-KR');
+							paymentDetail += "<td>₩" + orderPrice + "</td>"
+							//paymentDetail += "<td>" + paymentTotal[index].orderPrice + "</td>"
+							paymentDetail += "<td>" + data[0].approveDate + "</td>"
+							paymentDetail += "</tr>"
 						})
-
+						
+						$('.paymentDetail').prepend(paymentDetail);
+						
+						$('#searchPaymentDetail').on('hidden.bs.modal', function(e) {  
+							$('.paymentDetail').empty();
+						})
+						
 					});
 						
 					request.fail(function( jqXHR, textStatus ) {	

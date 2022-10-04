@@ -112,7 +112,7 @@
 				ON
 				p.payment_group_code = cp.card_payment_code
 			<trim prefix="WHERE" prefixOverrides="AND |OR ">
-				<if test="sv != null and sv != ''">
+				<if test="sv != null and sv != '' and sk != null">
 					${sk} LIKE CONCAT('%', #{sv},'%')
 				</if>
 			</trim>	
