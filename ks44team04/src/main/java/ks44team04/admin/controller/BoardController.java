@@ -37,6 +37,8 @@ public class BoardController {
 	@PostMapping("/boardList")
 	public String getBoardListSearch(@RequestParam(name="searchKey", defaultValue="boardTitle") String searchKey
 									,@RequestParam(name="searchValue", required=false, defaultValue="") String searchValue
+									,@RequestParam(name="searchKey2",defaultValue="") String searchKey2
+									,@RequestParam(name="searchCateName", required = false, defaultValue = "") String searchCateName
 									,Model model) {
 		
 		if("boardTitle".equals(searchKey)) {
@@ -49,14 +51,24 @@ public class BoardController {
 			searchKey = "u.user_id";
 		}
 		
+		if("categoryName".equals(searchKey2)) {
+			searchKey2 = "category_name";
+		}
+		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("searchKey", searchKey);
 		paramMap.put("searchValue", searchValue);
+		paramMap.put("searchKey2", searchKey2);
+		paramMap.put("searchCateName", searchCateName);
 		
 		List<Board> boardList = boardService.getBoardListSearch(paramMap);
 		
 		model.addAttribute("title", "게시물 검색");
 		model.addAttribute("boardList", boardList);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("searchKey2", searchKey2);
+		model.addAttribute("searchCateName", searchCateName);
 		
 		return "/admin/board/boardList";
 	}
@@ -74,6 +86,8 @@ public class BoardController {
 	@PostMapping("/boardComment")
 	public String getBoardCommentListSearch(@RequestParam(name="searchKey", defaultValue="commentContent") String searchKey
 											,@RequestParam(name="searchValue", required=false, defaultValue="") String searchValue
+											,@RequestParam(name="searchKey2",defaultValue="") String searchKey2
+											,@RequestParam(name="searchCateName", required = false, defaultValue = "") String searchCateName
 											,Model model) {
 		
 		if("commentContent".equals(searchKey)) {
@@ -82,14 +96,24 @@ public class BoardController {
 			searchKey = "u.user_id";
 		}
 		
+		if("categoryName".equals(searchKey2)) {
+			searchKey2 = "category_name";
+		}
+		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("searchKey", searchKey);
 		paramMap.put("searchValue", searchValue);
+		paramMap.put("searchKey2", searchKey2);
+		paramMap.put("searchCateName", searchCateName);
 		
 		List<BoardComment> boardCommentList = boardService.getBoardCommentListSearch(paramMap);
 		
 		model.addAttribute("title", "댓글 검색");
 		model.addAttribute("boardCommentList", boardCommentList);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("searchKey2", searchKey2);
+		model.addAttribute("searchCateName", searchCateName);
 		
 		return "/admin/board/boardComment";
 	}
@@ -107,20 +131,32 @@ public class BoardController {
 	@PostMapping("/boardLike")
 	public String getBoardLikeListSearch(@RequestParam(name="searchKey", defaultValue="userId") String searchKey
 							  			,@RequestParam(name="searchValue", required=false, defaultValue="") String searchValue
+							  			,@RequestParam(name="searchKey2",defaultValue="") String searchKey2
+							  			,@RequestParam(name="searchCateName", required = false, defaultValue = "") String searchCateName
 							  			,Model model) {
 		
 		if("userId".equals(searchKey)) {
 			searchKey = "u.user_id";
 		}
 		
+		if("categoryName".equals(searchKey2)) {
+			searchKey2 = "category_name";
+		}
+		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("searchKey", searchKey);
 		paramMap.put("searchValue", searchValue);
+		paramMap.put("searchKey2", searchKey2);
+		paramMap.put("searchCateName", searchCateName);
 		
 		List<BoardLike> boardLikeList = boardService.getBoardLikeListSearch(paramMap);
 		
 		model.addAttribute("title", "좋아요 검색");
 		model.addAttribute("boardLikeList", boardLikeList);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("searchKey2", searchKey2);
+		model.addAttribute("searchCateName", searchCateName);
 		
 		return "/admin/board/boardLike";
 	}	
