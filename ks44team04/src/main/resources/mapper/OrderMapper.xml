@@ -35,6 +35,7 @@
         <result column="order_confirm_date" property="orderConfirmDate"/>
         <result column="save_point" property="savePoint"/>
         <association property="goods" resultMap="ks44team04.mapper.GoodsMapper.goodsResultMap"/>
+        <association property="order" resultMap="orderResultMap"/>
     </resultMap>
 
     <resultMap type="OrderCancel" id="orderCancelResultMap">
@@ -63,10 +64,9 @@
     <resultMap type="OrderReturn" id="orderReturnResultMap">
         <result column="order_return_code" property="orderReturnCode"/>
         <result column="order_detail_code" property="orderDetailCode"/>
-        <result column="payment_code" property="paymentCode"/>
         <result column="buyer_id" property="buyerId"/>
         <result column="return_ask_date" property="returnAskDate"/>
-        <result column="cancel_reason" property="cancelReason"/>
+        <result column="return_reason" property="returnReason"/>
         <result column="permit_date" property="permitDate"/>
         <result column="post_company" property="postCompany"/>
         <result column="invoice_number" property="invoiceNumber"/>
@@ -77,10 +77,19 @@
         (exchange_ask_code, order_detail_code, buyer_id, post_info, exchange_ask_date, exchange_reason)
         VALUES (#{exchangeAskCode}, #{orderDetailCode}, #{buyerId}, #{postInfo}, NOW(), #{exchangeReason})
     </insert>
+    <insert id="setOrderReturn" parameterType="OrderReturn">
+        insert into tb_order_return
+        (order_return_code, order_detail_code, buyer_id, return_ask_date, return_reason)
+        VALUES (#{orderReturnCode}, #{orderDetailCode}, #{buyerId}, NOW(), #{returnReason})
+    </insert>
 
     <select id="getOrderExchangeMaxCode" resultType="String">
         SELECT MAX(exchange_ask_code)
         FROM tb_order_exchange
+    </select>
+    <select id="getOrderReturnMaxCode" resultType="String">
+        SELECT MAX(order_return_code)
+        FROM tb_order_return
     </select>
 
     <select id="getOrderDetail" parameterType="Map" resultMap="orderDetailResultMap">
@@ -103,7 +112,39 @@
         </otherwise>
         </choose>
     </select>
+    
+    <update id="setReturnPost" parameterType="Map">
+        <choose>
+            <when test="postType = 'exchange'">
+                update tb_order_exchange
+            </when>
+            <when test="postType = 'refund'">
+                update tb_order_return
+            </when>
+        </choose>
+            set post_company = #{postCompany},
+                invoice_number = #{invoiceNumber}
+            where order_detail_code = #{orderDetailCode};
+    </update>
 
+    <update id="setOrderDetailStatus" parameterType="String">
+        call set_order_status(#{orderDetailCode}, #{orderStatus})
+    </update>
+
+    <select id="getOrderList" parameterType="String" resultMap="orderDetailResultMap">
+        select *
+        from tb_order_detail as tod
+                 inner join tb_goods tg
+                            on tod.goods_code = tg.goods_code
+                 inner join tb_order t
+                            on tod.order_num = t.order_num
+        where t.buyer_id = #{userId}
+        order by order_detail_code desc
+    </select>
+
+    <select id="getGoodsInfo" parameterType="String" resultMap="ks44team04.mapper.GoodsMapper.goodsResultMap">
+        select * from tb_goods where goods_code = #{goodsCode}
+    </select>
 
 </mapper>
 

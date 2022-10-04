@@ -12,30 +12,41 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-4">
-            <form th:object="${orderDetail}">
+            <form th:object="${orderDetail}" id="exchangeForm" th:action="@{/user/order/exchange}" method="post">
                 <div class="form-group my-3">
-                    <label for="orderNum">주문번호</label>
-                    <input type="email" class="form-control" id="orderNum" th:value="*{orderNum}" readonly/>
+                    <label for="orderDetailCode">주문번호</label>
+                    <input type="text" class="form-control" id="orderDetailCode" name="orderDetailCode" th:value="*{orderDetailCode}" readonly/>
                 </div>
                 <div class="form-group mb-3">
-                    <label for="input2">상품명</label>
-                    <input type="text" class="form-control" id="input2" th:value="*{goodsCode}" readonly/>
+                    <label for="goodsName">상품명</label>
+                    <input type="text" class="form-control" id="goodsName" th:value="*{goods.goodsName}" readonly/>
                 </div>
                 <div class="form-group mb-3">
                     <label for="exchangeReason">교환사유</label>
-                    <select class="custom-select form-control" id="exchangeReason" required>
+                    <select class="custom-select form-control" id="exchangeReason" name="exchangeReason" required>
                         <option selected disabled value="invalid">교환사유를 선택해주세요</option>
-                        <option value="123">품질</option>
-                        <option value="123">파손</option>
-                        <option value="123">오배송</option>
+                        <option value="품질">품질</option>
+                        <option value="파손">파손</option>
+                        <option value="오배송">오배송</option>
                     </select>
                 </div>
                 <div class="form-group mb-3">
                     <label for="textarea">상세사유</label>
                     <textarea class="form-control" id="textarea" rows="3"></textarea>
                 </div>
+                <div class="form-group mb-3">
+                    <div class="mb-2">
+                        <a href="#" class="btn-sm btn-danger">배송지선택</a>
+                    </div>
+                    <div class="border rounded text-secondary" style="font-size: 14px;">
+                        <input type="hidden" name="postInfo" value="po00000030"/>
+                        <span class="d-block">김범자</span>
+                        <span class="d-block">전라북도 전주시 완산구 서원로</span>
+                        <span class="d-block">010-0000-0000</span>
+                    </div>
+                </div>
                 <div class="form-group text-right">
-                    <button type="button" class="btn btn-dark">교환요청</button>
+                    <button type="submit" class="btn btn-dark">교환요청</button>
                 </div>
             </form>
         </div>
