@@ -24,6 +24,7 @@ public class Seller {
     private Goods goodsList;
     private LevelSellerCategory levelSeller;
     private Right rightList;
+    private GoodsLargeCategory goodsLargeCategory;
 
     public String getSellerCode() {
 		return sellerCode;
@@ -201,6 +202,14 @@ public class Seller {
 		this.rightList = rightList;
 	}
 
+	public GoodsLargeCategory getGoodsLargeCategory() {
+		return goodsLargeCategory;
+	}
+
+	public void setGoodsLargeCategory(GoodsLargeCategory goodsLargeCategory) {
+		this.goodsLargeCategory = goodsLargeCategory;
+	}
+
 	@Override
     public String toString() {
         return "Seller{" +
@@ -226,6 +235,7 @@ public class Seller {
                 ", goodsList='" + goodsList + '\'' +
                 ", rightList='" + rightList + '\'' +
                 ", levelSeller='" + levelSeller + '\'' +
+                ", goodsLargeCategory='" + goodsLargeCategory + '\'' +
                 '}';
     }
 }

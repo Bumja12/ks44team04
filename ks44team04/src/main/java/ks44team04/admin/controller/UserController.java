@@ -4,6 +4,7 @@ import ks44team04.service.UserService;
 import ks44team04.dto.Seller;
 import ks44team04.dto.Dormant;
 import ks44team04.dto.Goods;
+import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.Leave;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
@@ -37,27 +38,39 @@ public class UserController {
         this.userService = userService;
     }
 
-    
+    //판매자 가입
     @PostMapping("/user/addSeller")
     public String addSeller(Seller seller) {
-    	log.info("사용자가 입력한 회원의 정보 ::: {}", seller);
-    	
-    	System.out.println("사용자가 입력한 회원의 정보 -> " + seller);
+    	log.info("사용자가 입력한 판매자의 정보 ::: {}", seller);
+    	System.out.println("사용자가 입력한 판매자의 정보 -> " + seller);
     	userService.addSeller(seller);
-    	
     	return "redirect:/admin/user/sellerList";
     }
     
+	//판매자 가입 쿼리 실행
+	@GetMapping("/user/addSeller")
+	public String addSellerForm(@RequestParam(value="userId", required = false) String userId
+								,Model model) {
+        User userInfo = userService.getUserInfoById(userId);
+        log.info("회원정보 ::: {}",userInfo);
+        List<GoodsLargeCategory> goodsLargeCategory = userService.getGoodsLargeCategory();
+        model.addAttribute("title", "판매자등록");
+		model.addAttribute("userInfo", userInfo);
+		model.addAttribute("goodsLargeCategory", goodsLargeCategory);
+		return "admin/user/addSeller";
+	}
+    
+	//구매자 회원가입
 	@PostMapping("/user/addUser")
     public String addUser(User user) {
 		log.info("사용자가 입력한 회원의 정보 ::: {}", user);
-		
         System.out.println("사용자가 입력한 회원의 정보 -> " + user);
         userService.addUser(user);
         
         return "redirect:/admin/user/userList";
     }
 	
+	//구매자 회원가입 쿼리 실행
 	@GetMapping("/user/addUser")
 	public String addUserForm(Model model) {
 		

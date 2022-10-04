@@ -49,7 +49,12 @@
 			<h3>상세정보</h3>
 		</div>
 		<div>
-			<button type="button" class="btn btn-dark pull-right" th:onclick="|location.href='@{/admin/user/modifyUser(userId=${userInfo.userId})}'|" style="margin-right: 10px;">수정</button>
+			<button type="button" id="addSellerBtn" class="btn btn-dark pull-right" 
+					th:if="${userInfo.userRight == 'seller_before'}"
+					th:onclick="|location.href='@{/admin/user/addSeller(userId=${userInfo.userId})}'|" 
+					style="margin-right: 10px;">판매자등록
+			</button>
+			<button type="button" id="modifyBtn" class="btn btn-dark pull-right" th:onclick="|location.href='@{/admin/user/modifyUser(userId=${userInfo.userId})}'|" style="margin-right: 10px;">수정</button>
 			<button type="button" class="btn btn-default pull-right" th:onclick="|location.href='@{/admin/user/userList}'|" style="margin-right: 10px;">
 				<i class="fa fa-bars"> 회원목록</i>
 			</button>
@@ -181,6 +186,26 @@
 				$('#userLevel').attr('value', "-");
 			}
 		});
+    	
+		$(function() {
+			$("#btn-hello")
+				.click(function() { alert("Hello"); });
+			$("#btn-world")
+				.click(function() { alert("World"); })
+				.prop("disabled", true);
+			});
+    	
+    	$(function() {
+    		
+    		var userStatus = $('#userStatus').val();
+    		if(userStatus === '탈퇴') {
+    			$("#modifyBtn") .click(function() {
+    				alert("탈퇴한 회원의 정보는 수정할 수 없습니다.");
+					this.prop("disabled", true);
+    			});
+    		}
+    	});
+    	
 
     </script>
     

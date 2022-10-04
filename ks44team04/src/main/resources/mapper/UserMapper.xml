@@ -57,6 +57,7 @@
 		<association property="goodsList"		resultMap="GoodsResultMap"/>
 		<association property="rightList"		resultMap="RightResultMap"/>
 		<association property="levelSeller"		resultMap="LevelSellerResultMap"/>
+		<association property="goodsLargeCategory" resultMap="GoodsLargeCategoryMap"/>
 	</resultMap>
 	
 	<resultMap 	id="DormantResultMap"			type="Dormant">
@@ -102,7 +103,7 @@
 		<result column="level_code_npk" 	property="levelCodeNpk"/>
 	</resultMap>
 	
-	<resultMap id="LevelSellerResultMap" 		type="LevelSellerCategory">
+	<resultMap 	 id="LevelSellerResultMap" 		type="LevelSellerCategory">
 		<id 	 column="s_level_code" 			property="levelCode"/>
 		<result  column="s_level_name" 			property="levelName"/>
 		<result  column="reg_id" 				property="regId"/>
@@ -113,39 +114,21 @@
 		<result  column="seller_review_terms"	property="sellerReviewTerms"/>
 		<result  column="level_code_npk" 	 	property="levelCodeNpk"/>
 	</resultMap>
+	
+	<resultMap 	 id="GoodsLargeCategoryMap" 		type="GoodsLargeCategory">
+		<id 	 column="goods_large_category" 		property="goodsLargeCategory"/>
+		<result  column="goods_category" 			property="goodsCategory"/>
+		<result  column="g_use_check" 				property="useCheck"/>
+	</resultMap>
 
-<!-- 	<resultMap 	id="SellerResultMap" 			type="Seller">
-		<id		column="seller_code" 			property="sellerCode" />
-		<result column="s_seller_id" 			property="sellerId" />
-		<result column="store_name" 			property="storeName" />
-		<result column="seller_sort" 			property="sellerSort" />
-		<result column="bank_name" 				property="bankName" />
-		<result column="account" 				property="account" />
-		<result column="account_holder" 		property="accountHolder" />
-		<result column="licence_num" 			property="licenceNum" />
-		<result column="store_address" 			property="storeAddress" />
-		<result column="store_address2" 		property="storeAddress2" />
-		<result column="store_phone" 			property="storePhone" />
-		<result column="store_email" 			property="storeEmail" />
-		<result column="licence_img" 			property="licenceImg" />
-		<result column="online_licence_img" 	property="onlineLicenceImg" />
-		<result column="approve_ask_date" 		property="approveAskDate" />
-		<result column="approve_date" 			property="approveDate" />
-		<result column="approve_check" 			property="approveCheck" />
-		<result column="approve_id" 			property="approveId" />
-		<association property="userInfo" 		resultMap="UserResultMap"/>
-		<association property="goodsList"		resultMap="GoodsResultMap"/>
-		<association property="rightList"		resultMap="RightResultMap"/>
-		<association property="levelSeller"		resultMap="LevelSellerResultMap"/>
-	</resultMap> -->
 
 	<!-- 판매자 등록 -->
 	<insert id="addSeller" parameterType="Seller">
 		/* 판매자 등록 */
 		INSERT INTO tb_seller
-			(seller_code, seller_id, store_name, seller_sort, bank_name, account, account_holder, licence_num, store_address, store_address2, store_phone, store_email, licence_img, online_licence_img, approve_ask_date, approve_date, approve_check, approve_id)
+			(seller_code, seller_id, store_name, seller_sort, bank_name, account, account_holder, licence_num, store_address, store_address2, store_phone, store_email, approve_ask_date, approve_date, approve_check, approve_id)
 		VALUES 
-			(#{sellerCode}, #{sellerId}, #{storeName}, #{sellerSort}, #{bankName}, #{account}, #{accountHolder}, #{licenceNum}, #{storeAddress}, #{storeAddress2}, #{storePhone}, #{storeEmail}, #{licenceImg}, #{onlineLicenceImg}, CURDATE(), #{approveDate}, #{approveCheck}, #{approveId})
+			(#{sellerCode}, #{sellerId}, #{storeName}, #{sellerSort}, #{bankName}, #{account}, #{accountHolder}, #{licenceNum}, #{storeAddress}, #{storeAddress2}, #{storePhone}, #{storeEmail}, NOW(), #{approveDate}, #{approveCheck}, #{approveId})
 	</insert>
 	
 	<!-- 회원정보 수정 -->
@@ -163,7 +146,7 @@
 			<if test="userPhone != null and userPhone != ''">,user_phone = #{userPhone}</if>
 			<if test="userEmail != null and userEmail != ''">,user_email = #{userEmail}</if>
 			<if test="userRight != null and userRight != ''">,user_right = #{userRight}</if>
-			,user_update_date = CURDATE()
+			,user_update_date = NOW()
 			<if test="userStatus != null and userStatus != ''">,user_status = #{userStatus}</if>
 			<if test="userPenalty != null and userPenalty != ''">,user_penalty = #{userPenalty}</if>
 			<if test="userPoint != null and userPoint != ''">,user_point = #{userPoint}</if>
@@ -177,9 +160,9 @@
 	<insert id="addUser" parameterType="User">
 		/* 회원 가입 */
 		INSERT INTO tb_user
-			(user_id, user_pw, user_name, user_gender, user_nickname, user_address, user_address2, user_phone, user_email, user_right, user_reg_date, user_update_date, user_status, user_penalty, user_point, user_info_keep, user_level)
+			(user_id, user_pw, user_name, user_gender, user_nickname, user_address, user_address2, user_phone, user_email, user_right, user_reg_date, user_status, user_penalty, user_point, user_info_keep, user_level)
 		VALUES 
-			(#{userId}, #{userPw}, #{userName}, #{userGender}, #{userNickname}, #{userAddress}, #{userAddress2}, #{userPhone}, #{userEmail}, #{userRight}, CURDATE(), CURDATE(), #{userStatus}, #{userPenalty}, #{userPoint}, #{userInfoKeep}, #{userLevel})
+			(#{userId}, #{userPw}, #{userName}, #{userGender}, #{userNickname}, #{userAddress}, #{userAddress2}, #{userPhone}, #{userEmail}, #{userRight}, NOW(), #{userStatus}, #{userPenalty}, #{userPoint}, #{userInfoKeep}, #{userLevel})
 	</insert>
 	
 	<!-- 특정 판매자 판매상품 조회 -->
@@ -416,6 +399,16 @@
 			tb_dormant
 	</select>
 	
+	<!-- 상품 카테고리 조회(판매자코드) -->
+	<select id="getGoodsLargeCategory" resultMap="GoodsLargeCategoryMap">
+		/* 상품 카테고리 조회(판매자코드) */
+		SELECT 
+			 g.goods_large_category
+			,g.goods_category
+			,g.use_check		AS g_use_check
+		FROM 
+			tb_goods_large_category as g
+	</select>
 	
 	<!-- 구매자 등급 조회 -->
 	<select id="getLevelBuyer" resultMap="LevelBuyerResultMap">
