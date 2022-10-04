@@ -51,7 +51,7 @@
     	<div class="container">
         	<div class="row no-gutters slider-text align-items-center justify-content-center">
           		<div class="col-md-9 ftco-animate text-center">
-          			<p class="breadcrumbs"><span class="mr-2"><a href="http://130.162.131.42/user">Home</a></span></p>  
+          			<p class="breadcrumbs"><span class="mr-2"><a th:href="@{/user}">Home</a></span></p>  
             		<h1 class="mb-0 bread">고객 문의 내역</h1>
           		</div>
         	</div>
@@ -121,7 +121,7 @@
     		<!-- 목록 버튼 -->
     		<div class="row justify-content-center mb-5">
     			<div class="col-md-12 text-right">
-    				<a href="http://130.162.131.42/user/customerAsk/customerAskList" class="btn btn-primary btn-lg">목록</a>
+    				<a th:href="@{/user/customerAsk/customerAskList}" class="btn btn-primary btn-lg">목록</a>
     			</div>
    			</div>
    			

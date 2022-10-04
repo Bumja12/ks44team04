@@ -3,6 +3,18 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:fragment="navFragment">
 
+<th:block layout:fragment="customCss">
+	<style>
+		/* 눈누 웹 폰트 */
+		@font-face {
+		    font-family: 'ChosunBg';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunBg.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+	</style>
+</th:block>
+
 <div class="py-1 bg-primary">
     <div class="container">
         <div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
@@ -46,8 +58,8 @@
                 </li>
                 <li class="nav-item"><a th:href="@{/user}" class="nav-link">About</a></li>
                 <li class="nav-item"><a th:href="@{/user}" class="nav-link">Blog</a></li>
-                <li class="nav-item dropdown">
- 	            	<a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">고객센터</a>
+                <li class="nav-item dropdown" style="font-family: 'ChosunBg';">
+ 	            	<a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 12px !important;">고객센터</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown05">
                     	<a class="dropdown-item" th:href="@{/user/regularAsk/regularAskList}">자주 묻는 질문</a>
                         <a class="dropdown-item" th:href="@{/user/customerAsk/customerAskList}">고객 문의</a>
@@ -66,4 +78,3 @@
 </th:block>
 
 </html>
-
