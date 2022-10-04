@@ -218,13 +218,14 @@
 		/* 대분류 선택시 중분류 카테고리 나오게 하기 */
 		var largeCategoryList = /*[[${largeCategoryList}]]*/
 		var searchKey = /*[[${searchKey}]]*/
-		if(typeof searchKey != 'undefined' && searchKey != null && searchKey != ''){
+		var searchCate = /*[[${searchCate}]]*/
+		if(typeof searchKey != 'undefined' && searchKey != null && searchKey != '' && searchCate != ''){
 			var searchGoodsList = /*[[${goodsList}]]*/
 			var searchGoodsLargeCate = searchGoodsList[0].goodsLargeCategoryInfo.goodsLargeCategory;
 			var searchGoodsSmallCate = searchGoodsList[0].goodsSmallCategory;
 			console.log(searchGoodsList)
 		}
-		console.log(searchKey)
+		console.log(searchKey,'<<<<<<<<<<<<<<<<')
 		console.log(largeCategoryList)
 		var largeCate = $(".largeCate");
 		var smallCate = $(".smallCate");
@@ -283,8 +284,9 @@
 				}
 			}
 		});
+		console.log(searchCate,'dsfkjasdljfaslkdfjlasdjflasdkjflkj')
 		//대분류 카테고리가 undefined, null, '' 이 아닐 때 대분류 중분류 옵션 변경 할 수 있게 하기
-		if(typeof searchGoodsLargeCate != 'undefined' && searchGoodsLargeCate != null && searchGoodsLargeCate != ''){
+		if(typeof searchGoodsLargeCate != 'undefined' && searchGoodsLargeCate != null && searchGoodsLargeCate != '' && searchCate != ''){
 			$(largeCate).change();
 			$(smallCate).change();
 		}
@@ -294,10 +296,7 @@
 			console.log(smallCateOption);
 			$('#searchCate').val( smallCateOption );
 		});
-		$('.searchBtn').click(function(){
-			largeCate.append("<option value='none'>::</option>")
-			smallCate.append("<option value='none'>::</option>")
-		});
+		
 		
 	});
 	</script>
