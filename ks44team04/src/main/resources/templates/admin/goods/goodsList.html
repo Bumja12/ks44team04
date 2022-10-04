@@ -11,6 +11,7 @@
 <th:block layout:fragment="customCss">
 
 <style>
+
 .searchTitle {
 	margin-left: 10px; margin-right: 5px;
 }
@@ -56,21 +57,21 @@
 						<form th:action="@{/admin/goods/goodsList}" id="searchForm" method="post">
 							<label class="searchTitle control-label">대분류</label>
 								<select class="largeCate form-control">
-							 		<option value="">::</option>
+							 		<option value="none">::</option>
 								</select>
 							<label class="searchTitle control-label">중분류</label>
-								<select name="searchKey2" class="smallCate form-control">
-									<option value="">::</option>
+								<select class="smallCate form-control" name="searchKey2" >
+									<option value="none">::</option>
 								</select>
 								<input type="hidden" id="searchCate" name="searchCate">
 							<label class="searchTitle control-label">문의 검색</label>
-								<select name="searchKey" class="searchKeyword form-control">
+								<select class="searchKeyword form-control" name="searchKey">
 									<option>::</option>
-									<option value="goodsCode">상품코드</option>
-									<option value="goodsName">상품명</option>
-									<option value="userId">판매자</option>
+									<option value="goodsCode" th:selected="${'goods_code' == searchKey}">상품코드</option>
+									<option value="goodsName" th:selected="${'goods_name' == searchKey}">상품명</option>
+									<option value="userId" th:selected="${'user_id' == searchKey}">판매자</option>
 								</select>
-								<input type="text" name="searchValue" class="form-control" size="12">
+								<input type="text" name="searchValue" class="form-control" size="12" th:value="${searchValue != null ? searchValue : ''}">
 							<button type="submit" class="searchBtn btn btn-dark" style="margin-left:10px; margin-top:-7px;">검색</button>
 							<button type="reset" class="btn btn-dark" style="margin-top:-7px;">초기화</button>
 						</form>
@@ -79,12 +80,11 @@
 			</div>
 
 			<div class="x_content2">
-				<table id="datatable"
-					class="table table-striped table-bordered bulk_action dataTable no-footer"
-					role="grid">
+				<table id="datatable" class="table table-striped table-bordered bulk_action dataTable no-footer" role="grid">
 					<thead>
-						<tr style="text-align:center;">
+						<tr>
 							<th style="width: 100px;">상품코드</th>
+							<th style="width: 120px;">카테고리</th>
 							<th>상품명</th>
 							<th style="width: 80px;">정가</th>
 							<th style="width: 60px;">할인율</th>
@@ -98,9 +98,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${not #lists.isEmpty(goodsList)}" th:each="g : ${goodsList}" id="goodsListTable">
+						<tr th:if="${not #lists.isEmpty(goodsList)}" th:each="g : ${goodsList}" id="goodsListTable" style="text-align:center;">
 							<td th:text="${g.goodsCode}"></td>
-							<td th:text="${g.goodsName}"></td>
+							<td th:text="${g.goodsSmallCategoryInfo.smallCategoryName}"></td>
+							<td th:text="${g.goodsName}" style="text-align:left;"></td>
 							<td th:text="${'₩' + #numbers.formatInteger(g.goodsPrice,3,'COMMA')}"></td>
 							<td th:text="${g.goodsDiscountRate + '%'}"></td>
 							<td th:text="${'₩'+ #numbers.formatInteger((g.goodsPrice-g.goodsPrice*g.goodsDiscountRate/100),3,'COMMA')}"></td>
@@ -152,7 +153,6 @@
 
 
 <th:block layout:fragment="customScript">
-    
 	<script th:inline="javascript">
 	
 	 $(function() {
@@ -218,7 +218,16 @@
 		});
 		/* 대분류 선택시 중분류 카테고리 나오게 하기 */
 		var largeCategoryList = /*[[${largeCategoryList}]]*/
-			console.log(largeCategoryList)
+		var searchKey = /*[[${searchKey}]]*/
+		var searchCate = /*[[${searchCate}]]*/
+		if(typeof searchKey != 'undefined' && searchKey != null && searchKey != '' && searchCate != ''){
+			var searchGoodsList = /*[[${goodsList}]]*/
+			var searchGoodsLargeCate = searchGoodsList[0].goodsLargeCategoryInfo.goodsLargeCategory;
+			var searchGoodsSmallCate = searchGoodsList[0].goodsSmallCategory;
+			console.log(searchGoodsList)
+		}
+		console.log(searchKey,'<<<<<<<<<<<<<<<<')
+		console.log(largeCategoryList)
 		var largeCate = $(".largeCate");
 		var smallCate = $(".smallCate");
 		
@@ -229,8 +238,18 @@
 			console.log('largeCode: '+large.goodsLargeCategory)
 			console.log('largeName: '+large.goodsCategory)
 			
-			largeCate.append("<option value='"+ largeCode +"'>" + largeName + "</option>");
+			//검색 후(undefined, null, '' 이 아닐 때) 대분류 option 유지되게 하기 (if문)
+			if(typeof searchGoodsLargeCate != 'undefined' && searchGoodsLargeCate != null && searchGoodsLargeCate != ''){
+				if(largeCode == searchGoodsLargeCate){
+					largeCate.append("<option value='"+ largeCode +"' selected>" + largeName + "</option>");
+				}else{					
+					largeCate.append("<option value='"+ largeCode +"'>" + largeName + "</option>");
+				}
+			}else{
+				largeCate.append("<option value='"+ largeCode +"'>" + largeName + "</option>");
+			}
 		}
+		
 		//대분류 option 클릭 시 중분류 변화
 		$(largeCate).on("change",function(){
 			//var selectLarge = $(this).find("option:selected").val();	
@@ -252,17 +271,33 @@
 					console.log('smallName: '+smallName);
 						
 					if(selectLarge === largeCode2){
-						smallCate.append("<option value='goodsSamllCategory' name='"+smallCode+"'>" + smallName + "</option>");
+						//검색 후(undefined, null, '' 이 아닐 때) 중분류 option 유지되게 하기 (if문)
+						if(typeof searchGoodsSmallCate != 'undefined' && searchGoodsSmallCate != null && searchGoodsSmallCate != ''){
+							if(smallCode == searchGoodsSmallCate){
+								smallCate.append("<option value='goodsSamllCategory' name='"+smallCode+"' selected>" + smallName + "</option>");								
+							}else{								
+								smallCate.append("<option value='goodsSamllCategory' name='"+smallCode+"'>" + smallName + "</option>");
+							}
+						}else{							
+							smallCate.append("<option value='goodsSamllCategory' name='"+smallCode+"'>" + smallName + "</option>");
+						}
 					}
 				}
 			}
 		});
+		console.log(searchCate,'dsfkjasdljfaslkdfjlasdjflasdkjflkj')
+		//대분류 카테고리가 undefined, null, '' 이 아닐 때 대분류 중분류 옵션 변경 할 수 있게 하기
+		if(typeof searchGoodsLargeCate != 'undefined' && searchGoodsLargeCate != null && searchGoodsLargeCate != '' && searchCate != ''){
+			$(largeCate).change();
+			$(smallCate).change();
+		}
 		/* select smallCate 선택 시 smallCode 히든 인풋에 넣기 (카테고리 검색에 이용) */
 		$('.smallCate').change(function() {
 		var smallCateOption = $(".smallCate option:selected").attr('name');
 			console.log(smallCateOption);
 			$('#searchCate').val( smallCateOption );
 		});
+		
 		
 	});
 	</script>

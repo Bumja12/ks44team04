@@ -4,8 +4,62 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team04.mapper.ReviewMapper">
 
+	<resultMap type="Review" id="reviewListResultMap">
+		<id     column="review_list"  			property="reviewList"/>
+		<result column="goods_list" 			property="goodsList"/>
+		<result column="buyer_id" 				property="buyerId"/>
+		<result column="order_detail_code" 		property="orderDetailCode"/>
+		<result column="review_content"  		property="reviewContent"/>
+		<result column="review_img" 			property="reviewImg"/>
+		<result column="review_reg_date" 		property="reviewRegDate"/>
+		<result column="review_update_date" 	property="reviewUpdateDate"/>
+		<result column="save_point" 			property="savePoint"/>
+		<result column="like_amount" 			property="likeAmount"/>
+		<result column="grade" 					property="grade"/>
+	</resultMap>
+
+<select id="reviewList" resultMap="reviewListResultMap">
+	SELECT 
+		r.review_list
+		,r.goods_list
+		,r.buyer_id
+		,r.order_detail_code
+		,r.review_content
+		,r.review_img
+		,r.review_reg_date
+		,r.review_update_date
+		,r.save_point
+		,r.like_amount
+		,r.grade
+	FROM 
+		tb_review AS r 
 	
+</select>
+
+<select id="reviewSerchList" resultMap="reviewListResultMap">
+	SELECT 
+		r.review_list
+		,r.goods_list
+		,r.buyer_id
+		,r.order_detail_code
+		,r.review_content
+		,r.review_img
+		,r.review_reg_date
+		,r.review_update_date
+		,r.save_point
+		,r.like_amount
+		,r.grade
+	FROM 
+		tb_review AS r 
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		   	<if test="sv != null and sv != ''">
+		   		${sk} LIKE CONCAT('%',#{sv},'%')
+		   	</if>
+	   </trim>
+	
+</select>
+
+
+
     
-    
- 
 </mapper>

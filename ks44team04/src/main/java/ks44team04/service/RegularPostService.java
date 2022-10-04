@@ -21,7 +21,5 @@ public class RegularPostService {
         return regularPostMapper.getRegularPostHistory(userId);
     }
 
-    public void setOrderDetailStatus(String orderDetailCode, String orderStatus) {
-        regularPostMapper.setOrderDetailStatus(orderDetailCode, orderStatus);
-    }
+
 }

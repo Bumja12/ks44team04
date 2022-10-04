@@ -14,6 +14,8 @@ public class Review {
     private int likeAmount;
     private int grade;
 
+  
+    
     public String getReviewList() {
         return reviewList;
     }

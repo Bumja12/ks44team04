@@ -9,159 +9,248 @@
 
 <th:block layout:fragment="customCss">
 	<style>
-.loginInput {
-	margin-bottom: 10px;
-}
+		.loginInput {
+			margin-bottom: 10px;
+		}
+		
+		.userDetail td{
+			padding-left: 12px !important;
+		}
+      
+		.userDetail button {
+			margin: 5px 3px 5px;
+		}
 
-.userDetail td {
-	padding-left: 12px !important;
-}
+		.tableOdd {
+			background-color: #f6f6f6;
+			font-weight: bold;
+			padding-top: 20px !important;
+		}
+  
+		.tableEven .text {
+			width: 230px;
+			margin: 3px;
+		}
+  
+		.tableEven .select {
+			width: 230px;
+			margin: 3px;
+		}
 
-.userDetail button {
-	margin-bottom: 0px;
-}
+		.tableEven label {
+			padding-top: 4px;
+		}
 
-.tableOdd {
-	background-color: #f6f6f6;
-	font-weight: bold;
-	padding-top: 16px !important;
-}
+		.text {
+			margin-right: 6px;
+		}
+		
+		.userAddr {
+			width: 350px !important;
+			margin-right: 6px;
+		}
+		
+		.file {
+			margin-left: 5px;
+		}
+		
 
-.tableEven .text {
-	width: 200px;
-	margin-right: 4px;
-}
-
-.tableEven select {
-	width: 200px;
-}
-
-.tableEven label {
-	padding-top: 4px;
-}
 </style>
 </th:block>
 
 <th:block layout:fragment="customContents">
+	
+	<form id="addSellerForm" th:action="@{/admin/user/addSeller}" method="post">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>판매자등록</h3>
+			</div>
 
-	<!-- dd -->
-	<div class="page-title">
-		<div class="title_left">
-			<h3>상세정보</h3>
-		</div>
-		<div>
-			<button type="button" class="btn btn-dark pull-right" style="margin-right: 10px;">수정</button>
-			<button type="button" class="btn btn-default pull-right" th:onclick="|location.href='@{/admin/user/sellerList}'|" style="margin-right: 10px;">
-				<i class="fa fa-bars"> 회원목록</i>
-			</button>
-		</div>
-	</div>
-
-	<div class="clearfix"></div>
-	<div class="row">
-		<div class="col-md-12 col-sm-12 col-xs-12">
-			<div class="x_panel">
-				<div class="x_content">
-
-					<!-- farm detail form Start -->
-					<div class="x_title">
-						<h4>농장정보</h4>
-						<div class="clearfix"></div>
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="x_panel" style="padding-top: 30px;">
+						<div class="x_content">
+							<input type="hidden" class="form-control text" id="sellerCode" name="sellerCode" />
+<!-- 							<input type="hidden" class="form-control text" id="approveCheck" name="approveCheck" value="N" />
+ -->							<table class="userDetail table table-responsive">
+								<tbody>
+									<tr>
+										<td class="tableOdd col-md-1">판매분류</td>
+										<td class="tableEven col-md-4" colspan="3">
+											<div class="form-inline">
+	 											<select class="select form-control" id="sellerSort" name="sellerSort">
+													<th:block th:unless="${#lists.isEmpty(goodsLargeCategory)}" th:each="gCate : ${goodsLargeCategory}">
+														<option th:value="${gCate.goodsLargeCategory}" th:text="${gCate.goodsCategory}"></option>
+													</th:block>
+													<th:block th:if="${#lists.isEmpty(goodsLargeCategory)}">
+														<option>등록된 분류가 없습니다.</option>
+													</th:block>
+												</select>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd col-md-1">아이디</td>
+										<td class="tableEven col-md-4">
+											<input type="text" class="form-control text" id="sellerId" name="sellerId" th:value="${userInfo.userId}" readonly="readonly" />
+										</td>
+										<td class="tableOdd col-md-1">상호명</td>
+										<td class="tableEven col-md-4" colspan="3">
+												<input type="text" class="form-control text" id="storeName" name="storeName" placeholder="상호명을 입력해주세요" />
+										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd">계좌정보</td>
+										<td class="tableEven col-md-4" colspan="3">
+												<div class="form-inline">
+												<select class="form-control text" style="width: 150px;" id="bankName" name="bankName">
+							                        <option value="">- 은행선택 -</option>
+							                        <option value="경남은행">경남은행</option>
+							                        <option value="광주은행">광주은행</option>
+							                        <option value="국민은행">국민은행</option>
+							                        <option value="기업은행">기업은행</option>
+							                        <option value="기업은행">기업은행</option>
+							                        <option value="농협회원조합">농협회원조합</option>
+							                        <option value="대구은행">대구은행</option>
+							                        <option value="부산은행">부산은행</option>
+							                        <option value="새마을금고">새마을금고</option>
+							                        <option value="수협중앙회">수협중앙회</option>
+							                        <option value="신한은행">신한은행</option>
+							                        <option value="신협중앙회">신협중앙회</option>
+							                        <option value="외환은행">외환은행</option>
+							                        <option value="우리은행">우리은행</option>
+							                        <option value="우체국">우체국</option>
+							                        <option value="전북은행">전북은행</option>
+							                        <option value="제주은행">제주은행</option>
+							                        <option value="카카오뱅크">카카오뱅크</option>
+							                        <option value="케이뱅크">케이뱅크</option>
+							                        <option value="하나은행">하나은행</option>
+							                        <option value="SC제일은행">SC제일은행</option>
+												</select>
+												<input type="text" class="form-control text" style="width: 230px;" id="account" name="account" placeholder="계좌번호" />
+												<input type="text" class="form-control text" style="width: 150px;" id="accountHolder" name="accountHolder" placeholder="예금주명" />
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd">사업지 주소</td>
+										<td class="tableEven col-md-4" colspan="3">
+											<div class="form-inline">
+												<input type="text" class="userAddr form-control addr" id="storeAddress" name="storeAddress" placeholder="주소를 검색해주세요" readonly="readonly" /> 
+												<input type="text" class="userAddr form-control addr" id="storeAddress2" name="storeAddress2" placeholder="상세주소를 입력해주세요" />
+												<button type="button" class="btn" id="addrSearchBtn">주소검색</button>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd">사업자 대표전화</td>
+										<td class="tableEven col-md-4">
+											<div class="form-inline">
+												<input type="text" class="form-control text phoneNumber" id="storePhone" name="storePhone" placeholder="전화번호를 입력해주세요" />
+												<button type="button" class="btn" id="idCheckBtn">중복확인</button>
+											</div>
+										</td>
+										<td class="tableOdd col-md-1">사업자 이메일</td>
+										<td class="tableEven col-md-4">
+											<div class="form-inline">
+												<input type="text" class="form-control text" id="storeEmail" name="storeEmail" placeholder="이메일을 입력해주세요" />
+												<button type="button" class="btn" id="idCheckBtn">중복확인</button>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd">사업자 등록번호</td>
+										<td class="tableEven col-md-4" colspan="3">
+											<div class="form-inline">
+												<input type="text" class="form-control text" id="licenceNum" name="licenceNum" placeholder="사업자 등록번호를 입력해주세요" onlyNumber/> * 숫자만 입력해주세요
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd">사업자등록증</td>
+										<td class="tableEven col-md-4" style="padding: 16px;">
+											<input type="file" class="file" id="licenceImg" name="licenceImg" accept="image/png, image/jpeg">
+										</td>
+										<td class="tableOdd">통신판매업신고증</td>
+										<td class="tableEven col-md-4"  style="padding: 16px;">
+											<input type="file" class="file" id="onlineLicenceImg" name="onlineLicenceImg" accept="image/png, image/jpeg">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<!-- add Seller form End -->
+							
+							<div class="form-group">
+		                        <div style="text-align:center; margin: 30px;">
+									<button type="button" class="btn btn" th:onclick="|location.href='@{/admin/user/sellerList}'|">취소</button>
+									<button type="submit" class="btn btn-dark btn">등록</button>
+								</div>
+							</div>
+						</div>
 					</div>
-					<table class="userDetail table table-responsive" th:object="${sellerInfo}">
-						<tbody>
-							<tr>
-								<td class="tableOdd col-md-1">판매자 대표코드</td>
-								<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="sellerCode" name="sellerCode" th:value="*{sellerCode}" readonly="readonly" />
-								</td>
-								<td class="tableOdd col-md-1">분류코드</td>
-								<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="selleSort" name="selleSort" th:value="*{sellerSort}" readonly="readonly" />
-								</td>
-							</tr>
-							<tr>
-								<td class="tableOdd">상호명</td>
-								<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="storeName" name="storeName" th:value="*{storeName}" readonly="readonly" />
-								</td>
-								<td class="tableOdd">계좌정보</td>
-								<td class="tableEven col-md-4" colspan="3">
-										<div class="form-inline">
-										<input type="text" class="form-control text" style="width: 100px;" id="bankName" name="bankName" th:value="*{bankName}" readonly="readonly">
-										<input type="text" class="form-control text" style="width: 230px;" id="account" name="account" th:value="*{account}" readonly="readonly" />
-										<input type="text" class="form-control text" style="width: 150px;" id="accountholder" name="accountholder" th:value="*{accountHolder}" readonly="readonly" />
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td class="tableOdd">사업자 대표전화</td>
-								<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="storePhone" name="storePhone" th:value="*{storePhone}" readonly="readonly" />
-								</td>
-								<td class="tableOdd">사업자 이메일</td>
-								<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="storeEmail" name="storeEmail" th:value="*{storeEmail}" readonly="readonly" />
-								</td>
-							</tr>
-							<tr>
-								<td class="tableOdd">사업지 주소</td>
-								<td class="tableEven col-md-4" colspan="3">
-									<div class="form-inline">
-											<input type="text" class="form-control Text" id="farmAddr" style="width: 350px; margin-right: 6px;" name="storeAddress" th:value="*{storeAddress}" readonly="readonly" />
-										<input type="text" class="form-control Text" id="farmAddrDetail" name="farmAddrDetail" style="width: 350px; margin-right: 6px;" th:value="*{storeAddress}" readonly="readonly" />
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td class="tableOdd">사업자 등록번호</td>
-								<td class="tableEven col-md-4" colspan="3">
-										<input type="text" class="form-control text" id="licenceNum" name="licenceNum" th:value="*{licenceNum}" readonly="readonly" />
-								</td>
-							</tr>
-							<tr>
-								<td class="tableOdd">사업자등록증</td>
-								<td class="tableEven col-md-4" style="padding: 16px;">
-											<a href="#" th:text="${sellerInfo.licenceImg}" style="margin-left: 5px;"></a>
-								</td>
-								<td class="tableOdd">통신판매업신고증</td>
-								<td class="tableEven col-md-4"  style="padding: 16px;">
-											<a href="#" th:text="${sellerInfo.onlineLicenceImg}" style="margin-left: 5px;"></a>
-								</td>
-							</tr>
-							<tr>
-								<td class="tableOdd">승인요청일시</td>
-								<td class="tableEven col-md-4">
-											<input type="text" class="form-control text" id="approveAskDate" name="approveAskDate" th:value="*{approveAskDate}" readonly="readonly" />
-								</td>
-								<td class="tableOdd">승인일시</td>
-								<td class="tableEven col-md-4">
-											<input type="text" class="form-control text" id="approveDate" name="approveDate" th:value="*{approveDate}" readonly="readonly" />
-								</td>
-							</tr>
-							<tr>
-								<td class="tableOdd">승인여부</td>
-								<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="approveCheck" name="approveCheck" th:value="*{approveCheck}" readonly="readonly" />
-								</td>
-								<td class="tableOdd">승인자</td>
-								<td class="tableEven col-md-4">
-										<input type="text" class="form-control text" id="approveId" name="approveId" th:value="*{approveId}" readonly="readonly" />
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<!-- farm detail form End -->
 				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 </th:block>
 
 <th:block layout:fragment="customJsScript">
-    <script th:inline="javascript">
+	<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
 
-    </script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
     
+    	/* 주소 검색 */
+		let text = document.querySelector('#storeAddress');
+		document.querySelector('#addrSearchBtn').addEventListener('click', function () {
+			
+			new daum.Postcode({
+				oncomplete: function (data) {
+				text.value = data.address;
+				}
+			}).open();
+			
+			//상세주소 초기화
+			var input = document.getElementById('storeAddress2'); 
+			input.value = null;
+		});
+    
+		/* 전화번호 입력시 자동 대시(-) */
+		$(document).on("keyup", ".phoneNumber", function() { 
+			$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+		});
+		
+		/* 숫자만 입력 */
+		$('input[onlyNumber]').on('keyup', function () {
+		    $(this).val($(this).val().replace(/[^0-9]/g, ""));
+		});
+	    
+		/* 중복 없는 랜덤 판매자 코드 생성 */
+		$(function() {
+			var text1 = "";
+			var text2 = "";
+			var ranCode="";
+			var alphabet = "abcdefghijklmnopqrstuvwxyz";
+			var num = "0123456789";
+	
+			for(var i=0; i < 2; i++) {      
+				text1 += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+			}
+			for(var i=0; i < 3; i++){      
+				text2 += num.charAt(Math.floor(Math.random() * num.length));
+			}
+			ranCode = text1+text2;
+	     
+			$('#sellerCode').attr('value',ranCode);
+			console.log($('#sellerCode').val());
+		});
+
+		
+		
+		
+		$('#addSellerForm').submit(function(event) {});
+	
+    </script>
 </th:block>
 </html>
