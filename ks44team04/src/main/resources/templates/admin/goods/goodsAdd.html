@@ -186,13 +186,13 @@
 				<div class="firstMenu form-inline" style="margin-bottom:-15px;">
 					<div class="input-group">
 						<label class="addTitle chk_box">
-							<input type="checkbox" id="packagePostCheck" name="packagePostCheck"> 묶음배송
+							<input type="checkbox" id="packagePostCheck" name="packagePostCheck" value="Y" checked> 묶음배송
 							<span class="on"></span>
 						</label>
 					</div>
 					<div class="input-group" >
 						<label class="addTitle chk_box">
-							<input type="checkbox" id="regularDeliverCheck" name="regularDeliverCheck"> 정기배송
+							<input type="checkbox" id="regularDeliverCheck" name="regularDeliverCheck" value="Y" checked> 정기배송
 							<span class="on"></span>
 						</label>
 					</div>
@@ -239,7 +239,7 @@
 		<div class="x_content2">
 			<div class="well well-sm">
 				<div class="form-inline form-group" style="margin-top: 20px;">
- 					<div class="summernote" id="goodsContent" name="goodsContent"></div>
+ 					<textarea class="summernote" id="goodsContent" name="goodsContent"></textarea>
  				</div>
  				<p class="explain">
  					상세설명 권장 크기 : 가로 860px <br>
@@ -266,7 +266,7 @@
 	<script th:inline="javascript">
     
 	$(function(){
-	    /* 섬머노트 설정 */
+	    /* 썸머노트 설정 */
 		$(document).ready(function() {
 	    	$('.summernote').summernote({
 				height: 300,           //에디터 높이
@@ -368,33 +368,38 @@
 				}
 			}
 		});
+		
 		/* 무료배송 체크박스 체크, 해제 시 이벤트 */
 	    $("#freePost").change(function(){
 	    	if($(this).prop("checked")){
-	    		console.log("체크");
-	    		$("#goodsPostPrice").attr("disabled", true);
-	    		$("#goodsPostPrice").val();
+	    		console.log("무료배송 체크 : Y ");
+	    		$("#goodsPostPrice").attr("disabled", true); //무료배송 체크시 배송비 인풋 막기
+	    		$("#goodsPostPrice").val( 0 );
 	    	}else{
-	    		console.log("체크 해제");
+	    		console.log("무료배송 체크 해제 : N ");
 	    		$("#goodsPostPrice").attr("disabled", false);
 	    	}
 	    });
+		
 	    /* 묶음배송 체크박스 체크, 해제 시 이벤트 */
 	    $("#packagePostCheck").change(function(){
 	        if($(this).is(":checked")){
-	            alert("체크");
-	        }
-	        else{
-	            alert("체크 해제");
+	        	console.log("묶음배송 체크 : Y ");
+	        	$("#packagePostCheck").val( 'Y' );
+	        }else{
+	        	console.log("묶음배송 체크 해제 : N ");
+	        	$("#packagePostCheck").val( 'N' );
 	        }
 	    });
+	    
 	    /* 정기배송 체크박스 체크, 해제 시 이벤트 */
 	    $("#regularDeliverCheck").change(function(){
 	        if($(this).is(":checked")){
-	            alert("체크");
-	        }
-	        else{
-	            alert("체크 해제");
+	        	console.log("정기배송 체크 : Y ");
+	        	$("#regularDeliverCheck").val( 'Y' );
+	        }else{
+	        	console.log("정기배송 체크 해제 : N ");
+	        	$("#regularDeliverCheck").val( 'N' );
 	        }
 	    });
 		
