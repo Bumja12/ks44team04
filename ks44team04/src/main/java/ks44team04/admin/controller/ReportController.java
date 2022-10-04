@@ -162,6 +162,7 @@ public class ReportController {
 
 		return "admin/report/reportList";
 	}
+	
 	//정지 리스트 검색 
 	@PostMapping("/report/userSuspendList")
 	public String getSuspendSearch(@RequestParam(name="reportSearchKey")String sk 
