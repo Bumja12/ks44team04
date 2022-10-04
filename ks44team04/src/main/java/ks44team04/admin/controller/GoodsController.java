@@ -49,7 +49,7 @@ public class GoodsController {
 	@PostMapping("/goodsList")
 	public String getGoodsListSearch(@RequestParam(name="searchKey", defaultValue = "goodsCode") String searchKey
 									,@RequestParam(name="searchValue", required = false, defaultValue = "") String searchValue
-									,@RequestParam(name="searchKey2", defaultValue = "goodsSmallCategory") String searchKey2
+									//,@RequestParam(name="searchKey2", defaultValue = "goodsSmallCategory") String searchKey2
 									,@RequestParam(name="searchCate", required = false, defaultValue = "") String searchCate
 									,Model model) {
 		
@@ -62,21 +62,25 @@ public class GoodsController {
 			searchKey = "user_id";
 		}
 
-		if("goodsSmallCategory".equals(searchKey2)) {
-			searchKey2 = "sc.goods_small_category";
-		}
+		//if("goodsSmallCategory".equals(searchKey2)) {
+		//	searchKey2 = "sc.goods_small_category";
+		//}
 		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("searchKey", searchKey);
 		paramMap.put("searchValue", searchValue);
-		paramMap.put("searchKey2", searchKey2);
+		//paramMap.put("searchKey2", searchKey2);
 		paramMap.put("searchCate", searchCate);
 		
 		List<Goods> goodsList = goodsService.getGoodsListSearch(paramMap);
-		
+		List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
 		
 		model.addAttribute("title", "상품 목록 조회");
 		model.addAttribute("goodsList", goodsList);
+		model.addAttribute("largeCategoryList", largeCategoryList);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("searchCate", searchCate);
 		
 		return "/admin/goods/goodsList";
 	}
@@ -108,30 +112,39 @@ public class GoodsController {
 	//상품 등록
 	@GetMapping("/goodsAdd")
 	public String goodsAdd(Model model){
+		//대분류 카테고리 리스트 가져오기
+		List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
+		
 		model.addAttribute("title", "상품 등록");
+		model.addAttribute("largeCategoryList", largeCategoryList);
 		return "admin/goods/goodsAdd";
 	}
 
 	//상품 등록 쿼리 실행
 	@PostMapping("/goodsAdd")
-	public String goodsAdd(Goods goods) {
+	public String goodsAdd(Goods goods, Model model) {
 		String sellerId = "seller01"; //임의
 			
 		// goodsCode 생성
 		String goodsNewCode = goodsService.getGoodsNewCode(sellerId);
 		goodsNewCode = CodeIndex.codeIndex(goodsNewCode, 5);
-			
+		
+		
 		log.info("상품 증가 코드 :::{}" , goodsNewCode);
 			
 		goods.setGoodsCode(goodsNewCode);
 		goods.setSellerId("seller01");
-		goods.setGoodsSmallCategory("apple"); //임의
 		//goods.setGoodsContent("contents"); //임의
 		goods.setGoodsFile("goods.jpg"); //임의
 			
+		//대분류 카테고리 리스트 가져오기
+		List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
+		
 		log.info("사용자가 상품 등록한 정보 ::: {}", goods);
 		goodsService.goodsAdd(goods);
 			
+		model.addAttribute("largeCategoryList", largeCategoryList);
+		
 		return "redirect:/admin/goods/goodsList";
 	}
 		
@@ -170,8 +183,10 @@ public class GoodsController {
     
 	//문의 목록 검색
 	@PostMapping("/goodsQna")
-	public String getGoodsQnaSearch(@RequestParam(name="searchKey", defaultValue="goodsCode") String searchKey
-							  		,@RequestParam(name="value", required=false, defaultValue="") String value
+	public String getGoodsQnaSearch( @RequestParam(name="searchKey", defaultValue="goodsCode") String searchKey
+							  		,@RequestParam(name="searchValue", required=false, defaultValue="") String searchValue
+							  		,@RequestParam(name="searchKey2", defaultValue="goodsCode") String searchKey2
+							  		,@RequestParam(name="searchQnaStatus", required = false, defaultValue = "") String searchQnaStatus
 							  		,Model model) {
 		
 		if("goodsCode".equals(searchKey)) {
@@ -186,14 +201,24 @@ public class GoodsController {
 			searchKey = "user_id";
 		}
 		
+		if("qnaStatus".equals(searchKey2)) {
+			searchKey2 = "qna_status";
+		}
+		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("searchKey", searchKey);
-		paramMap.put("value", value);
+		paramMap.put("searchValue", searchValue);
+		paramMap.put("searchKey2", searchKey2);
+		paramMap.put("searchQnaStatus", searchQnaStatus);
 		
 		List<GoodsQna> goodsQna = goodsService.getGoodsQnaSearch(paramMap);
 		
 		model.addAttribute("title", "상품 목록 조회");
 		model.addAttribute("goodsQna", goodsQna);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("searchKey2", searchKey2);
+		model.addAttribute("searchQnaStatus", searchQnaStatus);
 		
 		return "/admin/goods/goodsQna";
 	}

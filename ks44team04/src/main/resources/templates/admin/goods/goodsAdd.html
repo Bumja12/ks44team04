@@ -10,6 +10,17 @@
 
 <th:block layout:fragment="customCss">
 <style>
+.chk_box { border-radius: 5px; display: block; position: relative; padding-left: 25px; margin-bottom: 10px; cursor: pointer; font-size: 14px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+/* 기본 체크박스 숨기기 */
+.chk_box input[type="checkbox"] { display: none; }
+/* 선택되지 않은 체크박스 스타일 꾸미기 */
+.on { width: 20px; height: 20px; background: #ddd; position: absolute; top: 0; left: 0; border-radius: 5px;}
+/* 선택된 체크박스 스타일 꾸미기 */
+.chk_box input[type="checkbox"]:checked + .on { background: #73879c; }
+.on:after { content: ""; position: absolute; display: none; }
+.chk_box input[type="checkbox"]:checked + .on:after { display: block; }
+.on:after { width: 6px; height: 10px; border: solid #fff; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 4px; }
+
 .firstMenu{
 	margin-top: 5px;
 }
@@ -63,22 +74,19 @@
 			<div class="well well-sm">
 				<div class="firstMenu form-inline">
 					<label class="addTitle control-label">대분류</label>
-						<select class="form-control">
-							<option>::</option>
-							<option value="1">못난이1</option>
-							<option value="2">못난이2</option>
+						<select class="largeCate form-control">
+							<option value="none">::</option>
 						</select>
-					<label class="addTitle control-label" style="margin-left: 10px;">소분류</label>
-						<select class="form-control">
-							<option>::</option>
-							<option value="1">못난이1</option>
-							<option value="2">못난이2</option>
+					<label class="addTitle control-label" style="margin-left: 10px;">중분류</label>
+						<select class="smallCate form-control" id="goodsSmallCategory" name="goodsSmallCategory">
+							<option value="none">::</option>
 						</select>
 					<p class="explain">
 						상품에 맞지 않는 카테고리에 등록할 경우 강제 이동되거나 판매중지, 판매금지 될 수 있습니다.</p>
 				</div>
 			</div>
 		</div>
+
 
 		<div>
 			<h5>
@@ -92,9 +100,9 @@
 				<div class="firstMenu form-inline">
 					<label class="addTitle control-label" for="goodsName">상품명</label>
 						<input type="text" class="form-control" id="goodsName" name="goodsName" required="required" size="30">
-						<p class="explain">
-							상품명 최대 30글자까지 입력가능하며, 일부 특수문자를 포함한 금칙어는 상품명으로 사용할 수 없습니다.<br>
-							판매 상품과 직접 관련이 없는 다른 상품명, 스팸성 키워드 입력 시 관리자에 의해 판매 금지될 수 있습니다.</p>
+					<p class="explain">
+						상품명 최대 30글자까지 입력가능하며, 일부 특수문자를 포함한 금칙어는 상품명으로 사용할 수 없습니다.<br>
+						판매 상품과 직접 관련이 없는 다른 상품명, 스팸성 키워드 입력 시 관리자에 의해 판매 금지될 수 있습니다.</p>
 				</div>
 			</div>
 		</div>
@@ -165,24 +173,29 @@
 						<input type="text" class="postPrice numberInput form-control" id="goodsPostPrice" name="goodsPostPrice" size="5">
 						<span class="input-group-addon">원</span>
 					</div>
-					<input type="checkbox" class="flat"> 무료배송
+					<div class="addTitle input-group" style="margin-top:10px;">
+						<label for="freePost" class="chk_box">
+							<input type="checkbox" id="freePost" > 무료배송
+							<span class="on"></span>
+						</label>
+					</div>
 				</div>
-				<p class="explain">
+				<p class="explain" style="margin-bottom:15px;">
 					무료배송 체크 시, 자동으로 배송비는 0원으로 변경됩니다.</p>
 					
-				<div class="firstMenu form-inline">
-					<label class="addTitle control-label" for="packagePostCheck">묶음배송</label>
-						<div class="input-group" style="margin-top: 8px;">
-                        	<input type="checkbox" class="flat" id="packagePostCheck" name="packagePostCheck"> 가능
-                            <input type="checkbox" class="flat" id="packagePostCheck" name="packagePostCheck"> 불가능
-                        </div>
-				</div>
-				<div class="firstMenu form-inline">
-					<label class="addTitle control-label" for="regularDeliverCheck">정기배송</label>
-						<div class="input-group" style="margin-top: 8px;">
-                        	<input type="checkbox" class="flat" id="regularDeliverCheck" name="regularDeliverCheck"> 가능
-                            <input type="checkbox" class="flat" id="regularDeliverCheck" name="regularDeliverCheck"> 불가능
-                        </div>
+				<div class="firstMenu form-inline" style="margin-bottom:-15px;">
+					<div class="input-group">
+						<label class="addTitle chk_box">
+							<input type="checkbox" id="packagePostCheck" name="packagePostCheck"> 묶음배송
+							<span class="on"></span>
+						</label>
+					</div>
+					<div class="input-group" >
+						<label class="addTitle chk_box">
+							<input type="checkbox" id="regularDeliverCheck" name="regularDeliverCheck"> 정기배송
+							<span class="on"></span>
+						</label>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -226,7 +239,7 @@
 		<div class="x_content2">
 			<div class="well well-sm">
 				<div class="form-inline form-group" style="margin-top: 20px;">
- 					<textarea class="summernote" id="goodsContent" name="goodsContent"></textarea>
+ 					<div class="summernote" id="goodsContent" name="goodsContent"></div>
  				</div>
  				<p class="explain">
  					상세설명 권장 크기 : 가로 860px <br>
@@ -250,7 +263,7 @@
     <!-- 스크롤이 자꾸 아래로 가서 넣음 -->
     <script>history.scrollRestoration = "manual"</script>
     
-	<script>
+	<script th:inline="javascript">
     
 	$(function(){
 	    /* 섬머노트 설정 */
@@ -315,7 +328,78 @@
 		 
 			$('#goodsAddForm').submit();
 		});
+		
+		/* 대분류 선택시 중분류 카테고리 나오게 하기 */
+		var largeCategoryList = /*[[${largeCategoryList}]]*/
+			console.log(largeCategoryList)
+		var largeCate = $(".largeCate");
+		var smallCate = $(".smallCate");
+		
+		//대분류 <option> 태그
+		for(var large of largeCategoryList){
+			var largeCode = large.goodsLargeCategory;
+			var largeName = large.goodsCategory;
+			console.log('largeCode: '+large.goodsLargeCategory)
+			console.log('largeName: '+large.goodsCategory)
+			
+			largeCate.append("<option value='"+ largeCode +"'>" + largeName + "</option>");
+		}
+		//대분류 option 클릭 시 중분류 변화
+		$(largeCate).on("change",function(){
+			smallCate.children().remove();
+			smallCate.append("<option value='none'>::</option>")
+				
+			for(var large of largeCategoryList){
+				var selectLarge = $(this).find("option:selected").val();	
+				console.log(selectLarge);
+				
+				for(var small of large.goodsSmallCategoryInfo){
+					var largeCode2 = small.goodsLargeCategory;
+					var smallCode = small.goodsSmallCategory;
+					var smallName = small.smallCategoryName;
+							
+					console.log('largeCode2: '+largeCode2);
+					console.log('smallCode: '+smallCode);
+					console.log('smallName: '+smallName);
+						
+					if(selectLarge === largeCode2){
+						smallCate.append("<option value='"+smallCode+"'>" + smallName + "</option>");
+					}
+				}
+			}
+		});
+		/* 무료배송 체크박스 체크, 해제 시 이벤트 */
+	    $("#freePost").change(function(){
+	    	if($(this).prop("checked")){
+	    		console.log("체크");
+	    		$("#goodsPostPrice").attr("disabled", true);
+	    		$("#goodsPostPrice").val();
+	    	}else{
+	    		console.log("체크 해제");
+	    		$("#goodsPostPrice").attr("disabled", false);
+	    	}
+	    });
+	    /* 묶음배송 체크박스 체크, 해제 시 이벤트 */
+	    $("#packagePostCheck").change(function(){
+	        if($(this).is(":checked")){
+	            alert("체크");
+	        }
+	        else{
+	            alert("체크 해제");
+	        }
+	    });
+	    /* 정기배송 체크박스 체크, 해제 시 이벤트 */
+	    $("#regularDeliverCheck").change(function(){
+	        if($(this).is(":checked")){
+	            alert("체크");
+	        }
+	        else{
+	            alert("체크 해제");
+	        }
+	    });
+		
+		
 	});
-	</script>
+</script>
 </th:block>
 </html>

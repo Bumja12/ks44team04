@@ -85,8 +85,11 @@
 			ON
 			b.user_id = u.user_id
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchCateName != null and searchCateName != ''">
+				${searchKey2} = #{searchCateName}
+			</if>
 			<if test="searchValue != null and searchValue != ''">
-				${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
 			</if>
 		</trim>
 		ORDER BY b.reg_date DESC;
@@ -156,8 +159,11 @@
 			ON
 			l.user_id = u.user_id
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchCateName != null and searchCateName != ''">
+				${searchKey2} = #{searchCateName}
+			</if>
 			<if test="searchValue != null and searchValue != ''">
-				${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
 			</if>
 		</trim>
 		ORDER BY l.like_reg_date DESC;
@@ -236,8 +242,11 @@
 			ON
 			co.user_id = u.user_id
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchCateName != null and searchCateName != ''">
+				${searchKey2} = #{searchCateName}
+			</if>
 			<if test="searchValue != null and searchValue != ''">
-				${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
 			</if>
 		</trim>
 		ORDER BY co.reg_date DESC;

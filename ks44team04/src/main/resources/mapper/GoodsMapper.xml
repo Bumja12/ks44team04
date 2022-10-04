@@ -21,7 +21,6 @@
         <result column="regular_deliver_check" 	property="regularDeliverCheck"/>
         <result column="reg_date" 				property="regDate"/>
         <result column="modify_date" 			property="modifyDate"/>
-        <result column="goods_report_amount"	property="goodsReportAmount"/>
         <result column="goods_file" 			property="goodsFile"/>
         	<association property="userInfo" resultMap="ks44team04.mapper.UserMapper.UserResultMap"/>
         	<association property="goodsSmallCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsSmallCategoryMap"/>
@@ -51,7 +50,6 @@
 			,g.stop_sale_check
 			,g.goods_discount_rate
 			,u.user_id
-			,g.goods_report_amount
 			,g.reg_date	
 		FROM
 			 tb_goods AS g
@@ -67,6 +65,7 @@
 			 tb_goods_large_category AS lc
 			 ON
 			 sc.goods_large_category = lc.goods_large_category
+		ORDER BY g.reg_date DESC;
 	</select>
 	
 	<!-- 상품 검색 -->
@@ -85,7 +84,6 @@
 			,g.stop_sale_check
 			,g.goods_discount_rate
 			,u.user_id
-			,g.goods_report_amount
 			,g.reg_date	
 		FROM
 			 tb_goods AS g
@@ -108,7 +106,8 @@
 			<if test="searchValue != null and searchValue != ''">
 				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
 			</if>
-		</trim>			 
+		</trim>
+		ORDER BY g.reg_date DESC;		 
 	</select>
 
 	<!-- 특정상품 조회 -->
@@ -129,7 +128,6 @@
 			,g.package_post_check		
 			,g.regular_deliver_check	
 			,g.reg_date					
-			,g.goods_report_amount		
 		FROM
 			tb_goods AS g
 			INNER JOIN
@@ -205,7 +203,7 @@
 		INSERT INTO tb_goods
 			(goods_code, goods_small_category, seller_id, goods_name, goods_content, goods_price, goods_discount_rate, goods_post_price, goods_stock, package_post_check, regular_deliver_check, reg_date, goods_file)
 		VALUES
-			(#{goodsCode}, #{goodsSmallCategory}, #{sellerId}, #{goodsName}, #{goodsContent}, #{goodsPrice}, #{goodsDiscountRate}, #{goodsPostPrice}, #{goodsStock}, #{packagePostCheck}, #{regularDeliverCheck}, CURDATE(), #{goodsFile})
+			(#{goodsCode}, #{goodsSmallCategory}, #{sellerId}, #{goodsName}, #{goodsContent}, #{goodsPrice}, #{goodsDiscountRate}, #{goodsPostPrice}, #{goodsStock}, #{packagePostCheck}, #{regularDeliverCheck}, NOW(), #{goodsFile})
 	</insert>
 	
 	<!-- 마지막 상품코드 (코드증가) -->
@@ -323,8 +321,11 @@
 			ON
 			q.buyer_id = u.user_id
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
-			<if test="value != null and value != ''">
-				${searchKey} LIKE CONCAT('%', #{value}, '%')
+			<if test="searchQnaStatus != null and searchQnaStatus != ''">
+				${searchKey2} = #{searchQnaStatus}
+			</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
 			</if>
 		</trim>
 		ORDER BY q.goods_qna_date DESC;
