@@ -1,6 +1,7 @@
 package ks44team04.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,6 +9,11 @@ import ks44team04.dto.PaymentTotal;
 
 @Mapper
 public interface PaymentMapper {
+	
+	//결제상세내역 검색
+	public List<PaymentTotal> searchPaymentDetail(Map<String, Object> searchMap);
+	//결제내역 검색
+	public List<PaymentTotal> searchPaymentList(Map<String, Object> searchMap);
 	
 	//주문취소삭제
 	public int removeCancel(String orderDetailCode);
@@ -29,7 +35,7 @@ public interface PaymentMapper {
 	public PaymentTotal getPaymentDetail(String orderDetailCode);
 	
 	//결제상세
-	public List<PaymentTotal> paymentDetailList();
+	public List<PaymentTotal> paymentDetail();
 	
 	//결제내역
 	public List<PaymentTotal> paymentList();
