@@ -7,40 +7,6 @@
 	<title th:text="${title}"></title>
 </th:block>
 
-<th:block layout:fragment="customTopJs">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script>
-		
-		//체크박스 전체선택, 해제
-		function checkSelectAll(checkbox)  {
-			const selectAll = document.querySelector('input[name="rowAllCheck"]');
-			  
-			if(checkbox.checked === false)  {
-				selectAll.checked = false;
-			}
-		}
-		function selectAll(selectAll)  {
-			const checkboxes = document.getElementsByName('indivChecks');
-			  
-			checkboxes.forEach((checkbox) => {
-				checkbox.checked = selectAll.checked
-			})
-		}
-		
-		
-/* 		var userStatus = $('.userStatus').val();
-		alert(userStatus);
-			
-		if(userStatus === '탈퇴') {
-			$('#modifyBtn').click(function (e) {
-				e.preventDefault();
-			});
-		} */
-
-		
-	</script>
-</th:block>
-
 <th:block layout:fragment="customContents">
 
 	<div class="page-title">
@@ -130,7 +96,7 @@
 							<th>가입일</th>
 							<th>최근접속일</th>
 							<th style="width: 80px">상태</th>
-							<th style="width: 180px">관리</th>
+							<th style="width: 120px">관리</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -144,13 +110,13 @@
 							<td th:text="${l.userEmail}"></td>
 							<td th:text="${l.userRegDate}"></td>
 							<td th:text="${l.userUpdateDate}"></td>
-							<td th:text="${l.userStatus}" th:value="${l.userStatus}" class="userStatus"></td>
+							<td th:text="${l.userStatus}" th:value="${l.userStatus}" id="userStatus"></td>
 							<td>
-								<a th:href="@{/admin/user/userDetail(userId=${l.userId})}"> 
+								<a th:if="${l.rightList.rightStatus == '판매자' and l.userStatus == '정상'}" th:href="@{/admin/user/sellerDetail(sellerId=${l.userId})}"> 
 									<i class="fa fa-info-circle"></i> 상세 &nbsp;
 								</a> 
-								<a th:href="@{/admin/user/modifyUser(userId=${l.userId})}" id="modifyBtn">
-									<i class="fa fa-edit"></i> 수정 &nbsp;
+								<a th:unless="${l.rightList.rightStatus == '판매자' and l.userStatus == '정상'}" th:href="@{/admin/user/userDetail(userId=${l.userId})}"> 
+									<i class="fa fa-info-circle"></i> 상세 &nbsp;
 								</a> 
 								<a href="#"><i class="fa fa-close"></i> 탈퇴 &nbsp;</a>
 							</td>
@@ -164,5 +130,44 @@
 		</div>
 	</div>
 
+</th:block>
+
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script>
+		
+		//체크박스 전체선택, 해제
+		function checkSelectAll(checkbox)  {
+			const selectAll = document.querySelector('input[name="rowAllCheck"]');
+			  
+			if(checkbox.checked === false)  {
+				selectAll.checked = false;
+			}
+		}
+		function selectAll(selectAll)  {
+			const checkboxes = document.getElementsByName('indivChecks');
+			  
+			checkboxes.forEach((checkbox) => {
+				checkbox.checked = selectAll.checked
+			})
+		}
+		
+		/* 탈퇴회원 정보 수정 금지 (안됨) */
+		/*
+ 		$(function() {
+			var leaveUser = $('#userStatus').val();
+			if(leaveUser === '탈퇴') {
+				$('#modifyBtn').click(function (e) {
+					e.preventDefault();
+					alert("탈퇴한 회원의 정보는 수정할 수 없습니다.");
+				});
+			}
+		});
+		*/
+		
+		
+
+		
+	</script>
 </th:block>
 </html>

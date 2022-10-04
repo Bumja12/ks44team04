@@ -3,6 +3,7 @@ package ks44team04.service;
 import ks44team04.mapper.UserMapper;
 import ks44team04.dto.Dormant;
 import ks44team04.dto.Goods;
+import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.Leave;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
@@ -101,6 +102,13 @@ public class UserService {
     	List<Seller> sellerList = userMapper.getSellerList();
     	
     	return sellerList;
+    }
+    
+    //상품 카테고리 조회(판매자코드)
+    public List<GoodsLargeCategory> getGoodsLargeCategory() {
+    	List<GoodsLargeCategory> goodsLargeCategory = userMapper.getGoodsLargeCategory();
+    	
+    	return goodsLargeCategory;
     }
     
     //레벨 조회

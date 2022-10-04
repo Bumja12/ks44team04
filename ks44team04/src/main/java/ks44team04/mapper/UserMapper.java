@@ -2,6 +2,7 @@ package ks44team04.mapper;
 
 import ks44team04.dto.Dormant;
 import ks44team04.dto.Goods;
+import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.Leave;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
@@ -53,6 +54,9 @@ public interface UserMapper {
 	//판매자 목록 조회
 	public List<Seller> getSellerList();
 
+	//상품 카테고리 조회(판매자코드)
+	public List<GoodsLargeCategory> getGoodsLargeCategory();
+	
 	//회원 레벨 조회
 	public List<LevelBuyerCategory> getLevelBuyer();
 	public List<LevelSellerCategory> getLevelSeller();

@@ -90,7 +90,7 @@
 														<option th:text="${lb.levelName}" th:value="${lb.levelCode}"></option>
 													</th:block>
 													<th:block th:if="${#lists.isEmpty(levelBuyer)}">
-														<option th:value="">등록된 회원등급이 없습니다.</option>
+														<option>등록된 회원등급이 없습니다.</option>
 													</th:block>
 												</select>
 											</div>
@@ -149,7 +149,7 @@
 										<td class="tableOdd">휴대폰번호</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text" id="userPhone" name="userPhone" placeholder="휴대폰번호를 입력하세요" />
+												<input type="text" class="form-control text phoneNumber" id="userPhone" name="userPhone" placeholder="휴대폰번호를 입력하세요" />
 												<button type="button" class="btn" id="phoneCheck">중복확인</button>
 											</div>
 										</td>
@@ -167,11 +167,11 @@
 									<tr>
 										<td class="tableOdd">포인트</td>
 										<td class="tableEven col-md-4">
-											<input type="text" class="form-control text" id="userPoint" name="userPoint" />
+											<input type="text" onkeyup="commas(this)" class="form-control text" id="userPoint" name="userPoint" />
 										</td>
 										<td class="tableOdd">벌점</td>
 										<td class="tableEven col-md-4">
-											<input type="text" class="form-control text" id="userPenalty" name="userPenalty" />
+											<input type="text" class="form-control text" id="userPenalty" name="userPenalty" onlyNumber/>
 										</td>
 									</tr>
 									<tr>
@@ -218,7 +218,8 @@
 
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
-    	//주소검색
+    
+    	/* 주소 검색 */
 		let text = document.querySelector('#userAddress');
 		document.querySelector('#addrSearchBtn').addEventListener('click', function () {
 			
@@ -233,8 +234,32 @@
 			input.value = null;
 		});
 		
+		/* 전화번호 입력시 자동 대시(-) */
+		$(document).on("keyup", ".phoneNumber", function() { 
+			$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+		});
+		
+		/* 숫자만 입력  */
+		$('input[onlyNumber]').on('keyup', function () {
+		    $(this).val($(this).val().replace(/[^0-9]/g, ""));
+		});
+		
+		/* 숫자만 입력 + 3자리마다 콤마 */
+		function commas(t) {
+			// 콤마 빼기
+			var x = t.value;			
+			x = x.replace(/,/gi, '');
+			// 숫자 정규식 확인
+			var regexp = /^[0-9]*$/;
+			if(!regexp.test(x)) { 
+				$(t).val(""); 
+			}else {
+				x = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");			
+				$(t).val(x);			
+			}
+		}
+		
 		/* 권한 판매자 승인전 선택시 등급 select박스 제어 */
-		/*
 		$('#userRight').change(function() {
 			
 			 if($(this).val() == "buyer") {
@@ -250,7 +275,6 @@
 				 $('#userPenalty').prop('value', 0);
 			 }
 		});
-		*/
 		
 		
 /* 			var userRight = $('#userRight option:selected').val();
@@ -338,7 +362,6 @@
   							$('#addMemberForm input').prop('disabled', false);
   							$('#addMemberForm select').prop('disabled', false);
   							$('#addMemberForm button').prop('disabled', false);
-
   						}	
   					});
   					
