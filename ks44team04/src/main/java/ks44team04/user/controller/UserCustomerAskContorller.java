@@ -36,9 +36,16 @@ public class UserCustomerAskContorller {
 		return "user/customerAsk/user_customerAsk_detail";
 	}
 	
+	// 구매자 고객 문의 등록 처리
+	@PostMapping("/addCustomerAsk")
+	public String addCustomerAskAction () {
+		
+		return "redirect:/user/customerAsk/customerAskList";
+	}
+	
 	// 구매자 고객 문의 등록 화면
 	@GetMapping("/addCustomerAsk")
-	public String addCustomerAsk (Model model) {
+	public String addCustomerAskForm (Model model) {
 		
 		model.addAttribute("title", "구매자 고객 문의 등록 화면");
 		return "user/customerAsk/user_customerAsk_add";

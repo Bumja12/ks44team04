@@ -3,13 +3,19 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/userDefault}">
 
-<th:block layout:fragment="customCss">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-</th:block>
-
 <th:block layout:fragment="customTitle">
     <title th:text="${title}"></title>
+	
+</th:block>
 
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+	<style>
+		/* 목록 버튼 */
+		.btn-lg{
+			border-radius: 5px;
+		}
+	</style>
 </th:block>
 
 <th:block layout:fragment="customContents">
@@ -18,8 +24,8 @@
     	<div class="container">
         	<div class="row no-gutters slider-text align-items-center justify-content-center">
           		<div class="col-md-9 ftco-animate text-center">
-          			<p class="breadcrumbs"><span class="mr-2"><a href="http://130.162.131.42/user">Home</a></span></p>  
-            		<h1 class="mb-0 bread">고객 문의</h1>
+          			<p class="breadcrumbs"><span class="mr-2"><a th:href="@{/user}">Home</a></span></p>  
+            		<h1 class="mb-0 bread">고객 문의 목록</h1>
           		</div>
         	</div>
     	</div>
@@ -96,7 +102,7 @@
 			
 			<!-- 화면 번호 -->
 			<div class="row mt-5">
-		    	<div class="col-sm-11 ">
+		    	<div class="col-sm-10">
 		        	<div class="block-27">
 		            	<ul class="text-center">
 		                	<li><a href="#">&lt;</a></li>
@@ -110,8 +116,8 @@
 		             	
 		           </div>
 		    	</div>
-	           <div class="col-sm-1 ">
-	           		<a class="btn btn-primary" href="http://130.162.131.42/user/customerAsk/addCustomerAsk" role="button">등록</a>
+	           <div class="col-sm-2">
+	           		<a class="btn btn-primary btn-lg" th:href="@{/user/customerAsk/addCustomerAsk}" role="button">등록</a>
 	           </div>
 		    	
 	        </div> <!-- <div class="row mt-5"> -->
