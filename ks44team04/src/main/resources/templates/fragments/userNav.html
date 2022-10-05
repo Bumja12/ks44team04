@@ -47,17 +47,23 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active"><a th:href="@{/user}" class="nav-link">Home</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 12px !important;">상품</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" th:href="@{/user/goodslist}">Goodslist</a>
-                        <a class="dropdown-item" th:href="@{/user/wishlist}">Wishlist</a>
-                        <a class="dropdown-item" th:href="@{/user/goods}">Goods</a>
-                        <a class="dropdown-item" th:href="@{/user/cart}">Cart</a>
+                        <a class="dropdown-item" th:href="@{/user/goods/goods}">테슷흐</a>
+                        <a class="dropdown-item" th:href="@{/user/goods/goodsList}">상품목록</a>
+                        <a class="dropdown-item" th:href="@{/user/goods/wishlist}">관심상품</a>
                         <a class="dropdown-item" th:href="@{/user/checkout}">Checkout</a>
                     </div>
                 </li>
-                <li class="nav-item"><a th:href="@{/user}" class="nav-link">About</a></li>
-                <li class="nav-item"><a th:href="@{/user}" class="nav-link">Blog</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 12px !important;">커뮤니티</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown06">
+                        <a class="dropdown-item" th:href="@{/user/board/boardFree}">자유게시판</a>
+                        <a class="dropdown-item" th:href="@{/user/board/boardRecipe}">레시피</a>
+                        <a class="dropdown-item" th:href="@{/user/board/boardFarm}">농촌체험</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a th:href="@{/user}" class="nav-link">ㅇㅇㅇ</a></li>
                 <li class="nav-item dropdown" style="font-family: 'ChosunBg';">
  	            	<a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 12px !important;"># 고객센터</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown05">
@@ -66,10 +72,7 @@
                     </div>
                 </li>
 
-
-                
-
-                <li class="nav-item cta cta-colored"><a th:href="@{/user/cart}" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+                <li class="nav-item cta cta-colored"><a th:href="@{/user/goods/cart}" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
             </ul>
         </div>
     </div>
