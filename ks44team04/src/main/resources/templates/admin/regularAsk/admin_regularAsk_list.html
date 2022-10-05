@@ -38,78 +38,18 @@
 			                    	</tr>
 			                   	</thead>
 								<tbody>
-			                 		<tr style="cursor:pointer;">
-			                 			<td>
+									<tr th:each="rAskList : ${regularAskList}" style="cursor:pointer;">
+										<td>
 											<input type="checkbox" class="checkAll" name="checkAll1">
 			             				</td>
-			                          	<td class="moveToDetail">regularAsk001</td>
-			                          	<td class="moveToDetail">회원/정보 관리</td>
-			                          	<td class="moveToDetail">admin01</td>
-			                          	<td class="moveToDetail">제목1</td>
-			                            <td class="moveToDetail">Y</td>
-			                        	<td class="moveToDetail">2021-01-01 00:00:00</td>
-			                        	<td class="moveToDetail">2022-05-22 00:00:00</td>
-			                    	</tr>
-			                 		<tr style="cursor:pointer;">
-			                 			<td>
-											<input type="checkbox" class="checkAll" name="checkAll2">
-			             				</td>
-			                          	<td class="moveToDetail">regularAsk002</td>
-			                          	<td class="moveToDetail">배송</td>
-			                          	<td class="moveToDetail">admin01</td>
-			                          	<td class="moveToDetail">제목2</td>
-			                            <td class="moveToDetail">Y</td>
-			                        	<td class="moveToDetail">2021-01-01 00:00:00</td>
-			                        	<td class="moveToDetail">2022-05-15 00:00:00</td>
-			                    	</tr>
-			                 		<tr style="cursor:pointer;">
-			                 			<td>
-											<input type="checkbox" class="checkAll" name="checkAll3">
-			             				</td>
-			                          	<td class="moveToDetail">regularAsk003</td>
-			                          	<td class="moveToDetail">반품/교환/환불</td>
-			                          	<td class="moveToDetail">admin01</td>
-			                          	<td class="moveToDetail">제목3</td>
-			                            <td class="moveToDetail">Y</td>
-			                        	<td class="moveToDetail">2021-01-01 00:00:00</td>
-			                        	<td class="moveToDetail">2022-05-20 00:00:00</td>
-			                    	</tr>
-			                 		<tr style="cursor:pointer;">
-			                 			<td>
-											<input type="checkbox" class="checkAll" name="checkAll4">
-			             				</td>
-			                          	<td class="moveToDetail">regularAsk004</td>
-			                          	<td class="moveToDetail">주문/결제</td>
-			                          	<td class="moveToDetail">admin01</td>
-			                          	<td class="moveToDetail">제목4</td>
-			                            <td class="moveToDetail">Y</td>
-			                        	<td class="moveToDetail">2021-01-01 00:00:00</td>
-			                        	<td class="moveToDetail">2022-06-01 00:00:00</td>
-			                    	</tr>
-			                 		<tr style="cursor:pointer;" >
-			                 			<td>
-											<input type="checkbox" class="checkAll" name="checkAll5">
-			             				</td>
-			                          	<td class="moveToDetail">regularAsk005</td>
-			                          	<td class="moveToDetail">정기 배송</td>
-			                          	<td class="moveToDetail">admin01</td>
-			                          	<td class="moveToDetail">제목5</td>
-			                            <td class="moveToDetail">Y</td>
-			                        	<td class="moveToDetail">2021-01-01 00:00:00</td>
-			                        	<td class="moveToDetail">2022-06-01 00:00:00</td>
-			                    	</tr>
-			                 		<tr style="cursor:pointer;">
-			                 			<td>
-											<input type="checkbox" class="checkAll" name="checkAll6">
-			             				</td>
-	    								<td class="moveToDetail">regularAsk006</td>
-			                          	<td class="moveToDetail">포인트/할인쿠폰</td>
-			                          	<td class="moveToDetail">admin01</td>
-			                          	<td class="moveToDetail">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-			                            <td class="moveToDetail">Y</td>
-			                        	<td class="moveToDetail">2021-01-01 00:00:00</td>
-			                        	<td class="moveToDetail">2022-06-03 00:00:00</td>
-			                    	</tr>
+										<td class="moveToDetail" th:text="${rAskList.regularAskPK}">자주 묻는 질문 PK</td>
+										<td class="moveToDetail" th:text="${rAskList.categoryName}">자주 묻는 질문 카테고리</td>
+										<td class="moveToDetail" th:text="${rAskList.regId}">회원 아이디 FK(작성자)</td>
+										<td class="moveToDetail" th:text="${rAskList.regularAskTitle}">제목</td>
+										<td class="moveToDetail" th:text="${rAskList.useCheck}">사용 여부</td>
+										<td class="moveToDetail" th:text="${rAskList.regDate}">등록일</td>
+										<td class="moveToDetail" th:text="${rAskList.updateDate}">수정일</td>
+									</tr>
 								</tbody>
 			        		</table>
 						</div> <!-- </div class="card-box table-responsive"> -->

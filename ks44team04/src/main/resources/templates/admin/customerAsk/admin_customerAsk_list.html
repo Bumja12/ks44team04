@@ -166,11 +166,11 @@
 				$moveToDetail.each(function(i){
 					$(this).click(function(){
 						 var $allTd = $(this).parent().children();
-						console.log($allTd[0].innerText); // String type
-						var $customerAskPK = $allTd[0].innerText
+						console.log($allTd[1].innerText); // String type
+						var $customerAskPK = $allTd[1].innerText
 						
 			  			var request = $.ajax({
-				  			  url: "/admin/customerAsk/regularAskDetail", //요청 페이지 주소
+				  			  url: "/admin/customerAsk/customerAskDetail", //요청 페이지 주소
 				  			  method: "POST", //요청 방식
 				  			  data: { customerAskPK : $customerAskPK}, 
 			                  //요청 페이지에 전달할 데이터 {key: value}

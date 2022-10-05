@@ -3,5 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team04.mapper.CategoryManageMapper">   
-    
+
+	
+	<!-- 자주 묻는 질문 카테고리 목록 조희 -->
 </mapper>

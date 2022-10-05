@@ -1,14 +1,19 @@
 package ks44team04.admin.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "/admin/customerAsk")
 public class CustomerAskContorller {
+
+	private static final Logger log = LoggerFactory.getLogger(CustomerAskContorller.class);
 
 	// 문의 답변 삭제 처리
 	@PostMapping("/removeAskAnswer")
@@ -49,6 +54,16 @@ public class CustomerAskContorller {
 		// 수정 처리 후 관리자 고객 문의 목록 화면으로 리다이렉트
 		return "redirect:/admin/customerAsk/customerAskList";
 	} 
+	
+	// 관리자 자주 묻는 질문 내역 화면
+	@PostMapping("/customerAskDetail")
+	public String ajaxCustomerAskDetail (@RequestParam(value="customerAskPK") String customerAskPK
+										,Model model) {
+		model.addAttribute("관리자 고객 문의 내역 화면");
+//		log.info("ajaxCustomerAskDetail");
+		log.info(customerAskPK);
+		return "customerAskDetail/";
+	}
 	
 	// 관리자 자주 묻는 질문 내역 화면
 	@GetMapping("/customerAskDetail")
