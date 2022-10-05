@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/userDefault}">
+<th:block layout:fragment="customCss">
+<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+<style>
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
+/* plus minus 인풋 */
+.center{ width: 150px; }
+/* 구매하기 버튼 스타일 적용  */
+.buyBtn { background-color:#b3d97a; border-radius:28px; border:1px solid #ffffff;
+		  display:inline-block; cursor:pointer; color:#ffffff; font-family:Spoqa Han Sans Neo;
+		  font-size:17px; font-weight:bold; padding:10px 60px; }
+.buyBtn:hover { background-color:#a5cf67; color:#ffffff; }
+.buyBtn:active { position:relative; top:1px;}
+
+/* 장바구니&관심상품 버튼 스타일 적용  */
+.cartBtn { background-color:#dbe6c4; border-radius:28px; border:1px solid #ffffff;
+		   display:inline-block; cursor:pointer; color:#636363;
+		   font-family:Spoqa Han Sans Neo; font-size:17px; padding:10px 27px; }
+.cartBtn:hover { background-color:#ceddae; color:#636363; }
+.cartBtn:active { position:relative; top:1px; }
+
+/* 상품문의&상품후기 탭 스타일 */
+button:focus, input:focus, textarea:focus, select:focus { outline: none; }
+.tabs { display: block; display: flex;
+  		-webkit-flex-wrap: wrap; -moz-flex-wrap: wrap; flex-wrap: wrap; margin: 0; overflow: hidden; }
+.tabs [class^="tab"] label, .tabs [class*=" tab"] label
+{   cursor: pointer; display: block; font-size: 1.1em;
+    font-weight: 300; ㅡine-height: 1em; padding: 2rem 0; text-align: center; }
+.tabs [class^="tab"] [type="radio"], .tabs [class*=" tab"] [type="radio"]
+{	border-bottom: 1px solid rgba(239, 237, 239, 0.5); cursor: pointer;
+    -webkit-appearance: none; -moz-appearance: none; appearance: none;
+    display: block; width: 100%; -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
+.tabs [class^="tab"] [type="radio"]:hover, .tabs [class^="tab"] [type="radio"]:focus,
+.tabs [class*=" tab"] [type="radio"]:hover, .tabs [class*=" tab"] [type="radio"]:focus { border-bottom: 1px solid #84B147; }
+.tabs [class^="tab"] [type="radio"]:checked, .tabs [class*=" tab"] [type="radio"]:checked { border-bottom: 2px solid #84B147; }
+.tabs [class^="tab"] [type="radio"]:checked + div, .tabs [class*=" tab"] [type="radio"]:checked + div { opacity: 1; }
+.tabs [class^="tab"] [type="radio"] + div, .tabs [class*=" tab"] [type="radio"] + div
+{	display: block; opacity: 0; padding: 2rem 0; width: 90%; -webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
+.tabs .tab-2 { width: 50%; }
+.tabs .tab-2 [type="radio"] + div { width: 200%; margin-left: 200%; }
+.tabs .tab-2 [type="radio"]:checked + div { margin-left: 0; }
+.tabs .tab-2:last-child [type="radio"] + div { margin-left: 100%; }
+.tabs .tab-2:last-child [type="radio"]:checked + div { margin-left: -100%; }
+
+
+
+.pViewTabCon .pViewTab {
+    width: 1024px;
+    margin: 0px auto;
+    background-color: #fff;
+}
+.pViewTab li:first-child a {
+    border-left: 1px solid #dddddd;
+}
+.pViewTab {
+    border-top: 1px solid #dddddd;
+}
+.oDetail .pViewTab li {
+    border-color: #e0e0e0;
+}
+
+.pViewTabCon .pViewTab .tabList::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.pViewTab li.on {
+    border-bottom: 0;
+    float: left;
+    width: 20%;
+    border-bottom: 1px solid #dddddd;
+}
+.oDetail .pViewTab li.on a, .oDetail .pViewTab li a:hover {
+    background: 0;
+}
+.pViewTab li a {
+    height: 50px;
+    padding: 0;
+    background: #f7f7f7;
+    font-weight: 400;
+    color: #333;
+    line-height: 50px;
+}
+.pViewTab li a {
+    display: block;
+    height: 42px;
+    padding-top: 8px;
+    border-right: 1px solid #dddddd;
+    text-align: center;
+    color: #666666;
+    font-size: 16px;
+    line-height: 30px;
+    font-weight: 500;
+    text-decoration: none;
+}
+</style>
+</th:block>
+
+<th:block layout:fragment="customContents">
+<section class="ftco-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 mb-5 ftco-animate">
+				<img src="/images/apple.png" class="img-fluid" alt="appleImg">
+			</div>
+			<div class="col-lg-6 pl-md-5">
+				<span style="font-weight:500; font-size:28px; color:#1f2937; line-height: 32px;">맛있는 사과 2kg</span>
+				<div style="margin-bottom: -15px; margin-top: 10px; text-decoration: line-through">16,000원</div>
+				<div class="form-inline">
+					<div>
+						<span style="color: #84B147; font-weight: 700; font-size: 20px;">10%</span>
+						<span style="font-weight: 700; font-size: 23px; color: #000; margin-left: 5px;">14,400원</span>
+					</div>
+					<div style="margin-left: 170px; margin-top: 20px;">
+						<p class="text-left mr-4">
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+							<a href="#" class="mr-2">5.0</a>
+						</p>
+					</div>
+				</div>
+				<hr style="margin-top: -5px; margin-left : 0; width: 85%;">
+				<p>달콤하고 아삭아삭한 사과 간단간단간단 설명 간단간단간단 설명 <br>간단간단간단 설명 간단간단간단 설명 간단간단간단 설명 <br>간단간단간단 설명 간단간단간단 설명 간단간단간단 설명</p>
+				<div class="d-flex flex-column mb-3">
+				  <div class="p-1 font-family"><span>배송비</span></div>
+				  <div class="p-1 font-family"><span>묶음배송</span></div>
+				  <div class="p-1 font-family"><span>정기배송</span></div>
+				</div>
+				<div class="col-md-12" style="margin-left:-10px;">
+					<div class="input-group center">
+						<button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]" style="width:40px; height:40px; border:1px; border-radius: 50%; background-color:#f1f1f1;">-
+							<span class="glyphicon glyphicon-minus"></span>
+						</button>&nbsp
+						<input type="text" name="quant[1]" class="form-control input-number" value="1" min="1" max="30" style=" height:40px !important; text-align:center;">
+						&nbsp<button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]" style="width:40px; height:40px; border:1px; border-radius: 50%; background-color:#f1f1f1;">+
+							<span class="glyphicon glyphicon-plus"></span>
+						</button>
+					</div>
+				</div><br>
+				<hr style="margin-top: -5px; margin-left : 0; width: 85%;">
+              	<div class="form-inline form-group" style="font-size:18px; margin-left:190px;">
+              		<span style="font-weight:bold;">총 상품금액</span>
+              		<span style="font-weight:bold; color:#84B147; margin-left: 100px;">0</span>
+              		<span style="font-weight:bold; color:#84B147;">원</span>
+              	</div>
+              	<div class="form-inline form-group" style="margin-left:-20px;">	
+					<a href="#" class="buyBtn" style="margin-left:30px;">구매하기</a>
+					<a href="#" class="cartBtn">장바구니 </a>
+					<a href="#" class="cartBtn">찜하기 </a>
+    			</div>
+			</div>
+    	</div>
+    </div>
+	<hr style="width: 75%; align:center;">
+</section>
+<div class="pViewTabCon" id="pViewTabCon">
+	<div class="pViewTab" id="pViewTab" >
+		<ul class="flex nav nav-tabs">
+			<li data-idx="1" class=""><a href="#detail" class="tabBtn btn01" data-toggle="tab" data-tab="1">상품정보</a></li>
+			<li data-idx="2" class=""><a href="#review" class="tabBtn btn02" data-toggle="tab" data-tab="2">후기</a></li>
+			<li data-idx="3" class=""><a href="#qna" class="tabBtn btn03" data-toggle="tab" data-tab="3">문의</a></li>
+		</ul>
+	</div>
+	<div class="tab-content">
+	  <div id="detail" class="tab-pane fade in active">
+	    <h3>HOME</h3>
+	    <p>Some content.</p>
+	  </div>
+	  <div id="review" class="tab-pane fade">
+	    <h3>Menu 1</h3>
+	    <p>Some content in menu 1.</p>
+	  </div>
+	  <div id="qna" class="tab-pane fade">
+	    <h3>Menu 2</h3>
+	    <p>Some content in menu 2.</p>
+	  </div>
+	</div>
+</div>
+
+
+
+
+
+<br><br><br>
+
+<!--
+<div class="tabs">
+  <div class="tab-2">
+    <label for="tab2-1">상품정보</label>
+    <input id="tab2-1" name="tabs-two" type="radio" checked="checked">
+    <div>
+      <h4>상품정보</h4>
+        <p>사과</p>
+    </div>
+  </div>
+  <div class="tab-2">
+    <label for="tab2-2">상품후기</label>
+    <input id="tab2-2" name="tabs-two" type="radio">
+    <div>
+      <h4>상품후기</h4>
+      <p>맛있어여</p>
+    </div>
+  </div>
+  <div class="tab-2">
+    <label for="tab2-2">Two</label>
+    <input id="tab2-2" name="tabs-two" type="radio">
+    <div>
+      <h4>Tab Two</h4>
+      <p>Quisque sit amet turpis leo. Maecenas sed dolor mi. Pellentesque varius elit in neque ornare commodo ac non tellus. Mauris id iaculis quam. Donec eu felis quam. Morbi tristique lorem eget iaculis consectetur. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean at tellus eget risus tempus ultrices. Nam condimentum nisi enim, scelerisque faucibus lectus sodales at.</p>
+    </div>
+  </div>
+</div>
+ 
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center mb-3 pb-3">
+                <div class="col-md-12 heading-section text-center ftco-animate">
+                    <span class="subheading">Products</span>
+                    <h2 class="mb-4">Related Products</h2>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="product">
+                        <a href="#" class="img-prod"><img class="img-fluid" src="images/product-1.jpg"
+                                                          alt="Colorlib Template">
+                            <span class="status">30%</span>
+                            <div class="overlay"></div>
+                        </a>
+                        <div class="text py-3 pb-4 px-3 text-center">
+                            <h3><a href="#">Bell Pepper</a></h3>
+                            <div class="d-flex">
+                                <div class="pricing">
+                                    <p class="price"><span class="mr-2 price-dc">$120.00</span><span class="price-sale">$80.00</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="bottom-area d-flex px-3">
+                                <div class="m-auto d-flex">
+                                    <a href="#"
+                                       class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                        <span><i class="ion-ios-menu"></i></span>
+                                    </a>
+                                    <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                        <span><i class="ion-ios-cart"></i></span>
+                                    </a>
+                                    <a href="#" class="heart d-flex justify-content-center align-items-center ">
+                                        <span><i class="ion-ios-heart"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="product">
+                        <a href="#" class="img-prod"><img class="img-fluid" src="images/product-2.jpg"
+                                                          alt="Colorlib Template">
+                            <div class="overlay"></div>
+                        </a>
+                        <div class="text py-3 pb-4 px-3 text-center">
+                            <h3><a href="#">Strawberry</a></h3>
+                            <div class="d-flex">
+                                <div class="pricing">
+                                    <p class="price"><span>$120.00</span></p>
+                                </div>
+                            </div>
+                            <div class="bottom-area d-flex px-3">
+                                <div class="m-auto d-flex">
+                                    <a href="#"
+                                       class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                        <span><i class="ion-ios-menu"></i></span>
+                                    </a>
+                                    <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                        <span><i class="ion-ios-cart"></i></span>
+                                    </a>
+                                    <a href="#" class="heart d-flex justify-content-center align-items-center ">
+                                        <span><i class="ion-ios-heart"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="product">
+                        <a href="#" class="img-prod"><img class="img-fluid" src="images/product-3.jpg"
+                                                          alt="Colorlib Template">
+                            <div class="overlay"></div>
+                        </a>
+                        <div class="text py-3 pb-4 px-3 text-center">
+                            <h3><a href="#">Green Beans</a></h3>
+                            <div class="d-flex">
+                                <div class="pricing">
+                                    <p class="price"><span>$120.00</span></p>
+                                </div>
+                            </div>
+                            <div class="bottom-area d-flex px-3">
+                                <div class="m-auto d-flex">
+                                    <a href="#"
+                                       class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                        <span><i class="ion-ios-menu"></i></span>
+                                    </a>
+                                    <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                        <span><i class="ion-ios-cart"></i></span>
+                                    </a>
+                                    <a href="#" class="heart d-flex justify-content-center align-items-center ">
+                                        <span><i class="ion-ios-heart"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="product">
+                        <a href="#" class="img-prod"><img class="img-fluid" src="images/product-4.jpg"
+                                                          alt="Colorlib Template">
+                            <div class="overlay"></div>
+                        </a>
+                        <div class="text py-3 pb-4 px-3 text-center">
+                            <h3><a href="#">Purple Cabbage</a></h3>
+                            <div class="d-flex">
+                                <div class="pricing">
+                                    <p class="price"><span>$120.00</span></p>
+                                </div>
+                            </div>
+                            <div class="bottom-area d-flex px-3">
+                                <div class="m-auto d-flex">
+                                    <a href="#"
+                                       class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                        <span><i class="ion-ios-menu"></i></span>
+                                    </a>
+                                    <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                        <span><i class="ion-ios-cart"></i></span>
+                                    </a>
+                                    <a href="#" class="heart d-flex justify-content-center align-items-center ">
+                                        <span><i class="ion-ios-heart"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+        <div class="container py-4">
+            <div class="row d-flex justify-content-center py-5">
+                <div class="col-md-6">
+                    <h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
+                    <span>Get e-mail updates about our latest shops and special offers</span>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <form action="#" class="subscribe-form">
+                        <div class="form-group d-flex">
+                            <input type="text" class="form-control" placeholder="Enter email address">
+                            <input type="submit" value="Subscribe" class="submit px-3">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+ -->
+</th:block>
+<th:block layout:fragment="customJsScript">
+<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+<script th:inline="javascript">
+$('.btn-number').click(function(e){
+    e.preventDefault();
+    
+    fieldName = $(this).attr('data-field');
+    type      = $(this).attr('data-type');
+    var input = $("input[name='"+fieldName+"']");
+    var currentVal = parseInt(input.val());
+    if (!isNaN(currentVal)) {
+        if(type == 'minus') {
+            
+            if(currentVal > input.attr('min')) {
+                input.val(currentVal - 1).change();
+            } 
+            if(parseInt(input.val()) == input.attr('min')) {
+                $(this).attr('disabled', true);
+            }
+
+        } else if(type == 'plus') {
+
+            if(currentVal < input.attr('max')) {
+                input.val(currentVal + 1).change();
+            }
+            if(parseInt(input.val()) == input.attr('max')) {
+                $(this).attr('disabled', true);
+            }
+
+        }
+    } else {
+        input.val(0);
+    }
+});
+$('.input-number').focusin(function(){
+   $(this).data('oldValue', $(this).val());
+});
+$('.input-number').change(function() {
+    
+    minValue =  parseInt($(this).attr('min'));
+    maxValue =  parseInt($(this).attr('max'));
+    valueCurrent = parseInt($(this).val());
+    
+    name = $(this).attr('name');
+    if(valueCurrent >= minValue) {
+        $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+    } else {
+        alert('Sorry, the minimum value was reached');
+        $(this).val($(this).data('oldValue'));
+    }
+    if(valueCurrent <= maxValue) {
+        $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+    } else {
+        alert('Sorry, the maximum value was reached');
+        $(this).val($(this).data('oldValue'));
+    }
+    
+    
+});
+$(".input-number").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+             // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) || 
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+    
+    
+/* 탭 자스 */
+$(document).ready(function(){
+   $('.pViewTabCon .tableCom .tL1 a').click(function(){
+      $(this).parent().parent().next().toggle();
+   });
+});
+
+</script>
+</th:block>
+</html>
