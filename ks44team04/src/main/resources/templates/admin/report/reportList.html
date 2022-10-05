@@ -164,7 +164,7 @@
                 </thead>
 
                 <tbody style="text-align: center;">
-	                <th:block 	>
+	                <th:block th:if="${not #lists.isEmpty(reportList)}" th:each="l : ${reportList}"	>
 	                  <tr class="even pointer">
 	                    <td th:text="${l.reportHistoryCode}"></td>
 	                    <td th:text="${l.reportedId}"> </td>
@@ -177,7 +177,6 @@
 	                    <td th:text="${l.penaltyPoint} + '점'"></td>
 	                    <td th:text="${l.totalPenaltyPoint} + '점'"></td>
 	                    <td th:text="${l.reportResult}"></td>
-	                    
 	                    <td style="padding: 0px; "><a th:if="${l.reportResult} != '대기중'" th:href="@{/admin/report/reportParticulars(reportHistoryCode=${l.reportHistoryCode})}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">조회</button></a></td>
 	                  </tr>
 	                </th:block>

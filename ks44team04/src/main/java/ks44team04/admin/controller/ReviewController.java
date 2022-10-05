@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ks44team04.dto.Report;
 import ks44team04.dto.Review;
+import ks44team04.dto.ReviewComment;
 import ks44team04.service.ReviewService;
 
 
@@ -55,14 +56,25 @@ public class ReviewController {
 		return "admin/review/reviewList";
 	}
 	
-	//리뷰 리스트
+	//후기 목록
 	@GetMapping("/review/reviewList")
 	public String reviewList(Model model) {
 		List<Review> reviewList = reviewService.reviewSerchList(null);
-		
-		model.addAttribute("title", "admin리뷰리스트");
+	
+		model.addAttribute("title", "후기목록");
 		model.addAttribute("reviewList", reviewList);
+		
 		return "admin/review/reviewList";
 	}
-
+	
+	//후기 댓글 목록
+	@GetMapping("/review/reviewComment")
+	public String reviewComment(Model model) {
+		List<ReviewComment> reviewComment = reviewService.reviewComment();
+		model.addAttribute("reviewComment", reviewComment);
+		
+		return "admin/review/reviewComment";
+	}
+	
+	
 }

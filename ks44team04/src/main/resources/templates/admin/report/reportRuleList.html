@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+<style>
+.style1{
+        background-color: #ECECEC;
+        text-align: center;
+        width: 150px;
+      }
+</style>
+
+   <div class="row" style="display: inline-block;">
+      <div class="tile_count">
+        <h3>벌점 관리</h3>
+      </div>
+   </div>
+   <!-- 검색  -->
+   <div class="x_panel">
+    <!-- 검색 시작-->
+	<form method="post" action="/admin/report/reportList">
+		<div class="">
+			<table class=" table table-bordered" style="background-color: white;  ">
+				<tbody >
+					<tr>
+						<td class="col-md-2 col-sm-2" style="padding-top: 10px; text-align:right; border-color: white; width: 60px;"><b >검색어</b></td>
+						<td class="col-md-4"style=" border-color: white; padding: 0px; width: 360px;">
+							<div class="form-inline" style="text-align: center;">
+								<div class="form-group" >
+									<select class="form-control" name="reportSearchKey" style="width: 150px;">
+										<option selected value="''">- 전체검색 -</option>
+										<option value="reportHistoryCode">회원신고기록코드</option>
+										<option value="reportedId">신고 대상 아이디</option>
+										<option value="reportApproveId">승인자 아이디</option>
+										<option value="reportResult">처리상태</option>
+										<option value="reportReason">신고내용</option>
+										
+									</select>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control text"  name="reportSearchValue" value="" placeholder="검색어를 입력해주세요">
+								</div>
+							</div>
+						</td>
+						<td style=" border-color: white; padding: 0px;">
+							<button type="submit" class="btn btn-dark">검색</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+        </form>
+        <!-- 검색 끝 -->
+		<div class="col-md-12 col-sm-12 ">
+
+			<div class="x_panel">
+
+				<div class="x_title">
+					<h2>벌점 기준 목록</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false"><i
+								class="fa fa-wrench"></i></a>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<a class="dropdown-item" href="#">Settings 1</a> <a
+									class="dropdown-item" href="#">Settings 2</a>
+							</div></li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				<!-- 검색 창 -->
+				<!-- 정지 등록 -->
+				<div class="x_panel">
+					<div class="accordion" id="userSuspendAdd">
+						<div class="card">
+							<div class="card-header">
+								<h2 class="mb-0">
+									<button class="btn btn-link btn-block collapsed" type="button"
+										data-toggle="collapse" data-target="#collapseTwo"
+										style="margin: 0px;">벌점 기준 등록</button>
+								</h2>
+							</div>
+							<div id="collapseTwo" class="collapse"
+								data-parent="#userSuspendAdd">
+								<div class="card-body">
+									<div class="x_content2">
+										<form>
+											<table class="table" th:object="${Report}">
+
+												<tbody>
+
+													<tr>
+														<th colspan="6" style="font-size: 20px;">등록 정보</th>
+													</tr>
+													<tr>
+														<th class="style1" style="padding-top: 15px;">신고 사유명
+														</th>
+														<td style="width: 450px;"><input type="text" style="width: 450px; border: none;"></td>
+														<th class="style1" style="padding-top: 15px;">등록 아이디</th>
+														<td style="padding-top: 15px; width: 350px;"><input type="text"
+															style="border: none;" th:value="${session.SID}"
+															readonly="readonly"></td>
+														<th class="style1" style="padding-top: 15px;">벌점</th>
+														<td><input type="text" style="width: 450px; border: none;"></td>
+													</tr>
+													<tr>
+														<td colspan="6" style="text-align: right; ">
+							                              <i class="fa fa-check" style="padding-top: 10px;"></i>
+							                              <button type="button" class=" btn btn-link " value="등록" style="padding-top:8px; margin: 0px; font-size: 15px;">등록</button>
+							                            </td>
+													<tr>
+														
+													
+												</tbody>
+											</table>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 정지 등록  끝 -->
+
+
+
+				<div class="x_content">
+					<table class="table table-striped jambo_table bulk_action">
+						<thead style="font-size: 12px;">
+							<tr class="headings">
+								<th style="text-align: center;" class="column-title">신고사유코드
+								</th>
+								<th style="text-align: center;" class="column-title">신고사유 명
+								</th>
+								<th style="text-align: center;" class="column-title">등록일</th>
+								<th style="text-align: center;" class="column-title">등록자</th>
+								<th style="text-align: center;" class="column-title">사용여부</th>
+								<th style="text-align: center;" class="column-title">벌점</th>
+								<th style="text-align: center;" class="column-title">수정</th>
+								<th style="text-align: center;" class="bulk-actions" colspan="7">
+									<a class="antoo" style="color: #fff; font-weight: 500;">Bulk
+										Actions ( <span class="action-cnt"> </span> <i
+										class="fa fa-chevron-down"></i>
+								</a>
+								</th>
+							</tr>
+						</thead>
+
+						<tbody style="text-align: center;">
+							<th:block th:if="${not #lists.isEmpty(reportRuleList)}"
+								th:each="l : ${reportRuleList}">
+								<tr class="even pointer">
+									<td th:text="${l.reportCode}"></td>
+									<td th:text="${l.reportReason}"></td>
+									<td th:text="${l.reportDate}"></td>
+									<td th:text="${l.userId}"></td>
+									<td th:text="${l.useCheck}"></td>
+									<td th:text="${l.penaltyPoint}"></td>
+									<td style="padding: 0px; "><a th:href="@{#}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">수정</button></a></td>
+								</tr>
+							</th:block>
+							<tr th:unless="${not #lists.isEmpty(reportRuleList)}">
+								<td colspan="12">못찾겠다 꾀꼬리</td>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- reportModel 불러오기  -->
+		</div>
+         
+          
+</th:block>
+<!-- jQuery -->
+
+
+
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script>
+		$(function() {
+			let $checks = $('.indivChecks');
+			$('#rowAllCheck').click(function() {
+				$checks.prop('checked', $(this).prop('checked'));
+			});
+		});
+	</script>
+</th:block>
+	
+
+
+
+</html>

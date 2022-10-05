@@ -35,10 +35,8 @@ public class UserReviewController {
 	public String reviewList(Model model) {
 		List<Review> reviewList = reviewService.reviewList();
 		
-		
 		model.addAttribute("title", "리뷰리스트");
 		model.addAttribute("reviewList", reviewList);
-		
 		
 		return "user/review/reviewList";
 	}
