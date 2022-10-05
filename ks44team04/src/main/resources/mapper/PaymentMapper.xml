@@ -43,6 +43,7 @@
 		<result column="refund_bank" 		property="refundBank"/>
 		<result column="refund_account" 	property="refundAccount"/>
 		<result column="approve_price"		property="approvePrice"/>
+		<result column="post_info"			property="postInfo"/>
 		<association property="paymentInfo" javaType="PaymentInfo" >
 			<result column="order_num" 		property="orderNum"/>
 			<result column="buyer_id" 		property="buyerId"/>
@@ -73,6 +74,7 @@
 			<result column="refund_bank" 		property="refundBank"/>
 			<result column="refund_account" 	property="refundAccount"/>
 			<result column="approve_price"		property="approvePrice"/>
+			<result column="post_info"			property="postInfo"/>
 		</collection>
 	</resultMap>
 	
@@ -93,6 +95,7 @@
 				,od.order_price
 				,cp.approve_price
 				,cp.approve_date
+				,od.post_info
 			FROM
 				tb_order AS o
 				INNER JOIN
@@ -138,6 +141,7 @@
 				,od.order_price
 				,ap.approve_price
 				,ap.approve_date
+				,od.post_info
 			FROM
 				tb_order AS o
 				INNER JOIN
@@ -184,6 +188,7 @@
 			,od.order_amount
 			,o.order_status
 			,o.order_date
+			,od.post_info
 		FROM
 			tb_order AS o
 			INNER JOIN
@@ -293,6 +298,7 @@
 				,od.order_price
 				,cp.approve_price
 				,cp.approve_date
+				,od.post_info
 			FROM
 				tb_order AS o
 				INNER JOIN
@@ -328,6 +334,7 @@
 				,od.order_price
 				,ap.approve_price
 				,ap.approve_date
+				,od.post_info
 			FROM
 				tb_order AS o
 				INNER JOIN
@@ -367,6 +374,7 @@
 				,od.order_price
 				,cp.approve_price
 				,cp.approve_date
+				,od.post_info
 			FROM
 				tb_order AS o
 				INNER JOIN
@@ -400,6 +408,7 @@
 				,od.order_price
 				,ap.approve_price
 				,ap.approve_date
+				,od.post_info
 			FROM
 				tb_order AS o
 				INNER JOIN
@@ -435,6 +444,7 @@
 			,od.order_amount
 			,o.order_status
 			,o.order_date
+			,od.post_info
 		FROM
 			tb_order AS o
 			INNER JOIN

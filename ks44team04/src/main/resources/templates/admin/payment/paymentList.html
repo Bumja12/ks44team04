@@ -84,7 +84,7 @@ th {
 										<td th:text="'- ' + ${pt.couponPrice}"></td>
 										<td th:text="'- ' + ${pt.usePoint}"></td>									
 										<td th:text="${'₩' + #numbers.formatInteger(pt.orderPrice, 3, 'COMMA')}"></td>
-										<td><a id="postInfo" href="#"><i class="fa fa-truck"></i> 배송정보</a></td>
+										<td><a id="postInfo" th:href="@{|/user/order/postcheck/${pt.postInfo}|}"><i class="fa fa-truck"></i> 배송정보</a></td>
 										<th:block th:if="${status.index == 0}">
 											<td th:rowspan="${status.size}" th:text="${p.orderDate}"></td>
 										</th:block>

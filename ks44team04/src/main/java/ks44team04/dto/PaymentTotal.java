@@ -27,6 +27,15 @@ public class PaymentTotal {
 	private int approvePrice;
 	private String refundBank;
 	private String refundAccount;
+	private String postInfo;
+	
+	public String getPostInfo() {
+		return postInfo;
+	}
+
+	public void setPostInfo(String postInfo) {
+		this.postInfo = postInfo;
+	}
 
 	public String getOrderDetailCode() {
 		return orderDetailCode;
@@ -155,7 +164,7 @@ public class PaymentTotal {
 				+ ", goodsName=" + goodsName + ", savePoint=" + savePoint + ", orderPrice=" + orderPrice
 				+ ", orderAmount=" + orderAmount + ", paymentMethod=" + paymentMethod + ", cardCompany=" + cardCompany
 				+ ", cardNumber=" + cardNumber + ", approvePrice=" + approvePrice + ", refundBank=" + refundBank
-				+ ", refundAccount=" + refundAccount + "]";
+				+ ", refundAccount=" + refundAccount + ", postInfo=" + postInfo + "]";
 	}
 
 }
