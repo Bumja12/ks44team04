@@ -24,14 +24,14 @@
                     	<div class="clearfix"></div>
             		</div>
             		<div class="x_content">
-     					<br/>
+     					<br/> 
 						<form class="form-horizontal form-label-left" th:action="@{/admin/regularAsk/modifyRegularAsk}" method="post">
 							<!-- 자주 묻는 질문 PK -->
 							<div class="form-group row ">
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="regularAskPK">자주 묻는 질문 PK
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="text" id="regularAskPK" name="" value="regularAsk001" disabled="disabled" required="required" class="form-control" maxlength="15">
+									<input type="text" id="regularAskPK" name="" th:value="${regularAsk.regularAskPK}" disabled="disabled" required="required" class="form-control" maxlength="15">
 								</div>
 							</div>
 							<!-- 자주 묻는 질문 카테고리 FK -->
@@ -41,12 +41,13 @@
 								<div class="col-md-6 col-sm-6 ">
 									<select class="select2_single form-control"  id="regular_ask_category" disabled="disabled" required="required" tabindex="-1">
 										<option></option>
-										<option value="regularAskCategory01" selected="selected">회원/정보관리</option>
-										<option value="regularAskCategory02">배송</option>
-										<option value="regularAskCategory03">반품/교환/환불</option>
-										<option value="regularAskCategory04">주문/결제</option>
-										<option value="regularAskCategory05">정기 배송</option>
-										<option value="regularAskCategory06">회원/정보관리</option>
+										<!-- th:selected 사용 -->
+										<option value="regularAskCategory01" th:selected="${regularAsk.categoryName eq '회원/정보 관리'}">회원/정보 관리</option> 
+										<option value="regularAskCategory02" th:selected="${regularAsk.categoryName eq '배송'}">배송</option>
+										<option value="regularAskCategory03" th:selected="${regularAsk.categoryName eq '반품/교환/환불'}">반품/교환/환불</option>
+										<option value="regularAskCategory04" th:selected="${regularAsk.categoryName eq '주문/결제'}">주문/결제</option>
+										<option value="regularAskCategory05" th:selected="${regularAsk.categoryName eq '정기 배송'}">정기 배송</option>
+										<option value="regularAskCategory06" th:selected="${regularAsk.categoryName eq '포인트/할인 쿠폰'}">포인트/할인 쿠폰</option>
 									</select>
 								</div>
 							</div>
@@ -55,7 +56,7 @@
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="reg_id">회원 아이디 FK(작성자)
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="text" id="reg_id" value="admin01" disabled="disabled" required="required" class="form-control" maxlength="15">
+									<input type="text" id="reg_id" th:value="${regularAsk.regId}" disabled="disabled" required="required" class="form-control" maxlength="15">
 								</div>
 							</div>
 							<!-- 제목 -->
@@ -63,7 +64,7 @@
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="regular_ask_title">제목
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="text" id="regular_ask_title" value="제목1" disabled="disabled" required="required" class="form-control" maxlength="15">
+									<input type="text" id="regular_ask_title" th:value="${regularAsk.regularAskTitle}" disabled="disabled" required="required" class="form-control" maxlength="15">
 								</div>
 							</div>
 							<!-- 내용 -->
@@ -71,7 +72,7 @@
 								<label class="col-form-label col-md-3 col-sm-3" for="regular_ask_content">내용
 								</label>
 								<div class="col-md-6 col-sm-6" >
-									<textarea id="regular_ask_content" class="form-control" rows="3" required="required" disabled="disabled" placeholder="내용" style="resize: none; overflow-y: scroll; height: 300px;">내용1
+									<textarea id="regular_ask_content" class="form-control" rows="3" th:text="${regularAsk.regularAskContent}" required="required" disabled="disabled" placeholder="내용" style="resize: none; overflow-y: scroll; height: 300px;">내용1
 									</textarea>
 								</div>
 							</div>
@@ -80,7 +81,7 @@
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="reg_date">등록일
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="datetime" id="reg_date" disabled="disabled" value="2021-01-01 00:00:00" required="required" class="form-control" maxlength="15">
+									<input type="datetime" id="reg_date" disabled="disabled" th:value="${regularAsk.regDate}" required="required" class="form-control" maxlength="15">
 								</div>
 							</div>
 							<!-- 수정일 -->
@@ -88,7 +89,7 @@
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="update_date">수정일
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="datetime" id="update_date" disabled="disabled" value="2022-05-22 00:00:00" required="required" class="form-control" maxlength="15">
+									<input type="datetime" id="update_date" disabled="disabled" th:value="${regularAsk.updateDate}" required="required" class="form-control" maxlength="15">
 								</div>
 							</div>
 							<!-- 사용 여부 -->
@@ -96,8 +97,9 @@
 								<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="radio" class="flat" name="use_check" id="use_check_Y" value="Y"  checked="checked" required /> Y
-									<input type="radio" class="flat" name="use_check" id="use_check_N" value="N" /> N								
+									<!-- th:checked 사용 -->
+									<input type="radio" class="flat" name="use_check" id="use_check_Y" value="Y" th:checked="${regularAsk.useCheck eq 'Y'}" required="required"/> Y
+									<input type="radio" class="flat" name="use_check" id="use_check_N" value="N" th:checked="${regularAsk.useCheck eq 'N'}" required="required"/> N								
 								</div>
 							</div>
 							<div class="ln_solid"></div>
@@ -145,7 +147,9 @@
 			cancelBtn.addEventListener('click', function(){
 				console.log(location.href);
 				// 자주 묻는 질문 목록으로 리다이렉트
-				window.location = 'http://130.162.131.42/admin/regularAsk/regularAskList';
+					// th:href="@{/admin/regularAsk/regularAskList}"
+					// window.open("/admin/regularAsk/regularAskList"); 
+				window.location = '/admin/regularAsk/regularAskList';
 			
 			});
 			

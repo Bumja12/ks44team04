@@ -1,5 +1,7 @@
 package ks44team04.admin.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ks44team04.dto.RegularAsk;
 import ks44team04.service.RegularAskService;
 
 @Controller
@@ -20,13 +23,13 @@ public class RegularAskController {
 	private static final Logger log = LoggerFactory.getLogger(RegularAskController.class);
 	
 	// RegularAskService 의존성 주입
-	// private final RegularAskService regularAskService;
+	 private final RegularAskService regularAskService;
 	
 	// 생성자 메소드
-	// public RegularAskController(RegularAskService regularAskService) {
-		// this.regularAskService = regularAskService;
+	public RegularAskController(RegularAskService regularAskService) {
 		
-	// }
+		this.regularAskService = regularAskService;
+	}
 	
 	// 자주 묻는 질문 삭제 처리
 	@PostMapping("/removeRegularAsk")
@@ -69,8 +72,14 @@ public class RegularAskController {
 	public String getRegularAskDetail (@PathVariable(value = "regularAskPK") String regularAskPK
 									   ,Model model) {
 		
+		// 특정 자주 묻는 질문 
+		RegularAsk regularAsk = regularAskService.getRegularAskByPK(regularAskPK);
 		model.addAttribute("title", "관리자 자주 묻는 질문 내역 화면");
-		log.info(regularAskPK);
+		model.addAttribute("regularAsk", regularAsk);
+		// log.info(regularAsk.toString());
+		// log.info(regularAskPK);
+
+		
 		return "admin/regularAsk/admin_regularAsk_detail";
 	}
 	
@@ -86,8 +95,11 @@ public class RegularAskController {
 	@GetMapping("/regularAskList")
 	public String getRegularAskList (Model model) {
 		
-		//regularAskService.getRegularAskCategory();
+		// 자주 묻는 질문 목록
+		List<RegularAsk> regularAskList =  regularAskService.getRegularAskList();
 		model.addAttribute("title", "관리자 자주 묻는 질문 목록 화면");
+		model.addAttribute("regularAskList", regularAskList);
+//		System.out.println(regularAskList.get(1));
 		return "admin/regularAsk/admin_regularAsk_list";
 	}
 	
