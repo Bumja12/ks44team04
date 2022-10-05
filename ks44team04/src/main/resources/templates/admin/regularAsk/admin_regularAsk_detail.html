@@ -12,6 +12,9 @@
 			#regular_ask_content{
 				resize: none;
 			}
+			.readonlyCursor{
+				cursor: not-allowed  !important;
+			}
 		</style>
 	</th:block>
 	
@@ -31,15 +34,15 @@
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="regularAskPK">자주 묻는 질문 PK
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="text" id="regularAskPK" name="" th:value="${regularAsk.regularAskPK}" disabled="disabled" required="required" class="form-control" maxlength="15">
+									<input type="text" name="regularAskPK" id="regularAskPK" th:value="${regularAsk.regularAskPK}" disabled="disabled" required="required" class="form-control readonlyCursor" maxlength="15">
 								</div>
 							</div>
 							<!-- 자주 묻는 질문 카테고리 FK -->
 							<div class="form-group row">
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="regular_ask_category">자주 묻는 질문 카테고리 
 								</label>
-								<div class="col-md-6 col-sm-6 ">
-									<select class="select2_single form-control"  id="regular_ask_category" disabled="disabled" required="required" tabindex="-1">
+								<div class="col-md-6 col-sm-6">
+									<select class="select2_single form-control" id="categoryName" disabled="disabled" name="categoryName" required="required" tabindex="-1">
 										<option></option>
 										<!-- th:selected 사용 -->
 										<option value="regularAskCategory01" th:selected="${regularAsk.categoryName eq '회원/정보 관리'}">회원/정보 관리</option> 
@@ -56,7 +59,7 @@
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="reg_id">회원 아이디 FK(작성자)
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="text" id="reg_id" th:value="${regularAsk.regId}" disabled="disabled" required="required" class="form-control" maxlength="15">
+									<input type="text" name="regId" id="regId" th:value="${regularAsk.regId}" disabled="disabled" required="required" class="form-control" maxlength="15">
 								</div>
 							</div>
 							<!-- 제목 -->
@@ -64,7 +67,7 @@
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="regular_ask_title">제목
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="text" id="regular_ask_title" th:value="${regularAsk.regularAskTitle}" disabled="disabled" required="required" class="form-control" maxlength="15">
+									<input type="text" id="regularAskTitle" name="regularAskTitle" th:value="${regularAsk.regularAskTitle}" disabled="disabled" required="required" class="form-control" maxlength="15">
 								</div>
 							</div>
 							<!-- 내용 -->
@@ -72,7 +75,7 @@
 								<label class="col-form-label col-md-3 col-sm-3" for="regular_ask_content">내용
 								</label>
 								<div class="col-md-6 col-sm-6" >
-									<textarea id="regular_ask_content" class="form-control" rows="3" th:text="${regularAsk.regularAskContent}" required="required" disabled="disabled" placeholder="내용" style="resize: none; overflow-y: scroll; height: 300px;">내용1
+									<textarea id="regularAskContent" name="regularAskContent" class="form-control" rows="3" th:text="${regularAsk.regularAskContent}" disabled="disabled" required="required"  placeholder="내용" style="resize: none; overflow-y: scroll; height: 300px;">내용1
 									</textarea>
 								</div>
 							</div>
@@ -81,7 +84,7 @@
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="reg_date">등록일
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="datetime" id="reg_date" disabled="disabled" th:value="${regularAsk.regDate}" required="required" class="form-control" maxlength="15">
+									<input type="datetime" id="regDate" name="regDate" disabled="disabled" th:value="${regularAsk.regDate}" required="required" class="form-control" maxlength="15">
 								</div>
 							</div>
 							<!-- 수정일 -->
@@ -89,7 +92,7 @@
 								<label class="col-form-label col-md-3 col-sm-3 label-align" for="update_date">수정일
 								</label>
 								<div class="col-md-6 col-sm-6 ">
-									<input type="datetime" id="update_date" disabled="disabled" th:value="${regularAsk.updateDate}" required="required" class="form-control" maxlength="15">
+									<input type="datetime" name="updateDate" id="updateDate" disabled="disabled" th:value="${regularAsk.updateDate}" required="required" class="form-control" maxlength="15">
 								</div>
 							</div>
 							<!-- 사용 여부 -->
@@ -98,8 +101,8 @@
 								</label>
 								<div class="col-md-6 col-sm-6 ">
 									<!-- th:checked 사용 -->
-									<input type="radio" class="flat" name="use_check" id="use_check_Y" value="Y" th:checked="${regularAsk.useCheck eq 'Y'}" required="required"/> Y
-									<input type="radio" class="flat" name="use_check" id="use_check_N" value="N" th:checked="${regularAsk.useCheck eq 'N'}" required="required"/> N								
+									<input type="radio" class="flat" name="useCheck" id="use_check_Y" value="Y" th:checked="${regularAsk.useCheck eq 'Y'}" required="required"/> Y
+									<input type="radio" class="flat" name="useCheck" id="use_check_N" value="N" th:checked="${regularAsk.useCheck eq 'N'}" required="required"/> N								
 								</div>
 							</div>
 							<div class="ln_solid"></div>
@@ -124,7 +127,7 @@
 			// 수정 버튼 탐색
 			let modifyBtn = document.querySelector('#modifyBtn');
 			// 수정할 요소 탐색 (자주 묻는 질문 카테고리 FK, 제목, 내용, 사용 여부 ) - 총 5개 요소
- 			let updateContent = document.querySelectorAll('#regular_ask_category, #regular_ask_title, #regular_ask_content, #use_check_N, #use_check_Y');
+ 			let updateContent = document.querySelectorAll('#categoryName, #regularAskTitle, #regularAskContent, #use_check_N, #use_check_Y');
 			// 취소 버튼 탐색
 			let cancelBtn = document.querySelector('#cancelBtn');
 			// 자주 묻는 질문 PK값 탐색
@@ -140,6 +143,11 @@
 				}
 				// 그리고 수정 버튼을 전송 버튼으로 바꾼다.
 				modifyBtn.addEventListener('click', function(){
+					let disabledContent =  $('input[disabled]');
+					disabledContent.each(function(i){
+						// console.log($(this)[0].disabled);
+						$(this)[0].disabled=false;
+					});
 					this.type = 'submit';
 				});
 			});

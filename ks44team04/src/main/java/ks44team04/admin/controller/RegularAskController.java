@@ -49,7 +49,9 @@ public class RegularAskController {
 	
 	// 관리자 자주 묻는 질문 수정 처리 
 	@PostMapping("/modifyRegularAsk")
-	public String modifyRegularAskAction() {
+	public String modifyRegularAskAction(RegularAsk regularAsk) {
+		
+		System.out.println(regularAsk.toString());
 		
 		log.info("modifyRegularAskAction");
 		// 수정 처리 후 관리자 자주 묻는 질문 목록 화면으로 리다이렉트

@@ -5,7 +5,7 @@
 <mapper namespace="ks44team04.mapper.RegularAskMapper">
 	<!-- 자주 묻는 질문 목록 -->
 	<resultMap type="RegularAsk" id="regularAskMap">
-		<id	column="regular_ask" 			 property="regularAskPK"/> <!-- 자주 묻는 질문 PK -->
+		<id	column="regular_ask" 			 property="regularAskPK"/> 		 <!-- 자주 묻는 질문 PK -->
         <result column="category_name"		 property="categoryName"/>		 <!-- 자주 묻는 질문 카테고리 -->
         <result column="reg_id" 			 property="regId"/>				 <!-- 회원 아이디 FK(작성자) -->
         <result column="regular_ask_title"   property="regularAskTitle"/>	 <!-- 제목 -->

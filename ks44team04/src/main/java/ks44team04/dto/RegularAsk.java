@@ -4,7 +4,8 @@ package ks44team04.dto;
 public class RegularAsk {
 
     private String regularAskPK; // 자주 묻는 질문 PK
-    private String categoryName; // 자주 묻는 질문 카테고리
+    private String regularAskCategory; // 자주 묻는 질문 카테고리 이름
+    private String categoryName; // 자주 묻는 질문 카테고리 이름
     private String regId; // 회원 아이디 FK(작성자)
     private String regularAskTitle; // 제목
     private String regularAskContent; // 내용
@@ -17,6 +18,12 @@ public class RegularAsk {
 	}
 	public void setRegularAskPK(String regularAskPK) {
 		this.regularAskPK = regularAskPK;
+	}
+	public String getRegularAskCategory() {
+		return regularAskCategory;
+	}
+	public void setRegularAskCategory(String regularAskCategory) {
+		this.regularAskCategory = regularAskCategory;
 	}
 	public String getCategoryName() {
 		return categoryName;
@@ -63,8 +70,9 @@ public class RegularAsk {
 	
 	@Override
 	public String toString() {
-		return "RegularAsk [regularAskPK=" + regularAskPK + ", categoryName=" + categoryName + ", regId=" + regId
-				+ ", regularAskTitle=" + regularAskTitle + ", regularAskContent=" + regularAskContent + ", useCheck="
-				+ useCheck + ", regDate=" + regDate + ", updateDate=" + updateDate + "]";
+		return "RegularAsk [regularAskPK=" + regularAskPK + ", regularAskCategory=" + regularAskCategory
+				+ ", categoryName=" + categoryName + ", regId=" + regId + ", regularAskTitle=" + regularAskTitle
+				+ ", regularAskContent=" + regularAskContent + ", useCheck=" + useCheck + ", regDate=" + regDate
+				+ ", updateDate=" + updateDate + "]";
 	}
 }
