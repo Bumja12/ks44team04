@@ -3,13 +3,17 @@ package ks44team04.admin.controller;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team04.service.CouponService;
 import ks44team04.dto.Coupon;
@@ -32,6 +36,18 @@ public class CouponController {
 	
 	public CouponController(CouponService couponService) {
 		this.couponService = couponService;
+	}
+	
+	@PostMapping("/couponCreate")
+	public String CouponCreate(Coupon coupon
+								,HttpSession session
+								,RedirectAttributes reAttr) {
+		
+		System.out.println(session.getId());
+		coupon.setRegId(session.getId());
+		
+		
+		return "/admin/coupon/couponList";
 	}
 	
 	//쿠폰보유현황

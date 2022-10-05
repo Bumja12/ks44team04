@@ -13,6 +13,8 @@
 <div>123</div>
 <textarea id="summernote" th:text="${test}"></textarea>
 
+<button id="btn">버튼</button>
+
 <script>
 
     $('#summernote').summernote({
@@ -33,6 +35,14 @@
     //let val = $('#summernote').val();
     //console.log(val);
    $('#summernote').summernote('html');
+
+   $('#btn').click(function () {
+       let test = [];
+       test.push('123');
+       test.push('234');
+       test.push('345');
+       location.href = `/test?test=test`;
+   });
 
 </script>
 

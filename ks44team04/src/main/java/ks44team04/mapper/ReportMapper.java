@@ -1,6 +1,7 @@
 package ks44team04.mapper;
 
 import ks44team04.dto.Report;
+import ks44team04.dto.ReportRule;
 import ks44team04.dto.User;
 import ks44team04.dto.UserSuspend;
 
@@ -40,5 +41,7 @@ public interface ReportMapper {
     //정지 검색 
     public List<UserSuspend> getSuspendSearch(Map<String, Object> searchMap);
     
+    //벌점 기준 목록
+    public List<ReportRule> reportRuleList();
 
 }

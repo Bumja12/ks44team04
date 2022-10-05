@@ -43,6 +43,7 @@
 		<result column="refund_bank" 		property="refundBank"/>
 		<result column="refund_account" 	property="refundAccount"/>
 		<result column="approve_price"		property="approvePrice"/>
+		<result column="post_info"			property="postInfo"/>
 		<association property="paymentInfo" javaType="PaymentInfo" >
 			<result column="order_num" 		property="orderNum"/>
 			<result column="buyer_id" 		property="buyerId"/>
@@ -73,6 +74,7 @@
 			<result column="refund_bank" 		property="refundBank"/>
 			<result column="refund_account" 	property="refundAccount"/>
 			<result column="approve_price"		property="approvePrice"/>
+			<result column="post_info"			property="postInfo"/>
 		</collection>
 	</resultMap>
 	
@@ -93,6 +95,7 @@
 				,od.order_price
 				,cp.approve_price
 				,cp.approve_date
+				,od.post_info
 			FROM
 				tb_order AS o
 				INNER JOIN
@@ -111,11 +114,17 @@
 				tb_card_payment AS cp
 				ON
 				p.payment_group_code = cp.card_payment_code
-			<trim prefix="WHERE" prefixOverrides="AND |OR ">
-				<if test="sv != null and sv != '' and sk != null">
-					${sk} LIKE CONCAT('%', #{sv},'%')
-				</if>
-			</trim>	
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv},'%')
+			</if>
+			<if test="fd != null and fd !='' and td != null and td !=''">
+				AND
+				o.order_date <![CDATA[>]]> (#{fd})
+				AND
+				o.order_date <![CDATA[<]]> (#{td})
+			</if>
+		</trim>
 				) AS a
 				
 				UNION
@@ -132,6 +141,7 @@
 				,od.order_price
 				,ap.approve_price
 				,ap.approve_date
+				,od.post_info
 			FROM
 				tb_order AS o
 				INNER JOIN
@@ -150,11 +160,17 @@
 				tb_account_payment AS ap
 				ON
 				p.payment_group_code = ap.account_payment_code
-			<trim prefix="WHERE" prefixOverrides="AND |OR ">
-				<if test="sv != null and sv != ''">
-					${sk} LIKE CONCAT('%', #{sv},'%')
-				</if>
-			</trim>		
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv},'%')
+			</if>
+			<if test="fd != null and fd !='' and td != null and td !=''">
+				AND
+				o.order_date <![CDATA[>]]> (#{fd})
+				AND
+				o.order_date <![CDATA[<]]> (#{td})
+			</if>
+		</trim>	
 			ORDER BY order_detail_code;
 	</select>
 	
@@ -172,6 +188,7 @@
 			,od.order_amount
 			,o.order_status
 			,o.order_date
+			,od.post_info
 		FROM
 			tb_order AS o
 			INNER JOIN
@@ -182,11 +199,17 @@
 			tb_goods AS g
 			ON
 			od.goods_code = g.goods_code
-		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="sv != null and sv != ''">
 				${sk} LIKE CONCAT('%', #{sv},'%')
 			</if>
-		</trim>	
+			<if test="fd != null and fd !='' and td != null and td !=''">
+				AND
+				o.order_date <![CDATA[>]]> (#{fd})
+				AND
+				o.order_date <![CDATA[<]]> (#{td})
+			</if>
+		</trim>
 		ORDER BY o.order_num;
 	</select>
 	
@@ -275,6 +298,7 @@
 				,od.order_price
 				,cp.approve_price
 				,cp.approve_date
+				,od.post_info
 			FROM
 				tb_order AS o
 				INNER JOIN
@@ -310,6 +334,7 @@
 				,od.order_price
 				,ap.approve_price
 				,ap.approve_date
+				,od.post_info
 			FROM
 				tb_order AS o
 				INNER JOIN
@@ -349,6 +374,7 @@
 				,od.order_price
 				,cp.approve_price
 				,cp.approve_date
+				,od.post_info
 			FROM
 				tb_order AS o
 				INNER JOIN
@@ -382,6 +408,7 @@
 				,od.order_price
 				,ap.approve_price
 				,ap.approve_date
+				,od.post_info
 			FROM
 				tb_order AS o
 				INNER JOIN
@@ -417,6 +444,7 @@
 			,od.order_amount
 			,o.order_status
 			,o.order_date
+			,od.post_info
 		FROM
 			tb_order AS o
 			INNER JOIN

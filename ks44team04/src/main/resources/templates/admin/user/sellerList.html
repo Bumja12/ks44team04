@@ -118,8 +118,10 @@
 											<td th:text="${l.approveAskDate}"></td>
 											<td hidden="hidden" class="approveCheck" id="approveCheck" th:value="${l.approveCheck}"></td>
 											<td>
-												<a href="#" id="approveBtn"><i class="fa fa-check"></i> 승인 </a>
-												<a href="#" id="rejectBtn"><i class="fa fa-times"></i> 승인거부 </a>
+												<div>
+													<a th:href="@{/admin/user/sellerList}" id="approveBtn"><i class="fa fa-check"></i> 승인 </a>
+												</div>
+												<a href="#" id="rejectBtn"><i class="fa fa-times"></i> 거부 </a>
 											</td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(sellerListN)}">
@@ -201,46 +203,12 @@
 		}
 		
 		/* 판매자 신청 승인 */
-		/*
 		$(function() {
-			$('#approveBtn').click(function() {
-				$('#approveCheck').attr('value','Y');
+			$('#approveBtn').on('click', function() {
+				$('#approveCheck').val('Y');
 			});
 		});
-		*/
-		
-		/* 판매자 신청 승인 (ajax) 탁*/
-		/*
-		$(function(){
-			$('#idCheck').click(function(){
-				let id = $('#userId').val();
-				if(id.trim() == ''){
-					alert('아이디 값을 입력해주세요');
-					return;
-				}
-				var request = $.ajax({
-					url: "idCheck.jsp", 
-					method: "POST",
-					data: { id : id },
-					dataType: "json" 
-				});
-				
-				request.done(function( data ) {
-					console.log(data);
-					if(data.result){
-						alert('아이디 사용 불가');
-					}else {
-						alert('아이디 사용 가능');
-					}
-				});
-				
-				request.fail(function( jqXHR, textStatus ) {
-					alert( "Request failed: " + textStatus );
-				});
-			});
-		});
-		*/
-		
+	
 		
 		/* 판매자 신청 승인 (ajax) 홍*/
 		/*
@@ -252,10 +220,11 @@
 				approveCheck = sellerList[0].approveCheck;
 				console.log(approveCheck);
 				
-				console.log($('#approveCheck').val());
-				$('#approveCheck').prop('value','Y');
-				console.log($('#approveCheck').val());
-				return;
+				if(approveCheck == 'N') {
+					$('#approveCheck').prop('value','Y');
+					console.log($('#approveCheck').val());
+					return;
+				}
 			
  				var request = $.ajax({
 					url: '/admin/user/sellerList', //http://localhost/member/idCheck
@@ -269,9 +238,8 @@
 						alert("승인되었습니다.");
 					}	
 				});
-  					
 				request.fail(function( jqXHR, textStatus ) {
-					alert( "Request failed: " + textStatus );
+					alert("요청실패 ");
 				});
 			});
 		});

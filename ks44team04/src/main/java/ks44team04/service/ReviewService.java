@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import ks44team04.dto.Review;
+import ks44team04.dto.ReviewComment;
 import ks44team04.mapper.ReviewMapper;
 
 
@@ -41,5 +42,12 @@ public class ReviewService {
     	return reviewList;
     }
 	
+    //리뷰 댓글 목록
+    public List<ReviewComment> reviewComment(){
+    	List<ReviewComment> reviewComment = reviewMapper.reviewComment();
+    	
+    	return reviewComment;
+    	
+    }
 	
 }

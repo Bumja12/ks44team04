@@ -53,13 +53,11 @@
 
 			<div class="x_content" >
 				<table class="table" th:object="${Report}">
-					<thead >
+					<tbody>
 						<tr>
 							<th class="processing" scope="col"> 회원 신고 코드</th>
 							<th scope="col" colspan="5" ><input type="text" style="border: none; "th:value="*{reportHistoryCode}" readonly="readonly"> </th>
 						</tr>
-					</thead>
-					<tbody>
 
 						<tr>
 							<th class="processing" scope="row">신고자 아이디</th>
@@ -121,22 +119,20 @@
 			</div>
 			<!-- 처리 -->
 			<div class="x_content">
-	<form id="reportProcessing" th:action="@{/admin/report/reportParticulars}" method="post">
+	<form id="reportParticulars" th:action="@{/admin/report/reportParticulars}" method="post">
 				
 			
 				<table class="table" th:object="${Report}">
-					<thead>
+					<tbody>
 						<tr>
 							
 							<th class="processing" scope="col">회원 신고 코드</th>
 							<th scope="col" colspan="">
 							<input type="text" style="border: none;" name="reportHistoryCode" th:value="*{reportHistoryCode}" readonly="readonly">
 							<th class="processing">신고대상 아이디</th>
-							<td style="text-align: left;" ><input type="text" style="border: none; "th:value="*{reportingId}" readonly="readonly"></td>
+							<td style="text-align: left;" colspan="3" ><input type="text" style="border: none; "th:value="*{reportingId}" readonly="readonly"></td>
 							
 						</tr>
-					</thead>
-					<tbody>
 						<tr>
 							<th class="processing" scope="row">관리자 아이디</th>
 							<td><input type="text" style="border: none;" id="reportApproveId" name="reportApproveId" th:value="*{reportApproveId}" readonly="readonly"></td>
@@ -165,18 +161,6 @@
 							<td><input type="text" style="border: none; "th:value="*{UserDto.userPenalty}" readonly="readonly"></td>
 						</tr>
 						<tr>
-							<th style="padding: 0px; text-align: right;" colspan="8" >
-								<input type="hidden" id="penaltyPoint" name="penaltyPoint" th:value="*{reportRuleDto.penaltyPoint}">
-								<input type="hidden" id="reportResult" name="reportResult" >
-								<input type="hidden" name="userId" th:value="*{reportedId}">
-								
-								<label><i class="glyphicon glyphicon-ok"></i>
-									<button type="button" class=" btn btn-link "  value="승인">승인수정</button>
-								</label>
-								<label><i class="glyphicon glyphicon-remove"></i>
-									<button type="button" class=" btn btn-link " value="반려">반려수정</button>
-								</label>
-							</th>
 							<th  th:if="*{reportResult} == '반려'" >
 								<input type="hidden" name="userPenalty" th:value="*{totalPenaltyPoint} + *{reportRuleDto.penaltyPoint}">
 								<input type="hidden" name="totalPenaltyPoint" th:value="*{totalPenaltyPoint} + *{reportRuleDto.penaltyPoint}">
@@ -184,6 +168,18 @@
 							<th th:if="*{reportResult} == '승인'">
 								<input type="hidden" name="userPenalty" th:value="*{totalPenaltyPoint} - *{reportRuleDto.penaltyPoint}">
 								<input type="hidden" name="totalPenaltyPoint" th:value="*{totalPenaltyPoint} - *{reportRuleDto.penaltyPoint}">
+							</th>
+							<th style="padding: 0px; text-align: right;" colspan="5" >
+								<input type="hidden" id="penaltyPoint" name="penaltyPoint" th:value="*{reportRuleDto.penaltyPoint}">
+								<input type="hidden" id="reportResult" name="reportResult" >
+								<input type="hidden" name="userId" th:value="*{reportedId}">
+								
+								<label th:if="*{reportResult} == '반려'" style="text-align: right;"><i class="glyphicon glyphicon-ok"></i>
+									<button type="button" class=" btn btn-link "  value="승인">승인수정</button>
+								</label>
+								<label th:if="*{reportResult} == '승인'" ><i class="glyphicon glyphicon-remove"></i>
+									<button type="button" class=" btn btn-link " value="반려">반려수정</button>
+								</label>
 							</th>
 						</tr>
 					</tbody>
@@ -203,7 +199,6 @@
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	
 	<script type="text/javascript">
-	var point = [[${userPenalty}]];D
 	   //  $('.btn').on("click", function() {     //버튼 클릭시 호출되는 함수
 		   //$('table').on('click', '.btn', function() {
 	 	/*  $('.btn').each(function() {
@@ -212,10 +207,10 @@
 				     $('.btn').on("click", function() {     //버튼 클릭시 호출되는 함수
 				           if($(this).val() === '반려'){
 				    	 	 $('#reportResult').val('반려');
-				             $( '#reportProcessing' ).submit();
+				             $( '#reportParticulars' ).submit();
 				     	}else if($(this).val() === '승인'){
 				     		$('#reportResult').val('승인');
-				     		$( '#reportProcessing' ).submit();
+				     		$( '#reportParticulars' ).submit();
 				     	}
 				     });
 				});

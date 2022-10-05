@@ -1,9 +1,6 @@
 package ks44team04.mapper;
 
-import ks44team04.dto.Goods;
-import ks44team04.dto.OrderDetail;
-import ks44team04.dto.OrderExchange;
-import ks44team04.dto.OrderReturn;
+import ks44team04.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,4 +26,6 @@ public interface OrderMapper {
     public List<OrderDetail> getOrderList(String userId);
 
     public Goods getGoodsInfo(String goodsCode);
+
+    public void setOrder(Order order);
 }
