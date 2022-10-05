@@ -28,7 +28,7 @@
 		<div class="col-md-12 col-sm-12 ">
 			<div class="x_panel">
 				<div class="x_title">
-					<h2>Form Design <small>different form elements</small></h2>
+					<h2 th:text="${paymentTotal.orderDetailCode} + ' 주문서 삭제'"></h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -47,81 +47,83 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content" th:object="${paymentTotal}">
-					<br />
-					<form id="deleteForm" th:action="@{/admin/payment/removePaymentDetail}" method="post" data-parsley-validate class="form-horizontal form-label-left">
-						<div class="item form-group">
-							<label for="buyerId"class="col-form-label col-md-3 col-sm-3 label-align">회원아이디 <span class="required">*</span>
-							</label>
-							<div class="col-md-6 col-sm-6 ">
-								<input type="text" id="buyerId" th:value="${paymentTotal.paymentInfo.buyerId}" class="form-control" readonly="readonly">
-							</div>
-						</div>
-						<div class="item form-group">
-							<label for="orderNum" class="col-form-label col-md-3 col-sm-3 label-align">주문번호 <span class="required">*</span>
-							</label>
-							<div class="col-md-6 col-sm-6 "	>
-								<input type="text" id="orderNum" th:value="${paymentTotal.paymentInfo.orderNum}"  required="required" class="form-control" readonly="readonly">
-							</div>
-						</div>
-						<div class="item form-group">
-							<label for="orderDetailCode" class="col-form-label col-md-3 col-sm-3 label-align">주문상세번호 <span class="required">*</span>
-							</label>
-							<div class="col-md-6 col-sm-6 ">
-								<input type="text" id="orderDetailCode" name="orderDetailCode" th:value="${paymentTotal.orderDetailCode}" required="required" class="form-control" readonly="readonly">
-							</div>
-						</div>
-						<div class="item form-group">
-							<label for="goodsName" class="col-form-label col-md-3 col-sm-3 label-align">상품정보</label>
-							<div class="col-md-6 col-sm-6 ">
-								<input type="text" id="goodsName" class="form-control" th:value="${paymentTotal.goodsName}" readonly="readonly">
-							</div>
-						</div>
-						<div class="item form-group">
-							<label class="col-form-label col-md-3 col-sm-3 label-align">결제수단</label>
-							<div class="col-md-6 col-sm-6 ">
-								<div id="paymentMethod" class="btn-group" data-toggle="buttons">
-									<label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-										<input type="radio" th:value="${paymentTotal.paymentMethod}"> &nbsp; 카드 &nbsp;
-									</label>
-									<label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-										<input type="radio" th:value="${paymentTotal.paymentMethod}"> 계좌이체
-									</label>
+					<div class="x_panel">
+						<br />
+						<form id="deleteForm" th:action="@{/admin/payment/removePaymentDetail}" method="post" data-parsley-validate class="form-horizontal form-label-left">
+							<div class="item form-group">
+								<label for="buyerId"class="col-form-label col-md-3 col-sm-3 label-align">회원아이디 <span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="buyerId" th:value="${paymentTotal.paymentInfo.buyerId}" class="form-control" readonly="readonly">
 								</div>
 							</div>
-						</div>
-						<div class="item form-group">
-							<label for="cardCompany" class="col-form-label col-md-3 col-sm-3 label-align">영업사</label>
-							<div class="col-md-6 col-sm-6 ">
-								<input id="cardCompany" class="form-control" type="text" th:value="${paymentTotal.cardCompany}" readonly="readonly">
+							<div class="item form-group">
+								<label for="orderNum" class="col-form-label col-md-3 col-sm-3 label-align">주문번호 <span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 "	>
+									<input type="text" id="orderNum" th:value="${paymentTotal.paymentInfo.orderNum}"  required="required" class="form-control" readonly="readonly">
+								</div>
 							</div>
-						</div>
-						<div class="item form-group">
-							<label for="cardNumber" class="col-form-label col-md-3 col-sm-3 label-align">카드번호 / 환불계좌</label>
-							<div class="col-md-6 col-sm-6 ">
-								<input id="cardNumber" class="form-control" type="text" th:value="${paymentTotal.cardNumber}" readonly="readonly">
+							<div class="item form-group">
+								<label for="orderDetailCode" class="col-form-label col-md-3 col-sm-3 label-align">주문상세번호 <span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="orderDetailCode" name="orderDetailCode" th:value="${paymentTotal.orderDetailCode}" required="required" class="form-control" readonly="readonly">
+								</div>
 							</div>
-						</div>
-						<div class="item form-group">
-							<label for="orderPrice" class="col-form-label col-md-3 col-sm-3 label-align">주문금액</label>
-							<div class="col-md-6 col-sm-6 ">
-								<input id="orderPrice" class="form-control" type="text" th:value="${'₩' + #numbers.formatInteger(paymentTotal.orderPrice, 3, 'COMMA')}" readonly="readonly">
+							<div class="item form-group">
+								<label for="goodsName" class="col-form-label col-md-3 col-sm-3 label-align">상품정보</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="goodsName" class="form-control" th:value="${paymentTotal.goodsName}" readonly="readonly">
+								</div>
 							</div>
-						</div>
-						<div class="item form-group">
-							<label for="approveDate" class="col-form-label col-md-3 col-sm-3 label-align">결제일자 / 승인일자</label>
-							<div class="col-md-6 col-sm-6 ">
-								<input id="approveDate" class="form-control" type="text" th:value="${paymentTotal.paymentInfo.approveDate}" readonly="readonly">
+							<div class="item form-group">
+								<label class="col-form-label col-md-3 col-sm-3 label-align">결제수단</label>
+								<div class="col-md-6 col-sm-6 ">
+									<div id="paymentMethod" class="form-check">
+										<label class="form-check-label btn btn-primary">
+											<input class="form-check-input" type="checkbox" th:value="${paymentTotal.paymentMethod}" th:checked="${paymentTotal.paymentMethod eq '카드'}" disabled="disabled"> &nbsp; 카드 &nbsp;
+										</label>
+										<label class="form-check-label btn btn-primary">
+											<input class="form-check-input" type="checkbox" th:value="${paymentTotal.paymentMethod}" th:checked="${paymentTotal.paymentMethod eq '계좌이체'}" disabled="disabled"> 계좌이체
+										</label>
+									</div>
+								</div>
 							</div>
-						</div>
-						
-						<div class="ln_solid"></div>
-						<div class="item form-group">
-							<div class="col-md-6 col-sm-6 offset-md-3">
-								<button value="0" class="btn btn-danger btnCheck" type="button">취소</button>
-								<button value="1" class="btn btn-success btnCheck" type="button">삭제</button>
+							<div class="item form-group">
+								<label for="cardCompany" class="col-form-label col-md-3 col-sm-3 label-align">영업사</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input id="cardCompany" class="form-control" type="text" th:value="${paymentTotal.cardCompany}" readonly="readonly">
+								</div>
 							</div>
-						</div>
-					</form>
+							<div class="item form-group">
+								<label for="cardNumber" class="col-form-label col-md-3 col-sm-3 label-align">카드번호 / 환불계좌</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input id="cardNumber" class="form-control" type="text" th:value="${paymentTotal.cardNumber}" readonly="readonly">
+								</div>
+							</div>
+							<div class="item form-group">
+								<label for="orderPrice" class="col-form-label col-md-3 col-sm-3 label-align">주문금액</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input id="orderPrice" class="form-control" type="text" th:value="${'₩' + #numbers.formatInteger(paymentTotal.orderPrice, 3, 'COMMA')}" readonly="readonly">
+								</div>
+							</div>
+							<div class="item form-group">
+								<label for="approveDate" class="col-form-label col-md-3 col-sm-3 label-align">결제일자 / 승인일자</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input id="approveDate" class="form-control" type="text" th:value="${paymentTotal.paymentInfo.approveDate}" readonly="readonly">
+								</div>
+							</div>
+							
+							<div class="ln_solid"></div>
+							<div class="item form-group">
+								<div class="col-md-6 col-sm-6 offset-md-3">
+									<button value="0" class="btn btn-danger btnCheck" type="button">취소</button>
+									<button value="1" class="btn btn-success btnCheck" type="button">삭제</button>
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
