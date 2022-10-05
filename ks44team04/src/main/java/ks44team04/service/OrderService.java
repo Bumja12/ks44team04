@@ -1,9 +1,6 @@
 package ks44team04.service;
 
-import ks44team04.dto.Goods;
-import ks44team04.dto.OrderDetail;
-import ks44team04.dto.OrderExchange;
-import ks44team04.dto.OrderReturn;
+import ks44team04.dto.*;
 import ks44team04.mapper.OrderMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +49,11 @@ public class OrderService {
         return orderMapper.getOrderList(userId);
     }
 
-    public Goods getGoodsList(String goodsCode) {
+    public Goods getGoodsInfo(String goodsCode) {
         return orderMapper.getGoodsInfo(goodsCode);
+    }
+
+    public void setOrder(Order order) {
+        orderMapper.setOrder(order);
     }
 }
