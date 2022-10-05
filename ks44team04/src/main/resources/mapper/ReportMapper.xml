@@ -4,6 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team04.mapper.ReportMapper">
 
+	<resultMap type="ReportRule" id="reportRuleListResultMap">
+		<id     column="report_code" 	 property="reportCode"/>
+		<result column="report_reason"   property="reportReason"/>
+		<result column="report_date" 	 property="reportDate"/>
+		<result column="user_id" 		 property="userId"/>
+		<result column="use_check" 		 property="useCheck"/>
+		<result column="penalty_point"   property="penaltyPoint"/>
+	</resultMap>
+	
+	
 	<resultMap type="UserSuspend" id="userSuspendListResultMap">
 		<id     column="user_suspend_code"  property="userSuspendCode"/>
 		<result column="suspend_id" 		property="suspendId"/>
@@ -12,6 +22,7 @@
 		<result column="start_suspend"  	property="startSuspend"/>
 		<result column="end_suspend" 		property="endSuspend"/>
 		<result column="suspend_result" 		property="suspendResult"/>
+		<result column="suspend_reason" 		property="suspendReason"/>
 	</resultMap>
 
     <resultMap type="Report" id="reportListResultMap">
@@ -218,9 +229,6 @@
 		
     </select>
    
-
-   
-   
     <!-- 신고등록시 코드 증가 -->
     <select id="getHistoryCode" resultType="String">
     /* 신고등록시 코드 증가*/
@@ -231,21 +239,6 @@
 	ORDER BY report_history_code DESC LIMIT 1
     </select>
     
-    <!-- 정지목록 -->
-    <select id="getUserSuspendList" resultMap="userSuspendListResultMap">
-    /* 정지목록 */
-    SELECT 
-		 s.user_suspend_code
-		,s.suspend_id
-		,s.approve_id
-		,s.suspend_day
-		,s.start_suspend
-		,s.end_suspend
-		,s.suspend_result
-	FROM 
-		tb_user_suspend AS s
-	ORDER BY s.user_suspend_code DESC 
-    </select>
    <!-- 신고 검색  -->
 	<select id="getReportSearch" parameterType="map" resultMap="reportListResultMap" fetchSize="100">
 	/* 신고 검색  */
@@ -286,6 +279,23 @@
 		   </trim>
 		   ORDER BY r.report_history_code DESC 
 	</select>
+    
+    <!-- 정지목록 -->
+    <select id="getUserSuspendList" resultMap="userSuspendListResultMap">
+    /* 정지목록 */
+    SELECT 
+		 s.user_suspend_code
+		,s.suspend_id
+		,s.approve_id
+		,s.suspend_day
+		,s.start_suspend
+		,s.end_suspend
+		,s.suspend_result
+		,s.suspend_reason 
+	FROM 
+		tb_user_suspend AS s
+	ORDER BY s.user_suspend_code DESC 
+    </select>
 	
        <!-- 정지 검색  -->
 	<select id="getSuspendSearch" parameterType="map" resultMap="userSuspendListResultMap" fetchSize="100">
@@ -298,6 +308,7 @@
 			,s.start_suspend
 			,s.end_suspend
 			,s.suspend_result
+			,s.suspend_reason 
 		FROM 
 			tb_user_suspend AS s
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
@@ -306,6 +317,21 @@
 			</if>
 	   </trim>
 		 ORDER BY s.user_suspend_code DESC 
+	</select>
+	
+	<select id="reportRuleList" resultMap="reportRuleListResultMap">
+	/* 벌점 기준 목록 */
+	
+	SELECT
+		r.report_code
+		,r.report_reason
+		,r.report_date
+		,r.user_id
+		,r.use_check
+		,r.penalty_point 
+	FROM 
+		tb_report_rule AS r
+		
 	</select>
     
 </mapper>

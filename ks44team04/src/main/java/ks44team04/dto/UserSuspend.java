@@ -9,8 +9,17 @@ public class UserSuspend {
     private String startSuspend;
     private String endSuspend;
     private String suspendResult;
+    private String suspendReason;
 
-    public String getSuspendResult() {
+    public String getSuspendReason() {
+		return suspendReason;
+	}
+
+	public void setSuspendReason(String suspendReason) {
+		this.suspendReason = suspendReason;
+	}
+
+	public String getSuspendResult() {
 		return suspendResult;
 	}
 
@@ -70,6 +79,6 @@ public class UserSuspend {
 	public String toString() {
 		return "UserSuspend [userSuspendCode=" + userSuspendCode + ", suspendId=" + suspendId + ", approveId="
 				+ approveId + ", suspendDay=" + suspendDay + ", startSuspend=" + startSuspend + ", endSuspend="
-				+ endSuspend + ", suspendResult=" + suspendResult + "]";
+				+ endSuspend + ", suspendResult=" + suspendResult + ", suspendReason=" + suspendReason + "]";
 	}
 }

@@ -2,6 +2,7 @@ package ks44team04.service;
 
 import ks44team04.mapper.ReportMapper;
 import ks44team04.dto.Report;
+import ks44team04.dto.ReportRule;
 import ks44team04.dto.User;
 import ks44team04.dto.UserSuspend;
 
@@ -84,4 +85,11 @@ public class ReportService {
     	List<UserSuspend> SuspendList = reportMapper.getSuspendSearch(paramMap);
     	return SuspendList;
     }
+    
+    //벌점 기준 목록
+    public List<ReportRule> reportRuleList(){
+    	List<ReportRule> reportRuleList = reportMapper.reportRuleList();
+    	return reportRuleList;
+    }
+    
 }

@@ -3,6 +3,7 @@ package ks44team04.admin.controller;
 import ks44team04.service.ReportService;
 import ks44team04.util.CodeIndex;
 import ks44team04.dto.Report;
+import ks44team04.dto.ReportRule;
 import ks44team04.dto.User;
 import ks44team04.dto.UserSuspend;
 
@@ -189,6 +190,7 @@ public class ReportController {
 		
 		return "admin/report/userSuspendList";
 	}
+	
 	// 정지리스트
 	@GetMapping("/report/userSuspendList")
 	public String getUserSuspendList(Model model) {
@@ -196,11 +198,21 @@ public class ReportController {
 		  List<UserSuspend> userSuspendList = reportService.getSuspendSearch(null);
 		  log.info("/admin/report/suspendList userSuspendList ReportController.java");
 		  
-		  model.addAttribute("title", "정지목록"); model.addAttribute("userSuspendList",
-		  userSuspendList);
+		  model.addAttribute("title", "정지목록");
+		  model.addAttribute("userSuspendList", userSuspendList);
 		
 
 		return "admin/report/userSuspendList";
 	}
-
+	
+	@GetMapping("/report/reportRuleList")
+	public String reportRuleList(Model model) {
+		
+		List<ReportRule> reportRuleList = reportService.reportRuleList()
+;
+		model.addAttribute("title", "벌점 기준 목록");
+		model.addAttribute("reportRuleList", reportRuleList);
+		
+		return "admin/report/reportRuleList";
+	}
 }
