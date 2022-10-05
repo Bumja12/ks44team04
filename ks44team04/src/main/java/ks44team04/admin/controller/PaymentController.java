@@ -37,6 +37,7 @@ public class PaymentController {
 		log.info("paymentController Bean 생성");
 	}
 	
+	// 주문상세 모달창 출력
 	@GetMapping("/selectPaymentDetail")
 	@ResponseBody
 	public List<PaymentTotal> selectPaymentDetail(@RequestParam(value = "orderNum") String orderNum, Model model) {
@@ -51,6 +52,7 @@ public class PaymentController {
 		return paymentDetail;
 	}
 	
+	// 주문상세 검색
 	@PostMapping("/paymentDetail")
 	public String searchPaymentDetail(@RequestParam(name="searchKey", defaultValue = "orderDetailCode") String sk
 										,@RequestParam(name="searchValue", required = false, defaultValue = "") String sv
@@ -69,6 +71,8 @@ public class PaymentController {
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 		searchMap.put("sk", sk);
 		searchMap.put("sv", sv);
+		searchMap.put("fd", fromDate);
+		searchMap.put("td", toDate);
 		
 		List<PaymentTotal> paymentDetail = paymentService.searchPaymentDetail(searchMap);
 		model.addAttribute("title", "검색결과");
@@ -77,8 +81,8 @@ public class PaymentController {
 		return "admin/payment/paymentDetail";
 	}
 	
+	// 결제내역 검색
 	@PostMapping("/paymentList")
-	// 주문상세번호 검색
 	public String searchPaymentList(@RequestParam(name="searchKey", defaultValue = "orderDetailCode") String sk
 									,@RequestParam(name="searchValue", required = false, defaultValue = "") String sv
 									,@RequestParam(name="fromDate", required = false, defaultValue= "") String fromDate
@@ -96,6 +100,8 @@ public class PaymentController {
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 		searchMap.put("sk", sk);
 		searchMap.put("sv", sv);
+		searchMap.put("fd", fromDate);
+		searchMap.put("td", toDate);
 		
 		List<PaymentTotal> paymentList = paymentService.searchPaymentList(searchMap);
 		model.addAttribute("title", "검색결과");

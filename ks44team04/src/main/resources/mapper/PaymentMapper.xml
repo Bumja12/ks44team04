@@ -111,11 +111,17 @@
 				tb_card_payment AS cp
 				ON
 				p.payment_group_code = cp.card_payment_code
-			<trim prefix="WHERE" prefixOverrides="AND |OR ">
-				<if test="sv != null and sv != '' and sk != null">
-					${sk} LIKE CONCAT('%', #{sv},'%')
-				</if>
-			</trim>	
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv},'%')
+			</if>
+			<if test="fd != null and fd !='' and td != null and td !=''">
+				AND
+				o.order_date <![CDATA[>]]> (#{fd})
+				AND
+				o.order_date <![CDATA[<]]> (#{td})
+			</if>
+		</trim>
 				) AS a
 				
 				UNION
@@ -150,11 +156,17 @@
 				tb_account_payment AS ap
 				ON
 				p.payment_group_code = ap.account_payment_code
-			<trim prefix="WHERE" prefixOverrides="AND |OR ">
-				<if test="sv != null and sv != ''">
-					${sk} LIKE CONCAT('%', #{sv},'%')
-				</if>
-			</trim>		
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv},'%')
+			</if>
+			<if test="fd != null and fd !='' and td != null and td !=''">
+				AND
+				o.order_date <![CDATA[>]]> (#{fd})
+				AND
+				o.order_date <![CDATA[<]]> (#{td})
+			</if>
+		</trim>	
 			ORDER BY order_detail_code;
 	</select>
 	
@@ -182,11 +194,17 @@
 			tb_goods AS g
 			ON
 			od.goods_code = g.goods_code
-		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="sv != null and sv != ''">
 				${sk} LIKE CONCAT('%', #{sv},'%')
 			</if>
-		</trim>	
+			<if test="fd != null and fd !='' and td != null and td !=''">
+				AND
+				o.order_date <![CDATA[>]]> (#{fd})
+				AND
+				o.order_date <![CDATA[<]]> (#{td})
+			</if>
+		</trim>
 		ORDER BY o.order_num;
 	</select>
 	
