@@ -96,23 +96,23 @@
         select *
         from tb_order_detail as tod
         inner join tb_goods as tg
-            on tod.goods_code = tg.goods_code
+        on tod.goods_code = tg.goods_code
         <choose>
-        <when test="orderDetailCode != null">
-            where order_detail_code = #{orderDetailCode}
-        </when>
-        <when test="orderNum != null">
-            where order_num = #{orderNum}
-        </when>
-        <when test="goodsCode != null">
-            where goods_code = #{goodsCode}
-        </when>
-        <otherwise>
-            where 1 = 2
-        </otherwise>
+            <when test="orderDetailCode != null">
+                where order_detail_code = #{orderDetailCode}
+            </when>
+            <when test="orderNum != null">
+                where order_num = #{orderNum}
+            </when>
+            <when test="goodsCode != null">
+                where goods_code = #{goodsCode}
+            </when>
+            <otherwise>
+                where 1 = 2
+            </otherwise>
         </choose>
     </select>
-    
+
     <update id="setReturnPost" parameterType="Map">
         <choose>
             <when test="postType = 'exchange'">
@@ -122,9 +122,9 @@
                 update tb_order_return
             </when>
         </choose>
-            set post_company = #{postCompany},
-                invoice_number = #{invoiceNumber}
-            where order_detail_code = #{orderDetailCode};
+        set post_company = #{postCompany},
+        invoice_number = #{invoiceNumber}
+        where order_detail_code = #{orderDetailCode};
     </update>
 
     <update id="setOrderDetailStatus" parameterType="String">
@@ -143,7 +143,24 @@
     </select>
 
     <select id="getGoodsInfo" parameterType="String" resultMap="ks44team04.mapper.GoodsMapper.goodsResultMap">
-        select * from tb_goods where goods_code = #{goodsCode}
+        select *
+        from tb_goods
+        where goods_code = #{goodsCode}
+    </select>
+
+    <insert id="setOrder" parameterType="Order">
+        insert into tb_order (order_num, buyer_id, coupon_code, order_date, order_status, total_sum, total_price,
+                              coupon_price, use_point, goods_discount_price, post_price, total_order_price,
+                              post_address_list)
+        values (#{orderNum}, #{buyerId}, #{couponCode}, now(), '주문요청중', #{totalSum}, #{totalPrice}, #{couponPrice},
+                #{usePoint}, #{goodsDiscountPrice}, #{postPrice}, #{totalOrderPrice}, #{postAddressList});
+    </insert>
+
+    <select id="getOrderNum" resultType="String">
+        select max(order_num)
+        from tb_order
+        where order_num like concat('', '#');
+
     </select>
 
 </mapper>

@@ -6,11 +6,14 @@ import com.google.gson.JsonElement;
 import ks44team04.dto.*;
 import ks44team04.service.*;
 import ks44team04.util.CodeIndex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +28,7 @@ public class UserOrderController {
     OrderService orderService;
     Service service;
     Gson gson;
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     public UserOrderController(AddressService addressService, CouponService couponService, PointService pointService, OrderService orderService, Service service, Gson gson) {
         this.addressService = addressService;
@@ -37,7 +41,7 @@ public class UserOrderController {
 
     @GetMapping("/checkout")
     public String checkout(Model model,
-                           @RequestParam(value = "goodsCode", required = false) String goodsCode) {
+                           @RequestParam(value = "goodsCode", required = false) String[] goodsCode) {
         String userId = "buyer01";
         Map<String, String> addressInfo = new HashMap<>();
         addressInfo.put("userId", userId);
@@ -47,7 +51,13 @@ public class UserOrderController {
         model.addAttribute("addressList", addressLists);
         model.addAttribute("userPoint", userPoint);
 
-        orderService.getGoodsList(goodsCode);
+        goodsCode = new String[]{"WN895022", "WN895023"};
+        List<Goods> goodsList = new ArrayList<>();
+        for (String goods : goodsCode) {
+            Goods goodsInfo = orderService.getGoodsInfo(goods);
+            goodsList.add(goodsInfo);
+        }
+        model.addAttribute("goodsList", goodsList);
 
         return "user/order/checkout";
     }
@@ -186,6 +196,13 @@ public class UserOrderController {
         return "redirect:" + referer;
     }
 
+    @PostMapping("/end")
+    public String setOrder(@RequestBody Order order) {
+        String sessionId = "buyer01";
 
+        order.setBuyerId(sessionId);
+        orderService.setOrder(order);
+        return "redirect:/user/order/checkout";
+    }
 
 }
