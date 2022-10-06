@@ -45,7 +45,7 @@
                     <div class="row" align="right">
                         <div class="col-sm-12">
                             <div class="ml-auto">
-                                <button class="btn btn-success" type="button" data-toggle="modal"
+                                <button class="btn btn-success getUserBtn" type="button" data-toggle="modal"
                                         data-target="#couponIssue">쿠폰발급
                                 </button>
                             </div>
@@ -112,27 +112,59 @@
                 </div>
                 <div class="modal-body">
                     <div class="x_panel">
-                        <form method="post" th:action="@{/admin/coupon/couponCreate}">
-                            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                            <table id="datatable-checkbox" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid">
                                 <thead>
                                 <tr>
-                                    <th>쿠폰명</th>
-                                    <th>할인금액</th>
-                                    <th>사용조건금액(이상)</th>
-                                    <th>만료일자</th>
-                                    <th>등록자</th>
+                                    <th style="width: 30px;">
+                                        <input type="checkbox" id="checkAll" class="flat">
+                                    </th>
+                                    <th>회원아이디</th>
+                                    <th>이름</th>
+                                    <th>닉네임</th>
+                                    <th>권한</th>
+                                    <th>등급</th>
+                                    <!-- <th>연락처</th>
+                                    <th>이메일</th> -->
+                                    <th>가입일</th>
+                                    <th>최근접속일</th>
+                                    <th style="width: 80px">상태</th>
+                                    <th style="width: 120px">관리</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <!--
+                                <tr th:if="${not #lists.isEmpty(userList)}" th:each="l : ${userList}">
+                                    <td>
+								        <input type="checkbox" class="indivChecks flat">
+							        </td>
+                                    <td th:text="${l.userId}"></td>
+                                    <td th:text="${l.userName}"></td>
+                                    <td th:text="${l.userNickname}"></td>
+                                    <td th:text="${l.rightList.rightStatus}"></td>
+                                    <td th:text="${l.userLevelName}"></td>
+                                    <td th:text="${l.userRegDate}"></td>
+                                    <td th:text="${l.userUpdateDate}"></td>
+                                    <td th:text="${l.userStatus}" th:value="${l.userStatus}" id="userStatus"></td>
+                                    <td>
+                                        <a th:if="${l.rightList.rightStatus == '판매자' and l.userStatus == '정상'}" th:href="@{/admin/user/sellerDetail(sellerId=${l.userId})}">
+                                            <i class="fa fa-info-circle"></i> 상세 &nbsp;
+                                        </a>
+                                        <a th:unless="${l.rightList.rightStatus == '판매자' and l.userStatus == '정상'}" th:href="@{/admin/user/userDetail(userId=${l.userId})}">
+                                            <i class="fa fa-info-circle"></i> 상세 &nbsp;
+                                        </a>
+                                        <a href="#"><i class="fa fa-close"></i> 탈퇴 &nbsp;</a>
+                                    </td>
+                                </tr>
+                                !-->
+                                <tr th:unless="${not #lists.isEmpty(userList)}">
+                                    <td colspan="14" style="text-align: center;">등록된 회원이 없습니다.</td>
                                 </tr>
                                 </tbody>
                             </table>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-success float-middle createBtn">생성</button>
+                                <button type="submit" class="btn btn-success float-middle couponIssueBtn">쿠폰발급</button>
                                 <button type="button" class="btn btn-warning float-middle resetBtn">초기화</button>
                             </div>
-                        </form>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -146,7 +178,9 @@
 <th:block layout:fragment="customJsScript">
     <script type="text/javascript">
         $(function(){
-
+            $('.getUserBtn').click(function (){
+                console.log(2);
+            })
         });
     </script>
 </th:block>
