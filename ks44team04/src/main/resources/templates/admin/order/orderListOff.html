@@ -47,10 +47,24 @@
                                 <td>
                                     <span th:text="${l.orderStatus}">주문처리중</span>
                                 </td>
-                                <td>
-                                    <button class="btn btn-danger">주문취소</button>
+                                <td th:if="${l.orderStatus == '교환요청'}">
+                                    <button class="btn btn-danger">교환처리</button>
                                 </td>
-
+                                <td th:if="${l.orderStatus == '반품요청'}">
+                                    <button class="btn btn-danger">환불처리</button>
+                                </td>
+                                <td th:if="${#strings.contains(l.orderStatus, '완료')}">
+                                    <span>-</span>
+                                </td>
+                                <td th:if="${#strings.contains(l.orderStatus, '반품')}">
+                                    <span>-</span>
+                                </td>
+                                <td th:if="${#strings.contains(l.orderStatus, '취소')}">
+                                <span>-</span>
+                                </td>
+                                <td th:if="${#strings.contains(l.orderStatus, '교환')}">
+                                <span>-</span>
+                                </td>
 
                             </tr>
                         </th:block>
