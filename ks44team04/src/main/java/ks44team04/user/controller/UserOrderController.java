@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -112,7 +114,7 @@ public class UserOrderController {
         ResponseEntity<Object> companyObj = service.getData("https://apis.tracker.delivery/carriers");
         JsonArray companyArray = gson.toJsonTree(companyObj.getBody()).getAsJsonArray();
         for (JsonElement jsonElement : companyArray) {
-            if(jsonElement.getAsJsonObject().get("name").getAsString().contains(pcn)) {
+            if (jsonElement.getAsJsonObject().get("name").getAsString().contains(pcn)) {
                 company = jsonElement.getAsJsonObject().get("id").getAsString();
             }
         }
@@ -197,11 +199,47 @@ public class UserOrderController {
     }
 
     @PostMapping("/end")
-    public String setOrder(@RequestBody Order order) {
+    public String setOrder(Order order, OrderDetail orderDetail, OrderDetailStr orderDetailStr) {
         String sessionId = "buyer01";
+        String orderNum = orderService.getOrderNum();
 
+        if (orderNum == null) {
+            LocalDate now = LocalDate.now();
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
+            orderNum = now.format(format) + "001";
+        } else {
+            orderNum = CodeIndex.codeIndex(orderNum, 8);
+        }
+
+        if ("".equals(order.getCouponCode())) {
+            order.setCouponCode(null);
+        }
+
+        order.setOrderNum(orderNum);
         order.setBuyerId(sessionId);
+
         orderService.setOrder(order);
+
+        log.info("=============================={}", orderDetailStr);
+        log.info("=============================={}", orderDetailStr.getGoodsCode());
+        log.info("=============================={}", (String[]) orderDetailStr.getGoodsCode().split(","));
+        log.info("=============================={}", orderDetailStr.getGoodsCode().split(",").length);
+        log.info("=============================={}", orderDetailStr.getGoodsCode().split(",")[0]);
+        log.info("=============================={}", orderDetailStr.getGoodsCode().split(",")[1]);
+
+
+        for (int i = 0; i < orderDetailStr.getGoodsCode().split(",").length; i++) {
+            orderDetail.setOrderDetailCode(orderNum + "_" + (i + 1));
+            orderDetail.setOrderNum(orderNum);
+            orderDetail.setGoodsCode(orderDetailStr.getGoodsCode().split(",")[i]);
+            orderDetail.setOrderAmount(Integer.parseInt(orderDetailStr.getOrderAmount().split(",")[i]));
+            orderDetail.setOrderOgPrice(Integer.parseInt(orderDetailStr.getOrderOgPrice().split(",")[i]));
+            orderDetail.setOrderPrice(Integer.parseInt(orderDetailStr.getOrderPrice().split(",")[i]));
+            log.info("============={}", orderDetail);
+            orderService.setOrderDetail(orderDetail);
+        }
+
+
         return "redirect:/user/order/checkout";
     }
 

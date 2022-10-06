@@ -18,6 +18,10 @@ public class Order {
     private String finalConfirmDate;
     private String postAddressList;
 
+    private int toInt(String str) {
+        return Integer.parseInt(str);
+    }
+
     public String getOrderNum() {
         return orderNum;
     }
@@ -65,6 +69,9 @@ public class Order {
     public void setTotalSum(int totalSum) {
         this.totalSum = totalSum;
     }
+    public void setTotalSum(String totalSum) {
+        this.totalSum = toInt(totalSum);
+    }
 
     public int getTotalPrice() {
         return totalPrice;
@@ -72,6 +79,9 @@ public class Order {
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
+    }
+    public void setTotalPrice(String totalPrice) {
+        this.totalPrice = toInt(totalPrice);
     }
 
     public int getCouponPrice() {
@@ -81,6 +91,9 @@ public class Order {
     public void setCouponPrice(int couponPrice) {
         this.couponPrice = couponPrice;
     }
+    public void setCouponPrice(String  couponPrice) {
+        this.couponPrice = toInt(couponPrice);
+    }
 
     public int getUsePoint() {
         return usePoint;
@@ -88,6 +101,9 @@ public class Order {
 
     public void setUsePoint(int usePoint) {
         this.usePoint = usePoint;
+    }
+    public void setUsePoint(String usePoint) {
+        this.usePoint = toInt(usePoint);
     }
 
     public int getGoodsDiscountPrice() {
@@ -97,6 +113,9 @@ public class Order {
     public void setGoodsDiscountPrice(int goodsDiscountPrice) {
         this.goodsDiscountPrice = goodsDiscountPrice;
     }
+    public void setGoodsDiscountPrice(String goodsDiscountPrice) {
+        this.goodsDiscountPrice = toInt(goodsDiscountPrice);
+    }
 
     public int getPostPrice() {
         return postPrice;
@@ -104,6 +123,9 @@ public class Order {
 
     public void setPostPrice(int postPrice) {
         this.postPrice = postPrice;
+    }
+    public void setPostPrice(String postPrice) {
+        this.postPrice = toInt(postPrice);
     }
 
     public int getTotalOrderPrice() {
@@ -113,6 +135,9 @@ public class Order {
     public void setTotalOrderPrice(int totalOrderPrice) {
         this.totalOrderPrice = totalOrderPrice;
     }
+    public void setTotalOrderPrice(String totalOrderPrice) {
+        this.totalOrderPrice = toInt(totalOrderPrice);
+    }
 
     public int getFinalConfirmPrice() {
         return finalConfirmPrice;
@@ -120,6 +145,9 @@ public class Order {
 
     public void setFinalConfirmPrice(int finalConfirmPrice) {
         this.finalConfirmPrice = finalConfirmPrice;
+    }
+    public void setFinalConfirmPrice(String finalConfirmPrice) {
+        this.finalConfirmPrice = toInt(finalConfirmPrice);
     }
 
     public String getFinalConfirmDate() {
