@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import ks44team04.dto.User;
+import ks44team04.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,15 +27,17 @@ public class CouponController {
 	private static final Logger log = LoggerFactory.getLogger(CouponController.class);
 	
 	private final CouponService couponService;
-	
+	private final UserService userService;
+
 	@PostConstruct
 	public void couponControllerInit() {
 		
 		log.info("couponController Bean 생성");
 	}
 	
-	public CouponController(CouponService couponService) {
+	public CouponController(CouponService couponService, UserService userService) {
 		this.couponService = couponService;
+		this.userService = userService;
 	}
 	
 	@PostMapping("/couponCreate")
@@ -45,7 +49,16 @@ public class CouponController {
 
 		return "redirect:/admin/coupon/couponList";
 	}
-	
+
+	@GetMapping("/userList")
+	public String getUserList(Model model) {
+		List<User> userList = userService.getUserList();
+		log.info("회원의 목록 ::: {}", userList);
+		model.addAttribute("userList", userList);
+
+		return "admin/user/userList";
+	}
+
 	//쿠폰보유현황
 	@GetMapping("/couponStatus")
 	public String CouponStatus(Model model) {
