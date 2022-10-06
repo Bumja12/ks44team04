@@ -29,6 +29,13 @@ public class CouponService {
 		log.info("couponService bean 생성");
 	}
 
+	// 쿠폰생성
+	public void couponCreate(Coupon coupon){
+
+		couponMapper.couponCreate(coupon);
+
+	}
+
 	// 쿠폰보유현황
 	public List<CouponStatus> couponStatus() {
 

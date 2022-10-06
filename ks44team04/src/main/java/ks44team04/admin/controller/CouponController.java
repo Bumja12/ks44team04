@@ -3,8 +3,6 @@ package ks44team04.admin.controller;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,14 +38,12 @@ public class CouponController {
 	
 	@PostMapping("/couponCreate")
 	public String CouponCreate(Coupon coupon
-								,HttpSession session
 								,RedirectAttributes reAttr) {
-		
-		System.out.println(session.getId());
-		coupon.setRegId(session.getId());
-		
-		
-		return "/admin/coupon/couponList";
+
+		System.out.println(coupon);
+		couponService.couponCreate(coupon);
+
+		return "redirect:/admin/coupon/couponList";
 	}
 	
 	//쿠폰보유현황
