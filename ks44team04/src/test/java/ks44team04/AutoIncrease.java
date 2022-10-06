@@ -11,7 +11,7 @@ public class AutoIncrease {
 
     @Test
     void autoInc() {
-        String nextGoodsCode = CodeIndex.codeIndex("WN895006", 5);
+        String nextGoodsCode = CodeIndex.codeIndex("regularAsk005", 10);
         log.info("{}", nextGoodsCode);
     }
 }
