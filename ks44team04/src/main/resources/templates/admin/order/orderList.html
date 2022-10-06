@@ -8,6 +8,66 @@
 </th:block>
 
 <th:block layout:fragment="customContents">
-    안녕하세욘
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>주문관리</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <div class="table-responsive">
+                    <table class="table table-striped jambo_table">
+                        <thead>
+                        <tr class="headings">
+                            <th class="column-title">주문번호</th>
+                            <th class="column-title">상품명</th>
+                            <th class="column-title">수량</th>
+                            <th class="column-title">구매자</th>
+                            <th class="column-title">주문현황</th>
+                            <th class="column-title">버튼</th>
+                            <th class="column-title">버튼</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <th:block>
+                            <tr class="pointer">
+                                <td>
+                                    <a href="#">20221006001_1</a>
+                                <td>
+                                    <a href="#">맛있는사과</a>
+                                </td>
+                                <td>2</td>
+                                <td>buyer01</td>
+                                <td>주문처리중</td>
+                                <td>주문확인</td>
+                                <td>배송지입력</td>
+                                <td>주문취소</td>
+                            </tr>
+                        </th:block>
+                        <th:block>
+                            <tr th:unless="${not #lists.isEmpty(addressList)}">
+                                <td colspan="9">등록된 배송지가 없습니다.</td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="customJsScript">
+    <th:block th:replace="/fragments/adminJs :: datatablesFragment"></th:block>
+    <script>
+
+        function deleteAddressFn(href) {
+            if (confirm("정말로 삭제하시겠습니까?")) {
+                location.href = `/admin/address/delete/${href}`;
+            }
+        }
+    </script>
 </th:block>
 </html>

@@ -159,9 +159,15 @@
     <select id="getOrderNum" resultType="String">
         select max(order_num)
         from tb_order
-        where order_num like concat('', '#');
-
+        where order_num like concat( (curdate() + 0), '%' );
     </select>
+    
+    <insert id="setOrderDetail" parameterType="OrderDetail">
+        insert into tb_order_detail (order_detail_code, order_num, goods_code, order_amount, order_og_price, order_price,
+                                     order_status, refund_check, auto_confirm_date)
+        values (#{orderDetailCode}, #{orderNum}, #{goodsCode}, #{orderAmount}, #{orderOgPrice}, #{orderPrice}, '주문처리중',
+                'Y', date_add(now(), interval 7 day));
+    </insert>
 
 </mapper>
 

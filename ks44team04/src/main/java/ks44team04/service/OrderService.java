@@ -56,4 +56,12 @@ public class OrderService {
     public void setOrder(Order order) {
         orderMapper.setOrder(order);
     }
+
+    public String getOrderNum() {
+        return orderMapper.getOrderNum();
+    }
+
+    public void setOrderDetail(OrderDetail orderDetail) {
+        orderMapper.setOrderDetail(orderDetail);
+    }
 }

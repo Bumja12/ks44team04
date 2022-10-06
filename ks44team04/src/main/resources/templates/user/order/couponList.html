@@ -46,14 +46,13 @@
     document.querySelector('#couponList').addEventListener('click', function (e) {
         if (e.target.classList.contains('useCoupon')) {
             opener.document.querySelector('#couponPrice').textContent = e.target.dataset.discountPrice + '원';
-            opener.document.querySelector('#couponPrice').dataset.discountPrice = e.target.dataset.discountPrice;
-            opener.document.querySelector('#couponPrice').dataset.couponCode = e.target.dataset.couponCode;
+            opener.document.getElementsByName('couponPrice')[0].value = e.target.dataset.discountPrice;
+            opener.document.getElementsByName('couponCode')[0].value = e.target.dataset.couponCode;
             window.setTimeout(function () {
                 this.close();
             }, 500);
         }
     });
-
 
 </script>
 

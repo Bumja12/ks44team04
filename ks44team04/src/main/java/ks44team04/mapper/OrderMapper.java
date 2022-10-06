@@ -28,4 +28,8 @@ public interface OrderMapper {
     public Goods getGoodsInfo(String goodsCode);
 
     public void setOrder(Order order);
+
+    public String getOrderNum();
+
+    public void setOrderDetail(OrderDetail orderDetail);
 }
