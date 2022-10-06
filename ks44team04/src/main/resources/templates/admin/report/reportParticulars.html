@@ -161,13 +161,13 @@
 							<td><input type="text" style="border: none; "th:value="*{UserDto.userPenalty}" readonly="readonly"></td>
 						</tr>
 						<tr>
-							<th  th:if="*{reportResult} == '반려'" >
-								<input type="hidden" name="userPenalty" th:value="*{totalPenaltyPoint} + *{reportRuleDto.penaltyPoint}">
-								<input type="hidden" name="totalPenaltyPoint" th:value="*{totalPenaltyPoint} + *{reportRuleDto.penaltyPoint}">
+							<th> 
+								<input  type="hidden" id="totalPenalty" th:value="*{totalPenaltyPoint}">
+								<input  type="hidden" id="penaltyPoint" th:value="*{reportRuleDto.penaltyPoint}">
 							</th>
-							<th th:if="*{reportResult} == '승인'">
-								<input type="hidden" name="userPenalty" th:value="*{totalPenaltyPoint} - *{reportRuleDto.penaltyPoint}">
-								<input type="hidden" name="totalPenaltyPoint" th:value="*{totalPenaltyPoint} - *{reportRuleDto.penaltyPoint}">
+							<th >
+								<input type="hidden" id="userPenalty" name="userPenalty" >
+								<input type="hidden" id="totalPenaltyPoint" name="totalPenaltyPoint" >
 							</th>
 							<th style="padding: 0px; text-align: right;" colspan="5" >
 								<input type="hidden" id="penaltyPoint" name="penaltyPoint" th:value="*{reportRuleDto.penaltyPoint}">
@@ -179,6 +179,9 @@
 								</label>
 								<label th:if="*{reportResult} == '승인'" ><i class="glyphicon glyphicon-remove"></i>
 									<button type="button" class=" btn btn-link " value="반려">반려수정</button>
+								</label>
+								<label ><i class="fa fa-rotate-left"></i>
+									<a  th:href="@{/admin/report/reportList}" ><button type="button" class=" btn btn-link">돌아가기</button></a>
 								</label>
 							</th>
 						</tr>
@@ -203,17 +206,27 @@
 		   //$('table').on('click', '.btn', function() {
 	 	/*  $('.btn').each(function() {
 			 $(this).click(function() { */ 
-				 $(document).ready(function() {       
-				     $('.btn').on("click", function() {     //버튼 클릭시 호출되는 함수
+				 $(document).ready(function() {    
+					var totalPenalty = parseInt($('#totalPenalty').val());
+					var penaltyPoint =  parseInt($('#penaltyPoint').val());
+				 		console.log(totalPenalty);
+				 		console.log(penaltyPoint);
+				     $('.btn').on("click", function(penalty) {     //버튼 클릭시 호출되는 함수
 				           if($(this).val() === '반려'){
-				    	 	 $('#reportResult').val('반려');
-				             $( '#reportParticulars' ).submit();
-				     	}else if($(this).val() === '승인'){
-				     		$('#reportResult').val('승인');
-				     		$( '#reportParticulars' ).submit();
-				     	}
-				     });
-				});
+					    	 	 $('#reportResult').val('반려');
+					    	 	 $('#userPenalty').val(totalPenalty - penaltyPoint);
+					    	 	 $('#totalPenaltyPoint').val(totalPenalty - penaltyPoint);
+					             $('#reportParticulars' ).submit();
+				     		}else if($(this).val() === '승인'){
+					     		 $('#reportResult').val('승인');
+						   	 	 $('#userPenalty').val(totalPenalty + penaltyPoint);
+					    	 	 $('#totalPenaltyPoint').val( totalPenalty + penaltyPoint);
+					     		 $('#reportParticulars' ).submit();
+					     	}
+					     });
+					});
+			 	
+			
 		 
 	</script>
 

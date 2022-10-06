@@ -8,29 +8,294 @@
 </th:block>
 
 <th:block layout:fragment="customContents">
-   <div class="row" style="display: inline-block;">
-      <div class="tile_count">
-        <h1>장부관리</h1>
-      </div>
-   </div>
-       
+<style>
+        .div_1 {
+          margin: 7px;
+          border: 0;
+          background: #fff;
+          box-shadow: 0px 1px 12px rgb(0 0 0 / 10%);
+          border-radius: 5px;
+          overflow: hidden;
+          text-align: center ;
+          font-size: 20px;
+          margin-top: 80px;
+          display: flex;
+		  justify-content: space-around
+        }
+
+        .div_2 {
+          margin: 7px;
+          border: 0;
+          background: #fff;
+          box-shadow: 0px 1px 12px rgb(0 0 0 / 10%);
+          border-radius: 5px;
+          overflow: hidden;
+          padding: 30px;
+          font-size: 18px;
+          height: 500px;
+          gap: 0px;
+          
+
+        }
+        th {
+    		text-align: center !important;
+			}
+
+        .div-4 {
+
+          display: flex;
+          justify-content: space-between;
+        }
+</style>
+	<form>
+        <div class="container">
+          <div class="div_1 " style=" padding: 40px 100px 30px 100px; " >
+            <div >
+              <dl>
+                <dt><i class="fa fa-edit" style="font-size: 20px;"></i> 오늘 주문접수</dt>
+                <dd><span id="today_order_count">0</span> 건</dd>
+              </dl>
+            </div>
+
+            <div >
+              <dl>
+                <dt><i class="fa fa-won"></i> 오늘 결제확인</dt>
+                <dd><span id="today_deposit_count">0</span> 건</dd>
+              </dl>
+            </div>
+
+            <div >
+              <dl>
+                <dt><i class="fa fa-money"></i> 오늘 매출</dt>
+	                <dd><span id="today_deposit_price">0</span> 원</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="div-4">
+
+            <div class="div_2 " style="width: 650px; ;">
+              <dl>
+                <dt> 2022년 결제 금액 </dt>
+              </dl>
+                <hr style="border: solid 1px #D3D3D3; ">
+               <div style="overflow: auto; height: 400px; font-size: 14px;text-align: center; ">
+                 <table class="table" >
+                   <thead >
+                     <tr >
+                       <th>월</th>
+                       <th>결제 금액</th>
+                       <th>배송비</th>
+                       <th>총 결제 금액</th>
+                     </tr>
+                   </thead>
+                   <tbody >
+                     <tr >
+                       <td>1월</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                       <td>0원</td>
+
+                     </tr>
+                     <tr>
+                       <td>2월</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                     </tr>
+                     <tr>
+                       <td>3월</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                     </tr>
+                     <tr>
+                       <td>4월</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                     </tr>
+                     <tr>
+                       <td>5월</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                     </tr>
+                     <tr>
+                       <td>6월</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                     </tr>
+                     <tr>
+                       <td>7월</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                     </tr>
+                     <tr>
+                       <td>8월</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                     </tr>
+                     <tr>
+                       <td>9월</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                     </tr>
+                     <tr>
+                       <td>10월</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                     </tr>
+                     <tr>
+                       <td>11월</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                     </tr>
+                     <tr>
+                       <td>12월</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                       <td>0원</td>
+                     </tr>
+                     <tr>
+                       <td colspan="4" style="padding: 0px;"></td>
+
+                     </tr>
+                   </tbody>
+                 </table>
+               </div>	
+            </div>
+            <div class="div_2 " style="width: 1200px;">
+              <dl>
+                <dt> 일주일 결제 금액 </dt>
+              </dl>
+                <hr style="border: solid 1px #D3D3D3;">
+              <div>
+                <canvas id="line-chart" width="800" height="280"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="div_2" style="font-size: 14px; text-align: center; height: 300px; ">
+            <dl>
+              <dt style=" font-size: 18px;"> 2022년 할인 통계 </dt>
+            </dl>
+              <hr style="border: solid 1px #D3D3D3;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>구분</th>
+                  <th>1월</th>
+                  <th>2월</th>
+                  <th>3월</th>
+                  <th>4월</th>
+                  <th>5월</th>
+                  <th>6월</th>
+                  <th>7월</th>
+                  <th>8월</th>
+                  <th>9월</th>
+                  <th>10월</th>
+                  <th>11월</th>
+                  <th>12월</th>
+                </tr>
+              </thead>
+              <thead>
+              <tbody>
+                <tr>
+                  <td>포인트</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                </tr>
+                <tr>
+                  <td>쿠폰</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                </tr>
+                <tr>
+                  <td>이벤트</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                  <td>0원</td>
+                </tr>
+                <tr>
+                  <td style="padding: 0px;" colspan="13"></td>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+	</form>
+
+  
+	 
 
          
           
 </th:block>
 <!-- jQuery -->
-    <th:block layout:fragment="customScript">
+<th:block layout:fragment="customScript">
+<th:block th:replace="fragments/adminJs :: datatablesFragment"></th:block>
+<script th:src="@{/build/js/Chart.min.js}"></script>
+<script>
+      new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+          labels: [7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7],
+          datasets: [{
+            data: [86, 114, 106, 106, 107, 111, 133],
+            label: "결제 금액",
+            borderColor: "#5F04B4",
+            fill: false
+          }, {
+            data: [282, 350, 411, 502, 635, 809, 947],
+            label: "할인 금액",
+            borderColor: "#0431B4",
+            fill: false
+          }
+          ]
+        },
 
-	        </th:block>
-<th:block layout:fragment="customJsScript">
+      });
 
-    <th:block th:replace="fragments/adminJs :: datatablesFragment"></th:block>
-
+    </script>
 </th:block>
-
-	
-
-
- <script src="../vendors/jquery/dist/jquery.min.js"></script>
-   
 </html>
