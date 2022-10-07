@@ -45,7 +45,7 @@ th {
            				<div class="col-sm-12">
 	           				<div class="ml-auto">
 	           					<button class="btn btn-success" type="button" data-toggle="modal" data-target="#couponCreate">쿠폰생성</button>
-								<button class="btn btn-info getUserBtn" type="button" data-toggle="modal" data-target="#couponIssue">쿠폰발급</button>
+								<button class="btn btn-info getUserBtn" type="button">쿠폰발급</button>
 							</div>
            				</div>
 		           	</div>
@@ -55,8 +55,7 @@ th {
 						<thead>
 							<tr>
 								<th style="width: 30px;">
-									<label for="motherCheck"></label>
-									<input type="checkbox" id="motherCheck" class="form-check-input">
+									<input type="checkbox" class="form-check-input motherCheckCoupon">
 								</th>
 								<th>쿠폰명</th>
 								<th>할인금액</th>
@@ -69,7 +68,7 @@ th {
 						</thead>
 						<tbody>
 							<tr th:if="${not #lists.isEmpty(couponList)}" th:each="c : ${couponList}">
-								<td><input type="checkbox" class="childCheck"></td>
+								<td><input type="checkbox" class="childCheckCoupon"></td>
 								<td th:text="${c.couponName}"></td>
 								<td th:text="${'₩' + #numbers.formatInteger(c.discountPrice, 3, 'COMMA')}"></td>
 								<td th:text="${'₩' + #numbers.formatInteger(c.priceTerms, 3, 'COMMA') + ' 이상'}"></td>
@@ -153,8 +152,7 @@ th {
 								<thead>
 								<tr>
 									<th style="width: 30px;">
-										<label for="motherCheck"></label>
-										<input type="checkbox" id="motherCheck" class="form-check-input">
+										<input type="checkbox" class="form-check-input motherCheckUser">
 									</th>
 									<th>회원아이디</th>
 									<th>이름</th>
@@ -167,6 +165,7 @@ th {
 									<th>최근접속일</th>
 									<th>상태</th>
 									<th>관리</th>
+									<th style="display: none"><input type="text" th:value="${session.SID}"></th>
 								</tr>
 								</thead>
 								<tbody class="userList">
@@ -190,6 +189,12 @@ th {
 <th:block layout:fragment="customJsScript">
 	<script type="text/javascript">
 		$(function(){
+			let motherCheckCoupon = $('.motherCheckCoupon');
+			let childCheckCoupon = $('.childCheckCoupon');
+			let motherCheckUser = $('.motherCheckUser');
+			let childCheckUser = $('.childCheckUser');
+
+
 			$('.resetBtn').click(function (){
 				$('.couponInfo').val(null);
 			});
@@ -198,47 +203,59 @@ th {
 				$('.couponInfo').val(null);
 			});
 
-			$('#motherCheck').click(function () {
-				$('.childCheck').prop('checked', $(this).prop('checked'));
+			motherCheckCoupon.click(function () {
+				childCheckCoupon.prop('checked', $(this).prop('checked'));
+			});
+
+			motherCheckUser.click(function () {
+				$('.childCheckUser').prop('checked', $(this).prop('checked'));
 			});
 
 			$('.getUserBtn').click(function (){
-				var request = $.ajax({
-					url: "/admin/coupon/userList",
-					method: 'GET',
-					data: { 'getUserListCheck' : true },
-					dataType: "json"
-				});
+				let checksCoupon = childCheckCoupon.is(':checked');
+				if(checksCoupon){
+					$('#couponIssue').modal('show');
+					var request = $.ajax({
+						url: "/admin/coupon/userList",
+						method: 'GET',
+						data: { 'getUserListCheck' : true },
+						dataType: "json"
+					});
 
-				request.done(function( data ) {
+					request.done(function( data ) {
 
-					let userList = "";
+						let userList = "";
 
-					$.each(data, function(index, item){
-						userList += "<tr>"
-						userList += "<td><input type=\"checkbox\" name='userId' value='"+ data[index].userId + "' class=\"childCheck\"></td>"
-						userList += "<td>" + data[index].userId + "</td>"
-						userList += "<td>" + data[index].userName + "</td>"
-						userList += "<td>" + data[index].userNickname + "</td>"
-						userList += "<td>" + data[index].rightList.rightStatus + "</td>"
-						userList += "<td>" + data[index].userLevelName + "</td>"
-						userList += "<td>" + data[index].userRegDate + "</td>"
-						userList += "<td>" + data[index].userUpdateDate + "</td>"
-						userList += "<td>" + data[index].userStatus + "</td>"
-						userList += "<td>" + data[index].rightList.rightStatus + "</td>"
-						userList += "</tr>"
-					})
+						$.each(data, function(index, item){
+							userList += "<tr>"
+							userList += "<td><input type=\"checkbox\" name='userId' value='"+ data[index].userId + "' class=\"childCheckUser\"></td>"
+							userList += "<td>" + data[index].userId + "</td>"
+							userList += "<td>" + data[index].userName + "</td>"
+							userList += "<td>" + data[index].userNickname + "</td>"
+							userList += "<td>" + data[index].rightList.rightStatus + "</td>"
+							userList += "<td>" + data[index].userLevelName + "</td>"
+							userList += "<td>" + data[index].userRegDate + "</td>"
+							userList += "<td>" + data[index].userUpdateDate + "</td>"
+							userList += "<td>" + data[index].userStatus + "</td>"
+							userList += "<td>" + data[index].rightList.rightStatus + "</td>"
+							userList += "</tr>"
+						})
 
-					$('.userList').prepend(userList);
+						$('.userList').prepend(userList);
 
-					$('#couponIssue').on('hidden.bs.modal', function(e) {
-						$('.userList').empty();
-					})
-				});
+						$('#couponIssue').on('hidden.bs.modal', function(e) {
+							$('.userList').empty();
+						})
+					});
 
-				request.fail(function( jqXHR, textStatus ) {
-					alert( "Request failed: " + textStatus );
-				});
+					request.fail(function( jqXHR, textStatus ) {
+						alert( "Request failed: " + textStatus );
+					});
+
+				}else {
+					alert('발급할 쿠폰을 선택해주세요.')
+				}
+
 			})
 		});
 	</script>
