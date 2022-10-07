@@ -177,7 +177,7 @@
               </dl>
                 <hr style="border: solid 1px #D3D3D3;">
               <div>
-                <canvas id="line-chart" width="800" height="280"></canvas>
+                <canvas id="line-sellerBook" width="800" height="280"></canvas>
               </div>
             </div>
           </div>
@@ -276,7 +276,7 @@
 <th:block th:replace="fragments/adminJs :: datatablesFragment"></th:block>
 <script th:src="@{/build/js/Chart.min.js}"></script>
 <script>
-      new Chart(document.getElementById("line-chart"), {
+      new Chart(document.getElementById("line-sellerBook"), {
         type: 'line',
         data: {
           labels: [7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7],
