@@ -1,6 +1,7 @@
 package ks44team04.service;
 
 import java.util.List;
+import java.util.Map;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -62,4 +63,19 @@ public class RegularAskService {
     	regularAskMapper.addRegularAsk(regularAsk);
     }
     
+    // 자주 묻는 질문 검색
+    public List<RegularAsk> searchRegularAsk(Map<String, Object> paramMap){
+    	
+    	List<RegularAsk> searchResult = regularAskMapper.searchRegularAsk(paramMap);
+    	// System.out.println(searchResult);
+    	
+		return searchResult;
+    }
+    
+    // 자주 묻는 질문 삭제
+    public void removeRegularAsk(String regularAskPK) {
+    	
+    	regularAskMapper.removeRegularAsk(regularAskPK);
+    };
+
 }
