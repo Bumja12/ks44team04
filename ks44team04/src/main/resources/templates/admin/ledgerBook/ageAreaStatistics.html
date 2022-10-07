@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+<style>
+        .div_1 {
+          margin: 7px;
+          border: 0;
+          background: #fff;
+          box-shadow: 0px 1px 12px rgb(0 0 0 / 10%);
+          border-radius: 5px;
+          overflow: hidden;
+          text-align: center;
+          padding: 30px;
+          font-size: 18px;
+          margin-top: 80px;
+          
+        }
+
+        .div_2 {
+          margin: 7px;
+          border: 0;
+          background: #fff;
+          box-shadow: 0px 1px 12px rgb(0 0 0 / 10%);
+          border-radius: 5px;
+          overflow: hidden;
+          padding: 30px;
+          font-size: 18px;
+          height: 1000px;
+          gap: 0px;
+
+        }
+
+        .div-4 {
+          display: flex;
+          justify-content: space-around;
+        }
+</style>
+
+	<form>
+	  
+          <!--연령 별 -->
+       <div class=" div_1 ">
+            <dl><dt style="text-align: left;">연령별</dt></dl>
+            <hr style="border: solid 1px #D3D3D3; ">
+            <div class="div-4">
+              <div>
+                <canvas id="pie-ageNumber" width="600" height="350"></canvas>
+              </div>
+              <div>
+                <canvas id="pie-ageAmount" width="600" height="350"></canvas>
+              </div>
+            </div>
+            <div>
+              <table class="table table-bordered" style="margin-top: 20px; font-size: 15px;">
+                <tbody>
+                  <tr>
+                    <th rowspan="2">
+                       
+                    </th>
+                    <th colspan="3">
+                       10대
+                    </th>
+                    <th colspan="3">
+                       20대
+                    </th>
+                    <th colspan="3">
+                       30대
+                    </th>
+                    <th colspan="3">
+                       40대
+                    </th>
+                    <th colspan="3">
+                       50대
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>남</td>
+                    <td>여</td>
+                    <td>통합</td>
+                    <td>남</td>
+                    <td>여</td>
+                    <td>통합</td>
+                    <td>남</td>
+                    <td>여</td>
+                    <td>통합</td>
+                    <td>남</td>
+                    <td>여</td>
+                    <td>통합</td>
+                    <td>남</td>
+                    <td>여</td>
+                    <td>통합</td>
+                  </tr>
+                  <tr>
+                    <td>금액</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>건수</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <!-- 지역별 -->
+          <div class=" div_2 " style="height: 750px;">
+            <dl><dt style="text-align: left;">지역별</dt></dl>
+            <hr style="border: solid 1px #D3D3D3; ">
+            <div class="div-4">
+              <div>
+                <canvas id="line-statistics" width="1650" height="450"></canvas>
+              </div>
+            </div>
+            <div style="margin-top: 50Px;">
+              <table class="table table-bordered" style="margin-top: 20px; font-size: 15px;">
+                <tbody>
+                  <tr>
+                    <td>지역</td>
+                    <td>서울</td>
+                    <td>경기도</td>
+                    <td>강원도</td>
+                    <td>인천</td>
+                    <td>충청남도</td>
+                    <td>충청북도</td>
+                    <td>대전</td>
+                    <td>경상북도</td>
+                    <td>경상남도</td>
+                    <td>대구</td>
+                    <td>울산</td>
+                    <td>부산</td>
+                    <td>전라북도</td>
+                    <td>전라남도</td>
+                    <td>광주</td>
+                    <td>제주</td>
+                  </tr>
+                  
+                  <tr>
+                    <td>금액</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>건수</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                </tbody>
+              </table>  
+            </div>
+          </div>
+	</form>
+
+  
+	 
+
+         
+          
+</th:block>
+<!-- jQuery -->
+<th:block layout:fragment="customScript">
+<th:block th:replace="fragments/adminJs :: datatablesFragment"></th:block>
+<script th:src="@{/build/js/Chart.min.js}"></script>
+
+<!--연령별-->
+<script>
+   new Chart(document.getElementById("pie-ageNumber"), {
+    type: 'pie',
+    data: {
+      labels: ["10대", "20대", "30대", "40대 ", "50대"],
+      datasets: [{
+        label: "Population (millions)",
+        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+        data: [2478,5267,734,784,433]
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '연령별 건수'
+      }
+    }
+});
+</script>
+<!--연령별-->
+<script>
+   new Chart(document.getElementById("pie-ageAmount"), {
+    type: 'pie',
+    data: {
+      labels: ["10대", "20대", "30대", "40대 ", "50대"],
+      datasets: [{
+        label: "Population (millions)",
+        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+        data: [2478,5267,734,784,433]
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '연령별 금액'
+      }
+    }
+});
+</script>
+
+<!--지역별 -->
+
+
+<script>
+  new Chart(document.getElementById("line-statistics"), {
+  type: 'line',
+  data: {
+    labels: ['2022.06.12', '2022.06.13', '2022.06.14', '2022.06.15', '2022.06.16', '2022.06.17', '2022.06.18', '2022.06.19', '2022.06.20', '2022.06.21'],
+    datasets: [{ 
+        data: [86,114,106,106,107,111,133,221,783,2478],
+        label: "서울",
+        borderColor: "#D84F2B",
+        fill: false
+      }, { 
+        data: [282,350,411,502,635,809,947,1402,3700,5267],
+        label: "경기도",
+        borderColor: "#F36F3F",
+        fill: false
+      }, { 
+        data: [168,170,178,190,203,276,408,547,675,734],
+        label: "강원도",
+        borderColor: "#FCA148",
+        fill: false
+      }, { 
+        data: [40,20,10,16,24,38,74,167,508,784],
+        label: "인천",
+        borderColor: "#F2C454",
+        fill: false
+      }, { 
+        data: [6,3,2,2,7,26,82,172,312,433],
+        label: "충청남도",
+        borderColor: "#CFB81D",
+        fill: false
+      }, { 
+        data: [282,350,411,502,635,809,947,1402,3700,5267],
+        label: "충청북도",
+        borderColor: "#A09F20",
+        fill: false
+      }, { 
+        data: [168,170,178,190,203,276,408,547,675,734],
+        label: "대전",
+        borderColor: "#93CE94",
+        fill: false
+      }, { 
+        data: [40,20,10,16,24,38,74,167,508,784],
+        label: "경상북도",
+        borderColor: "#72A34A",
+        fill: false
+      }, { 
+        data: [6,3,2,2,7,26,82,172,312,433],
+        label: "경상남도",
+        borderColor: "#8CD2D0",
+        fill: false
+      }, { 
+        data: [282,350,411,502,635,809,947,1402,3700,5267],
+        label: "대구",
+        borderColor: "#3DBAB4",
+        fill: false
+      }, { 
+        data: [168,170,178,190,203,276,408,547,675,734],
+        label: "울산",
+        borderColor: "#1A9BAE",
+        fill: false
+      }, { 
+        data: [40,20,10,16,24,38,74,167,508,784],
+        label: "부산",
+        borderColor: "#5587A2",
+        fill: false
+      }, { 
+        data: [6,3,2,2,7,26,82,172,312,433],
+        label: "전라북도",
+        borderColor: "#FFDAB9",
+        fill: false
+      }, { 
+        data: [168,170,178,190,203,276,408,547,675,734],
+        label: "전라남도",
+        borderColor: "#FFE4B5",
+        fill: false
+      }, { 
+        data: [40,20,10,16,24,38,74,167,508,784],
+        label: "광주",
+        borderColor: "#F4A460",
+        fill: false
+      }, { 
+        data: [6,3,2,2,7,26,82,172,312,433],
+        label: "제주",
+        borderColor: "#DEB887",
+        fill: false
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: '지역별 금액'
+    }
+  }
+});
+</script>
+    
+</th:block>
+</html>

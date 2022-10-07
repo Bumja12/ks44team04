@@ -102,7 +102,7 @@
     </div>
 
     <div class="modal fade" id="couponIssue" tabindex="-1" role="dialog" aria-labelledby="searchPaymentDetail" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg" style="max-width: 80%" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title" id="couponIssueTitle">쿠폰발급하기</h2>
@@ -116,7 +116,8 @@
                                 <thead>
                                 <tr>
                                     <th style="width: 30px;">
-                                        <input type="checkbox" id="checkAll" class="flat">
+                                        <label for="motherCheck"></label>
+                                        <input type="checkbox" id="motherCheck" class="form-check-input">
                                     </th>
                                     <th>회원아이디</th>
                                     <th>이름</th>
@@ -127,38 +128,11 @@
                                     <th>이메일</th> -->
                                     <th>가입일</th>
                                     <th>최근접속일</th>
-                                    <th style="width: 80px">상태</th>
-                                    <th style="width: 120px">관리</th>
+                                    <th>상태</th>
+                                    <th>관리</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <!--
-                                <tr th:if="${not #lists.isEmpty(userList)}" th:each="l : ${userList}">
-                                    <td>
-								        <input type="checkbox" class="indivChecks flat">
-							        </td>
-                                    <td th:text="${l.userId}"></td>
-                                    <td th:text="${l.userName}"></td>
-                                    <td th:text="${l.userNickname}"></td>
-                                    <td th:text="${l.rightList.rightStatus}"></td>
-                                    <td th:text="${l.userLevelName}"></td>
-                                    <td th:text="${l.userRegDate}"></td>
-                                    <td th:text="${l.userUpdateDate}"></td>
-                                    <td th:text="${l.userStatus}" th:value="${l.userStatus}" id="userStatus"></td>
-                                    <td>
-                                        <a th:if="${l.rightList.rightStatus == '판매자' and l.userStatus == '정상'}" th:href="@{/admin/user/sellerDetail(sellerId=${l.userId})}">
-                                            <i class="fa fa-info-circle"></i> 상세 &nbsp;
-                                        </a>
-                                        <a th:unless="${l.rightList.rightStatus == '판매자' and l.userStatus == '정상'}" th:href="@{/admin/user/userDetail(userId=${l.userId})}">
-                                            <i class="fa fa-info-circle"></i> 상세 &nbsp;
-                                        </a>
-                                        <a href="#"><i class="fa fa-close"></i> 탈퇴 &nbsp;</a>
-                                    </td>
-                                </tr>
-                                !-->
-                                <tr th:unless="${not #lists.isEmpty(userList)}">
-                                    <td colspan="14" style="text-align: center;">등록된 회원이 없습니다.</td>
-                                </tr>
+                                <tbody class="userList">
                                 </tbody>
                             </table>
                             <div class="text-center">
@@ -178,8 +152,49 @@
 <th:block layout:fragment="customJsScript">
     <script type="text/javascript">
         $(function(){
-            $('.getUserBtn').click(function (){
+
+                $('#motherCheck').change(function (){
                 console.log(2);
+                $('.childCheck').prop('checked', $(this).prop('checked'));
+            })
+
+            $('.getUserBtn').click(function (){
+                var request = $.ajax({
+                    url: "/admin/coupon/userList",
+                    method: 'GET',
+                    data: { 'getUserListCheck' : true },
+                    dataType: "json"
+                });
+
+                request.done(function( data ) {
+
+                    let userList = "";
+
+                    $.each(data, function(index, item){
+                        userList += "<tr>"
+                        userList += "<td><input type=\"checkbox\" class=\"childCheck\"></td>"
+                        userList += "<td>" + data[index].userId + "</td>"
+                        userList += "<td>" + data[index].userName + "</td>"
+                        userList += "<td>" + data[index].userNickname + "</td>"
+                        userList += "<td>" + data[index].rightList.rightStatus + "</td>"
+                        userList += "<td>" + data[index].userLevelName + "</td>"
+                        userList += "<td>" + data[index].userRegDate + "</td>"
+                        userList += "<td>" + data[index].userUpdateDate + "</td>"
+                        userList += "<td>" + data[index].userStatus + "</td>"
+                        userList += "<td>" + data[index].rightList.rightStatus + "</td>"
+                        userList += "</tr>"
+                    })
+
+                    $('.userList').prepend(userList);
+
+                    $('#couponIssue').on('hidden.bs.modal', function(e) {
+                        $('.userList').empty();
+                    })
+                });
+
+                request.fail(function( jqXHR, textStatus ) {
+                    alert( "Request failed: " + textStatus );
+                });
             })
         });
     </script>
