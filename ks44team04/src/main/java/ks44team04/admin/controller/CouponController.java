@@ -38,6 +38,20 @@ public class CouponController {
 		this.userService = userService;
 	}
 
+	@PostMapping("/couponIssue")
+	public String CouponIssue(@RequestParam List<String> userId) {
+
+		System.out.println(userId);
+
+		for (String couponId: userId){
+			CouponStatus couponIssue = new CouponStatus();
+			couponIssue.setBuyerId(couponId);
+
+		}
+
+		return "redirect:/admin/coupon/couponStatus";
+	}
+
 	//쿠폰발급
 	@GetMapping("/userList")
 	@ResponseBody
@@ -45,7 +59,6 @@ public class CouponController {
 
 		if(getUserListCheck){
 			List<User> userList = userService.getUserList();
-			log.info("회원의 목록 ::: {}", userList);
 
 			return userList;
 
