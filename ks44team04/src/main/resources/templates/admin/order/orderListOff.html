@@ -5,6 +5,7 @@
 
 <th:block layout:fragment="customTitle">
     <title th:text="${title}"></title>
+    <link rel="stylesheet" th:href="@{/build/css/page.css}">
 </th:block>
 
 <th:block layout:fragment="customContents">
@@ -14,7 +15,11 @@
                 <h2>주문관리</h2>
                 <div class="clearfix"></div>
             </div>
-
+            <div class="x_panel">
+                <a href="javascript:getOrderList('취소')">취소</a>
+                <a href="javascript:getOrderList('교환')">교환</a>
+                <a href="javascript:getOrderList('반품')">반품</a>
+            </div>
             <div class="x_content">
                 <div class="table-responsive">
                     <table class="table table-striped jambo_table">
@@ -26,55 +31,17 @@
                             <th class="column-title">구매자</th>
                             <th class="column-title">주문현황</th>
                             <th class="column-title">버튼</th>
-                            <th class="column-title">버튼</th>
                         </tr>
                         </thead>
-
-                        <tbody>
-                        <th:block th:each="l : ${orderList}">
-                            <tr class="pointer">
-                                <td>
-                                    <a href="#" th:text="${l.orderDetailCode}">20221006001_1</a>
-                                <td>
-                                    <a href="#" th:text="${l.goods.goodsName}">맛있는사과</a>
-                                </td>
-                                <td>
-                                    <span th:text="${l.orderAmount}">2</span>
-                                </td>
-                                <td>
-                                    <span th:text="${l.order.buyerId}">buyer01</span>
-                                </td>
-                                <td>
-                                    <span th:text="${l.orderStatus}">주문처리중</span>
-                                </td>
-                                <td th:if="${l.orderStatus == '교환요청'}">
-                                    <button class="btn btn-danger">교환처리</button>
-                                </td>
-                                <td th:if="${l.orderStatus == '반품요청'}">
-                                    <button class="btn btn-danger">환불처리</button>
-                                </td>
-                                <td th:if="${#strings.contains(l.orderStatus, '완료')}">
-                                    <span>-</span>
-                                </td>
-                                <td th:if="${#strings.contains(l.orderStatus, '반품')}">
-                                    <span>-</span>
-                                </td>
-                                <td th:if="${#strings.contains(l.orderStatus, '취소')}">
-                                <span>-</span>
-                                </td>
-                                <td th:if="${#strings.contains(l.orderStatus, '교환')}">
-                                <span>-</span>
-                                </td>
-
-                            </tr>
-                        </th:block>
-                        <th:block>
-                            <tr th:unless="${not #lists.isEmpty(addressList)}">
-                                <td colspan="9">등록된 배송지가 없습니다.</td>
-                            </tr>
-                        </th:block>
+                        <tbody id="tableBody">
                         </tbody>
                     </table>
+                    <ul id="page" class="">
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -84,11 +51,112 @@
 <th:block layout:fragment="customJsScript">
     <th:block th:replace="/fragments/adminJs :: datatablesFragment"></th:block>
     <script>
+        window.addEventListener('load', () => getOrderList('취소'));
 
-        function deleteAddressFn(href) {
-            if (confirm("정말로 삭제하시겠습니까?")) {
-                location.href = `/admin/address/delete/${href}`;
-            }
+        /* ajax 호출 */
+        function getOrderList(status) {
+            let dataPerPage = 10;
+            let pageCount = 10;
+            let globalCurrentPage = 1;
+            let totalData;
+
+            fetch('/admin/order/listoff', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: status
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    /* paging 함수 선언 시작 */
+                    function paging(totalData, dataPerPage, pageCount, currentPage) {
+                        let totalPage = Math.ceil(totalData / dataPerPage);
+
+                        if (totalPage < pageCount) pageCount = totalPage;
+
+                        let pageGroup = Math.ceil(currentPage / pageCount);
+                        let last = pageGroup * pageCount;
+
+                        if (last > totalPage) last = totalPage;
+
+                        let first = last - (pageCount - 1);
+                        let next = last + 1;
+                        let prev = first - 1;
+
+                        let pageHtml = "";
+                        if (prev > 0) pageHtml += "<li><a href='#' id='prev'> 이전 </a></li>";
+
+                        for (let i = first; i <= last; i++) {
+                            if (currentPage === i) {
+                                pageHtml +=
+                                    "<li class='on'><a href='#' id='" + i + "'>" + i + "</a></li>";
+                            } else {
+                                pageHtml += "<li><a href='#' id='" + i + "'>" + i + "</a></li>";
+                            }
+                        }
+
+                        if (last < totalPage) pageHtml += "<li><a href='#' id='next'> 다음 </a></li>";
+
+                        document.querySelector('#page').innerHTML = pageHtml;
+
+                        document.querySelectorAll('#page li a').forEach(function (e) {
+                            e.onclick = function () {
+                                let id = this.getAttribute('id');
+                                let selectedPage = this.textContent;
+
+                                if (id === 'next') selectedPage = next;
+                                if (id === 'prev') selectedPage = prev;
+
+                                globalCurrentPage = selectedPage;
+
+                                paging(totalData, dataPerPage, pageCount, selectedPage, data);
+                                displayData(selectedPage, dataPerPage, data);
+                            }
+                        });
+                    }
+
+                    /* displayData 함수 선언 시작 */
+                    function displayData(currentPage, dataPerPage) {
+                        let trHtml = "";
+                        currentPage = Number(currentPage);
+                        dataPerPage = Number(dataPerPage);
+                        for (
+                            let i = (currentPage - 1) * dataPerPage;
+                            i < (currentPage - 1) * dataPerPage + dataPerPage && i < totalData;
+                            i++
+                        ) {
+                            trHtml +=
+                                '<tr class="pointer"><td><a href="javascript:void(0)">' +
+                                data[i].orderDetailCode +
+                                '</a></td><td><a href="javascript:void(0)">' +
+                                data[i].goods.goodsName +
+                                '</a></td><td>' +
+                                data[i].orderAmount +
+                                '</td><td>' +
+                                data[i].order.buyerId +
+                                '</td><td>' +
+                                data[i].orderStatus +
+                                '</td><td>';
+                            if (data[i].orderStatus === '취소요청') {
+                                trHtml += '<button type="button">취소처리</button>';
+                            } else if (data[i].orderStatus === '교환요청') {
+                                trHtml += '<button type="button">교환처리</button>';
+                            } else if (data[i].orderStatus === '반품요청') {
+                                trHtml += '<button type="button">반품처리</button>';
+                            } else {
+                                trHtml += '-';
+                            }
+
+                            trHtml += '</td></tr>';
+                        }
+                        document.querySelector('#tableBody').innerHTML = trHtml;
+                    }
+
+                    totalData = data.length;
+                    paging(totalData, dataPerPage, pageCount, 1);
+                    displayData(1, dataPerPage);
+                });
         }
     </script>
 </th:block>

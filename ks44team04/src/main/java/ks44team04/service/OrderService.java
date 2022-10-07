@@ -48,11 +48,8 @@ public class OrderService {
     public List<OrderDetail> getOrderList(String userId) {
         return orderMapper.getOrderList(userId);
     }
-    public List<OrderDetail> getOrderListOn(String sellerId) {
-        return orderMapper.getOrderListOn(sellerId);
-    }
-    public List<OrderDetail> getOrderListOff(String sellerId, String status) {
-        return orderMapper.getOrderListOff(sellerId, status);
+    public List<OrderDetail> getOrderListA(String sellerId, String status) {
+        return orderMapper.getOrderListA(sellerId, status);
     }
 
     public Goods getGoodsInfo(String goodsCode) {

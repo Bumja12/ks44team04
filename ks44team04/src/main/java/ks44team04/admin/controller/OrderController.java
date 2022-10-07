@@ -4,9 +4,7 @@ import ks44team04.dto.OrderDetail;
 import ks44team04.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,22 +32,20 @@ public class OrderController {
 
     @GetMapping("/order/liston")
     public String orderListOn(Model model) {
-        String sellerId = "seller01";
-        List<OrderDetail> orderList = orderService.getOrderListOn(sellerId);
+        model.addAttribute("title", "주문목록");
 
-        model.addAttribute("orderList", orderList);
-
-        return "orderList";
+        return "admin/order/orderList";
     }
     @GetMapping("/order/listoff")
-    public String orderListOut(@RequestParam("status") String status,
-                               Model model) {
-        String sellerId = "seller01";
-        List<OrderDetail> orderList = orderService.getOrderListOff(sellerId, status);
-
-        model.addAttribute("orderList", orderList);
-
+    public String orderListOff(Model model) {
+        model.addAttribute("title", "주문관리");
         return "admin/order/orderListOff";
+    }
+    @PostMapping("/order/listoff")
+    @ResponseBody
+    public List<OrderDetail> orderListOffA(@RequestBody String status) {
+        String sellerId = "seller01";
+        return orderService.getOrderListA(sellerId, status);
     }
 
     @GetMapping("/order/cancel")
