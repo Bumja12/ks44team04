@@ -7,7 +7,7 @@
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 <!-- 이미지 내 화살표 아이콘 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-<!-- 별, 장바구니, 찜하기 아이콘 -->
+<!-- 별, 장바구니, 찜하기, 자물쇠 아이콘 -->
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 
 <style>
@@ -15,8 +15,11 @@
 
 /* plus minus 인풋 */
 .center{ width: 150px; }
-.minuPlusBtn{ width:40px; height:40px; border:1px; border-radius: 50%; background-color:#f1f1f1;
-			  font-size: 25px; font-weight:bold; line-height: 20px; }
+.minusBtn{ width:40px; height:40px; border:1px; border-radius: 50%; background-color:#f1f1f1;
+		   font-size: 25px; font-weight:bold; line-height: 20px; }
+.plusBtn{ width:40px; height:40px; border:1px; border-radius: 50%; background-color:#f1f1f1;
+		   font-size: 25px; font-weight:bold; line-height: 20px; }
+.countVal { height:40px !important; text-align:center; border-color:#f1f1f1; }
 button:focus{ outline:none; border:none; }
 
 /* 상품 옆 구분선 */
@@ -48,15 +51,15 @@ button:focus{ outline:none; border:none; }
 div { margin: 5px 0px }
 
 /* 이미지 슬라이드 왼쪽&오른쪽 버튼 */
-.imgleftBtn { display: inline-block; font-weight: 400; text-align: center; vertical-align: middle;
+.imgLeftBtn { display: inline-block; font-weight: 400; text-align: center; vertical-align: middle;
               user-select: none; border: 1px solid transparent; padding: 0.375rem 0.75rem;
               font-size: 1rem; line-height: 1.5; border-radius: 30px; color: #f6f6f6; opacity: 60%;
               background-color:transparent; }
-.imgrightBtn { display: inline-block; font-weight: 400; text-align: center; vertical-align: middle;
+.imgRightBtn { display: inline-block; font-weight: 400; text-align: center; vertical-align: middle;
                user-select: none; border: 1px solid transparent; padding: 0.375rem 0.75rem;
                font-size: 1rem; line-height: 1.5; border-radius: 30px; color: #f6f6f6; opacity: 60%;
                background-color:transparent; margin-left: 404px; }
-.imgleftBtn:focus, .imgrightBtn:focus{ outline:none; }
+.imgLeftBtn:focus, .imgRightBtn:focus{ outline:none; }
 
 /* 이미지 슬라이드 버튼 위치 조정 */
 .imgBtnWrap { position: relative; z-index:1; width: 100%; height: 500px; margin: auto; }
@@ -64,23 +67,47 @@ div { margin: 5px 0px }
 .imgBox {  width:100%; height:500px; }
 
 /* 이미지 슬라이드 밑에 배너 */
-#ulliList ul li { list-style-type: none; display: inline; }
-#ulliList ul { text-align: center; margin: 0; padding: 0;}
-#ulliList li { display: inline-block; }
-#ulliList li img { width: 50px; height: 50px; }
+.imgSlideList ul li { list-style-type: none; display: inline; }
+.imgSlideList ul { text-align: center; margin: 0; padding: 0;}
+.imgSlideList li { display: inline-block; }
+.imgSlideList li img { width: 50px; height: 50px; }
 
 /* 상품 정보&후기&문의 탭 */
 .goodsTabCon .goodsTab { width: 1024px; margin: 0px auto; background-color: #fff; }
 .tabList { list-style:none; vertical-align: top; }
 .goodsTab .goodsTab .tabList::after { content: ''; display: block; clear: both; }
 .goodsTab ul, .goodsTab li { padding:0px; margin:0px; }
-.goodsTab li { border-color: #e0e0e0; float: left; width: 33%; border-bottom: 1px solid #dddddd; border-top: 1px solid #dddddd;}
-.goodsTab li:first-child a { border-left: 1px solid #dddddd; }
-.goodsTab li a { height: 40px; padding: 0; background: #f7f7f7; font-weight: 400; color: #333; line-height: 40px; }
-.goodsTab li a { display: block; height: 42px; padding-top: 8px; border-right: 1px solid #dddddd; text-align: center;
-    			 font-size: 16px; line-height: 30px; font-weight: 400; text-decoration: none; }
-.goodsTab li.on { border-bottom: 0; }
-.goodsTab li.on a, .goodsTab li a:hover { background: 0; }
+.goodsTab li { float: left; display: block; width: 33%; height: 40x; line-height: 40px; background: #f7f7f7; border: 1px solid #dddddd;
+			   padding: 0; color: #333; text-align: center; font-size: 16px; font-weight: 400; text-decoration: none; }
+.goodsTab li.current { border-bottom: 0; }
+.goodsTab li.current, .goodsTab li:hover { background: 0; }
+
+/* 탭 content 디자인 */
+.tabContent { margin-top: 20px; display: none; padding: 0px 20px 0px 20px; height: 100%; }
+.tabContent.current { display: inherit; }
+
+/* 문의 탭 테이블 */
+.qnaNotice { font-size: 22px; color: #333; height: 30px; text-align: left; font-weight: 500; }
+.qnaNoticeText { border: 1px solid #dcdcdc; background-color: #f8f8f8; margin-top: 15px; }
+.qnaNoticeText div { padding: 10px 15px; color: #666; line-height: 1.5; font-size: 14px; font-weight: 400; }
+.qnaTable { width: 100%; table-layout: fixed; border-top: 1px solid #bbb; margin-top: 10px; }
+.qnaTable thead th { height: 45px; text-align: center; font-weight: normal; font-size: 15px; color: #111; border-bottom: 1px solid #ddd; background: #fafafa;}
+.qnaTable tbody td { font-size: 15px; color: #666; line-height: 15px; padding: 15px 0; border-bottom: 1px solid #e6e6e6; text-align: center; }
+.qnaTableUnder { position: relative; width: 100%; height: 40px; display: flex; margin-top:10px; }
+.qnaModalBtn { position: absolute; right: 0px; padding: 0px 10px; text-align: center; width: 110px; height: 40px;
+			   font-size: 15px; background-color: #dbe6c4; border:none; border-radius:28px; }
+			   
+/* 문의하기 모달 스타일 */
+.modal { text-align: center; padding: 0!important; }
+.modal:before { content: ''; display: inline-block; height: 100%; vertical-align: middle; margin-right: -4px; }
+.modal-dialog { display: inline-block; text-align: left; vertical-align: middle; }
+.qnaSelect { width: 100px; border: 1px solid #d3d3d3; border-radius: 3px; outline: none; padding: 5px; }
+.qnaInContent { width: 500px; height:150px; border: 1px solid #d3d3d3; overflow-y:auto; resize: none; border-radius: 3px; outline: none;}
+.secretCheck { position: relative; top: 1.5px; width: 1rem; height: 1rem;  border: 1px solid #d3d3d3; border-radius: 50%; appearance: none; cursor: pointer; transition: background 0.2s; }
+.secretCheck:checked { background: #b3d97a; border: none; }
+.qnaSubmit { cursor:pointer; background-color:#dbe6c4; border-radius: 15px; height: 30px; width: 70px; border:none;}
+.qnaClose { cursor:pointer; background-color:#e5e5e5; border-radius: 15px; height: 30px; width: 70px; border:none;}
+.qnaPw { border: 1px solid #d3d3d3; border-radius: 3px; width: 100px; vertical-align: middle; outline: none; height: 25px; }
 
 </style>
 </th:block>
@@ -92,17 +119,17 @@ div { margin: 5px 0px }
 		<div class="col-lg-6 mb-5">
             <div class="imgBtnWrap">
 				<div class="imgBtnDiv">
-					<button type="button" class="imgleftBtn prev pull-left"><i class="fa fa-chevron-left fa-4x" style="color:#f7f7f7;"></i></button>
-					<button type="button" class="imgrightBtn next pull-right"><i class="fa fa-chevron-right fa-4x" style="color:#f7f7f7;"></i></button>
+					<button type="button" class="imgLeftBtn prev pull-left"><i class="fa fa-chevron-left fa-4x" style="color:#f7f7f7;"></i></button>
+					<button type="button" class="imgRightBtn next pull-right"><i class="fa fa-chevron-right fa-4x" style="color:#f7f7f7;"></i></button>
 				</div>
 				<div class="imgBox">
-		            <img class="img-fluid img on " src="/images/goodsTest/apple.png" alt="">
+		            <img class="img-fluid img on" src="/images/goodsTest/apple.png" alt="">
 					<img class="img-fluid img" src="/images/goodsTest/gom.png" alt="">
 					<img class="img-fluid img" src="/images/goodsTest/gom2.png" alt="">
 					<img class="img-fluid img" src="/images/goodsTest/gom3.png" alt="">
 					<img class="img-fluid img" src="/images/goodsTest/gom4.png" alt="">
 				</div>
-				<div id="ulliList">
+				<div class="imgSlideList">
 					<ul class="imgSlide">
 						<li><img src="/images/goodsTest/apple.png" alt=""></li>
 		                <li><img src="/images/goodsTest/gom.png" alt=""></li>
@@ -147,12 +174,10 @@ div { margin: 5px 0px }
 						<div class="p-1 font-family"><span>정기배송</span></div>
 					</div>
 					<div class="col-md-12" style="margin-left:-10px;">
-						<div class="input-group center">
-							<button type="button" class="minuPlusBtn btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">-
-							<span class="glyphicon glyphicon-minus"></span></button>&nbsp
-							<input type="text" name="quant[1]" class="form-control input-number" value="1" min="1" max="30" style=" height:40px !important; text-align:center; border-color:#f1f1f1;">
-							&nbsp<button type="button" class="minuPlusBtn btn-number" data-type="plus" data-field="quant[1]">+
-							<span class="glyphicon glyphicon-plus"></span></button>
+						<div class="plusMiusDiv input-group center">
+							<button type="button" class="minusBtn">-</button>&nbsp
+							<input type="text" class="countVal form-control" value="1" min="1" max="30">&nbsp
+							<button type="button" class="plusBtn">+</button>
 						</div>
 					</div>
 				</div><br>
@@ -171,332 +196,252 @@ div { margin: 5px 0px }
 		</div>
 	</div>
 </div>
-<hr style="width: 65%; align:center;">
-	
+<hr style="width: 80%; text-align:left; margin: auto;">
+
 <div class="goodsTabCon" id="goodsTabCon">
+	<div style="width:1024px; height:50px; margin:auto;"></div>
 	<div class="goodsTab" id="goodsTab">
-		<ul class="tabList">
-			<li class=""><a href="#detail" class="tabBtn btn01" data-toggle="tab" data-tab="1">상품정보</a></li>
-			<li data-idx="2" class=""><a href="#review" class="tabBtn btn02" data-toggle="tab" data-tab="2">후기</a></li>
-			<li data-idx="3" class=""><a href="#qna" class="tabBtn btn03" data-toggle="tab" data-tab="3">문의</a></li>
-		</ul>
-	<div class="clear"></div>
-</div>
 	
-	<div class="tab-content">
-	   	<div class="">
-			<div id="detail" class="tab-pane fade in active">
-				<h3>HOME</h3>
-				<p>Some content.</p>
-			</div>
-			<div id="review" class="tab-pane fade">
-				<h3>Menu 1</h3>
-				<p>Some content in menu 1.</p>
-			</div>
-			<div id="qna" class="tab-pane fade">
-				<h3>Menu 2</h3>
-				<p>Some content in menu 2.</p>
+		<div class="goodsTab" id="goodsTab">
+			<ul class="tabList">
+				<li class="tabLink current" data-tab="tab-1">상품정보</li>
+				<li class="tabLink" data-tab="tab-2">후기</li>
+				<li class="tabLink" data-tab="tab-3">문의</li>
+			</ul>
+			<div class="clear"></div>
+	
+			<div class="tabDetail">
+				<div id="tab-1" class="tabContent current">
+					<h3>HOME</h3>
+				</div>
+				<div id="tab-2" class="tabContent">
+					<h3>Menu 1</h3>
+					<p>Some content in menu 1.</p>
+				</div>
+				
+				<!-- 상품 문의 Content 시작 -->
+				<div id="tab-3" class="tabContent">
+					<div id="qnaList">
+							<div class="qnaNotice">상품문의</div>
+						<div class="qnaNoticeText">
+							<div>
+								- 배송관련, 주문(취소/교환/환불)관련 문의 밑 요청사항은 <span style="font-weight:500;">고객센터 내 1:1 문의하기</span>를 이용해주세요.<br>
+								- 해당 상품 자체와 관계없는 글, 양도, 광고성, 욕설, 비방, 도배 등의 글은 예고없이 노출제한, 삭제 등의 조치가 취해질 수 있습니다.
+							</div>
+						</div>
+						
+						<table class="qnaTable">
+							<colgroup><col width="100"><col width="100"><col width="*"><col width="100"><col width="125"></colgroup>
+							<thead style="vertical-align: middle;">
+								<tr>
+									<th>문의유형</th><th>답변상태</th><th>제목</th><th>문의자</th><th>등록일</th>
+								</tr>
+							</thead>
+							<tbody style="vertical-align: middle;">
+								<tr>
+									<td>교환</td>
+									<td><span class="noAnswer" style="color: #9a9a9a;">[답변대기]</span></td>
+									<td>내용~~~~</td>
+									<td>buyer01</td>
+									<td>2021.03.05</td>
+								</tr>
+								<tr>
+									<td>상품</td>
+									<td><span class="okAnswer" style="color: #7d9655;">[답변완료]</span></td>
+									<td>비밀글입니다.<i class="fi fi-rr-lock"></i></td>
+									<td>buyer01</td>
+									<td>2021.03.05</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="qnaTableUnder">
+						<div>
+							<button type="button" class="qnaModalBtn Modal" data-toggle="modal" data-target="#qnaModal">문의하기</button>
+						</div>
+					</div>
+					<!-- 상품 문의 Content 끝 -->
+					
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-
+<!-- 상품 문의 모달 실행 -->
+<form id="qnaModalForm" name="qnaModalForm" method="get">
+<div class="qnaModal modal fade" id="qnaModal" tabindex="-1" role="dialog" aria-labelledby="qnaModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="width:700px; height:500px;">
+    <div class="modal-content" style="height:100%;">
+      <div class="modal-header" style="margin-top: -5px;">
+        <div class="modal-title" id="qnaModalLabel" style="font-weight: 400; color:#333; font-size:23px; ">상품 문의하기</div>
+      </div>
+      <div class="modal-body">
+          <div class="form-group" style="margin: -10px 0px 0px 10px;" >
+            <img src="/images/goodsTest/apple.png" style="width:70px; height:70px; border-radius:5px;">
+            <span style="font-size:16px; font-weight: 500; line-height:22px; color:#333; margin-left: 20px;">맛있는 사과 2kg</span>
+          </div>
+          	<hr>
+          <div class="form-group" style="margin-left:10px;">
+          	<span style="margin-right:10px;">문의유형</span>
+          	<select class="qnaSelect">
+          		<option>::</option>
+          		<option>상품</option>
+          		<option>배송</option>
+          		<option>반품</option>
+          		<option>구매</option>
+          		<option>기타</option>
+          	</select>
+          </div>
+          <div class="form-group" style="margin-left:10px;">
+          	<span style="margin-right:37px; vertical-align:top;">내용</span>
+          	<textarea class="qnaInContent"></textarea>
+          	<div style="margin: -1px 0px -33px 68px;">
+          	<input type="checkbox" class="secretCheck">
+          	<label style="display:inline-block; margin-left:5px; margin-right:5px;">비밀글로 문의하기</label>
+          	<input type="password" class="qnaPw" disabled>
+          	</div>
+          </div>
+      </div>
+      <div class="modal-footer" style="display:flex; justify-content:center;">
+	        <button type="button" class="qnaClose" id="closeBtn" data-dismiss="modal">취소</button>
+	        <button type="button" class="qnaSubmit" id="submitBtn">등록</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+	 
+	
+	
+	
 <br><br><br>
 
-<!--
-    <section class="ftco-section">
-        <div class="container">
-            <div class="row justify-content-center mb-3 pb-3">
-                <div class="col-md-12 heading-section text-center ftco-animate">
-                    <span class="subheading">Products</span>
-                    <h2 class="mb-4">Related Products</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-lg-3 ftco-animate">
-                    <div class="product">
-                        <a href="#" class="img-prod"><img class="img-fluid" src="images/product-1.jpg"
-                                                          alt="Colorlib Template">
-                            <span class="status">30%</span>
-                            <div class="overlay"></div>
-                        </a>
-                        <div class="text py-3 pb-4 px-3 text-center">
-                            <h3><a href="#">Bell Pepper</a></h3>
-                            <div class="d-flex">
-                                <div class="pricing">
-                                    <p class="price"><span class="mr-2 price-dc">$120.00</span><span class="price-sale">$80.00</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="bottom-area d-flex px-3">
-                                <div class="m-auto d-flex">
-                                    <a href="#"
-                                       class="add-to-cart d-flex justify-content-center align-items-center text-center">
-                                        <span><i class="ion-ios-menu"></i></span>
-                                    </a>
-                                    <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-                                        <span><i class="ion-ios-cart"></i></span>
-                                    </a>
-                                    <a href="#" class="heart d-flex justify-content-center align-items-center ">
-                                        <span><i class="ion-ios-heart"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 ftco-animate">
-                    <div class="product">
-                        <a href="#" class="img-prod"><img class="img-fluid" src="images/product-2.jpg"
-                                                          alt="Colorlib Template">
-                            <div class="overlay"></div>
-                        </a>
-                        <div class="text py-3 pb-4 px-3 text-center">
-                            <h3><a href="#">Strawberry</a></h3>
-                            <div class="d-flex">
-                                <div class="pricing">
-                                    <p class="price"><span>$120.00</span></p>
-                                </div>
-                            </div>
-                            <div class="bottom-area d-flex px-3">
-                                <div class="m-auto d-flex">
-                                    <a href="#"
-                                       class="add-to-cart d-flex justify-content-center align-items-center text-center">
-                                        <span><i class="ion-ios-menu"></i></span>
-                                    </a>
-                                    <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-                                        <span><i class="ion-ios-cart"></i></span>
-                                    </a>
-                                    <a href="#" class="heart d-flex justify-content-center align-items-center ">
-                                        <span><i class="ion-ios-heart"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 ftco-animate">
-                    <div class="product">
-                        <a href="#" class="img-prod"><img class="img-fluid" src="images/product-3.jpg"
-                                                          alt="Colorlib Template">
-                            <div class="overlay"></div>
-                        </a>
-                        <div class="text py-3 pb-4 px-3 text-center">
-                            <h3><a href="#">Green Beans</a></h3>
-                            <div class="d-flex">
-                                <div class="pricing">
-                                    <p class="price"><span>$120.00</span></p>
-                                </div>
-                            </div>
-                            <div class="bottom-area d-flex px-3">
-                                <div class="m-auto d-flex">
-                                    <a href="#"
-                                       class="add-to-cart d-flex justify-content-center align-items-center text-center">
-                                        <span><i class="ion-ios-menu"></i></span>
-                                    </a>
-                                    <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-                                        <span><i class="ion-ios-cart"></i></span>
-                                    </a>
-                                    <a href="#" class="heart d-flex justify-content-center align-items-center ">
-                                        <span><i class="ion-ios-heart"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 ftco-animate">
-                    <div class="product">
-                        <a href="#" class="img-prod"><img class="img-fluid" src="images/product-4.jpg"
-                                                          alt="Colorlib Template">
-                            <div class="overlay"></div>
-                        </a>
-                        <div class="text py-3 pb-4 px-3 text-center">
-                            <h3><a href="#">Purple Cabbage</a></h3>
-                            <div class="d-flex">
-                                <div class="pricing">
-                                    <p class="price"><span>$120.00</span></p>
-                                </div>
-                            </div>
-                            <div class="bottom-area d-flex px-3">
-                                <div class="m-auto d-flex">
-                                    <a href="#"
-                                       class="add-to-cart d-flex justify-content-center align-items-center text-center">
-                                        <span><i class="ion-ios-menu"></i></span>
-                                    </a>
-                                    <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-                                        <span><i class="ion-ios-cart"></i></span>
-                                    </a>
-                                    <a href="#" class="heart d-flex justify-content-center align-items-center ">
-                                        <span><i class="ion-ios-heart"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
-        <div class="container py-4">
-            <div class="row d-flex justify-content-center py-5">
-                <div class="col-md-6">
-                    <h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
-                    <span>Get e-mail updates about our latest shops and special offers</span>
-                </div>
-                <div class="col-md-6 d-flex align-items-center">
-                    <form action="#" class="subscribe-form">
-                        <div class="form-group d-flex">
-                            <input type="text" class="form-control" placeholder="Enter email address">
-                            <input type="submit" value="Subscribe" class="submit px-3">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
- -->
 </th:block>
 
 <th:block layout:fragment="customJsScript">
 <th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
 <script th:inline="javascript">
-$('.btn-number').click(function(e){
-    e.preventDefault();
-    
-    fieldName = $(this).attr('data-field');
-    type      = $(this).attr('data-type');
-    var input = $("input[name='"+fieldName+"']");
-    var currentVal = parseInt(input.val());
-    if (!isNaN(currentVal)) {
-        if(type == 'minus') {
-            
-            if(currentVal > input.attr('min')) {
-                input.val(currentVal - 1).change();
-            } 
-            if(parseInt(input.val()) == input.attr('min')) {
-                $(this).attr('disabled', true);
-            }
 
-        } else if(type == 'plus') {
-
-            if(currentVal < input.attr('max')) {
-                input.val(currentVal + 1).change();
-            }
-            if(parseInt(input.val()) == input.attr('max')) {
-                $(this).attr('disabled', true);
-            }
-
+$(function() {
+	
+	
+	<!-- 상품 상세 페이지 이벤트 -->
+	/* 수량 증가 감소 */
+	var strNum = $('.countVal').val();
+	var countVal = parseInt(strNum, 10);
+	// 감소버튼
+	$('.minusBtn').click(function(e){
+		e.preventDefault();
+		countVal--;
+		
+		if(countVal <= 0){
+			alert('최소 수량입니다');
+			countVal = 1;
+		}
+		$('.countVal').val(countVal);
+		console.log('minus 버튼: '+countVal);
+	});
+	// 증가 버튼
+	$('.plusBtn').click(function(e){
+		e.preventDefault();
+		countVal++;
+		
+		if(countVal >= 99){
+			alert('최대 수량입니다');
+			countVal = 99;
+		}
+		$('.countVal').val(countVal);
+		console.log('plus 버튼: '+countVal);
+	});
+	
+	/* 이미지 슬라이드 */
+	// 이미지 현재의 위치
+	var imgOn = $('.imgBox').find(".on").index();
+	// 이미지 총 개수 
+	var imgLenght = $('.imgBox .img').length;
+	
+	// 왼쪽 버튼 눌렀을 때
+	$('.imgLeftBtn').click(function(e) {
+	    e.preventDefault();
+	    console.log('이미지 현재 순서: '+imgOn)
+	    console.log('이미지 총 개수: '+imgLenght)
+	    
+	    // imgBox안의 img 중 imgOn 번째의 on 클래스 삭제 
+	    $('.imgBox .img').eq(imgOn).removeClass('on');
+	    // imgBox안의 img 중 imgOn 번째 숨기기 
+	    $('.imgBox .img').eq(imgOn).css('opacity', 0);
+	    
+	    // 이전 위치로 가기 위해
+	    imgOn = imgOn -1;
+	    if( imgOn < 0 ){
+	      // 현재 위치 0일 때 돌아갈 경우(-1), 총 이미지의 마지막으로 이동
+	      $('.imgBox .img').eq(imgLenght -1).css('opacity', 1);
+	      $('.imgBox .img').eq(imgLenght -1).addClass('on');
+	    }else{
+	      // 돌아갈 위치가 -1이 아닌 경우, 그 전 이미지로 이동
+	      $('.imgBox .img').eq(imgOn).css('opacity', 1);
+	      $('.imgBox .img').eq(imgOn).addClass('on');
+	    }
+	});
+	// 오른쪽 버튼 눌렀을 경우
+	$('.imgRightBtn').click(function(e) {
+	    e.preventDefault();
+	    console.log('이미지 현재 순서: '+imgOn)
+	    console.log('이미지 총 개수: '+imgLenght)
+	    
+	    $('.imgBox .img').eq(imgOn).removeClass('on');
+	    $('.imgBox .img').eq(imgOn).css('opacity', 0);
+	    
+	    // 다음 위치로 가기 위해
+	    imgOn = imgOn + 1;
+	    if( imgOn === imgLenght ){
+	      // 다음 위치가 총 개수보다 클 경우 처음 위치로 이동
+	      $('.imgBox .img').eq(0).css('opacity', 1);
+	      $('.imgBox .img').eq(0).addClass('on');
+	    }else{
+	      // 다음 위치가 있는 경우 
+	      $('.imgBox .img').eq(imgOn).css('opacity', 1);
+	      $('.imgBox .img').eq(imgOn).addClass('on');
+	    }
+	});
+	
+	/* 상품정보&후기&문의 탭 이벤트 */
+    $('ul.tabList li').click(function(){
+        var tabId = $(this).attr('data-tab');
+ 
+        $('ul.tabList li').removeClass('current');
+        $('.tabContent').removeClass('current');
+ 
+        $(this).addClass('current');
+        $("#"+tabId).addClass('current');
+    })
+	
+	<!-- 상품 문의 이벤트 -->
+    /* 모달 열릴 때 이벤트 */
+	$('.qnaModal').on('show.bs.modal', function(e) {
+		console.log('modal open');
+	}); 
+	/* 모달 닫을 때 안에 있는 데이터 초기화 */
+	$('.qnaModal').on('hidden.bs.modal', function(e) {
+		console.log('modal close');
+		document.forms['qnaModalForm'].reset();
+	});
+	
+	/* 비밀글 checkbox 선택 시 입력 인풋 활성화 */
+    $('.secretCheck').click(function(){
+        var secretCheck = $(this).prop('checked'); 
+        // this를 사용하여 클릭한 checkbox 가 체크되도록 설정
+        if(secretCheck){
+            $('.qnaPw').attr('disabled', false);
+            $('.qnaPw').focus();
         }
-    } else {
-        input.val(0);
-    }
-});
-$('.input-number').focusin(function(){
-   $(this).data('oldValue', $(this).val());
-});
-$('.input-number').change(function() {
-    
-    minValue =  parseInt($(this).attr('min'));
-    maxValue =  parseInt($(this).attr('max'));
-    valueCurrent = parseInt($(this).val());
-    
-    name = $(this).attr('name');
-    if(valueCurrent >= minValue) {
-        $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
-    } else {
-        alert('Sorry, the minimum value was reached');
-        $(this).val($(this).data('oldValue'));
-    }
-    if(valueCurrent <= maxValue) {
-        $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
-    } else {
-        alert('Sorry, the maximum value was reached');
-        $(this).val($(this).data('oldValue'));
-    }
-    
-    
-});
-$(".input-number").keydown(function (e) {
-        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
-            (e.keyCode == 65 && e.ctrlKey === true) || 
-            (e.keyCode >= 35 && e.keyCode <= 39)) {
-                 return;
-        }
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
+        else{
+            $('.qnaPw').attr('disabled', true);
+            $('.qnaPw').val(null);
         }
     });
     
-$(".prev").on("click", function (e) {
-    e.preventDefault();
-
-    // 이미지 현재의 위치
-    var imgOn = $(".imgBox").find(".on").index();
-    // 이미지 총 개수 
-    var imgLen = $(".imgBox .img").length;
-    console.log(imgOn)
-    
-    // imgBox안의 img 중 imgOn 번째의 on 클래스 삭제 
-    $(".imgBox .img").eq(imgOn).removeClass("on");
-    // imgBox안의 img 중 imgOn 번째 숨기기 
-    $(".imgBox .img").eq(imgOn).css("opacity", 0);
-    
-    //  이전의 위치로 돌아가야함으로
-    imgOn = imgOn -1;
-
-    if( imgOn < 0 ){
-      // 돌아가 위치가 -1일 경우 
-      // 이미지의 마지막으로 돌아간다
-      $(".imgBox .img").eq(imgLen -1).css("opacity", 1);
-      $(".imgBox .img").eq(imgLen -1).addClass("on");
-    }else{
-      // 돌아갈 위치가 -1이 아닌 경우
-      $(".imgBox .img").eq(imgOn).css("opacity", 1);
-      $(".imgBox .img").eq(imgOn).addClass("on");
-    }
-
-  });
-
-  $(".next").on("click", function (e) {
-    e.preventDefault();
-    // 위에 동일 
-    var imgOn = $(".imgBox").find(".on").index();
-    var imgLen = $(".imgBox .img").length;
-
-    // 위에 동일
-    $(".imgBox .img").eq(imgOn).removeClass("on");
-    $(".imgBox .img").eq(imgOn).css("opacity", 0);
-    
-    // 다음의 위치로 알아야 되기 때문에 
-    imgOn = imgOn + 1;
-    
-    if( imgOn === imgLen ){
-      // 다음의 위치가 총 개수보다 클 경우
-      // 처음의 위치로 돌아간다
-      $(".imgBox .img").eq(0).css("opacity", 1);
-      $(".imgBox .img").eq(0).addClass("on");
-    }else{
-      // 다음 위치가 있는 경우 
-      $(".imgBox .img").eq(imgOn).css("opacity", 1);
-      $(".imgBox .img").eq(imgOn).addClass("on");
-    }
-  });
-    
-    
-/* 탭 자스 */
-$(document).ready(function(){
-   $('.pViewTabCon .tableCom .tL1 a').click(function(){
-      $(this).parent().parent().next().toggle();
-   });
 });
-
 </script>
 </th:block>
 </html>
