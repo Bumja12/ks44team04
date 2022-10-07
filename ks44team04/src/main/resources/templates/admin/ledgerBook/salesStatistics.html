@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+	
+  
+	 
+
+         
+          
+</th:block>
+<!-- jQuery -->
+<th:block layout:fragment="customScript">
+<th:block th:replace="fragments/adminJs :: datatablesFragment"></th:block>
+<script th:src="@{/build/js/Chart.min.js}"></script>
+
+
+    
+</th:block>
+</html>
