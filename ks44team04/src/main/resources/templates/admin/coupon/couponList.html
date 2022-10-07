@@ -140,9 +140,9 @@ th {
 				$('.couponInfo').val(null);
 			});
 
-			$('.closeModal').click(function (){
+			$('#couponCreate').on('hidden.bs.modal', function(e) {
 				$('.couponInfo').val(null);
-			});
+			})
 		});
 	</script>
 </th:block>
