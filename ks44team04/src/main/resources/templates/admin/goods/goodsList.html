@@ -3,7 +3,6 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/adminDefault}">
 	
-
 <th:block layout:fragment="customTitle">
 	<title th:text="${title}"></title>
 </th:block>
@@ -285,7 +284,7 @@
 				}
 			}
 		});
-		console.log(searchCate,'dsfkjasdljfaslkdfjlasdjflasdkjflkj')
+		
 		//대분류 카테고리가 undefined, null, '' 이 아닐 때 대분류 중분류 옵션 변경 할 수 있게 하기
 		if(typeof searchGoodsLargeCate != 'undefined' && searchGoodsLargeCate != null && searchGoodsLargeCate != '' && searchCate != ''){
 			$(largeCate).change();
