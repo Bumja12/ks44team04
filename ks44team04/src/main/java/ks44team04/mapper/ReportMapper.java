@@ -41,7 +41,16 @@ public interface ReportMapper {
     //정지 검색 
     public List<UserSuspend> getSuspendSearch(Map<String, Object> searchMap);
     
+    //정지 등록
+    public int userSuspendAdd(UserSuspend userSuspend);
+    
+    //정지 등록 코드 증가
+    public String getUserSuspendCods();
+    
     //벌점 기준 목록
     public List<ReportRule> reportRuleList();
+    
+    //정지 등록시 필요한 유저 아이디 / 닉네임 값 가져오기 
+    public List<User> userList();
 
 }

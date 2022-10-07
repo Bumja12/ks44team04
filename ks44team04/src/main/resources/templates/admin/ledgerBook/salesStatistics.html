@@ -1,27 +1,233 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/adminDefault}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
 
 <th:block layout:fragment="customTitle">
-    <title th:text="${title}"></title>
+	<title th:text="${title}"></title>
 </th:block>
 
 <th:block layout:fragment="customContents">
 
-	
-  
-	 
+	<style>
+.div_1 {
+	margin: 7px;
+	border: 0;
+	background: #fff;
+	box-shadow: 0px 1px 12px rgb(0 0 0/ 10%);
+	border-radius: 5px;
+	overflow: hidden;
+	text-align: center;
+	padding: 20px;
+	font-size: 18px;
+	margin-top: 80px;
+}
 
-         
-          
+.div_2 {
+	margin: 7px;
+	border: 0;
+	background: #fff;
+	box-shadow: 0px 1px 12px rgb(0 0 0/ 10%);
+	border-radius: 5px;
+	overflow: hidden;
+	padding: 30px;
+	font-size: 18px;
+	height: 500px;
+	gap: 0px;
+}
+
+.div-4 {
+	display: flex;
+	justify-content: space-around;
+}
+</style>
+
+
+	<div class="row div_1">
+		<table class="table  "
+			style="margin: 0px; font-size: 15px; text-align: left;">
+
+			<tbody>
+				<tr>
+					<th style="width: 150px; text-align: center;">결제 확인일</th>
+					<td><label> <input type="radio" name="day">
+							월별
+					</label> <label> <input type="radio" name="day"> 일별
+					</label></td>
+				</tr>
+				<tr>
+					<th style="width: 150px; text-align: center;">기간</th>
+					<td><select>
+							<option>:: 년도::</option>
+					</select> <select>
+							<option>:: 월::</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align: center;">
+						<button type="button">초기화</button>
+						<button type="button">검색</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+
+	<div class="row  div-4">
+		<div class="div_2 " style="width: 1000px; height: 1010px;">
+			<dl><dt>카테고리별 결제 금액 (그래프)</dt></dl>
+				<hr style="border: solid 1px #D3D3D3;">
+			<canvas id="bar-chart" width="800" height="750"></canvas>
+		</div>
+		<div>
+
+			<div class="div_2" style="width: 810px;">
+				<dl><dt>카테고리별 결제 금액 비율</dt></dl>
+					<hr style="border: solid 1px #D3D3D3;">
+				<canvas id="doughnut-chart" width="700" height="350"></canvas>
+			</div>
+			<div class="div_2" style="width: 810px;">
+				<dl><dt>카테고리별 교환/환불</dt></dl>
+					<hr style="border: solid 1px #D3D3D3;">
+				<ul class="nav nav-tabs">
+					<li class="nav-item"><a class="nav-link active"
+						id="Exchange-tab" data-toggle="tab" href="#Exchange" role="tab"
+						aria-controls="Exchange" aria-selected="true">교환</a></li>
+					<li class="nav-item"><a class="nav-link" id="Refund-tab"
+						data-toggle="tab" href="#Refund" role="tab" aria-controls="Refund"
+						aria-selected="false">환불</a></li>
+				</ul>
+				<!--교환 테그-->
+				<div class="tab-pane fade show active" id="Exchange" role="tabpanel"
+					aria-labelledby="Exchange-tab">
+					<table class="table table-bordered"
+						style="font-size: 13px; text-align: center;">
+						<tbody>
+							<tr>
+								<th rowspan="2" style="text-align: center;">날짜</th>
+								<th colspan="2">카테고리명</th>
+								<th colspan="2">카테고리명</th>
+								<th colspan="2">카테고리명</th>
+							</tr>
+							<tr>
+								<td>건수</td>
+								<td>금액</td>
+								<td>건수</td>
+								<td>금액</td>
+								<td>건수</td>
+								<td>금액</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!--환불 테그-->
+				<div class="tab-pane fade show active" id="Refund" role="tabpanel"
+					aria-labelledby="Refund-tab"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="div_2">
+		<dl><dt>결제 금액 (표)</dt></dl>
+			<hr style="border: solid 1px #D3D3D3;">
+		<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th></th>
+						<th>1월</th>
+						<th>2월</th>
+						<th>3월</th>
+						<th>4월</th>
+						<th>5월</th>
+						<th>6월</th>
+						<th>7월</th>
+						<th>8월</th>
+						<th>9월</th>
+						<th>10월</th>
+						<th>11월</th>
+						<th>12월</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>카테고리명</th>
+						<td>0원</td>
+						<td>0원</td>
+						<td>0원</td>
+						<td>0원</td>
+						<td>0원</td>
+						<td>0원</td>
+						<td>0원</td>
+						<td>0원</td>
+						<td>0원</td>
+						<td>0원</td>
+						<td>0원</td>
+						<td>0원</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+
+
+
 </th:block>
 <!-- jQuery -->
 <th:block layout:fragment="customScript">
-<th:block th:replace="fragments/adminJs :: datatablesFragment"></th:block>
-<script th:src="@{/build/js/Chart.min.js}"></script>
+	<th:block th:replace="fragments/adminJs :: datatablesFragment"></th:block>
+	<script th:src="@{/build/js/Chart.min.js}"></script>
 
+<script>
 
-    
+  new Chart(document.getElementById("bar-chart"), {
+    type: 'bar',
+    data: {
+      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+      datasets: [
+        {
+          label: "Population (millions)",
+            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+            data: [2478,5267,734,784,433]
+          }
+        ]
+      },
+      options: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Predicted world population (millions) in 2050'
+        }
+      }
+    });
+    </script>
+
+    <script>
+      new Chart(document.getElementById("doughnut-chart"), {
+    type: 'doughnut',
+    data: {
+      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+      datasets: [
+        {
+          label: "Population (millions)",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: [2478,5267,734,784,433]
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Predicted world population (millions) in 2050'
+      }
+    }
+});
+    </script>s
+
 </th:block>
 </html>
