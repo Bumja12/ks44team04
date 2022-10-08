@@ -37,6 +37,34 @@ public class UserService {
     	System.out.println("회원가입 결과:" + addSellerResult);
     }
     
+    //회원 휴대폰번호 중복체크
+    public int phoneCheck(String userPhone) {
+    	int cnt = userMapper.phoneCheck(userPhone);
+    	System.out.println("휴대폰번호 중복체크 : " + cnt);
+    	return cnt;
+    }
+    
+    //회원 이메일 중복체크
+    public int emailCheck(String userEmail) {
+    	int cnt = userMapper.emailCheck(userEmail);
+    	System.out.println("이메일 중복체크 : " + cnt);
+    	return cnt;
+    }
+    
+    //회원 닉네임 중복체크
+    public int nicknameCheck(String userNickname) {
+    	int cnt = userMapper.nicknameCheck(userNickname);
+    	System.out.println("닉네임 중복체크 : " + cnt);
+    	return cnt;
+    }
+    
+	//회원 아이디 중복체크
+	public int idCheck(String userId) {
+		int cnt = userMapper.idCheck(userId);
+		System.out.println("아이디 중복체크 : " + cnt);
+		return cnt;
+	}
+    
     //회원가입
     public void addUser(User user) {
     	int addUserResult = userMapper.addUser(user);

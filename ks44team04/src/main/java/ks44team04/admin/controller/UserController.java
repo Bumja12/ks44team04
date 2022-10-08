@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.StringUtils;
 
@@ -60,6 +61,42 @@ public class UserController {
 		return "admin/user/addSeller";
 	}
     
+	// 10/8 회원 휴대폰번호 중복체크
+	@GetMapping("/user/phoneCheck")
+	@ResponseBody
+	public int phoneCheck(@RequestParam(name="userPhone") String userPhone) {
+		int cnt = userService.phoneCheck(userPhone);
+		
+		return cnt;
+	}
+	
+	// 10/8 회원 이메일 중복체크
+	@GetMapping("/user/emailCheck")
+	@ResponseBody
+	public int emailCheck(@RequestParam(name="userEmail") String userEmail) {
+		int cnt = userService.emailCheck(userEmail);
+		
+		return cnt;
+	}
+	
+	// 10/8 회원 닉네임 중복체크
+	@GetMapping("/user/nicknameCheck")
+	@ResponseBody
+	public int nicknameCheck(@RequestParam(name="userNickname") String userNickname) {
+		int cnt = userService.nicknameCheck(userNickname);
+		
+		return cnt;
+	}
+	
+	// 10/8 회원 아이디 중복체크
+	@GetMapping("/user/idCheck")
+	@ResponseBody
+	public int idCheck(@RequestParam(name="userId") String userId) {
+		int cnt = userService.idCheck(userId);
+		
+		return cnt;
+	}
+	
 	//구매자 회원가입
 	@PostMapping("/user/addUser")
     public String addUser(User user) {
