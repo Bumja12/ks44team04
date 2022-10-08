@@ -24,6 +24,18 @@ public interface UserMapper {
     //판매자 등록
     public int addSeller(Seller seller);
     
+    //회원 휴대폰번호 중복체크
+    public int phoneCheck(String userPhone);
+    
+    //회원 이메일 중복체크
+    public int emailCheck(String userEmail);
+    
+    //회원 닉네임 중복체크
+    public int nicknameCheck(String userNickname);
+
+    //회원 아이디 중복체크
+	public int idCheck(String userId);
+    
 	//회원 가입
 	public int addUser(User user);
     
