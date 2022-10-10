@@ -37,24 +37,52 @@ public class UserService {
     	System.out.println("회원가입 결과:" + addSellerResult);
     }
     
+    //판매자 휴대폰번호 중복체크
+    public int phoneCheckS(String storePhone) {
+    	int cnt = userMapper.phoneCheckS(storePhone);
+    	System.out.println("판매자 휴대폰번호 중복체크 : " + cnt);
+    	return cnt;
+    }
+    
+    //판매자 이메일 중복체크
+    public int emailCheckS(String storeEmail) {
+    	int cnt = userMapper.emailCheckS(storeEmail);
+    	System.out.println("판매자 이메일 중복체크 : " + cnt);
+    	return cnt;
+    }
+    
+    //판매자 상호명 중복체크
+    public int storeNameCheck(String storeName) {
+    	int cnt = userMapper.storeNameCheck(storeName);
+    	System.out.println("판매자 상호명 중복체크 : " + cnt);
+    	return cnt;
+    }
+    
+    //판매자코드 중복체크
+    public int codeCheck(String sellerCode) {
+    	int cnt = userMapper.codeCheck(sellerCode);
+    	System.out.println("판매자 상호명 중복체크 : " + cnt);
+    	return cnt;
+    }
+    
     //회원 휴대폰번호 중복체크
-    public int phoneCheck(String userPhone) {
-    	int cnt = userMapper.phoneCheck(userPhone);
-    	System.out.println("휴대폰번호 중복체크 : " + cnt);
+    public int phoneCheckU(String userPhone) {
+    	int cnt = userMapper.phoneCheckU(userPhone);
+    	System.out.println("회원 휴대폰번호 중복체크 : " + cnt);
     	return cnt;
     }
     
     //회원 이메일 중복체크
-    public int emailCheck(String userEmail) {
-    	int cnt = userMapper.emailCheck(userEmail);
-    	System.out.println("이메일 중복체크 : " + cnt);
+    public int emailCheckU(String userEmail) {
+    	int cnt = userMapper.emailCheckU(userEmail);
+    	System.out.println("회원 이메일 중복체크 : " + cnt);
     	return cnt;
     }
     
     //회원 닉네임 중복체크
     public int nicknameCheck(String userNickname) {
     	int cnt = userMapper.nicknameCheck(userNickname);
-    	System.out.println("닉네임 중복체크 : " + cnt);
+    	System.out.println("회원 닉네임 중복체크 : " + cnt);
     	return cnt;
     }
     

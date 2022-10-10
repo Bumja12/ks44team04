@@ -60,21 +60,57 @@ public class UserController {
 		model.addAttribute("goodsLargeCategory", goodsLargeCategory);
 		return "admin/user/addSeller";
 	}
+	
+	// 10/10 판매자 이메일 중복체크
+	@GetMapping("/user/emailCheckS")
+	@ResponseBody
+	public int emailCheckS(@RequestParam(name="storeEmail") String storeEmail) {
+		int cnt = userService.emailCheckS(storeEmail);
+		
+		return cnt;
+	}
+	
+	// 10/10 판매자 휴대폰번호 중복체크
+	@GetMapping("/user/phoneCheckS")
+	@ResponseBody
+	public int phoneCheckS(@RequestParam(name="storePhone") String storePhone) {
+		int cnt = userService.phoneCheckS(storePhone);
+		
+		return cnt;
+	}
+	
+	// 10/10 판매자 상호명 중복체크
+	@GetMapping("/user/storeNameCheck")
+	@ResponseBody
+	public int storeNameCheck(@RequestParam(name="storeName") String storeName) {
+		int cnt = userService.storeNameCheck(storeName);
+		
+		return cnt;
+	}
+	
+	// 10/10 판매자코드 중복체크
+	@GetMapping("/user/codeCheck")
+	@ResponseBody
+	public int codeCheck(@RequestParam(name="sellerCode") String sellerCode) {
+		int cnt = userService.codeCheck(sellerCode);
+		
+		return cnt;
+	}
     
 	// 10/8 회원 휴대폰번호 중복체크
-	@GetMapping("/user/phoneCheck")
+	@GetMapping("/user/phoneCheckU")
 	@ResponseBody
-	public int phoneCheck(@RequestParam(name="userPhone") String userPhone) {
-		int cnt = userService.phoneCheck(userPhone);
+	public int phoneCheckU(@RequestParam(name="userPhone") String userPhone) {
+		int cnt = userService.phoneCheckU(userPhone);
 		
 		return cnt;
 	}
 	
 	// 10/8 회원 이메일 중복체크
-	@GetMapping("/user/emailCheck")
+	@GetMapping("/user/emailCheckU")
 	@ResponseBody
-	public int emailCheck(@RequestParam(name="userEmail") String userEmail) {
-		int cnt = userService.emailCheck(userEmail);
+	public int emailCheckU(@RequestParam(name="userEmail") String userEmail) {
+		int cnt = userService.emailCheckU(userEmail);
 		
 		return cnt;
 	}
