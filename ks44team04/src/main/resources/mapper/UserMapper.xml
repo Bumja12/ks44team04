@@ -157,8 +157,52 @@
 	</update>
 	
 	
+	<!-- 판매자 휴대폰번호 중복체크 -->
+	<select id="phoneCheckS" parameterType="String" resultType="int">
+		/* 판매자 휴대폰번호 중복체크 */
+		SELECT
+			count(s.store_phone)
+		FROM 
+			tb_seller AS s
+		WHERE 
+			s.store_phone = #{storePhone};
+	</select>
+	
+	<!-- 판매자 이메일 중복체크 -->
+	<select id="emailCheckS" parameterType="String" resultType="int">
+		/* 판매자 이메일 중복체크 */
+		SELECT
+			count(s.store_email)
+		FROM 
+			tb_seller AS s
+		WHERE 
+			s.store_email = #{storeEmail};
+	</select>
+	
+	<!-- 판매자 상호명 중복체크 -->
+	<select id="storeNameCheck" parameterType="String" resultType="int">
+		/* 판매자 상호명 중복체크 */
+		SELECT
+			count(s.store_name)
+		FROM 
+			tb_seller AS s
+		WHERE 
+			s.store_name = #{storeName};
+	</select>
+	
+	<!-- 판매자 상호명 중복체크 -->
+	<select id="codeCheck" parameterType="String" resultType="int">
+		/* 판매자 상호명 중복체크 */
+		SELECT
+			count(s.seller_code)
+		FROM 
+			tb_seller AS s
+		WHERE 
+			s.seller_code = #{sellerCode};
+	</select>
+	
 	<!-- 회원 휴대폰번호 중복체크 -->
-	<select id="phoneCheck" parameterType="String" resultType="int">
+	<select id="phoneCheckU" parameterType="String" resultType="int">
 		/* 회원 휴대폰번호 중복체크 */
 		SELECT
 			count(u.user_phone)
@@ -169,7 +213,7 @@
 	</select>
 	
 	<!-- 회원 이메일 중복체크 -->
-	<select id="emailCheck" parameterType="String" resultType="int">
+	<select id="emailCheckU" parameterType="String" resultType="int">
 		/* 회원 이메일 중복체크 */
 		SELECT
 			count(u.user_email)

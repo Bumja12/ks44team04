@@ -24,11 +24,23 @@ public interface UserMapper {
     //판매자 등록
     public int addSeller(Seller seller);
     
+    //판매자 휴대폰번호 중복체크
+    public int phoneCheckS(String storePhone);
+    
+    //판매자 이메일 중복체크
+    public int emailCheckS(String storeEmail);
+    
+    //판매자 상호명 중복체크
+    public int storeNameCheck(String storeName);
+    
+    //판매자코드 중복체크
+    public int codeCheck(String sellerCode);
+    
     //회원 휴대폰번호 중복체크
-    public int phoneCheck(String userPhone);
+    public int phoneCheckU(String userPhone);
     
     //회원 이메일 중복체크
-    public int emailCheck(String userEmail);
+    public int emailCheckU(String userEmail);
     
     //회원 닉네임 중복체크
     public int nicknameCheck(String userNickname);
