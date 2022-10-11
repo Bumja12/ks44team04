@@ -32,4 +32,7 @@ public interface ReviewMapper {
 	
 	//후기 추천수 코드 증가
 	public String ReviewLikeCode();
+	
+	//후기 추천수 증가(Update)
+	public int reviewLikeUp(Review review);
 }

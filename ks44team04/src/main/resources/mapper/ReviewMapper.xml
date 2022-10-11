@@ -116,6 +116,7 @@ FROM
 		,#{userId}
 		,NOW())
 </insert>
+
 <!-- 추천 해제  -->
 <delete id="reviewLikeDelete" parameterType="ReviewLike">
 DELETE FROM 
@@ -124,6 +125,20 @@ DELETE FROM
  WHERE 
  	review_list= #{reviewList} AND user_id = #{userId}
 </delete>   
+
+<update id="reviewLikeUp" parameterType="Review">
+UPDATE tb_review AS r
+	SET
+		like_amount	= (SELECT 
+							COUNT(l.review_list)
+			 		   FROM 
+			  			   tb_review_like AS l
+				       WHERE 
+						  l.review_list = #{reviewList})
+	WHERE review_list = #{reviewList}
+	
+
+</update>
     
     
 </mapper>

@@ -7,14 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ks44team04.dto.Review;
 import ks44team04.dto.ReviewLike;
-import ks44team04.mapper.ReviewMapper;
 import ks44team04.service.ReviewService;
 import ks44team04.util.CodeIndex;
 
@@ -56,9 +54,10 @@ public class UserReviewController {
 		return "user/review/reviewList";
 	}
 	
+	// 후기 추천 
 	@GetMapping("/review/reviewLike")
 	@ResponseBody
-	public String reviewLike(ReviewLike reviewLike) {
+	public String reviewLike(Review review, ReviewLike reviewLike) {
 		// 코드 증가 
 		String ReviewLikeCode = reviewService.ReviewLikeCode();
 		ReviewLikeCode = CodeIndex.codeIndex(ReviewLikeCode, 10);
@@ -66,15 +65,21 @@ public class UserReviewController {
 		log.info("---------------------------------리뷰 코드값 ", ReviewLikeCode);
 		reviewLike.setReviewLike(ReviewLikeCode);
 		
+		/* review.setLikeAmount(likeAmount); */
 		reviewService.reviewLike(reviewLike);
+		reviewService.reviewLikeUp(review);
+		
+	
 		
 		return "user/review/reviewList";	
 	}
 	
+	// 후기 추천 해제 
 	@GetMapping("/review/reviewLikeDelete")
-	public String reviewLikeDelete(ReviewLike reviewLike) {
+	public String reviewLikeDelete(ReviewLike reviewLike, Review review) {
 		
 		reviewService.reviewLikeDelete(reviewLike);
+		reviewService.reviewLikeUp(review);
 		
 		return "user/review/reviewList";
 	}
