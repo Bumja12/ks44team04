@@ -7,20 +7,6 @@
 	<title th:text="${title}"></title>
 </th:block>
 
-<th:block layout:fragment="customTopJs">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script>
-	$(function() {
-		$(function (){
-			$(".qnaToggle").click(function (){
-		  	//$(".toggle").toggle();
-		  		$(this).next().next().toggle();
-			});
-		});
-	});
-	</script>
-</th:block> 
-
 <th:block layout:fragment="customContents">
 	<div class="page-title">
 		<div class="title_left">
@@ -148,15 +134,24 @@
 		</div>
 </th:block>
 <th:block layout:fragment="customScript">
-	<script th:inline="javascript">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script th:inline="javascript">
 	 $(function() {
+		
+		 /* 문의 답변보기 클릭 시 답변 토글 */
+	 	$(".qnaToggle").click(function (){
+		 	$(this).next().next().toggle();
+		 });
+	 	
 		 /* select searchStatus 선택 시 qnaStatus 히든 인풋에 넣기 (답변 상태 검색에 이용) */
 		$('.searchStatus').change(function() {
 			var statusOption = $(".searchStatus option:selected").text();
 				console.log(statusOption);
 				$('#searchQnaStatus').val( statusOption );
 		});	 
+	 
+	 	
 	 });
-	</script>
+</script>
 </th:block> 
 </html>
