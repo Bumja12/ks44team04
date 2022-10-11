@@ -4,6 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks44team04.mapper.ReviewMapper">
 
+	<resultMap type="ReviewLike" id="reviewLikeSersultMap">
+		<id     column="review_like"	property="reviewLike"/>
+		<result column="review_list" 	property="reviewList"/>
+		<result column="user_id" 		property="userId"/>
+		<result column="like_reg_date" 	property="likeRegDate"/>
+		
+	</resultMap>
+
 	<resultMap type="ReviewComment" id="reviewCommentSersultMap">
 		<id     column="review_comment_list"  		property="reviewCommentList"/>
 		<result column="review_list" 				property="reviewList"/>
@@ -85,6 +93,52 @@ FROM
 </select>
 
 
+<!-- 추천 등록시 코드 증가 -->
+<select id="ReviewLikeCode" resultType="String">
+/* 추천 등록시 코드 증가*/
+	SELECT 
+		r.review_like
+	FROM 
+		tb_review_like AS r
+	ORDER BY review_like DESC LIMIT 1
+</select>
+   
+<!-- 추천 등록  -->
+<insert id="reviewLike" parameterType="ReviewLike">
+	INSERT INTO tb_review_like 
+		(review_like
+		,review_list
+		,user_id
+		,like_reg_date)
+	VALUES 
+		(#{reviewLike}
+		,#{reviewList}
+		,#{userId}
+		,NOW())
+</insert>
 
+<!-- 추천 해제  -->
+<delete id="reviewLikeDelete" parameterType="ReviewLike">
+DELETE FROM 
+	tb_review_like
+
+ WHERE 
+ 	review_list= #{reviewList} AND user_id = #{userId}
+</delete>   
+
+<update id="reviewLikeUp" parameterType="Review">
+UPDATE tb_review AS r
+	SET
+		like_amount	= (SELECT 
+							COUNT(l.review_list)
+			 		   FROM 
+			  			   tb_review_like AS l
+				       WHERE 
+						  l.review_list = #{reviewList})
+	WHERE review_list = #{reviewList}
+	
+
+</update>
+    
     
 </mapper>

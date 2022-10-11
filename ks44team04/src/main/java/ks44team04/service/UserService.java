@@ -17,8 +17,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class UserService {
 	
 	
@@ -31,62 +33,79 @@ public class UserService {
         this.userMapper = userMapper;
     }
     
-    //판매자 등록
-    public void addSeller(Seller seller) {
-    	int addSellerResult = userMapper.addSeller(seller);
-    	System.out.println("회원가입 결과:" + addSellerResult);
+    // 10/11 판매자 신청 승인 (seller 테이블)
+    public void approveSeller(Seller seller) {
+    	userMapper.approveSeller(seller);
     }
     
-    //판매자 휴대폰번호 중복체크
+	// 10/11 판매자 신청 승인 (user 테이블)
+	public void approveSellerRight(User user) {
+		userMapper.approveSellerRight(user);
+	}
+    
+    // 10/11 이미 신청한 회원 판매자 등록 막기 (userId, sellerId 비교)
+    public int isAddSeller(String sellerId) {
+    	int cnt = userMapper.isAddSeller(sellerId);
+    	System.out.println("이미 신청한 회원 판매자 등록 막기 : " + cnt);
+    	return cnt;
+    }
+    
+    // 10/10 판매자 휴대폰번호 중복체크
     public int phoneCheckS(String storePhone) {
     	int cnt = userMapper.phoneCheckS(storePhone);
     	System.out.println("판매자 휴대폰번호 중복체크 : " + cnt);
     	return cnt;
     }
     
-    //판매자 이메일 중복체크
+    // 10/10 판매자 이메일 중복체크
     public int emailCheckS(String storeEmail) {
     	int cnt = userMapper.emailCheckS(storeEmail);
     	System.out.println("판매자 이메일 중복체크 : " + cnt);
     	return cnt;
     }
     
-    //판매자 상호명 중복체크
+    // 10/10 판매자 상호명 중복체크
     public int storeNameCheck(String storeName) {
     	int cnt = userMapper.storeNameCheck(storeName);
     	System.out.println("판매자 상호명 중복체크 : " + cnt);
     	return cnt;
     }
     
-    //판매자코드 중복체크
+    // 10/10 판매자코드 중복체크
     public int codeCheck(String sellerCode) {
     	int cnt = userMapper.codeCheck(sellerCode);
     	System.out.println("판매자 상호명 중복체크 : " + cnt);
     	return cnt;
     }
     
-    //회원 휴대폰번호 중복체크
+    //판매자 등록
+    public void addSeller(Seller seller) {
+    	int addSellerResult = userMapper.addSeller(seller);
+    	System.out.println("판매자 등록 결과:" + addSellerResult);
+    }
+    
+    // 10/8 회원 휴대폰번호 중복체크
     public int phoneCheckU(String userPhone) {
     	int cnt = userMapper.phoneCheckU(userPhone);
     	System.out.println("회원 휴대폰번호 중복체크 : " + cnt);
     	return cnt;
     }
     
-    //회원 이메일 중복체크
+    // 10/8 회원 이메일 중복체크
     public int emailCheckU(String userEmail) {
     	int cnt = userMapper.emailCheckU(userEmail);
     	System.out.println("회원 이메일 중복체크 : " + cnt);
     	return cnt;
     }
     
-    //회원 닉네임 중복체크
+    // 10/8 회원 닉네임 중복체크
     public int nicknameCheck(String userNickname) {
     	int cnt = userMapper.nicknameCheck(userNickname);
     	System.out.println("회원 닉네임 중복체크 : " + cnt);
     	return cnt;
     }
     
-	//회원 아이디 중복체크
+	// 10/8 회원 아이디 중복체크
 	public int idCheck(String userId) {
 		int cnt = userMapper.idCheck(userId);
 		System.out.println("아이디 중복체크 : " + cnt);
@@ -194,32 +213,36 @@ public class UserService {
 			for(User user : userList) {
 				
 				String userLevel = user.getUserLevel();
-				String lvName = userLevel.substring(userLevel.length() - 2);
 				
-				if(userLevel.contains("Buyer")) {
-					if(lvName.equals("01")) {
-						user.setUserLevelName("씨앗");
-					}else if(lvName.equals("02")) {
-						user.setUserLevelName("새싹");
-					}else if(lvName.equals("03")) {
-						user.setUserLevelName("잎새");
-					}else if(lvName.equals("04")) {
-						user.setUserLevelName("열매");
+				if(userLevel != null) {
+					String lvName = userLevel.substring(userLevel.length() - 2);
+					
+					if(userLevel.contains("Buyer")) {
+						if(lvName.equals("01")) {
+							user.setUserLevelName("씨앗");
+						}else if(lvName.equals("02")) {
+							user.setUserLevelName("새싹");
+						}else if(lvName.equals("03")) {
+							user.setUserLevelName("잎새");
+						}else if(lvName.equals("04")) {
+							user.setUserLevelName("열매");
+						}
+					}else if(userLevel.contains("Seller")) {
+						if(lvName.equals("01")) {
+							user.setUserLevelName("물방울");
+						}else if(lvName.equals("02")) {
+							user.setUserLevelName("시냇물");
+						}else if(lvName.equals("03")) {
+							user.setUserLevelName("호수");
+						}else if(lvName.equals("04")) {
+							user.setUserLevelName("강");
+						}
 					}
-				}else if(userLevel.contains("Seller")) {
-					if(lvName.equals("01")) {
-						user.setUserLevelName("물방울");
-					}else if(lvName.equals("02")) {
-						user.setUserLevelName("시냇물");
-					}else if(lvName.equals("03")) {
-						user.setUserLevelName("호수");
-					}else if(lvName.equals("04")) {
-						user.setUserLevelName("강");
-					}
-				}else if(userLevel != null) {
-					user.setUserLevelName("-");
-				}
-				log.info("user.getUserLevelName(), {}", user.getUserLevelName());
+				
+				}else {
+				user.setUserLevelName("-");
+			}
+			log.info("user.getUserLevelName(), {}", user.getUserLevelName());
 			}
 		}
 		return userList;

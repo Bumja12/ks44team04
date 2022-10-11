@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+	<!-- 신고 대상 카테고리 -->
+	<div class="row">
+		<div class="col-sm-12">
+        	<div class="x_panel">
+            	<div class="x_title">
+                	<h2 style="font-size: 17px;">신고 대상 카테고리</h2>
+           	        <ul class="nav navbar-right panel_toolbox">
+                      <li style="float: right;"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+            	</div>
+            	<div class="x_content">
+         	        <!-- 신고 대상 카테고리 검색 조각 -->
+	            	<div th:include="admin/category/report/reportCategory_search :: reportCategory_searchFragment" style="margin-bottom: 10px"></div>
+                   	<div class="clearfix"></div>
+					<div class="card-box table-responsive">
+		            	<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" style="width:100%">
+		    				<thead>
+		                    	<tr>
+                				    <th>
+										<input type="checkbox" id="checkAllBtn" >
+									</th>
+			                        <th>신고 카테고리 PK</th>
+			                        <th>카테고리명</th>
+			                        <th>회원 아이디 FK(등록)</th>
+			                        <th>등록일시</th>
+			                        <th>사용 여부</th>
+		                    	</tr>
+		                   	</thead>
+							<tbody>
+		                 		<tr style="cursor:pointer;">
+									<td>
+										<input type="checkbox" class="checkAll" name="checkAll1">
+		             				</td>
+		                          	<td class="moveToDetail">1</td>
+		                          	<td class="moveToDetail">판매 상품</td>
+		                          	<td class="moveToDetail">admin01</td>
+		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
+		                            <td class="moveToDetail">Y</td>
+		                    	</tr>
+		                 		<tr style="cursor:pointer;">
+									<td>
+										<input type="checkbox" class="checkAll" name="checkAll1">
+		             				</td>
+		                          	<td class="moveToDetail">2</td>
+		                          	<td class="moveToDetail">후기</td>
+		                          	<td class="moveToDetail">admin01</td>
+		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
+		                            <td class="moveToDetail">Y</td>
+		                    	</tr>
+		                 		<tr style="cursor:pointer;">
+									<td>
+										<input type="checkbox" class="checkAll" name="checkAll1">
+		             				</td>
+		                          	<td class="moveToDetail">3</td>
+		                          	<td class="moveToDetail">후기 댓글</td>
+		                          	<td class="moveToDetail">admin01</td>
+		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
+		                            <td class="moveToDetail">Y</td>
+		                    	</tr>
+		                 		<tr style="cursor:pointer;">
+									<td>
+										<input type="checkbox" class="checkAll" name="checkAll1">
+		             				</td>
+		                          	<td class="moveToDetail">4</td>
+		                          	<td class="moveToDetail">게시글</td>
+		                          	<td class="moveToDetail">admin01</td>
+		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
+		                            <td class="moveToDetail">N</td>
+		                    	</tr>
+		                 		<tr style="cursor:pointer;">
+									<td>
+										<input type="checkbox" class="checkAll" name="checkAll1">
+		             				</td>
+		                          	<td class="moveToDetail">5</td>
+		                          	<td class="moveToDetail">게시글 댓글</td>
+		                          	<td class="moveToDetail">admin01</td>
+		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
+		                            <td class="moveToDetail">N</td>
+		                    	</tr>
+							</tbody>
+		        		</table>
+					</div> <!-- </div class="card-box table-responsive"> -->
+           			<div class="row">
+           				<div class="col-sm-12">
+	           				<div class="ml-auto">
+	           					<a class="btn btn-success" th:href="@{/admin/category/addCategory}" role="button">등록</a>
+	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
+	           				</div>
+           				</div> <!-- </div class="col-sm-12"> -->
+           			</div> <!-- </div class="row"> -->
+           			
+            	</div> <!-- </div class="x_content"> -->
+            </div> <!-- </div class="x_panel"> -->
+            
+		</div> <!-- </div class="col-md-12 col-sm-12"> -->
+	</div> <!-- </div class="row"> -->
+	
+	<!-- 삭제 모달 -->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    	<div class="modal-dialog modal-lg">
+        	<div class="modal-content" style="text-align: center;">
+	        	<div class="modal-header" style="padding-top: 35px;">
+		        	<h4 class="modal-title" id="myModalLabel">게시판 대분류 카테고리 삭제</h4>
+		            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+		            </button>
+	          	</div>
+        		<form class="eventRemove" action="removeCategory"  method="POST">
+        	    	<div class="modal-body">
+	            		<h4>비밀번호 확인</h4>
+	            	    <input type="text" id="pwInput" placeholder="비밀번호를 입력하시길 바랍니다." style="height: 30px; width: 250px;">
+	            	</div>
+		            <div class="modal-footer">
+			            <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+			            <button type="button" id="deleteBtn1" class="btn btn-danger" onclick="passCheck(this)">삭제</button>
+		            </div>
+	           	</form>
+        	</div>
+      	</div>
+    </div>
+    
+</th:block> <!-- </th:block layout:fragment="customContents"> -->
+
+<th:block layout:fragment="customJsScript">
+	<script type="text/javascript">
+	
+		// 전체 체크 버튼 탐색
+		let checkAllBtn = document.getElementById('checkAllBtn');	
+		
+		// 모든 체크박스 탐색
+		var checkAll = document.getElementsByClassName('checkAll');	
+		
+		// 삭제할 자주 묻는 질문 PK 담는 배열 객체 선언			
+		var removeElement =  [];
+		
+		// 전체 체크 버튼에 이벤트 등록
+		checkAllBtn.addEventListener('click', function(){
+			for(var i=0; i<checkAll.length; i++){
+				// 전체 체크 버튼의 checked 속성을 모든 체크박스에 대입함으로써 전체 체크 버튼을 누르면 모든 체크박스에가 체크/해체
+				checkAll[i].checked = this.checked;
+			}
+		});	
+		
+		// 자주 묻는 질문 PK값 구해서 관리자 자주 묻는 질문 내역 화면으로 매핑하는 함수
+		$(function(){
+			// moveToDetail 클래스를 가지고 있는 모든 <td> 탐색
+			var $moveToDetail = $('.moveToDetail');
+			
+			// moveToDetail 클래스를 가지고 있는 모든 <td>에 이벤트 등록
+			$moveToDetail.each(function(i){
+				$(this).click(function(){
+					 var $allTd = $(this).parent().children();
+					console.log($allTd[1].innerText); // String type
+					var $reportCategory = $allTd[1].innerText
+					
+					location.href="reportCategoryDetail/" + $reportCategory;
+
+				});
+			});
+			
+		});
+
+	</script>
+</th:block>
+</html>

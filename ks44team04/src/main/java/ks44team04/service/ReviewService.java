@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import ks44team04.dto.Review;
 import ks44team04.dto.ReviewComment;
+import ks44team04.dto.ReviewLike;
 import ks44team04.mapper.ReviewMapper;
 
 
@@ -28,26 +29,52 @@ public class ReviewService {
 		this.reviewMapper = reviewMapper;
 	}
 	
-	//리뷰 리스트
+	//후기 목록
 	public List<Review> reviewList(){
 		List<Review> reviewList = reviewMapper.reviewList();
-		log.info("리뷰 리스트");
+		log.info("후기 목록");
 		
 		return reviewList;
 	}
 	
-	//리뷰 검색
+	//후기 검색
     public List<Review> reviewSerchList(Map<String, Object> paramMap){
     	List<Review> reviewList = reviewMapper.reviewSerchList(paramMap);
     	return reviewList;
     }
+
 	
-    //리뷰 댓글 목록
+    //후기 댓글 목록
     public List<ReviewComment> reviewComment(){
     	List<ReviewComment> reviewComment = reviewMapper.reviewComment();
     	
     	return reviewComment;
     	
     }
+    
+    //후기 추천 
+    public void reviewLike(ReviewLike reviewLike) {
+    	int result = reviewMapper.reviewLike(reviewLike);
+    	 log.info("추천 추가 :" + result);
+    }
+    
+    //후기 추천 해제
+    public void reviewLikeDelete(ReviewLike reviewLike) {
+    	int result = reviewMapper.reviewLikeDelete(reviewLike);
+    	log.info("추천 해제 :" + result);
+    }
+    
+  //후기 등록 코드 증가 
+    public String ReviewLikeCode() {
+    	String ReviewLikeCode = reviewMapper.ReviewLikeCode();
+    	return ReviewLikeCode;
+    }
+    
+    //후기 추천수 업데이트 
+    public void reviewLikeUp(Review review) {
+    	reviewMapper.reviewLikeUp(review);
+    }
+    
+    
 	
 }

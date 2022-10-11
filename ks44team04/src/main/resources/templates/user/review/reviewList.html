@@ -6,7 +6,7 @@
 <th:block layout:fragment="customTitle">
     <title th:text="${title}"></title>
     <link href="/assets/css/star.css" rel="stylesheet"/>	
-
+	<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css'>
 <style>
 
 .modal-body fieldset{
@@ -45,16 +45,25 @@
     resize: none;
 }
 
-.reviewBtn{
-	
+.off span{
+    display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    border: 0; /* 필드셋 테두리 제거 */
+     color: transparent; /* 기존 이모지 컬러 제거 */
+    text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
+ 
+}
+.on span{
+  display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    border: 0; /* 필드셋 테두리 제거 */
+     color: transparent; /* 기존 이모지 컬러 제거 */
+    text-shadow: 0 0 0 #f00; /* 새 이모지 색상 부여 */
 }
 </style>	
 
 
 </th:block>
-
-<div th:fragment="reviewModal">
-<form >
+<th:block layout:fragment="customContents">
+	<div th:fragment="reviewModal">
 
 		<div>
 	  		<div style="text-align: center; font-size: 20px;"><b>사용자 총평</b></div>
@@ -63,10 +72,10 @@
 	  			<b style="font-size: 18px; margin-left:50px; " > 포토 </b>
 	  		<hr style="border: solid 1px black;">
 	  		<div class="row">
-		  		<div class="col-8" >
+		  		<div class="col-10" >
 		  			<b style="font-size: 18px; margin-left:50px;" > 후기 </b>
 		  		</div>
-				<div class="col-2"  style="text-align: right;"> 
+				<div class="col-2"  style="text-align: left;"> 
 			  		<select>
 			  			<option>최신순</option>
 			  			<option>평점 낮은 순</option>
@@ -74,10 +83,11 @@
 			  			<option>추천수 높은 순</option>
 			  			<option>추천수 낮은 순</option>
 			  		</select>
-				  	<label >
-						<button type="button" class="btn btn-primary" data-toggle="modal"
-						data-target=".review" id="reviewModal" data-backdrop="static" style="font-size: 15px;">후기작성</button>
-					</label>	
+			  		<label>
+		<button type="button" class="btn btn-primary" data-toggle="modal"
+			data-target=".review" id="reviewModal" data-backdrop="static" style="font-size: 15px;">후기작성</button>
+		</label>
+				  	<div th:include="user/review/review :: reviewModal"></div>	
 				</div>	  		
 	  		</div>
   	<th:block th:if="${not #lists.isEmpty(reviewList)}" th:each="l : ${reviewList}">
@@ -99,32 +109,68 @@
 		         <p th:text="${l.reviewContent}"></p>
 		        </div>
 				<div class="col-2" >
-					<span> 
-						<label>♡</label>
-						<label th:text="'추천수' + ${l.likeAmount} + ' 개' "></label>
-					</span>
+					<label> 
+						<button type="button" class="reviewLikeBtn off" style="border: none; background-color: white;" th:value="${l.reviewList}"> 
+							<span><i class="fi fi-sr-heart"></i></span>
+						</button>
+							<span class="likeAmount" th:value="${l.likeAmount} " th:text="'추천수' + ${l.likeAmount} + ' 개' " ></span>
+					</label>
 				</div>
-			
+				
+				<input type="hidden" id="userId" name="userId" value="buyer01">
+				<input type="hidden" id="reviewList" name="reviewList" value="review001">
+				
 		      </div>
 		      <div class="row">
 			  	<hr align="center" style="border: solid 1px black; width: 82%;">
 		      </div>
 		</div>	
-	 <div  style="text-align: right;" class="col-11">
-	<div th:include="user/review/review :: reviewModal"></div>
-		
-	</div>
-	</form>		
+	
 	</div>
   	</th:block>
+  	
  </th:block>
 
-    <th:block layout:fragment="customTopJs">
-	    <script th:inline="javascript">
-	    var num = /*[[${reviewList}]]*/ 
-	    console.log(num);
-	    
-		
-		</script>
+    <th:block layout:fragment="customScript">
+	 
+	 <script>
+		$(function(){
+			var userId = $('#userId').val();
+			console.log(userId);
+			// 추천버튼 클릭시(추천 추가 또는 추천 제거)
+			$(".reviewLikeBtn").click(function(){
+				let hart = $(this);
+				let reviewList = hart.val();
+			if(hart.hasClass('off')){
+				$.ajax({
+					url: "/user/review/reviewLike",
+	                type: "GET",
+	                data: {
+	                	'reviewList': reviewList,
+	                	'userId': userId
+	                },
+	                success: function (reviewList) {
+	                	hart.removeClass("off").addClass("on")
+	                }
+				})
+			}else if(hart.hasClass('on')){
+				$.ajax({
+					url: "/user/review/reviewLikeDelete",
+	                type: "GET",
+	                data: {
+	                	'reviewList': reviewList,
+	                	'userId': userId
+	                },
+	                success: function (reviewList) {
+	                	hart.removeClass("on").addClass("off")
+	                }
+				})
+			}
+			});
+		});
+
+	 </script>
+			
+
 	</th:block>
 </html>

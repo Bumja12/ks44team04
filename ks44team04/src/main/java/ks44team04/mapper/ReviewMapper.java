@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import ks44team04.dto.Review;
 import ks44team04.dto.ReviewComment;
+import ks44team04.dto.ReviewLike;
 
 
 @Mapper
@@ -22,4 +23,16 @@ public interface ReviewMapper {
 	
 	//후기 댓글 목록 
 	public List<ReviewComment> reviewComment();
+	
+	//후기 추천
+	public int reviewLike(ReviewLike reviewLike);
+	
+	//후기 추천 해제
+	public int reviewLikeDelete(ReviewLike reviewLike);
+	
+	//후기 추천수 코드 증가
+	public String ReviewLikeCode();
+	
+	//후기 추천수 증가(Update)
+	public int reviewLikeUp(Review review);
 }

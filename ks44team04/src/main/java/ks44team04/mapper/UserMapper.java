@@ -21,6 +21,15 @@ public interface UserMapper {
     public String userLogin(String userId);
     public User getLoginUserInfo(String userId);
     
+    //판매자 신청 승인(seller 테이블)
+    public int approveSeller(Seller seller);
+    
+    //판매자 신청 승인 (user 테이블)
+    public int approveSellerRight(User user);
+    
+    //이미 판매자신청 한 회원 판매자신청 불가
+    public int isAddSeller(String sellerId);
+    
     //판매자 등록
     public int addSeller(Seller seller);
     
