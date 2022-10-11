@@ -38,7 +38,18 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    
+	
+	// 10/11 판매자 신청 승인
+	@PostMapping("/user/approveSeller")
+	public String approveSeller(@RequestParam(value="sellerId", required = false) String sellerId
+								,Seller seller, User user, Model model) {
+		
+		userService.approveSeller(seller);
+		userService.approveSellerRight(user);
+		
+		return "redirect:/admin/user/sellerList";
+	}
+	
     // 10/11 이미 신청한 회원 판매자 등록 막기
     @GetMapping("/user/isAddSeller")
     @ResponseBody
@@ -94,6 +105,7 @@ public class UserController {
         model.addAttribute("title", "판매자등록");
 		model.addAttribute("userInfo", userInfo);
 		model.addAttribute("goodsLargeCategory", goodsLargeCategory);
+		
 		return "admin/user/addSeller";
 	}
 	
@@ -273,6 +285,7 @@ public class UserController {
 		return "admin/user/dormantList";
 	}
 	
+	//판매자리스트
 	@GetMapping("/user/sellerList")
 	public String getSellerList(Model model) {
 		List<Seller> sellerList = userService.getSellerList();
@@ -294,6 +307,7 @@ public class UserController {
 		return "admin/user/sellerList";
 	}
     
+	//회원리스트
 	@GetMapping("/user/userList")
 	public String getUserList(Model model) {
 		List<User> userList = userService.getUserList();

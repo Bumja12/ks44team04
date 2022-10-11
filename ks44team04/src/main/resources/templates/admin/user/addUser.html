@@ -241,7 +241,6 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
     
-    	/* 유효성검사 */
 		var idCheck = false;
 		var pwCheck = false;
 		var pwCheck2 = false;
@@ -258,7 +257,6 @@
 		var penaltyCheck = false;
 		var statusCheck = false; 
 		var infoKeepCheck = false;
-    
 		
     	/* 주소 검색 */
 		let text = document.querySelector('#userAddress');
@@ -269,12 +267,10 @@
 					/* 주소 입력시 경고표시 없애기 */
 					$('#userAddress').css('border','1px solid #ccc');
 			        $('#addressCheck').html('');
-				text.value = data.address;
+					text.value = data.address;
 				}
 			}).open();
 			
-			
-	        
 			//상세주소 초기화
 			var input = document.getElementById('userAddress2'); 
 			input.value = "";
@@ -708,8 +704,7 @@
 			$('#userPenalty').val( Number($('#userPenalty').val().replace(/,/g, "")) );
 	        
 	        /* form 전송 */
-			$('#addUserForm').submit(function(event) {
-			}); 
+			$('#addUserForm').submit(function(event) {}); 
 	        
 	        /* 최종 유효성 검사 */
 			if(idCheck && pwCheck && pwCheck2 && pwCheckFinal && nameCheck && nicknameCheck && genderCheck && emailCheck && phoneCheck && addressCheck && addressCheck2 && addressCheckFinal && pointCheck && penaltyCheck && infoKeepCheck) {
