@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team04.mapper.CategoryManageMapper">   
+	
+	<!-- 자주 묻는 질문 카테고리 목록 -->
+	<resultMap  type="RegularAskCategory"     id="regularAskCategoryListMap">
+		<id	    column="regular_ask_category" property="regularAskCategory"/> <!-- 자주 묻는 질문 카테고리 PK -->
+        <result column="category_name"        property="categoryName"/>		  <!-- 자주 묻는 질문 카테고리 -->
+        <result column="reg_id" 			  property="regId"/>		      <!-- 회원 아이디 FK(등록인) -->
+        <result column="use_check" 			  property="useCheck"/>			  <!-- 사용 여부 -->
+        <result column="reg_date" 		      property="regDate"/>			  <!-- 등록일 -->
+	</resultMap>
+    
+	<!-- 자주 묻는 질문 카테고리 목록 조희 -->
+    <select id="getRegularAskCategoryList" resultMap="regularAskCategoryListMap">
+    	SELECT 
+	    	 rCategory.regular_ask_category -- 자주 묻는 질문 카테고리 PK
+	 		,rCategory.category_name		-- 자주 묻는 질문 카테고리
+		    ,rCategory.reg_id				-- 회원 아이디 FK(등록인)
+		    ,rCategory.use_check			-- 사용 여부
+		    ,rCategory.reg_date				-- 등록일
+		FROM 
+			tb_regular_ask_category AS rCategory; -- 자주 묻는 질문 카테고리 테이블
+    </select>
+</mapper>

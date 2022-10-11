@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customCss">
+	<style>
+		.loginInput {
+			margin-bottom: 10px;
+		}
+  
+		.userDetail td{
+			padding-left: 12px !important;
+		}
+      
+		.userDetail button {
+			margin-bottom: 0px;
+		}
+
+		.tableOdd {
+			background-color: #f6f6f6;
+			font-weight: bold;
+			padding-top: 16px !important;
+		}
+  
+		.tableEven .text {
+			width: 200px;
+			margin-right: 4px;
+		}
+
+		.tableEven select {
+			width: 200px;
+		}
+
+		.tableEven label {
+			padding-top: 4px;
+		}
+	 </style>
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+	<div class="page-title">
+		<div class="title_left">
+			<h3>상세정보</h3>
+		</div>
+		<div>
+			<button type="button" id="addSellerBtn" class="btn btn-dark pull-right" 
+					th:if="${userInfo.userRight == 'seller_before' and userInfo.userStatus == '정상'}"
+					th:onclick="|location.href='@{/admin/user/addSeller(userId=${userInfo.userId})}'|" 
+					style="margin-right: 10px;">판매자등록
+			</button>
+			<!-- 			
+			<button type="button" id="addSellerBtn_leave" class="btn btn-dark pull-right" 
+					th:if="${userInfo.userStatus == '탈퇴'}"
+					style="margin-right: 10px;">판매자등록</button>
+ 			<button type="button" id="modifyBtn_leave" class="btn btn-dark pull-right" th:if="${userInfo.userStatus == '탈퇴'}" style="margin-right: 10px;">수정</button>
+ 			-->			
+ 			<button type="button" id="modifyBtn" class="btn btn-dark pull-right" th:unless="${userInfo.userStatus == '탈퇴'}" th:onclick="|location.href='@{/admin/user/modifyUser(userId=${userInfo.userId})}'|" style="margin-right: 10px;">수정</button>
+			<button type="button" class="btn btn-default pull-right" th:onclick="|location.href='@{/admin/user/userList}'|" style="margin-right: 10px;">
+				<i class="fa fa-bars"> 회원목록</i>
+			</button>
+		</div>
+
+		<div class="clearfix"></div>
+		<div>
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel" style="padding-top: 30px;">
+					<div class="x_content">
+
+						<!-- user detail form Start -->
+						<table class="userDetail table table-responsive" th:object="${userInfo}">
+							<tbody>
+								<tr>
+									<td class="tableOdd col-md-1">회원권한</td>
+									<td class="tableEven">
+										<div class="form-inline">
+ 											<input type="text" class="form-control text" id="userRight" name="userRight" th:value="*{userRight}" readonly="readonly" />
+										</div>
+									</td>
+									<td class="tableOdd col-md-1">회원등급</td>
+									<td class="tableEven">
+ 										<input type="text" class="form-control text" id="userLevel" name="userLevel" th:value="*{userLevel}" readonly="readonly" />
+									</td>
+								</tr>
+								<tr>
+									<td class="tableOdd">아이디</td>
+									<td class="tableEven col-md-4">
+										<input type="text" class="form-control text" id="userId" name="userId" th:value="*{userId}" readonly="readonly" />
+									</td>
+									<td class="tableOdd">비밀번호</td>
+									<td class="tableEven col-md-4">
+										<input type="text" class="form-control text" id="userPw" name="userPw" th:value="*{userPw}" readonly="readonly" />
+									</td>
+								</tr>
+								<tr>
+									<td class="tableOdd">이름</td>
+									<td class="tableEven col-md-4">
+										<input type="text" class="form-control text" id="userName" name="userName" th:value="*{userName}" readonly="readonly" />
+									</td>
+									<td class="tableOdd">닉네임</td>
+									<td class="tableEven col-md-4">
+										<input type="text" class="form-control text" id="userNickname" name="userNickname" th:value="*{userNickname}" readonly="readonly" />
+									</td>
+								</tr>
+								<tr>
+									<td class="tableOdd">성별</td>
+									<td class="tableEven col-md-4" colspan="3">
+ 										<input type="text" class="form-control text" id="userGender" name="userGender" th:value="*{userGender}" readonly="readonly" />
+									</td>
+								</tr>
+								<tr>
+									<td class="tableOdd">이메일</td>
+									<td class="tableEven col-md-4">
+										<div class="form-inline">
+											<input type="text" class="form-control text" id="userEmail" name="userEmail" th:value="*{userEmail}" readonly="readonly" />
+										</div>
+									</td>
+									<td class="tableOdd">휴대폰번호</td>
+									<td class="tableEven col-md-4">
+										<input type="text" class="form-control text" id="userPhone" name="userPhone" th:value="*{userPhone}" readonly="readonly" />
+									</td>
+								</tr>
+								<tr>
+									<td class="tableOdd">주소</td>
+									<td class="tableEven col-md-4" colspan="3">
+										<div class="form-inline">
+											<input type="text" class="form-control Text" id="userAddr" style="width: 350px; margin-right: 6px;" th:value="*{userAddress}" readonly="readonly" /> 
+											<input type="text" class="form-control Text" id="userAddrDetail" name="userAddrDetail"
+												   style="width: 350px; margin-right: 6px;" th:value="*{userAddress2}" readonly="readonly" />
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="tableOdd">포인트</td>
+									<td class="tableEven col-md-4">
+										<div class="form-inline">
+											<input type="text" class="form-control text" id="userPoint" name="userPoint" th:value="*{#numbers.formatInteger(userPoint,1,'COMMA') + '점'}" readonly="readonly" />
+										</div>
+									</td>
+									<td class="tableOdd">벌점</td>
+									<td class="tableEven col-md-4">
+										<div class="form-inline">
+											<input type="text" class="form-control text" id="userPenalty" name="userPenalty" th:value="*{userPenalty + '점'}" readonly="readonly" />
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="tableOdd">상태</td>
+									<td class="tableEven col-md-4">
+										<input type="text" class="form-control text" id="userStatus" name="userStatus" th:value="*{userStatus}" readonly="readonly" />
+									</td>
+									<td class="tableOdd">정보보관기간</td>
+									<td class="tableEven col-md-4">
+										<input type="text" class="form-control text" id="userInfoKeep" name="userInfoKeep" th:value="*{userInfoKeep}" readonly="readonly" />
+									</td>
+								</tr>
+								<tr>
+									<td class="tableOdd">등록일시</td>
+									<td class="tableEven col-md-4">
+										<input type="text" class="form-control text" id="userRegDate" name="userRegDate" th:value="*{userRegDate}" readonly="readonly" />
+									</td>
+									<td class="tableOdd">최종수정</td>
+									<td class="tableEven col-md-4">
+										<input type="text" class="form-control text" id="userUpdateDate" name="userUpdateDate" th:value="*{userUpdateDate}" readonly="readonly" />
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- user detail form End -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+</th:block>
+<th:block layout:fragment="customJsScript">
+	<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+
+    <script th:inline="javascript">
+
+    	/* 회원등급 null일시 '-' 표시 */
+		$(document).ready(function() {
+			
+			var rightNull = $('#userLevel').val();
+			if(rightNull === "null") {
+				$('#userLevel').attr('value', "-");
+			}
+		});
+    	
+		/* 탈퇴회원 정보 수정 불가 */
+		/*
+    	$(function() {
+   			$("#modifyBtn_leave") .click(function() {
+   				alert("탈퇴한 회원의 정보는 수정할 수 없습니다.");
+   			});
+    	});
+		*/
+    	
+
+    </script>
+    
+</th:block>
+
+</html>
