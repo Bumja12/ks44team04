@@ -106,18 +106,18 @@
      </insert>
 	
    
-     
-        <update id="reportPoint" parameterType="User">
-        
-         UPDATE tb_user
-		<trim prefix="SET" prefixOverrides=",">
-				user_penalty = #{userPenalty}
-		</trim>
-			WHERE
-			  user_id = #{userId};
-        </update>
-     
+   <!-- 유저 포인트 업데이트 -->  
+    <update id="reportPoint" parameterType="User">
+       
+        UPDATE tb_user
+	<trim prefix="SET" prefixOverrides=",">
+			user_penalty = #{userPenalty}
+	</trim>
+		WHERE
+		  user_id = #{userId};
+    </update>
     
+   
   
      
      <!-- 신고 처리 -->
