@@ -39,6 +39,58 @@
 		<association property="couponInfo" resultMap="couponListMapper"/>
 	</resultMap>
 
+	<!-- 쿠폰목록검색 -->
+	<select id="searchCouponStatus" parameterType="map" resultMap="couponUserMap" fetchSize="100">
+		SELECT
+			c.coupon_name
+			 ,c.discount_price
+			 ,c.price_terms
+			 ,c.end_date
+			 ,cs.coupon_status_code
+			 ,cs.coupon_code
+			 ,cs.buyer_id
+			 ,cs.admin_id
+			 ,cs.coupon_issue_date
+		FROM
+			tb_coupon AS c
+				INNER JOIN
+			tb_coupon_status AS cs
+			ON
+				c.coupon_code = cs.coupon_code
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv},'%')
+			</if>
+			<if test="fd != null and fd !='' and td != null and td !=''">
+				AND
+				cs.coupon_issue_date <![CDATA[>]]> (#{fd})
+				AND
+				cs.coupon_issue_date <![CDATA[<]]> (#{td})
+			</if>
+		</trim>
+		ORDER BY cs.coupon_issue_date;
+	</select>
+
+	<!-- 쿠폰목록검색 -->
+	<select id="searchCouponList" parameterType="map" resultMap="couponListMapper" fetchSize="100">
+		select
+		    *
+		from
+		    tb_coupon as c
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv},'%')
+			</if>
+			<if test="fd != null and fd !='' and td != null and td !=''">
+				AND
+				c.reg_date <![CDATA[>]]> (#{fd})
+				AND
+				c.reg_date <![CDATA[<]]> (#{td})
+			</if>
+		</trim>
+		ORDER BY c.coupon_code;
+	</select>
+
 	<!-- 쿠폰발급 -->
 	<insert id="couponIssue" parameterType="CouponStatus">
 		<selectKey keyProperty="couponStatusCode" resultType="String" order="BEFORE">
