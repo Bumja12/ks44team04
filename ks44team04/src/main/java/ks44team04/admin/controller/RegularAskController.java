@@ -118,7 +118,7 @@ public class RegularAskController {
 		return "redirect:/admin/regularAsk/regularAskList";
 	}
 	
-	// 에이젝스 테스트
+	// 관리자 자주 묻는 질문 내역 화면
 	@ResponseBody
 	@PostMapping("/regularAskDetail")
 	public String ajaxRegularAskDetail (@RequestParam(value="regularAskPK") String regularAskPK

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<!-- 검색바 -->
+	<div th:fragment="levelSellerCategory_searchFragment">
+		<form th:action="@{/admin/category/searchCategory}"  method="post">
+			<select name="searchKey" style="height: 25px;">
+				<option value="memberId">등급 이름</option>
+				<option value="memberId">사용 여부</option>
+				<option value="memberName">1년간 누적 판매 금액</option>
+				<option value="memberName">1년간 누적 판매 건수</option>
+				<option value="memberName">6개월 평균 리뷰 평점</option>
+			</select>
+			<input type="text" name="searchValue" placeholder="검색어를 입력해주세요." style="height: 25px;">
+			<button type="submit" style="height: 25px;">검색</button>
+		</form>
+	</div>
+</html>

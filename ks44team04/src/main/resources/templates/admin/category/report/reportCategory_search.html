@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<!-- 검색바 -->
+	<div th:fragment="reportCategory_searchFragment">
+		<form th:action="@{/admin/category/searchCategory}"  method="post">
+			<select name="searchKey" style="height: 25px;">
+				<option value="memberName">PK</option>
+				<option value="memberName">카테고리명</option>
+				<option value="memberName">사용 여부</option>
+			</select>
+			<input type="text" name="searchValue" placeholder="검색어를 입력해주세요." style="height: 25px;">
+			<button type="submit" style="height: 25px;">검색</button>
+		</form>
+	</div>
+</html>
