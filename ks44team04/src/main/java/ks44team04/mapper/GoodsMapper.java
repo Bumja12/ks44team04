@@ -7,6 +7,7 @@ import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsAnswer;
 import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
+import ks44team04.dto.GoodsQnaCategory;
 
 @Mapper
 public interface GoodsMapper {
@@ -43,6 +44,15 @@ public interface GoodsMapper {
 	
 	//문의 검색
 	public List<GoodsQna> getGoodsQnaSearch(Map<String, Object> searchMap);
+	
+	//특정 문의 조회
+	public List<GoodsQna> getGoodsQnaInfoByCode(String goodsCode);
+	
+	//문의 카테고리 조회
+	public List<GoodsQnaCategory> goodsQnaCategoryList();
+	
+	//문의 등록
+	public int goodsQnaAdd(GoodsQna goodsQna);
 	
 	//상품 문의 답변 조회
 	public List<GoodsAnswer> getGoodsAnswer();

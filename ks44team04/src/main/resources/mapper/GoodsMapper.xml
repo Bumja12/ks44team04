@@ -284,9 +284,9 @@
 		ORDER BY q.goods_qna_date DESC;
 	</select>
 	
-    <!-- 상품 문의 조회 -->
+    <!-- 상품 문의 검색 -->
     <select id="getGoodsQnaSearch"  parameterType="map" resultMap="goodsQnaMap" fetchSize="100" >
-		/* 상품 문의 조회 */
+		/* 상품 문의 검색 */
 		SELECT
 			 q.goods_qna_num
 			,qc.category_name
@@ -330,6 +330,74 @@
 		</trim>
 		ORDER BY q.goods_qna_date DESC;
 	</select>
+	
+	<!-- 특정상품 문의 조회 -->
+    <select id="getGoodsQnaInfoByCode"  parameterType="map" resultMap="goodsQnaMap" fetchSize="100" >
+		/* 상품 문의 조회 */
+		SELECT
+			 q.goods_qna_num
+			,qc.category_name
+			,g.goods_code
+			,g.goods_name
+			,q.goods_qna_title
+			,q.goods_qna_content
+			,q.secret_check
+			,q.goods_qna_pw
+			,q.goods_qna_date
+			,u.user_id
+			,q.qna_status
+			,qa.seller_id
+			,qa.goods_answer_content
+			,qa.answer_date
+		FROM
+			tb_goods_qna AS q
+			INNER JOIN
+			tb_goods_qna_category AS qc
+			ON
+			q.goods_qna_category = qc.goods_qna_category
+			INNER JOIN
+			tb_goods AS g
+			ON
+			q.goods_code = g.goods_code
+			LEFT JOIN
+			tb_goods_qna_answer AS qa
+			ON
+			q.goods_qna_num = qa.goods_qna_num
+			INNER JOIN
+			tb_user AS u
+			ON
+			q.buyer_id = u.user_id
+		WHERE
+			g.goods_code = #{goodsCode}
+		ORDER BY q.goods_qna_date DESC;
+	</select>
+	
+	<resultMap type="GoodsQnaCategory" 			id="GoodsQnaCategoryMap">
+		<id column="goods_qna_category" 		property="goodsQnaCategory"/>
+		<result column="reg_id" 				property="regId"/>
+		<result column="category_name" 			property="categoryName"/>
+		<result column="reg_date" 				property="regDate"/>
+		<result column="use_check" 				property="useCheck"/>
+	</resultMap>
+	
+	<!-- 문의 카테고리 -->
+	<select id="goodsQnaCategoryList" resultMap="GoodsQnaCategoryMap">
+		/* 문의 카테고리 조회 */
+		SELECT
+			 gqc.goods_qna_category
+			,gqc.category_name
+		FROM
+			tb_goods_qna_category as gqc
+	</select>
+	
+	<!-- 문의 등록 -->
+	<insert id="goodsQnaAdd" parameterType="GoodsQna">
+		/* 상품 문의 등록  */
+		INSERT INTO tb_goods_qna
+			(goods_qna_num, goods_code, goods_qna_category, buyer_id, goods_qna_title, goods_qna_content, goods_qna_date, secret_check, goods_qna_pw, qna_status)
+		VALUES
+			(0, #{goodsCode}, #{goodsQnaCategory}, #{buyerId}, #{goodsQnaTitle}, #{goodsQnaContent}, NOW(), #{secretCheck}, #{goodsQnaPw}, #{qnaStatus})
+	</insert>
 
  	<resultMap 	type="GoodsAnswer" 				id="goodsAnswerMap">
         <id 	column="goods_qna_answer" 		property="goodsQnaAnswer"/>
