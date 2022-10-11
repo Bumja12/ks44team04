@@ -78,7 +78,7 @@
 					<div class="clearfix"></div>
 				</div>
 				<!-- 검색 창 -->
-				<!-- 정지 등록 -->
+				<!-- 벌점 카테고리 등록 -->
 				<div class="x_panel">
 					<div class="accordion" id="userSuspendAdd">
 						<div class="card">
@@ -102,15 +102,16 @@
 														<th colspan="6" style="font-size: 20px;">등록 정보</th>
 													</tr>
 													<tr>
-														<th class="style1" style="padding-top: 15px;">신고 사유명
-														</th>
+														<th class="style1" style="padding-top: 15px;">신고 사유명</th>
 														<td style="width: 450px;"><input type="text" style="width: 450px; border: none;"></td>
 														<th class="style1" style="padding-top: 15px;">등록 아이디</th>
-														<td style="padding-top: 15px; width: 350px;"><input type="text"
-															style="border: none;" th:value="${session.SID}"
-															readonly="readonly"></td>
+														<td style="padding-top: 15px; width: 350px;">
+															<input type="text" style="border: none;" th:value="${session.SID}" readonly="readonly">
+														</td>
 														<th class="style1" style="padding-top: 15px;">벌점</th>
-														<td><input type="text" style="width: 450px; border: none;"></td>
+														<td>
+															<input type="text" style="width: 450px; border: none;">
+														</td>
 													</tr>
 													<tr>
 														<td colspan="6" style="text-align: right; ">
@@ -129,7 +130,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- 정지 등록  끝 -->
+				<!-- 벌점 카테고리 등록  끝 -->
 
 
 
@@ -186,14 +187,6 @@
 
 <th:block layout:fragment="customTopJs">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script>
-		$(function() {
-			let $checks = $('.indivChecks');
-			$('#rowAllCheck').click(function() {
-				$checks.prop('checked', $(this).prop('checked'));
-			});
-		});
-	</script>
 </th:block>
 	
 

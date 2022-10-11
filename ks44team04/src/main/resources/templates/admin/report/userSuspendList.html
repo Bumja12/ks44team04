@@ -54,7 +54,7 @@
 	                            	<select style="width: 255px; height: 30px; border-color: #CCCCCC; padding-left: 10px;"	>
 	                            		<option>아아디 :: 닉네임</option>
 	                            	<th:block th:unless="${#lists.isEmpty(userList)}" th:each="u : ${userList}">
-	                            		<option th:text="${u.userId} + ' :: ' + ${u.userName}"></option>
+	                            		<option th:text="${u.userId} + ' :: ' + ${u.userName}" th:value="${u.userId}"></option>
 	                            	</th:block>
 	                            	</select>
 	                            </td>
