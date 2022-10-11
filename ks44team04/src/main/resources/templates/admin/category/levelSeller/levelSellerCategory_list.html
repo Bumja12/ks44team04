@@ -29,8 +29,8 @@
 		            	<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" style="width:100%">
 		    				<thead>
 		                    	<tr>
-			                        <th>
-										<input type="checkbox" id="check-all" >
+                				    <th>
+										<input type="checkbox" id="checkAllBtn" >
 									</th>
 			                        <th>등급 코드 PK</th>
 			                        <th>등급 이름</th>
@@ -44,61 +44,61 @@
 		                    	</tr>
 		                   	</thead>
 							<tbody>
-		                 		<tr>
-		                		    <td>
-										<input type="checkbox" id="check-all" >
+		                 		<tr style="cursor:pointer;">
+									<td>
+										<input type="checkbox" class="checkAll" name="checkAll1">
 		             				</td>
-		                          	<td>levelSeller01</td>
-		                          	<td>물방울</td>
-		                          	<td>admin01</td>
-		                            <td>2021-01-01 00:00:00</td>
-		                            <td>Y</td>
-		                        	<td>0</td>
-		                        	<td>0</td>
-		                        	<td> </td>
-		                        	<td>levelSeller01</td>
+		                          	<td class="moveToDetail">levelSeller01</td>
+		                          	<td class="moveToDetail">물방울</td>
+		                          	<td class="moveToDetail">admin01</td>
+		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
+		                            <td class="moveToDetail">Y</td>
+		                        	<td class="moveToDetail">0</td>
+		                        	<td class="moveToDetail">0</td>
+		                        	<td class="moveToDetail"> </td>
+		                        	<td class="moveToDetail">levelSeller01</td>
 		                    	</tr>
-		                 		<tr>
-		                		    <td>
-										<input type="checkbox" id="check-all" >
+		                 		<tr style="cursor:pointer;">
+									<td>
+										<input type="checkbox" class="checkAll" name="checkAll1">
 		             				</td>
-		                          	<td>levelSeller02</td>
-		                          	<td>시냇물</td>
-		                          	<td>admin01</td>
-		                            <td>2021-01-01 00:00:00</td>
-		                            <td>Y</td>
-		                        	<td>2000000</td>
-		                        	<td>100</td>
-		                        	<td> </td>
-		                        	<td>levelSeller02</td>
+		                          	<td class="moveToDetail">levelSeller02</td>
+		                          	<td class="moveToDetail">시냇물</td>
+		                          	<td class="moveToDetail">admin01</td>
+		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
+		                            <td class="moveToDetail">Y</td>
+		                        	<td class="moveToDetail">2000000</td>
+		                        	<td class="moveToDetail">100</td>
+		                        	<td class="moveToDetail"> </td>
+		                        	<td class="moveToDetail">levelSeller02</td>
 		                    	</tr>
-		                 		<tr>
-		                		    <td>
-										<input type="checkbox" id="check-all" >
+		                 		<tr style="cursor:pointer;">
+									<td>
+										<input type="checkbox" class="checkAll" name="checkAll1">
 		             				</td>
-		                          	<td>levelSeller03</td>
-		                          	<td>호수</td>
-		                          	<td>admin01</td>
-		                            <td>2021-01-01 00:00:00</td>
-		                            <td>Y</td>
-		                        	<td>3000000</td>
-		                        	<td>300</td>
-		                        	<td> </td>
-		                        	<td>levelSeller03</td>
+		                          	<td class="moveToDetail">levelSeller03</td>
+		                          	<td class="moveToDetail">호수</td>
+		                          	<td class="moveToDetail">admin01</td>
+		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
+		                            <td class="moveToDetail">Y</td>
+		                        	<td class="moveToDetail">3000000</td>
+		                        	<td class="moveToDetail">300</td>
+		                        	<td class="moveToDetail"> </td>
+		                        	<td class="moveToDetail">levelSeller03</td>
 		                    	</tr>
-		                 		<tr>
-		                		    <td>
-										<input type="checkbox" id="check-all" >
+		                 		<tr style="cursor:pointer;">
+									<td>
+										<input type="checkbox" class="checkAll" name="checkAll1">
 		             				</td>
-		                          	<td>levelSeller04</td>
-		                          	<td>강</td>
-		                          	<td>admin01</td>
-		                            <td>2021-01-01 00:00:00</td>
-		                            <td>Y</td>
-		                        	<td>3000000 </td>
-		                        	<td>500</td>
-		                        	<td>4.5</td>
-		                        	<td>levelSeller04</td>
+		                          	<td class="moveToDetail">levelSeller04</td>
+		                          	<td class="moveToDetail">강</td>
+		                          	<td class="moveToDetail">admin01</td>
+		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
+		                            <td class="moveToDetail">Y</td>
+		                        	<td class="moveToDetail">3000000 </td>
+		                        	<td class="moveToDetail">500</td>
+		                        	<td class="moveToDetail">4.5</td>
+		                        	<td class="moveToDetail">levelSeller04</td>
 		                    	</tr>
 							</tbody>
 		        		</table>
@@ -145,61 +145,62 @@
 
 <th:block layout:fragment="customJsScript">
 	<script type="text/javascript">
-			<!-- 모달 기능 -->
-			// 목록 내에 삭제 버튼 탐색
-			var deleteModal = document.getElementsByClassName('deleteModal');	
-			
-			// 관리자 비밀번호
-			let userPw = 'pw001';
-			
-			/*유효성 검사*/
-			function passCheck(i){
-				 
-				var pwInput = document.getElementById("pwInput");
-				
-				if(pwInput.value == ""){
-					alert("비밀번호를 입력하세요.")
-					pwInput.focus();
-					
-				}else if(pwInput.value != userPw){
-						alert("비밀번호를 확인하시길 바랍니다.")
-						pwInput.focus();
-						
-				}else if(pwInput.value == userPw){
-					console.log(i.type);
-					i.type = 'submit';
-				}
-				
+	
+		// 전체 체크 버튼 탐색
+		let checkAllBtn = document.getElementById('checkAllBtn');	
+		
+		// 모든 체크박스 탐색
+		var checkAll = document.getElementsByClassName('checkAll');	
+		
+		// 삭제할 자주 묻는 질문 PK 담는 배열 객체 선언			
+		var removeElement =  [];
+		
+		// 전체 체크 버튼에 이벤트 등록
+		checkAllBtn.addEventListener('click', function(){
+			for(var i=0; i<checkAll.length; i++){
+				// 전체 체크 버튼의 checked 속성을 모든 체크박스에 대입함으로써 전체 체크 버튼을 누르면 모든 체크박스에가 체크/해체
+				checkAll[i].checked = this.checked;
 			}
+		});
+		
+		// 자주 묻는 질문 PK값 구해서 관리자 자주 묻는 질문 내역 화면으로 매핑하는 함수
+		$(function(){
+			// moveToDetail 클래스를 가지고 있는 모든 <td> 탐색
+			var $moveToDetail = $('.moveToDetail');
 			
-			$(function(){
-				
-				// 모든 체크박스 탐색
-				var $checkAll = $('.checkAll');
-				// 전체 체크 버튼 탐색
-				var $checkAllBtn = $('.checkAllBtn');
-				
-				// 자주 묻는 질문 PK값을 저장하는 배열 객체 removeElement 선언
-// 				var removeElement = [];
-				
-				$checkAllBtn.each(function(i){
-					$(this).click(function(){
-						// <tbody>까지 접근
-						let $table = $(this).parent().parent().parent().parent().children()[1];
-						console.log($table);
-					});
+			// moveToDetail 클래스를 가지고 있는 모든 <td>에 이벤트 등록
+			$moveToDetail.each(function(i){
+				$(this).click(function(){
+					 var $allTd = $(this).parent().children();
+					console.log($allTd[1].innerText); // String type
+					var $levelCode = $allTd[1].innerText
+					
+		  			var request = $.ajax({
+		  				url: "/admin/category/levelSellerCategoryDetail", //요청 페이지 주소
+			  			  method: "POST", //요청 방식
+			  			  data: { levelCode : $levelCode}, 
+		                  //요청 페이지에 전달할 데이터 {key: value}
+			  			  dataType: "text" //요청 페이지에서 응답할 방식
+			  			});
+					
+			  			//정상적인 응답이 왔을 경우 실행되는 메서드
+			  			request.done(function( data ) {
+			  				console.log('응답 성공');
+			  				console.log(data);
+			  				
+			  				location.href=data;
+			  			});
+			  			//비정상적인 응답이나 요청 후 응답 실패시 실행되는 메서드
+			  			request.fail(function( jqXHR, textStatus ) {
+			  			  alert( "Request failed: " + textStatus );
+			  			});
 				});
 			});
 			
-			// 전체 체크 버튼에 이벤트 등록
-// 			checkAllBtn.addEventListener('click', function(){
-// 				for(var i=0; i<checkAll.length; i++){
-// 					// 전체 체크 버튼의 checked 속성을 모든 체크박스에 대입함으로써 전체 체크 버튼을 누르면 모든 체크박스에가 체크/해체
-// 					checkAll[i].checked = this.checked;
-// 				}
-// 			});
+		});
+		
 
 
-		</script>
+	</script>
 </th:block>
 </html>

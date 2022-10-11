@@ -1,14 +1,26 @@
 package ks44team04.admin.controller;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import ks44team04.dto.RegularAsk;
+import ks44team04.dto.RegularAskCategory;
 
 @Controller
 @RequestMapping(value = "/admin/category")
 public class CategoryController {
+
+	private static final Logger log = LoggerFactory.getLogger(CategoryController.class);
 
 	// 카테고리 검색 처리
 	@PostMapping("/searchCategory")
@@ -132,6 +144,61 @@ public class CategoryController {
 	
 	
 	// --------------------------------------카테고리 목록  화면--------------------------------------
+	
+	// --------------------------------------카테고리 내역  화면--------------------------------------
+	
+	// 구매자 등급 카테고리 내역 화면
+	@ResponseBody
+	@PostMapping("/levelBuyerCategoryDetail")
+	public String ajaxlevelBuyerDetail (@RequestParam(value="levelCode") String levelCode) {
+		
+		log.info(levelCode);
+		
+		return "levelBuyerCategoryDetail/" + levelCode;
+	}
+	
+	// 구매자 등급 카테고리 내역 화면
+	@GetMapping("/levelBuyerCategoryDetail/{levelCode}")
+	public String getLevelBuyerCategoryDetail (@PathVariable(value = "levelCode") String levelCode
+									   ,Model model) {
+		
+		// 특정 자주 묻는 질문 
+		// RegularAsk regularAsk = regularAskService.getRegularAskByPK(regularAskPK);
+		
+		// 자주 묻는 질문 카테고리 목록
+		// List<RegularAskCategory> regularAskCategoryList = categoryManageService.getRegularAskCategoryList();
+		
+		model.addAttribute("title", "구매자 등급 카테고리 내역 화면");
+		
+		return "admin/category/levelBuyer/levelBuyerCategory_detail";
+	}
+	
+	// 판매자 등급 카테고리 내역 화면
+	@ResponseBody
+	@PostMapping("/levelSellerCategoryDetail")
+	public String ajaxlevelSellerDetail (@RequestParam(value="levelCode") String levelCode) {
+		
+		log.info(levelCode);
+		
+		return "levelSellerCategoryDetail/" + levelCode;
+	}
+	
+	// 판매자 등급 카테고리 내역 화면
+	@GetMapping("/levelSellerCategoryDetail/{levelCode}")
+	public String getLevelSellerCategoryDetail (@PathVariable(value = "levelCode") String levelCode
+			,Model model) {
+		
+		// 특정 자주 묻는 질문 
+		// RegularAsk regularAsk = regularAskService.getRegularAskByPK(regularAskPK);
+		
+		// 자주 묻는 질문 카테고리 목록
+		// List<RegularAskCategory> regularAskCategoryList = categoryManageService.getRegularAskCategoryList();
+		
+		model.addAttribute("title", "판매자 등급 카테고리 내역 화면");
+		
+		return "admin/category/levelSeller/levelSellerCategory_detail";
+	}
+	
 	
 	
 }
