@@ -23,10 +23,10 @@
 						 <input	type="hidden" name="reportCategory" value="4"> 
 						 <input	type="hidden" name="reportWhat" value="board006"> 
 						 <input	type="hidden" name="reportResult" value="대기중"> 
-						 <input	type="text" id="reportReason" name="reportReason" style="width: 500px; height: 200px; font-size: 20px;">
+						 <input	type="text" id="reportReason" name="reportReason" th:text="${}" style="width: 500px; height: 200px; font-size: 20px;">
 
 						<h3>신고 사유</h3>
-						<div style="font-size: 23px;">
+						<div style="font-size: 18px;">
 							<label style="margin-right: 40px;"> <input type="radio"
 								id="reportCode" name="reportCode" value="report_reason_1">스팸/도배글
 							</label> <label> <input type="radio" id="reportCode"
