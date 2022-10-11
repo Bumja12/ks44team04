@@ -45,5 +45,8 @@ public class PointService {
 	public void addPointDetailPlus(PointDetail pointDetail) {
 		pointMapper.addPointDetailPlus(pointDetail);
 	}
+	public void addPointDetailMinus(String dealId) {
+		pointMapper.addPointDetailMinus(dealId);
+	}
 
 }

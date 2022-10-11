@@ -199,7 +199,8 @@ public class UserOrderController {
     }
 
     @PostMapping("/end")
-    public String setOrder(Order order, OrderDetail orderDetail, OrderDetailStr orderDetailStr) {
+    public String setOrder(Order order, OrderDetail orderDetail, OrderDetailStr orderDetailStr, PointDeal pointDeal,
+                           @RequestParam("couponStatusCode") String couponStatusCode) {
         String sessionId = "buyer01";
         String orderNum = orderService.getOrderNum();
 
@@ -239,6 +240,19 @@ public class UserOrderController {
             orderService.setOrderDetail(orderDetail);
         }
 
+        /* 포인트 사용 */
+        pointDeal.setUserId(sessionId);
+        pointDeal.setStatus("사용");
+        pointDeal.setPointDealReason("상품구매");
+        pointDeal.setPointDealReference(orderNum);
+        pointDeal.setPointDealPrice(-order.getUsePoint());
+        String dealId = pointService.addPointDeal(pointDeal);
+        pointService.addPointDetailMinus(dealId);
+
+        /* 쿠폰 사용 */
+        if (order.getCouponCode() != null) {
+            couponService.deleteCouponStatus(couponStatusCode);
+        }
 
         return "redirect:/user/order/checkout";
     }

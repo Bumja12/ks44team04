@@ -22,7 +22,7 @@
         ORDER BY p.point_deal_date;
     </select>
 
-    <select id="getUserPoint" parameterType="String" resultType="int">
+    <select id="getUserPoint" parameterType="string" resultType="int">
         select sum(point_deal_detail)
         from tb_point_detail
         where user_id = 'buyer01'
@@ -58,6 +58,11 @@
         values (#{pointDetail}, #{userId}, #{pointDealDetail}, #{pointDetailCode}, #{pointDetailCode}, #{pointDealId}, now(),
         date_add(now(), interval 1 year));
     </insert>
+
+    <insert id="addPointDetailMinus" parameterType="string" statementType="CALLABLE">
+        call usePoint(#{dealId})
+    </insert>
+
 
 
 </mapper>

@@ -15,4 +15,5 @@ public interface PointMapper {
 
 	public void addPointDeal(PointDeal pointDeal);
 	public void addPointDetailPlus(PointDetail pointDetail);
+	public void addPointDetailMinus(String dealId);
 }

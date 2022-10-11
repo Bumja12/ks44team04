@@ -123,4 +123,10 @@
 			on tcs.coupon_code = tc.coupon_code
 			where buyer_id = #{userId}
 	</select>
+	
+	<delete id="deleteCouponStatus" parameterType="string">
+		delete
+		from tb_coupon_status
+		where coupon_status_code = #{couponStatusCode};
+	</delete>
 </mapper>
