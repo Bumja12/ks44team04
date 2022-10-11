@@ -1,129 +1,204 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/adminDefault}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminDefault}">
 
 <th:block layout:fragment="customCss">
-	<style>
-th {
-	text-align: center;
-}
+    <style>
+        th {
+            text-align: center;
+        }
 
-.table>tbody>tr>td {
-	vertical-align: middle;
-	text-align: center;
-}
-</style>
+        .table > tbody > tr > td {
+            vertical-align: middle;
+            text-align: center;
+        }
+    </style>
 </th:block>
 
 <th:block layout:fragment="customTitle">
-	<title th:text="${title}"></title>
+    <title th:text="${title}"></title>
 </th:block>
 
 <th:block layout:fragment="customContents">
-	<div class="row">
-		<div class="col-md-12 col-sm-12 " style="overflow: scroll; width:100%; height:700px;">
-			<div class="x_panel tile fixed_height_320">
-				<div class="x_title">
-					<h2>App Versions</h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false"><i
-								class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
-								x-placement="bottom-start"
-								style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 31px, 0px);">
-								<a class="dropdown-item" href="#">Settings 1</a> <a
-									class="dropdown-item" href="#">Settings 2</a>
-							</div></li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<div class="row">
-						<div class="col-md-12 col-sm-12 col-xs-12">
-							<div class="x_panel">
-								<div class="x_title">
-									<h2>
-										쿠폰목록 <small>Admin</small>
-									</h2>
-									<ul class="nav navbar-right panel_toolbox">
-										<li><a class="collapse-link"><i
-												class="fa fa-chevron-up"></i></a></li>
-										<li class="dropdown"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown" role="button" aria-expanded="false"><i
-												class="fa fa-wrench"></i></a>
-											<div class="dropdown-menu"
-												aria-labelledby="dropdownMenuButton">
-												<a class="dropdown-item" href="#">Settings 1</a> <a
-													class="dropdown-item" href="#">Settings 2</a>
-											</div></li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-									</ul>
-									<div class="clearfix"></div>
-								</div>
-								<div class="x_content2">
-									<table id="datatable-checkbox"
-										class="table table-striped table-bordered table-hover dataTable no-footer"
-										role="grid">
-										<thead>
-											<tr>
-												<th>회원아이디</th>
-												<th>쿠폰코드</th>
-												<th>쿠폰명</th>
-												<th>할인금액</th>
-												<th>사용조건금액</th>
-												<th>만료일자</th>
-												<th>발급인</th>
-												<th>지급일시</th>
-												<th style="width: 140px">관리</th>
-											</tr>
-										</thead>
-										<tbody>
-											<th:block th:if="${not #lists.isEmpty(couponStatus)}"
-												th:each="c : ${couponStatus}">
-												<th:block th:if="${not #lists.isEmpty(c.couponNow)}"
-													th:each="cn : ${c.couponNow}">
-													<tr>
-														<th:block th:if="${cnStat.index == 0}">
-															<td th:rowspan="${cnStat.size}" th:text="${c.buyerId}"></td>
-														</th:block>
-														<td th:text="${cn.couponCode}"></td>
-														<td th:text="${cn.couponName}"></td>
-														<td
-															th:text="${'₩' + #numbers.formatInteger(cn.discountPrice, 3, 'COMMA')}"></td>
-														<td
-															th:text="${'₩' + #numbers.formatInteger(cn.priceTerms, 3, 'COMMA') + ' 이상'}"></td>
-														<td th:text="${cn.endDate}"></td>
-														<td th:text="${cn.adminId}"></td>
-														<td th:text="${cn.couponIssueDate}"></td>
-														<td><a href="#"><i class="fa fa-edit"></i> 수정</a>
-															<a href="#"><i class="fa fa-close"></i>삭제</a>
-														</td>
-													</tr>
-												</th:block>
-											</th:block>
-											<tr th:unless="${not #lists.isEmpty(couponStatus)}">
-												<td colspan="7">등록된 쿠폰이 없습니다.</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+    <div class="col-md-12 col-sm-12 col-xs-12" style="overflow: scroll; width:100%; height:700px;">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>쿠폰보유현황 <small>Admin</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle"
+                                            data-toggle="dropdown" role="button" aria-expanded="false"><i
+                            class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a> <a
+                                class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content2">
+                <div class="x_panel">
+                    <div class="row" align="right">
+                        <div class="col-sm-12">
+                            <div class="ml-auto">
+                                <button class="btn btn-success getUserBtn" type="button" data-toggle="modal"
+                                        data-target="#couponIssue">쿠폰발급
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="datatable-checkbox"
+                           class="table table-striped table-bordered table-hover dataTable no-footer"
+                           role="grid">
+                        <thead>
+                        <tr>
+                            <th>회원아이디</th>
+                            <th>쿠폰코드</th>
+                            <th>쿠폰명</th>
+                            <th>할인금액</th>
+                            <th>사용조건금액</th>
+                            <th>만료일자</th>
+                            <th>발급인</th>
+                            <th>지급일시</th>
+                            <th style="width: 140px">관리</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:if="${not #lists.isEmpty(couponStatus)}"
+                                  th:each="c : ${couponStatus}">
+                            <th:block th:if="${not #lists.isEmpty(c.couponNow)}"
+                                      th:each="cn : ${c.couponNow}">
+                                <tr>
+                                    <th:block th:if="${cnStat.index == 0}">
+                                        <td th:rowspan="${cnStat.size}" th:text="${c.buyerId}"></td>
+                                    </th:block>
+                                    <td th:text="${cn.couponCode}"></td>
+                                    <td th:text="${cn.couponName}"></td>
+                                    <td
+                                            th:text="${'₩' + #numbers.formatInteger(cn.discountPrice, 3, 'COMMA')}"></td>
+                                    <td
+                                            th:text="${'₩' + #numbers.formatInteger(cn.priceTerms, 3, 'COMMA') + ' 이상'}"></td>
+                                    <td th:text="${cn.endDate}"></td>
+                                    <td th:text="${cn.adminId}"></td>
+                                    <td th:text="${cn.couponIssueDate}"></td>
+                                    <td><a href="#"><i class="fa fa-edit"></i> 수정</a>
+                                        <a href="#"><i class="fa fa-close"></i>삭제</a>
+                                    </td>
+                                </tr>
+                            </th:block>
+                        </th:block>
+                        <tr th:unless="${not #lists.isEmpty(couponStatus)}">
+                            <td colspan="7">등록된 쿠폰이 없습니다.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="modal fade" id="couponIssue" tabindex="-1" role="dialog" aria-labelledby="searchPaymentDetail" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="couponIssueTitle">쿠폰발급하기</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="x_panel">
+                        <form th:action="@{/admin/coupon/couponIssue}" method="post" >
+                            <table id="datatable-checkbox" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid">
+                                <thead>
+                                <tr>
+                                    <th style="width: 30px;">
+                                        <label for="motherCheck"></label>
+                                        <input type="checkbox" id="motherCheck" class="form-check-input">
+                                    </th>
+                                    <th>회원아이디</th>
+                                    <th>이름</th>
+                                    <th>닉네임</th>
+                                    <th>권한</th>
+                                    <th>등급</th>
+                                    <!-- <th>연락처</th>
+                                    <th>이메일</th> -->
+                                    <th>가입일</th>
+                                    <th>최근접속일</th>
+                                    <th>상태</th>
+                                    <th>관리</th>
+                                </tr>
+                                </thead>
+                                <tbody class="userList">
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success float-middle couponIssueBtn">쿠폰발급</button>
+                                <button type="button" class="btn btn-warning float-middle resetBtn">초기화</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary closeModal" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
 
+<th:block layout:fragment="customJsScript">
+    <script type="text/javascript">
+        $(function(){
 
+                $('#motherCheck').click(function (){
+                $('.childCheck').prop('checked', $(this).prop('checked'));
+            })
 
-	</div>
-	<!--  -->
+            $('.getUserBtn').click(function (){
+                var request = $.ajax({
+                    url: "/admin/coupon/userList",
+                    method: 'GET',
+                    data: { 'getUserListCheck' : true },
+                    dataType: "json"
+                });
+
+                request.done(function( data ) {
+
+                    let userList = "";
+
+                    $.each(data, function(index, item){
+                        userList += "<tr>"
+                        userList += "<td><input type=\"checkbox\" name='userId' value='"+ data[index].userId + "' class=\"childCheck\"></td>"
+                        userList += "<td>" + data[index].userId + "</td>"
+                        userList += "<td>" + data[index].userName + "</td>"
+                        userList += "<td>" + data[index].userNickname + "</td>"
+                        userList += "<td>" + data[index].rightList.rightStatus + "</td>"
+                        userList += "<td>" + data[index].userLevelName + "</td>"
+                        userList += "<td>" + data[index].userRegDate + "</td>"
+                        userList += "<td>" + data[index].userUpdateDate + "</td>"
+                        userList += "<td>" + data[index].userStatus + "</td>"
+                        userList += "<td>" + data[index].rightList.rightStatus + "</td>"
+                        userList += "</tr>"
+                    })
+
+                    $('.userList').prepend(userList);
+
+                    $('#couponIssue').on('hidden.bs.modal', function(e) {
+                        $('.userList').empty();
+                    })
+                });
+
+                request.fail(function( jqXHR, textStatus ) {
+                    alert( "Request failed: " + textStatus );
+                });
+            })
+        });
+    </script>
 </th:block>
 
 </html>

@@ -22,4 +22,21 @@ public class LedgerBookController {
 		
 		return "admin/ledgerBook/sellerBook";
 	}
+	
+	@GetMapping("/admin/ledgerBook/salesStatistics")
+	public String salesStatistics(Model model) {
+		
+		model.addAttribute("title", "연령/지역별 통계");
+		
+		return "admin/ledgerBook/salesStatistics";
+	}
+	
+	@GetMapping("/admin/ledgerBook/ageAreaStatistics")
+	public String ageAreaStatistics(Model model) {
+		
+		model.addAttribute("title", "연령/지역별 통계");
+		
+		return "admin/ledgerBook/ageAreaStatistics";
+	}
+	
 }

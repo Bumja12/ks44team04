@@ -7,7 +7,11 @@ import ks44team04.dto.CouponStatus;
 
 @Mapper
 public interface CouponMapper {
-	
+
+	public void coouponIssue(CouponStatus coupon);
+
+	public void couponCreate(Coupon coupon);
+
 	public List<Coupon> couponList();
 	
 	public List<CouponStatus> couponStatus();

@@ -156,7 +156,96 @@
 			user_id = #{userId};
 	</update>
 	
-	<!-- 회원등록 -->
+	
+	<!-- 판매자 휴대폰번호 중복체크 -->
+	<select id="phoneCheckS" parameterType="String" resultType="int">
+		/* 판매자 휴대폰번호 중복체크 */
+		SELECT
+			count(s.store_phone)
+		FROM 
+			tb_seller AS s
+		WHERE 
+			s.store_phone = #{storePhone};
+	</select>
+	
+	<!-- 판매자 이메일 중복체크 -->
+	<select id="emailCheckS" parameterType="String" resultType="int">
+		/* 판매자 이메일 중복체크 */
+		SELECT
+			count(s.store_email)
+		FROM 
+			tb_seller AS s
+		WHERE 
+			s.store_email = #{storeEmail};
+	</select>
+	
+	<!-- 판매자 상호명 중복체크 -->
+	<select id="storeNameCheck" parameterType="String" resultType="int">
+		/* 판매자 상호명 중복체크 */
+		SELECT
+			count(s.store_name)
+		FROM 
+			tb_seller AS s
+		WHERE 
+			s.store_name = #{storeName};
+	</select>
+	
+	<!-- 판매자 상호명 중복체크 -->
+	<select id="codeCheck" parameterType="String" resultType="int">
+		/* 판매자 상호명 중복체크 */
+		SELECT
+			count(s.seller_code)
+		FROM 
+			tb_seller AS s
+		WHERE 
+			s.seller_code = #{sellerCode};
+	</select>
+	
+	<!-- 회원 휴대폰번호 중복체크 -->
+	<select id="phoneCheckU" parameterType="String" resultType="int">
+		/* 회원 휴대폰번호 중복체크 */
+		SELECT
+			count(u.user_phone)
+		FROM 
+			tb_user AS u
+		WHERE 
+			u.user_phone = #{userPhone};
+	</select>
+	
+	<!-- 회원 이메일 중복체크 -->
+	<select id="emailCheckU" parameterType="String" resultType="int">
+		/* 회원 이메일 중복체크 */
+		SELECT
+			count(u.user_email)
+		FROM 
+			tb_user AS u
+		WHERE 
+			u.user_email = #{userEmail};
+	</select>
+	
+	<!-- 회원 닉네임 중복체크 -->
+	<select id="nicknameCheck" parameterType="String" resultType="int">
+		/* 회원 닉네임 중복체크 */
+		SELECT
+			count(u.user_Nickname)
+		FROM 
+			tb_user AS u
+		WHERE 
+			u.user_Nickname = #{userNickname};
+	</select>
+	
+	<!-- 회원 아이디 중복체크 -->
+	<select id="idCheck" parameterType="String" resultType="int">
+		/* 회원 아이디 중복체크 */
+		SELECT
+			count(u.user_id)
+		FROM 
+			tb_user AS u
+		WHERE 
+			u.user_id = #{userId};
+	</select>
+	
+ 	<!-- 회원등록 -->
 	<insert id="addUser" parameterType="User">
 		/* 회원 가입 */
 		INSERT INTO tb_user

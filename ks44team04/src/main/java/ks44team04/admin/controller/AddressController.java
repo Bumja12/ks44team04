@@ -27,7 +27,7 @@ public class AddressController {
         addressInfo.put("userId", userId);
         List<AddressList> addressLists = addressService.getAddressList(addressInfo);
         model.addAttribute("addressList", addressLists);
-        return "user/order/addressList";
+        return "admin/order/addressList";
     }
 
     @GetMapping("/modify/{addressList}")

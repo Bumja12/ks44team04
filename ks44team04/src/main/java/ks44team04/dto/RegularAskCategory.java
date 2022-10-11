@@ -5,7 +5,7 @@ public class RegularAskCategory {
     private String regularAskCategory; // 자주 묻는 질문 카테고리 PK
     private String regId; // 회원 아이디 FK(등록인)
     private String categoryName; // 자주 묻는 질문 카테고리명
-    private String regDate; // 등록일시
+    private String regDate; // 등록일
     private String useCheck; // 사용 여부
 
     public String getRegularAskCategory() {

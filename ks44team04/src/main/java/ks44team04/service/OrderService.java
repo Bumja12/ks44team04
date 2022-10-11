@@ -48,6 +48,9 @@ public class OrderService {
     public List<OrderDetail> getOrderList(String userId) {
         return orderMapper.getOrderList(userId);
     }
+    public List<OrderDetail> getOrderListA(String sellerId, String status) {
+        return orderMapper.getOrderListA(sellerId, status);
+    }
 
     public Goods getGoodsInfo(String goodsCode) {
         return orderMapper.getGoodsInfo(goodsCode);
@@ -55,5 +58,13 @@ public class OrderService {
 
     public void setOrder(Order order) {
         orderMapper.setOrder(order);
+    }
+
+    public String getOrderNum() {
+        return orderMapper.getOrderNum();
+    }
+
+    public void setOrderDetail(OrderDetail orderDetail) {
+        orderMapper.setOrderDetail(orderDetail);
     }
 }
