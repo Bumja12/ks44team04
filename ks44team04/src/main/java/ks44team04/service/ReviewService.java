@@ -70,6 +70,10 @@ public class ReviewService {
     	return ReviewLikeCode;
     }
     
+    //후기 추천수 업데이트 
+    public void reviewLikeUp(Review review) {
+    	reviewMapper.reviewLikeUp(review);
+    }
     
     
 	
