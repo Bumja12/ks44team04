@@ -122,17 +122,28 @@
 	</resultMap>
 
 
-	<!-- 판매자 신청 승인 -->
+	<!-- 판매자 신청 승인 (seller 테이블) -->
 	<update id="approveSeller" parameterType="map">
 		/* 판매자 신청 승인 */
 		UPDATE tb_seller
 		<trim prefix="SET" prefixOverrides=",">
 			approve_date = NOW(),
-			<if test="userId != null and userId != ''">,approve_check = #{approveCheck}</if>
-			<if test="userId != null and userId != ''">,approve_id = #{approveId}</if>
+			<if test="approveCheck != null and approveCheck != ''">,approve_check = #{approveCheck}</if>
+			<if test="approveId != null and approveId != ''">,approve_id = #{approveId}</if>
 		</trim>
 		WHERE
 			seller_id = #{sellerId};
+	</update>
+
+	<!-- 판매자 신청 승인 (user테이블) -->
+	<update id="approveSellerRight" parameterType="map">
+		/* 판매자 신청 승인 */
+		UPDATE tb_user
+		<trim prefix="SET" prefixOverrides=",">
+			<if test="userRight != null and userRight != ''">,user_right = #{userRight}</if>
+		</trim>
+		WHERE
+			user_id = #{userId};
 	</update>
 
 	<!-- 판매자 등록 -->

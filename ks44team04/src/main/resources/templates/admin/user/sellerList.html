@@ -7,6 +7,15 @@
 	<title th:text="${title}"></title>
 </th:block>
 
+<th:block layout:fragment="customCss">
+	<style>
+		.btns {
+			text-align: center;
+		}
+
+	</style>
+</th:block>
+
 <th:block layout:fragment="customContents">
 
 	<div class="page-title">
@@ -101,7 +110,7 @@
 											<th>사업자등록증</th>
 											<th>통신판매업신고증</th>
 											<th>신청일자</th>
-											<th>관리</th>
+											<th style="width: 105px;">관리</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -118,10 +127,17 @@
 											<td th:text="${l.approveAskDate}"></td>
 											<td hidden="hidden" class="approveCheck" id="approveCheck" th:value="${l.approveCheck}"></td>
 											<td>
-												<div>
-													<a th:href="@{/admin/user/sellerList}" id="approveBtn"><i class="fa fa-check"></i> 승인 </a>
+												<form id="approveSeller" th:action="@{/admin/user/approveSeller(sellerId=${l.sellerId})}" method="post">
+													<input type="hidden" id="approveCheck" name="approveCheck" value="Y" />
+													<input type="hidden" id="approveId" name="approveId" value="admin01" />
+													<input type="hidden" id="userRight" name="userRight" value="판매자" />
+												</form>
+												<form id="rejectSeller" th:action="@{/admin/user/sellerList(sellerId=${l.sellerId})}" method="post">
+												</form>
+												<div class="btns">
+													<input type="submit" form="approveSeller" class="approveBtn btn btn-xs btn-dark" id="approveBtn" value="승인">
+													<input type="submit" form="rejectSeller" class="rejectBtn btn btn-xs btn-dark" id="approveBtn" value="거부">
 												</div>
-												<a href="#" id="rejectBtn"><i class="fa fa-times"></i> 거부 </a>
 											</td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(sellerListN)}">
@@ -203,47 +219,10 @@
 		}
 		
 		/* 판매자 신청 승인 */
-		$(function() {
-			$('#approveBtn').on('click', function() {
-				$('#approveCheck').val('Y');
-			});
+		$("#approveBtn").on('click',function(){
+			$('#sellerApprove').submit(function(event) {});
+			$('#sellerApprove').submit();
 		});
-	
-		
-		/* 판매자 신청 승인 (ajax) 홍*/
-		/*
- 		$(function() {
- 			
-			$('#approveBtn').click(function(){
-				
- 				var sellerList = '[[${sellerListN}]]';
-				approveCheck = sellerList[0].approveCheck;
-				console.log(approveCheck);
-				
-				if(approveCheck == 'N') {
-					$('#approveCheck').prop('value','Y');
-					console.log($('#approveCheck').val());
-					return;
-				}
-			
- 				var request = $.ajax({
-					url: '/admin/user/sellerList', //http://localhost/member/idCheck
-	 				method: 'POST',
-					data: { 'approveCheck' : approveCheck },
-					dataType: "json"  //String이면 text   //text, json, xml, html
-				});
-	  					 
-				request.done(function( data ) {
-					if(data) {
-						alert("승인되었습니다.");
-					}	
-				});
-				request.fail(function( jqXHR, textStatus ) {
-					alert("요청실패 ");
-				});
-			});
-		});
-		*/
 
 		
 	/*]]>*/
