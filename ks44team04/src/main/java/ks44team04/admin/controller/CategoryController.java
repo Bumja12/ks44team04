@@ -162,12 +162,6 @@ public class CategoryController {
 	public String getLevelBuyerCategoryDetail (@PathVariable(value = "levelCode") String levelCode
 									   ,Model model) {
 		
-		// 특정 자주 묻는 질문 
-		// RegularAsk regularAsk = regularAskService.getRegularAskByPK(regularAskPK);
-		
-		// 자주 묻는 질문 카테고리 목록
-		// List<RegularAskCategory> regularAskCategoryList = categoryManageService.getRegularAskCategoryList();
-		
 		model.addAttribute("title", "구매자 등급 카테고리 내역 화면");
 		
 		return "admin/category/levelBuyer/levelBuyerCategory_detail";
@@ -199,6 +193,83 @@ public class CategoryController {
 		return "admin/category/levelSeller/levelSellerCategory_detail";
 	}
 	
+	
+	// 고객 문의 카테고리 내역 화면
+	@GetMapping("/customerAskCategoryDetail/{askCategory}")
+	public String getCustomerAskCategoryDetail (@PathVariable(value = "askCategory") String askCategory
+			,Model model) {
+		
+		log.info(askCategory);
+		model.addAttribute("title", "고객 문의 카테고리 내역 화면");
+		
+		return "admin/category/customerAsk/customerAskCategory_detail";
+	}
+	
+	// 자주 묻는 질문 카테고리 내역 화면
+	@GetMapping("/regularAskCategoryDetail/{regularAskCategory}")
+	public String getRegularAskCategoryDetail (@PathVariable(value = "regularAskCategory") String regularAskCategory
+			,Model model) {
+		
+		log.info(regularAskCategory);
+		model.addAttribute("title", "자주 묻는 질문 카테고리 내역 화면");
+		
+		return "admin/category/regularAsk/regularAskCategory_detail";
+	}	
+	
+	// 게시판 카테고리 내역 화면
+	@GetMapping("/boardCategoryDetail/{boardCategory}")
+	public String getBoardCategoryDetail (@PathVariable(value = "boardCategory") String boardCategory
+			,Model model) {
+		
+		log.info(boardCategory);
+		model.addAttribute("title", "게시판 카테고리 내역 화면");
+		
+		return "admin/category/board/boardCategory_detail";
+	}	
+	
+	// 신고 카테고리 내역 화면
+	@GetMapping("/reportCategoryDetail/{reportCategory}")
+	public String getReportCategoryDetail (@PathVariable(value = "reportCategory") String reportCategory
+			,Model model) {
+		
+		log.info(reportCategory);
+		model.addAttribute("title", "신고 카테고리 내역 화면");
+		
+		return "admin/category/report/reportCategory_detail";
+	}	
+	
+	// 판매 상품  카테고리 대분류 내역 화면
+	@GetMapping("/goodsLargeCategoryDetail/{goodsLargeCategory}")
+	public String getGoodsLargeCategoryDetail (@PathVariable(value = "goodsLargeCategory") String goodsLargeCategory
+			,Model model) {
+		
+		log.info(goodsLargeCategory);
+		model.addAttribute("title", "판매 상품  카테고리 대분류 내역 화면");
+		
+		return "admin/category/goodsLarge/goodsLargeCategory_detail";
+	}	
+	
+	// 판매 상품  카테고리 소분류 내역 화면
+	@GetMapping("/goodsSmallCategoryDetail/{goodsSmallCategory}")
+	public String getGoodsSmallCategoryDetail (@PathVariable(value = "goodsSmallCategory") String goodsSmallCategory
+			,Model model) {
+		
+		log.info(goodsSmallCategory);
+		model.addAttribute("title", "판매 상품  카테고리 소분류 내역 화면");
+		
+		return "admin/category/goodsSmall/goodsSmallCategory_detail";
+	}	
+	
+	// 상품 문의 카테고리 내역 화면
+	@GetMapping("/goodsQnaCategoryDetail/{goodsQnaCategory}")
+	public String getGoodsQnaCategoryDetail (@PathVariable(value = "goodsQnaCategory") String goodsQnaCategory
+			,Model model) {
+		
+		log.info(goodsQnaCategory);
+		model.addAttribute("title", "상품 문의 카테고리 내역 화면");
+		
+		return "admin/category/goodsQna/goodsQnaCategory_detail";
+	}	
 	
 	
 }
