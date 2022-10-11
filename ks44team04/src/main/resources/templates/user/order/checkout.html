@@ -13,7 +13,7 @@
 
     <div class="container" style="padding: 80px 0">
         <div>주문서 작성</div>
-        <form>
+        <form id="orderForm" th:action="@{/user/order/end}" method="post">
             <div>
                 <h3>배송지</h3>
                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
@@ -27,8 +27,6 @@
                             </li>
                         </th:block>
                         <li role="presentation" id="submitCheck" class="">
-                            <!--<a href="javascript:void(0);" data-toggle="modal" data-target=".addressSelect"
-                               role="tab">배송지등록</a>-->
                             <a href="javascript:pop()">배송지등록</a>
                         </li>
                     </ul>
@@ -49,27 +47,39 @@
                 <div>
                     <h3>상품정보</h3>
                     <th:block th:each="gl : ${goodsList}">
-                        <div class="d-flex goodsCode">
+                        <div class="d-flex">
+                            <input type="hidden" name="goodsCode" th:value="${gl.goodsCode}"/>
+                            <input type="hidden" name="orderOgPrice" th:value="${gl.goodsPrice}"/>
+                            <input type="hidden" name="discountPrice"
+                                   th:value="${#numbers.formatInteger(gl.goodsPrice * gl.goodsDiscountRate / 100, 0)}"/>
+                            <input type="hidden" name="orderPrice"
+                                   th:value="${#numbers.formatInteger(gl.goodsPrice - gl.goodsPrice * gl.goodsDiscountRate / 100, 0)}"/>
+                            <input type="hidden" name="orderAmount" th:value="2"/>
+                            <input type="hidden" id="goodsPostPrice" th:value="${gl.goodsPostPrice}"/>
                             <div class="p-2">상품이미지</div>
                             <div class="p-2">
                                 <span class="d-block" th:text="${gl.goodsName}"></span>
-                                <span class="d-block orderAmount" th:data-goods-code="${gl.goodsCode}">2</span><span>개</span>
+                                <span class="d-block" th:text="2 + '개'"></span>
                             </div>
-                            <div class="p-2 ml-auto goodsPrice" th:text="${gl.goodsPrice}"
-                                 th:data-goods-price="${gl.goodsPrice}"
-                                 th:data-post-price="${gl.goodsPostPrice}"
-                                 th:data-discout-price="${#numbers.formatInteger(gl.goodsPrice * gl.goodsDiscountRate / 100, 0)}"
-                                 th:data-order-price="${#numbers.formatInteger(gl.goodsPrice - gl.goodsPrice * gl.goodsDiscountRate / 100, 0)}">
-                                <span>원</span>
+                            <div class="p-2 ml-auto">
+                                <span th:text="${gl.goodsPrice} * 2 + '원'"></span>
                             </div>
                         </div>
                     </th:block>
                 </div>
                 <div>
                     <h3>쿠폰/할인/포인트</h3>
+                    <input type="hidden" name="goodsDiscountPrice" value=""/>
+                    <input type="hidden" name="totalSum" value=""/>
+                    <input type="hidden" name="couponPrice" value="0"/>
+                    <input type="hidden" name="couponCode" value=""/>
+                    <input type="hidden" name="totalPrice" value=""/>
+                    <input type="hidden" name="totalOrderPrice" value=""/>
+                    <input type="hidden" name="postAddressList" value=""/>
+                    <input type="hidden" name="postPrice" value=""/>
                     <div class="d-flex p-2">
                         <span class="p-2 mr-auto">상품할인</span>
-                        <span id="sumGoodsDiscount" class="p-2"></span>
+                        <span id="totalDiscount" class="p-2"></span>
                     </div>
                     <div class="d-flex p-2">
                         <span class="p-2 mr-auto">쿠폰사용</span>
@@ -77,31 +87,31 @@
                     </div>
                     <div class="d-flex p-2">
                         <span class="p-2 mr-auto">쿠폰할인</span>
-                        <span id="couponPrice" class="p-2" data-discount-price="0" >0원</span>
+                        <span id="couponPrice" class="p-2">0원</span>
                     </div>
                     <div class="d-flex p-2">
                         <label for="usePoint" class="p-2 mr-auto">포인트사용</label>
-                        <input type="text" id="usePoint" class="p-2 discountInput"
+                        <input type="text" id="usePoint" class="p-2" name="usePoint" value="0"
                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                     </div>
                     <div class="d-flex p-2">
                         <span class="p-2 mr-auto">보유포인트</span>
-                        <span id="currentPoint" class="p-2" th:text="${userPoint} + '원'">5000원</span>
+                        <span id="userPoint" class="p-2" th:text="${userPoint} + '원'"></span>
                     </div>
                 </div>
                 <div>
                     <h3>최종결제금액</h3>
                     <div class="d-flex p-2">
                         <span class="p-2 mr-auto">상품금액</span>
-                        <span id="totalSum" class="p-2">5000원</span>
+                        <span id="totalSum" class="p-2"></span>
                     </div>
                     <div class="d-flex p-2">
                         <span class="p-2 mr-auto">할인합계</span>
-                        <span id="goodsDiscountPrice" type="text" class="p-2">5000원</span>
+                        <span id="goodsDiscountPrice" type="text" class="p-2"></span>
                     </div>
                     <div class="d-flex p-2">
                         <span class="p-2 mr-auto">결제금액</span>
-                        <span id="totalOrderPrice" class="p-2">5000원</span>
+                        <span id="totalOrderPrice" class="p-2"></span>
                     </div>
                 </div>
                 <div>
@@ -110,7 +120,7 @@
                     <button type="button" class="btn btn-dark col-4">계좌이체</button>
                 </div>
                 <div class="mt-3">
-                    <button type="button" id="payment" class="btn btn-warning col-12">결제하기</button>
+                    <button type="submit" class="btn btn-warning col-12">결제하기</button>
                 </div>
             </div>
         </form>
@@ -137,7 +147,7 @@
                                     let address2 = data.address2;
                                     let phone = data.phone;
                                     let phone2 = data.phone2;
-                                    let addressSelect = `<li role="presentation " data-addressList="${addressList}"> <a href="#${addressName}" role="tab" data-toggle="tab" aria-expanded="true">${addressName}</a>&nbsp;|&nbsp; </li>`;
+                                    let addressSelect = `<li role="presentation " data-address-list="${addressList}"> <a href="#${addressName}" role="tab" data-toggle="tab" aria-expanded="true">${addressName}</a>&nbsp;|&nbsp; </li>`;
                                     let addressContent = `<div role="tabpanel" class="tab-pane fade" id="${addressName}"><div>${receiverName}</div>` +
                                         `<div> <span>${phone}</span> <span> | </span> <span>${phone2}</span> </div>` +
                                         `<div>${address}</div> <div>${address2}</div> </div>`;
@@ -159,89 +169,61 @@
             let couponInterval = window.setInterval(function () {
                 if (selectCouponPop.closed) {
                     discountFn();
-                    couponCode = document.querySelector('#couponPrice').dataset.couponCode;
                     window.clearInterval(couponInterval);
                 }
             }, 500);
         });
 
-        /* 상품할인 합계 구해서 대입 */
+        /* tb_order_detail */
+        let goodsCode = '';
+        let orderAmount = 0;
+
+        /* 상품할인 합계 구해서 대입 (tb_order) */
         let goodsDiscountPrice = 0;
-        let usePoint = 0;
-        let couponPrice = 0;
-        let couponCode = '';
-        let totalPrice = 0;
-        let totalOrderPrice = 0;
-        let postAddressList = '';
-        let postPrice = 0;
         let totalSum = 0;
-        for (let g of document.querySelectorAll('.goodsPrice')) goodsDiscountPrice += Number(g.dataset.discoutPrice);
-        for (let g of document.querySelectorAll('.goodsPrice')) totalSum += Number(g.dataset.goodsPrice);
-        for (let g of document.querySelectorAll('.goodsPrice')) postPrice += Number(g.dataset.postPrice);
+        let postPrice = 0;
 
-        totalPrice = totalSum - goodsDiscountPrice;
+        for (let g of document.getElementsByName('discountPrice')) goodsDiscountPrice += Number(g.value);
+        for (let g of document.getElementsByName('orderOgPrice')) totalSum += Number(g.value);
+        for (let g of document.getElementsByName('goodsPostPrice')) postPrice += Number(g.value);
 
-        document.querySelector('#sumGoodsDiscount').textContent = goodsDiscountPrice.toString() + '원';
+        document.querySelector('#totalDiscount').textContent = goodsDiscountPrice.toString() + '원';
+
         document.querySelector('#totalSum').textContent = totalSum.toString() + '원';
+        document.getElementsByName('totalSum')[0].value = totalSum.toString();
         document.querySelector('#goodsDiscountPrice').textContent = goodsDiscountPrice.toString() + '원';
+        document.getElementsByName('goodsDiscountPrice')[0].value = goodsDiscountPrice.toString();
         document.querySelector('#totalOrderPrice').textContent = (totalSum - goodsDiscountPrice).toString() + '원';
+        document.getElementsByName('totalOrderPrice')[0].value = (totalSum - goodsDiscountPrice).toString();
+        document.getElementsByName('totalPrice')[0].value = (totalSum - goodsDiscountPrice).toString();
+        document.getElementsByName('postPrice')[0].value = postPrice.toString();
 
+        /* 포인트, 쿠폰 금액 변경 시 할인금액과 결제금액 변경 함수*/
         let discountFn = function () {
-            usePoint = Number(document.querySelector('#usePoint').value);
-            console.log(usePoint);
-            couponPrice = Number(document.querySelector('#couponPrice').dataset.discountPrice);
+            let usePoint = 0;
+            if(document.querySelector('#usePoint').value !== ''){
+                usePoint = Number(document.querySelector('#usePoint').value);
+            }
+            let couponPrice = Number(document.getElementsByName('couponPrice')[0].value);
             document.querySelector('#goodsDiscountPrice').textContent
                 = (goodsDiscountPrice + usePoint + couponPrice).toString() + '원';
-            totalOrderPrice = (totalSum - goodsDiscountPrice - usePoint - couponPrice).toString();
-            document.querySelector('#totalOrderPrice').textContent = totalOrderPrice + '원';
+            document.getElementsByName('goodsDiscountPrice')[0].value
+                = (goodsDiscountPrice + usePoint + couponPrice).toString();
+            document.querySelector('#totalOrderPrice').textContent
+                = (totalSum - goodsDiscountPrice - usePoint - couponPrice).toString() + '원';
+            document.getElementsByName('totalOrderPrice')[0].value
+                = (totalSum - goodsDiscountPrice - usePoint - couponPrice).toString();
         }
 
+        /* 포인트 변경 시 discountFn 함수 호출 */
         document.querySelector('#usePoint').onchange = discountFn;
 
         /* 배송지목록 클릭이벤트 */
         document.querySelectorAll('.address').forEach(function (e) {
             e.onclick = function () {
-                postAddressList = this.dataset.addressList
-                console.log(postAddressList)
+                document.getElementsByName('postAddressList')[0].value = e.dataset.addressList;
             }
         });
-
-
-        document.querySelector('#payment').addEventListener('click', () => {
-            /* tb_order_detail */
-            let orderDetail = [];
-            for (let i of document.querySelectorAll('.orderAmount')) {
-                let goodsCode = i.dataset.goodsCode;
-                let orderAmount = Number(i.textContent);
-                let obj = {goodsCode, orderAmount}
-                orderDetail.push(obj);
-                console.log(orderDetail);
-            }
-            /* tb_order */
-            let order = {goodsDiscountPrice, usePoint, couponPrice, couponCode, totalSum, totalPrice, totalOrderPrice, postAddressList, postPrice};
-
-            console.log(order);
-            console.log(orderDetail);
-           fetch('/user/order/end', {
-               method: "POST",
-               headers: {
-                   "Content-Type": "application/json"
-               },
-               body: JSON.stringify(order)
-           })
-               .then((response) => {
-                   return response.data/*fetch('/user/order/detail', {
-                       method: "POST",
-                       headers: {
-                           "Content-Type": "application/json"
-                       },
-                       body: JSON.stringify(orderDetail)
-                   });*/
-               })
-               .then((response) => alert('정상처리 완료'));
-        });
-
-
 
     </script>
 

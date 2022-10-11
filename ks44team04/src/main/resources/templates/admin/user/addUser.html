@@ -54,12 +54,19 @@
 			margin-left: 5px;
 			margin-top: 6px;		
 		}
+		
+		.checks {
+			font-size: 12px;
+			margin-left: 6px;
+			border: 1px soild black;
+		}
+		
 	</style>
 </th:block>
 
 <th:block layout:fragment="customContents">
 	
-	<form id="addUserForm" th:action="@{/admin/user/addUser}" method="post">
+	<form id="addUserForm" th:action="@{/admin/user/addUser}" method="POST">
 		<div class="page-title">
 			<div class="title_left">
 				<h3>회원등록</h3>
@@ -100,8 +107,8 @@
 										<td class="tableOdd">아이디</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text" id="userId" name="userId" data-ischecked="false" placeholder="아이디를 입력해주세요" />
-												<button type="button" class="btn" id="idCheckBtn">중복확인</button>
+												<input type="text" class="form-control text" id="userId" name="userId" data-ischecked="false" placeholder="아이디를 입력해주세요." />
+	 											<span class="checks" id="idCheck"></span>
 											</div>
 										</td>
 										<td class="tableOdd">비밀번호</td>
@@ -110,18 +117,23 @@
 												<input type="text" class="form-control text" id="userPw" name="userPw" placeholder="비밀번호입력" />
 												<input type="text" class="form-control text" id="userPwCheck" name="userPwCheck" placeholder="비밀번호확인" />
 											</div>
+											<span class="checks" id="pwCheck1"></span>
+											<span class="checks" id="pwCheck2"></span>
 										</td>
 									</tr>
 									<tr>
 										<td class="tableOdd">이름</td>
 										<td class="tableEven col-md-4">
-											<input type="text" class="form-control text" id="userName" name="userName" placeholder="이름을 입력해주세요" />
+											<div class="form-inline">
+												<input type="text" class="form-control text" id="userName" name="userName" placeholder="이름을 입력해주세요." />
+												<span class="checks" id="nameCheck"></span>
+											</div>
 										</td>
 										<td class="tableOdd">닉네임</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text" id="userNickname" name="userNickname" placeholder="닉네임을 입력해주세요" />
-												<button type="button" class="btn" id="nicknameCheckBtn">중복확인</button>
+												<input type="text" class="form-control text" id="userNickname" name="userNickname" placeholder="닉네임을 입력해주세요." />
+												<span class="checks" id="nicknameCheck"></span>
 											</div>
 										</td>
 									</tr>
@@ -135,6 +147,7 @@
 												<label>
 													<input type="radio" id="userGender" name="userGender" value="남" /> 남자
 												</label>
+												<span class="checks" id="genderCheck"></span>
 											</div> 
 										</td>
 									</tr>
@@ -142,15 +155,15 @@
 										<td class="tableOdd">이메일</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text" id="userEmail" name="userEmail" placeholder="이메일을 입력하세요" />
-												<button type="button" class="btn" id="emailCheckBtn">중복확인</button>
+												<input type="text" class="form-control text" id="userEmail" name="userEmail" placeholder="예:ksmart@gmail.com" />
+												<span class="checks" id="emailCheck"></span>
 											</div>
 										</td>
 										<td class="tableOdd">휴대폰번호</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text phoneNumber" id="userPhone" name="userPhone" placeholder="휴대폰번호를 입력하세요" />
-												<button type="button" class="btn" id="phoneCheck">중복확인</button>
+												<input type="text" class="form-control text" id="userPhone" name="userPhone" placeholder="숫자만 입력해주세요" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="11"/>
+												<span class="checks" id="phoneCheck"></span>
 											</div>
 										</td>
 									</tr>
@@ -161,17 +174,25 @@
 												<input type="text" class="userAddr form-control addr" id="userAddress" name="userAddress" placeholder="주소를 검색해주세요" readonly="readonly" /> 
 												<input type="text" class="userAddr form-control addr" id="userAddress2" name="userAddress2" placeholder="상세주소를 입력해주세요" />
 												<button type="button" class="btn" id="addrSearchBtn">주소검색</button>
+												<span class="checks" id="addressCheck"></span>
+												<span class="checks" id="addressCheck2"></span>
 											</div>
 										</td>
 									</tr>
 									<tr>
 										<td class="tableOdd">포인트</td>
 										<td class="tableEven col-md-4">
-											<input type="text" onkeyup="commas(this)" class="form-control text" id="userPoint" name="userPoint" />
+											<div class="form-inline">
+												<input type="text" class="form-control text comma" id="userPoint" name="userPoint" value="0" />
+												<span class="checks" id="pointCheck"></span>
+											</div>
 										</td>
 										<td class="tableOdd">벌점</td>
 										<td class="tableEven col-md-4">
-											<input type="text" class="form-control text" id="userPenalty" name="userPenalty" onlyNumber/>
+											<div class="form-inline">
+												<input type="text" class="form-control text comma" id="userPenalty" name="userPenalty" value="0" />
+												<span class="checks" id="penaltyCheck"></span>
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -192,6 +213,7 @@
 												<label>
 													<input type="radio" name="userInfoKeep" value="1년" /> 1년
 												</label>
+												<span class="checks" id="infoKeepCheck"></span>
 											</div> 
 										</td>
 									</tr>
@@ -201,7 +223,7 @@
 							<div class="form-group">
 		                        <div style="text-align:center; margin: 30px;" >
 									<button type="button" class="btn btn" th:onclick="|location.href='@{/admin/user/userList}'|">취소</button>
-									<button type="submit" class="btn btn-dark btn">등록</button>
+									<button type="submit" id="addUserBtn" class="btn btn-dark addUserBtn">등록</button>
 								</div>
 							</div>
 							
@@ -219,45 +241,54 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
     
+    	/* 유효성검사 */
+		var idCheck = false;
+		var pwCheck = false;
+		var pwCheck2 = false;
+		var pwCheckFinal = false; 
+		var NameCheck = false; 
+		var nicknameCheck = false;
+		var genderCheck = false;
+		var emailCheck = false;
+		var phoneCheck = false;
+		var addressCheck = false;
+		var addressCheck2 = false;
+		var addressCheckFinal = false;
+		var pointCheck = false;
+		var penaltyCheck = false;
+		var statusCheck = false; 
+		var infoKeepCheck = false;
+    
+		
     	/* 주소 검색 */
 		let text = document.querySelector('#userAddress');
 		document.querySelector('#addrSearchBtn').addEventListener('click', function () {
 			
 			new daum.Postcode({
 				oncomplete: function (data) {
+					/* 주소 입력시 경고표시 없애기 */
+					$('#userAddress').css('border','1px solid #ccc');
+			        $('#addressCheck').html('');
 				text.value = data.address;
 				}
 			}).open();
 			
+			
+	        
 			//상세주소 초기화
 			var input = document.getElementById('userAddress2'); 
-			input.value = null;
+			input.value = "";
 		});
 		
 		/* 전화번호 입력시 자동 대시(-) */
-		$(document).on("keyup", ".phoneNumber", function() { 
+/* 		$(document).on("keyup", ".phoneNumber", function() { 
 			$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
-		});
+		}); */
 		
-		/* 숫자만 입력  */
-		$('input[onlyNumber]').on('keyup', function () {
-		    $(this).val($(this).val().replace(/[^0-9]/g, ""));
-		});
-		
-		/* 숫자만 입력 + 3자리마다 콤마 */
-		function commas(t) {
-			// 콤마 빼기
-			var x = t.value;			
-			x = x.replace(/,/gi, '');
-			// 숫자 정규식 확인
-			var regexp = /^[0-9]*$/;
-			if(!regexp.test(x)) { 
-				$(t).val(""); 
-			}else {
-				x = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");			
-				$(t).val(x);			
-			}
-		}
+		/* 숫자만 입력  & 숫자 천단위 콤마 찍기  */
+		$('.comma').on('input',function(){
+			$(this).val($(this).val().replace(/[^0-9.]/g,'').replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,'));
+		})
 		
 		/* 권한 판매자 승인전 선택시 등급 select박스 제어 */
 		$('#userRight').change(function() {
@@ -270,111 +301,424 @@
 				 $('#userLevel,#userPoint,#userPenalty').attr('disabled', 'disabled');
 				 $("#userLevel").prepend("<option value='선택불가'>선택불가</option>");
 				 $("#userLevel").val("선택불가").prop("selected", true);
-				 //$('#userLevel').prop('value', 'null');
 				 $('#userPoint').prop('value', 0);
 				 $('#userPenalty').prop('value', 0);
 			 }
 		});
 		
+		/* id 중복체크 - ajax 비동기처리 */			
+		$("#userId").on("propertychange change keyup paste input",function() {
 		
-/* 			var userRight = $('#userRight option:selected').val();
-			console.log(userRight);
-			
-			if(userRight.includes('seller')) {
-				$('#userLevel').css('display', 'none');
-			} */
-		/*
-		$(function(){
-	  				
-			function vaildationCheck(data) {
-				var isValid = true;	 
-				
-					//유효성검사
-					if(typeof data == 'object'){
-						$.each(data, function(){
-							var inputValue = $(this).val();
-							if(typeof inputValue == 'undefined' || inputValue == null || inputValue == '') {
-  								isValid = false;
-  								var inputId = $(this).attr('id');
-  								var alertMsg = $('label[for="'+ inputId +'"]').text();
-  								alert(alertMsg + '를 입력해주세요');
-  								$(this).focus();
-  								return false; //이벤트를 종료시키기 위함
-  							}
-  						});
-  					}
-  					
-  					if(typeof data == 'string'){
-  						if(typeof data == 'undefined' || data == null || data == '') {
-								isValid = false;
-								return false;
-							}
-  					}
-  					return isValid;
-  				}
-  				
-  				$('#memberId').on('keydown change input keyup blur', function(){
-  					$('#idCheckBtn').attr('data-isChecked', false);
-  				});
-  						
-  				$(document).on('click', '#joinBtn', function(){
-  					
-  					var isChecked = $('#idCheckBtn').attr('data-ischecked');
-  					 
-  					isChecked = (isChecked == 'true');
-  					
-  					if(!isChecked) {
-  						alert('아이디 중복체크 후 회원가입이 가능합니다.');
-  						return false;
-  					}
-  					
-  					var inputObj = $('#addMemberForm input');
+			var userId = $('#userId').val();
 
-  					var isValid = vaildationCheck(inputObj);
-  					
-  					if(isValid) $('#addMemberForm').submit();
-  				});
-  				
-  				$('#idCheckBtn').click(function(){
-  					//var isChecked = $(this).attr('data-isChecked');
-  					var memberId = $('#memberId').val();
-  					var result = vaildationCheck(memberId);
-  					
-  					if(!result) {
-  						alert('회원아이디를 입력해주세요');
-  						return false;
-  					}
-  					console.log(typeof memberId);
-  					
-  					var request = $.ajax({
-  					  url: '/member/idCheck', //http://localhost/member/idCheck
-  					  method: 'GET',
-  					  data: { 'memberId' : memberId },
-  					  dataType: "json"  //String이면 text   //text, json, xml, html
-  					});
-  					 
-	  					request.done(function( data ) {
-  						if(data) {
-  							alert('가입된 회원입니다.');
-  							$('#memberId').focus();
-  						}else {
-  							$('#idCheckBtn').attr('data-isChecked', true);
-  							$('#addMemberForm input').prop('disabled', false);
-  							$('#addMemberForm select').prop('disabled', false);
-  							$('#addMemberForm button').prop('disabled', false);
-  						}	
-  					});
-  					
-  					request.fail(function( jqXHR, textStatus ) {
-  					  alert( "Request failed: " + textStatus );
-  					});
-  				});
+			function id_check( id ) {
+			    var regex= /^[a-z][a-z\d]{5,15}$/;
+			    return (id != '' && id != 'undefined' && regex.test(id));
+			}
+			
+			if(!id_check(userId)) {
+				$('#idCheck').css('color','#f03f40');
+                $('#idCheck').html("* 6~16자의 영문 소문자, 숫자만 입력해주세요");
+                $('#userId').css('border','1px solid #f03f40');
+				$('#userId').focus();
+				idCheck = false;
+			}else {
+				$.ajax({
+					url: '/admin/user/idCheck',
+					method: 'GET',
+					data: { 'userId' : userId },
+					//dataType: "json",  //String이면 text   //text, json, xml, html
+					success : function(cnt) {
+						if(cnt == 0){
+			                $('#idCheck').css('color','#36ae36');
+			                $('#idCheck').html("* 사용 가능한 아이디입니다.");
+			                $('#userId').css('border','1px solid #36ae36');
+							//$('#addUserForm button').prop('disabled', false);
+			                idCheck = true;
+						}else {
+							$('#idCheck').css('color','#ff696a');
+			                $('#idCheck').html("* 이미 사용중인 아이디입니다.");
+							$('#userId').css('border','1px solid #f03f40');
+							$('#userId').focus();
+							idCheck = false;
+						}	
+					}
+				});
+			}
+		});
+		
+	  	/* 비밀번호 유효성검사 */
+		$("#userPw").on("propertychange change keyup paste input",function(){
+              
+           	var regex = /^[A-Za-z\d]{5,15}$/;
+               var userPw = regex.exec($("#userPw").val());
+               var userPwCheck = $('#userPwCheck').val();
+
+               if(userPw != null){
+               	$('#userPw').css('border','1px solid #50B55F');
+               	$('#pwCheck1').css('color','#50B55F');
+               	$('#pwCheck1').html('* 사용 가능한 비밀번호입니다.');
+               	pwCheck = true
+               }else{
+               	$('#userPw').css('border','1px solid #f03f40');
+               	$('#pwCheck1').css('color','#ff696a');
+               	$('#pwCheck1').html('* 6~16자의 영문 대소문자, 숫자만 입력해주세요.');
+               	pwCheck = false;
+               }
+			
+			if(userPw != userPwCheck) {
+				$('#userPwCheck').css('border','1px solid #f03f40');
+               	$('#pwCheck2').css('color','#ff696a');
+               	$('#pwCheck2').html('* 비밀번호가 일치하지 않습니다.');
+               	pwCheck2 = false
+			}else if(userPwCheck == "" || userPw != userPwCheck) {
+				$('#userPwCheck').css('border','1px solid #f03f40');
+               	$('#pwCheck2').css('color','#ff696a');
+               	$('#pwCheck2').html('* 비밀번호가 일치하지 않습니다.');
+               	pwCheck2 = false
+			}
+			
+           });
+		
+		/* 비밀번호 확인 */
+		$('#userPwCheck').on("propertychange change keyup paste input",function() {
+			
+			var userPw = $('#userPw').val();
+			var userPwCheck = $('#userPwCheck').val();
+			
+			if(userPwCheck != "" && userPw == userPwCheck) {
+				$('#userPwCheck').css('border','1px solid #50B55F');
+               	$('#pwCheck2').css('color','#50B55F');
+               	$('#pwCheck2').html('* 비밀번호가 일치합니다.');
+               	pwCheck2 = true;
+			}else if(userPwCheck == "" || userPw != userPwCheck) {
+				$('#userPwCheck').css('border','1px solid #f03f40');
+               	$('#pwCheck2').css('color','#ff696a');
+               	$('#pwCheck2').html('* 비밀번호가 일치하지 않습니다.');
+               	pwCheck2 = false
+			}
+		});
+	  	
+		//닉네임 중복체크
+		$("#userNickname").on("propertychange change keyup paste input",function() {
+		
+			var userNickname = $('#userNickname').val();
+			
+			$.ajax({
+				url: '/admin/user/nicknameCheck',
+				method: 'GET',
+				data: { 'userNickname' : userNickname },
+				//dataType: "json",  //String이면 text   //text, json, xml, html
+				success : function(cnt) {
+					if(cnt == 0){
+		                $('#nicknameCheck').css('color','#36ae36');
+		                $('#nicknameCheck').html("* 사용 가능한 닉네임입니다.");
+		                $('#userNickname').css('border','1px solid #36ae36');
+		                nicknameCheck = true;
+					}else {
+						$('#nicknameCheck').css('color','#f03f40');
+		                $('#nicknameCheck').html("* 이미 사용중인 닉네임입니다.");
+		                $('#userNickname').css('border','1px solid #f03f40');
+						$('#userNickname').focus();
+						nicknameCheck = false;
+					}	
+				}
 			});
-		*/
+		});
 		
+		/* 이메일 중복체크 */
+		$("#userEmail").on("propertychange change keyup paste input",function() {
+			
+			var userEmail = $('#userEmail').val();
+			
+			// 정규표현식 (@, . 포함)
+			function email_check( email ) {
+			    var regex=/^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+			    return (email != '' && email != 'undefined' && regex.test(email));
+			}
+			
+			if(! email_check(userEmail)) {
+				$('#emailCheck').css('color','#f03f40');
+                $('#emailCheck').html("* 잘못된 형식의 이메일입니다.");
+                $('#userEmail').css('border','1px solid #f03f40');
+				$('#userEmail').focus();
+				emailCheck = false
+			}else {
+				$.ajax({
+					url: '/admin/user/emailCheckU',
+					method: 'GET',
+					data: { 'userEmail' : userEmail },
+					//dataType: "json",  //String이면 text   //text, json, xml, html
+					success : function(cnt) {
+						if(cnt == 0){
+			                $('#emailCheck').css('color','#36ae36');
+			                $('#emailCheck').html("* 사용 가능한 이메일입니다.");
+			                $('#userEmail').css('border','1px solid #36ae36');
+			                emailCheck = true;
+						}else {
+							$('#emailCheck').css('color','#f03f40');
+			                $('#emailCheck').html("* 이미 사용중인 이메일입니다.");
+			                $('#userEmail').css('border','1px solid #f03f40');
+							$('#userEmail').focus();
+							emailCheck = false
+						}	
+					}
+				});
+			}
+			return emailCheck;
+		});
 		
-	
-		$('#addUserForm').submit(function(event) {});
+		//전화번호 중복체크
+		$("#userPhone").on("propertychange change keyup paste input",function() {
+			
+			var userPhone = $('#userPhone').val();
+			
+			if(userPhone.length != 11) {
+				$('#phoneCheck').css('color','#f03f40');
+                $('#phoneCheck').html("* 11자리 숫자를 입력해주세요.");
+                $('#userPhone').css('border','1px solid #f03f40');
+				$('#userPhone').focus();
+				phoneCheck = false;
+			}else {
+				$.ajax({
+					url: '/admin/user/phoneCheckU',
+					method: 'GET',
+					data: { 'userPhone' : userPhone },
+					//dataType: "json",  //String이면 text   //text, json, xml, html
+					success : function(cnt) {
+						if(cnt == 0){
+			                $('#phoneCheck').css('color','#36ae36');
+			                $('#phoneCheck').html("* 사용 가능한 휴대폰번호입니다.");
+			                $('#userPhone').css('border','1px solid #36ae36');
+			                phoneCheck = true;
+						}else {
+							$('#phoneCheck').css('color','#f03f40');
+			                $('#phoneCheck').html("* 이미 사용중인 휴대폰번호입니다.");
+			                $('#userPhone').css('border','1px solid #f03f40');
+							$('#userPhone').focus();
+							phoneCheck = false;
+						}	
+					}
+				});
+			}
+		});
+		
+	  	/* 이름 입력시 경고표시 없애기 */
+		$('#userName').on("propertychange change input", function(){
+			if($('#userName').val() != ""){
+				$('#userName').css('border','1px solid #ccc');
+               	$('#nameCheck').html('');
+	        }
+		});
+	  	
+		/* 성별 선택시 경고표시 없애기 */
+		$("input[name='userGender']").change(function(){
+	        if($('input[name=userGender]:checked').length > 0){
+               	$('#genderCheck').html('');
+	        }			
+		});
+		
+		/* 상세주소 입력시 경고표시 없애기 */
+		$('#userAddress2').on("propertychange change input",function() {
+			if($('#userAddress2').val != "") {
+				$('#userAddress2').css('border','1px solid #ccc');
+		        $('#addressCheck2').html('');
+			}
+		});
+		
+		/* 포인트 입력시 경고표시 없애기 */
+		$('#userPoint').on("propertychange change input",function() {
+			if($('#userPoint').val != "") {
+				$('#userPoint').css('border','1px solid #ccc');
+		        $('#pointCheck').html('');
+			}
+		});
+		
+		/* 벌점 입력시 경고표시 없애기 */
+		$('#userPenalty').on("propertychange change input",function() {
+			if($('#userPenalty').val != "") {
+				$('#userPenalty').css('border','1px solid #ccc');
+		        $('#penaltyCheck2').html('');
+			}
+		});
+		
+		/* 정보보관기간 선택시 경고표시 없애기 */
+		$("input[name='userInfoKeep']").change(function(){
+	        if($('input[name=userInfoKeep]:checked').length > 0){
+               	$('#infoKeepCheck').html('');
+	        }			
+		});
+		
+		/* 등록 버튼 클릭시 유효성검사 */
+		$("#addUserBtn").click(function(){
+			
+			/* 아이디 */
+			if($('#userId').val() == "") {
+				$('#idCheck').css('color','#f03f40');
+                $('#idCheck').html("* 아이디를 입력해주세요.");
+                $('#userId').css('border','1px solid #f03f40');
+				$('#userId').focus();
+				idCheck = false;
+			}
+			console.log('idCheck : ',idCheck);
+			
+			/* 비밀번호 */
+			if($('#userPw').val() == "") {
+				$('#pwCheck1').css('color','#f03f40');
+                $('#pwCheck1').html("* 비밀번호를 입력해주세요.");
+                $('#userPw').css('border','1px solid #f03f40');
+				$('#userPw').focus();
+				pwCheck = false;
+			}
+			console.log('pwCheck : ',pwCheck);
+			
+			/* 비밀번호확인 */
+			console.log('pwCheck2 : ',pwCheck2);
+			
+			/* 비밀번호 최종확인 */
+			if(pwCheck == true && pwCheck2 == true) {
+				pwCheckFinal = true;
+			}else {
+				pwCheckFinal = false;
+			}
+			console.log('pwCheckFinal : ',pwCheckFinal);
+			
+			/* 이름 유효성검사 */
+	        if($('#userName').val() == ""){
+	        	$('#nameCheck').show();
+				$('#nameCheck').css('color','#f03f40');
+                $('#nameCheck').html("* 이름을 입력해주세요.");
+                $('#userName').css('border','1px solid #f03f40');
+				$('#userName').focus();
+				nameCheck = false;
+	        }else {
+	        	nameCheck = true;
+	        }
+	        console.log('nameCheck : ',nameCheck);
+			
+			/* 닉네임 */
+	        if($('#userNickname').val() == ""){
+				$('#nicknameCheck').css('color','#f03f40');
+                $('#nicknameCheck').html("* 닉네임을 입력해주세요.");
+                $('#userNickname').css('border','1px solid #f03f40');
+				$('#userNickname').focus();
+				nicknameCheck = false;
+	        }
+			console.log('nicknameCheck : ',nicknameCheck);
+	        
+	        /* 성별 */
+	        if($('input[name=userGender]:checked').length == 0){
+	        	$('#genderCheck').css('color','#f03f40');
+                $('#genderCheck').html("* 성별을 입력해주세요.");
+	            genderCheck = false;
+	        }else{
+	        	genderCheck = true;
+	        }
+	        console.log('genderCheck : ',genderCheck);
+	        
+	        /* 이메일 */
+	        if($('#userEmail').val() == ""){
+				$('#emailCheck').css('color','#f03f40');
+                $('#emailCheck').html("* 이메일을 입력해주세요.");
+                $('#userEmail').css('border','1px solid #f03f40');
+				$('#userEmail').focus();
+				emailCheck = false;
+	        }
+			console.log('emailCheck : ',emailCheck);
+	        
+			/* 휴대폰번호 */
+	        if($('#userPhone').val() == ""){
+				$('#phoneCheck').css('color','#f03f40');
+                $('#phoneCheck').html("* 휴대폰번호를 입력해주세요.");
+                $('#userPhone').css('border','1px solid #f03f40');
+				$('#userPhone').focus();
+				phoneCheck = false;
+	        }
+			console.log('phoneCheck : ',phoneCheck);
+			
+	        /* 주소 */
+	        if($('#userAddress').val() == ""){
+				$('#addressCheck').css('color','#f03f40');
+                $('#addressCheck').html("* 주소를 입력해주세요.");
+                $('#userAddress').css('border','1px solid #f03f40');
+				$('#userAddress').focus();
+				addressCheck = false;
+	        }else {
+	        	addressCheck = true;
+	        }
+	        console.log('addressCheck : ',addressCheck);
+	        
+	        /* 상세주소 */
+	        if($('#userAddress2').val() == "") {
+				$('#addressCheck2').css('color','#f03f40');
+                $('#addressCheck2').html("* 상세주소를 입력해주세요.");
+                $('#userAddress2').css('border','1px solid #f03f40');
+				$('#userAddress2').focus();
+				addressCheck2 = false;
+	        }else {
+	        	addressCheck2 = true;
+	        }
+	        console.log('addressCheck2 : ',addressCheck2);
+	        
+			/* 주소,상세주소 최종확인 */
+			if(addressCheck == true && addressCheck2 == true) {
+				addressCheckFinal = true;
+			}else {
+				addressCheckFinal = false;
+			}
+			console.log('addressCheckFinal : ',addressCheckFinal);
+	        
+			/* 포인트 유효성검사 */
+	        if($('#userPoint').val() == ""){
+				$('#pointCheck').css('color','#f03f40');
+                $('#pointCheck').html("* 포인트를 입력해주세요.");
+                $('#userPoint').css('border','1px solid #f03f40');
+				$('#userPoint').focus();
+				pointCheck = false;
+	        }
+	        else{
+	        	pointCheck = true;
+	        }
+	        console.log('pointCheck : ',pointCheck);
+	        
+			/* 벌점 유효성검사 */
+	        if($('#userPenalty').val() == ""){
+	        	$('#penaltyCheck').show();
+				$('#penaltyCheck').css('color','#f03f40');
+                $('#penaltyCheck').html("* 벌점을 입력해주세요.");
+                $('#userPenalty').css('border','1px solid #f03f40');
+				$('#userPenalty').focus();
+				penaltyCheck = false;
+	        }else{
+	        	penaltyCheck = true;
+	        }
+	        console.log('penaltyCheck : ',penaltyCheck);
+	 
+	        /* 정보보관기간 유효성검사 */
+	        if($('input[name=userInfoKeep]:checked').length == 0){
+				$('#infoKeepCheck').css('color','#f03f40');
+                $('#infoKeepCheck').html("* 정보보관기간을 입력해주세요.");
+                infoKeepCheck = false;
+	        }else{
+	        	infoKeepCheck = true;
+	        }
+	        console.log('infoKeepCheck : ',infoKeepCheck);
+	        
+	        $('#userPoint').val( Number($('#userPoint').val().replace(/,/g, "")) );
+			$('#userPenalty').val( Number($('#userPenalty').val().replace(/,/g, "")) );
+	        
+	        /* form 전송 */
+			$('#addUserForm').submit(function(event) {
+			}); 
+	        
+	        /* 최종 유효성 검사 */
+			if(idCheck && pwCheck && pwCheck2 && pwCheckFinal && nameCheck && nicknameCheck && genderCheck && emailCheck && phoneCheck && addressCheck && addressCheck2 && addressCheckFinal && pointCheck && penaltyCheck && infoKeepCheck) {
+				$('#addUserForm').submit();
+	        }
+			return false;
+		});
+
+		
 
     </script>
     

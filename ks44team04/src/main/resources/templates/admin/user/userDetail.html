@@ -79,7 +79,7 @@
 									<td class="tableOdd col-md-1">회원권한</td>
 									<td class="tableEven">
 										<div class="form-inline">
- 											<input type="text" class="form-control text" id="userRight" name="userRight" th:value="*{userRight}" readonly="readonly" />
+ 											<input type="text" class="form-control text" id="userRight" name="userRight" th:value ="${rightList.rightStatus}" readonly="readonly" />
 										</div>
 									</td>
 									<td class="tableOdd col-md-1">회원등급</td>
@@ -201,6 +201,22 @@
    			});
     	});
 		*/
+		
+		//이미 판매자신청 한 회원 판매자신청 불가
+		$(function() {
+			var userId = $('#userId').val();
+			
+			$.ajax({
+				url: '/admin/user/isAddSeller',
+				method: 'GET',
+				data: { 'userId' : userId },
+				success : function(cnt) {
+					if(cnt > 0){
+		                $('#addSellerBtn').css('display','none');
+					}
+				}
+			});
+		});
     	
 
     </script>

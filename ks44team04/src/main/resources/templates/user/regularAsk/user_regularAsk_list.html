@@ -31,13 +31,15 @@
     		<div class="row justify-content-center">
     			<div class="col-md-12 mb-5 text-center">
     				<ul class="product-category">
-    					<li><a href="#" class="categoryActive active">전체</a></li>
-    					<li><a href="#" class="categoryActive">회원/정보 관리</a></li>
-    					<li><a href="#" class="categoryActive">배송</a></li>
-    					<li><a href="#" class="categoryActive">반품/교환/환불</a></li>
-    					<li><a href="#" class="categoryActive">주문/결제</a></li>
-    					<li><a href="#" class="categoryActive">정기 배송</a></li>
-    					<li><a href="#" class="categoryActive">포인트/할인쿠폰</a></li>
+    					<li value="all"><a href="#" class="categoryActive active">전체</a></li>
+	    				<th:block th:if="${not #lists.isEmpty(regularAskCategoryList)}" th:each="rCategoryList : ${regularAskCategoryList}">
+	    					<li th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory01'}" th:value="${rCategoryList.regularAskCategory}"><a href="#" class="categoryActive" th:text="${rCategoryList.categoryName}">전체</a></li>
+	    					<li th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory02'}" th:value="${rCategoryList.regularAskCategory}"><a href="#" class="categoryActive" th:text="${rCategoryList.categoryName}">회원/정보 관리</a></li>
+	    					<li th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory03'}" th:value="${rCategoryList.regularAskCategory}"><a href="#" class="categoryActive" th:text="${rCategoryList.categoryName}">배송</a></li>
+	    					<li th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory04'}" th:value="${rCategoryList.regularAskCategory}"><a href="#" class="categoryActive" th:text="${rCategoryList.categoryName}">반품/교환/환불</a></li>
+	    					<li th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory05'}" th:value="${rCategoryList.regularAskCategory}"><a href="#" class="categoryActive" th:text="${rCategoryList.categoryName}">주문/결제</a></li>
+	    					<li th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory06'}" th:value="${rCategoryList.regularAskCategory}"><a href="#" class="categoryActive" th:text="${rCategoryList.categoryName}"></a></li>
+	    				</th:block>
     				</ul>
     			</div>
     		</div>
@@ -50,50 +52,23 @@
                				<!--아코디언 시작 -->
                				<div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
 			           	   	 	<!-- 자주 묻는 질문 제목 1 -->
-			                	<div class="panel">
+			                	<div class="panel" th:each="rAskList, status  : ${regularAskList}">
 				                 	<h4 class="panel-title">
 				                 		<span class="material-symbols-outlined pb-1" style="font-size: 33px; vertical-align: middle;">help</span>
 					                    <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" 
-					                    href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: rgb(34, 34, 34); vertical-align: middle;">
+					                    th:href="'#' + ${'collapse' + status.index}" aria-expanded="true" aria-controls="collapseOne" 
+					                    style="color: rgb(34, 34, 34); vertical-align: middle;" th:text="${rAskList.regularAskTitle} ">
 				                     	자주 묻는 질문 제목 1
+				                     	<!-- th:href="'#' + ${'collapse' + status.index}" -->
+				                     	<!-- th:id="${'collapse' + status.index}" -->
 				                     	</a>
 				                     </h4>
-				                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+				                     <div th:id="${'collapse' + status.index}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 				                     	<div class="panel-body mt-3">
-				                   			<p>자주 묻는 질문 내용 1</p>
+				                   			<p th:text="${rAskList.regularAskContent}">자주 묻는 질문 내용 1</p>
 				                     	</div>
 				                 	 </div>
                 				</div>
-				                <!-- 자주 묻는 질문 제목 2 -->
-				                <div class="panel">
-					            	<h4 class="panel-title">
-					            		<span class="material-symbols-outlined pb-1" style="font-size: 33px; vertical-align: middle;">help</span>
-				                    	<a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" 
-				                     	href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: rgb(34, 34, 34);">
-					                 	자주 묻는 질문 제목 2
-					                 	</a>
-					                </h4>
-				                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-				                    	<div class="panel-body mt-3">
-									 		<p>자주 묻는 질문 내용 2</p>                     
-								 		</div>
-				                 	</div>
-				                </div>
-                 				<!-- 자주 묻는 질문 제목 3 -->
-				                <div class="panel">
-				                	<h4 class="panel-title">
-				                		<span class="material-symbols-outlined pb-1" style="font-size: 33px; vertical-align: middle;">help</span>
-				                		<a class="panel-heading collapsed" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" 
-				                		href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="color: rgb(34, 34, 34);">
-				                		자주 묻는 질문 제목 3
-				                   		</a>
-				                   	</h4>
-				                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-				                    	<div class="panel-body mt-3">
-				                        	<p>자주 묻는 질문 내용 3</p>     
-				                     	</div>
-				                    </div>
-				                </div> <!-- </div class="panel"> -->
 			                </div> <!-- </div class="accordion" id="accordion" role="tablist" aria-multiselectable="true"> -->
                				<!-- 아코디언 끝 -->
 
@@ -139,8 +114,13 @@
 						// 현재 active 클래스를 가진 카테고리 탐색
 						let $activeCategory = $('.categoryActive.active');
 						
+						// 현재 active 상태인 요소
 						console.log($activeCategory);
+						// 클릭한 요소
 						console.log($(this));
+						console.log($(this).parent().get(0));
+						
+						
 						$activeCategory.toggleClass('active');
 						$(this).toggleClass('active');
 					});

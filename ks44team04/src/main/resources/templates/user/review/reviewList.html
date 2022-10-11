@@ -44,16 +44,30 @@
     font-size: 16px;
     resize: none;
 }
+
+.off span{
+ display: inline-block;
+  -webkit-text-fill-color: red; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 0.5px;
+  -webkit-text-stroke-color: red;
+  cursor: pointer;
+ 
+}
+.on span{
+display: flex;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 0.5px;
+  -webkit-text-stroke-color: red;
+  cursor: pointer;
+}
 </style>	
 
 
 </th:block>
-
 <th:block layout:fragment="customContents">
-<form >
+	<div th:fragment="reviewModal">
 
 		<div>
-	  		<b style="font-size: 25px; margin-left:50px;  " > 상품평 </b>
 	  		<div style="text-align: center; font-size: 20px;"><b>사용자 총평</b></div>
 	  		<div style="text-align: center; font-size: 50px;" > ★★★★★ </div>
 	  		<hr style="border: solid 1px black;">
@@ -63,7 +77,7 @@
 		  		<div class="col-10" >
 		  			<b style="font-size: 18px; margin-left:50px;" > 후기 </b>
 		  		</div>
-				<div class="col-2"> 
+				<div class="col-2"  style="text-align: left;"> 
 			  		<select>
 			  			<option>최신순</option>
 			  			<option>평점 낮은 순</option>
@@ -71,6 +85,11 @@
 			  			<option>추천수 높은 순</option>
 			  			<option>추천수 낮은 순</option>
 			  		</select>
+			  		<label>
+		<button type="button" class="btn btn-primary" data-toggle="modal"
+			data-target=".review" id="reviewModal" data-backdrop="static" style="font-size: 15px;">후기작성</button>
+		</label>
+				  	<div th:include="user/review/review :: reviewModal"></div>	
 				</div>	  		
 	  		</div>
   	<th:block th:if="${not #lists.isEmpty(reviewList)}" th:each="l : ${reviewList}">
@@ -93,31 +112,65 @@
 		        </div>
 				<div class="col-2" >
 					<span> 
-						<label>♡</label>
+						<label ><button type="button" class="reviewLikeBtn off" style="border: none; background-color: white;" th:value="${l.reviewList}"> <span>♡</span></button></label>
 						<label th:text="'추천수' + ${l.likeAmount} + ' 개' "></label>
 					</span>
 				</div>
-			
+				
+				<input type="hidden" id="userId" name="userId" value="buyer01">
+				<input type="hidden" id="reviewList" name="reviewList" value="review001">
+				
 		      </div>
 		      <div class="row">
 			  	<hr align="center" style="border: solid 1px black; width: 82%;">
 		      </div>
 		</div>	
-	 <div  style="text-align: right;" class="col-11">
-		<div th:include="user/review/review :: reviewModal"></div>
+	
 	</div>
-	</form>		
-	
   	</th:block>
-	
  </th:block>
 
-    <th:block layout:fragment="customTopJs">
-	    <script th:inline="javascript">
-	    var num = /*[[${reviewList}]]*/ 
-	    console.log(num);
-	    
-		
-		</script>
+    <th:block layout:fragment="customScript">
+	 
+	 <script>
+		$(function(){
+			var userId = $('#userId').val();
+			console.log(reviewList);
+			console.log(userId);
+			// 추천버튼 클릭시(추천 추가 또는 추천 제거)
+			$(".reviewLikeBtn").click(function(){
+				let hart = $(this);
+				let reviewList = hart.val();
+			if(hart.hasClass('off')){
+				$.ajax({
+					url: "/user/review/reviewLike",
+	                type: "GET",
+	                data: {
+	                	'reviewList': reviewList,
+	                	'userId': userId
+	                },
+	                success: function (reviewList) {
+	                	hart.removeClass("off").addClass("on")
+	                }
+				})
+			}else if(hart.hasClass('on')){
+				$.ajax({
+					url: "/user/review/reviewLikeDelete",
+	                type: "GET",
+	                data: {
+	                	'reviewList': reviewList,
+	                	'userId': userId
+	                },
+	                success: function (reviewList) {
+	                	hart.removeClass("on").addClass("off")
+	                }
+				})
+			}
+			});
+		});
+
+	 </script>
+			
+
 	</th:block>
 </html>

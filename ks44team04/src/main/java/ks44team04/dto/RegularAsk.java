@@ -4,7 +4,7 @@ package ks44team04.dto;
 public class RegularAsk {
 
     private String regularAskPK; // 자주 묻는 질문 PK
-    private String regularAskCategory; // 자주 묻는 질문 카테고리 이름
+    private String regularAskCategory; // 자주 묻는 질문 카테고리 
     private String categoryName; // 자주 묻는 질문 카테고리 이름
     private String regId; // 회원 아이디 FK(작성자)
     private String regularAskTitle; // 제목

@@ -197,19 +197,24 @@ public class ReportController {
 		
 		  List<UserSuspend> userSuspendList = reportService.getSuspendSearch(null);
 		  log.info("/admin/report/suspendList userSuspendList ReportController.java");
+		//정지 등록시 필요한 유저 아이디 / 닉네임 값 가져오기 
+		  List<User> userList = reportService.userList();
+		 
 		  
 		  model.addAttribute("title", "정지목록");
+		  model.addAttribute("userList", userList);
 		  model.addAttribute("userSuspendList", userSuspendList);
 		
 
 		return "admin/report/userSuspendList";
 	}
 	
+	
+	
 	@GetMapping("/report/reportRuleList")
 	public String reportRuleList(Model model) {
 		
-		List<ReportRule> reportRuleList = reportService.reportRuleList()
-;
+		List<ReportRule> reportRuleList = reportService.reportRuleList();
 		model.addAttribute("title", "벌점 기준 목록");
 		model.addAttribute("reportRuleList", reportRuleList);
 		

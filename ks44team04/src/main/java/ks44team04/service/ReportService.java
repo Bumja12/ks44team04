@@ -79,7 +79,20 @@ public class ReportService {
     	
     	return userSuspendList;
     }
-
+    
+    //정지 등록
+    public void userSuspend(UserSuspend userSuspend) {
+ 	   int result = reportMapper.userSuspendAdd(userSuspend);
+ 	   log.info("정지 등록:" + result);
+ 	   }
+    
+    //정지 등록 코드 증가
+    public String getUserSuspendCode() {
+    	String UserSuspendCode = reportMapper.getUserSuspendCods();
+    	return UserSuspendCode;
+    
+    }
+    
     //정지 검색
     public List<UserSuspend> getSuspendSearch(Map<String, Object> paramMap){
     	List<UserSuspend> SuspendList = reportMapper.getSuspendSearch(paramMap);
@@ -90,6 +103,13 @@ public class ReportService {
     public List<ReportRule> reportRuleList(){
     	List<ReportRule> reportRuleList = reportMapper.reportRuleList();
     	return reportRuleList;
+    }
+    
+  //정지 등록시 필요한 유저 아이디 / 닉네임 값 가져오기 
+    public List<User> userList(){
+    	List<User> userList = reportMapper.userList(); 
+    	
+    	return userList;
     }
     
 }

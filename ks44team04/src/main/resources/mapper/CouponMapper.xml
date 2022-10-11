@@ -39,6 +39,103 @@
 		<association property="couponInfo" resultMap="couponListMapper"/>
 	</resultMap>
 
+	<!-- 쿠폰목록검색 -->
+	<select id="searchCouponStatus" parameterType="map" resultMap="couponUserMap" fetchSize="100">
+		SELECT
+			c.coupon_name
+			 ,c.discount_price
+			 ,c.price_terms
+			 ,c.end_date
+			 ,cs.coupon_status_code
+			 ,cs.coupon_code
+			 ,cs.buyer_id
+			 ,cs.admin_id
+			 ,cs.coupon_issue_date
+		FROM
+			tb_coupon AS c
+				INNER JOIN
+			tb_coupon_status AS cs
+			ON
+				c.coupon_code = cs.coupon_code
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv},'%')
+			</if>
+			<if test="fd != null and fd !='' and td != null and td !=''">
+				AND
+				cs.coupon_issue_date <![CDATA[>]]> (#{fd})
+				AND
+				cs.coupon_issue_date <![CDATA[<]]> (#{td})
+			</if>
+		</trim>
+		ORDER BY cs.coupon_issue_date;
+	</select>
+
+	<!-- 쿠폰목록검색 -->
+	<select id="searchCouponList" parameterType="map" resultMap="couponListMapper" fetchSize="100">
+		select
+		    *
+		from
+		    tb_coupon as c
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv},'%')
+			</if>
+			<if test="fd != null and fd !='' and td != null and td !=''">
+				AND
+				c.reg_date <![CDATA[>]]> (#{fd})
+				AND
+				c.reg_date <![CDATA[<]]> (#{td})
+			</if>
+		</trim>
+		ORDER BY c.coupon_code;
+	</select>
+
+	<!-- 쿠폰발급 -->
+	<insert id="couponIssue" parameterType="CouponStatus">
+		<selectKey keyProperty="couponStatusCode" resultType="String" order="BEFORE">
+			SELECT
+			(CASE
+			-- 쿠폰이 없을 경우
+			WHEN count(c.coupon_status_code) = 0 THEN 'uCoupon0001'
+			-- 999개 등록되어 있을 경우
+			WHEN (Max(CAST(substring_index(c.coupon_status_code,'n',-1) AS UNSIGNED))+1) > 999 THEN
+			concat('couponCode',Max(CAST(substring_index(c.coupon_status_code,'n',-1) AS UNSIGNED))+1)
+			-- 1~999 범위일 경우
+			ELSE
+			concat('couponCode',LPAD(Max(CAST(substring_index(c.coupon_status_code,'n',-1) AS UNSIGNED))+1,4,0))
+			END) AS couponStatusCode
+			FROM
+			tb_coupon_status AS c;
+		</selectKey>
+		insert into tb_coupon_status
+			(coupon_status_code, coupon_code, buyer_id, admin_id, coupon_issue_date)
+		VALUES
+			(#{couponStatusCode}, #{couponCode}, #{buyerId}, #{adminId}, now());
+	</insert>
+
+	<!-- 쿠폰생성 -->
+	<insert id="couponCreate" parameterType="Coupon">
+		<selectKey keyProperty="couponCode" resultType="String" order="BEFORE">
+			SELECT
+			(CASE
+			-- 쿠폰이 없을 경우
+			WHEN count(c.coupon_code) = 0 THEN 'couponConde0001'
+			-- 999개 등록되어 있을 경우
+			WHEN (Max(CAST(substring_index(c.coupon_code,'e',-1) AS UNSIGNED))+1) > 999 THEN
+			concat('couponCode',Max(CAST(substring_index(c.coupon_code,'e',-1) AS UNSIGNED))+1)
+			-- 1~999 범위일 경우
+			ELSE
+			concat('couponCode',LPAD(Max(CAST(substring_index(c.coupon_code,'e',-1) AS UNSIGNED))+1,4,0))
+			END) AS couponCode
+			FROM
+			tb_coupon AS c;
+		</selectKey>
+		insert into tb_coupon
+			(coupon_code, coupon_name, discount_price, price_terms, end_date, reg_id, reg_date)
+		values
+			(#{couponCode}, #{couponName}, #{discountPrice}, #{priceTerms}, #{endDate}, #{regId}, now());
+	</insert>
 	
 	<!-- 쿠폰보유현황 -->
 	<select id="couponStatus" resultMap="couponUserMap">

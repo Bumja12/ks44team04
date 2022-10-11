@@ -1,9 +1,11 @@
 package ks44team04.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import ks44team04.dto.PaymentTotal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,29 @@ public class CouponService {
 	@PostConstruct
 	public void couponService() {
 		log.info("couponService bean 생성");
+	}
+
+	//쿠폰목록검색
+	public List<Coupon> searchCouponStatus(Map<String, Object> searchMap) {
+
+		List<Coupon> couponStatus = couponMapper.searchCouponStatus(searchMap);
+
+		return couponStatus;
+	}
+
+	//쿠폰목록검색
+	public List<Coupon> searchCouponList(Map<String, Object> searchMap) {
+
+		List<Coupon> couponList = couponMapper.searchCouponList(searchMap);
+
+		return couponList;
+	}
+
+	// 쿠폰생성
+	public void couponCreate(Coupon coupon){
+
+		couponMapper.couponCreate(coupon);
+
 	}
 
 	// 쿠폰보유현황
