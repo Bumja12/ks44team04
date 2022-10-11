@@ -21,6 +21,9 @@ public interface UserMapper {
     public String userLogin(String userId);
     public User getLoginUserInfo(String userId);
     
+    //이미 판매자신청 한 회원 판매자신청 불가
+    public int isAddSeller(String sellerId);
+    
     //판매자 등록
     public int addSeller(Seller seller);
     

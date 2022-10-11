@@ -17,8 +17,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class UserService {
 	
 	
@@ -29,6 +31,13 @@ public class UserService {
     
     public UserService(UserMapper userMapper) {
         this.userMapper = userMapper;
+    }
+    
+    //이미 신청한 회원 판매자 등록 막기 (userId, sellerId 비교)
+    public int isAddSeller(String sellerId) {
+    	int cnt = userMapper.isAddSeller(sellerId);
+    	System.out.println("이미 신청한 회원 판매자 등록 막기 : " + cnt);
+    	return cnt;
     }
     
     //판매자 등록
@@ -194,32 +203,36 @@ public class UserService {
 			for(User user : userList) {
 				
 				String userLevel = user.getUserLevel();
-				String lvName = userLevel.substring(userLevel.length() - 2);
 				
-				if(userLevel.contains("Buyer")) {
-					if(lvName.equals("01")) {
-						user.setUserLevelName("씨앗");
-					}else if(lvName.equals("02")) {
-						user.setUserLevelName("새싹");
-					}else if(lvName.equals("03")) {
-						user.setUserLevelName("잎새");
-					}else if(lvName.equals("04")) {
-						user.setUserLevelName("열매");
+				if(userLevel != null) {
+					String lvName = userLevel.substring(userLevel.length() - 2);
+					
+					if(userLevel.contains("Buyer")) {
+						if(lvName.equals("01")) {
+							user.setUserLevelName("씨앗");
+						}else if(lvName.equals("02")) {
+							user.setUserLevelName("새싹");
+						}else if(lvName.equals("03")) {
+							user.setUserLevelName("잎새");
+						}else if(lvName.equals("04")) {
+							user.setUserLevelName("열매");
+						}
+					}else if(userLevel.contains("Seller")) {
+						if(lvName.equals("01")) {
+							user.setUserLevelName("물방울");
+						}else if(lvName.equals("02")) {
+							user.setUserLevelName("시냇물");
+						}else if(lvName.equals("03")) {
+							user.setUserLevelName("호수");
+						}else if(lvName.equals("04")) {
+							user.setUserLevelName("강");
+						}
 					}
-				}else if(userLevel.contains("Seller")) {
-					if(lvName.equals("01")) {
-						user.setUserLevelName("물방울");
-					}else if(lvName.equals("02")) {
-						user.setUserLevelName("시냇물");
-					}else if(lvName.equals("03")) {
-						user.setUserLevelName("호수");
-					}else if(lvName.equals("04")) {
-						user.setUserLevelName("강");
-					}
-				}else if(userLevel != null) {
-					user.setUserLevelName("-");
-				}
-				log.info("user.getUserLevelName(), {}", user.getUserLevelName());
+				
+				}else {
+				user.setUserLevelName("-");
+			}
+			log.info("user.getUserLevelName(), {}", user.getUserLevelName());
 			}
 		}
 		return userList;

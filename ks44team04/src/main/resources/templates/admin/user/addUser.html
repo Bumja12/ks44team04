@@ -107,7 +107,7 @@
 										<td class="tableOdd">아이디</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text" id="userId" name="userId" data-ischecked="false" placeholder="아이디를 입력해주세요" />
+												<input type="text" class="form-control text" id="userId" name="userId" data-ischecked="false" placeholder="아이디를 입력해주세요." />
 	 											<span class="checks" id="idCheck"></span>
 											</div>
 										</td>
@@ -125,14 +125,14 @@
 										<td class="tableOdd">이름</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text" id="userName" name="userName" placeholder="이름을 입력해주세요" />
+												<input type="text" class="form-control text" id="userName" name="userName" placeholder="이름을 입력해주세요." />
 												<span class="checks" id="nameCheck"></span>
 											</div>
 										</td>
 										<td class="tableOdd">닉네임</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text" id="userNickname" name="userNickname" placeholder="닉네임을 입력해주세요" />
+												<input type="text" class="form-control text" id="userNickname" name="userNickname" placeholder="닉네임을 입력해주세요." />
 												<span class="checks" id="nicknameCheck"></span>
 											</div>
 										</td>
@@ -266,10 +266,15 @@
 			
 			new daum.Postcode({
 				oncomplete: function (data) {
+					/* 주소 입력시 경고표시 없애기 */
+					$('#userAddress').css('border','1px solid #ccc');
+			        $('#addressCheck').html('');
 				text.value = data.address;
 				}
 			}).open();
 			
+			
+	        
 			//상세주소 초기화
 			var input = document.getElementById('userAddress2'); 
 			input.value = "";
@@ -285,12 +290,6 @@
 			$(this).val($(this).val().replace(/[^0-9.]/g,'').replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,'));
 		})
 		
-		/* 콤마 제거 함수 */
-		function removeComma(str) {
-			n = parseInt(str.replace(/,/g,""));
-			return n;
-		}
-		
 		/* 권한 판매자 승인전 선택시 등급 select박스 제어 */
 		$('#userRight').change(function() {
 			
@@ -302,13 +301,11 @@
 				 $('#userLevel,#userPoint,#userPenalty').attr('disabled', 'disabled');
 				 $("#userLevel").prepend("<option value='선택불가'>선택불가</option>");
 				 $("#userLevel").val("선택불가").prop("selected", true);
-				 //$('#userLevel').prop('value', 'null');
 				 $('#userPoint').prop('value', 0);
 				 $('#userPenalty').prop('value', 0);
 			 }
 		});
 		
-			
 		/* id 중복체크 - ajax 비동기처리 */			
 		$("#userId").on("propertychange change keyup paste input",function() {
 		
@@ -467,7 +464,6 @@
 						}	
 					}
 				});
-				
 			}
 			return emailCheck;
 		});
@@ -520,15 +516,6 @@
 	        if($('input[name=userGender]:checked').length > 0){
                	$('#genderCheck').html('');
 	        }			
-		});
-		
-		/* 주소 입력시 경고표시 없애기 */
-			$('#userAddress').on("propertychange change input",function() {
-			if($('#userAddress').val != "") {
-				$('#userAddress').css('border','1px solid #ccc');
-		        $('#addressCheck').html('');
-				addressCheck = true;
-			}
 		});
 		
 		/* 상세주소 입력시 경고표시 없애기 */
@@ -717,8 +704,8 @@
 	        }
 	        console.log('infoKeepCheck : ',infoKeepCheck);
 	        
-			$('#userPoint').attr('value',removeComma($('#userPoint').val()));
-			$('#userPenalty').attr('value',removeComma($('#userPenalty').val()));
+	        $('#userPoint').val( Number($('#userPoint').val().replace(/,/g, "")) );
+			$('#userPenalty').val( Number($('#userPenalty').val().replace(/,/g, "")) );
 	        
 	        /* form 전송 */
 			$('#addUserForm').submit(function(event) {
@@ -726,7 +713,6 @@
 	        
 	        /* 최종 유효성 검사 */
 			if(idCheck && pwCheck && pwCheck2 && pwCheckFinal && nameCheck && nicknameCheck && genderCheck && emailCheck && phoneCheck && addressCheck && addressCheck2 && addressCheckFinal && pointCheck && penaltyCheck && infoKeepCheck) {
-				$('#addUserForm').attr('action','/admin/user/userList');
 				$('#addUserForm').submit();
 	        }
 			return false;

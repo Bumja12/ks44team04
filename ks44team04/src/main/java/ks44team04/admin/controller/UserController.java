@@ -38,7 +38,43 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+    
+    // 10/11 이미 신청한 회원 판매자 등록 막기
+    @GetMapping("/user/isAddSeller")
+    @ResponseBody
+    public int isAddSeller(@RequestParam(name="userId") String sellerId) {
+    	int cnt = userService.isAddSeller(sellerId);
+    	
+    	return cnt;
+    }
 
+	// 10/10 판매자 휴대폰번호 중복체크
+	@GetMapping("/user/phoneCheckS")
+	@ResponseBody
+	public int phoneCheckS(@RequestParam(name="storePhone") String storePhone) {
+		int cnt = userService.phoneCheckS(storePhone);
+		
+		return cnt;
+	}
+	
+	// 10/10 판매자 상호명 중복체크
+	@GetMapping("/user/storeNameCheck")
+	@ResponseBody
+	public int storeNameCheck(@RequestParam(name="storeName") String storeName) {
+		int cnt = userService.storeNameCheck(storeName);
+		
+		return cnt;
+	}
+	
+	// 10/10 판매자코드 중복체크
+	@GetMapping("/user/codeCheck")
+	@ResponseBody
+	public int codeCheck(@RequestParam(name="sellerCode") String sellerCode) {
+		int cnt = userService.codeCheck(sellerCode);
+		
+		return cnt;
+	}
+    
     //판매자 가입
     @PostMapping("/user/addSeller")
     public String addSeller(Seller seller) {
@@ -66,33 +102,6 @@ public class UserController {
 	@ResponseBody
 	public int emailCheckS(@RequestParam(name="storeEmail") String storeEmail) {
 		int cnt = userService.emailCheckS(storeEmail);
-		
-		return cnt;
-	}
-	
-	// 10/10 판매자 휴대폰번호 중복체크
-	@GetMapping("/user/phoneCheckS")
-	@ResponseBody
-	public int phoneCheckS(@RequestParam(name="storePhone") String storePhone) {
-		int cnt = userService.phoneCheckS(storePhone);
-		
-		return cnt;
-	}
-	
-	// 10/10 판매자 상호명 중복체크
-	@GetMapping("/user/storeNameCheck")
-	@ResponseBody
-	public int storeNameCheck(@RequestParam(name="storeName") String storeName) {
-		int cnt = userService.storeNameCheck(storeName);
-		
-		return cnt;
-	}
-	
-	// 10/10 판매자코드 중복체크
-	@GetMapping("/user/codeCheck")
-	@ResponseBody
-	public int codeCheck(@RequestParam(name="sellerCode") String sellerCode) {
-		int cnt = userService.codeCheck(sellerCode);
 		
 		return cnt;
 	}
@@ -146,7 +155,6 @@ public class UserController {
 	//구매자 회원가입 쿼리 실행
 	@GetMapping("/user/addUser")
 	public String addUserForm(Model model) {
-		
 		List<LevelBuyerCategory> levelBuyer = userService.getLevelBuyer();
         log.info("구매자 레벨 ::: {}",levelBuyer);
 		List<Right> rightList = userService.getRightList();
@@ -208,23 +216,28 @@ public class UserController {
 	//특정 회원 상세정보
 	@GetMapping("/user/userDetail")
 	public String userDetail(@RequestParam(value="userId", required = false) String userId
-							  ,Model model) {
+							  ,String sellerId ,Model model) {
         User userInfo = userService.getUserInfoById(userId);
         
         String userLevel = userInfo.getUserLevel();
         LevelBuyerCategory levelBuyer = userInfo.getLevelBuyer();
         LevelSellerCategory levelSeller = userInfo.getLevelSeller();
-        if(userLevel.contains("Buyer")) {
-        	userInfo.setUserLevel(levelBuyer.getLevelName());
-        }else if(userLevel.contains("Seller")) {
-        	userInfo.setUserLevel(levelSeller.getLevelName());
-        }else if(userLevel.equals("")) {
+        Right rightList = userInfo.getRightList();
+        
+        if(userLevel != null) {
+	        if(userLevel.contains("Buyer")) {
+	        	userInfo.setUserLevel(levelBuyer.getLevelName());
+	        }else if(userLevel.contains("Seller")) {
+	        	userInfo.setUserLevel(levelSeller.getLevelName());
+	        }
+        }else {
         	userInfo.setUserLevel("없음");
         }
         
         log.info("로그 목록 ::: {}",userInfo);
 		model.addAttribute("title", "회원상세정보");
 		model.addAttribute("userInfo", userInfo);
+		model.addAttribute("rightList", rightList);
 		
 		return "admin/user/userDetail";
 	}
@@ -311,7 +324,6 @@ public class UserController {
             log.info("로그인 유저 아이디 {}",loginUserInfo.getUserId());
             return "redirect:/admin";
         }
-
         loginReAttr.addAttribute("loginFailed", "로그인에 실패했습니다.");
 
         return "redirect:/admin/login";
