@@ -143,7 +143,6 @@ th {
 	</div>
 
 	<div class="pwCheckModal modal fade" id="pwCheckModal" tabindex="-1" role="dialog" aria-labelledby="pwCheckModalLabel" aria-hidden="true">
-		<!-- <div class="modal-dialog modal-dialog-centered modal-sm" role="document"> -->
 		<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -153,11 +152,10 @@ th {
 					<div class="form-group">
 						<label for="adminPw" class="col-form-label">비밀번호를 입력해주세요.</label>
 						<input type="password" class="pwInput form-control" id="adminPw" name="adminPw">
-						<p id="checkTip" style="color:gray; font-weight: bold;"> </p>
 					</div>
 				</div>
 				<div class="modal-footer" style="text-align: center;">
-					<button type="button" class="btn btn-dark" id="removeBtnCheck">확인</button>
+					<button type="button" class="btn btn-dark" id="adminCheckBtn">확인</button>
 					<button type="button" class="btn btn-secondary" id='closeBtn' data-dismiss="modal">닫기</button>
 				</div>
 			</div>
@@ -224,35 +222,33 @@ th {
 
 					$('#pwCheckModal').modal('show');
 
-					$('#removeBtnCheck').click(function () {
+					$('#adminCheckBtn').off().on('click', function () {
 						var adminPw = $('input[name="adminPw"]').val();
 
-						$('#removeBtnCheck').click(function () {
-							var adminPw = $('input[name="adminPw"]').val();
+						var request = $.ajax({
+							url: "/admin/goods/pwCheck",
+							method: 'POST',
+							data: { userPw : adminPw },
+							dataType: "json"
+						});
 
-							var request = $.ajax({
-								url: "/admin/goods/pwCheck",
-								method: 'POST',
-								data: { userPw : adminPw },
-								dataType: "json"
-							});
-
-							request.done(function( data ) {
-								if (data) {
-									location.href = "/admin/payment/remove/" + orderDetailNum;
+						request.done(function( data ) {
+							if (data) {
+								location.href = "/admin/payment/remove/" + orderDetailNum;
+							}else {
+								if(typeof adminPw == 'undefined' || adminPw == null || adminPw == '') {
+									alert('비밀번호를 입력해주세요.');
+									$('#adminPw').focus();
+									return false;
 								}else {
-									if(typeof adminPw == 'undefined' || adminPw == null || adminPw == '') {
-										alert('비밀번호를 입력해주세요.')
-										return false;
-									}else {
-										alert('비밀번호가 일치하지 않습니다.')
-										return false;
-									}
+									alert('비밀번호가 일치하지 않습니다.');
+									$('#adminPw').focus();
+									return false;
 								}
-							})
-							request.fail(function( jqXHR, textStatus ) {
-								alert( "Request failed: " + textStatus );
-							});
+							}
+						})
+						request.fail(function( jqXHR, textStatus ) {
+							alert( "Request failed: " + textStatus );
 						});
 					});
 				})
@@ -261,6 +257,11 @@ th {
 					$('#adminPw').val(null);
 				});
 
+				$("#adminPw").keyup(function(e){
+					if(e.keyCode == 13) {
+						$('#adminCheckBtn').click();
+					}
+				});
 			})
 		</script>
 	</th:block>

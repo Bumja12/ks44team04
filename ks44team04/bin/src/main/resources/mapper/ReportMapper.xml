@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team04.mapper.ReportMapper">
+
+	<resultMap type="ReportRule" id="reportRuleListResultMap">
+		<id     column="report_code" 	 property="reportCode"/>
+		<result column="report_reason"   property="reportReason"/>
+		<result column="report_date" 	 property="reportDate"/>
+		<result column="user_id" 		 property="userId"/>
+		<result column="use_check" 		 property="useCheck"/>
+		<result column="penalty_point"   property="penaltyPoint"/>
+	</resultMap>
+	
+	
+	<resultMap type="UserSuspend" id="userSuspendListResultMap">
+		<id     column="user_suspend_code"  property="userSuspendCode"/>
+		<result column="suspend_id" 		property="suspendId"/>
+		<result column="approve_id" 		property="approveId"/>
+		<result column="suspend_day" 		property="suspendDay"/>
+		<result column="start_suspend"  	property="startSuspend"/>
+		<result column="end_suspend" 		property="endSuspend"/>
+		<result column="suspend_result" 		property="suspendResult"/>
+		<result column="suspend_reason" 		property="suspendReason"/>
+	</resultMap>
+
+    <resultMap type="Report" id="reportListResultMap">
+        <id     column="report_history_code" 	property="reportHistoryCode"/>
+        <result column="reported_id"		 	property="reportedId"/>
+        <result column="reporting_id"		 	property="reportingId"/>
+        <result column="report_category"	 	property="reportCategory"/>
+        <result column="report_code" 		 	property="reportCode"/>
+        <result column="report_what" 	 	 	property="reportWhat"/>
+        <result column="r_report_reason" 	 	property="reportReason"/>
+        <result column="board_file" 		 	property="boardFile"/>
+        <result column="report_date" 		 	property="reportDate"/>
+        <result column="report_result"		 	property="reportResult"/>
+        <result column="report_result_reason" 	property="reportResultReason"/>
+        <result column="report_result_date" 	property="reportResultDate"/>
+        <result column="report_approve_id"	 	property="reportApproveId"/>
+        <result column="r_penalty_point" 		property="penaltyPoint"/>
+        <result column="total_penalty_point" 	property="totalPenaltyPoint"/>
+        <result column="ban_date" 				property="banDate"/>
+        <association property="reportCategoryDto" javaType="ReportCategory" >
+        	<id     column="report_category" property="reportCategory"/>
+        	<result column="category_name" 	 property="categoryName"/>
+        </association>
+        <association property="reportRuleDto" javaType="ReportRule" >
+        	<id     column="report_code" 	property="reportCode"/>
+        	<result column="report_reason"  property="reportReason"/>
+        	<result column="penalty_point"  property="penaltyPoint"/>
+        </association>
+        <association property="UserDto" javaType="User" >
+        	<id     column="user_id" 		property="userId"/>
+        	<result column="user_penalty"  	property="userPenalty"/>
+        	<result column="user_name" 		property="userName"/>
+        </association>
+    </resultMap>
+    
+    <resultMap type="User" id="userResultMap">
+    	<id     column="user_id" 		property="userId"/>
+        <result column="user_penalty"  	property="userPenalty"/>
+        <result column="user_name" 		property="userName"/>
+    </resultMap>
+   
+   
+    
+    
+     <!-- 신고 하기 -->
+     <insert id="setReport" parameterType="Report" >
+     INSERT INTO tb_report
+		(report_history_code
+		 ,reported_id
+		 ,reporting_id
+		 ,report_category
+		 ,report_code
+		 ,report_what
+		 ,report_reason
+		 ,board_file
+		 ,report_date
+		 ,report_result
+		 ,report_result_reason
+		 ,report_result_date
+		 ,report_approve_id
+		 ,penalty_point
+		 ,total_penalty_point
+		 ,ban_date)
+     VALUES 
+     	(#{reportHistoryCode}
+    	,#{reportedId}
+    	,#{reportingId}
+   		,#{reportCategory}
+   		,#{reportCode}
+   		,#{reportWhat}
+    	,#{reportReason}
+    	,#{boardFile}
+    	,NOW()
+    	,#{reportResult}
+    	,#{reportResultReason}
+    	,null
+    	,#{reportApproveId}
+    	,0
+    	,0
+    	,0)
+     </insert>
+	
+   
+     
+        <update id="reportPoint" parameterType="User">
+        
+         UPDATE tb_user
+		<trim prefix="SET" prefixOverrides=",">
+				user_penalty = #{userPenalty}
+		</trim>
+			WHERE
+			  user_id = #{userId};
+        </update>
+     
+    
+  
+     
+     <!-- 신고 처리 -->
+     <update id="reportProcessing" parameterType="Report">
+     UPDATE tb_report
+     <trim prefix="SET" prefixOverrides=",">
+		<if test="reportResult != null and reportResult != ''">
+			 report_result= #{reportResult}
+		</if>
+		<if test="reportResultReason != null and reportResultReason != ''">
+			,report_result_reason = #{reportResultReason}
+		</if>
+			,report_result_date = NOW()
+		<if test="reportApproveId != null and reportApproveId != ''">
+			,report_approve_id = #{reportApproveId}
+		</if>
+		<if test="penaltyPoint != null and penaltyPoint != ''">
+			,penalty_point = #{penaltyPoint}
+		</if>
+		<if test="reportResult == '반려'">
+			,penalty_point = 0
+		</if>
+		
+		<if test="totalPenaltyPoint != null and totalPenaltyPoint != ''">
+			,total_penalty_point = #{totalPenaltyPoint}
+		</if>
+		
+	</trim>
+		WHERE 
+			report_history_code= #{reportHistoryCode};
+     
+     </update>
+     
+     
+     
+     <!-- 특정 신고 코드 조회 -->
+     <select id="getReportHostryCode" parameterType="String" resultMap="reportListResultMap">
+     /* 특정 신고 목록 조회 */
+     SELECT 
+			r.report_history_code
+			,r.reporting_id
+			,r.reported_id
+			,c.category_name
+			,u.report_reason
+			,r.report_what
+			,r.report_reason AS r_report_reason
+			,r.board_file
+			,r.report_date
+			,r.report_result
+			,r.report_result_reason
+			,r.report_result_date
+			,r.report_approve_id
+			,r.penalty_point AS r_penalty_point
+			,u.penalty_point
+			,r.total_penalty_point
+			,r.ban_date
+			,r.report_approve_id 
+			,s.user_penalty
+			,s.user_name
+		FROM 
+			tb_report_category AS c
+			INNER JOIN 
+			tb_report AS r 
+			on
+			c.report_category = r.report_category
+			INNER JOIN 
+			tb_report_rule AS u
+			on
+			r.report_code = u.report_code
+			INNER JOIN 
+			tb_user AS s
+			on
+			r.reported_id = s.user_id
+		where
+			r.report_history_code = #{reportHistoryCode};
+     </select>
+     
+
+    <!-- 신고 목록 조회 -->
+    <select id="getReportList" resultMap="reportListResultMap">
+    	/* 신고 목록 조회 */
+    	SELECT 
+			r.report_history_code
+			,r.reporting_id
+			,r.reported_id
+			,c.category_name
+			,u.report_reason
+			,r.report_what
+			,r.report_reason AS r_report_reason
+			,r.board_file
+			,r.report_date
+			,r.report_result
+			,r.report_result_reason
+			,r.report_result_date
+			,r.report_approve_id
+			,r.penalty_point AS r_penalty_point
+			,u.penalty_point
+			,r.total_penalty_point
+			,r.ban_date
+		FROM 
+			tb_report_category AS c
+			INNER JOIN 
+			tb_report AS r 
+			on
+			c.report_category = r.report_category
+			INNER JOIN 
+			tb_report_rule AS u
+			on
+			r.report_code = u.report_code
+			
+		ORDER BY r.report_history_code DESC 
+		
+    </select>
+   
+    <!-- 신고등록시 코드 증가 -->
+    <select id="getHistoryCode" resultType="String">
+    /* 신고등록시 코드 증가*/
+	SELECT 
+		report_history_code
+	FROM 
+		tb_report
+	ORDER BY report_history_code DESC LIMIT 1
+    </select>
+    
+   <!-- 신고 검색  -->
+	<select id="getReportSearch" parameterType="map" resultMap="reportListResultMap" fetchSize="100">
+	/* 신고 검색  */
+		SELECT 
+			r.report_history_code
+			,r.reporting_id
+			,r.reported_id
+			,c.category_name
+			,u.report_reason
+			,r.report_what
+			,r.report_reason AS r_report_reason
+			,r.board_file
+			,r.report_date
+			,r.report_result
+			,r.report_result_reason
+			,r.report_result_date
+			,r.report_approve_id
+			,r.penalty_point AS r_penalty_point
+			,u.penalty_point
+			,r.total_penalty_point
+			,r.ban_date
+		FROM 
+			tb_report_category AS c
+			INNER JOIN 
+			tb_report AS r 
+			on
+			c.report_category = r.report_category
+			INNER JOIN 
+			tb_report_rule AS u
+			on
+			r.report_code = u.report_code
+		   <trim prefix="WHERE" prefixOverrides="AND |OR ">
+			   	<if test="sv != null and sv != ''">
+			   		${sk} LIKE CONCAT('%',#{sv},'%')
+			   	</if>
+			   	
+			   
+		   </trim>
+		   ORDER BY r.report_history_code DESC 
+	</select>
+    
+    <!-- 정지목록 -->
+    <select id="getUserSuspendList" resultMap="userSuspendListResultMap">
+    /* 정지목록 */
+    SELECT 
+		 s.user_suspend_code
+		,s.suspend_id
+		,s.approve_id
+		,s.suspend_day
+		,s.start_suspend
+		,s.end_suspend
+		,s.suspend_result
+		,s.suspend_reason 
+	FROM 
+		tb_user_suspend AS s
+	ORDER BY s.user_suspend_code DESC 
+    </select>
+    
+
+       <!-- 정지 검색  -->
+	<select id="getSuspendSearch" parameterType="map" resultMap="userSuspendListResultMap" fetchSize="100">
+	/* 정지검색  */
+		 SELECT 
+			 s.user_suspend_code
+			,s.suspend_id
+			,s.approve_id
+			,s.suspend_day
+			,s.start_suspend
+			,s.end_suspend
+			,s.suspend_result
+			,s.suspend_reason 
+		FROM 
+			tb_user_suspend AS s
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%',#{sv},'%')
+			</if>
+	   </trim>
+		 ORDER BY s.user_suspend_code DESC 
+	</select>
+	
+	<select id="reportRuleList" resultMap="reportRuleListResultMap">
+	/* 벌점 기준 목록 */
+	
+	SELECT
+		r.report_code
+		,r.report_reason
+		,r.report_date
+		,r.user_id
+		,r.use_check
+		,r.penalty_point 
+	FROM 
+		tb_report_rule AS r
+		
+	</select>
+	
+	
+	
+	
+	<!-- 정지 등록시 필요한 유저 아이디 / 닉네임 값 가져오기  -->
+	<select id="userList" resultMap="userResultMap">
+	/*정지 등록시 필요한 유저 아이디 / 닉네임 값 가져오기 */
+	
+	SELECT 
+		u.user_id
+		,u.user_name
+		,user_penalty
+	FROM 
+		tb_user AS u
+		
+	</select>
+	
+	
+	
+    
+</mapper>

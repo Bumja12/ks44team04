@@ -17,8 +17,24 @@ public class Goods {
     private String regularDeliverCheck;
     private String regDate;
     private String modifyDate;
-    private int goodsReportAmount;
     private String goodsFile;
+    
+    /* ~~~ 시작 ~~~ */
+	private GoodsAnswer goodsAnswerInfo;
+	public GoodsAnswer getGoodsAnswerInfo() {
+		return goodsAnswerInfo;
+	}
+	public void setGoodsAnswerInfo(GoodsAnswer goodsAnswerInfo) {
+		this.goodsAnswerInfo = goodsAnswerInfo;
+	}
+	
+	private GoodsQna goodsQnaInfo;
+	public GoodsQna getGoodsQnaInfo() {
+		return goodsQnaInfo;
+	}
+	public void setUserInfoGoodsQnaInfo(GoodsQna goodsQnaInfo) {
+		this.goodsQnaInfo = goodsQnaInfo;
+	}
     
 	private User userInfo;
 	public User getUserInfo() {
@@ -43,7 +59,7 @@ public class Goods {
 	public void setGoodsLargeCategoryInfo(GoodsLargeCategory goodsLargeCategoryInfo) {
 		this.goodsLargeCategoryInfo = goodsLargeCategoryInfo;
 	}
-	
+	/* ~~~ 끝 ~~~ */
 	
 	public String getGoodsCode() {
         return goodsCode;
@@ -165,14 +181,6 @@ public class Goods {
     	this.modifyDate = modifyDate;
     }
 
-    public int getGoodsReportAmount() {
-        return goodsReportAmount;
-    }
-
-    public void setGoodsReportAmount(int goodsReportAmount) {
-        this.goodsReportAmount = goodsReportAmount;
-    }
-
     public String getGoodsFile() {
         return goodsFile;
     }
@@ -198,8 +206,12 @@ public class Goods {
                 ", packagePostCheck='" + packagePostCheck + '\'' +
                 ", regularDeliverCheck='" + regularDeliverCheck + '\'' +
                 ", regDate='" + regDate + '\'' +
-                ", goodsReportAmount=" + goodsReportAmount +
                 ", goodsFile='" + goodsFile + '\'' +
+                ", goodsAnswerInfo='" + goodsAnswerInfo + '\'' +
+                ", goodsQnaInfo='" + goodsQnaInfo + '\'' +
+                ", userInfo='" + userInfo + '\'' +
+                ", goodsSmallCategoryInfo='" + goodsSmallCategoryInfo + '\'' +
+                ", goodsLargeCategoryInfo='" + goodsLargeCategoryInfo + '\'' +
                 '}';
     }
 }

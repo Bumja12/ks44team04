@@ -137,7 +137,6 @@ public class GoodsController {
 		log.info("상품 증가 코드 :::{}" , goodsNewCode);
 		goods.setGoodsCode(goodsNewCode);
 		goods.setSellerId("seller01");
-		//goods.setGoodsContent("contents"); //임의
 		goods.setGoodsFile("goods.jpg"); //임의
 		
 		//대분류 카테고리 리스트 가져오기
@@ -172,6 +171,7 @@ public class GoodsController {
 		}
 		return 0;
 	}
+	
 	//상품문의 & 상품문의 답변
 	@GetMapping("/goodsQna")
 	public String getGoodsQna(Model model) {

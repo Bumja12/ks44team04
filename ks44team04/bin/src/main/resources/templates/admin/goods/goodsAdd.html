@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+	<link rel="stylesheet" th:href="@{/build/summernote.min.css}">
+</th:block>
+
+<th:block layout:fragment="customCss">
+<style>
+.chk_box { border-radius: 5px; display: block; position: relative; padding-left: 25px; margin-bottom: 10px; cursor: pointer; font-size: 14px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+/* 기본 체크박스 숨기기 */
+.chk_box input[type="checkbox"] { display: none; }
+/* 선택되지 않은 체크박스 스타일 꾸미기 */
+.on { width: 20px; height: 20px; background: #ddd; position: absolute; top: 0; left: 0; border-radius: 5px;}
+/* 선택된 체크박스 스타일 꾸미기 */
+.chk_box input[type="checkbox"]:checked + .on { background: #73879c; }
+.on:after { content: ""; position: absolute; display: none; }
+.chk_box input[type="checkbox"]:checked + .on:after { display: block; }
+.on:after { width: 6px; height: 10px; border: solid #fff; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 4px; }
+
+.firstMenu{
+	margin-top: 5px;
+}
+.openClose{
+	color: #b4b7ba;
+}
+.explain{
+	color: slategray; margin-top: 8px; margin-bottom: -3px;
+}
+.imgExplain{
+	color: gray; margin-left: 85px; margin-top: 10px;
+}
+.addTitle{
+	margin-right: 10px;
+}
+.imgTitle{
+	margin-right: 15px; margin-top: -8px;
+}
+.hrStyle{
+	border-color: #c4c4c4; width: 40%; border-style:dashed;
+}
+.img{
+	height: 170px; width: 170px;
+}
+.priceChange{
+	font-size: 15px;
+}
+.numberTitle{
+	margin-top: -6px;
+}
+</style>
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<div class="page-title">
+		<div class="title_left">
+			<h3>상품 등록</h3>
+		</div>
+	</div>
+
+<form id="goodsAddForm" th:action="@{/admin/goods/goodsAdd}" method="post">
+	<div class="x_panel">
+		<div>
+			<h5>
+				<b>카테고리</b> <a class="collapse-link"><i class="openClose fa fa-chevron-up"></i></a>
+			</h5>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="x_content1">
+			<div class="well well-sm">
+				<div class="firstMenu form-inline">
+					<label class="addTitle control-label">대분류</label>
+						<select class="largeCate form-control">
+							<option value="none">::</option>
+						</select>
+					<label class="addTitle control-label" style="margin-left: 10px;">중분류</label>
+						<select class="smallCate form-control" id="goodsSmallCategory" name="goodsSmallCategory">
+							<option value="none">::</option>
+						</select>
+					<p class="explain">
+						상품에 맞지 않는 카테고리에 등록할 경우 강제 이동되거나 판매중지, 판매금지 될 수 있습니다.</p>
+				</div>
+			</div>
+		</div>
+
+
+		<div>
+			<h5>
+				<b>상품명</b><a class="collapse-link"><i class="openClose fa fa-chevron-up"></i></a>
+			</h5>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="x_content2">
+			<div class="well well-sm">
+				<div class="firstMenu form-inline">
+					<label class="addTitle control-label" for="goodsName">상품명</label>
+						<input type="text" class="form-control" id="goodsName" name="goodsName" required="required" size="30">
+					<p class="explain">
+						상품명 최대 30글자까지 입력가능하며, 일부 특수문자를 포함한 금칙어는 상품명으로 사용할 수 없습니다.<br>
+						판매 상품과 직접 관련이 없는 다른 상품명, 스팸성 키워드 입력 시 관리자에 의해 판매 금지될 수 있습니다.</p>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<h5>
+				<b>판매가</b> <a class="collapse-link"><i class="openClose fa fa-chevron-up"></i></a>
+			</h5>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="x_content2">
+			<div class="well well-sm">
+				<div class="firstMenu form-inline">
+					<label class="addTitle numberTitle control-label" for="goodsPrice">판매가</label>
+					<div class="input-group">
+					<input type="hidden" id="hiddenGoodsPrice" value="0">
+						<input type="text" class="salePrice numberInput form-control" id="goodsPrice" name="goodsPrice" size="12" placeholder="숫자만 입력 가능">
+						<span class="input-group-addon">원</span>
+					</div>
+				</div>
+				<div class="firstMenu form-inline">
+					<label class="addTitle numberTitle control-label" for="goodsDiscountRate">할인율</label>
+					<div class="input-group">
+						<input type="text" class="disRate numberInput form-control" id="goodsDiscountRate" name="goodsDiscountRate" size="3">
+						<span class="input-group-addon">%</span>
+					</div>
+				</div>
+				<hr class="hrStyle" align="left">
+				<div class="firstMenu form-inline">
+					<label class="addTitle numberTitle control-label">할인가</label>
+					<div class="form-group" id="resultDiv" style="margin-top: -10px;">
+						<input type="hidden" id="hiddenPrice" value="0">
+						<span class="discountPrice" style="font-size: 25px;">0</span>
+						<span style="font-size: 20px;">원</span>
+						<span class="priceChange" style="margin-left: 5px;">(</span>
+						<input type="hidden" id="hiddenDiscount" value="0">
+						<span class="discountVal priceChange" style="margin-left: -4px;">0</span>
+						<span class="priceChange" style="margin-left: -3px;">원 할인)</span>
+					</div>
+				</div>
+				<p class="explain">할인가는 구매자가 상품을 구매하는 최종가격입니다.(화면 노출)</p>
+			</div>
+		</div>
+
+		<div>
+			<h5>
+				<b>재고·배송 설정</b><a class="collapse-link"><i class="openClose fa fa-chevron-up"></i></a>
+			</h5>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="x_content2">
+			<div class="well well-sm">
+				<div class="firstMenu form-inline">
+					<label class="addTitle numberTitle control-label" for="goodsStock">재고수량</label>
+					<div class="input-group">
+						<input type="text" class="numberInput form-control" id="goodsStock" name="goodsStock" size="5">
+						<span class="input-group-addon">개</span>
+					</div>
+					<p class="explain">
+						주문하면 재고수량이 차감되며, 재고가 0으로 변경 시 품절상태로 변경됩니다.</p>
+				</div>
+				<hr class="hrStyle" align="left">
+				<div class="firstMenu form-inline">
+					<label class="control-label" for="goodsPostPrice" style="margin-right: 17px; margin-left: 5px; margin-top: -8px;">배송비</label>
+					<div class="addTitle input-group">
+						<input type="text" class="postPrice numberInput form-control" id="goodsPostPrice" name="goodsPostPrice" size="5">
+						<span class="input-group-addon">원</span>
+					</div>
+					<div class="addTitle input-group" style="margin-top:10px;">
+						<label for="freePost" class="chk_box">
+							<input type="checkbox" id="freePost" > 무료배송
+							<span class="on"></span>
+						</label>
+					</div>
+				</div>
+				<p class="explain" style="margin-bottom:15px;">
+					무료배송 체크 시, 자동으로 배송비는 0원으로 변경됩니다.</p>
+					
+				<div class="firstMenu form-inline" style="margin-bottom:-15px;">
+					<div class="input-group">
+						<label class="addTitle chk_box">
+							<input type="checkbox" id="packagePostCheck" name="packagePostCheck" value="Y" checked> 묶음배송
+							<span class="on"></span>
+						</label>
+					</div>
+					<div class="input-group" >
+						<label class="addTitle chk_box">
+							<input type="checkbox" id="regularDeliverCheck" name="regularDeliverCheck" value="Y" checked> 정기배송
+							<span class="on"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<h5>
+				<b>상품이미지 설정</b> <a class="collapse-link"><i class="openClose fa fa-chevron-up"></i></a>
+			</h5>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="x_content2">
+			<div class="well well-sm">
+				<div class="firstMenu form-inline">
+					<label class="imgTitle control-label" for="goodsFile">대표이미지</label>
+					<img src="gom.png" class="img img-thumbnail" alt="대표이미지" id="goodsFile" name="goodsFile">
+				</div>
+				<p class="imgExplain">권장 크기 : 640 x 640 (윈도대상 750 x 1000)</p>
+
+				<div class="firstMenu form-inline">
+					<label class="imgTitle control-label">추가이미지</label>
+						<img id="preview" class="img img-thumbnail">
+						<input type="file" onchange="readURL(this);" style="margin-left: 85px; margin-top: 5px;">
+				</div>
+				<p class="imgExplain">권장 크기 : 640 x 640 (윈도대상 750 x 1000)</p>
+				<hr class="hrStyle" align="left">
+				<p class="explain">
+					대표이미지 1장은 필수, 추가이미지는 최대 5장까지 등록할 수 있습니다.<br>
+					추가 이미지는 상세페이지 화면에서 이미지를 클릭하여 크게 볼 수 있습니다.<br>
+					파일명은 <span style="color:green;">jpg, jpeg, png, bmp 형식의 정지 이미지만</span> 등록됩니다.</p>
+			</div>
+		</div>
+
+		<div>
+			<h5>
+				<b>상세 설명</b> <a class="collapse-link"><i class="openClose fa fa-chevron-up"></i></a>
+			</h5>
+			<div class="clearfix"></div>
+		</div>
+			
+		<div class="x_content2">
+			<div class="well well-sm">
+				<div class="form-inline form-group" style="margin-top: 20px;">
+ 					<textarea class="summernote" id="goodsContent" name="goodsContent"></textarea>
+ 				</div>
+ 				<p class="explain">
+ 					상세설명 권장 크기 : 가로 860px <br>
+					상품명과 직접적 관련 없는 상세설명, 외부 링크 입력 시 관리자에 의해 판매 금지 될 수 있습니다.<br>
+					안전거래정책에 위배할 경우 관리자에 의해 재재조치가 있을 수 있습니다.</p>
+ 			</div>
+		</div>
+			
+		<div style="text-align: center;">
+			<button type="button" class="btn btn-dark" th:onclick="|location.href='@{/admin/goods/goodsList}'|">취소</button>
+			<button type="reset" class="btn btn-dark">초기화</button>
+			<button type="submit" class="btn btn-dark" id="goodsAddBtn">등록</button>
+		</div>
+	</div>
+</form>
+</th:block>
+
+<th:block layout:fragment="customJsScript">
+	<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+    <script src="/build/summernote.min.js"></script>
+    <!-- 스크롤이 자꾸 아래로 가서 넣음 -->
+    <script>history.scrollRestoration = "manual"</script>
+    
+	<script th:inline="javascript">
+    
+	$(function(){
+	    /* 썸머노트 설정 */
+		$(document).ready(function() {
+	    	$('.summernote').summernote({
+				height: 300,           //에디터 높이
+				minHeight: null,       //최소 높이
+				maxHeight: null,       //최대 높이
+				lang: "ko-KR",
+				toolbar: [ ['fontname', ['fontname']],
+				           ['fontsize', ['fontsize']],
+				    	   ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+				    	   ['color', ['forecolor','color']],
+				    	   ['table', ['table']],
+				    	   ['para', ['ul', 'ol', 'paragraph']],
+				   	 	   ['height', ['height']],
+				    	   ['insert',['picture','link','video']],
+				    	   ['view', ['fullscreen', 'help']] ],
+				fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+				fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+			});
+		});
+	    	
+		/* 숫자만 입력  & 숫자 천단위 콤마 찍기  */
+		$('.numberInput').on('input',function(){
+			$(this).val($(this).val().replace(/[^0-9.]/g,'').replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,'));
+		});
+	    	
+		/* input 할인율 숫자 99까지만 입력 가능하게 하기 */
+		$('.disRate').on("keyup",function() {
+			var val= $(this).val();
+			if(val < 1 || val > 99) {
+			$(this).val('');
+			}
+		});
+	    	
+	    /* 판매가, 할인율 입력 시 자동 계산 후 할인가 입력 */
+		$('.disRate, .salePrice').on('change',function(){
+			if ($('.salePrice').val() != null && $('.goodsPrice').val() != '') {
+				var salePrice = Number($('.salePrice').val().replace(/,/g, ""));
+				var disRate = Number($('.disRate').val());
+				var discounted = salePrice * disRate / 100;
+				//할인가 콤마 넣기
+				$('#hiddenDiscount').val(discounted);
+				var hiddenDiscount = $('#hiddenDiscount').val().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+				$('.discountVal').text( hiddenDiscount );
+				//할인금액 콤마 넣기
+				$('#hiddenPrice').val(salePrice - discounted);
+				var hiddenPrice = $('#hiddenPrice').val().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+				$('.discountPrice').text( hiddenPrice );
+	    	} 
+		});
+	   
+	    /* form 전송 */ 
+		$('#goodsAddForm').submit(function(event) {
+		});
+		  
+		$('#goodsAddBtn').click(function () {
+			//판매가, 배송비 결과값 콤마 없애기
+			$('.salePrice').val( Number($('.salePrice').val().replace(/,/g, "")) );
+			$('.postPrice').val( Number($('.postPrice').val().replace(/,/g, "")) );
+		 
+			$('#goodsAddForm').submit();
+		});
+		
+		/* 대분류 선택시 중분류 카테고리 나오게 하기 */
+		var largeCategoryList = /*[[${largeCategoryList}]]*/
+			console.log(largeCategoryList)
+		var largeCate = $(".largeCate");
+		var smallCate = $(".smallCate");
+		
+		//대분류 <option> 태그
+		for(var large of largeCategoryList){
+			var largeCode = large.goodsLargeCategory;
+			var largeName = large.goodsCategory;
+			console.log('largeCode: '+large.goodsLargeCategory)
+			console.log('largeName: '+large.goodsCategory)
+			
+			largeCate.append("<option value='"+ largeCode +"'>" + largeName + "</option>");
+		}
+		//대분류 option 클릭 시 중분류 변화
+		$(largeCate).on("change",function(){
+			smallCate.children().remove();
+			smallCate.append("<option value='none'>::</option>")
+				
+			for(var large of largeCategoryList){
+				var selectLarge = $(this).find("option:selected").val();	
+				console.log(selectLarge);
+				
+				for(var small of large.goodsSmallCategoryInfo){
+					var largeCode2 = small.goodsLargeCategory;
+					var smallCode = small.goodsSmallCategory;
+					var smallName = small.smallCategoryName;
+							
+					console.log('largeCode2: '+largeCode2);
+					console.log('smallCode: '+smallCode);
+					console.log('smallName: '+smallName);
+						
+					if(selectLarge === largeCode2){
+						smallCate.append("<option value='"+smallCode+"'>" + smallName + "</option>");
+					}
+				}
+			}
+		});
+		
+		/* 무료배송 체크박스 체크, 해제 시 이벤트 */
+	    $("#freePost").change(function(){
+	    	if($(this).prop("checked")){
+	    		console.log("무료배송 체크 : Y ");
+	    		$("#goodsPostPrice").attr("disabled", true); //무료배송 체크시 배송비 인풋 막기
+	    		$("#goodsPostPrice").val( 0 );
+	    	}else{
+	    		console.log("무료배송 체크 해제 : N ");
+	    		$("#goodsPostPrice").attr("disabled", false);
+	    	}
+	    });
+		
+	    /* 묶음배송 체크박스 체크, 해제 시 이벤트 */
+	    $("#packagePostCheck").change(function(){
+	        if($(this).is(":checked")){
+	        	console.log("묶음배송 체크 : Y ");
+	        	$("#packagePostCheck").val( 'Y' );
+	        }else{
+	        	console.log("묶음배송 체크 해제 : N ");
+	        	$("#packagePostCheck").val( 'N' );
+	        }
+	    });
+	    
+	    /* 정기배송 체크박스 체크, 해제 시 이벤트 */
+	    $("#regularDeliverCheck").change(function(){
+	        if($(this).is(":checked")){
+	        	console.log("정기배송 체크 : Y ");
+	        	$("#regularDeliverCheck").val( 'Y' );
+	        }else{
+	        	console.log("정기배송 체크 해제 : N ");
+	        	$("#regularDeliverCheck").val( 'N' );
+	        }
+	    });
+		
+		
+	});
+</script>
+</th:block>
+</html>

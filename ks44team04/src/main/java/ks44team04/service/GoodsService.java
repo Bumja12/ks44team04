@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ks44team04.mapper.GoodsMapper;
+import ks44team04.dto.Cart;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
@@ -24,7 +25,11 @@ public class GoodsService {
 	this.goodsMapper = goodsMapper;
 	}
 	
+
 	
+
+	/* ~~~ 상품 시작 ~~~ */
+
 	
 	//상품 목록 조회
 	public List<Goods> getGoodsList() {
@@ -78,6 +83,8 @@ public class GoodsService {
 		return adminPw;
 	}
 	
+	/* ~~~ 상품 문의 시작 ~~~ */
+	
 	//상품 문의 조회
 	public List<GoodsQna> getGoodsQna() {
 		List<GoodsQna> goodsQna = goodsMapper.getGoodsQna();
@@ -114,6 +121,7 @@ public class GoodsService {
 	// return goodsAnswer;
 	//}
 	
+
 	//후기 목록
 		public List<Review> reviewList(){
 			List<Review> reviewList = goodsMapper.reviewList();
@@ -128,5 +136,32 @@ public class GoodsService {
 			return reviewSpecific;
 		}
 	
+
+	//유저 권한 불러오기
+	public String userRight(String userId) {
+		String userRight = goodsMapper.userRight(userId);
+		return userRight;
+	}
+	
+	//문의 한 유저만 열람 가능 쿼리
+	public String qnaBuyerView(String userId) {
+		String qnaBuyerView = goodsMapper.qnaBuyerView(userId);
+		return qnaBuyerView;
+	}
+	
+	//해당 상품 판매자 문의 열람 가능 쿼리
+	public String qnaSellerView(String userId) {
+		String qnaSellerView = goodsMapper.qnaSellerView(userId);
+		return qnaSellerView;
+	}
+	
+	/* ~~~ 장바구니 시작 ~~~ */
+	
+	//장바구니 목록 조회
+	public List<Cart> getCartList(String userId) {
+		List<Cart> cartList = goodsMapper.getCartList(userId);
+		return cartList;
+	}
+
 	
 }

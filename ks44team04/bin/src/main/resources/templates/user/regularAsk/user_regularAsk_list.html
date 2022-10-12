@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/userDefault}">
+
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+</th:block>
+
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<!-- 상단 이미지 -->
+	<div class="hero-wrap hero-bread" style="background-image: url('/user/images/bg_1.jpg');">
+    	<div class="container">
+        	<div class="row no-gutters slider-text align-items-center justify-content-center">
+          		<div class="col-md-9 ftco-animate text-center">
+          			<p class="breadcrumbs"><span class="mr-2"><a th:href="@{/user}">Home</a></span></p>
+            		<h1 class="mb-0 bread">자주 묻는 질문</h1>
+          		</div>
+        	</div>
+    	</div>
+    </div>
+    
+    <!-- 자주 묻는 질문 목록 -->
+	<section class="ftco-section">
+    	<div class="container">
+    		<div class="row justify-content-center">
+    			<div class="col-md-12 mb-5 text-center">
+    				<ul class="product-category">
+    					<li value="all"><a href="#" class="categoryActive active">전체</a></li>
+	    				<th:block th:if="${not #lists.isEmpty(regularAskCategoryList)}" th:each="rCategoryList : ${regularAskCategoryList}">
+	    					<li th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory01'}" th:value="${rCategoryList.regularAskCategory}"><a href="#" class="categoryActive" th:text="${rCategoryList.categoryName}">전체</a></li>
+	    					<li th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory02'}" th:value="${rCategoryList.regularAskCategory}"><a href="#" class="categoryActive" th:text="${rCategoryList.categoryName}">회원/정보 관리</a></li>
+	    					<li th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory03'}" th:value="${rCategoryList.regularAskCategory}"><a href="#" class="categoryActive" th:text="${rCategoryList.categoryName}">배송</a></li>
+	    					<li th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory04'}" th:value="${rCategoryList.regularAskCategory}"><a href="#" class="categoryActive" th:text="${rCategoryList.categoryName}">반품/교환/환불</a></li>
+	    					<li th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory05'}" th:value="${rCategoryList.regularAskCategory}"><a href="#" class="categoryActive" th:text="${rCategoryList.categoryName}">주문/결제</a></li>
+	    					<li th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory06'}" th:value="${rCategoryList.regularAskCategory}"><a href="#" class="categoryActive" th:text="${rCategoryList.categoryName}"></a></li>
+	    				</th:block>
+    				</ul>
+    			</div>
+    		</div>
+    		
+    		
+    		<div class="row">
+				<div class="col-md-12 col-sm-12">
+             		<div class="x_panel">
+             			<div class="x_content">
+               				<!--아코디언 시작 -->
+               				<div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+			           	   	 	<!-- 자주 묻는 질문 제목 1 -->
+			                	<div class="panel" th:each="rAskList, status  : ${regularAskList}">
+				                 	<h4 class="panel-title">
+				                 		<span class="material-symbols-outlined pb-1" style="font-size: 33px; vertical-align: middle;">help</span>
+					                    <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" 
+					                    th:href="'#' + ${'collapse' + status.index}" aria-expanded="true" aria-controls="collapseOne" 
+					                    style="color: rgb(34, 34, 34); vertical-align: middle;" th:text="${rAskList.regularAskTitle} ">
+				                     	자주 묻는 질문 제목 1
+				                     	<!-- th:href="'#' + ${'collapse' + status.index}" -->
+				                     	<!-- th:id="${'collapse' + status.index}" -->
+				                     	</a>
+				                     </h4>
+				                     <div th:id="${'collapse' + status.index}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+				                     	<div class="panel-body mt-3">
+				                   			<p th:text="${rAskList.regularAskContent}">자주 묻는 질문 내용 1</p>
+				                     	</div>
+				                 	 </div>
+                				</div>
+			                </div> <!-- </div class="accordion" id="accordion" role="tablist" aria-multiselectable="true"> -->
+               				<!-- 아코디언 끝 -->
+
+           				</div> <!-- </div class="x_content"> -->
+          			</div> <!-- </div class="x_panel"> -->
+       			</div> <!-- </div class="col-md-12 col-sm-12"> -->
+			</div> <!-- <div class="row"> -->
+			
+			<div class="row mt-5">
+		    	<div class="col text-center">
+		        	<div class="block-27">
+		            	<ul>
+		                	<li><a href="#">&lt;</a></li>
+			                <li class="pageNumber active"><a href="#"><span>1</span></a></li>
+			                <li class="pageNumber"><a href="#">2</a></li>
+			                <li class="pageNumber"><a href="#">3</a></li>
+			                <li class="pageNumber"><a href="#">4</a></li>
+			                <li class="pageNumber"><a href="#">5</a></li>
+			                <li><a href="#">&gt;</a></li>
+		             	</ul>
+		           </div>
+		    	</div>
+	        </div> <!-- <div class="row mt-5"> -->
+	        
+    	</div> <!-- </div class="container"> -->	
+	</section>
+</th:block> <!-- </th:block layout:fragment="customContents"> -->
+
+<th:block layout:fragment="customJsScript">
+	<script type="text/javascript">
+			// 삭제 버튼 탐색
+			
+			$(function(){
+ 				// categoryActive 클래스를 가지고 있는 모든 <a> 탐색
+				var $categoryActive = $('.categoryActive');
+ 				
+ 				// pageNumber 클래스를 가지고 있는 모든 <a> 탐색
+				var $pageNumber = $('.pageNumber');
+ 				
+ 				// categoryActive 클래스를 가지고 있는 모든 <a>에 이벤트 등록
+				$categoryActive.each(function(i){
+					$(this).click(function(){
+						// 현재 active 클래스를 가진 카테고리 탐색
+						let $activeCategory = $('.categoryActive.active');
+						
+						// 현재 active 상태인 요소
+						console.log($activeCategory);
+						// 클릭한 요소
+						console.log($(this));
+						console.log($(this).parent().get(0));
+						
+						
+						$activeCategory.toggleClass('active');
+						$(this).toggleClass('active');
+					});
+				});
+ 				
+ 				// pageNumber 클래스를 가지고 있는 모든 <li>에 이벤트 등록
+				$pageNumber.each(function(i){
+					$(this).click(function(){
+						// 현재 active, pageNumber 클래스를 가진 <li> 탐색
+						let $activeNumber = $('.pageNumber.active');
+						
+						console.log($activeNumber);
+						console.log($(this));
+						$activeNumber.toggleClass('active');
+						$(this).toggleClass('active');
+					});
+				});
+			});
+			
+				
+		</script>
+</th:block> <!-- </th:block layout:fragment="customJsScript"> -->
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
