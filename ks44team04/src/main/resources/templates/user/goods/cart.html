@@ -31,28 +31,30 @@ button:focus{ outline:none; border:none; }
 		<div class="row">
 			<div class="col-md-8">
 				<div style="font-size:17px; margin-bottom:-10px;">
-					<input type="checkbox" class="cartCheck" id="allCheck" style="margin-right:5px;">전체선택
+					<input type="checkbox" class="cartCheck" id="allCheck" style="margin-right:5px;"><label for="allCheck" style="cursor:pointer;">전체선택</label>
 						<span style="color:gray;">&nbsp;&nbsp;|</span>
 						<button class="selectDel" style="border:none; background-color:rgba(0,0,0,0); outline: none; cursor:pointer;">선택삭제</button>
 				</div>
 			<hr>
 				<div th:object="${cartList}" th:each="c : ${cartList}">
-					<div class="form-inline" style="width:100%;"> 
+					<div class="cartAll form-inline" style="width:100%;"> 
 						<input type="checkbox" class="cartCheck" id="oneCheck" style="margin-right:15px;">
 							<img src="/images/goodsTest/apple.png" style="width:85px; height:85px; border-radius:5px;">
-							<span th:text="${c.goodsInfo.goodsName}" style="margin:auto; font-size:18px; font-weight: 500; line-height:22px; color:#333; margin-left: 10px; vertical-align:middle;">맛있는 사과 2kg</span>
+							<span th:text="${c.goodsInfo.goodsName}" style="margin:auto; font-size:18px; font-weight: 500; line-height:22px; color:#333; margin-left: 10px; vertical-align:middle;"></span>
 							
 						<div class="form-inline form-group">
 							<div class="plusMiusDiv input-group" style="width: 150px; float:right;">
-								<button type="button" class="plusMinusBtn minusBtn">-</button>&nbsp;
-								<input type="text" th:value="${c.cartAmount}" class="countVal form-control" min="1" max="30" style="size:10px; height:35px !important; text-align:center; border-color:#f1f1f1;">&nbsp;
-								
-								<input type="hidden" class="goodsStock" th:value="${c.goodsInfo.goodsStock}">
-								<button type="button" class="plusMinusBtn plusBtn">+</button>
+								<button type="button" class="plusMinusBtn minusBtn" th:value="${c.cartCode}">-</button>&nbsp;
+									<input type="text" th:value="${c.cartAmount}" id="cartAmount" class="cartAmount form-control" style="size:10px; height:35px !important; text-align:center; border-color:#f1f1f1;">&nbsp;
+									<input type="hidden" id="goodsStock" th:value="${c.goodsInfo.goodsStock}">
+								<button type="button" class="plusMinusBtn plusBtn" th:value="${c.cartCode}">+</button>
 							</div>
 							<div style="margin-top:10px;">
-								<div th:text="${#numbers.formatInteger((c.goodsInfo.goodsPrice-c.goodsInfo.goodsPrice*c.goodsInfo.goodsDiscountRate/100),3,'COMMA') + '원'}" style="font-weight:600; font-size:18px; width:120px; text-align:right;"> </div>
+								<div class="totalPrice" th:text="${#numbers.formatInteger((c.goodsInfo.goodsPrice-c.goodsInfo.goodsPrice*c.goodsInfo.goodsDiscountRate/100),3,'COMMA') + '원'}" style="font-weight:600; font-size:18px; width:120px; text-align:right;"> </div>
+									<input type="hidden" class="hiddenPrice">
+									<input type="hidden" id="goodsPrice" th:value="${c.goodsInfo.goodsPrice}">
 								<div th:text="${#numbers.formatInteger(c.goodsInfo.goodsPrice,3,'COMMA')+'원'}" style="font-weight:400; font-size:14px; color:#767676; float:right; text-decoration: line-through; margin-top:-12px;"> </div>
+									<input type="hidden" id="goodsDiscountRate" th:value="${c.goodsInfo.goodsDiscountRate}">
 							</div>
 							<i class="fi fi-br-cross" style="font-size:17px; color:#d3d3d3; width:35px; text-align:right; margin-top:3px;"></i>
 						</div>
@@ -65,7 +67,7 @@ button:focus{ outline:none; border:none; }
 			
 			</div>
 		
-			<div class="col-md-4" th:object="${cartList}" th:each="c : ${cartList}" style="margin-top:38px; padding-right:40px;">
+			<div class="col-md-4" th:object="${cartList}" style="margin-top:38px; padding-right:40px;">
 				<div style="border:1px solid #e5e5e5; width:100%; height:235px;">
 					<div style="padding:25px 35px 25px 35px; margin-bottom:-15px; width:100%; height:100%;">
 						<div>
@@ -110,78 +112,107 @@ button:focus{ outline:none; border:none; }
 
 $(document).ready(function() {
 	
-		$('.allCheck').click(function() {
-			if($('.allCheck').is(':checked')) $('input[class=oneCheck]').prop('checked', true);
-			else $('input[class=oneCheck]').prop('checked', false);
-		});
+	
 
-		$('input[class=oneCheck]').click(function() {
-			var total = $('input[class=oneCheck]').length;
-			var checked = $('input[class=oneCheck]:checked').length;
+	/* 전체 선택 클릭 시 장바구니 안에 있는 상품 다 전체 선택 */
+	$('#allCheck').click(function() {
+		if($('#allCheck').is(':checked')) $('input[id=oneCheck]').prop('checked', true);
+		else $('input[id=oneCheck]').prop('checked', false);
+	});
 
-			if(total != checked) $('.allCheck').prop('checked', false);
-			else $('.allCheck').prop('checked', true); 
-		});
+	$('input[id=oneCheck]').click(function() {
+		var total = $('input[id=oneCheck]').length;
+		var checked = $('input[id=oneCheck]:checked').length;
+
+		if(total != checked) $('.allCheck').prop('checked', false);
+		else $('#allCheck').prop('checked', true); 
+	});
 	
-	
-	
-	
-	
-	
+	/* 수량버튼 */
+	$('.plusBtn').on('click', function(){
+		
 		//상품 가격
-	var goodsPrice = $('.goodsPrice').val();
+		var goodsPrice = $(this).parent('div').parent('div').find('#goodsPrice').val();
 		//상품 할인율
-	var goodsDiscountRate = $('.goodsDiscountRate').val();
+		var goodsDiscountRate = $(this).parent('div').parent('div').find('#goodsDiscountRate').val();
 		//상품 할인가
-	var discounted = goodsPrice * goodsDiscountRate / 100;
+		var discounted = goodsPrice * goodsDiscountRate / 100;
 		//상품 정가-할인가 = 할인가격
-	var salePrice = goodsPrice - discounted;
+		var salePrice = goodsPrice - discounted;
+		//선택 수량
+		var quantity = $(this).parent('div').find('input[id=cartAmount]').val();
 		//할인가격 * 선택 수량
-	var totalPrice = salePrice * countVal
-	
-	/* 수량 증가 감소 */
-	//var goodsStock = $('.goodsStock').val(); //실제 상품 재고량 가져오기
-	var goodsStock = 15;
-	var strNum = $('.countVal').val(); //val에 들어있는 값은 아직 문자
-	var countVal = parseInt(strNum, 10); //문자를 숫자로 
-	// 감소버튼
-	$('.minusBtn').click(function(e){
-		e.preventDefault();
-		countVal--;
+		var totalPrice = salePrice * quantity
 		
-		if(countVal <= 0){
-			alert('최소 수량입니다');
-			countVal = 1;
-		}
-		$('.countVal').val(countVal);
-		console.log('minus 버튼: '+countVal);
+		//해당 상품의 재고
+		var goodsStock = $(this).parent('div').find('input[id=goodsStock]').val();
+		console.log('해당 상품 재고: '+goodsStock);
 		
-		//수량 변경값에 따라 총 금액 변화주기
-		$('.hiddenPrice').val(salePrice * countVal);
-		var hiddenPrice = $('.hiddenPrice').val().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
-		$('.totalPrice').text(hiddenPrice);
-		console.log(hiddenPrice);
-	});
-	// 증가 버튼
-	$('.plusBtn').click(function(e){
-		e.preventDefault();
-		countVal++;
+		var quantity = $(this).parent('div').find('input[id=cartAmount]').val();
+		$(this).parent('div').find('input[id=cartAmount]').val(++quantity);
 		
-		if(countVal > goodsStock){
+		if(quantity > goodsStock){
 			alert('최대 수량입니다');
-			countVal = goodsStock;
-		}
-		$('.countVal').val(countVal);
-		console.log('plus 버튼: '+countVal);
+			$(this).parent('div').find('input[id=cartAmount]').val(goodsStock);
+		} 
+		console.log('선택 수량: '+quantity);
 		
 		//수량 변경값에 따라 총 금액 변화주기
-		$('.hiddenPrice').val(salePrice * countVal);
-		var hiddenPrice = $('.hiddenPrice').val().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
-		$('.totalPrice').text(hiddenPrice);
+		if(quantity == '0'){
+			$(this).parent('div').parent('div').find('.hiddenPrice').val(quantity);
+		}else{
+		$(this).parent('div').parent('div').find('.hiddenPrice').val(salePrice * quantity);
+		var hiddenPrice = $(this).parent('div').parent('div').find('.hiddenPrice').val().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+		$(this).parent('div').parent('div').find('.totalPrice').text(hiddenPrice);
 		console.log(hiddenPrice);
+		}
 	});
-
-    
+	$('.minusBtn').on('click', function(){
+		
+		//상품 가격
+		var goodsPrice = $(this).parent('div').parent('div').find('#goodsPrice').val();
+		//상품 할인율
+		var goodsDiscountRate = $(this).parent('div').parent('div').find('#goodsDiscountRate').val();
+		//상품 할인가
+		var discounted = goodsPrice * goodsDiscountRate / 100;
+		//상품 정가-할인가 = 할인가격
+		var salePrice = goodsPrice - discounted;
+		//선택 수량
+		var quantity = $(this).parent('div').find('input[id=cartAmount]').val();
+		//할인가격 * 선택 수량
+		var totalPrice = salePrice * quantity
+		
+		//해당 상품의 재고
+		var goodsStock = $(this).parent('div').find('input[id=goodsStock]').val();
+		console.log('해당 상품 재고: '+goodsStock);
+		
+		var quantity = $(this).parent('div').find('input[id=cartAmount]').val();
+		$(this).parent('div').find('input[id=cartAmount]').val(--quantity);		
+		
+		if(quantity <= 0){
+			alert('최소 수량입니다');
+			$(this).parent('div').find('input[id=cartAmount]').val(1);
+		}
+		console.log('선택 수량: '+quantity);
+		
+		//수량 변경값에 따라 총 금액 변화주기
+		if(quantity == '0'){
+			$(this).parent('div').parent('div').find('.hiddenPrice').val(quantity);
+		}else{
+		$(this).parent('div').parent('div').find('.hiddenPrice').val(salePrice * quantity);
+		var hiddenPrice = $(this).parent('div').parent('div').find('.hiddenPrice').val().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+		$(this).parent('div').parent('div').find('.totalPrice').text(hiddenPrice);
+		console.log(hiddenPrice);
+		}
+	});
+	
+	/* 장바구니 내에서 수량 변경 시 수량 업데이트 */
+	$('.plusMinusBtn').click(function(){
+		var cartAmount = $(this).parent('div').find('.cartAmount').val();
+		console.log(cartAmount);
+		
+	});
+	
 });
 </script>
 </th:block>
