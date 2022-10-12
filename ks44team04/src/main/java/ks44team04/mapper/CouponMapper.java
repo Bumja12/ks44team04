@@ -14,7 +14,7 @@ public interface CouponMapper {
 
 	public List<Coupon> searchCouponList(Map<String, Object> searchMap);
 
-	public void coouponIssue(CouponStatus coupon);
+	public void couponIssue(CouponStatus couponStatus);
 
 	public void couponCreate(Coupon coupon);
 

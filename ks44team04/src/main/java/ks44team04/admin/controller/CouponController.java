@@ -101,15 +101,11 @@ public class CouponController {
 
 	//쿠폰발급
 	@PostMapping("/couponIssue")
-	public String CouponIssue(@RequestParam List<String> userId) {
+	public String CouponIssue(CouponStatus couponStatus) {
 
-		System.out.println(userId);
+		System.out.println(couponStatus);
 
-		for (String couponId: userId){
-			CouponStatus couponIssue = new CouponStatus();
-			couponIssue.setBuyerId(couponId);
 
-		}
 
 		return "redirect:/admin/coupon/couponStatus";
 	}
