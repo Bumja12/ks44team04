@@ -10,6 +10,14 @@
 <!-- 별, 장바구니, 찜하기, 자물쇠 아이콘 -->
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 
+<!-- 초희 하트 이미지  -->
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+
+<!-- 문의, 답변, 답변대기 아이콘 -->
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-straight/css/uicons-bold-straight.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+
+
 <style>
 * { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; color: #333;}
 
@@ -79,7 +87,60 @@ div { margin: 5px 0px }
 .qnaClose { cursor:pointer; background-color:#e5e5e5; border-radius: 15px; height: 30px; width: 70px; border:none; }
 .qnaPw { border: 1px solid #d3d3d3; border-radius: 3px; width: 100px; vertical-align: middle; outline: none; height: 25px; }
 
+/* 초희 모달  */
+.modal-body fieldset{
+    display: inline-block;
+    direction: rtl;
+    border:0;
+}
+.modal-body fieldset legend{
+    text-align: right;
+}
+.modal-body input[type=radio]{
+    display: none;
+}
+.modal-body label{
+    font-size: 3em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+}
+.modal-body label:hover{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+.modal-body label:hover ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+.modal-body input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+#reviewContents {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: solid 1.5px #D3D3D3;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+}
+
+/* 초희 하트 */
+.off span i{
+	display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    border: 0; /* 필드셋 테두리 제거 */
+    color: transparent; /* 기존 이모지 컬러 제거 */
+    text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
+ 
+}
+.on span i{
+	display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    border: 0; /* 필드셋 테두리 제거 */
+    color: transparent; /* 기존 이모지 컬러 제거 */
+    text-shadow: 0 0 0 #f00; /* 새 이모지 색상 부여 */
+}
 </style>
+	
+	
 </th:block>
 
 <th:block layout:fragment="customContents">
@@ -164,8 +225,8 @@ div { margin: 5px 0px }
 				</div>
 				<div class="form-group">	
 					<a href="#" class="buyBtn" style="margin-left:30px;">구매하기</a>
-					<a href="#" class="cartBtn"><i class="fi fi-rr-shopping-cart" style="vertical-align:-2px"></i>&nbsp장바구니 </a>
-					<a href="#" class="cartBtn"><i class="fi fi-rr-search-heart" style="vertical-align:-2px"></i>&nbsp찜하기 </a>
+					<a href="#" class="cartBtn"><i class="fi fi-rr-shopping-cart" style="vertical-align:-2px"></i>&nbsp;장바구니 </a>
+					<a href="#" class="cartBtn"><i class="fi fi-rr-search-heart" style="vertical-align:-2px"></i>&nbsp;찜하기 </a>
 				</div>
 			</div>
 		</div>
@@ -181,23 +242,99 @@ div { margin: 5px 0px }
 			<ul class="tabList" style="list-style:none; vertical-align: top;">
 				<li class="tabLink current" data-tab="tab-1">상품정보</li>
 				<li class="tabLink" data-tab="tab-2">후기</li>
-				<li class="tabLink" data-tab="tab-3">문의</li>
+				<li id="qnaTab" class="tabLink" data-tab="tab-3">문의</li>
 			</ul>
 			<div class="clear"></div>
 	
 			<div class="tabDetail">
 			
 			
+			
+			
+			
 				<!-- 상품 정보 Content 시작 -->
 				<div id="tab-1" class="tabContent current" th:object=${goodsInfo}>
 					<p th:text="*{goodsContent}"></p>
 				</div>
+				<!-- 상품 정보 Content 끝 -->
+				
+				
+				
 				
 				
 				<!-- 상품 후기 Content 시작 -->
 				<div id="tab-2" class="tabContent">
-					 <div th:include="user/review/reviewList :: reviewModal"></div>
+					<div>
+	  					<div style="text-align: center; font-size: 20px;"><b>사용자 총평</b></div>
+	  					<div style="text-align: center; font-size: 50px;" > ★★★★★ </div>
+	  					<hr style="border: solid 1px black;">
+	  					<b style="font-size: 18px; margin-left:50px; " > 포토 </b>
+	  					<hr style="border: solid 1px black;">
+	  				<div class="row">
+		  				<div class="col-9" >
+		  					<b style="font-size: 18px; margin-left:50px;" > 후기 </b>
+		  				</div>
+						<div class="col-3"  style="text-align: left;"> 
+					  		<select>
+					  			<option>최신순</option>
+					  			<option>평점 낮은 순</option>
+					  			<option>평점 놓은 순</option>
+					  			<option>추천수 높은 순</option>
+					  			<option>추천수 낮은 순</option>
+					  		</select>
+					  		<label>
+								<button type="button" class="btn btn-primary" data-toggle="modal"
+									data-target=".review" id="reviewModal" data-backdrop="static" style="font-size: 15px; background-color: #B3D97A; outline: none; border-color: #B3D97A ">후기작성</button>
+							</label>
+						</div>	  		
+	  				</div>
+	  				<th:block th:if="${not #lists.isEmpty(reviewSpecific)}" th:each="l : ${reviewSpecific}">
+			    		  <div class="row " style="margin-left: 80px; margin-top: 35px;">
+			       			 <div  class="col-12">
+			        			<span>
+			        				<th:block th:each="gradeLoop : ${#numbers.sequence(1, l.grade)}">★</th:block>
+			        			</span>
+			          			<input type="hidden"  th:value="${l.grade}">
+			       			 </div>
+			        		 <div class="col-12" >
+			        			<span>
+			        				<label th:text="${l.buyerId} + '○' + ${l.reviewRegDate}"></label>
+			        			</span>
+								<button type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
+					         	<button type="button" class="btn"  style="font-size: 13px; padding: 0px;">삭제</button>		      
+								<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
+					         	<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn"  style="font-size: 13px; padding: 0px;">삭제</button>		      
+			       			 </div>
+			       			 <div class="col-9">
+			        			<p th:text="${l.reviewContent}"></p>
+			        		 </div>
+							 <div class="col-3" >
+								<label >
+									<button type="button" class="reviewLikeBtn off" style="border: none; background-color: white; outline: none;" th:value="${l.reviewList}">
+										 <span><i class="fi fi-sr-heart"></i></span>
+								 	</button>
+									<span  th:text="'추천수 ' + ${l.likeAmount}  "></span>
+								 </label>
+							</div>
+					
+							<input type="hidden" id="userId" name="userId" value="buyer01">
+							<input type="hidden" id="reviewList" name="reviewList" value="review001">
+					
+			    		  </div>
+					      <div class="row">
+						  	<hr align="center" style="border: solid 1px black; width: 82%;">
+					      </div>
+			      </th:block>
+				</div>	
+			</div>	
+				
 				</div>
+				<!-- 상품 후기 Content 끝 -->
+				
+				
+				
+				
+				
 				
 				<!-- 상품 문의 Content 시작 -->
 				<div id="tab-3" class="tabContent">
@@ -218,24 +355,41 @@ div { margin: 5px 0px }
 								</tr>
 							</thead>
 							<tbody id="qnaList" style="vertical-align: middle;">
-								<tr th:if="${not #lists.isEmpty(goodsQnaInfo)}" th:each="gqi : ${goodsQnaInfo}">
+							<th:block th:if="${not #lists.isEmpty(goodsQnaInfo)}" th:each="gqi : ${goodsQnaInfo}">
+								<input type="hidden" class="secretVal" th:value="${gqi.secretCheck}">
+								<tr>
 									<td th:text="${gqi.goodsQnaCategoryInfo.categoryName}"></td>
-									<td th:text="${'['+gqi.qnaStatus+']'}"><span class="noAnswer" style="color: #9a9a9a;"></span></td>
-									<td th:text="${gqi.goodsQnaTitle}" class="qnaToggle"></td>
+									<td th:text="${'['+gqi.qnaStatus+']'}" class="answerYN" th:classappend="(${gqi.qnaStatus}=='완료'?Y:'')+(${gqi.qnaStatus}=='대기'?N:'')"></td>
+									<td th:text="${gqi.goodsQnaTitle}" class="qnaToggle" style="cursor:pointer;"></td>
 									<td th:text="${gqi.userInfo.userId}"></td>
 									<td th:text="${#strings.substring(gqi.goodsQnaDate,0,10)}"></td>
 								</tr>
-						<!-- 		<tr th:if="${goodsQnaInfo.qnaStatus} == '답변완료'" th:each="gqi : ${goodsQnaInfo}">
-								</tr>  -->
-								<tr>
-									<td>상품</td>
-									<td><span class="okAnswer" style="color: #7d9655;">[답변완료]</span></td>
-									<td>비밀글입니다.<i class="fi fi-rr-lock"></i></td>
-									<td>buyer01</td>
-									<td>2021-03-05</td>
-								</tr>
-								<tr th:unless="${not #lists.isEmpty(goodsQnaInfo)}">
+						 			<tr class="answerToggle" style="display:none;">
+						 				<td colspan="2"></td>
+						 				<td colspan="2" style="text-align:left; padding-left:50px; background-color:#f4f8ed;">
+						 					<div>
+							 					<div style="display:table-cell;">
+							 						<i class="fi fi-bs-comment-question" style="font-size:20px; color:#98b856;"></i>
+							 						<span th:text="${gqi.goodsQnaContent}" style="padding-left:10px; vertical-align:text-top; font-size:16px;"></span>
+							 					</div>
+						 					</div>
+						 					<div style="margin-top:20px;">
+							 					<div th:if="${gqi.qnaStatus}=='답변완료'" style="display:table-cell;" >
+							 						<i class="fi fi-br-comment-check" style="font-size:20px; color:#98b856;"></i>
+							 						<span th:text="${gqi.goodsAnswerInfo.goodsAnswerContent}" style="padding-left:10px; vertical-align:text-top; font-size:16px;"></span>
+							 					</div>
+							 					<div th:unless="${gqi.qnaStatus} == '답변완료'" style="display:table-cell;">
+							 					</div>
+							 					<div>
+							 			 			<span th:text="${#strings.substring(gqi.goodsAnswerInfo.answerDate,0,10)}" style="float:right; padding-right:20px;"></span>
+						 						</div>
+						 					</div>
+						 			 	</td> 
+						 			</tr>
+									<tr th:unless="${not #lists.isEmpty(goodsQnaInfo)}">
 									<td colspan="5">등록된 문의가 없습니다.</td>
+									</tr>
+							</th:block>
 							</tbody>
 						</table>
 					</div>
@@ -245,6 +399,10 @@ div { margin: 5px 0px }
 						</div>
 					</div>
 					<!-- 상품 문의 Content 끝 -->
+					
+					
+					
+					
 				</div>
 			</div>
 		</div>
@@ -299,7 +457,9 @@ div { margin: 5px 0px }
 </form>
 	
 <br><br><br>
-
+<!-- 후기 등록 모달 -->
+				<div th:include="user/review/review :: reviewModal"></div>		
+				
 </th:block>
 
 <th:block layout:fragment="customJsScript">
@@ -307,12 +467,6 @@ div { margin: 5px 0px }
 <script th:inline="javascript">
 
 $(function() {
-	
-
-	/* 문의 클릭 시 답변 펼치기 */
-		$('.qnaToggle').click(function (){
-			$('.answerToggle').show();
-		});
 	
 	
 	/* 스크롤 방지 코드 */
@@ -490,7 +644,7 @@ $(function() {
           return false;
         }
     });
-    
+
 	/* 문의 등록 
     $('.qnaSubmit').click(function () {
         var qnaModal = $('#qnaModalForm').serialize();
@@ -518,12 +672,113 @@ $(function() {
 		}
     }); */
     
+  
+
+    /* 문의 등록시 문의 화면으로 새로고침 */
+    if(/*[[${param.qnaView}]]*/ !== null) {
+		document.querySelector('#qnaTab').click();
+		console.log('zzzzzzzz');
+	}
     
+    /* 답변완료 시 녹색으로, 답변대기 시 회색 */
+	$(".answerYN").each(function(){
+		var answerYN = $('.answerYN').text();
+		console.log(answerYN);
+		
+		if($(this).text() == '[답변완료]'){
+			$(this).css('color','#98b856');
+		}
+		else{
+			$(this).css('color','#9a9a9a');
+		}
+	});
     
+	/* 비밀글일 때 qna제목 옆 자물쇠 아이콘 넣기 */
+	$('.qnaToggle').each(function(){
+		var icon = document.createElement("i");
+		
+		var secretVal = $('.secretVal').val();
+		console.log(secretVal);
+		
+		if($('.secretVal').val() == 'Y'){
+			$(this).append('<i class="fi fi-rr-lock" style="font-size:14px; color:gray;"></i>');		
+			//icon.innerHTML = '<i class="fi fi-rr-lock"></i>'
+		}
+		
+
+	});
     
+	/* 문의 클릭 시 답변 펼치기 */
+	$(".qnaToggle").click(function (){
+		$(".qnaToggle").each(function(){
+			$(this).parent().next().css('display', 'none');
+		})
+			$(this).parent().next().toggle();
+		/* $.ajax({ type: "POST",
+	                url: "/user/goods/answerView",
+	           	    data: var a = { 'goodsCode' : goodsCode,
+	           			   		    'qnaCode' : qnaCode },
+	                success: function (data) {
+	                if(result == 1){  */
+					//1
+					
+	                //0
+	             //}else {
+	             //},
+			//});
+	});
 	
-        
+	
+    
 });
+
+$(function(){
+	var userId = $('#userId').val();
+	console.log(userId);
+	
+	// 추천버튼 클릭시(추천 추가 또는 추천 제거)
+	$(".reviewLikeBtn").click(function(){
+		let hart = $(this);
+		let reviewList = hart.val();
+		let spanRecom = hart.next();
+		console.log(spanRecom);
+		
+		if(hart.hasClass('off')){
+			$.ajax({
+				url: "/user/review/reviewLike",
+                type: "GET",
+                data: {
+                	'reviewList': reviewList,
+                	'userId': userId
+                },
+                dataType: "text",
+                success: function (likeAmount) {
+                	alert("추천하였습니다.")
+                	$(spanRecom).text('추천수 ' + likeAmount);
+                	hart.removeClass("off").addClass("on")
+                }
+			});
+		}else if(hart.hasClass('on')){
+			$.ajax({
+				url: "/user/review/reviewLikeDelete",
+                type: "GET",
+                data: {
+                	'reviewList': reviewList,
+                	'userId': userId
+                },
+                dataType: "text",
+                success: function (likeAmount) {
+                	alert("추천을 해제 하였습니다.")
+                	$(spanRecom).text('추천수 ' + likeAmount);
+                	hart.removeClass("on").addClass("off")
+                	
+                }
+			});
+		}
+	});
+});
+
+
 </script>
 </th:block>
 </html>

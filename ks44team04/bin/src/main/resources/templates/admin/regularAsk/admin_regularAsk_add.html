@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminDefault}">
+
+	<th:block layout:fragment="customTitle">
+	    <title th:text="${title}"></title>
+	</th:block>
+
+	<th:block layout:fragment="customCSS">
+		<style>
+			#regular_ask_content{
+				resize: none;
+			}
+		</style>
+	</th:block>
+	
+	<th:block layout:fragment="customContents">
+		<div class="row">
+			<div class="col-sm-12">
+        		<div class="x_panel">
+            		<div class="x_title">
+                		<h2 style="font-size: 17px;">자주 묻는 질문 등록</h2>
+                    	<div class="clearfix"></div>
+            		</div>
+            		<div class="x_content">
+     					<br/>
+						<form class="form-horizontal form-label-left" th:action="@{/admin/regularAsk/addRegularAsk}" method="post">
+							<!-- 자주 묻는 질문 카테고리 FK -->
+							<div class="form-group row">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="regularAskCategory">자주 묻는 질문 카테고리 FK
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+								
+									<select class="select2_single form-control"  id="regularAskCategory" name="regularAskCategory" required="required" tabindex="-1">
+										<option></option>
+										<th:block th:if="${not #lists.isEmpty(regularAskCategoryList)}" th:each="rCategoryList : ${regularAskCategoryList}">
+											<!-- 모델에 담은 자주 묻는 질문 카테고리 목록 객체에서 자주 묻는 질문 카테고리명을 화면에 바인딩한다. -->
+											<option th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory01'}" th:value="${rCategoryList.regularAskCategory}" th:text="${rCategoryList.categoryName}">회원/정보 관리</option>
+											<option th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory02'}" th:value="${rCategoryList.regularAskCategory}" th:text="${rCategoryList.categoryName}">배송</option>
+											<option th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory03'}" th:value="${rCategoryList.regularAskCategory}" th:text="${rCategoryList.categoryName}">반품/교환/환불</option>
+											<option th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory04'}" th:value="${rCategoryList.regularAskCategory}" th:text="${rCategoryList.categoryName}">주문/결제</option>
+											<option th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory05'}" th:value="${rCategoryList.regularAskCategory}" th:text="${rCategoryList.categoryName}">정기 배송</option>
+											<option th:if="${rCategoryList.regularAskCategory eq 'regularAskCategory06'}" th:value="${rCategoryList.regularAskCategory}" th:text="${rCategoryList.categoryName}">포인트/할인 쿠폰</option>
+										</th:block>
+									</select>
+								</div>
+							</div>
+							<!-- 제목 -->
+							<div class="form-group row ">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="regularAskTitle">제목
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" id="regularAskTitle" name="regularAskTitle" required="required" class="form-control" maxlength="15">
+								</div>
+							</div>
+							<!-- 내용 -->
+							<div class="form-group row">
+								<label class="col-form-label col-md-3 col-sm-3" for="regularAskContent">내용
+								</label>
+								<div class="col-md-6 col-sm-6" >
+									<textarea id="regularAskContent" name="regularAskContent" class="form-control" rows="3" required="required" style="resize: none; overflow-y: scroll; height: 300px;">
+									</textarea>
+								</div>
+							</div>
+							<!-- 사용 여부 -->
+							<div class="item form-group">
+								<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="radio" class="flat" name="useCheck" id="use_check_Y" value="Y" required="required"/> Y
+									<input type="radio" class="flat" name="useCheck" id="use_check_N" value="N" required="required"/> N								
+								</div>
+							</div>
+							<div class="ln_solid"></div>
+							<div class="item form-group">
+								<div class="col-md-6 col-sm-6 offset-md-3">
+									<button type="submit" id="modifyBtn" class="btn btn-success">등록</button>
+									<button class="btn btn-primary" id="resetBtn" type="reset">초기화</button>
+									<button id="cancelBtn" class="btn btn-primary" type="button">취소</button>
+								</div>
+							</div>
+						</form> <!-- <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"> -->
+           				
+           			</div> <!-- </div class="x_content"> -->
+            	</div> <!-- </div class="x_panel"> -->
+            
+			</div> <!-- </div class="col-md-12 col-sm-12"> -->
+		</div> <!-- </div class="row"> -->
+	
+	</th:block>
+
+	<th:block layout:fragment="customJsScript">
+		<script type="text/javascript">
+			// 취소 버튼 탐색
+			let cancelBtn = document.querySelector('#cancelBtn');
+			// 취소 버튼에 이벤트 등록
+			cancelBtn.addEventListener('click', function(){
+				console.log(location.href);
+				// 자주 묻는 질문 목록으로 리다이렉트
+				window.location = '/admin/regularAsk/regularAskList';
+			
+			});
+			
+		</script>
+	</th:block>
+
+</html>

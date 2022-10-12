@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
 <mapper namespace="ks44team04.mapper.GoodsMapper">
-	
+
 	<resultMap type="Goods" id="goodsResultMap">
         <id 	column="goods_code" 			property="goodsCode"/>
         <result column="goods_small_category" 	property="goodsSmallCategory"/>
@@ -25,8 +25,13 @@
         	<association property="userInfo" resultMap="ks44team04.mapper.UserMapper.UserResultMap"/>
         	<association property="goodsSmallCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsSmallCategoryMap"/>
 			<association property="goodsLargeCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsLargeCategoryMap"/>
-	        
+			<association property="goodsAnswerInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsAnswerMap"/>
+			<association property="goodsQnaInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsQnaMap"/>
     </resultMap>
+    
+
+    
+    
 <!--        
 	        
 	        <association property="userInfo" javaType="User">
@@ -422,5 +427,122 @@
 		ON
 		qa.goods_qna_num = gq.goods_qna_num;
     </select> 
+    
+    <!-- 유저 권한 쿼리 -->
+    <select id="userRight" parameterType="String" resultType="string">
+	SELECT
+		u.user_right
+	FROM
+		tb_user AS u
+	WHERE
+		u.user_id = #{userId};	
+    </select>
+    
+    <!-- 문의 한 유저만 열람 가능 쿼리 -->
+    <select id="qnaBuyerView" parameterType="int" resultType="string" fetchSize="100">
+	SELECT
+		buyer_id
+	FROM
+		tb_goods_qna AS gq
+	WHERE
+		gq.goods_qna_num = #{goodsQnaNum};
+	</select>
+	
+	<!-- 해당 상품 판매자 문의 열람 가능 쿼리 -->
+    <select id="qnaSellerView" parameterType="int" resultType="string" fetchSize="100">
+	SELECT
+		seller_id
+	FROM
+		tb_goods AS g
+		INNER JOIN
+		tb_goods_qna AS gq
+		ON
+		g.goods_code = gq.goods_code
+	WHERE
+		gq.goods_qna_num = #{goodsQnaNum};
+    </select>
+    
+    <!-- ************************************카트 시작****************************************** -->
+    
+    <resultMap  type="Cart" 	id="cartResultMap">
+        <id 	column="cart_code" 			property="cartCode"/>
+        <result column="goods_code" 		property="goodsCode"/>
+        <result column="buyer_id" 			property="buyerId"/>
+        <result column="cart_amount" 		property="cartAmount"/>
+        <result column="reg_date" 			property="regDate"/>
+        <result column="modify_date" 		property="modifyDate"/>
+        	<association property="goodsInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsResultMap"/>
+    </resultMap>
+    
+    <select id="getCartList" parameterType="String" resultMap="cartResultMap" fetchSize="100" >
+	SELECT
+		*
+	FROM
+		tb_cart AS c
+		INNER JOIN
+		tb_goods AS g
+		ON
+		c.goods_code = g.goods_code
+	WHERE
+		c.buyer_id = #{buyerId}
+
+	</select>
+	
+    <!-- ~~~~~~~~~~~~~~~~~~~후기 시작~~~~~~~~~~~~~~~~~~~~~~~ -->
+      <!-- 후기 리소스맵  -->
+    <resultMap type="Review" id="reviewListResultMap">
+		<id     column="review_list"  			property="reviewList"/>
+		<result column="goods_list" 			property="goodsList"/>
+		<result column="buyer_id" 				property="buyerId"/>
+		<result column="order_detail_code" 		property="orderDetailCode"/>
+		<result column="review_content"  		property="reviewContent"/>
+		<result column="review_img" 			property="reviewImg"/>
+		<result column="review_reg_date" 		property="reviewRegDate"/>
+		<result column="review_update_date" 	property="reviewUpdateDate"/>
+		<result column="save_point" 			property="savePoint"/>
+		<result column="like_amount" 			property="likeAmount"/>
+		<result column="grade" 					property="grade"/>
+	</resultMap>
+	
+  
+    <!-- 후기 목록  -->
+    <select id="reviewList" resultMap="reviewListResultMap">
+	/* 후기 목록 */
+	SELECT 
+		r.review_list
+		,r.goods_list
+		,r.buyer_id
+		,r.order_detail_code
+		,r.review_content
+		,r.review_img
+		,r.review_reg_date
+		,r.review_update_date
+		,r.save_point
+		,r.like_amount
+		,r.grade
+	FROM 
+		tb_review AS r 
+	
+	</select>
+	
+	<!-- 후기 특정 목록  -->
+	<select id="reviewSpecific" resultMap="reviewListResultMap">
+		SELECT 
+			r.review_list
+			,r.goods_list
+			,r.buyer_id
+			,r.order_detail_code
+			,r.review_content
+			,r.review_img
+			,r.review_reg_date
+			,r.review_update_date
+			,r.save_point
+			,r.like_amount
+			,r.grade
+		FROM 
+			tb_review AS r 
+		WHERE 
+			r.goods_list = #{goodsList}
+	</select>
     
 </mapper>

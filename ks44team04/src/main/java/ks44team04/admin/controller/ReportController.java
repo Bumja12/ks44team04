@@ -65,7 +65,7 @@ public class ReportController {
             reportHistoryCode, Report report, Model model) {
 		
 		//특정 신고목록
-		Report Report = reportService.getReportHostryCode(reportHistoryCode);
+		Report Report = reportService.getReportHistoryCode(reportHistoryCode);
 		model.addAttribute("titel", "신고상세수정");
 		model.addAttribute("Report", Report);
 		
@@ -97,7 +97,7 @@ public class ReportController {
             reportHistoryCode, Report report ,Model model) {
 		
 		//특정 신고목록
-		Report Report = reportService.getReportHostryCode(reportHistoryCode);
+		Report Report = reportService.getReportHistoryCode(reportHistoryCode);
 		
 		model.addAttribute("titel", "신고처리");
 		model.addAttribute("Report", Report);

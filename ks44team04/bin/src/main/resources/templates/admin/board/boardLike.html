@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<div class="page-title">
+		<div class="title_left">
+			<h3>좋아요 관리</h3>
+		</div>
+	</div>
+
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+			<div class="x_title">
+				<h5>
+					검색 필터 <a class="collapse-link"><i class="fa fa-chevron-up"
+						style="color: #b4b7ba;"></i></a>
+				</h5>
+				<div class="clearfix"></div>
+			</div>
+
+			<div class="x_content">
+			<form th:action="@{/admin/board/boardLike}" method="post">
+				<div class="well" style="overflow: auto">
+					<div class="form-inline form-group" style="margin-bottom: -1px;">
+						<label class="control-label" for="qnaSearch" style="margin-right: 10px;">게시판</label>
+							<select class="searchCateName form-control" name="searchKey2">
+								<option value="none">::</option>
+								<option value="categoryName">레시피</option>
+								<option value="categoryName">자유게시판</option>
+								<option value="categoryName">농촌체험</option>
+								<option value="categoryName">맛집추천</option>
+								<option value="categoryName">행사</option>
+							</select>
+							<input type="hidden" id="searchCateName" name="searchCateName">
+						<label class="control-label" name="searchKey" style="margin-left: 10px; margin-right: 10px;">작성자</label>
+							<input type="text" name="searchValue" class="form-control" size="12" th:value="${searchValue != null ? searchValue : ''}">
+					</div>
+					<div class="form-inline control-group controls">
+						<label class="control-label" for="qnaSearchDate" style="margin-right: 10px; ">등록일</label>
+						<div class="input-prepend input-group" style="margin-top:9px;">
+							<span class="add-on input-group-addon"><i
+								class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+								<input type="text" style="width: 200px;" name="reservation"
+								id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
+						</div>
+						<div class="btn-group  btn-group-sm">
+	                        <button class="btn btn-default" type="button" name="filterDate" value="today">오늘</button>
+	                        <button class="btn btn-default" type="button" name="filterDate" value="week">일주일</button>
+	                        <button class="btn btn-default" type="button" name="filterDate" value="month">한달</button>
+                     	</div>
+					</div>
+					<div style="text-align: center; margin-bottom:-10px;">
+						<button type="submit" class="btn btn-dark">검색</button>
+						<button type="reset" class="btn btn-dark">초기화</button>
+					</div>
+				</div>
+				</form>
+				</div>
+
+				<div class="x_content2">
+                    <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action">
+						<thead>
+							<tr>
+								<th style="width: 30px"><input type="checkbox" id="check-all" class="flat"></th>
+								<th style="width: 90px;">게시판</th>
+								<th>제목</th>
+								<th style="width: 80px;">추천ID</th>
+								<th style="width: 140px;">등록일</th>
+								<th style="width: 70px;">관리</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:if="${not #lists.isEmpty(boardLikeList)}"
+							th:each="l : ${boardLikeList}" id="boardLikeListTable">
+								<td><input type="checkbox" id="check-all" class="flat"></td>
+								<td th:text="${'['+(l.boardCategoryInfo.categoryName)+']'}" style="text-align: center;"></td>
+								<td th:text="${l.boardInfo.boardTitle}"></td>
+								<td th:text="${l.userInfo.userId}"></td>
+								<td th:text="${l.LikeRegDate}"></td>
+								<td><a href="#"><i class="fa fa-close"></i> 삭제</a></td>
+							</tr>
+							<tr th:unless="${not #lists.isEmpty(boardLikeList)}">
+							<td colspan="6">등록된 상품이 없습니다.</td>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+</th:block>
+<th:block layout:fragment="customScript">
+	<script th:inline="javascript">
+	 $(function() {
+		 /* select searchCateName 선택 시 boardCateName 히든 인풋에 넣기 (답변 상태 검색에 이용) */
+		$('.searchCateName').change(function() {
+			var boardCateName = $(".searchCateName option:selected").text();
+				console.log(boardCateName);
+				$('#searchCateName').val( boardCateName );
+		});	 
+		 
+		 
+	 });
+	</script>
+</th:block> 
+</html>

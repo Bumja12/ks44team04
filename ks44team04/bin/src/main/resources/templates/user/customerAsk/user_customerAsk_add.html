@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/userDefault}">
+
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+
+</th:block>
+
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+	<style>
+		/* 목록 버튼 */
+		.btn-lg{
+			border-radius: 5px;
+		}
+		/* 고객 문의 내용 입력 폼 (textarea) */
+		#customerAskContent {
+			resize: none;
+			height: 450px !important;
+		}
+		/* 수직 정렬을 위한 스타일 */
+		/* 부모 요소에 속성 추가 */
+		.d-table{
+			display: table;
+		}
+		/* 자식 요소에 속성추가 */
+		.vertical-middle{
+			display: table-cell;
+			vertical-align: middle;
+		}
+		/* 눈누 웹 폰트 */
+		@font-face {
+		    font-family: 'ChosunBg';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunBg.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		.ChosunBg{
+			font-weight: 500;
+			font-family: 'ChosunBg';
+		}
+	</style>
+	
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<!-- 상단 이미지 -->
+	<div class="hero-wrap hero-bread" style="background-image: url('/user/images/bg_1.jpg');">
+    	<div class="container">
+        	<div class="row no-gutters slider-text align-items-center justify-content-center">
+          		<div class="col-md-9 ftco-animate text-center">
+          			<p class="breadcrumbs"><span class="mr-2"><a th:href="@{/user}">Home</a></span></p>  
+            		<h1 class="mb-0 bread">고객 문의 등록</h1>
+          		</div>
+        	</div>
+    	</div>
+    </div>
+    
+    
+	<section class="ftco-section">
+    	<div class="container">
+    		<!-- 고객 문의 등록 폼 -->
+    		<div class="row">
+    			<div class="col-md-12 mb-5 text-center">
+	    			<form class="p-5" th:action="@{/user/customerAsk/addCustomerAsk}" method="post">
+						<!-- 카테고리 -->
+						<div class="form-group row">
+					    	<div class="col-sm-4 d-table">
+					    		<label for="customerAskCategory" class="vertical-middle ChosunBg">카테고리</label>
+					    	</div>
+						    <div class="col-sm-8">
+								<select id="customerAskCategory" class="form-control" required="required" tabindex="-1">
+									<option></option>
+									<option value="customerAskCategory01">결제 관련 문의</option>
+									<option value="customerAskCategory02">정기 배송 문의</option>
+									<option value="customerAskCategory03">배송 관련 문의</option>
+									<option value="customerAskCategory04">홈페이지 오류 신고</option>
+									<option value="customerAskCategory05">판매 문의</option>
+								</select>
+						    </div>
+					    </div>
+					    <!-- 제목 -->
+						<div class="form-group row">
+				    		<div class="col-sm-4 d-table">
+							    <label for="customerAskTitle" class="vertical-middle ChosunBg">제목</label>
+				    		</div>
+				    		<div class="col-sm-8">
+				    			<input type="text" id="customerAskTitle" required="required" class="form-control">
+				    		</div>
+			    		</div>    
+			    		<!-- 내용 -->
+						<div class="form-group row">
+				    		<div class="col-sm-4 d-table">
+							    <label for="customerAskContent" class="vertical-middle ChosunBg">내용</label>
+				    		</div>
+				    		<div class="col-sm-8">
+		 						<textarea id="customerAskContent" class="form-control" required="required" rows="" cols=""></textarea>
+				    		</div>
+			    		</div>    
+			    		<!-- 첨부 파일 -->
+						<div class="form-group row">
+				    		<div class="col-sm-4 d-table">
+							    <label for="customerAskFile" class="vertical-middle ChosunBg">첨부 파일</label>
+				    		</div>
+				    		<div class="col-sm-8">
+				    			<input type="text" id="customerAskFile" class="form-control">
+				    		</div>
+			    		</div>    
+			    		<!-- 등록, 취소 버튼 -->
+						<div class="form-group row">
+				    		<div class="col-sm-12 text-right">
+  			    				<button type="submit" class="btn btn-primary btn-lg mr-3">등록</button>
+  			    				<button type="reset" class="btn btn-info btn-lg mr-3">초기화</button>
+    							<a th:href="@{/user/customerAsk/customerAskList}" class="btn btn-danger btn-lg">취소</a>
+				    		</div>
+			    		</div>    
+					</form>
+    			</div> <!-- </div class="col-md-12 mb-5 text-center"> -->
+    		</div> <!-- </div class="row justify-content-center"> -->
+			
+			<!-- 화면 번호 -->
+			<div class="row mt-5">
+		    	<div class="col-sm-12">
+		        	<div class="block-27">
+		            	<ul class="text-center">
+		                	<li><a href="#">&lt;</a></li>
+			                <li class="pageNumber active"><a href="#"><span>1</span></a></li>
+			                <li class="pageNumber"><a href="#">2</a></li>
+			                <li class="pageNumber"><a href="#">3</a></li>
+			                <li class="pageNumber"><a href="#">4</a></li>
+			                <li class="pageNumber"><a href="#">5</a></li>
+			                <li><a href="#">&gt;</a></li>
+		             	</ul>
+		             	
+		           </div>
+		    	</div>
+	        </div> <!-- <div class="row mt-5"> -->
+	        
+    	</div> <!-- </div class="container"> -->	
+	</section>
+</th:block> <!-- </th:block layout:fragment="customContents"> -->
+
+<th:block layout:fragment="customJsScript">
+	<script type="text/javascript">
+
+			
+				
+	</script>
+</th:block> <!-- </th:block layout:fragment="customJsScript"> -->
+
+</html>
+
+
+
+
+
+
+
+
+
+
+

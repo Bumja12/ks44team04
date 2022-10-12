@@ -3,14 +3,19 @@ package ks44team04.mapper;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
+
+import ks44team04.dto.Cart;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsAnswer;
 import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
 import ks44team04.dto.GoodsQnaCategory;
+import ks44team04.dto.Review;
 
 @Mapper
 public interface GoodsMapper {
+	
+	/* ~~~ 상품 시작 ~~~ */
 	
 	//상품 목록 조회
 	public List<Goods> getGoodsList();
@@ -39,6 +44,8 @@ public interface GoodsMapper {
 	//상품 삭제를 위한 관리자 비밀번호
 	public String getAdminPw(String userPw);
 	
+	/* ~~~ 상품 문의 시작 ~~~ */
+	
 	//상품 문의 조회
 	public List<GoodsQna> getGoodsQna();
 	
@@ -56,4 +63,26 @@ public interface GoodsMapper {
 	
 	//상품 문의 답변 조회
 	public List<GoodsAnswer> getGoodsAnswer();
+	
+	//유저 권한 불러오기
+	public String userRight(String userId);
+	
+	//문의 한 유저만 열람 가능 쿼리
+	public String qnaBuyerView(String userId);
+	
+	//해당 상품 판매자 문의 열람 가능 쿼리
+	public String qnaSellerView(String userId);
+	
+	/* ~~~ 장바구니 시작 ~~~ */
+	
+	//장바구니 목록 조회
+	public List<Cart> getCartList(String userId);
+
+	/* ~~~ 후기 시작 ~~~ */
+	
+	//후기 목록 
+	public List<Review> reviewList();
+	
+	//후기 목록 
+	public List<Review> reviewSpecific(String goodsList);
 }

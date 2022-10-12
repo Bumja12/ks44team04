@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customCss">
+	<style>
+.loginInput {
+	margin-bottom: 10px;
+}
+
+.userDetail td {
+	padding-left: 12px !important;
+}
+
+.userDetail button {
+	margin-bottom: 0px;
+}
+
+.tableOdd {
+	background-color: #f6f6f6;
+	font-weight: bold;
+	padding-top: 16px !important;
+}
+
+.tableEven .text {
+	width: 200px;
+	margin-right: 4px;
+}
+
+.tableEven select {
+	width: 200px;
+}
+
+.tableEven label {
+	padding-top: 4px;
+}
+</style>
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+	<!-- dd -->
+	<div class="page-title">
+		<div class="title_left">
+			<h3>상세정보</h3>
+		</div>
+		<div>
+			<button type="button" class="btn btn-dark pull-right" style="margin-right: 10px;">수정</button>
+			<button type="button" class="btn btn-default pull-right" th:onclick="|location.href='@{/admin/user/sellerList}'|" style="margin-right: 10px;">
+				<i class="fa fa-bars"> 회원목록</i>
+			</button>
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_content">
+
+					<div class="" role="tabpanel" data-example-id="togglable-tabs">
+						<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+							<li role="presentation" class="">
+								<a href="#userInfoTab" id="home-tab" role="tab" data-toggle="tab"><b>회원정보</b></a>
+							</li>
+							<li role="presentation" class="active">
+								<a href="#sellerInfoTab" role="tab" id="profile-tab" data-toggle="tab"><b>농장정보</b></a>
+							</li>
+						</ul>
+						<div id="myTabContent" class="tab-content">
+							<div role="tabpanel" class="tab-pane fade" id="userInfoTab">
+
+								<!-- user detail form Start -->
+								<table class="userDetail table table-responsive" th:object="${userInfoS}">
+									<tbody>
+										<tr>
+											<td class="tableOdd col-md-1">회원권한</td>
+											<td class="tableEven">
+   												<input type="text" class="form-control text" id="userRight" name="userRight" th:value="*{rightList.rightStatus}" readonly="readonly" />
+											</td>
+											<td class="tableOdd col-md-1">회원등급</td>
+											<td class="tableEven">
+  												<input type="text" class="form-control text" id="userLevel" name="userLevel" th:value="*{levelSeller.levelName}" readonly="readonly" />
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">아이디</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="userId" name="userId" th:value="*{userInfo.userId}" readonly="readonly" />
+											</td>
+											<td class="tableOdd">비밀번호</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="userPw" name="userPw" th:value="*{userInfo.userPw}" readonly="readonly" />
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">이름</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="userName" name="userName" th:value="*{userInfo.userName}" readonly="readonly" />
+											</td>
+											<td class="tableOdd">닉네임</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="userNickname" name="userNickname" th:value="*{userInfo.userNickname}" readonly="readonly" />
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">성별</td>
+											<td class="tableEven col-md-4" colspan="3">
+												<input type="text" class="form-control text" id="userGender" name="userGender" th:value="*{userInfo.userGender}" readonly="readonly" />
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">이메일</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="userEmail" name="userEmail" th:value="*{userInfo.userEmail}" readonly="readonly" />
+											</td>
+											<td class="tableOdd">휴대폰번호</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="userPhone" name="userPhone" th:value="*{userInfo.userPhone}" readonly="readonly" />
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">주소</td>
+											<td class="tableEven col-md-4" colspan="3">
+												<div class="form-inline">
+ 													<input type="text" class="form-control Text" id="userAddr" style="width: 350px; margin-right: 6px;" th:value="*{userInfo.userAddress}" readonly="readonly" />
+													<input type="text" class="form-control Text" id="userAddrDetail" name="userAddrDetail" style="width: 350px; margin-right: 6px;" th:value="*{userInfo.userAddress2}" readonly="readonly" />
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">벌점</td>
+											<td class="tableEven col-md-4">
+	 											<input type="text" class="form-control text" id="userPenalty" name="userPenalty" th:value="*{#numbers.formatInteger(userInfo.userPenalty, 1, 'NONE') + '점'}" readonly="readonly" />
+											</td>
+											<td class="tableOdd">상태</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="userStatus" name="userStatus" th:value="*{userInfo.userStatus}" readonly="readonly" />
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">등록일시</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="userRegDate" name="userRegDate" th:value="*{userInfo.userRegDate}" readonly="readonly" />
+											</td>
+											<td class="tableOdd">최종수정</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="userUpdateDate" name="userUpdateDate" th:value="*{userInfo.userUpdateDate}" readonly="readonly" />
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">정보보관기간</td>
+											<td class="tableEven col-md-4" colspan="3">
+ 												<input type="text" class="form-control text" id="userInfoKeep" name="userInfoKeep" th:value="*{UserInfo.userInfoKeep}" readonly="readonly" />
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- user detail form Start -->
+
+							</div>
+							<div role="tabpanel" class="tab-pane fade active in" id="sellerInfoTab">
+								<!-- farm detail form Start -->
+								<table class="userDetail table table-responsive" th:object="${sellerInfo}">
+									<tbody>
+										<tr>
+											<td class="tableOdd col-md-1">판매자 대표코드</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="sellerCode" name="sellerCode" th:value="*{sellerCode}" readonly="readonly" />
+											</td>
+											<td class="tableOdd col-md-1">분류코드</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="selleSort" name="selleSort" th:value="*{sellerSort}" readonly="readonly" />
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">상호명</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="storeName" name="storeName" th:value="*{storeName}" readonly="readonly" />
+											</td>
+											<td class="tableOdd">계좌정보</td>
+											<td class="tableEven col-md-4" colspan="3">
+ 												<div class="form-inline">
+													<input type="text" class="form-control text" style="width: 100px;" id="bankName" name="bankName" th:value="*{bankName}" readonly="readonly">
+													<input type="text" class="form-control text" style="width: 230px;" id="account" name="account" th:value="*{account}" readonly="readonly" />
+													<input type="text" class="form-control text" style="width: 150px;" id="accountholder" name="accountholder" th:value="*{accountHolder}" readonly="readonly" />
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">사업자 대표전화</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="storePhone" name="storePhone" th:value="*{storePhone}" readonly="readonly" />
+											</td>
+											<td class="tableOdd">사업자 이메일</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="storeEmail" name="storeEmail" th:value="*{storeEmail}" readonly="readonly" />
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">사업지 주소</td>
+											<td class="tableEven col-md-4" colspan="3">
+												<div class="form-inline">
+ 													<input type="text" class="form-control Text" id="farmAddr" style="width: 350px; margin-right: 6px;" name="storeAddress" th:value="*{storeAddress}" readonly="readonly" />
+													<input type="text" class="form-control Text" id="farmAddrDetail" name="farmAddrDetail" style="width: 350px; margin-right: 6px;" th:value="*{storeAddress}" readonly="readonly" />
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">사업자 등록번호</td>
+											<td class="tableEven col-md-4" colspan="3">
+ 												<input type="text" class="form-control text" id="licenceNum" name="licenceNum" th:value="*{licenceNum}" readonly="readonly" />
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">사업자등록증</td>
+											<td class="tableEven col-md-4" style="padding: 16px;">
+  												<a href="#" th:text="${sellerInfo.licenceImg}" style="margin-left: 5px;"></a>
+											</td>
+											<td class="tableOdd">통신판매업신고증</td>
+											<td class="tableEven col-md-4"  style="padding: 16px;">
+  												<a href="#" th:text="${sellerInfo.onlineLicenceImg}" style="margin-left: 5px;"></a>
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">승인요청일시</td>
+											<td class="tableEven col-md-4">
+  												<input type="text" class="form-control text" id="approveAskDate" name="approveAskDate" th:value="*{approveAskDate}" readonly="readonly" />
+											</td>
+											<td class="tableOdd">승인일시</td>
+											<td class="tableEven col-md-4">
+  												<input type="text" class="form-control text" id="approveDate" name="approveDate" th:value="*{approveDate}" readonly="readonly" />
+											</td>
+										</tr>
+										<tr>
+											<td class="tableOdd">승인여부</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="approveCheck" name="approveCheck" th:value="*{approveCheck}" readonly="readonly" />
+											</td>
+											<td class="tableOdd">승인자</td>
+											<td class="tableEven col-md-4">
+ 												<input type="text" class="form-control text" id="approveId" name="approveId" th:value="*{approveId}" readonly="readonly" />
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- farm detail form End -->
+							</div>
+						</div>
+					</div>
+
+					<div class="x_title">
+						<h4>판매상품목록</h4>
+						<div class="clearfix"></div>
+					</div>
+					
+					
+					<div class="x_content2">
+						<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action dataTable no-footer" role="grid">
+							<thead>
+								<tr>
+									<th>상품코드</th>
+									<th>상품명</th>
+									<th>정가</th>
+									<th>등록일</th>
+									<th>관리</th>
+								</tr>
+							</thead>
+							<tbody>
+ 								<tr th:if="${not #lists.isEmpty(goodsList)}" th:each="l : ${goodsList}">
+									<td th:text="${l.goodsCode}"></td>
+									<td th:text="${l.goodsName}"></td>
+									<td th:text="${'￦' + #numbers.formatInteger(l.goodsPrice, 3, 'COMMA')}"></td>
+									<td th:text="${l.regDate}"></td>
+									<td>
+										<a href="#"><i class="fa fa-external-link"></i> 상품 관리로 이동</a>
+									</td>
+								</tr>
+								<tr th:unless="${not #lists.isEmpty(goodsList)}">
+									<td colspan="12" class="text-center">등록된 상품이 없습니다.</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="customJsScript">
+
+    <script th:inline="javascript">
+
+	$(function() {
+		
+		var approveCheck = $('#approveCheck').val();
+		
+ 		if(approveCheck === 'Y') {
+			$('#approveCheck').attr('value','승인');
+		}else {
+			$('#approveCheck').prop('value','미승인');
+		} 
+	});
+
+    </script>
+    
+</th:block>
+</html>
