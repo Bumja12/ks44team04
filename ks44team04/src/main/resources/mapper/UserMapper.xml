@@ -122,26 +122,45 @@
 	</resultMap>
 
 
+	<!-- 회원 탈퇴 Start -->
+	
+	
+	
+	<!-- (공통1) 로그인 이력 삭제 -->
+	
+	
+	
+	<!-- (공통2) 회원 삭제 -->
+<!-- 	<delete id="removeUser" parameterType="String">
+		/* 회원 삭제 */
+		UPDATE
+			
+		SET
+			
+		WHERE
+			u.user_id = #{userId}
+	</delete> -->
+	<!-- 회원 탈퇴 End -->
+
 	<!-- 판매자 신청 승인 (seller 테이블) -->
-	<update id="approveSeller" parameterType="map">
+	<update id="approveSeller" parameterType="String">
 		/* 판매자 신청 승인 */
 		UPDATE tb_seller
-		<trim prefix="SET" prefixOverrides=",">
-			approve_date = NOW(),
-			<if test="approveCheck != null and approveCheck != ''">,approve_check = #{approveCheck}</if>
-			<if test="approveId != null and approveId != ''">,approve_id = #{approveId}</if>
-		</trim>
+		SET
+			 approve_date = NOW()
+			,approve_check = 'Y'
+			,approve_id = #{approveId}
 		WHERE
 			seller_id = #{sellerId};
 	</update>
 
 	<!-- 판매자 신청 승인 (user테이블) -->
-	<update id="approveSellerRight" parameterType="map">
+	<update id="approveSellerRight" parameterType="String">
 		/* 판매자 신청 승인 */
 		UPDATE tb_user
-		<trim prefix="SET" prefixOverrides=",">
-			<if test="userRight != null and userRight != ''">,user_right = #{userRight}</if>
-		</trim>
+		SET
+			 user_right = 'seller'
+			,user_level = 'levelSeller01'
 		WHERE
 			user_id = #{userId};
 	</update>

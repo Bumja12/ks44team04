@@ -42,10 +42,10 @@ public class UserController {
 	// 10/11 판매자 신청 승인
 	@PostMapping("/user/approveSeller")
 	public String approveSeller(@RequestParam(value="sellerId", required = false) String sellerId
-								,Seller seller, User user, Model model) {
+							    ,@RequestParam(value="approveId", required = false) String approveId) {
 		
-		userService.approveSeller(seller);
-		userService.approveSellerRight(user);
+		userService.approveSeller(sellerId, approveId);
+		userService.approveSellerRight(sellerId);
 		
 		return "redirect:/admin/user/sellerList";
 	}
@@ -229,8 +229,8 @@ public class UserController {
 	@GetMapping("/user/userDetail")
 	public String userDetail(@RequestParam(value="userId", required = false) String userId
 							  ,String sellerId ,Model model) {
+		
         User userInfo = userService.getUserInfoById(userId);
-        
         String userLevel = userInfo.getUserLevel();
         LevelBuyerCategory levelBuyer = userInfo.getLevelBuyer();
         LevelSellerCategory levelSeller = userInfo.getLevelSeller();

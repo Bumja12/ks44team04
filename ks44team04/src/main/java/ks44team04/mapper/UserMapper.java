@@ -14,6 +14,7 @@ import ks44team04.dto.User;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserMapper {
@@ -22,10 +23,10 @@ public interface UserMapper {
     public User getLoginUserInfo(String userId);
     
     //판매자 신청 승인(seller 테이블)
-    public int approveSeller(Seller seller);
+    public int approveSeller(@Param(value="sellerId")String sellerId, @Param(value="approveId")String approveId);
     
     //판매자 신청 승인 (user 테이블)
-    public int approveSellerRight(User user);
+    public int approveSellerRight(String userId);
     
     //이미 판매자신청 한 회원 판매자신청 불가
     public int isAddSeller(String sellerId);

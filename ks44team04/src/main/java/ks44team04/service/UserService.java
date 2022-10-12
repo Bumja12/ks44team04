@@ -34,13 +34,13 @@ public class UserService {
     }
     
     // 10/11 판매자 신청 승인 (seller 테이블)
-    public void approveSeller(Seller seller) {
-    	userMapper.approveSeller(seller);
+    public void approveSeller(String sellerId, String approveId) {
+    	userMapper.approveSeller(sellerId, approveId);
     }
     
 	// 10/11 판매자 신청 승인 (user 테이블)
-	public void approveSellerRight(User user) {
-		userMapper.approveSellerRight(user);
+	public void approveSellerRight(String userId) {
+		userMapper.approveSellerRight(userId);
 	}
     
     // 10/11 이미 신청한 회원 판매자 등록 막기 (userId, sellerId 비교)
