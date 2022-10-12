@@ -3,6 +3,7 @@ package ks44team04.service;
 import ks44team04.dto.PostInfo;
 import ks44team04.mapper.AddressMapper;
 import ks44team04.dto.AddressList;
+import ks44team04.mapper.OrderMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,4 +47,7 @@ public class AddressService {
     }
 
 
+    public void setPostInfo(PostInfo postInfo) {
+        addressMapper.setPostInfo(postInfo);
+    }
 }

@@ -21,10 +21,11 @@ public class AddressController {
     }
 
     @GetMapping("/list")
-    public String addressList(@RequestParam(value = "userId", required = false) String userId, Model model) {
-        userId = "buyer01";
+    public String addressList(@RequestParam(value = "searchId", required = false) String searchId, Model model) {
         Map<String, String> addressInfo = new HashMap<>();
-        addressInfo.put("userId", userId);
+        if (searchId != null || "".equals(searchId)) {
+            addressInfo.put("userId", searchId);
+        }
         List<AddressList> addressLists = addressService.getAddressList(addressInfo);
         model.addAttribute("addressList", addressLists);
         return "admin/order/addressList";

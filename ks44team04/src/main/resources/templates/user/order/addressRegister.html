@@ -12,6 +12,8 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
+<div class="container">
+    <div class="m-3">
 <form id="addressRegisterForm" th:action="@{/user/address/register}" method="post" class="" onsubmit="submitCheck();">
     <div class="form-group">
         <label class="" for="addressName"> 배송지명 <span class="required">*</span> </label>
@@ -69,6 +71,8 @@
     </div>
 
 </form>
+    </div>
+</div>
 <script th:src="@{/user/js/jquery.min.js}"></script>
 <script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
 <script>

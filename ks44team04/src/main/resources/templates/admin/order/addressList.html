@@ -11,14 +11,22 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Table design <small>Custom design</small></h2>
+                <h2 class="heading-section">배송지 목록</h2>
                 <div class="clearfix"></div>
             </div>
-
             <div class="x_content">
-
-                <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p>
-
+                <div class="col-sm-3" style="padding: 0;">
+                    <form th:action="@{/admin/address/list}" method="get">
+                    <div class="input-group">
+                        <input type="text" id="searchId" class="form-control" name="searchId" placeholder="아이디">
+                        <span class="input-group-btn">
+                              <button type="submit" class="btn btn-primary">검색</button>
+                            </span>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="x_content">
                 <div class="table-responsive">
                     <table class="table table-striped jambo_table bulk_action">
                         <thead>
@@ -26,6 +34,7 @@
                             <th>
                                 <input type="checkbox" id="check-all" class="flat">
                             </th>
+                            <th class="column-title">아이디</th>
                             <th class="column-title">배송지 이름</th>
                             <th class="column-title">수령인</th>
                             <th class="column-title">주소</th>
@@ -48,6 +57,7 @@
                                 <td class="a-center ">
                                     <input type="checkbox" class="flat" name="table_records">
                                 </td>
+                                <td class=" " th:text="${l.buyerId}">May 23</td>
                                 <td class=" " th:text="${l.addressName}">May 23</td>
                                 <td class=" " th:text="${l.receiverName}">121000210 <i
                                         class="success fa fa-long-arrow-up"></i></td>
@@ -66,6 +76,7 @@
                                 <td class="a-center ">
                                     <input type="checkbox" class="flat" name="table_records">
                                 </td>
+                                <td class=" " th:text="${l.buyerId}">May 23</td>
                                 <td class=" " th:text="${l.addressName}">May 23</td>
                                 <td class=" " th:text="${l.receiverName}">121000210
                                     <i class="success fa fa-long-arrow-up"></i>
@@ -100,7 +111,7 @@
     <script>
 
         function deleteAddressFn(href) {
-            if(confirm("정말로 삭제하시겠습니까?")){
+            if (confirm("정말로 삭제하시겠습니까?")) {
                 location.href = `/admin/address/delete/${href}`;
             }
         }

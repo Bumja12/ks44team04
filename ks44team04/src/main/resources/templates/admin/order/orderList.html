@@ -23,9 +23,25 @@
                 <a href="javascript:getOrderList('배송완료')">배송완료</a>
                 <a href="javascript:getOrderList('구매확정')">구매확정</a>
             </div>
+
+            <div class="input-group">
+                <div class="col-md-4">
+                <select class="custom-select form-control" id="inputGroupSelect04">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+                </div>
+                <div class="input-group-append col-sm-3">
+                    <button class="btn btn-outline-secondary" type="button">Button</button>
+                </div>
+
+            </div>
+
             <div class="x_content">
                 <div class="table-responsive">
-                    <table class="table table-striped jambo_table">
+                    <table id="orderTable" class="table table-striped jambo_table">
                         <thead>
                         <tr class="headings">
                             <th class="column-title">주문번호</th>
@@ -49,6 +65,80 @@
             </div>
         </div>
     </div>
+
+    <div id="postModal" class="modal fade bs-example-modal-sm in" tabindex="-1" role="dialog" style="display: none;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span onclick="closeModal()">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel2">배송지 등록</h4>
+                </div>
+                <form id="postForm" th:action="@{/admin/order/post}" method="post">
+                    <input type="hidden" id="orderDetailCode" name="orderDetailCode" value="">
+                    <input type="hidden" id="postAddressList" name="postList" value="">
+                    <div class="modal-body form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label for="postSelect" class="control-label">배송업체</label>
+                            <div class="">
+                                <select id="postSelect" name="postCompanyName" class="form-control">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="invoiceNumber" class="control-label">운송장번호</label>
+                            <div class="">
+                                <input type="text" id="invoiceNumber" name="invoiceNumber" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="closeModal()">취소</button>
+                        <button type="submit" class="btn btn-primary">등록</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="postModifyModal" class="modal fade bs-example-modal-sm in" tabindex="-1" role="dialog"
+         style="display: none;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span onclick="closeModal2()">×</span>
+                    </button>
+                    <h4 class="modal-title">배송지 등록</h4>
+                </div>
+                <form id="postModifyForm" th:action="@{/admin/order/post/modify}" method="post">
+                    <input type="hidden" id="postInfo" name="postInfo" value="">
+                    <div class="modal-body form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label for="postSelect" class="control-label">배송업체</label>
+                            <div class="">
+                                <select id="postSelectModify" name="postCompanyName" class="form-control">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="invoiceNumberModify" class="control-label">운송장번호</label>
+                            <div class="">
+                                <input type="text" id="invoiceNumberModify" name="invoiceNumber" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="closeModal2()">취소</button>
+                        <button type="submit" class="btn btn-primary">수정</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
 </th:block>
 
 <th:block layout:fragment="customJsScript">
@@ -56,7 +146,7 @@
     <script>
         window.addEventListener('load', () => getOrderList('결제|배송|구매'));
 
-        /* ajax 호출 */
+        /* 페이징 ajax 호출 */
         function getOrderList(status) {
             let dataPerPage = 10;
             let pageCount = 10;
@@ -130,7 +220,7 @@
                             i++
                         ) {
                             trHtml +=
-                                '<tr class="pointer"><td><a href="javascript:void(0)">' +
+                                '<tr class="pointer"><td><a class="orderDetailCode" href="javascript:void(0)">' +
                                 data[i].orderDetailCode +
                                 '</a></td><td><a href="javascript:void(0)">' +
                                 data[i].goods.goodsName +
@@ -142,11 +232,11 @@
                                 data[i].orderStatus +
                                 '</td><td>';
                             if (data[i].orderStatus === '결제완료') {
-                                trHtml += '<button type="button">주문확인</button>';
+                                trHtml += '<button type="button" class="btn-xs btn-dark" onclick="orderCheck(this);">주문확인</button>';
                             } else if (data[i].orderStatus === '배송준비중') {
-                                trHtml += '<button type="button">배송처리</button>';
+                                trHtml += `<button type="button" class="btn-xs btn-dark postBtn" data-address-list="${data[i].order.postAddressList}">배송처리</button>`;
                             } else if (data[i].orderStatus === '배송중') {
-                                trHtml += '<button type="button">배송수정</button>';
+                                trHtml += `<button type="button" class="btn-xs btn-dark postModifyBtn" data-post-info="${data[i].postInfo}">배송수정</button>`;
                             } else {
                                 trHtml += '-';
                             }
@@ -160,6 +250,65 @@
                     paging(totalData, dataPerPage, pageCount, 1);
                     displayData(1, dataPerPage);
                 });
+        }
+
+        function orderCheck(btn) {
+            let orderDetailCode = btn.closest('tr').querySelector('.orderDetailCode').textContent
+            fetch('/admin/order/check/' + orderDetailCode)
+                .finally(() => {
+                    return getOrderList('결제완료');
+                });
+        }
+
+        let postCompanyHtml = '';
+
+        fetch('https://apis.tracker.delivery/carriers')
+            .then((response) => response.json())
+            .then((data) => {
+                for (let obj of data) {
+                    postCompanyHtml += `<option value="${obj.name}">${obj.name}</option>`
+                }
+                document.querySelector('#postSelect').innerHTML = postCompanyHtml;
+                document.querySelector('#postSelectModify').innerHTML = postCompanyHtml;
+            });
+
+        document.querySelector('#orderTable').addEventListener('click', function (e) {
+            if (e.target.classList.contains('postBtn')) {
+                document.querySelector('#orderDetailCode').value
+                    = e.target.closest('tr').querySelector('.orderDetailCode').textContent;
+                document.querySelector('#postAddressList').value
+                    = e.target.dataset.addressList;
+                document.querySelector('#postModal').style.display = 'block';
+            }
+
+            if (e.target.classList.contains('postModifyBtn')) {
+                let postInfo = e.target.dataset.postInfo;
+                fetch('/admin/order/postinfo/' + postInfo)
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((data) => {
+                        document.querySelectorAll('#postSelectModify option').forEach(function (opt) {
+                            if (data.postCompanyName === opt.value) {
+                                opt.selected = true;
+                            }
+                        });
+                        document.querySelector('#postInfo').value = e.target.dataset.postInfo;
+                        document.querySelector('#invoiceNumberModify').value = data.invoiceNumber;
+                        document.querySelector('#postModifyModal').style.display = 'block';
+                    })
+
+            }
+        });
+
+        function closeModal() {
+            document.querySelector('#postModal').style.display = 'none';
+            document.querySelector('#postForm').reset();
+        }
+
+        function closeModal2() {
+            document.querySelector('#postModifyModal').style.display = 'none';
+            document.querySelector('#postModifyForm').reset();
         }
 
     </script>

@@ -81,4 +81,8 @@ public class CouponService {
 		return couponMapper.getCouponStatus(userId);
 	}
 
+	public void deleteCouponStatus(String couponStatusCode) {
+		couponMapper.deleteCouponStatus(couponStatusCode);
+	}
+
 }

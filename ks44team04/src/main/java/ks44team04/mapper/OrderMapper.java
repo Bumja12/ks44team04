@@ -34,4 +34,8 @@ public interface OrderMapper {
     public String getOrderNum();
 
     public void setOrderDetail(OrderDetail orderDetail);
+
+    public void addPostInfo(PostInfo postInfo);
+
+    public void setOrderDetailPost(@Param(value = "orderDetailCode") String orderDetailCode, @Param(value = "postInfo") String postInfo);
 }

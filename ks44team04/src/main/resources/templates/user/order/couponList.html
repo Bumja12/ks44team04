@@ -30,6 +30,7 @@
             <li class="list-inline-item col-2">
                 <button type="button" class="useCoupon"
                         th:if="0 < ${cs.couponInfo.priceTerms}"
+                        th:data-coupon-status-code="${cs.couponStatusCode}"
                         th:data-coupon-code="${cs.couponInfo.couponCode}"
                         th:data-discount-price="${cs.couponInfo.discountPrice}">선택
                 </button>
@@ -47,6 +48,7 @@
         if (e.target.classList.contains('useCoupon')) {
             opener.document.querySelector('#couponPrice').textContent = e.target.dataset.discountPrice + '원';
             opener.document.getElementsByName('couponPrice')[0].value = e.target.dataset.discountPrice;
+            opener.document.getElementsByName('couponStatusCode')[0].value = e.target.dataset.couponStatusCode;
             opener.document.getElementsByName('couponCode')[0].value = e.target.dataset.couponCode;
             window.setTimeout(function () {
                 this.close();

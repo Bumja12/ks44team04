@@ -26,21 +26,10 @@
         <result column="post_company_name" property="postCompanyName"/>
         <result column="invoice_number" property="invoiceNumber"/>
     </resultMap>
-
+    
     <select id="getAddressList" resultMap="addressListResultMap" parameterType="map">
         SELECT
-            address_list,
-            buyer_id,
-            address_name,
-            receiver_name,
-            postal_code,
-            address,
-            address2,
-            phone,
-            phone2,
-            reg_date,
-            modify_reg_date,
-            default_address_check
+            *
         FROM tb_address_list
         WHERE
         <choose>
@@ -51,7 +40,7 @@
                 address_list LIKE #{addressList}
             </when>
             <otherwise>
-                1 = 2
+                1 = 1
             </otherwise>
         </choose>
     </select>
@@ -95,6 +84,14 @@
             </if>
         </trim>
         WHERE address_list = #{addressList};
+    </update>
+
+    <update id="setPostInfo" parameterType="PostInfo">
+        update tb_post_info
+            set
+                post_company_name = #{postCompanyName},
+                invoice_number = #{invoiceNumber}
+        where post_info = #{postInfo}
     </update>
 
     <delete id="addressDelete" parameterType="String">

@@ -67,4 +67,13 @@ public class OrderService {
     public void setOrderDetail(OrderDetail orderDetail) {
         orderMapper.setOrderDetail(orderDetail);
     }
+
+    public String addPostInfo(PostInfo postInfo) {
+        orderMapper.addPostInfo(postInfo);
+        return postInfo.getPostInfo();
+    }
+
+    public void setOrderDetailPost(String orderDetailCode, String postInfo) {
+        orderMapper.setOrderDetailPost(orderDetailCode, postInfo);
+    }
 }

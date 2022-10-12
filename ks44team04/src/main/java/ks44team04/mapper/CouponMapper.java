@@ -23,5 +23,7 @@ public interface CouponMapper {
 	public List<CouponStatus> couponStatus();
 
 	public List<CouponStatus> getCouponStatus(String userId);
+
+	public void deleteCouponStatus(String couponStatusCode);
 	
 }
