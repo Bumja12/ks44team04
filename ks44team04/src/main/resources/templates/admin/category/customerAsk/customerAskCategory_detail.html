@@ -12,44 +12,51 @@
 			<div class="col-sm-12">
         		<div class="x_panel">
             		<div class="x_title">
-                		<h2 style="font-size: 17px;">구매자 등급 카테고리</h2>
+             		    <h2 style="font-size: 17px;">고객 문의 카테고리 내역 (목록에서 클릭한 열의 문의 카테고리 PK값에 해당하는 카테고리 정보를 화면에 바인딩한다.)</h2>
                     	<div class="clearfix"></div>
             		</div>
             		<div class="x_content">
 	            		<div class="row">
                     		<div class="col-sm-12">
          						<br/>
-								<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" th:action="@{/admin/category/modifyCategory}" method="post">
-									<!-- 등급 코드 PK -->
+								<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" th:action="@{/admin/category/modifyCustomerAskCategory}" method="post">
+									<!-- 문의 카테고리 PK -->
 									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_code">등급 코드 PK
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="askCategory">문의 카테고리 PK
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" id="level_code" value="levelBuyer01" disabled="disabled" class="form-control" maxlength="15">
-										</div>
-									</div>
-									<!-- 등급 이름 -->
-									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_name">등급 이름
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<input type="text" id="level_name" value="씨앗" required="required" class="form-control" maxlength="15">
+											<input type="text" id="askCategory" name="askCategory" value="levelBuyer01" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 회원 아이디(등록) -->
 									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="reg_id">회원 아이디(등록)
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="regId">회원 아이디(등록)
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" id="reg_id" value="admin01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="regId" id="regId" value="admin01" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
-									<!-- 등급 생성일 -->
+									<!-- 카테고리명 -->
 									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_reg_date">등급 생성일
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="categoryName">카테고리명
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="datetime" id="level_reg_date" value="2021-01-01 00:00:00" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<select class="select2_single form-control" id="categoryName" disabled="disabled" name="categoryName" required="required" tabindex="-1">
+												<option></option>
+												<option value="5" selected="selected">포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+											</select>
+										</div>
+									</div>
+									<!-- 등록일 -->
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="regDate">등록일
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="datetime" name="regDate" id="regDate" value="2021-01-01 00:00:00" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 사용 여부 -->
@@ -57,44 +64,24 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="radio" class="flat" name="gender" id="useCheckY" value="Y" checked="checked" required="required"/> Y
-											<input type="radio" class="flat" name="gender" id="useCheckN" value="N" required="required"/> N
-										</div>
-									</div>
-									<!-- 구매자 구매 금액 조건(6개월) -->
-									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="buyer_price_terms">구매자 구매 금액 조건(6개월)
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<!-- 숫자만 입력 가능 -->
-											<input type="number" id="buyer_price_terms" name="buyer_price_terms" value="0" required="required" class="form-control" oninput="handleOnInput(this, 15)">
-										</div>
-									</div>
-									<!-- 적립율(%) -->
-									<div class="item form-group">
-										<label for="save_rate" class="col-form-label col-md-3 col-sm-3 label-align">적립율(%)
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<!-- 숫자만 입력 가능 -->
-											<input id="save_rate" class="form-control" type="number" value="0.5" required="required" name="save_rate" oninput='handleOnInput(this, 15)'>
-										</div>
-									</div>
-									<!-- 등급 코드 -->
-									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_code_npk">등급 코드 
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<input type="text" id="level_code_npk" value="levelBuyer01" disabled="disabled" class="form-control" maxlength="15">
+											<input type="radio" class="flat" name="useCheck" id="useCheckY" value="Y" checked="checked" required="required" disabled="disabled"/> Y
+											<input type="radio" class="flat" name="useCheck" id="useCheckN" value="N" required="required" disabled="disabled"/> N
 										</div>
 									</div>
 									<div class="ln_solid"></div>
 									<div class="item form-group">
 										<div class="col-md-6 col-sm-6 offset-md-3">
-											<button type="submit" class="btn btn-success">수정</button>
-											<button class="btn btn-primary" type="reset">초기화</button>
-											<button id="cancelBtn" class="btn btn-primary" type="button">취소</button>
+											<button type="button" id="modifyBtn" class="btn btn-primary">수정</button>
+											<button class="btn btn-success" type="reset">초기화</button>
+											<button id="cancelBtn" class="btn btn-warning" type="button">목록</button>
 										</div>
 									</div>
+									<div class="ln_solid"></div>
+									<ul style="padding-left: 0;">
+										<li style="list-style: none; padding-left: 10px;">1. 수정 버튼 클릭하면 비활성 상태인 요소가 활성화되면서 수정이 가능하다.</li>
+										<li style="list-style: none; padding-left: 10px;">2. 초기화 버튼 클릭하면 수정했던 내용이 초기화된다.</li>
+										<li style="list-style: none; padding-left: 10px;">3. 목록 버튼 클릭하면 목록으로 이동한다.</li>
+									</ul>
 								</form> <!-- <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"> -->
            					</div> <!-- </div class="col-sm-12"> -->
            				</div> <!-- </div class="row"> -->
@@ -115,10 +102,39 @@
 			      = el.value.substr(0, maxlength);
 			  }
 			}
+			
+			// 수정 버튼 탐색
+			let modifyBtn = document.querySelector('#modifyBtn');
+			// 수정할 요소 탐색
+ 			let updateContent = document.querySelectorAll('#categoryName, #useCheckY, #useCheckN');
+			
+			// 수정 버튼에 이벤트 등록
+			modifyBtn.addEventListener('click', function(){
+				for(var i=0; i<updateContent.length; i++){
+					// 수정할 요소가 disabled 상태라면 원래대로 바꾼다. 
+					if(updateContent[i].disabled){
+						updateContent[i].disabled = false;
+					}
+				}
+				// 그리고 수정 버튼을 전송 버튼으로 바꾼다.
+				modifyBtn.addEventListener('click', function(){
+					let disabledContent =  $('input[disabled]');
+					disabledContent.each(function(i){
+						// console.log($(this)[0].disabled);
+						$(this)[0].disabled=false;
+					});
+					this.type = 'submit';
+				});
+			});
+			
+			// 목록 버튼 탐색
 			let cancelBtn = document.querySelector('#cancelBtn');
+			
+			// 목록 버튼에 이벤트 등록
 			cancelBtn.addEventListener('click', function(){
 				console.log(location.href);
-				window.location = '/admin/category/categoryList';
+				// 고객 문의 카테고리 목록으로 리다이렉트
+				window.location = '/admin/category/customerAsk';
 			
 			});
 			

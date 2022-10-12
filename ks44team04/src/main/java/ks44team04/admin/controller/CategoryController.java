@@ -271,5 +271,91 @@ public class CategoryController {
 		return "admin/category/goodsQna/goodsQnaCategory_detail";
 	}	
 	
+	// --------------------------------------카테고리 내역  화면--------------------------------------
 	
+	// --------------------------------------카테고리 수정 처리--------------------------------------
+	
+	// 구매자 등급 카테고리 수정 처리
+	@PostMapping("modifylevelBuyerCategory")
+	public String modifylevelBuyerCategoryAction() {
+
+		// 구매자 등급 카테고리 목록 화면으로 리다이렉트
+		return "redirect:/admin/category/levelBuyer";
+	}
+	
+	// 판매자 등급 카테고리 수정 처리
+	@PostMapping("modifylevelSellerCategory")
+	public String modifylevelSellerCategoryAction() {
+		
+		// 판매자 등급 카테고리 목록 화면으로 리다이렉트
+		return "redirect:/admin/category/levelSeller";
+	}
+	
+	// 고객 문의 카테고리 수정 처리
+	@PostMapping("modifyCustomerAskCategory")
+	public String modifyCustomerAskCategoryAction() {
+		
+		// 고객 문의 카테고리 목록 화면으로 리다이렉트
+		return "redirect:/admin/category/customerAsk";
+	}
+	
+	// 자주 묻는 질문 카테고리 수정 처리
+	@PostMapping("modifyRegularAskCategory")
+	public String modifyRegularAskCategoryAction() {
+		
+		// 자주 묻는 질문 카테고리 목록 화면으로 리다이렉트
+		return "redirect:/admin/category/regularAsk";
+	}
+	
+	// 게시판 카테고리 수정 처리
+	@PostMapping("modifyBoardAskCategory")
+	public String modifyBoardCategoryAction() {
+		
+		// 게시판 카테고리 목록 화면으로 리다이렉트
+		return "redirect:/admin/category/board";
+	}
+	
+	// 신고 카테고리 수정 처리
+	@PostMapping("modifyReportCategory")
+	public String modifyReportCategoryAction() {
+		
+		// 신고 카테고리 목록 화면으로 리다이렉트
+		return "redirect:/admin/category/report";
+	}
+	
+	// 판매 상품  카테고리 대분류 수정 처리
+	@PostMapping("modifyGoodsLargeCategory")
+	public String modifyGoodsLargeCategoryAction() {
+		
+		// 판매 상품  카테고리 대분류 목록 화면으로 리다이렉트
+		return "redirect:/admin/category/goodsLarge";
+	}
+	
+	// 판매 상품  카테고리 소분류 수정 처리
+	@PostMapping("modifyGoodsSmallCategory")
+	public String modifyGoodsSmallCategoryAction() {
+		
+		// 판매 상품  카테고리 소분류 목록 화면으로 리다이렉트
+		return "redirect:/admin/category/goodsSmall";
+	}
+	
+	// 상품 문의 카테고리 소분류 수정 처리
+	@PostMapping("modifyGoodsQnaCategory")
+	public String modifyGoodsQnaCategoryAction() {
+		
+		// 상품 문의 카테고리 목록 화면으로 리다이렉트
+		return "redirect:/admin/category/goodsQna";
+	}
+	
+	// --------------------------------------카테고리 수정 처리--------------------------------------
+	
+	// --------------------------------------카테고리 등록 처리--------------------------------------
+	
+	// 구매자 등급 카테고리 등록 화면
+	@GetMapping("/addLevelBuyerCategory")
+	public String addLevelBuyerCategoryForm(Model model) {
+
+		model.addAttribute("title", "구매자 등급 카테고리 등록 화면");
+		return "admin/category/levelBuyer/levelBuyerCategory_add";
+	}
 }
