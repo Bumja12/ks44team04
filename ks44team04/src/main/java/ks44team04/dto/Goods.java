@@ -208,7 +208,6 @@ public class Goods {
                 ", regDate='" + regDate + '\'' +
                 ", goodsFile='" + goodsFile + '\'' +
                 ", goodsAnswerInfo='" + goodsAnswerInfo + '\'' +
-                ", goodsQnaInfo='" + goodsQnaInfo + '\'' +
                 ", userInfo='" + userInfo + '\'' +
                 ", goodsSmallCategoryInfo='" + goodsSmallCategoryInfo + '\'' +
                 ", goodsLargeCategoryInfo='" + goodsLargeCategoryInfo + '\'' +

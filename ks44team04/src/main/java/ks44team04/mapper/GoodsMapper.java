@@ -3,7 +3,6 @@ package ks44team04.mapper;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
-
 import ks44team04.dto.Cart;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsAnswer;
@@ -73,11 +72,6 @@ public interface GoodsMapper {
 	//해당 상품 판매자 문의 열람 가능 쿼리
 	public String qnaSellerView(String userId);
 	
-	/* ~~~ 장바구니 시작 ~~~ */
-	
-	//장바구니 목록 조회
-	public List<Cart> getCartList(String userId);
-
 	/* ~~~ 후기 시작 ~~~ */
 	
 	//후기 목록 
@@ -85,4 +79,14 @@ public interface GoodsMapper {
 	
 	//후기 목록 
 	public List<Review> reviewSpecific(String goodsList);
+	
+	
+	/* ~~~ 장바구니 시작 ~~~ */
+	
+	//장바구니 목록 조회
+	public List<Cart> getCartList(String userId);
+	
+	//장바구니 수량 수정
+	public int cartAmountModify(Cart cart);
+
 }

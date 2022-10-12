@@ -24,12 +24,8 @@ public class GoodsService {
 	public GoodsService(GoodsMapper goodsMapper) {
 	this.goodsMapper = goodsMapper;
 	}
-	
-
-	
 
 	/* ~~~ 상품 시작 ~~~ */
-
 	
 	//상품 목록 조회
 	public List<Goods> getGoodsList() {
@@ -139,29 +135,35 @@ public class GoodsService {
 		return qnaSellerView;
 	}
 	
-	/* ~~~ 장바구니 시작 ~~~ */
 	
+	/* ~~~ 후기 시작 ~~~ */
+
+	//후기 목록
+	public List<Review> reviewList(){
+		List<Review> reviewList = goodsMapper.reviewList();
+		log.info("후기 목록");
+			
+		return reviewList;
+	}
+		
+	//특정 후기 목록
+	public List<Review> reviewSpecific(String goodsList){
+		List<Review> reviewSpecific = goodsMapper.reviewSpecific(goodsList);
+		return reviewSpecific;
+	}
+	
+	/* ~~~ 장바구니 시작 ~~~ */
+		
 	//장바구니 목록 조회
 	public List<Cart> getCartList(String userId) {
 		List<Cart> cartList = goodsMapper.getCartList(userId);
 		return cartList;
 	}
 	
-	/* ~~~ 후기 시작 ~~~ */
-
-	//후기 목록
-		public List<Review> reviewList(){
-			List<Review> reviewList = goodsMapper.reviewList();
-			log.info("후기 목록");
-			
-			return reviewList;
-		}
-		
-	//특정 후기 목록
-		public List<Review> reviewSpecific(String goodsList){
-			List<Review> reviewSpecific = goodsMapper.reviewSpecific(goodsList);
-			return reviewSpecific;
-		}
-	
+	//장바구니 수량 수정
+	public int cartAmountModify(Cart cart) {
+		int result = goodsMapper.cartAmountModify(cart);
+		return result;
+	}
 	
 }

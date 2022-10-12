@@ -232,6 +232,9 @@
 		FROM 	tb_user 	as u
 		WHERE	u.user_id = 'admin01';
     </select>
+    
+    
+    <!-- ************************************문의 시작****************************************** -->
 	
     <resultMap type="GoodsQna" id="goodsQnaMap">
         <id 	column="goods_qna_num" 		property="goodsQnaNum"/>
@@ -462,33 +465,7 @@
 		gq.goods_qna_num = #{goodsQnaNum};
     </select>
     
-    <!-- ************************************카트 시작****************************************** -->
-    
-    <resultMap  type="Cart" 	id="cartResultMap">
-        <id 	column="cart_code" 			property="cartCode"/>
-        <result column="goods_code" 		property="goodsCode"/>
-        <result column="buyer_id" 			property="buyerId"/>
-        <result column="cart_amount" 		property="cartAmount"/>
-        <result column="reg_date" 			property="regDate"/>
-        <result column="modify_date" 		property="modifyDate"/>
-        	<association property="goodsInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsResultMap"/>
-    </resultMap>
-    
-    <select id="getCartList" parameterType="String" resultMap="cartResultMap" fetchSize="100" >
-	SELECT
-		*
-	FROM
-		tb_cart AS c
-		INNER JOIN
-		tb_goods AS g
-		ON
-		c.goods_code = g.goods_code
-	WHERE
-		c.buyer_id = #{buyerId}
-
-	</select>
-	
-    <!-- ~~~~~~~~~~~~~~~~~~~후기 시작~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- ************************************후기 시작************************************ -->
       <!-- 후기 리소스맵  -->
     <resultMap type="Review" id="reviewListResultMap">
 		<id     column="review_list"  			property="reviewList"/>
@@ -544,5 +521,44 @@
 		WHERE 
 			r.goods_list = #{goodsList}
 	</select>
+	
+	
+    <!-- ************************************카트 시작****************************************** -->
+    
+    <resultMap  type="Cart" 	id="cartResultMap">
+        <id 	column="cart_code" 			property="cartCode"/>
+        <result column="goods_code" 		property="goodsCode"/>
+        <result column="buyer_id" 			property="buyerId"/>
+        <result column="cart_amount" 		property="cartAmount"/>
+        <result column="reg_date" 			property="regDate"/>
+        <result column="modify_date" 		property="modifyDate"/>
+        	<association property="goodsInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsResultMap"/>
+    </resultMap>
+    
+    <select id="getCartList" parameterType="String" resultMap="cartResultMap" fetchSize="100" >
+	SELECT
+		*
+	FROM
+		tb_cart AS c
+		INNER JOIN
+		tb_goods AS g
+		ON
+		c.goods_code = g.goods_code
+	WHERE
+		c.buyer_id = #{buyerId}
+	</select>
+	
+	<!-- 장바구니 수량 수정 -->
+	<update id="cartAmountModify" parameterType="Cart">
+	/* 장바구니 수량 수정 */
+	UPDATE
+		tb_cart
+	SET
+		 cart_amount = #{cartAmount}
+		,modify_date = NOW()
+	WHERE
+		cart_code = #{cartCode};
+	</update>
+	
     
 </mapper>
