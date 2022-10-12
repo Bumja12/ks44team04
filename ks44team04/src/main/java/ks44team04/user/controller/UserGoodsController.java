@@ -30,19 +30,14 @@ public class UserGoodsController {
     //의존성 주입
   	private GoodsService goodsService;
 
-  	public UserGoodsController(GoodsService goodsService) {
-  		this.goodsService = goodsService;
-  	}
-  	
-    
-    //상품 리스트 
 
   	//유저 권한 확인 서비스 
   	private UserService userService;
-    public UserGoodsController(GoodsService goodsService, UserService userService) {
-			this.goodsService = goodsService;
-			this.userService = userService;
-		}
+
+	public UserGoodsController(GoodsService goodsService, UserService userService) {
+		this.goodsService = goodsService;
+		this.userService = userService;
+	}
 
 
 	//상품 리스트 
@@ -88,6 +83,7 @@ public class UserGoodsController {
 		model.addAttribute("goodsInfo", goodsInfo);
 		model.addAttribute("goodsQnaInfo", goodsQnaInfo);
 		model.addAttribute("goodsQnaCategoryList", goodsQnaCategoryList);
+		
 		//후기 목록
 		model.addAttribute("reviewSpecific", reviewSpecific);
     	
