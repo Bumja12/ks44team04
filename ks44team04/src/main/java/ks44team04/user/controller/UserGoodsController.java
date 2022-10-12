@@ -144,8 +144,7 @@ public class UserGoodsController {
     @GetMapping("/cart")
     public String getCartList(Model model) {
     	
-    
-    	List<Cart> cartList = goodsService.getCartList("buyer01");
+    	List<Cart> cartList = goodsService.getCartList("buyer01"); //임시로 buyer01의 
     	log.info("장바구니 리스트 ::: {}", cartList);
     	
     	model.addAttribute("title", "장바구니");
@@ -154,6 +153,16 @@ public class UserGoodsController {
     	return "user/goods/cart";
     }
     
+    //장바구니 수량 수정
+    @PostMapping("/cart")
+    public String cartAmountModify(Cart cart) {
+		log.info("사용자가 상품 수정한 정보 ::: {}", cart);
+		
+		goodsService.cartAmountModify(cart);
+		
+		return "redirect:/user/goods/cart";
+	}
+	
     
     //관심 상품 
     @GetMapping("/wishlist")
