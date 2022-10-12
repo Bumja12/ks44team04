@@ -46,16 +46,16 @@
 }
 
 .off span{
-    display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+	display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
     border: 0; /* 필드셋 테두리 제거 */
-     color: transparent; /* 기존 이모지 컬러 제거 */
+    color: transparent; /* 기존 이모지 컬러 제거 */
     text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
  
 }
 .on span{
-  display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+	display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
     border: 0; /* 필드셋 테두리 제거 */
-     color: transparent; /* 기존 이모지 컬러 제거 */
+    color: transparent; /* 기존 이모지 컬러 제거 */
     text-shadow: 0 0 0 #f00; /* 새 이모지 색상 부여 */
 }
 </style>	
@@ -96,12 +96,14 @@
 		        	<span>
 		        		<th:block th:each="gradeLoop : ${#numbers.sequence(1, l.grade)}">★</th:block>
 		        	</span>
-		          	<input type="hidden" id="grade" th:value="${l.grade}">
+		          	<input type="hidden"  th:value="${l.grade}">
 		        </div>
 		        <div class="col-12" >
 		        	<span>
 		        	<label th:text="${l.buyerId} + '○' + ${l.reviewRegDate}"></label>
 		        	</span>
+					<button type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
+		         	<button type="button" class="btn"  style="font-size: 13px; padding: 0px;">삭제</button>		      
 					<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
 		         	<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn"  style="font-size: 13px; padding: 0px;">삭제</button>		      
 		        </div>
@@ -109,12 +111,12 @@
 		         <p th:text="${l.reviewContent}"></p>
 		        </div>
 				<div class="col-2" >
-					<label> 
-						<button type="button" class="reviewLikeBtn off" style="border: none; background-color: white;" th:value="${l.reviewList}"> 
-							<span><i class="fi fi-sr-heart"></i></span>
-						</button>
-							<span class="likeAmount" th:value="${l.likeAmount} " th:text="'추천수' + ${l.likeAmount} + ' 개' " ></span>
-					</label>
+						<label >
+							<button type="button" class="reviewLikeBtn off" style="border: none; background-color: white; outline: none;" th:value="${l.reviewList}">
+								 <span><i class="fi fi-sr-heart"></i></span>
+						 	</button>
+							<span  th:text="'추천수 ' + ${l.likeAmount}  "></span>
+						 </label>
 				</div>
 				
 				<input type="hidden" id="userId" name="userId" value="buyer01">
@@ -125,10 +127,8 @@
 			  	<hr align="center" style="border: solid 1px black; width: 82%;">
 		      </div>
 		</div>	
-	
 	</div>
   	</th:block>
-  	
  </th:block>
 
     <th:block layout:fragment="customScript">
@@ -137,35 +137,46 @@
 		$(function(){
 			var userId = $('#userId').val();
 			console.log(userId);
+			
 			// 추천버튼 클릭시(추천 추가 또는 추천 제거)
 			$(".reviewLikeBtn").click(function(){
 				let hart = $(this);
 				let reviewList = hart.val();
-			if(hart.hasClass('off')){
-				$.ajax({
-					url: "/user/review/reviewLike",
-	                type: "GET",
-	                data: {
-	                	'reviewList': reviewList,
-	                	'userId': userId
-	                },
-	                success: function (reviewList) {
-	                	hart.removeClass("off").addClass("on")
-	                }
-				})
-			}else if(hart.hasClass('on')){
-				$.ajax({
-					url: "/user/review/reviewLikeDelete",
-	                type: "GET",
-	                data: {
-	                	'reviewList': reviewList,
-	                	'userId': userId
-	                },
-	                success: function (reviewList) {
-	                	hart.removeClass("on").addClass("off")
-	                }
-				})
-			}
+				let spanRecom = hart.next();
+				console.log(spanRecom);
+				
+				if(hart.hasClass('off')){
+					$.ajax({
+						url: "/user/review/reviewLike",
+		                type: "GET",
+		                data: {
+		                	'reviewList': reviewList,
+		                	'userId': userId
+		                },
+		                dataType: "text",
+		                success: function (likeAmount) {
+		                	alert("추천하였습니다.")
+		                	$(spanRecom).text('추천수 ' + likeAmount);
+		                	hart.removeClass("off").addClass("on")
+		                }
+					});
+				}else if(hart.hasClass('on')){
+					$.ajax({
+						url: "/user/review/reviewLikeDelete",
+		                type: "GET",
+		                data: {
+		                	'reviewList': reviewList,
+		                	'userId': userId
+		                },
+		                dataType: "text",
+		                success: function (likeAmount) {
+		                	alert("추천을 해제 하였습니다.")
+		                	$(spanRecom).text('추천수 ' + likeAmount);
+		                	hart.removeClass("on").addClass("off")
+		                	
+		                }
+					});
+				}
 			});
 		});
 

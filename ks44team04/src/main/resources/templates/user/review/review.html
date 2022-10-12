@@ -6,13 +6,12 @@
 <div th:fragment="reviewModal">
 	
 			
-			<form class="row" id="reviewForm" th:action="@{/user/review/reviewList}" method="post">
-				<div class="modal fade review" tabindex="-1" role="dialog"
-				aria-hidden="true" style="display: none;">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
+			<form class="row" id="reviewForm" th:action="@{/user/review/reviewList}" method="post" >
+				<div class="modal fade review" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+				<div class="modal-dialog" style="width: 450px;">
+					<div class="modal-content" >
 					<div class="modal-header"
-						style="font-size: 30PX; background-color: #82ae46; color: white; text-align: center;">
+						style="font-size: 30PX; background-color: #82ae46; color: white; text-align: center; ">
 						후기작성</div>
 					<div class="modal-body" style="height: 530px;">
 						<fieldset>

@@ -9,9 +9,14 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
 <!-- 별, 장바구니, 찜하기, 자물쇠 아이콘 -->
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+
+<!-- 초희 하트 이미지  -->
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+
 <!-- 문의, 답변, 답변대기 아이콘 -->
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-straight/css/uicons-bold-straight.css'>
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+
 
 <style>
 * { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; color: #333;}
@@ -82,7 +87,60 @@ div { margin: 5px 0px }
 .qnaClose { cursor:pointer; background-color:#e5e5e5; border-radius: 15px; height: 30px; width: 70px; border:none; }
 .qnaPw { border: 1px solid #d3d3d3; border-radius: 3px; width: 100px; vertical-align: middle; outline: none; height: 25px; }
 
+/* 초희 모달  */
+.modal-body fieldset{
+    display: inline-block;
+    direction: rtl;
+    border:0;
+}
+.modal-body fieldset legend{
+    text-align: right;
+}
+.modal-body input[type=radio]{
+    display: none;
+}
+.modal-body label{
+    font-size: 3em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+}
+.modal-body label:hover{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+.modal-body label:hover ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+.modal-body input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+#reviewContents {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: solid 1.5px #D3D3D3;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+}
+
+/* 초희 하트 */
+.off span i{
+	display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    border: 0; /* 필드셋 테두리 제거 */
+    color: transparent; /* 기존 이모지 컬러 제거 */
+    text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
+ 
+}
+.on span i{
+	display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    border: 0; /* 필드셋 테두리 제거 */
+    color: transparent; /* 기존 이모지 컬러 제거 */
+    text-shadow: 0 0 0 #f00; /* 새 이모지 색상 부여 */
+}
 </style>
+	
+	
 </th:block>
 
 <th:block layout:fragment="customContents">
@@ -206,7 +264,70 @@ div { margin: 5px 0px }
 				
 				<!-- 상품 후기 Content 시작 -->
 				<div id="tab-2" class="tabContent">
-					 <div th:include="user/review/reviewList :: reviewModal"></div>
+					<div>
+	  					<div style="text-align: center; font-size: 20px;"><b>사용자 총평</b></div>
+	  					<div style="text-align: center; font-size: 50px;" > ★★★★★ </div>
+	  					<hr style="border: solid 1px black;">
+	  					<b style="font-size: 18px; margin-left:50px; " > 포토 </b>
+	  					<hr style="border: solid 1px black;">
+	  				<div class="row">
+		  				<div class="col-9" >
+		  					<b style="font-size: 18px; margin-left:50px;" > 후기 </b>
+		  				</div>
+						<div class="col-3"  style="text-align: left;"> 
+					  		<select>
+					  			<option>최신순</option>
+					  			<option>평점 낮은 순</option>
+					  			<option>평점 놓은 순</option>
+					  			<option>추천수 높은 순</option>
+					  			<option>추천수 낮은 순</option>
+					  		</select>
+					  		<label>
+								<button type="button" class="btn btn-primary" data-toggle="modal"
+									data-target=".review" id="reviewModal" data-backdrop="static" style="font-size: 15px; background-color: #B3D97A; outline: none; border-color: #B3D97A ">후기작성</button>
+							</label>
+						</div>	  		
+	  				</div>
+	  				<th:block th:if="${not #lists.isEmpty(reviewSpecific)}" th:each="l : ${reviewSpecific}">
+			    		  <div class="row " style="margin-left: 80px; margin-top: 35px;">
+			       			 <div  class="col-12">
+			        			<span>
+			        				<th:block th:each="gradeLoop : ${#numbers.sequence(1, l.grade)}">★</th:block>
+			        			</span>
+			          			<input type="hidden"  th:value="${l.grade}">
+			       			 </div>
+			        		 <div class="col-12" >
+			        			<span>
+			        				<label th:text="${l.buyerId} + '○' + ${l.reviewRegDate}"></label>
+			        			</span>
+								<button type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
+					         	<button type="button" class="btn"  style="font-size: 13px; padding: 0px;">삭제</button>		      
+								<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
+					         	<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn"  style="font-size: 13px; padding: 0px;">삭제</button>		      
+			       			 </div>
+			       			 <div class="col-9">
+			        			<p th:text="${l.reviewContent}"></p>
+			        		 </div>
+							 <div class="col-3" >
+								<label >
+									<button type="button" class="reviewLikeBtn off" style="border: none; background-color: white; outline: none;" th:value="${l.reviewList}">
+										 <span><i class="fi fi-sr-heart"></i></span>
+								 	</button>
+									<span  th:text="'추천수 ' + ${l.likeAmount}  "></span>
+								 </label>
+							</div>
+					
+							<input type="hidden" id="userId" name="userId" value="buyer01">
+							<input type="hidden" id="reviewList" name="reviewList" value="review001">
+					
+			    		  </div>
+					      <div class="row">
+						  	<hr align="center" style="border: solid 1px black; width: 82%;">
+					      </div>
+			      </th:block>
+				</div>	
+			</div>	
+				
 				</div>
 				<!-- 상품 후기 Content 끝 -->
 				
@@ -336,7 +457,9 @@ div { margin: 5px 0px }
 </form>
 	
 <br><br><br>
-
+<!-- 후기 등록 모달 -->
+				<div th:include="user/review/review :: reviewModal"></div>		
+				
 </th:block>
 
 <th:block layout:fragment="customJsScript">
@@ -521,7 +644,80 @@ $(function() {
           return false;
         }
     });
+
+	/* 문의 등록 
+    $('.qnaSubmit').click(function () {
+        var qnaModal = $('#qnaModalForm').serialize();
+    	console.log(qnaModal);
+    	function qnaAjax(){
+	        $.ajax({ url: "/user/goods/goodsQnaAdd",
+	            	 type:"POST",
+	            	 data: qnaModal,
+	    			 dateType : 'json',
+	    	}).done(function(data){
+		    	viewMemberList(data);
+	    	});
+		};
+		var viewQnaList = function(arr){
+			$("#qnaList").empty();
+				
+			$.each(arr, function(i,item){
+				let tr = $("<tr></tr>");
+				console.log(item)
+				$.each(item, function(key,value){
+					$("<td></td>").html(value).appendTo(tr);
+				});
+				$("#qnaList").append(tr);
+			});
+		}
+    }); */
     
+    //후기 추천수 ajax
+    $(function(){
+		var userId = $('#userId').val();
+		console.log(userId);
+		
+		// 추천버튼 클릭시(추천 추가 또는 추천 제거)
+		$(".reviewLikeBtn").click(function(){
+			let hart = $(this);
+			let reviewList = hart.val();
+			let spanRecom = hart.next();
+			console.log(spanRecom);
+			
+			if(hart.hasClass('off')){
+				$.ajax({
+					url: "/user/review/reviewLike",
+	                type: "GET",
+	                data: {
+	                	'reviewList': reviewList,
+	                	'userId': userId
+	                },
+	                dataType: "text",
+	                success: function (likeAmount) {
+	                	alert("추천하였습니다.")
+	                	$(spanRecom).text('추천수 ' + likeAmount);
+	                	hart.removeClass("off").addClass("on")
+	                }
+				});
+			}else if(hart.hasClass('on')){
+				$.ajax({
+					url: "/user/review/reviewLikeDelete",
+	                type: "GET",
+	                data: {
+	                	'reviewList': reviewList,
+	                	'userId': userId
+	                },
+	                dataType: "text",
+	                success: function (likeAmount) {
+	                	alert("추천을 해제 하였습니다.")
+	                	$(spanRecom).text('추천수 ' + likeAmount);
+	                	hart.removeClass("on").addClass("off")
+	                	
+	                }
+				});
+			}
+		});
+
     /* 문의 등록시 문의 화면으로 새로고침 */
     if(/*[[${param.qnaView}]]*/ !== null) {
 		document.querySelector('#qnaTab').click();
@@ -553,6 +749,7 @@ $(function() {
 			//icon.innerHTML = '<i class="fi fi-rr-lock"></i>'
 		}
 		
+
 	});
     
 	/* 문의 클릭 시 답변 펼치기 */

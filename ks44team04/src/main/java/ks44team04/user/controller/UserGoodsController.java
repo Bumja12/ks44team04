@@ -18,6 +18,7 @@ import ks44team04.dto.Cart;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsQna;
 import ks44team04.dto.GoodsQnaCategory;
+import ks44team04.dto.Review;
 import ks44team04.service.GoodsService;
 import ks44team04.service.UserService;
 
@@ -28,6 +29,14 @@ public class UserGoodsController {
     
     //의존성 주입
   	private GoodsService goodsService;
+
+  	public UserGoodsController(GoodsService goodsService) {
+  		this.goodsService = goodsService;
+  	}
+  	
+    
+    //상품 리스트 
+
   	//유저 권한 확인 서비스 
   	private UserService userService;
     public UserGoodsController(GoodsService goodsService, UserService userService) {
@@ -37,6 +46,7 @@ public class UserGoodsController {
 
 
 	//상품 리스트 
+
     @GetMapping("/goodsList")
     public String getGoodsList(Model model) {
         
@@ -56,8 +66,8 @@ public class UserGoodsController {
     
     //특정 상품 정보&문의
     @GetMapping("/goods")
-    public String goodsDetail(@RequestParam(name="goodsCode", required = false) String goodsCode,
-    						  Model model) {
+    public String goodsDetail(@RequestParam(name="goodsCode", required = false) String goodsCode, Model model) {
+    	
     	
     	//특정 상품의 정보
     	Goods goodsInfo = goodsService.getGoodsInfoByCode(goodsCode);
@@ -71,10 +81,15 @@ public class UserGoodsController {
     	List<GoodsQnaCategory> goodsQnaCategoryList = goodsService.goodsQnaCategoryList();
     	log.info("문의 카테고리 정보 ::: {}", goodsQnaCategoryList);
     	
+    	//특정 후기 목록
+    	List<Review> reviewSpecific = goodsService.reviewSpecific(goodsCode);
+    	
 		model.addAttribute("title", "상품");
 		model.addAttribute("goodsInfo", goodsInfo);
 		model.addAttribute("goodsQnaInfo", goodsQnaInfo);
 		model.addAttribute("goodsQnaCategoryList", goodsQnaCategoryList);
+		//후기 목록
+		model.addAttribute("reviewSpecific", reviewSpecific);
     	
     	return "user/goods/goods";
     }

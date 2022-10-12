@@ -10,6 +10,7 @@ import ks44team04.dto.GoodsAnswer;
 import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
 import ks44team04.dto.GoodsQnaCategory;
+import ks44team04.dto.Review;
 
 @Mapper
 public interface GoodsMapper {
@@ -63,6 +64,19 @@ public interface GoodsMapper {
 	//상품 문의 답변 조회
 	public List<GoodsAnswer> getGoodsAnswer();
 	
+
+	
+	
+	
+	
+	//후기~~~~~~~~~~~~
+	
+	//후기 목록 
+	public List<Review> reviewList();
+	
+	//후기 목록 
+	public List<Review> reviewSpecific(String goodsList);
+
 	//유저 권한 불러오기
 	public String userRight(String userId);
 	
@@ -76,5 +90,4 @@ public interface GoodsMapper {
 	
 	//장바구니 목록 조회
 	public List<Cart> getCartList(String userId);
-	
-}
+
