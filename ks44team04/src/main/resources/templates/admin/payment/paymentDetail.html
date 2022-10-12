@@ -111,7 +111,7 @@ th, td {
 					</div>
 				</div>
 				<div class="modal-footer" style="text-align: center;">
-					<button type="button" class="btn btn-dark" id="removeBtnCheck">확인</button>
+					<button type="button" class="btn btn-dark" id="adminCheckBtn">확인</button>
 					<button type="button" class="btn btn-secondary" id='closeBtn' data-dismiss="modal">닫기</button>
 				</div>
 			</div>
@@ -128,7 +128,7 @@ th, td {
 
 				$('#pwCheckModal').modal('show');
 
-				$('#removeBtnCheck').off().on('click', function () {
+				$('#adminCheckBtn').off().on('click', function () {
 					var adminPw = $('input[name="adminPw"]').val();
 
 					var request = $.ajax({
@@ -165,7 +165,7 @@ th, td {
 
 			$("#adminPw").keyup(function(e){
 				if(e.keyCode == 13) {
-					$('#removeBtnCheck').click();
+					$('#adminCheckBtn').click();
 				}
 			});
 
