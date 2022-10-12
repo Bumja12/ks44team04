@@ -24,6 +24,7 @@
             	<div class="x_content">
             	    <!-- 판매 상품 카테고리 대분류 검색 조각 -->
 	            	<div th:include="admin/category/goodsLarge/goodsLargeCategory_search :: goodsLargeCategory_searchFragment" style="margin-bottom: 10px"></div>
+	            	<p style="font-weight: bold;">특정 행 클식하면 해당 내역으로 이동한다.</p>
                    	<div class="clearfix"></div>
 					<div class="card-box table-responsive">
 		            	<table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" style="width:100%">
@@ -116,8 +117,13 @@
            			<div class="row">
            				<div class="col-sm-12">
 	           				<div class="ml-auto">
-	           					<a class="btn btn-success" th:href="@{/admin/category/addCategory}" role="button">등록</a>
-	           					<a class="btn btn-primary" th:href="@{/admin/category/modifyCategory}" role="button">수정</a>
+	           					<a class="btn btn-success" th:href="@{/admin/category/addGoodsLargeCategory}" role="button">등록</a>
+								<button type="button" class="btn btn-danger deleteModal" data-toggle="modal" data-target=".bs-example-modal-lg">삭제</button>
+								<div class="ln_solid"></div>
+								<ul style="padding-left: 0;">
+									<li style="list-style: none; padding-left: 10px;">1. 등록 버튼 클릭하면 등록 화면으로 이동한다.</li>
+									<li style="list-style: none; padding-left: 10px;">2. 삭제 버튼 클릭하면 체크박스가 체크된 열을 삭제하는 모달 창을 띄운다..</li>
+								</ul>								
            					</div> <!-- </div class="ml-auto"> -->
            				</div> <!-- </div class="col-sm-12"> -->
            			</div> <!-- </div class="row"> -->

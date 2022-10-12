@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminDefault}">
+
+	<th:block layout:fragment="customTitle">
+	    <title th:text="${title}"></title>
+	</th:block>
+	
+	<th:block layout:fragment="customContents">
+		<div class="row">
+			<div class="col-sm-12">
+        		<div class="x_panel">
+            		<div class="x_title">
+                		<h2 style="font-size: 17px;">판매 상품 카테고리 대분류 등록</h2>
+                    	<div class="clearfix"></div>
+            		</div>
+            		<div class="x_content">
+	            		<div class="row">
+                    		<div class="col-sm-12">
+         						<br/>
+								<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" th:action="@{/admin/category/addGoodsLargeCategory}" method="post">
+									<!-- 카테고리 대분류 -->
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="categoryName">카테고리 대분류
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<select class="select2_single form-control" id="categoryName" name="categoryName" required="required" tabindex="-1">
+												<option ></option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+											</select>											
+										</div>
+									</div>
+									<!-- 사용 여부 -->
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="useCheckY">사용 여부
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="radio" class="flat" name="useCheck" id="useCheckY" value="Y" required="required" /> Y
+											<input type="radio" class="flat" name="useCheck" id="useCheckN" value="N" required="required"/> N
+										</div>
+									</div>
+									<div class="ln_solid"></div>
+									<div class="item form-group">
+										<div class="col-md-6 col-sm-6 offset-md-3">
+											<button type="submit" class="btn btn-primary">등록</button>
+											<button class="btn btn-success" type="reset">초기화</button>
+											<button id="cancelBtn" class="btn btn-warning" type="button">목록</button>
+										</div>
+									</div>
+								</form> <!-- <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"> -->
+           					</div> <!-- </div class="col-sm-12"> -->
+           				</div> <!-- </div class="row"> -->
+           				
+           			</div> <!-- </div class="x_content"> -->
+            	</div> <!-- </div class="x_panel"> -->
+            
+			</div> <!-- </div class="col-md-12 col-sm-12"> -->
+		</div> <!-- </div class="row"> -->
+	
+	</th:block>
+
+	<th:block layout:fragment="customJsScript">
+		<script type="text/javascript">
+			function handleOnInput(el, maxlength) {
+			  if(el.value.length > maxlength)  {
+			    el.value 
+			      = el.value.substr(0, maxlength);
+			  }
+			}
+			
+			// 목록 버튼 탐색
+			let cancelBtn = document.querySelector('#cancelBtn');
+			
+			// 목록 버튼에 이벤트 등록
+			cancelBtn.addEventListener('click', function(){
+				console.log(location.href);
+				// 판매 상품 카테고리 대분류 목록으로 리다이렉트
+				window.location = '/admin/category/goodsLarge';
+			
+			});
+			
+		</script>
+	</th:block>
+</html>

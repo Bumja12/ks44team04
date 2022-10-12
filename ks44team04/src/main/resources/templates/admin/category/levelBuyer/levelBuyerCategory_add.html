@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminDefault}">
+
+	<th:block layout:fragment="customTitle">
+	    <title th:text="${title}"></title>
+	</th:block>
+	
+	<th:block layout:fragment="customContents">
+		<div class="row">
+			<div class="col-sm-12">
+        		<div class="x_panel">
+            		<div class="x_title">
+                		<h2 style="font-size: 17px;">구매자 등급 카테고리 등록</h2>
+                    	<div class="clearfix"></div>
+            		</div>
+            		<div class="x_content">
+	            		<div class="row">
+                    		<div class="col-sm-12">
+         						<br/>
+								<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" th:action="@{/admin/category/addLevelBuyerCategory}" method="post">
+									<!-- 등급 이름 -->
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_name">등급 이름
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" id="level_name" required="required" class="form-control" maxlength="15">
+										</div>
+									</div>
+									<!-- 사용 여부 -->
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="useCheckY">사용 여부
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="radio" class="flat" name="useCheck" id="useCheckY" value="Y" required="required" /> Y
+											<input type="radio" class="flat" name="useCheck" id="useCheckN" value="N" required="required"/> N
+										</div>
+									</div>
+									<!-- 구매자 구매 금액 조건(6개월) -->
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="buyer_price_terms">구매자 구매 금액 조건(6개월)
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<!-- 숫자만 입력 가능 -->
+											<input type="number" id="buyer_price_terms" name="buyer_price_terms" value="0" required="required" class="form-control" oninput="handleOnInput(this, 15)">
+										</div>
+									</div>
+									<!-- 적립율(%) -->
+									<div class="item form-group">
+										<label for="save_rate" class="col-form-label col-md-3 col-sm-3 label-align">적립율(%)
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<!-- 숫자만 입력 가능 -->
+											<input id="save_rate" class="form-control" type="number" value="0.5" required="required" name="save_rate" oninput='handleOnInput(this, 15)'>
+										</div>
+									</div>
+									<div class="ln_solid"></div>
+									<div class="item form-group">
+										<div class="col-md-6 col-sm-6 offset-md-3">
+											<button type="submit" class="btn btn-primary">등록</button>
+											<button class="btn btn-success" type="reset">초기화</button>
+											<button id="cancelBtn" class="btn btn-warning" type="button">목록</button>
+										</div>
+									</div>
+								</form> <!-- <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"> -->
+           					</div> <!-- </div class="col-sm-12"> -->
+           				</div> <!-- </div class="row"> -->
+           				
+           			</div> <!-- </div class="x_content"> -->
+            	</div> <!-- </div class="x_panel"> -->
+            
+			</div> <!-- </div class="col-md-12 col-sm-12"> -->
+		</div> <!-- </div class="row"> -->
+	
+	</th:block>
+
+	<th:block layout:fragment="customJsScript">
+		<script type="text/javascript">
+			function handleOnInput(el, maxlength) {
+			  if(el.value.length > maxlength)  {
+			    el.value 
+			      = el.value.substr(0, maxlength);
+			  }
+			}
+			
+			// 목록 버튼 탐색
+			let cancelBtn = document.querySelector('#cancelBtn');
+			
+			// 목록 버튼에 이벤트 등록
+			cancelBtn.addEventListener('click', function(){
+				console.log(location.href);
+				// 판매 상품 카테고리 대분류 목록으로 리다이렉트
+				window.location = '/admin/category/levelBuyer';
+			
+			});
+			
+		</script>
+	</th:block>
+</html>
