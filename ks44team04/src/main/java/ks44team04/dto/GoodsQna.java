@@ -10,7 +10,7 @@ public class GoodsQna {
     private String goodsQnaContent;
     private String goodsQnaDate;
     private String secretCheck;
-    private int goodsQnaPw;
+    private String goodsQnaPw;
     private String qnaStatus;
     private GoodsAnswer goodsAnswerInfo;
     private User userInfo;
@@ -81,11 +81,11 @@ public class GoodsQna {
         this.secretCheck = secretCheck;
     }
 
-    public int getGoodsQnaPw() {
+    public String getGoodsQnaPw() {
         return goodsQnaPw;
     }
 
-    public void setGoodsQnaPw(int goodsQnaPw) {
+    public void setGoodsQnaPw(String goodsQnaPw) {
         this.goodsQnaPw = goodsQnaPw;
     }
 

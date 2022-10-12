@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="ks44team04.mapper.CategoryMapper">
+    
+    <resultMap 	type="GoodsLargeCategory" 		id="GoodsLargeCategoryMap">
+		<id 	column="goods_large_category" 	property="goodsLargeCategory"/>
+		<result column="goods_category" 		property="goodsCategory"/>
+		<result column="reg_id" 				property="regId"/>
+		<result column="use_check" 				property="useCheck"/>
+		<result column="reg_date" 				property="regDate"/>
+	</resultMap>
+	
+    <resultMap 	type="GoodsSmallCategory" 		id="GoodsSmallCategoryMap">
+		<id 	column="goods_small_category" 	property="goodsSmallCategory"/>
+		<result column="goods_large_category" 	property="goodsLargeCategory"/>
+		<result column="small_category_name" 	property="smallCategoryName"/>
+		<result column="reg_id" 				property="regId"/>
+		<result column="use_check" 				property="useCheck"/>
+		<result column="reg_date" 				property="regDate"/>
+	</resultMap>
+
+	<resultMap type="GoodsQnaCategory" 			id="GoodsQnaCategoryMap">
+		<id column="goods_qna_category" 		property="goodsQnaCategory"/>
+		<result column="reg_id" 				property="regId"/>
+		<result column="category_name" 			property="categoryName"/>
+		<result column="reg_date" 				property="regDate"/>
+		<result column="use_check" 				property="useCheck"/>
+	</resultMap>
+
+	<resultMap 	type="BoardCategory" 			id="BoardCategoryMap">
+		<id 	column="board_category" 		property="boardCategory"/>
+		<result column="category_name" 			property="categoryName"/>
+		<result column="reg_id" 				property="regId"/>
+		<result column="use_check" 				property="regDate"/>
+		<result column="reg_date" 				property="useCheck"/>
+	</resultMap>
+	
+</mapper>

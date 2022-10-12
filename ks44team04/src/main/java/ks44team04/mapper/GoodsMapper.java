@@ -56,4 +56,14 @@ public interface GoodsMapper {
 	
 	//상품 문의 답변 조회
 	public List<GoodsAnswer> getGoodsAnswer();
+	
+	//유저 권한 불러오기
+	public String userRight(String userId);
+	
+	//문의 한 유저만 열람 가능 쿼리
+	public String qnaBuyerView(String userId);
+	
+	//해당 상품 판매자 문의 열람 가능 쿼리
+	public String qnaSellerView(String userId);
+	
 }

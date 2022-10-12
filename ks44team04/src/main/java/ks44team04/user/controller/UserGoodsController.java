@@ -1,19 +1,24 @@
 package ks44team04.user.controller;
 
 import java.util.List;
-
+import java.util.Map;
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsQna;
 import ks44team04.dto.GoodsQnaCategory;
 import ks44team04.service.GoodsService;
+import ks44team04.service.UserService;
 
 @Controller
 @RequestMapping("/user/goods")
@@ -22,11 +27,17 @@ public class UserGoodsController {
     
     //의존성 주입
   	private GoodsService goodsService;
-  	public UserGoodsController(GoodsService goodsService) {
-  		this.goodsService = goodsService;
-  	}
+  	  	//유저 권한 확인 서비스 
+  	private UserService userService;
+  	
     
-    //상품 리스트 
+    public UserGoodsController(GoodsService goodsService, UserService userService) {
+			this.goodsService = goodsService;
+			this.userService = userService;
+		}
+
+
+	//상품 리스트 
     @GetMapping("/goodsList")
     public String getGoodsList(Model model) {
         
@@ -71,7 +82,9 @@ public class UserGoodsController {
     
     //문의 등록 
 	@PostMapping("/goods")
-	public String goodsQnaAdd(GoodsQna goodsQna){
+	public String goodsQnaAdd(GoodsQna goodsQna
+							 ,@RequestHeader(value = "Referer") String referer
+							 ,RedirectAttributes reattr){
 		
 		goodsQna.setBuyerId("buyer01");
 		goodsQna.setQnaStatus("답변대기");
@@ -79,9 +92,43 @@ public class UserGoodsController {
 		goodsService.goodsQnaAdd(goodsQna);
 		log.info("사용자가 등록한 문의 정보 ::: {}", goodsQna);
 		
+		reattr.addAttribute("qnaView", "qnaView");
 		
-		return "redirect:/user/goods/goods";
+		
+		return "redirect:" + referer;
 	}
+	
+	//문의 답변 권한별로 볼 수 있게 하기
+	@GetMapping("/answerView")
+	public String goodsQnaAnswer(@RequestParam(value="a") Map<String, String> answerView
+								,@RequestParam("userId") String userId ,HttpSession session) {
+	 
+		userService.userLogin(userId);
+		String SID = (String) session.getAttribute("SID");
+		
+		String userRight = goodsService.userRight(userId);
+		
+		int a = 0;
+		/*
+		if("admin".equals(userRight)) {
+			a = 1;
+		} else if ("buyer".equals(userRight)) {
+			// 글쓴이랑 세션아이디 비교
+			String buyerRight = goodsService.qnaBuyerView(userId);
+			if("") {
+				a = 1;
+			}
+		} else if ("seller".equals(userRight)) {
+			// 판매자랑 세션아이디 비교
+			String sellerRight = goodsService.qnaSellerView(userId);
+			if() {
+				a = 1;
+			}
+		} */
+	 
+		return "user/goods/answerView"; 
+	 }
+	 
     
     //장바구니
     @GetMapping("/cart")

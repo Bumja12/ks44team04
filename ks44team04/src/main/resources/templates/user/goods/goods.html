@@ -9,6 +9,9 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
 <!-- 별, 장바구니, 찜하기, 자물쇠 아이콘 -->
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+<!-- 문의, 답변, 답변대기 아이콘 -->
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-straight/css/uicons-bold-straight.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css'>
 
 <style>
 * { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; color: #333;}
@@ -164,8 +167,8 @@ div { margin: 5px 0px }
 				</div>
 				<div class="form-group">	
 					<a href="#" class="buyBtn" style="margin-left:30px;">구매하기</a>
-					<a href="#" class="cartBtn"><i class="fi fi-rr-shopping-cart" style="vertical-align:-2px"></i>&nbsp장바구니 </a>
-					<a href="#" class="cartBtn"><i class="fi fi-rr-search-heart" style="vertical-align:-2px"></i>&nbsp찜하기 </a>
+					<a href="#" class="cartBtn"><i class="fi fi-rr-shopping-cart" style="vertical-align:-2px"></i>&nbsp;장바구니 </a>
+					<a href="#" class="cartBtn"><i class="fi fi-rr-search-heart" style="vertical-align:-2px"></i>&nbsp;찜하기 </a>
 				</div>
 			</div>
 		</div>
@@ -181,23 +184,36 @@ div { margin: 5px 0px }
 			<ul class="tabList" style="list-style:none; vertical-align: top;">
 				<li class="tabLink current" data-tab="tab-1">상품정보</li>
 				<li class="tabLink" data-tab="tab-2">후기</li>
-				<li class="tabLink" data-tab="tab-3">문의</li>
+				<li id="qnaTab" class="tabLink" data-tab="tab-3">문의</li>
 			</ul>
 			<div class="clear"></div>
 	
 			<div class="tabDetail">
 			
 			
+			
+			
+			
 				<!-- 상품 정보 Content 시작 -->
 				<div id="tab-1" class="tabContent current" th:object=${goodsInfo}>
 					<p th:text="*{goodsContent}"></p>
 				</div>
+				<!-- 상품 정보 Content 끝 -->
+				
+				
+				
 				
 				
 				<!-- 상품 후기 Content 시작 -->
 				<div id="tab-2" class="tabContent">
 					 <div th:include="user/review/reviewList :: reviewModal"></div>
 				</div>
+				<!-- 상품 후기 Content 끝 -->
+				
+				
+				
+				
+				
 				
 				<!-- 상품 문의 Content 시작 -->
 				<div id="tab-3" class="tabContent">
@@ -218,24 +234,41 @@ div { margin: 5px 0px }
 								</tr>
 							</thead>
 							<tbody id="qnaList" style="vertical-align: middle;">
-								<tr th:if="${not #lists.isEmpty(goodsQnaInfo)}" th:each="gqi : ${goodsQnaInfo}">
+							<th:block th:if="${not #lists.isEmpty(goodsQnaInfo)}" th:each="gqi : ${goodsQnaInfo}">
+								<input type="hidden" class="secretVal" th:value="${gqi.secretCheck}">
+								<tr>
 									<td th:text="${gqi.goodsQnaCategoryInfo.categoryName}"></td>
-									<td th:text="${'['+gqi.qnaStatus+']'}"><span class="noAnswer" style="color: #9a9a9a;"></span></td>
-									<td th:text="${gqi.goodsQnaTitle}" class="qnaToggle"></td>
+									<td th:text="${'['+gqi.qnaStatus+']'}" class="answerYN" th:classappend="(${gqi.qnaStatus}=='완료'?Y:'')+(${gqi.qnaStatus}=='대기'?N:'')"></td>
+									<td th:text="${gqi.goodsQnaTitle}" class="qnaToggle" style="cursor:pointer;"></td>
 									<td th:text="${gqi.userInfo.userId}"></td>
 									<td th:text="${#strings.substring(gqi.goodsQnaDate,0,10)}"></td>
 								</tr>
-						<!-- 		<tr th:if="${goodsQnaInfo.qnaStatus} == '답변완료'" th:each="gqi : ${goodsQnaInfo}">
-								</tr>  -->
-								<tr>
-									<td>상품</td>
-									<td><span class="okAnswer" style="color: #7d9655;">[답변완료]</span></td>
-									<td>비밀글입니다.<i class="fi fi-rr-lock"></i></td>
-									<td>buyer01</td>
-									<td>2021-03-05</td>
-								</tr>
-								<tr th:unless="${not #lists.isEmpty(goodsQnaInfo)}">
+						 			<tr class="answerToggle" style="display:none;">
+						 				<td colspan="2"></td>
+						 				<td colspan="2" style="text-align:left; padding-left:50px; background-color:#f4f8ed;">
+						 					<div>
+							 					<div style="display:table-cell;">
+							 						<i class="fi fi-bs-comment-question" style="font-size:20px; color:#98b856;"></i>
+							 						<span th:text="${gqi.goodsQnaContent}" style="padding-left:10px; vertical-align:text-top; font-size:16px;"></span>
+							 					</div>
+						 					</div>
+						 					<div style="margin-top:20px;">
+							 					<div th:if="${gqi.qnaStatus}=='답변완료'" style="display:table-cell;" >
+							 						<i class="fi fi-br-comment-check" style="font-size:20px; color:#98b856;"></i>
+							 						<span th:text="${gqi.goodsAnswerInfo.goodsAnswerContent}" style="padding-left:10px; vertical-align:text-top; font-size:16px;"></span>
+							 					</div>
+							 					<div th:unless="${gqi.qnaStatus} == '답변완료'" style="display:table-cell;">
+							 					</div>
+							 					<div>
+							 			 			<span th:text="${#strings.substring(gqi.goodsAnswerInfo.answerDate,0,10)}" style="float:right; padding-right:20px;"></span>
+						 						</div>
+						 					</div>
+						 			 	</td> 
+						 			</tr>
+									<tr th:unless="${not #lists.isEmpty(goodsQnaInfo)}">
 									<td colspan="5">등록된 문의가 없습니다.</td>
+									</tr>
+							</th:block>
 							</tbody>
 						</table>
 					</div>
@@ -245,6 +278,10 @@ div { margin: 5px 0px }
 						</div>
 					</div>
 					<!-- 상품 문의 Content 끝 -->
+					
+					
+					
+					
 				</div>
 			</div>
 		</div>
@@ -307,12 +344,6 @@ div { margin: 5px 0px }
 <script th:inline="javascript">
 
 $(function() {
-	
-
-	/* 문의 클릭 시 답변 펼치기 */
-		$('.qnaToggle').click(function (){
-			$('.answerToggle').show();
-		});
 	
 	
 	/* 스크롤 방지 코드 */
@@ -491,38 +522,61 @@ $(function() {
         }
     });
     
-	/* 문의 등록 
-    $('.qnaSubmit').click(function () {
-        var qnaModal = $('#qnaModalForm').serialize();
-    	console.log(qnaModal);
-    	function qnaAjax(){
-	        $.ajax({ url: "/user/goods/goodsQnaAdd",
-	            	 type:"POST",
-	            	 data: qnaModal,
-	    			 dateType : 'json',
-	    	}).done(function(data){
-		    	viewMemberList(data);
-	    	});
-		};
-		var viewQnaList = function(arr){
-			$("#qnaList").empty();
-				
-			$.each(arr, function(i,item){
-				let tr = $("<tr></tr>");
-				console.log(item)
-				$.each(item, function(key,value){
-					$("<td></td>").html(value).appendTo(tr);
-				});
-				$("#qnaList").append(tr);
-			});
+    /* 문의 등록시 문의 화면으로 새로고침 */
+    if(/*[[${param.qnaView}]]*/ !== null) {
+		document.querySelector('#qnaTab').click();
+		console.log('zzzzzzzz');
+	}
+    
+    /* 답변완료 시 녹색으로, 답변대기 시 회색 */
+	$(".answerYN").each(function(){
+		var answerYN = $('.answerYN').text();
+		console.log(answerYN);
+		
+		if($(this).text() == '[답변완료]'){
+			$(this).css('color','#98b856');
 		}
-    }); */
+		else{
+			$(this).css('color','#9a9a9a');
+		}
+	});
     
+	/* 비밀글일 때 qna제목 옆 자물쇠 아이콘 넣기 */
+	$('.qnaToggle').each(function(){
+		var icon = document.createElement("i");
+		
+		var secretVal = $('.secretVal').val();
+		console.log(secretVal);
+		
+		if($('.secretVal').val() == 'Y'){
+			$(this).append('<i class="fi fi-rr-lock" style="font-size:14px; color:gray;"></i>');		
+			//icon.innerHTML = '<i class="fi fi-rr-lock"></i>'
+		}
+		
+	});
     
-    
-    
+	/* 문의 클릭 시 답변 펼치기 */
+	$(".qnaToggle").click(function (){
+		$(".qnaToggle").each(function(){
+			$(this).parent().next().css('display', 'none');
+		})
+			$(this).parent().next().toggle();
+		/* $.ajax({ type: "POST",
+	                url: "/user/goods/answerView",
+	           	    data: var a = { 'goodsCode' : goodsCode,
+	           			   		    'qnaCode' : qnaCode },
+	                success: function (data) {
+	                if(result == 1){  */
+					//1
+					
+	                //0
+	             //}else {
+	             //},
+			//});
+	});
 	
-        
+	
+    
 });
 </script>
 </th:block>

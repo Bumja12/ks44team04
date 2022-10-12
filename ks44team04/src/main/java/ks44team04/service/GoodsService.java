@@ -110,4 +110,24 @@ public class GoodsService {
 	// List<GoodsAnswer> goodsAnswer = goodsMapper.getGoodsAnswer();
 	// return goodsAnswer;
 	//}
+	
+	//유저 권한 불러오기
+	public String userRight(String userId) {
+		String userRight = goodsMapper.userRight(userId);
+		return userRight;
+	}
+	
+	//문의 한 유저만 열람 가능 쿼리
+	public String qnaBuyerView(String userId) {
+		String qnaBuyerView = goodsMapper.qnaBuyerView(userId);
+		return qnaBuyerView;
+	}
+	
+	//해당 상품 판매자 문의 열람 가능 쿼리
+	public String qnaSellerView(String userId) {
+		String qnaSellerView = goodsMapper.qnaSellerView(userId);
+		return qnaSellerView;
+	}
+	
+	
 }

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div class="hero-wrap hero-bread" style="background-image: url('/user/images/bg_1.jpg');" th:fragment="headerFragment">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center fadeInUp ftco-animated">
+                <p class="breadcrumbs"><span class="mr-2"><a th:href="@{/user}">Home</a></span> <span th:text="${header}"></span></p>
+                <h1 class="mb-0 bread" th:text="${header}"></h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/userHead :: headFragment"></head>
+
+<body class="goto-here">
+
+        <!-- start : top navigation -->
+        <div th:replace="fragments/userNav :: navFragment"></div>
+        <!-- end : top navigation -->
+
+        <!-- page content -->
+            <th:block layout:fragment="customContents"></th:block>
+
+        <div th:replace="fragments/userFooter :: footerFragment"></div>
+
+<th:block th:replace="fragments/userJs :: jsFragment"></th:block>
+
+<!-- 사용자 정의 JsScript 파일-->
+<th:block layout:fragment="customJsScript"></th:block>
+<!-- 사용자 정의 Script-->
+<th:block layout:fragment="customScript"></th:block>
+</body>
+
+</html>

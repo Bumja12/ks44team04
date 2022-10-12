@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+<style>
+.processing {
+	text-align: center;
+	background-color: #ECECEC;
+	width: 150px;
+}
+
+.btn-link {
+	color: black;
+}
+
+.btn-link:hover {
+	color: #73879C;
+}
+</style>
+
+	<div class="row" style="display: inline-block;">
+		<div class="tile_count">
+			<h1>신고 처리</h1>
+		</div>
+	</div>
+
+
+	<div class="col-md-12 col-sm-12  ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>신고 내용</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Settings 1</a> <a
+								class="dropdown-item" href="#">Settings 2</a>
+						</div>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+
+			<div class="x_content" >
+				<table class="table" th:object="${Report}">
+					<thead >
+						<tr>
+							<th class="processing" scope="col"> 회원 신고 코드</th>
+							<th scope="col" colspan="5" ><input type="text" style="border: none; "th:value="*{reportHistoryCode}" readonly="readonly"> </th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr>
+							<th class="processing" scope="row">신고자 아이디</th>
+							<td><input type="text" style="border: none; "th:value="*{reportingId}" readonly="readonly"></td>
+							<th class="processing">신고 시간</th>
+							<td  ><input type="text" style="border: none; "th:value="*{reportDate}" readonly="readonly"></td>
+							<th class="processing">상태</th>
+							<td  ><input type="text" style="border: none; "th:value="*{reportResult}" readonly="readonly"></td>
+						</tr>
+						<tr>
+							<th class="processing" scope="row">신고 카테고리</th>
+							<td><input type="text" style="border: none; "th:value="*{reportCategoryDto.categoryName}" readonly="readonly"></td>
+							<th class="processing">신고 사유 코드</th>
+							<td><input type="text" style="border: none; "th:value="*{reportRuleDto.reportReason}" readonly="readonly"></td>
+							<th class="processing">신고 대상 코드</th>
+							<td><input type="text" style="border: none; "th:value="*{reportWhat}" readonly="readonly"></td>
+
+
+						</tr>
+						<tr>
+							<th class="processing" scope="row">신고대상 아이디</th>
+							<td><input type="text" style="border: none; "th:value="*{reportedId}" readonly="readonly"></td>
+							<th rowspan="2" class="processing" style="padding: 30px;">신고내용</th>
+							<td rowspan="2" colspan="3"><input type="text" style="border: none; "th:value="*{reportReason}" readonly="readonly"></td>
+
+						</tr>
+						<tr>
+							<th class="processing" scope="row">신고대상자 벌점</th>
+							<td><input type="text" style="border: none; "th:value="*{UserDto.userPenalty}" readonly="readonly"></td>
+						</tr>
+						<tr>
+							<th class="processing" scope="row">첨부파일</th>
+							<td colspan="6">파일 이름 넣을 예정 - 파일이름 클릭시 사진 나오게</td>
+						</tr>
+						
+						<tr>
+							<th style="padding: 0px;" colspan="8"></th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>신고 처리내용</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Settings 1</a> <a
+								class="dropdown-item" href="#">Settings 2</a>
+						</div></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<!-- 처리 -->
+			<div class="x_content">
+	<form id="reportProcessing" th:action="@{/admin/report/reportProcessing}" method="post">
+				
+			
+				<table class="table" th:object="${Report}">
+					<thead>
+						<tr>
+							
+							<th class="processing" scope="col">회원 신고 코드</th>
+							<th scope="col" colspan="5">
+							<input type="text" style="border: none;" name="reportHistoryCode" th:value="*{reportHistoryCode}" readonly="readonly">
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th class="processing" scope="row">관리자 아이디</th>
+							<td><input type="text" style="border: none;" id="reportApproveId" name="reportApproveId" th:value="${session.SID}" readonly="readonly"></td>
+							<th class="processing">신고대상 아이디</th>
+							<td style="text-align: left;" colspan="3"><input type="text" style="border: none; "th:value="*{reportedId}" readonly="readonly"></td>
+						</tr>
+						<tr>
+							<th class="processing" scope="row">신고 카테고리</th>
+							<td><input type="text" style="border: none; "th:value="*{reportCategoryDto.categoryName}" readonly="readonly"></td>
+							<th class="processing">신고 사유 코드</th>
+							<td><input type="text" style="border: none; "th:value="*{reportRuleDto.reportReason}" readonly="readonly"></td>
+							<th class="processing">신고 대상 코드</th>
+							<td><input type="text" style="border: none; "th:value="*{reportWhat}" readonly="readonly"></td>
+						</tr>
+						<tr>
+							<th class="processing" scope="row">승인 반려 사유</th>
+							<td colspan="7">
+							<input type="text" id="reportResultReason" name="reportResultReason"  style="border: none; width: 1400px;">
+							</td>
+						</tr>
+						<tr>
+							<th style="padding: 0px; text-align: right;" colspan="8" >
+								<input type="hidden" name="penaltyPoint" th:value="*{reportRuleDto.penaltyPoint}">
+								<input type="hidden" name="totalPenaltyPoint" th:value="*{UserDto.userPenalty} + *{reportRuleDto.penaltyPoint}">
+								<input type="hidden" name="userId" th:value="*{reportedId}">
+								<input type="hidden" id="userPenalty" name="userPenalty" th:value="*{UserDto.userPenalty} + *{reportRuleDto.penaltyPoint}">
+								<input type="hidden" id="reportResult" name="reportResult" >
+								<label><i class="glyphicon glyphicon-ok"></i>
+									<button type="button" class=" btn btn-link "  value="승인">승인</button>
+								</label>
+								<label><i class="glyphicon glyphicon-remove"></i>
+									<button type="button" class=" btn btn-link "  value="반려">반려</button>
+								</label>
+							</th>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+			</div>
+		</div>
+
+
+	</div>
+
+</th:block>
+<!-- jQuery -->
+
+
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	
+	<script type="text/javascript">
+	
+	 $(document).ready(function() {       
+	     $('.btn').on("click", function() {     //버튼 클릭시 호출되는 함수
+	           if($(this).val() === '반려'){
+	    	 	$('#reportResult').val('반려');
+	    	 	$('#userPenalty').val([[${userPenalty}]]);
+	           $( '#reportProcessing' ).submit();
+	     	}else if($(this).val() === '승인'){
+	     		$('#reportResult').val('승인');
+	     		$( '#reportProcessing' ).submit();
+	     	}
+	     });
+	});
+	</script>
+
+</th:block>
+
+
+
+
+</html>

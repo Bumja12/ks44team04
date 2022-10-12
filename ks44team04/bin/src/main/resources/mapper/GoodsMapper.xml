@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="ks44team04.mapper.GoodsMapper">
+	
+	<resultMap type="Goods" id="goodsResultMap">
+        <id 	column="goods_code" 			property="goodsCode"/>
+        <result column="goods_small_category" 	property="goodsSmallCategory"/>
+        <result column="seller_id" 				property="sellerId"/>
+        <result column="goods_name" 			property="goodsName"/>
+        <result column="goods_content" 			property="goodsContent"/>
+        <result column="goods_price" 			property="goodsPrice"/>
+        <result column="goods_discount_rate" 	property="goodsDiscountRate"/>
+        <result column="goods_post_price" 		property="goodsPostPrice"/>
+        <result column="goods_stock" 			property="goodsStock"/>
+        <result column="soldout_check" 			property="soldoutCheck"/>
+        <result column="stop_sale_check" 		property="stopSaleCheck"/>
+        <result column="package_post_check" 	property="packagePostCheck"/>
+        <result column="regular_deliver_check" 	property="regularDeliverCheck"/>
+        <result column="reg_date" 				property="regDate"/>
+        <result column="modify_date" 			property="modifyDate"/>
+        <result column="goods_file" 			property="goodsFile"/>
+        	<association property="userInfo" resultMap="ks44team04.mapper.UserMapper.UserResultMap"/>
+        	<association property="goodsSmallCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsSmallCategoryMap"/>
+			<association property="goodsLargeCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsLargeCategoryMap"/>
+	        
+    </resultMap>
+<!--        
+	        
+	        <association property="userInfo" javaType="User">
+	       		<result column="user_id" 				property="userId"/>
+	        </association>
+-->	        
+    
+	<!-- 상품 목록 조회 -->
+	<select id="getGoodsList" resultMap="goodsResultMap" fetchSize="100" >
+		/* 상품 목록 조회 */
+		SELECT 
+			 lc.goods_large_category
+			,lc.goods_category
+			,sc.goods_small_category
+			,sc.small_category_name	
+			,g.goods_code
+			,g.goods_name 
+			,g.goods_price
+			,g.goods_stock
+			,g.soldout_check
+			,g.stop_sale_check
+			,g.goods_discount_rate
+			,u.user_id
+			,g.reg_date	
+		FROM
+			 tb_goods AS g
+			 INNER JOIN
+			 tb_user AS u
+			 ON
+			 g.seller_id = u.user_id
+			 INNER JOIN
+			 tb_goods_small_category AS sc
+			 ON
+			 g.goods_small_category = sc.goods_small_category
+			 INNER JOIN
+			 tb_goods_large_category AS lc
+			 ON
+			 sc.goods_large_category = lc.goods_large_category
+		ORDER BY g.reg_date DESC;
+	</select>
+	
+	<!-- 상품 검색 -->
+	<select id="getGoodsListSearch" parameterType="map" resultMap="goodsResultMap" fetchSize="100" >
+		/* 상품 목록 조회 */
+		SELECT 
+			 lc.goods_large_category
+			,lc.goods_category
+			,sc.goods_small_category
+			,sc.small_category_name	
+			,g.goods_code
+			,g.goods_name 
+			,g.goods_price
+			,g.goods_stock
+			,g.soldout_check
+			,g.stop_sale_check
+			,g.goods_discount_rate
+			,u.user_id
+			,g.reg_date	
+		FROM
+			 tb_goods AS g
+			 INNER JOIN
+			 tb_user AS u
+			 ON
+			 g.seller_id = u.user_id
+			 INNER JOIN
+			 tb_goods_small_category AS sc
+			 ON
+			 g.goods_small_category = sc.goods_small_category
+			 INNER JOIN
+			 tb_goods_large_category AS lc
+			 ON
+			 sc.goods_large_category = lc.goods_large_category
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchCate != null and searchCate != ''">
+				sc.goods_small_category = #{searchCate}
+			</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+			</if>
+		</trim>
+		ORDER BY g.reg_date DESC;		 
+	</select>
+
+	<!-- 특정상품 조회 -->
+	<select id="getGoodsInfoByCode" parameterType="String" resultMap="goodsResultMap">
+		/* 특정상품 조회 */
+		SELECT
+			 g.goods_code  				
+			,g.goods_small_category		
+			,g.seller_id				AS user_id
+			,g.goods_name				
+			,g.goods_content			
+			,g.goods_price				
+			,g.goods_discount_rate		
+			,g.goods_post_price			
+			,g.goods_stock				
+			,g.soldout_check			
+			,g.stop_sale_check			
+			,g.package_post_check		
+			,g.regular_deliver_check	
+			,g.reg_date					
+		FROM
+			tb_goods AS g
+			INNER JOIN
+			tb_user AS u
+			ON
+			g.seller_id = u.user_id
+		WHERE
+			goods_code = #{goodsCode};
+	</select>
+	<!--  	,g.goods_file				AS goodsFile -->
+	
+	<resultMap 	type="GoodsLargeCategory" 		id="GoodsLargeCategoryMap">
+		<id 	column="goods_large_category" 	property="goodsLargeCategory"/>
+		<result column="goods_category" 		property="goodsCategory"/>
+		<collection property="goodsSmallCategoryInfo" javaType="List" ofType="GoodsSmallCategory">
+			<id 	column="goods_small_category" 	property="goodsSmallCategory"/>
+			<result column="goods_large_category" 	property="goodsLargeCategory"/>
+			<result column="small_category_name" 	property="smallCategoryName"/>
+		</collection>
+	</resultMap>
+	
+	<!-- 상품 카테고리 대분류 -->
+    <select id="goodsLargeCategoryList" parameterType="map" resultMap="GoodsLargeCategoryMap">
+    /* 상품 카테고리 대분류 조회 */
+	SELECT
+		 lc.goods_large_category
+		,lc.goods_category
+		,sc.goods_large_category
+		,sc.goods_small_category
+		,sc.small_category_name
+	FROM
+		tb_goods_large_category AS lc
+		INNER JOIN
+		tb_goods_small_category AS sc
+		ON
+		lc.goods_large_category = sc.goods_large_category
+	<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		<if test="value != null and value != ''">
+			${searchKey} LIKE CONCAT('%', #{value}, '%')
+		</if>
+	</trim>	
+    </select>
+	
+    <!-- 상품 수정 -->
+	<update id="goodsModify" parameterType="Goods">
+		/* 상품 수정 */
+		UPDATE tb_goods
+		<trim prefix="SET" prefixOverrides=",">
+			<if test="goodsCode != null and goodsCode != ''">goods_code = #{goodsCode}</if>
+			<if test="goodsSmallCategory != null and goodsSmallCategory != ''">,goods_small_category = #{goodsSmallCategory}</if>
+			<if test="sellerId != null and sellerId != ''">,seller_id = #{sellerId}</if>
+			<if test="goodsName != null and goodsName != ''">,goods_name = #{goodsName}</if>
+			<if test="goodsContent != null and goodsContent != ''">,goods_content = #{goodsContent}</if>
+			<if test="goodsPrice != null and goodsPrice != ''">,goods_price = #{goodsPrice}</if>
+			<if test="goodsDiscountRate != null and goodsDiscountRate != ''">,goods_discount_rate = #{goodsDiscountRate}</if>
+			<if test="goodsPostPrice != null and goodsPostPrice != ''">,goods_post_price = #{goodsPostPrice}</if>
+			<if test="goodsStock != null and goodsStock != ''">,goods_stock = #{goodsStock}</if>
+			<if test="soldoutCheck != null and soldoutCheck != ''">,soldout_check = #{soldoutCheck}</if>
+			<if test="stopSaleCheck != null and stopSaleCheck != ''">,stop_sale_check = #{stopSaleCheck}</if>
+			<if test="packagePostCheck != null and packagePostCheck != ''">,package_post_check = #{packagePostCheck}</if>
+			<if test="regularDeliverCheck != null and regularDeliverCheck != ''">,regular_deliver_check = #{regularDeliverCheck}</if>
+			,modify_date = NOW()
+			<if test="goodsReportAmount != null and goodsReportAmount != ''">,goods_report_amount = #{goodsReportAmount}</if>
+			<if test="goodsFile != null and goodsFile != ''">,goods_file = #{goodsFile}</if>
+		</trim>
+		WHERE
+			goods_code = #{goodsCode};
+	</update>
+	
+	<!-- 상품 등록 -->
+	<insert id="goodsAdd" parameterType="Goods">
+		/* 상품 등록  */
+		INSERT INTO tb_goods
+			(goods_code, goods_small_category, seller_id, goods_name, goods_content, goods_price, goods_discount_rate, goods_post_price, goods_stock, package_post_check, regular_deliver_check, reg_date, goods_file)
+		VALUES
+			(#{goodsCode}, #{goodsSmallCategory}, #{sellerId}, #{goodsName}, #{goodsContent}, #{goodsPrice}, #{goodsDiscountRate}, #{goodsPostPrice}, #{goodsStock}, #{packagePostCheck}, #{regularDeliverCheck}, NOW(), #{goodsFile})
+	</insert>
+	
+	<!-- 마지막 상품코드 (코드증가) -->
+	<select id="getGoodsNewCode" parameterType="String" resultType="String">
+		SELECT  MAX(goods_code)
+		FROM 	tb_goods
+		WHERE   seller_id = #{SellerId};
+    </select>
+	
+	<!-- 상품 삭제 -->    
+    <delete id="goodsRemove" parameterType="String">
+		/* 상품 삭제 */
+		DELETE
+		FROM tb_goods
+		WHERE goods_code = #{goodsCode};
+	</delete>
+	
+	<!-- 상품 삭제하기 위한 관리자 비밀번호 -->
+	<select id="getAdminPw" parameterType="String" resultType="String">
+		SELECT	u.user_pw	AS userPw
+		FROM 	tb_user 	as u
+		WHERE	u.user_id = 'admin01';
+    </select>
+	
+    <resultMap type="GoodsQna" id="goodsQnaMap">
+        <id 	column="goods_qna_num" 		property="goodsQnaNum"/>
+        <result column="goods_qna_category" property="goodsQnaCategory"/>
+        <result column="goods_code" 		property="goodsCode"/>
+        <result column="buyer_id" 			property="buyerId"/>
+        <result column="goods_qna_title" 	property="goodsQnaTitle"/>
+        <result column="goods_qna_content" 	property="goodsQnaContent"/>
+        <result column="goods_qna_date" 	property="goodsQnaDate"/>
+        <result column="secret_check" 		property="secretCheck"/>
+        <result column="goods_qna_pw" 		property="goodsQnaPw"/>
+        <result column="qna_status" 		property="qnaStatus"/>
+		    <association property="goodsAnswerInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsAnswerMap"/>
+		    <association property="goodsInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsResultMap"/>
+		    <association property="goodsQnaCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsQnaCategoryMap"/>
+	        <association property="userInfo" resultMap="ks44team04.mapper.UserMapper.UserResultMap"/>
+    </resultMap>
+    
+    <!-- 상품 문의 조회 -->
+    <select id="getGoodsQna"  parameterType="map" resultMap="goodsQnaMap" fetchSize="100" >
+		/* 상품 문의 조회 */
+		SELECT
+			 q.goods_qna_num
+			,qc.category_name
+			,g.goods_code
+			,g.goods_name
+			,q.goods_qna_title
+			,q.goods_qna_content
+			,q.secret_check
+			,q.goods_qna_pw
+			,q.goods_qna_date
+			,u.user_id
+			,q.qna_status
+			,qa.seller_id
+			,qa.goods_answer_content
+			,qa.answer_date
+		FROM
+			tb_goods_qna AS q
+			INNER JOIN
+			tb_goods_qna_category AS qc
+			ON
+			q.goods_qna_category = qc.goods_qna_category
+			INNER JOIN
+			tb_goods AS g
+			ON
+			q.goods_code = g.goods_code
+			LEFT JOIN
+			tb_goods_qna_answer AS qa
+			ON
+			q.goods_qna_num = qa.goods_qna_num
+			INNER JOIN
+			tb_user AS u
+			ON
+			q.buyer_id = u.user_id
+		ORDER BY q.goods_qna_date DESC;
+	</select>
+	
+    <!-- 상품 문의 검색 -->
+    <select id="getGoodsQnaSearch"  parameterType="map" resultMap="goodsQnaMap" fetchSize="100" >
+		/* 상품 문의 검색 */
+		SELECT
+			 q.goods_qna_num
+			,qc.category_name
+			,g.goods_code
+			,g.goods_name
+			,q.goods_qna_title
+			,q.goods_qna_content
+			,q.secret_check
+			,q.goods_qna_pw
+			,q.goods_qna_date
+			,u.user_id
+			,q.qna_status
+			,qa.seller_id
+			,qa.goods_answer_content
+			,qa.answer_date
+		FROM
+			tb_goods_qna AS q
+			INNER JOIN
+			tb_goods_qna_category AS qc
+			ON
+			q.goods_qna_category = qc.goods_qna_category
+			INNER JOIN
+			tb_goods AS g
+			ON
+			q.goods_code = g.goods_code
+			LEFT JOIN
+			tb_goods_qna_answer AS qa
+			ON
+			q.goods_qna_num = qa.goods_qna_num
+			INNER JOIN
+			tb_user AS u
+			ON
+			q.buyer_id = u.user_id
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchQnaStatus != null and searchQnaStatus != ''">
+				${searchKey2} = #{searchQnaStatus}
+			</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+			</if>
+		</trim>
+		ORDER BY q.goods_qna_date DESC;
+	</select>
+	
+	<!-- 특정상품 문의 조회 -->
+    <select id="getGoodsQnaInfoByCode"  parameterType="map" resultMap="goodsQnaMap" fetchSize="100" >
+		/* 상품 문의 조회 */
+		SELECT
+			 q.goods_qna_num
+			,qc.category_name
+			,g.goods_code
+			,g.goods_name
+			,q.goods_qna_title
+			,q.goods_qna_content
+			,q.secret_check
+			,q.goods_qna_pw
+			,q.goods_qna_date
+			,u.user_id
+			,q.qna_status
+			,qa.seller_id
+			,qa.goods_answer_content
+			,qa.answer_date
+		FROM
+			tb_goods_qna AS q
+			INNER JOIN
+			tb_goods_qna_category AS qc
+			ON
+			q.goods_qna_category = qc.goods_qna_category
+			INNER JOIN
+			tb_goods AS g
+			ON
+			q.goods_code = g.goods_code
+			LEFT JOIN
+			tb_goods_qna_answer AS qa
+			ON
+			q.goods_qna_num = qa.goods_qna_num
+			INNER JOIN
+			tb_user AS u
+			ON
+			q.buyer_id = u.user_id
+		WHERE
+			g.goods_code = #{goodsCode}
+		ORDER BY q.goods_qna_date DESC;
+	</select>
+	
+	<resultMap type="GoodsQnaCategory" 			id="GoodsQnaCategoryMap">
+		<id column="goods_qna_category" 		property="goodsQnaCategory"/>
+		<result column="reg_id" 				property="regId"/>
+		<result column="category_name" 			property="categoryName"/>
+		<result column="reg_date" 				property="regDate"/>
+		<result column="use_check" 				property="useCheck"/>
+	</resultMap>
+	
+	<!-- 문의 카테고리 -->
+	<select id="goodsQnaCategoryList" resultMap="GoodsQnaCategoryMap">
+		/* 문의 카테고리 조회 */
+		SELECT
+			 gqc.goods_qna_category
+			,gqc.category_name
+		FROM
+			tb_goods_qna_category as gqc
+	</select>
+	
+	<!-- 문의 등록 -->
+	<insert id="goodsQnaAdd" parameterType="GoodsQna">
+		/* 상품 문의 등록  */
+		INSERT INTO tb_goods_qna
+			(goods_qna_num, goods_code, goods_qna_category, buyer_id, goods_qna_title, goods_qna_content, goods_qna_date, secret_check, goods_qna_pw, qna_status)
+		VALUES
+			(0, #{goodsCode}, #{goodsQnaCategory}, #{buyerId}, #{goodsQnaTitle}, #{goodsQnaContent}, NOW(), #{secretCheck}, #{goodsQnaPw}, #{qnaStatus})
+	</insert>
+
+ 	<resultMap 	type="GoodsAnswer" 				id="goodsAnswerMap">
+        <id 	column="goods_qna_answer" 		property="goodsQnaAnswer"/>
+        <result column="goods_qna_num" 			property="goodsQnaNum"/>
+        <result column="seller_id" 				property="sellerId"/>
+        <result column="goods_answer_content" 	property="goodsAnswerContent"/>
+        <result column="answer_date" 			property="answerDate"/>
+	</resultMap>
+    
+   	<!-- 상품 답변 조회  --> 
+    <select id="getGoodsAnswer" resultMap="goodsAnswerMap" fetchSize="100">
+    SELECT
+		 qa.goods_qna_answer
+		,gq.goods_qna_num
+		,qa.seller_id
+		,qa.goods_answer_content
+		,qa.answer_date
+	FROM
+		tb_goods_qna_answer AS qa
+		INNER JOIN
+		tb_goods_qna AS gq
+		ON
+		qa.goods_qna_num = gq.goods_qna_num;
+    </select> 
+    
+</mapper>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/userDefault}">
+
+<th:block layout:fragment="customTitle">
+    <title th:text="${title}"></title>
+    <link href="/assets/css/star.css" rel="stylesheet"/>	
+
+<style>
+
+.modal-body fieldset{
+    display: inline-block;
+    direction: rtl;
+    border:0;
+}
+.modal-body fieldset legend{
+    text-align: right;
+}
+.modal-body input[type=radio]{
+    display: none;
+}
+.modal-body label{
+    font-size: 3em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+}
+.modal-body label:hover{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+.modal-body label:hover ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+.modal-body input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+#reviewContents {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: solid 1.5px #D3D3D3;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+}
+</style>	
+
+
+</th:block>
+
+<th:block layout:fragment="customContents">
+<form >
+
+		<div>
+	  		<b style="font-size: 25px; margin-left:50px;  " > 상품평 </b>
+	  		<div style="text-align: center; font-size: 20px;"><b>사용자 총평</b></div>
+	  		<div style="text-align: center; font-size: 50px;" > ★★★★★ </div>
+	  		<hr style="border: solid 1px black;">
+	  			<b style="font-size: 18px; margin-left:50px; " > 포토 </b>
+	  		<hr style="border: solid 1px black;">
+	  		<div class="row">
+		  		<div class="col-10" >
+		  			<b style="font-size: 18px; margin-left:50px;" > 후기 </b>
+		  		</div>
+				<div class="col-2"> 
+			  		<select>
+			  			<option>최신순</option>
+			  			<option>평점 낮은 순</option>
+			  			<option>평점 놓은 순</option>
+			  			<option>추천수 높은 순</option>
+			  			<option>추천수 낮은 순</option>
+			  		</select>
+				</div>	  		
+	  		</div>
+  	<th:block th:if="${not #lists.isEmpty(reviewList)}" th:each="l : ${reviewList}">
+		      <div class="row " style="margin-left: 180px; margin-top: 50px;">
+		        <div  class="col-12">
+		        	<span>
+		        		<th:block th:each="gradeLoop : ${#numbers.sequence(1, l.grade)}">★</th:block>
+		        	</span>
+		          	<input type="hidden" id="grade" th:value="${l.grade}">
+		        </div>
+		        <div class="col-12" >
+		        	<span>
+		        	<label th:text="${l.buyerId} + '○' + ${l.reviewRegDate}"></label>
+		        	</span>
+					<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
+		         	<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn"  style="font-size: 13px; padding: 0px;">삭제</button>		      
+		        </div>
+		        <div class="col-10">
+		         <p th:text="${l.reviewContent}"></p>
+		        </div>
+				<div class="col-2" >
+					<span> 
+						<label>♡</label>
+						<label th:text="'추천수' + ${l.likeAmount} + ' 개' "></label>
+					</span>
+				</div>
+			
+		      </div>
+		      <div class="row">
+			  	<hr align="center" style="border: solid 1px black; width: 82%;">
+		      </div>
+		</div>	
+	 <div  style="text-align: right;" class="col-11">
+		<div th:include="user/review/review :: reviewModal"></div>
+	</div>
+	</form>		
+	
+  	</th:block>
+	
+ </th:block>
+
+    <th:block layout:fragment="customTopJs">
+	    <script th:inline="javascript">
+	    var num = /*[[${reviewList}]]*/ 
+	    console.log(num);
+	    
+		
+		</script>
+	</th:block>
+</html>
