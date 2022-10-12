@@ -42,6 +42,7 @@ th, td {
 						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 					</ul>
 					<div class="clearfix"></div>
+				</h2>
 			</div>
 			<div class="x_content">
 				<div class="x_panel">
@@ -98,7 +99,6 @@ th, td {
 	</div>
 
 	<div class="pwCheckModal modal fade" id="pwCheckModal" tabindex="-1" role="dialog" aria-labelledby="pwCheckModalLabel" aria-hidden="true">
-		<!-- <div class="modal-dialog modal-dialog-centered modal-sm" role="document"> -->
 		<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -108,7 +108,6 @@ th, td {
 					<div class="form-group">
 						<label for="adminPw" class="col-form-label">비밀번호를 입력해주세요.</label>
 						<input type="password" class="pwInput form-control" id="adminPw" name="adminPw">
-						<p id="checkTip" style="color:gray; font-weight: bold;"> </p>
 					</div>
 				</div>
 				<div class="modal-footer" style="text-align: center;">
@@ -129,7 +128,7 @@ th, td {
 
 				$('#pwCheckModal').modal('show');
 
-				$('#removeBtnCheck').click(function () {
+				$('#removeBtnCheck').off().on('click', function () {
 					var adminPw = $('input[name="adminPw"]').val();
 
 					var request = $.ajax({
@@ -144,24 +143,32 @@ th, td {
 							location.href = "/admin/payment/remove/" + orderDetailNum;
 						}else {
 							if(typeof adminPw == 'undefined' || adminPw == null || adminPw == '') {
-								alert('비밀번호를 입력해주세요.')
+								alert('비밀번호를 입력해주세요.');
+								$('#adminPw').focus();
 								return false;
 							}else {
-								alert('비밀번호가 일치하지 않습니다.')
+								alert('비밀번호가 일치하지 않습니다.');
+								$('#adminPw').focus();
 								return false;
 							}
 						}
 					})
 					request.fail(function( jqXHR, textStatus ) {
-					alert( "Request failed: " + textStatus );
+						alert( "Request failed: " + textStatus );
 					});
 				});
-
-			});
+			})
 
 			$('#pwCheckModal').on('hidden.bs.modal', function(e) {
 				$('#adminPw').val(null);
 			});
+
+			$("#adminPw").keyup(function(e){
+				if(e.keyCode == 13) {
+					$('#removeBtnCheck').click();
+				}
+			});
+
 		})
 	</script>
 </th:block>
