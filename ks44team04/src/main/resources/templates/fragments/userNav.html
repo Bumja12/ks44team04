@@ -28,8 +28,21 @@
 		  text-align: right !important;
 		}
 		
+		.right > a {
+			color: white;
+		}
+		
 		.topper {
-			font-size: 13px;
+			font-size: 12px;
+		}
+		
+		.rightIcons {
+			padding-left: 10px !important;
+			padding-right: 10px !important;
+		}
+		
+ 		.menus {
+			margin-top: 10px !important;
 		}
 		
 	</style>
@@ -50,8 +63,9 @@
                     </div>
                     <div class="col-md topper">
                     	<div class="right">
-	                        <a href="#" style="color: white;">회원가입 | </a>
-	                        <a href="#" style="color: white;"> 로그인</a>
+	                        <a href="#">회원가입 | </a>
+	                        <a href="#"> 로그인 | </a>
+	                        <a th:href="@{/user/user/myPage}"> 마이페이지</a>
                     	</div>
                     </div>
                 </div>
@@ -66,11 +80,11 @@
             <span class="oi oi-menu"></span> Menu
         </button>
         <div class="collapse navbar-collapse" id="ftco-nav">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto mr-auto">
             
             
-                <li class="nav-item active"><a th:href="@{/user}" class="nav-link">Home</a></li>
-                <li class="nav-item dropdown">
+                <li class="nav-item active menus"><a th:href="@{/user}" class="nav-link">Home</a></li>
+                <li class="nav-item dropdown menus">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 12px !important;">상품</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         <a class="dropdown-item" th:href="@{/user/goods/goodsList}">상품목록</a>
@@ -78,7 +92,7 @@
                         <a class="dropdown-item" th:href="@{/user/checkout}">Checkout</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown menus">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 12px !important;">커뮤니티</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown06">
                         <a class="dropdown-item" th:href="@{/user/board/boardFree}">자유게시판</a>
@@ -86,8 +100,8 @@
                         <a class="dropdown-item" th:href="@{/user/board/boardFarm}">농촌체험</a>
                     </div>
                 </li>
-                <li class="nav-item"><a th:href="@{/user}" class="nav-link">ㅇㅇㅇ</a></li>
-                <li class="nav-item dropdown" style="font-family: 'ChosunBg';">
+                <li class="nav-item menus"><a th:href="@{/user}" class="nav-link">ㅇㅇㅇ</a></li>
+                <li class="nav-item dropdown menus" style="font-family: 'ChosunBg';">
  	            	<a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 12px !important;"># 고객센터</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown05">
                     	<a class="dropdown-item" th:href="@{/user/regularAsk/regularAskList}"># 자주 묻는 질문</a>
@@ -95,18 +109,18 @@
                     </div>
                 </li>
 				<!-- 장부 테그  -->
-				<li class="nav-item"><a th:href="@{/user/userledgerBook/userBooks}" class="nav-link">내 장부</a></li>
+				<li class="nav-item menus"><a th:href="@{/user/userledgerBook/userBooks}" class="nav-link">내 장부</a></li>
 				<!-- 장부 테그 끝 -->
 				
 				
                 <li class="nav-item cta cta-colored">
-                	<a th:href="@{/user/goods/cart}" class="nav-link">
-                		<i class="fi fi-rs-heart rightIcons" style="font-size:23px; vertical-align:-2px"></i>
+                	<a th:href="@{/user/goods/cart}" class="nav-link rightIcons">
+                		<i class="fi fi-rs-heart" style="font-size:23px; vertical-align:-2px"></i>
                 	</a>
                 </li>
                 <li class="nav-item cta cta-colored">
-                	<a th:href="@{/user/goods/cart}" class="nav-link">
-                		<i class="cartUrl fi fi-rr-shopping-cart rightIcons" style="font-size:23px; vertical-align:-2px"></i>(0)
+                	<a th:href="@{/user/goods/cart}" class="nav-link rightIcons">
+                		<i class="cartUrl fi fi-rr-shopping-cart" style="font-size:23px; vertical-align:-2px"></i>(0)
                 	</a>
                 </li>
             </ul>

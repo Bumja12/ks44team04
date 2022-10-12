@@ -124,26 +124,189 @@
 
 	<!-- 회원 탈퇴 Start -->
 	
-	
-	
-	<!-- (공통1) 로그인 이력 삭제 -->
-	
-	
-	
-	<!-- (공통2) 회원 삭제 -->
-<!-- 	<delete id="removeUser" parameterType="String">
-		/* 회원 삭제 */
-		UPDATE
-			
+	<!-- (판매자) 판매상품 판매중지여부 Y로 변경 -->
+	<delete id="updateGoodsSaleCheck" parameterType="String">
+		/* 판매상품 판매중지여부 Y로 변경 */
+		UPDATE tb_goods
 		SET
-			
+			stop_sale_check = 'Y'
 		WHERE
-			u.user_id = #{userId}
-	</delete> -->
+			seller_id = #{userId}
+	</delete>
+	
+	<!-- (판매자) 판매자 등급현황 삭제 -->
+	<delete id="removeSellerLevelStatus" parameterType="String">
+		/* 판매자 등급현황 삭제 */
+		DELETE sls
+		FROM tb_seller_level_status sls
+		WHERE sls.seller_id = #{userId}
+	</delete>
+	
+	<!-- (판매자) 판매자 등급조건 누적 관리 삭제 -->
+	<delete id="removeSellerTotal" parameterType="String">
+		/* 판매자 등급조건 누적 관리 삭제 */
+		DELETE t
+		FROM tb_seller_total t
+		WHERE t.seller_id = #{userId}
+	</delete>
+	
+	<!-- (판매자) 판매자 정보 지우기 -->
+	<update id="removeSellerInfo" parameterType="String">
+		/* 판매자 정보 지우기 */
+		UPDATE tb_seller
+		SET
+			seller_sort='',
+			bank_name='',
+			account='',
+			account_holder='',
+			licence_num='',
+			store_address='',
+			store_address2='',
+			store_phone='',
+			store_email='',
+			licence_img='',
+			online_licence_img='',
+			approve_check='',
+			approve_id=''
+		WHERE seller_id = #{userId}
+	</update>
+	
+	<!-- (구매자) 배송지목록 정보 지우기 -->
+	<delete id="removeAddressList" parameterType="String">
+		/*  */
+		UPDATE tb_address_list
+		SET
+			buyer_id = '',
+			address_name = '',
+			receiver_name = '',
+			postal_code = '',
+			address = '',
+			address2 = '',
+			phone = '',
+			phone2 = '',
+			modify_reg_date = '',
+			default_address_check = ''
+		WHERE 
+			buyer_id = #{userId}
+	</delete>
+	
+	<!-- (구매자) 쿠폰보유현황 삭제 -->
+	<delete id="removeCouponStatus" parameterType="String">
+		/* 쿠폰보유현황 삭제 */
+		DELETE c
+		FROM tb_coupon_status c
+		WHERE c.buyer_id = #{userId}
+	</delete>
+	
+	<!-- (구매자) 알림전송내역 삭제 -->
+	<delete id="removeAlertSend" parameterType="String">
+		/* 알림전송내역 삭제 */
+		DELETE a
+		FROM tb_alert_send a 
+		WHERE a.receive_id = #{userId}
+	</delete>
+	
+	<!-- (구매자) 정기배송현황 상태 취소로 수정 -->
+	<delete id="updateRegularPostStatus" parameterType="String">
+		/* 정기배송현황 상태 취소로 수정 */
+		UPDATE tb_regular_post_status
+		SET `status` = '취소'
+		WHERE buyer_id = #{userId}
+	</delete>
+	
+	<!-- (구매자) 자동 결제 정보 삭제 -->
+	<delete id="removeAutoPayment" parameterType="String">
+		/* 자동 결제 정보 삭제 */
+		DELETE p
+		FROM tb_auto_payment p
+		WHERE p.buyer_id = #{userId}
+	</delete>
+	
+	<!-- (구매자) 관심상품 삭제 -->
+	<delete id="removeWishlist" parameterType="String">
+		/* 관심상품 삭제 */
+		DELETE w
+		FROM tb_wishlist w 
+		WHERE w.buyer_id = #{userId}
+	</delete>
+	
+	<!-- (구매자) 장바구니 삭제 -->
+	<delete id="removeCart" parameterType="String">
+		/* 장바구니 삭제 */
+		DELETE c
+		FROM tb_cart c
+		WHERE c.buyer_id = #{userId}
+	</delete>
+	
+	<!-- (구매자) 구매자 등급현황 삭제 -->
+	<delete id="removeBuyerLevelStatus" parameterType="String">
+		/* 구매자 등급현황 삭제 */
+		DELETE bls 
+		FROM tb_buyer_level_status bls 
+		WHERE bls.buyer_id = #{userId}
+	</delete>
+	
+	<!-- (구매자) 구매자 등급조건 누적 관리 삭제 -->
+	<delete id="removeBuyerTotal" parameterType="String">
+		/* 구매자 등급조건 누적 관리 삭제 */
+		DELETE t
+		FROM tb_buyer_total t
+		WHERE t.buyer_id = #{userId}
+	</delete>
+	
+	<!-- (공통3) 탈퇴 테이블에 추가 -->
+	<insert id="moveToLeave" parameterType="User">
+		/* 탈퇴 테이블에 추가 */
+		INSERT INTO tb_leave
+			(login_id, leave_reason, leave_date, user_info_destroy)
+		VALUES 
+			(#{loginId}, #{leaveReason}, NOW(), DATE_ADD(NOW(), INTERVAL 1 YEAR))
+	</insert>
+	
+	<!-- (공통2) 로그인 이력 삭제 -->
+	<delete id="removeLoginHistory" parameterType="String">
+		/* 로그인 이력 삭제 */
+		DELETE l
+		FROM tb_login l 
+		WHERE l.login_id = #{userId}
+	</delete>
+	
+	<!-- (공통1) 회원 정보 지우기 -->
+	<update id="removeUserInfo" parameterType="String">
+		/* 회원 정보 지우기 */
+		UPDATE tb_user
+		SET
+			user_pw = '',
+			user_name = '',
+			user_gender ='',
+			user_nickname = '',
+			user_address = '',
+			user_address2 = '',
+			user_phone = '',
+			user_email = '',
+			user_right = '',
+			user_status = '',
+			user_penalty = 0,
+			user_point = 0,
+			user_level = ''
+		WHERE 
+			user_id = #{userId}
+	</update>
+	
+	<!-- (공통) 정보보관기간 1년일경우 회원 상태 변경 -->
+	<update id="updateLeaveUserStatus" parameterType="String">
+		UPDATE tb_user
+		SET
+			user_status = '탈퇴'
+		WHERE 
+			user_id = #{userId}
+	</update>
+	
 	<!-- 회원 탈퇴 End -->
 
+
 	<!-- 판매자 신청 승인 (seller 테이블) -->
-	<update id="approveSeller" parameterType="String">
+	<update id="approveSeller" parameterType="User">
 		/* 판매자 신청 승인 */
 		UPDATE tb_seller
 		SET
