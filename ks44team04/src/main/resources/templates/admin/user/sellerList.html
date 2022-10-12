@@ -127,11 +127,11 @@
 											<td th:text="${l.approveAskDate}"></td>
 											<td hidden="hidden" class="approveCheck" id="approveCheck" th:value="${l.approveCheck}"></td>
 											<td>
-												<form id="approveSeller" th:action="@{/admin/user/approveSeller(sellerId=${l.sellerId})}" method="post">
-													<input type="hidden" id="approveCheck" name="approveCheck" value="Y" />
+												<form id="approveSeller" th:action="@{/admin/user/approveSeller}" method="post">
+													<input type="hidden" id="sellerId" name="sellerId" th:value="${l.sellerId}" />
 													<input type="hidden" id="approveId" name="approveId" value="admin01" />
-													<input type="hidden" id="userRight" name="userRight" value="판매자" />
-												</form>
+<!-- 													<input type="hidden" id="userRight" name="userRight" value="판매자" />
+ -->												</form>
 												<form id="rejectSeller" th:action="@{/admin/user/sellerList(sellerId=${l.sellerId})}" method="post">
 												</form>
 												<div class="btns">
