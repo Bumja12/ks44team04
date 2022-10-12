@@ -19,7 +19,7 @@ public class Goods {
     private String modifyDate;
     private String goodsFile;
     
-    
+    /* ~~~ 시작 ~~~ */
 	private GoodsAnswer goodsAnswerInfo;
 	public GoodsAnswer getGoodsAnswerInfo() {
 		return goodsAnswerInfo;
@@ -59,7 +59,7 @@ public class Goods {
 	public void setGoodsLargeCategoryInfo(GoodsLargeCategory goodsLargeCategoryInfo) {
 		this.goodsLargeCategoryInfo = goodsLargeCategoryInfo;
 	}
-	
+	/* ~~~ 끝 ~~~ */
 	
 	public String getGoodsCode() {
         return goodsCode;
@@ -207,6 +207,11 @@ public class Goods {
                 ", regularDeliverCheck='" + regularDeliverCheck + '\'' +
                 ", regDate='" + regDate + '\'' +
                 ", goodsFile='" + goodsFile + '\'' +
+                ", goodsAnswerInfo='" + goodsAnswerInfo + '\'' +
+                ", goodsQnaInfo='" + goodsQnaInfo + '\'' +
+                ", userInfo='" + userInfo + '\'' +
+                ", goodsSmallCategoryInfo='" + goodsSmallCategoryInfo + '\'' +
+                ", goodsLargeCategoryInfo='" + goodsLargeCategoryInfo + '\'' +
                 '}';
     }
 }

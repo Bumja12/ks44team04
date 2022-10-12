@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ks44team04.mapper.GoodsMapper;
+import ks44team04.dto.Cart;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
@@ -22,6 +23,8 @@ public class GoodsService {
 	public GoodsService(GoodsMapper goodsMapper) {
 	this.goodsMapper = goodsMapper;
 	}
+	
+	/* ~~~ 상품 시작 ~~~ */
 	
 	//상품 목록 조회
 	public List<Goods> getGoodsList() {
@@ -74,6 +77,8 @@ public class GoodsService {
 		String adminPw = goodsMapper.getAdminPw(userPw);
 		return adminPw;
 	}
+	
+	/* ~~~ 상품 문의 시작 ~~~ */
 	
 	//상품 문의 조회
 	public List<GoodsQna> getGoodsQna() {
@@ -129,5 +134,12 @@ public class GoodsService {
 		return qnaSellerView;
 	}
 	
+	/* ~~~ 장바구니 시작 ~~~ */
+	
+	//장바구니 목록 조회
+	public List<Cart> getCartList(String userId) {
+		List<Cart> cartList = goodsMapper.getCartList(userId);
+		return cartList;
+	}
 	
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ks44team04.dto.Cart;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsQna;
 import ks44team04.dto.GoodsQnaCategory;
@@ -27,10 +28,8 @@ public class UserGoodsController {
     
     //의존성 주입
   	private GoodsService goodsService;
-  	  	//유저 권한 확인 서비스 
+  	//유저 권한 확인 서비스 
   	private UserService userService;
-  	
-    
     public UserGoodsController(GoodsService goodsService, UserService userService) {
 			this.goodsService = goodsService;
 			this.userService = userService;
@@ -132,10 +131,18 @@ public class UserGoodsController {
     
     //장바구니
     @GetMapping("/cart")
-    public String cart() {
-    	log.info("cart 실행");
+    public String getCartList(Model model) {
+    	
+    
+    	List<Cart> cartList = goodsService.getCartList("buyer01");
+    	log.info("장바구니 리스트 ::: {}", cartList);
+    	
+    	model.addAttribute("title", "장바구니");
+		model.addAttribute("cartList", cartList);
+    	
     	return "user/goods/cart";
     }
+    
     
     //관심 상품 
     @GetMapping("/wishlist")

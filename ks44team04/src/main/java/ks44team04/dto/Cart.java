@@ -9,6 +9,14 @@ public class Cart {
    private String regDate;
    private String modifyDate;
 
+	private Goods goodsInfo;
+	public Goods getGoodsInfo() {
+		return goodsInfo;
+	}
+	public void setGoodsInfo(Goods goodsInfo) {
+		this.goodsInfo = goodsInfo;
+	}
+	
     public String getCartCode() {
         return cartCode;
     }
@@ -66,6 +74,7 @@ public class Cart {
                 ", cartAmount=" + cartAmount +
                 ", regDate='" + regDate + '\'' +
                 ", modifyDate='" + modifyDate + '\'' +
+                ", goodsInfo='" + goodsInfo + '\'' +
                 '}';
     }
 }
