@@ -21,8 +21,9 @@ public class UserLedgerBookController {
 	public String userBooks(Model model) {
 		
 		model.addAttribute("title", "구매자 장부");
-		
+			
 		return"user/userledgerBook/userBooks";
 	}
 	
 }
+	
