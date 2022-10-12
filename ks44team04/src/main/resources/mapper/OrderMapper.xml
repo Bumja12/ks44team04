@@ -127,9 +127,24 @@
         where order_detail_code = #{orderDetailCode};
     </update>
 
-    <update id="setOrderDetailStatus" parameterType="String">
+    <update id="setOrderDetailStatus" statementType="CALLABLE" parameterType="String">
         call set_order_status(#{orderDetailCode}, #{orderStatus})
     </update>
+
+    <update id="setOrderDetailPost" parameterType="String">
+        update tb_order_detail
+        set post_info = #{postInfo}
+        where order_detail_code = #{orderDetailCode};
+    </update>
+
+    <insert id="addPostInfo" parameterType="PostInfo">
+        <selectKey resultType="String" keyColumn="post_info" keyProperty="postInfo" order="BEFORE">
+            select concat(substr(max(post_info), 1, 2), lpad(cast(substr(max(post_info), 3) as unsigned) + 1, 8, 0)) as post_info
+            from tb_post_info
+        </selectKey>
+        insert into tb_post_info (post_info, post_list, reg_date, post_company_name, invoice_number)
+            values (#{postInfo}, #{postList}, now(), #{postCompanyName}, #{invoiceNumber})
+    </insert>
 
     <select id="getOrderList" parameterType="String" resultMap="orderDetailResultMap">
         select *

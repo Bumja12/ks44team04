@@ -21,5 +21,7 @@ public interface AddressMapper {
     public void addressDelete(String addressList);
 
     public PostInfo getPostInfo(String postInfo);
-    
+
+    public void setPostInfo(PostInfo postInfo);
+
 }
