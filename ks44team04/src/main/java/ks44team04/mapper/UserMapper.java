@@ -22,6 +22,9 @@ public interface UserMapper {
     public String userLogin(String userId);
     public User getLoginUserInfo(String userId);
     
+    //유저 마이페이지 
+    public String myPage();
+    
     //판매자 신청 승인(seller 테이블)
     public int approveSeller(@Param(value="sellerId")String sellerId, @Param(value="approveId")String approveId);
     
