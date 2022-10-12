@@ -11,6 +11,7 @@ import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
 import ks44team04.dto.GoodsQnaCategory;
+import ks44team04.dto.Review;
 
 @Service
 @Transactional
@@ -22,6 +23,8 @@ public class GoodsService {
 	public GoodsService(GoodsMapper goodsMapper) {
 	this.goodsMapper = goodsMapper;
 	}
+	
+	
 	
 	//상품 목록 조회
 	public List<Goods> getGoodsList() {
@@ -110,4 +113,20 @@ public class GoodsService {
 	// List<GoodsAnswer> goodsAnswer = goodsMapper.getGoodsAnswer();
 	// return goodsAnswer;
 	//}
+	
+	//후기 목록
+		public List<Review> reviewList(){
+			List<Review> reviewList = goodsMapper.reviewList();
+			log.info("후기 목록");
+			
+			return reviewList;
+		}
+		
+	//특정 후기 목록
+		public List<Review> reviewSpecific(String goodsList){
+			List<Review> reviewSpecific = goodsMapper.reviewSpecific(goodsList);
+			return reviewSpecific;
+		}
+	
+	
 }

@@ -9,7 +9,6 @@
 		<result column="review_list" 	property="reviewList"/>
 		<result column="user_id" 		property="userId"/>
 		<result column="like_reg_date" 	property="likeRegDate"/>
-		
 	</resultMap>
 
 	<resultMap type="ReviewComment" id="reviewCommentSersultMap">
@@ -34,9 +33,10 @@
 		<result column="like_amount" 			property="likeAmount"/>
 		<result column="grade" 					property="grade"/>
 	</resultMap>
+	
 <!-- 후기 목록  -->
 <select id="reviewList" resultMap="reviewListResultMap">
-/* 후기 목록 검색 */
+/* 후기 목록 */
 	SELECT 
 		r.review_list
 		,r.goods_list
@@ -119,11 +119,12 @@ FROM
 
 <!-- 추천 해제  -->
 <delete id="reviewLikeDelete" parameterType="ReviewLike">
-DELETE FROM 
-	tb_review_like
-
- WHERE 
- 	review_list= #{reviewList} AND user_id = #{userId}
+	DELETE 
+	FROM 
+		tb_review_like
+	WHERE 
+ 		review_list= #{reviewList} AND user_id = #{userId}
+ 	
 </delete>   
 
 <update id="reviewLikeUp" parameterType="Review">
@@ -137,7 +138,14 @@ UPDATE tb_review AS r
 						  l.review_list = #{reviewList})
 	WHERE review_list = #{reviewList}
 	
-
+	<selectKey keyProperty="likeAmount" resultType="int" order="AFTER">
+		SELECT
+			r.like_amount AS likeAmount
+		FROM
+			tb_review AS r
+		WHERE 
+			r.review_list = #{reviewList}
+	</selectKey>
 </update>
     
     
