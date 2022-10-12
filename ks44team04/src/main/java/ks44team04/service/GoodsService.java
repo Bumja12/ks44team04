@@ -121,22 +121,6 @@ public class GoodsService {
 	// return goodsAnswer;
 	//}
 	
-
-	//후기 목록
-		public List<Review> reviewList(){
-			List<Review> reviewList = goodsMapper.reviewList();
-			log.info("후기 목록");
-			
-			return reviewList;
-		}
-		
-	//특정 후기 목록
-		public List<Review> reviewSpecific(String goodsList){
-			List<Review> reviewSpecific = goodsMapper.reviewSpecific(goodsList);
-			return reviewSpecific;
-		}
-	
-
 	//유저 권한 불러오기
 	public String userRight(String userId) {
 		String userRight = goodsMapper.userRight(userId);
@@ -162,6 +146,22 @@ public class GoodsService {
 		List<Cart> cartList = goodsMapper.getCartList(userId);
 		return cartList;
 	}
+	
+	/* ~~~ 후기 시작 ~~~ */
 
+	//후기 목록
+		public List<Review> reviewList(){
+			List<Review> reviewList = goodsMapper.reviewList();
+			log.info("후기 목록");
+			
+			return reviewList;
+		}
+		
+	//특정 후기 목록
+		public List<Review> reviewSpecific(String goodsList){
+			List<Review> reviewSpecific = goodsMapper.reviewSpecific(goodsList);
+			return reviewSpecific;
+		}
+	
 	
 }
