@@ -37,37 +37,6 @@ public class CategoryController {
 		return "admin/category/category_remove";
 	}
 
-	// 카테고리 수정 화면
-	@PostMapping("modifyCategory")
-	public String modifyCategoryAction() {
-
-		// 카테고리 내역 화면으로 리다이렉트
-		return "redirect:/admin/category/categoryList";
-	}
-
-	// 카테고리 수정 화면
-	@GetMapping("/modifyCategory")
-	public String modifyCategoryForm(Model model) {
-
-		model.addAttribute("title", "카테고리 수정 화면");
-		return "admin/category/category_modify";
-	}
-
-	// 카테고리 등록 처리
-	@PostMapping("/addCategory")
-	public String addCategoryAction(Model model) {
-
-		return "redirect:/admin/category/categoryList";
-	}
-
-	// 카테고리 등록 화면
-	@GetMapping("/addCategory")
-	public String addCategoryForm(Model model) {
-
-		model.addAttribute("title", "카테고리 등록 화면");
-		return "admin/category/category_add";
-	}
-	
 	// --------------------------------------카테고리 목록  화면--------------------------------------
 	
 	// 구매자 등급 카테고리 목록 화면
@@ -358,4 +327,132 @@ public class CategoryController {
 		model.addAttribute("title", "구매자 등급 카테고리 등록 화면");
 		return "admin/category/levelBuyer/levelBuyerCategory_add";
 	}
+	
+	// 구매자 등급 카테고리 등록 처리
+	@PostMapping("/addLevelBuyerCategory")
+	public String addLevelBuyerCategoryAction(Model model) {
+
+		return "redirect:/admin/category/levelBuyer";
+	}
+	
+	// 판매자 등급 카테고리 등록 화면
+	@GetMapping("/addLevelSellerCategory")
+	public String addLevelSellerCategoryForm(Model model) {
+		
+		model.addAttribute("title", "판매자 등급 카테고리 등록 화면");
+		return "admin/category/levelSeller/levelSellerCategory_add";
+	}
+	
+	// 판매자 등급 카테고리 등록 처리
+	@PostMapping("/addLevelSellerCategory")
+	public String addLevelSellerCategoryAction(Model model) {
+		
+		return "redirect:/admin/category/levelSeller";
+	}
+	
+	// 고객 문의 카테고리 등록 화면
+	@GetMapping("/addCustomerAskCategory")
+	public String addCustomerAskCategoryForm(Model model) {
+		
+		model.addAttribute("title", "고객 문의 카테고리 등록 화면");
+		return "admin/category/customerAsk/customerAskCategory_add";
+	}
+	
+	// 고객 문의 카테고리 등록 처리
+	@PostMapping("/addCustomerAskCategory")
+	public String addCustomerAskCategoryAction(Model model) {
+		
+		return "redirect:/admin/category/customerAsk";
+	}
+	
+	// 자주 묻는 질문 카테고리 등록 화면
+	@GetMapping("/addRegularAskCategory")
+	public String addRegularAskCategoryForm(Model model) {
+		
+		model.addAttribute("title", "자주 묻는 질문 카테고리 등록 화면");
+		return "admin/category/regularAsk/regularAskCategory_add";
+	}
+	
+	// 자주 묻는 질문 카테고리 등록 처리
+	@PostMapping("/addRegularAskCategory")
+	public String addRegularAskCategoryAction(Model model) {
+		
+		return "redirect:/admin/category/regularAsk";
+	}
+	
+	// 게시판 카테고리 등록 화면
+	@GetMapping("/addBoardCategory")
+	public String addBoardCategoryForm(Model model) {
+		
+		model.addAttribute("title", "게시판 카테고리 등록 화면");
+		return "admin/category/board/boardCategory_add";
+	}
+	
+	// 게시판 카테고리 등록 처리
+	@PostMapping("/addBoardCategory")
+	public String addBoardCategoryAction(Model model) {
+		
+		return "redirect:/admin/category/board";
+	}
+	
+	// 신고 대상 카테고리 등록 화면
+	@GetMapping("/addReportCategory")
+	public String addReportCategoryForm(Model model) {
+		
+		model.addAttribute("title", "신고 대상 카테고리 등록 화면");
+		return "admin/category/report/reportCategory_add";
+	}
+	
+	// 신고 대상 카테고리 등록 처리
+	@PostMapping("/addReportCategory")
+	public String addReportCategoryAction(Model model) {
+		
+		return "redirect:/admin/category/report";
+	}
+	
+	// 판매 상품 카테고리 대분류 등록 화면
+	@GetMapping("/addGoodsLargeCategory")
+	public String addGoodsLargeCategoryForm(Model model) {
+		
+		model.addAttribute("title", "판매 상품 카테고리 대분류 등록 화면");
+		return "admin/category/goodsLarge/goodsLargeCategory_add";
+	}
+	
+	// 판매 상품 카테고리 대분류 등록 처리
+	@PostMapping("/addGoodsLargeCategory")
+	public String addGoodsLargeCategoryAction(Model model) {
+		
+		return "redirect:/admin/category/goodsLarge";
+	}
+	
+	// 판매 상품 카테고리 소분류 등록 화면
+	@GetMapping("/addGoodsSmallCategory")
+	public String addGoodsSmallCategoryForm(Model model) {
+		
+		model.addAttribute("title", "판매 상품 카테고리 소분류 등록 화면");
+		return "admin/category/goodsSmall/goodsSmallCategory_add";
+	}
+	
+	// 판매 상품 카테고리 소분류 등록 처리
+	@PostMapping("/addGoodsSmallCategory")
+	public String addGoodsSmallCategoryAction(Model model) {
+		
+		return "redirect:/admin/category/goodsSmall";
+	}
+	
+	// 상품 문의 카테고리 등록 화면
+	@GetMapping("/addGoodsQnaCategory")
+	public String addGoodsQnaCategoryForm(Model model) {
+		
+		model.addAttribute("title", "상품 문의 카테고리 등록 화면");
+		return "admin/category/goodsQna/goodsQnaCategory_add";
+	}
+	
+	// 상품 문의 카테고리 등록 처리
+	@PostMapping("/addGoodsQnaCategory")
+	public String addGoodsQnaCategoryAction(Model model) {
+		
+		return "redirect:/admin/category/goodsQna";
+	}
+	
 }

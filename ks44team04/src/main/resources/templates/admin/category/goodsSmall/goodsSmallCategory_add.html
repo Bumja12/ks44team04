@@ -12,14 +12,14 @@
 			<div class="col-sm-12">
         		<div class="x_panel">
             		<div class="x_title">
-                		<h2 style="font-size: 17px;">구매자 등급 카테고리 등록</h2>
+                		<h2 style="font-size: 17px;">판매 상품 카테고리 소분류 등록</h2>
                     	<div class="clearfix"></div>
             		</div>
             		<div class="x_content">
 	            		<div class="row">
                     		<div class="col-sm-12">
          						<br/>
-								<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" th:action="@{/admin/category/addLevelBuyerCategory}" method="post">
+								<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" th:action="@{/admin/category/addGoodsSmallCategory}" method="post">
 									<!-- 등급 이름 -->
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_name">등급 이름
@@ -91,7 +91,7 @@
 			cancelBtn.addEventListener('click', function(){
 				console.log(location.href);
 				// 판매 상품 카테고리 대분류 목록으로 리다이렉트
-				window.location = '/admin/category/levelBuyer';
+				window.location = '/admin/category/goodsSmall';
 			
 			});
 			
