@@ -20,39 +20,28 @@
                     		<div class="col-sm-12">
          						<br/>
 								<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" th:action="@{/admin/category/addReportCategory}" method="post">
-									<!-- 등급 이름 -->
+									<!-- 카테고리명 -->
 									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_name">등급 이름
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="categoryName">카테고리명
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" id="level_name" required="required" class="form-control" maxlength="15">
+											<select class="select2_single form-control" id="categoryName" name="categoryName" required="required" tabindex="-1">
+												<option></option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+											</select>										
 										</div>
 									</div>
 									<!-- 사용 여부 -->
 									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="useCheckY">사용 여부
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="radio" class="flat" name="use_check" id="use_check_Y" value="Y" required="required" /> Y
-											<input type="radio" class="flat" name="use_check" id="use_check_N" value="N" required="required"/> N
-										</div>
-									</div>
-									<!-- 구매자 구매 금액 조건(6개월) -->
-									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="buyer_price_terms">구매자 구매 금액 조건(6개월)
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<!-- 숫자만 입력 가능 -->
-											<input type="number" id="buyer_price_terms" name="buyer_price_terms" value="0" required="required" class="form-control" oninput="handleOnInput(this, 15)">
-										</div>
-									</div>
-									<!-- 적립율(%) -->
-									<div class="item form-group">
-										<label for="save_rate" class="col-form-label col-md-3 col-sm-3 label-align">적립율(%)
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<!-- 숫자만 입력 가능 -->
-											<input id="save_rate" class="form-control" type="number" value="0.5" required="required" name="save_rate" oninput='handleOnInput(this, 15)'>
+											<input type="radio" class="flat" name="useCheck" id="useCheckY" value="Y" required="required" /> Y
+											<input type="radio" class="flat" name="useCheck" id="useCheckN" value="N" required="required"/> N
 										</div>
 									</div>
 									<div class="ln_solid"></div>

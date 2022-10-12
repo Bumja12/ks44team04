@@ -22,39 +22,58 @@
 								<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" th:action="@{/admin/category/addLevelSellerCategory}" method="post">
 									<!-- 등급 이름 -->
 									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_name">등급 이름
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="levelName">등급 이름
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" id="level_name" required="required" class="form-control" maxlength="15">
+											<select class="select2_single form-control" id="levelName" name="levelName" required="required" tabindex="-1">
+												<option></option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+												<option value="5" >포인트/할인 쿠폰</option>
+											</select>
 										</div>
 									</div>
 									<!-- 사용 여부 -->
 									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="useCheckY">사용 여부
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="radio" class="flat" name="use_check" id="use_check_Y" value="Y" required="required" /> Y
-											<input type="radio" class="flat" name="use_check" id="use_check_N" value="N" required="required"/> N
+											<input type="radio" class="flat" name="useCheck" id="useCheckY" value="Y" required="required" /> Y
+											<input type="radio" class="flat" name="useCheck" id="useCheckN" value="N" required="required"/> N
 										</div>
 									</div>
-									<!-- 구매자 구매 금액 조건(6개월) -->
+									<!-- 1년 누적 판매 금액 -->
 									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="buyer_price_terms">구매자 구매 금액 조건(6개월)
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="sellerPriceTerms">1년 누적 판매 금액
 										</label>
 										<div class="col-md-6 col-sm-6 ">
 											<!-- 숫자만 입력 가능 -->
-											<input type="number" id="buyer_price_terms" name="buyer_price_terms" value="0" required="required" class="form-control" oninput="handleOnInput(this, 15)">
+											<input type="number" id="sellerPriceTerms" name="sellerPriceTerms" required="required" class="form-control" oninput="handleOnInput(this, 15)">
 										</div>
 									</div>
-									<!-- 적립율(%) -->
+									<!-- 1년 누적 판매 건수 -->
 									<div class="item form-group">
-										<label for="save_rate" class="col-form-label col-md-3 col-sm-3 label-align">적립율(%)
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="sellerScoreTerms">1년 누적 판매 건수
 										</label>
 										<div class="col-md-6 col-sm-6 ">
 											<!-- 숫자만 입력 가능 -->
-											<input id="save_rate" class="form-control" type="number" value="0.5" required="required" name="save_rate" oninput='handleOnInput(this, 15)'>
+											<input type="number" id="sellerScoreTerms" name="sellerScoreTerms" required="required" class="form-control" oninput="handleOnInput(this, 15)">
 										</div>
 									</div>
+									<!-- 6개월 평균 리뷰 평점 -->
+									<div class="item form-group">
+										<label for="sellerReviewTerms" class="col-form-label col-md-3 col-sm-3 label-align">6개월 평균 리뷰 평점
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<!-- 숫자만 입력 가능 -->
+											<input id="sellerReviewTerms" class="form-control" type="number" required="required" name="sellerReviewTerms" oninput='handleOnInput(this, 15)'>
+										</div>
+									</div>
+									
+									
+																		
 									<div class="ln_solid"></div>
 									<div class="item form-group">
 										<div class="col-md-6 col-sm-6 offset-md-3">
