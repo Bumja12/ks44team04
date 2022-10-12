@@ -3,10 +3,12 @@ package ks44team04.admin.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks44team04.service.LedgerBookService;
 
 @Controller
+@RequestMapping("/admin")
 public class LedgerBookController {
 	
 	private LedgerBookService ledgerBookService;
@@ -15,7 +17,7 @@ public class LedgerBookController {
 		this.ledgerBookService = ledgerBookService;
 	}
 	
-	@GetMapping("/admin/ledgerBook/sellerBook")
+	@GetMapping("/ledgerBook/sellerBook")
 	public String lederBook(Model model) {
 		
 		model.addAttribute("title", "판매자 장부");
@@ -23,7 +25,7 @@ public class LedgerBookController {
 		return "admin/ledgerBook/sellerBook";
 	}
 	
-	@GetMapping("/admin/ledgerBook/salesStatistics")
+	@GetMapping("/ledgerBook/salesStatistics")
 	public String salesStatistics(Model model) {
 		
 		model.addAttribute("title", "연령/지역별 통계");
@@ -31,7 +33,7 @@ public class LedgerBookController {
 		return "admin/ledgerBook/salesStatistics";
 	}
 	
-	@GetMapping("/admin/ledgerBook/ageAreaStatistics")
+	@GetMapping("/ledgerBook/ageAreaStatistics")
 	public String ageAreaStatistics(Model model) {
 		
 		model.addAttribute("title", "연령/지역별 통계");
