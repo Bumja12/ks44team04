@@ -145,24 +145,24 @@ public class UserGoodsController {
     }
     
     //장바구니 추가
-    @GetMapping("/cartAdd")
-    public String cartAdd(Cart cart) {
+    @PostMapping("/cartAdd")
+    @ResponseBody
+    public int cartAdd(Cart cart) {
     	
-    	cart.setBuyerId("buyer01"); //임의
     	String buyerId = "buyer01"; //임의
     	
     	//cartNewCode 생성
     	String cartNewCode = goodsService.cartNewCode(buyerId);
     	cartNewCode = CodeIndex.codeIndex(cartNewCode, 4);
-    	
     	log.info("상품 증가 코드 :::{}" , cartNewCode);
     	
-    	
+    	cart.setCartCode(cartNewCode);
+    	cart.setBuyerId("buyer01"); //임의
     	
     	goodsService.cartAdd(cart);
     	log.info("장바구니 추가 정보 ::: {}", cart);
     	
-    	return "user/goods/cart";
+    	return 2;
     }
     
     //장바구니 수량 수정
