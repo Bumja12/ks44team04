@@ -277,8 +277,6 @@
 			   	<if test="sv != null and sv != ''">
 			   		${sk} LIKE CONCAT('%',#{sv},'%')
 			   	</if>
-			   	
-			   
 		   </trim>
 		   ORDER BY r.report_history_code DESC 
 	</select>
@@ -315,9 +313,15 @@
 			,s.suspend_reason 
 		FROM 
 			tb_user_suspend AS s
-		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="sv != null and sv != ''">
 				${sk} LIKE CONCAT('%',#{sv},'%')
+			</if>
+			<if test="fd != null and fd !='' and td != null and td !=''">
+				AND
+				${dk} <![CDATA[>]]> (#{fd})
+				AND
+				${dk} <![CDATA[<]]> (#{td})
 			</if>
 	   </trim>
 		 ORDER BY s.user_suspend_code DESC 

@@ -100,10 +100,10 @@
 			WHEN count(c.coupon_status_code) = 0 THEN 'uCoupon0001'
 			-- 999개 등록되어 있을 경우
 			WHEN (Max(CAST(substring_index(c.coupon_status_code,'n',-1) AS UNSIGNED))+1) > 999 THEN
-			concat('couponCode',Max(CAST(substring_index(c.coupon_status_code,'n',-1) AS UNSIGNED))+1)
+			concat('uCoupon',Max(CAST(substring_index(c.coupon_status_code,'n',-1) AS UNSIGNED))+1)
 			-- 1~999 범위일 경우
 			ELSE
-			concat('couponCode',LPAD(Max(CAST(substring_index(c.coupon_status_code,'n',-1) AS UNSIGNED))+1,4,0))
+			concat('uCoupon',LPAD(Max(CAST(substring_index(c.coupon_status_code,'n',-1) AS UNSIGNED))+1,4,0))
 			END) AS couponStatusCode
 			FROM
 			tb_coupon_status AS c;

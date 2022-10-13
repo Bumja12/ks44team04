@@ -254,8 +254,17 @@
 		WHERE t.buyer_id = #{userId}
 	</delete>
 	
-	<!-- (공통3) 탈퇴 테이블에 추가 -->
-	<insert id="moveToLeave" parameterType="User">
+	<!-- (공통3-2) 탈퇴 테이블에 추가 정보보관기간: 탈퇴시까지 -->
+	<insert id="moveToLeaveAtOnce" parameterType="User">
+		/* 탈퇴 테이블에 추가 */
+		INSERT INTO tb_leave
+			(login_id, leave_reason, leave_date, user_info_destroy)
+		VALUES 
+			(#{loginId}, #{leaveReason}, NOW(), NOW())
+	</insert>
+	
+	<!-- (공통3-1) 탈퇴 테이블에 추가 정보보관기간: 1년 -->
+	<insert id="moveToLeave1years" parameterType="User">
 		/* 탈퇴 테이블에 추가 */
 		INSERT INTO tb_leave
 			(login_id, leave_reason, leave_date, user_info_destroy)
@@ -284,23 +293,31 @@
 			user_address2 = '',
 			user_phone = '',
 			user_email = '',
-			user_right = '',
 			user_status = '',
 			user_penalty = 0,
 			user_point = 0,
-			user_level = ''
+			user_level = NULL
 		WHERE 
 			user_id = #{userId}
 	</update>
 	
 	<!-- (공통) 정보보관기간 1년일경우 회원 상태 변경 -->
 	<update id="updateLeaveUserStatus" parameterType="String">
+		/* 정보보관기간 1년일경우 회원 상태 변경 */
 		UPDATE tb_user
 		SET
 			user_status = '탈퇴'
 		WHERE 
 			user_id = #{userId}
 	</update>
+	
+	<!-- 상품 삭제하기 위한 관리자 비밀번호 -->
+	<select id="getAdminPw" parameterType="String" resultType="String">
+		/* 상품 삭제하기 위한 관리자 비밀번호 */
+		SELECT	u.user_pw	AS userPw
+		FROM 	tb_user 	AS u
+		WHERE	u.user_id = 'admin01';
+    </select>
 	
 	<!-- 회원 탈퇴 End -->
 

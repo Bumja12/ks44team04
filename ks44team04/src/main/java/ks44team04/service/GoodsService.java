@@ -161,8 +161,8 @@ public class GoodsService {
 	}
 	
 	//장바구니 수량 수정
-	public int cartAmountModify(Cart cart) {
-		int result = goodsMapper.cartAmountModify(cart);
+	public int cartModify(Cart cart) {
+		int result = goodsMapper.cartModify(cart);
 		return result;
 	}
 	

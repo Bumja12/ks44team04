@@ -1,5 +1,6 @@
 package ks44team04.admin.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,15 @@ public class CouponController {
 	public CouponController(CouponService couponService, UserService userService) {
 		this.couponService = couponService;
 		this.userService = userService;
+	}
+
+	//회원쿠폰보유 삭제
+	@GetMapping("/deleteCouponStatus/{couponStatusCode}")
+	public String deleteCouponStatus(@PathVariable(value = "couponStatusCode") String couponStatusCode){
+
+		couponService.deleteCouponStatus(couponStatusCode);
+
+		return "redirect:/admin/coupon/couponStatus";
 	}
 
 	//쿠폰보유 검색
@@ -101,11 +111,20 @@ public class CouponController {
 
 	//쿠폰발급
 	@PostMapping("/couponIssue")
-	public String CouponIssue(CouponStatus couponStatus) {
+	public String CouponIssue(@RequestParam String[] userId
+								,@RequestParam String couponCode
+								,@RequestParam String adminId) {
 
-		System.out.println(couponStatus);
-
-
+		System.out.println(Arrays.toString(userId));
+		System.out.println(couponCode);
+		System.out.println(adminId);
+		for(String buyerId : userId){
+			CouponStatus couponStatus = new CouponStatus();
+			couponStatus.setBuyerId(buyerId);
+			couponStatus.setCouponCode(couponCode);
+			couponStatus.setAdminId(adminId);
+			couponService.couponIssue(couponStatus);
+		}
 
 		return "redirect:/admin/coupon/couponStatus";
 	}

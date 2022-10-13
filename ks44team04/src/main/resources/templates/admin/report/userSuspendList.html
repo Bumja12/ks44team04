@@ -5,7 +5,6 @@
 <th:block layout:fragment="customTitle">
     <title th:text="${title}"></title>
 </th:block>
-
 <th:block layout:fragment="customContents">
 <style>
 .style1{
@@ -116,8 +115,52 @@
         
         
 			<div class="x_panel">
-        
-        
+			  <!-- 검색 시작-->
+		       <div class="container" style="float: left; margin-left: 8px; margin-bottom: 10px;">
+					<div class="row">
+						<form class="form-inline" th:action="@{/admin/report/userSuspendList}" method="post">
+							<div class="form-group">
+								<select class="form-control" name="SearchKey" style="width: 150px;">
+			                          <option selected value="">- 날짜 -</option>
+			                          <option value="startSuspend">정지시작일</option>
+			                          <option value="endSuspend">정지 해제일</option>
+                     		 		 </select>
+								<div class="form-group">
+									<div class="col-sm-3">
+										<input name="fromDate" class="date-picker form-control" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'">
+									</div>
+								</div>
+							</div>
+							<span style="font-size: x-large; vertical-align: middle;">~</span>
+							<div class="form-group">
+								<div class="col-sm-2">
+									<input name="toDate" class="date-picker form-control" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'">
+								</div>
+							</div>
+							<div class="form-group">
+								<select class="form-control" name="reportSearchKey" style="width: 150px;">
+			                          <option selected value="">- 전체검색 -</option>
+			                          <option value="reportHistoryCode">회원신고기록코드</option>
+			                          <option value="reportedId">신고 대상 아이디</option>
+			                          <option value="reportApproveId">승인자 아이디</option>
+			                          <option value="reportResult">처리상태</option>
+			                          <option value="reportReason">신고내용</option>
+                      		  </select>
+							</div>
+							<div class="form-group">
+								<div class="col-md-8">
+									<input type="text" name="reportSearchValue" class="form-control" style="width: 200px;" placeholder="검색어를 입력해주세요">
+								</div>
+								<div class="col-md-4">
+									<button type="submit" class="btn btn-primary" style="width: 100%;">검색</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+		        
+     	     <!-- 검색 끝-->
+     	   
             <div class="x_title">
               <h2>정지 목록	</h2>
               <ul class="nav navbar-right panel_toolbox">
@@ -186,14 +229,8 @@
 
 <th:block layout:fragment="customTopJs">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script>
-		$(function() {
-			let $checks = $('.indivChecks');
-			$('#rowAllCheck').click(function() {
-				$checks.prop('checked', $(this).prop('checked'));
-			});
-		});
-	</script>
+	
+
 </th:block>
 	
 

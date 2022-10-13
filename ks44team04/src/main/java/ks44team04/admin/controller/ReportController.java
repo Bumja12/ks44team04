@@ -167,8 +167,11 @@ public class ReportController {
 	//정지 리스트 검색 
 	@PostMapping("/report/userSuspendList")
 	public String getSuspendSearch(@RequestParam(name="reportSearchKey")String sk 
-								 ,@RequestParam(name="reportSearchValue")String sv
-								 , Model model) {
+								  ,@RequestParam(name="reportSearchValue", required = false, defaultValue="")String sv
+								  ,@RequestParam(name="SearchKey", required = false, defaultValue="")String dk
+								  ,@RequestParam(name="fromDate", required = false, defaultValue="") String fromDate
+								  ,@RequestParam(name="toDate", required = false, defaultValue= "") String toDate
+								  ,Model model) {
 		if("userSuspendCode".equals(sk)) {
 			sk= "user_suspend_code";
 		}else if("suspendId".equals(sk)) {
@@ -179,9 +182,21 @@ public class ReportController {
 			sk= "suspend_result";
 		}
 		
+		
+		if("startSuspend".equals(dk)) {
+			dk= "start_suspend";
+		}else if("endSuspend".equals(dk)) {
+			dk= "end_suspend";
+		}
+		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("sk", sk);
 		paramMap.put("sv", sv);
+		paramMap.put("dk", dk);
+		paramMap.put("fd", fromDate);
+		paramMap.put("td", toDate);
+		
+		System.out.println(paramMap);
 		
 		List<UserSuspend> userSuspendList = reportService.getSuspendSearch(paramMap);
 	
