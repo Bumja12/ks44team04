@@ -2,14 +2,14 @@ package ks44team04.dto;
 
 public class LevelBuyerCategory {
 
-	private String levelCode;
-	private String levelName;
-	private String regId;
-	private String levelRegDate;
-	private String useCheck;
-	private int buyerPriceTerms;
-	private int saveRate;
-	private String levelCodeNpk;
+	private String levelCode; 	 // 등급 코드 PK
+	private String levelName; 	 // 등급 이름
+	private String regId; 		 // 회원 아이디 FK(등록인)
+	private String levelRegDate; // 등급 생성일
+	private String useCheck;     // 사용 여부
+	private int buyerPriceTerms; // 구매자 구매 금액 조건 (6개월)
+	private int saveRate; 		 // 적립율(%)	
+	private String levelCodeNpk; // 등급 코드
 
 	public String getLevelCode() {
 		return levelCode;

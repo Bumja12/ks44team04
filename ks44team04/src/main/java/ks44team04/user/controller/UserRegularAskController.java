@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks44team04.dto.RegularAsk;
 import ks44team04.dto.RegularAskCategory;
-import ks44team04.service.CategoryManageService;
+import ks44team04.service.CategoryService;
 import ks44team04.service.RegularAskService;
 
 @Controller
@@ -19,11 +19,11 @@ public class UserRegularAskController {
 	// 자주 묻는 질문 서비스 의존성 주입
 	private final RegularAskService regularAskService;
 	// 카테고리 관리 서비스 의존성 주입
-	private final CategoryManageService categoryManageService;
+	private final CategoryService categoryService;
 	
 	// 생성자 메소드
-	public UserRegularAskController(RegularAskService regularAskService, CategoryManageService categoryManageService) {
-		this.categoryManageService = categoryManageService;
+	public UserRegularAskController(RegularAskService regularAskService, CategoryService categoryService) {
+		this.categoryService = categoryService;
 		this.regularAskService = regularAskService;
 	}
 	
@@ -35,7 +35,7 @@ public class UserRegularAskController {
 		List<RegularAsk> regularAskList =  regularAskService.getRegularAskList();
 		
 		// 자주 묻는 질문 카테고리 목록
-		List<RegularAskCategory> regularAskCategoryList = categoryManageService.getRegularAskCategoryList();
+		List<RegularAskCategory> regularAskCategoryList = categoryService.getRegularAskCategoryList();
 		
 		model.addAttribute("title", "구매자 자주 묻는 질문 목록 화면");
 		model.addAttribute("regularAskList", regularAskList);

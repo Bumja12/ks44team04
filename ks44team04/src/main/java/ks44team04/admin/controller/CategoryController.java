@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ks44team04.dto.RegularAsk;
-import ks44team04.dto.RegularAskCategory;
+import ks44team04.dto.LevelBuyerCategory;
+import ks44team04.service.CategoryService;
 
 @Controller
 @RequestMapping(value = "/admin/category")
@@ -22,13 +22,26 @@ public class CategoryController {
 
 	private static final Logger log = LoggerFactory.getLogger(CategoryController.class);
 
+	// 카테고리 서비스 의존성 주입
+	private final CategoryService categoryService;
+	
+	// 생성자 메소드
+	public CategoryController(CategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
+	
 	// --------------------------------------카테고리 목록  화면--------------------------------------
 	
 	// 구매자 등급 카테고리 목록 화면
 	@GetMapping("/levelBuyer")
 	public String getlevelBuyerCategoryList(Model model) {
-
+		
+		// 구매자 등급 카테고리 목록
+		List<LevelBuyerCategory> levelBuyerCategoryList = categoryService.getLevelBuyerCategoryList();
+		// System.out.println(levelBuyerCategoryList.toString());
+		
 		model.addAttribute("title", "구매자 등급 카테고리 목록 화면");
+		model.addAttribute("levelBuyerCategoryList", levelBuyerCategoryList);
 		return "admin/category/levelBuyer/levelBuyerCategory_list";
 	}
 	
