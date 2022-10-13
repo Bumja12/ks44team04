@@ -45,62 +45,21 @@
 		                    	</tr>
 		                   	</thead>
 							<tbody>
-		                 		<tr style="cursor:pointer;">
+								<!-- 판매자 등급 카테고리 목록 -->
+								<tr th:each="lSeller : ${levelSellerCategoryList}" style="cursor:pointer;">
 									<td>
 										<input type="checkbox" class="checkAll" name="checkAll1">
 		             				</td>
-		                          	<td class="moveToDetail">levelSeller01</td>
-		                          	<td class="moveToDetail">물방울</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                        	<td class="moveToDetail">0</td>
-		                        	<td class="moveToDetail">0</td>
-		                        	<td class="moveToDetail"> </td>
-		                        	<td class="moveToDetail">levelSeller01</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">levelSeller02</td>
-		                          	<td class="moveToDetail">시냇물</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                        	<td class="moveToDetail">2000000</td>
-		                        	<td class="moveToDetail">100</td>
-		                        	<td class="moveToDetail"> </td>
-		                        	<td class="moveToDetail">levelSeller02</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">levelSeller03</td>
-		                          	<td class="moveToDetail">호수</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                        	<td class="moveToDetail">3000000</td>
-		                        	<td class="moveToDetail">300</td>
-		                        	<td class="moveToDetail"> </td>
-		                        	<td class="moveToDetail">levelSeller03</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">levelSeller04</td>
-		                          	<td class="moveToDetail">강</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                        	<td class="moveToDetail">3000000 </td>
-		                        	<td class="moveToDetail">500</td>
-		                        	<td class="moveToDetail">4.5</td>
-		                        	<td class="moveToDetail">levelSeller04</td>
-		                    	</tr>
+									<td class="moveToDetail" th:text="${lSeller.levelCode}">등급 코드 PK</td>
+									<td class="moveToDetail" th:text="${lSeller.levelName}">등급 이름</td>
+									<td class="moveToDetail" th:text="${lSeller.regId}">회원 아이디 FK(등록인)</td>
+									<td class="moveToDetail" th:text="${lSeller.levelRegDate}">등급 생성일</td>
+									<td class="moveToDetail" th:text="${lSeller.useCheck}">사용 여부</td>
+									<td class="moveToDetail" th:text="${lSeller.sellerPriceTerms}">1년 누적 판매 금액</td>
+									<td class="moveToDetail" th:text="${lSeller.sellerScoreTerms}">1년 누적 판매 건수</td>
+									<td class="moveToDetail" th:text="${lSeller.sellerReviewTerms}">6개월 평균 리뷰 평점</td>
+									<td class="moveToDetail" th:text="${lSeller.levelCodeNpk}">등급 코드</td>
+								</tr>		                 		
 							</tbody>
 		        		</table>
 					</div> <!-- </div class="card-box table-responsive"> -->
