@@ -160,6 +160,18 @@ public class GoodsService {
 		return cartList;
 	}
 	
+	//장바구니 추가
+	public void cartAdd(Cart cart) {
+		int result = goodsMapper.cartAdd(cart);
+		log.info("장바구니 추가 :" + result);
+	}
+	
+	//장바구니 추사 시 코드 증가
+	public String cartNewCode(String buyerId) {
+		String cartNewCode = goodsMapper.cartNewCode(buyerId);
+		return cartNewCode;
+	}
+	
 	//장바구니 수량 수정
 	public int cartModify(Cart cart) {
 		int result = goodsMapper.cartModify(cart);

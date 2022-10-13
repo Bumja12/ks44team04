@@ -86,6 +86,12 @@ public interface GoodsMapper {
 	//장바구니 목록 조회
 	public List<Cart> getCartList(String userId);
 	
+	//장바구니 추가
+	public int cartAdd(Cart cart);
+	
+	//장바구니 추가시 새로운 코드
+	public String cartNewCode(String buyerId);
+	
 	//장바구니 수량 수정
 	public int cartModify(Cart cart);
 
