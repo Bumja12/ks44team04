@@ -18,9 +18,71 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserMapper {
-
+	
+	//로그인
     public String userLogin(String userId);
     public User getLoginUserInfo(String userId);
+    
+    /* ===== 회원 탈퇴 시작 ===== */
+    
+    //(판매자) 판매상품 판매중지여부 Y로 변경
+    public int updateGoodsSaleCheck(String userId);
+    
+    //(판매자) 판매자 등급현황 삭제
+    public int removeSellerLevelStatus(String userId);
+    
+    //(판매자) 판매자 등급조건 누적 관리 삭제
+    public int removeSellerTotal(String userId);
+    
+    //(판매자) 판매자 정보 지우기
+    public int removeSellerInfo(String userId);
+    
+    //(구매자) 배송지목록 정보 지우기
+    public int removeAddressList(String userId);
+    
+    //(구매자) 쿠폰보유현황 삭제
+    public int removeCouponStatus(String userId);
+    
+    //(구매자) 알림전송내역 삭제
+    public int removeAlertSend(String userId);
+    
+    //(구매자) 정기배송현황 상태 취소로 수정
+    public int updateRegularPostStatus(String userId);
+    
+    //(구매자) 자동 결제 정보 삭제
+    public int removeAutoPayment(String userId);
+    
+    //(구매자) 관심상품 삭제
+    public int removeWishlist(String userId);
+    
+    //(구매자) 장바구니 삭제
+    public int removeCart(String userId);
+    
+    //(구매자) 구매자 등급현황 삭제
+    public int removeBuyerLevelStatus(String userId);
+    
+    //(구매자) 구매자 등급조건 누적 관리 삭제
+    public int removeBuyerTotal(String userId);
+    
+    //(공통3-1) 탈퇴 테이블에 추가 정보보관기간: 1년
+    public int moveToLeave1year(String userId);
+    
+    //(공통3-2) 탈퇴 테이블에 추가 정보보관기간: 탈퇴시까지
+    public int moveToLeaveAtOnce(String userId);
+    
+    //(공통2) 로그인 이력 삭제
+    public int removeLoginHistory(String userId);
+    
+    //(공통1) 회원 정보 지우기
+    public int removeUserInfo(String userId);
+    
+    //(공통) 정보보관기간 1년일경우 회원 상태 변경
+    public int updateLeaveUserStatus(String userId);
+    
+    //회원 탈퇴를 위한 관리자 비밀번호
+  	public String getAdminPw(String userPw);
+    
+    /* ===== 회원 탈퇴 끝 ===== */
     
     //유저 마이페이지 
     public String myPage();
@@ -37,6 +99,7 @@ public interface UserMapper {
     //판매자 등록
     public int addSeller(Seller seller);
     
+    /* ==== 회원,판매자 등록 / 중복체크 시작 ===== */
     //판매자 휴대폰번호 중복체크
     public int phoneCheckS(String storePhone);
     
@@ -63,7 +126,8 @@ public interface UserMapper {
     
 	//회원 가입
 	public int addUser(User user);
-    
+	/* ==== 회원,판매자 등록 / 중복체크 끝 ===== */
+	   
 	//회원 수정
 	public int modifyUser(User user);
 	

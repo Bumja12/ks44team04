@@ -31,6 +31,50 @@ public class UserService {
         this.userMapper = userMapper;
     }
     
+    //10/13 회원 탈퇴
+  	public int removeUser(String userId, String userRight, String userInfoKeep) {
+  		
+  		int resultRemove = 0;
+  		
+  		if(userInfoKeep.equals("탈퇴시까지")) {
+  			// 권한별 삭제 
+  			// 구매자
+  			if(userRight.equals("buyer") || userRight.equals("seller_before")) {
+  				resultRemove += userMapper.removeBuyerTotal(userId);
+  				resultRemove += userMapper.removeBuyerLevelStatus(userId);
+  				resultRemove += userMapper.removeCart(userId);
+  				resultRemove += userMapper.removeWishlist(userId);
+  				resultRemove += userMapper.removeAutoPayment(userId);
+  				resultRemove += userMapper.updateRegularPostStatus(userId);
+  				resultRemove += userMapper.removeAlertSend(userId);
+  				resultRemove += userMapper.removeCouponStatus(userId);
+  				resultRemove += userMapper.removeAddressList(userId);
+  			}
+  			// 판매자
+  			if(userRight.equals("seller")) {
+  				resultRemove += userMapper.removeSellerInfo(userId);
+  				resultRemove += userMapper.removeSellerTotal(userId);
+  				resultRemove += userMapper.removeSellerLevelStatus(userId);
+  				resultRemove += userMapper.updateGoodsSaleCheck(userId);
+  			}
+  			// 공통 (1. 로그인이력 삭제 / 2. 회원 삭제 / 3. 탈퇴 테이블에 추가)
+  			resultRemove += userMapper.moveToLeaveAtOnce(userId);
+  			resultRemove += userMapper.removeLoginHistory(userId);
+  			resultRemove += userMapper.removeUserInfo(userId);
+  		}else {
+  			//정보보관기간 1년 - userStatus '탈퇴'로 변경
+  			resultRemove += userMapper.updateLeaveUserStatus(userId);
+  			resultRemove += userMapper.moveToLeave1year(userId);
+  		}
+  		return resultRemove;
+  	}
+  	
+  	// 10/13 회원 탈퇴를 위한 관리자 비밀번호
+  	public String getAdminPw(String userPw) {
+  		String adminPw = userMapper.getAdminPw(userPw);
+  		return adminPw;
+  	}
+    
     // 10/11 판매자 신청 승인 (seller 테이블)
     public void approveSeller(String sellerId, String approveId) {
     	userMapper.approveSeller(sellerId, approveId);
@@ -236,7 +280,6 @@ public class UserService {
 							user.setUserLevelName("강");
 						}
 					}
-				
 				}else {
 				user.setUserLevelName("-");
 			}

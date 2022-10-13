@@ -10,6 +10,7 @@ public class GoodsLargeCategory {
     private String useCheck;
     private String regDate;
     private List<GoodsSmallCategory> goodsSmallCategoryInfo;
+    
 	public String getGoodsLargeCategory() {
 		return goodsLargeCategory;
 	}

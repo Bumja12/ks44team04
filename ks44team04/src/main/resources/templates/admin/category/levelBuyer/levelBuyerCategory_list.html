@@ -44,58 +44,20 @@
 		                    	</tr>
 		                   	</thead>
 							<tbody>
-		                 		<tr style="cursor:pointer;">
+								<!-- 구매자 등급 카테고리 목록 -->
+								<tr th:each="lBuyer : ${levelBuyerCategoryList}" style="cursor:pointer;">
 									<td>
 										<input type="checkbox" class="checkAll" name="checkAll1">
 		             				</td>
-		                          	<td class="moveToDetail">levelBuyer01</td>
-		                          	<td class="moveToDetail">씨앗</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td>2021-01-01 00:00:00</td>
-		                            <td>Y</td>
-		                        	<td>0</td>
-		                        	<td>0.5</td>
-		                        	<td>levelBuyer01</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">levelBuyer02</td>
-		                          	<td class="moveToDetail">새싹</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                        	<td class="moveToDetail">200000</td>
-		                        	<td class="moveToDetail">1</td>
-		                        	<td class="moveToDetail">levelBuyer02</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">levelBuyer03</td>
-		                          	<td class="moveToDetail">잎새</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                        	<td class="moveToDetail">400000</td>
-		                        	<td class="moveToDetail">1.5</td>
-		                        	<td class="moveToDetail">levelBuyer03</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">levelBuyer04</td>
-		                          	<td class="moveToDetail">열매</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                        	<td class="moveToDetail">700000</td>
-		                        	<td class="moveToDetail">2</td>
-		                        	<td class="moveToDetail">levelBuyer04</td>
-		                    	</tr>
+									<td class="moveToDetail" th:text="${lBuyer.levelCode}">등급 코드 PK</td>
+									<td class="moveToDetail" th:text="${lBuyer.levelName}">등급 이름</td>
+									<td class="moveToDetail" th:text="${lBuyer.regId}">회원 아이디 FK(등록인)</td>
+									<td class="moveToDetail" th:text="${lBuyer.levelRegDate}">등급 생성일</td>
+									<td class="moveToDetail" th:text="${lBuyer.useCheck}">사용 여부</td>
+									<td class="moveToDetail" th:text="${lBuyer.buyerPriceTerms}">구매자 구매 금액 조건 (6개월)</td>
+									<td class="moveToDetail" th:text="${lBuyer.saveRate}">적립율(%)</td>
+									<td class="moveToDetail" th:text="${lBuyer.levelCodeNpk}">등급 코드</td>
+								</tr>		                    	
 							</tbody>
 		        		</table>
 					</div> <!-- </div class="card-box table-responsive"> -->
@@ -124,7 +86,7 @@
     	<div class="modal-dialog modal-lg">
         	<div class="modal-content" style="text-align: center;">
 	        	<div class="modal-header" style="padding-top: 35px;">
-		        	<h4 class="modal-title" id="myModalLabel">게시판 대분류 카테고리 삭제</h4>
+		        	<h4 class="modal-title" id="myModalLabel">구매자 등급 카테고리 삭제</h4>
 		            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
 		            </button>
 	          	</div>
@@ -161,7 +123,7 @@
 			}
 		});
 		
-		// 자주 묻는 질문 PK값 구해서 관리자 자주 묻는 질문 내역 화면으로 매핑하는 함수
+		// 제이쿼리
 		$(function(){
 			// moveToDetail 클래스를 가지고 있는 모든 <td> 탐색
 			var $moveToDetail = $('.moveToDetail');
@@ -195,12 +157,95 @@
 				});
 			});
 			
-		});
+			// 모든 체크박스 탐색
+			var $checkAll = $('.checkAll');
+			
+			// 체크박스가 체크된 열의 PK값을 배열에 담는다.
+			$checkAll.each(function(i){
+				$(this).click(function(){
+					// PK값 탐색 
+					var $regularAskPK = $(this).parent().next().text();
+					// console.log($regularAskPK);
+
+					// 체크박스가 체크되었는지 확인
+					var isChecked = $(this)[0].checked;
+					if(isChecked){
+						// 체크가 됬을 때만 배열 객체에 PK값을 저장한다.
+						removeElement.push($regularAskPK);
+						
+					} else{
+						for(var i=0; i<removeElement.length; i++){
+							// 배열 객체의 인덱스마다 어떤값이 저장되어 있는지 확인
+							// console.log(removeElement[i]);
+							// 만약 i번째 인덱스의 담긴 값이 PK갑과 같다면
+							if(removeElement[i] == $regularAskPK){
+								// 확실하게 같은지 확인한다.
+								// console.log('배열 객체의 ' + i + '번째 요소의 값이 PK값과 같음');
+								// 배열 객체에 담긴 PK값 삭제
+								removeElement.splice(i, 1);
+									// console.log('삭제 처리 후 배열' + removeElement);
+							}
+						} // for(var i=0; i<removeElement.length; i++){
+					} // } else{
+					
+					console.log(removeElement);
+				}); // $(this).click(function(){
+			}); // $checkAll.each(function(i){
+			
+		}); // $(function(){
 		
 
 		
+		// 관리자 비밀번호
+		let userPw = 'pw001';
+		
+		// 삭제할 PK값 담는 배열 객체 선언			
+		var removeElement =  [];
+		
+		/* 모달 유효성 검사 */
+		function passCheck(i){
+			 
+			var pwInput = document.getElementById("pwInput");
+			
+			if(pwInput.value == ""){
+				alert("비밀번호를 입력하세요.")
+				pwInput.focus();
+				
+			}else if(pwInput.value != userPw){
+					alert("비밀번호를 확인하시길 바랍니다.")
+					pwInput.focus();
+					
+			}else if(pwInput.value == userPw){
+				console.log(typeof removeElement);
+				console.log(removeElement.length);
+				if(removeElement.length <= 0){
+					alert("삭제할 대상을 선택하시길 바랍니다.")
+				}else{
+		  			var request = $.ajax({
+			  			  url: "/admin/category/removeLevelBuyerCategory", //요청 페이지 주소
+			  			  method: "POST", //요청 방식
+			  			  data: { removeElement : removeElement}, 
+		                  //요청 페이지에 전달할 데이터 {key: value}
+			  			  dataType: "text" //요청 페이지에서 응답할 방식
+			  			});
+			  			//정상적인 응답이 왔을 경우 실행되는 메서드
+			  			request.done(function( data ) {
+			  				console.log('응답 성공');
+			  				console.log(data);
+			  				
+			  				location.href=data;
+			  			});
+			  			//비정상적인 응답이나 요청 후 응답 실패시 실행되는 메서드
+			  			request.fail(function( jqXHR, textStatus ) {
+			  			  alert( "Request failed: " + textStatus );
+			  			});
+				} // }else{
+				
+				// i.type = 'submit';
+			} // else if(pwInput.value == userPw){
+		} // function passCheck(i){
+		
 
-
-		</script>
+	</script>
 </th:block>
 </html>

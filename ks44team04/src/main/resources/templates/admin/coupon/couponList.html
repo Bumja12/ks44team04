@@ -153,7 +153,8 @@ th {
 									<th>최근접속일</th>
 									<th>상태</th>
 									<th>관리</th>
-									<th style="display: none"><input type="text" id="regId" th:value="${session.SID}"></th>
+									<th style="display: none"><input type="text" name="adminId" th:value="${session.SID}"></th>
+									<th style="display: none"><input type="text" id="couponCode" name="couponCode"></th>
 								</tr>
 								</thead>
 								<tbody class="userList">
@@ -212,7 +213,6 @@ th {
 
 			motherCheckUser.click(function () {
 				$('.childCheckUser').prop('checked', $(this).prop('checked'));
-				$('.CouponInfoCheck').prop('checked', $(this).prop('checked'));
 			});
 
 			$('.couponCreateBtn').click(function(){
@@ -253,6 +253,7 @@ th {
 			$('.getUserBtn').click(function (){
 
 				let couponCode = $(this).val();
+				$('#couponCode').val(couponCode);
 
 				$('#pwCheckModal').modal('show');
 
@@ -283,7 +284,7 @@ th {
 
 								$.each(data, function(index, item){
 									userList += "<tr>"
-									userList += "<td><input type=\"checkbox\" name='buyerId' value='"+ data[index].userId + "' class=\"childCheckUser\"></td>"
+									userList += "<td><input type=\"checkbox\" name='userId' value='"+ data[index].userId + "' class=\"childCheckUser\"></td>"
 									userList += "<td>" + data[index].userId + "</td>"
 									userList += "<td>" + data[index].userName + "</td>"
 									userList += "<td>" + data[index].userNickname + "</td>"
@@ -293,8 +294,6 @@ th {
 									userList += "<td>" + data[index].userUpdateDate + "</td>"
 									userList += "<td>" + data[index].userStatus + "</td>"
 									userList += "<td>" + data[index].rightList.rightStatus + "</td>"
-									userList += "<td style='display: none'><input type='checkbox' name='adminId' class='CouponInfoCheck' value='" + adminId + "'></td>"
-									userList += "<td style='display: none'><input type='checkbox' name='couponCode' class='CouponInfoCheck' value='" + couponCode + "'></td>"
 									userList += "</tr>"
 								})
 
@@ -336,10 +335,6 @@ th {
 					$('#adminCheckBtn').click();
 				}
 			});
-
-			$('.childCheckUser').click(function(){
-				$('.CouponInfoCheck').prop('checked', $(this).prop('checked'));
-			})
 		});
 	</script>
 </th:block>

@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<!-- 검색바 -->
 	<div th:fragment="levelBuyerCategory_searchFragment">
-		<form th:action="@{/admin/category/searchCategory}"  method="post">
+		<form th:action="@{/admin/category/searchLevelBuyerCategory}"  method="post">
 			<select name="searchKey" style="height: 25px;">
-				<option value="memberId">등급 이름</option>
-				<option value="memberName">사용 여부</option>
-				<option value="memberName">적립율(%)</option>
-				<option value="memberName">구매자 구매 금액 조건(6개월)</option>
+				<option value="levelName">등급 이름</option>
+				<option value="useCheck">사용 여부</option>
+				<option value="saveRate">적립율(%)</option>
+				<option value="buyerPriceTerms">구매자 구매 금액 조건(6개월)</option>
 			</select>
 			<input type="text" name="searchValue" placeholder="검색어를 입력해주세요." style="height: 25px;">
 			<button type="submit" style="height: 25px;">검색</button>

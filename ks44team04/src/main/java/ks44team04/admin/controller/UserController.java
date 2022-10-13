@@ -39,6 +39,37 @@ public class UserController {
         this.userService = userService;
     }
 	
+    // 10/13 회원 탈퇴
+	@GetMapping("/user/removeUser")
+	public String removeUser(@RequestParam(value = "userId") String userId) {
+		
+		User userInfo = userService.getUserInfoById(userId);
+		String userRight = userInfo.getUserRight();
+		String userInfoKeep = userInfo.getUserInfoKeep();
+		
+		if(userInfo != null) {
+			int resultRemove = userService.removeUser(userId, userRight, userInfoKeep);
+			if(resultRemove > 0) return "redirect:/admin/user/userList";
+		}
+		
+		return "redirect:/admin/user/userList";
+	}
+	
+	//관리자 비밀번호 체크
+	@PostMapping("/user/pwCheck")
+	@ResponseBody
+	public int pwCheck(@RequestParam(value = "userPw") String userPw) {
+		
+		//String userId = "admin01";
+		String adminPw = userService.getAdminPw(userPw);
+		log.info("관리자 비밀번호 ::: {}", adminPw);
+		
+		if(userPw.equals(adminPw)) {
+		return 1;
+		}
+		return 0;
+	}
+    
 	// 10/11 판매자 신청 승인
 	@PostMapping("/user/approveSeller")
 	public String approveSeller(@RequestParam(value="sellerId", required = false) String sellerId

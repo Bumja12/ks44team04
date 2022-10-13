@@ -136,6 +136,21 @@
         set post_info = #{postInfo}
         where order_detail_code = #{orderDetailCode};
     </update>
+    <update id="setCancelApprove" parameterType="string">
+        UPDATE tb_order_cancel
+        SET approve_date=now()
+        WHERE order_detail_code = #{orderDetailCode}
+    </update>
+    <update id="setExchangeApprove" parameterType="string">
+        UPDATE tb_order_exchange
+        SET approve_check='Y', approve_date=now()
+        WHERE order_detail_code = #{orderDetailCode}
+    </update>
+    <update id="setReturnApprove" parameterType="string">
+        UPDATE tb_order_return
+        SET permit_date=now()
+        WHERE order_detail_code = #{orderDetailCode}
+    </update>
 
     <insert id="addPostInfo" parameterType="PostInfo">
         <selectKey resultType="String" keyColumn="post_info" keyProperty="postInfo" order="BEFORE">
