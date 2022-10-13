@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<!-- 검색바 -->
 	<div th:fragment="goodsSmallCategory_searchFragment">
-		<form th:action="@{/admin/category/searchCategory}"  method="post">
+		<form th:action="@{/admin/category/searchGoodsSmallCategory}"  method="post">
 			<select name="searchKey" style="height: 25px;">
-				<option value="memberName">카테고리 대분류</option>
-				<option value="memberName">카테고리 소분류</option>
-				<option value="memberName">사용 여부</option>
+				<option value="goodsLargeCategory">카테고리 대분류</option>
+				<option value="smallCategoryName">카테고리 소분류</option>
+				<option value="useCheck">사용 여부</option>
 			</select>
 			<input type="text" name="searchValue" placeholder="검색어를 입력해주세요." style="height: 25px;">
 			<button type="submit" style="height: 25px;">검색</button>

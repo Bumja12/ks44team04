@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<!-- 검색바 -->
 	<div th:fragment="goodsQnaCategory_searchFragment">
-		<form th:action="@{/admin/category/searchCategory}"  method="post">
+		<form th:action="@{/admin/category/searchGoodsQnaCategory}"  method="post">
 			<select name="searchKey" style="height: 25px;">
-				<option value="memberName">카테고리명</option>
-				<option value="memberId">사용 여부</option>
+				<option value="categoryName">카테고리명</option>
+				<option value="useCheck">사용 여부</option>
 			</select>
 			<input type="text" name="searchValue" placeholder="검색어를 입력해주세요." style="height: 25px;">
 			<button type="submit" style="height: 25px;">검색</button>

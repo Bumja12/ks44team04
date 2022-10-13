@@ -22,13 +22,6 @@ public class CategoryController {
 
 	private static final Logger log = LoggerFactory.getLogger(CategoryController.class);
 
-	// 카테고리 검색 처리
-	@PostMapping("/searchCategory")
-	public String searchCategory() {
-
-		return "redirect:/admin/category/categoryList";
-	}
-
 	// --------------------------------------카테고리 목록  화면--------------------------------------
 	
 	// 구매자 등급 카테고리 목록 화면
@@ -624,4 +617,71 @@ public class CategoryController {
 	
 	
 	// --------------------------------------카테고리 삭제 처리--------------------------------------
+	
+	// --------------------------------------카테고리 검색 처리--------------------------------------
+	
+	// 구매자 등급 카테고리 검색 처리
+	@PostMapping("/searchLevelBuyerCategory")
+	public String searchLevelBuyerCategoryAction() {
+
+		return "redirect:/admin/category/levelBuyer";
+	}
+	
+	// 판매자 등급 카테고리 검색 처리
+	@PostMapping("/searchLevelSellerCategory")
+	public String searchLevelSellerCategoryAction() {
+		
+		return "redirect:/admin/category/levelSeller";
+	}
+	
+	// 고객 문의 카테고리 검색 처리
+	@PostMapping("/searchCustomerAskCategory")
+	public String searchLCustomerAskCategoryAction() {
+		
+		return "redirect:/admin/category/customerAsk";
+	}
+	
+	// 자주 묻는 질문 카테고리 검색 처리
+	@PostMapping("/searchRegularAskCategory")
+	public String searchLRegularAskCategoryAction() {
+		
+		return "redirect:/admin/category/regularAsk";
+	}
+	
+	// 게시판 카테고리 검색 처리
+	@PostMapping("/searchBoardCategory")
+	public String searchLBoardCategoryAction() {
+		
+		return "redirect:/admin/category/board";
+	}
+	
+	// 신고 대상 카테고리 검색 처리
+	@PostMapping("/searchReportCategory")
+	public String searchLReportCategoryAction() {
+		
+		return "redirect:/admin/category/report";
+	}
+	
+	// 판매 상품 카테고리 대분류 검색 처리
+	@PostMapping("/searchGoodsLargeCategory")
+	public String searchLGoodsLargeCategoryAction() {
+		
+		return "redirect:/admin/category/goodsLarge";
+	}
+	
+	// 판매 상품 카테고리 소분류 검색 처리
+	@PostMapping("/searchGoodsSmallCategory")
+	public String searchLGoodsSmallCategoryAction() {
+		
+		return "redirect:/admin/category/goodsSmall";
+	}
+	
+	// 상품 문의 카테고리 검색 처리
+	@PostMapping("/searchGoodsQnaCategory")
+	public String searchLGoodsQnaCategoryAction() {
+		
+		return "redirect:/admin/category/goodsQna";
+	}
+	
+	// --------------------------------------카테고리 검색 처리--------------------------------------
 }
