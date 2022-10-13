@@ -278,7 +278,7 @@ div { margin: 5px 0px }
 					  		<select>
 					  			<option>최신순</option>
 					  			<option>평점 낮은 순</option>
-					  			<option>평점 놓은 순</option>
+					  			<option>평점 높은 순</option>
 					  			<option>추천수 높은 순</option>
 					  			<option>추천수 낮은 순</option>
 					  		</select>
@@ -346,7 +346,6 @@ div { margin: 5px 0px }
 								- 해당 상품 자체와 관계없는 글, 양도, 광고성, 욕설, 비방, 도배 등의 글은 예고없이 노출제한, 삭제 등의 조치가 취해질 수 있습니다.
 							</div>
 						</div>
-						
 						<table class="qnaTable" style="width: 100%; table-layout: fixed; border-top: 1px solid #bbb; margin-top: 10px;">
 							<colgroup><col width="100"><col width="100"><col width="*"><col width="100"><col width="125"></colgroup>
 							<thead style="vertical-align: middle;">
@@ -356,14 +355,14 @@ div { margin: 5px 0px }
 							</thead>
 							<tbody id="qnaList" style="vertical-align: middle;">
 							<th:block th:if="${not #lists.isEmpty(goodsQnaInfo)}" th:each="gqi : ${goodsQnaInfo}">
-								<input type="hidden" class="secretVal" th:value="${gqi.secretCheck}">
-								<tr>
+								<tr th:data-secret="${gqi.secretCheck}">
 									<td th:text="${gqi.goodsQnaCategoryInfo.categoryName}"></td>
 									<td th:text="${'['+gqi.qnaStatus+']'}" class="answerYN" th:classappend="(${gqi.qnaStatus}=='완료'?Y:'')+(${gqi.qnaStatus}=='대기'?N:'')"></td>
 									<td th:text="${gqi.goodsQnaTitle}" class="qnaToggle" style="cursor:pointer;"></td>
 									<td th:text="${gqi.userInfo.userId}"></td>
 									<td th:text="${#strings.substring(gqi.goodsQnaDate,0,10)}"></td>
 								</tr>
+									<input type="hidden" class="secretVal" name="secretVal" th:value="${gqi.secretCheck}">
 						 			<tr class="answerToggle" style="display:none;">
 						 				<td colspan="2"></td>
 						 				<td colspan="2" style="text-align:left; padding-left:50px; background-color:#f4f8ed;">
@@ -692,16 +691,16 @@ $(function() {
     
 	/* 비밀글일 때 qna제목 옆 자물쇠 아이콘 넣기 */
 	$('.qnaToggle').each(function(){
-		var icon = document.createElement("i");
+		//var icon = document.createElement("i");
 		
-		var secretVal = $('.secretVal').val();
+		var secretVal = $(this).parent().data('secret');
 		console.log(secretVal);
 		
-		if($('.secretVal').val() == 'Y'){
+		if(secretVal == 'Y'){
 			$(this).append('<i class="fi fi-rr-lock" style="font-size:14px; color:gray;"></i>');		
 		}
 	});
-    
+
 	/* 문의 클릭 시 답변 펼치기 */
 	$(".qnaToggle").click(function (){
 		$(".qnaToggle").each(function(){
