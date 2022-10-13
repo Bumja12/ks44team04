@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ks44team04.dto.CustomerAskCategory;
 import ks44team04.dto.LevelBuyerCategory;
+import ks44team04.dto.LevelSellerCategory;
+import ks44team04.dto.RegularAskCategory;
 import ks44team04.service.CategoryService;
 
 @Controller
@@ -49,7 +52,12 @@ public class CategoryController {
 	@GetMapping("/levelSeller")
 	public String getlevelSellerCategoryList(Model model) {
 		
+		// 판매자 등급 카테고리 목록
+		List<LevelSellerCategory> levelSellerCategoryList = categoryService.getLevelSellerCategoryList();
+		// System.out.println(levelSellerCategoryList.toString());
+		
 		model.addAttribute("title", "판매자 등급 카테고리 목록 화면");
+		model.addAttribute("levelSellerCategoryList", levelSellerCategoryList);
 		return "admin/category/levelSeller/levelSellerCategory_list";
 	}
 	
@@ -57,7 +65,11 @@ public class CategoryController {
 	@GetMapping("/customerAsk")
 	public String getCustomerAskCategoryList(Model model) {
 		
+		// 고객 문의 카테고리 목록
+		List<CustomerAskCategory> customerAskCategoryList = categoryService.getCustomerAskCategoryList();
+		
 		model.addAttribute("title", "고객 문의 카테고리 목록 화면");
+		model.addAttribute("customerAskCategoryList", customerAskCategoryList);
 		return "admin/category/customerAsk/customerAskCategory_list";
 	}
 	
@@ -65,7 +77,11 @@ public class CategoryController {
 	@GetMapping("/regularAsk")
 	public String getRegularAskCategoryList(Model model) {
 		
+		// 자주 묻는 질문 카테고리 목록
+		List<RegularAskCategory> regularAskCategoryList = categoryService.getRegularAskCategoryList();
+		
 		model.addAttribute("title", "자주 묻는 질문 카테고리 목록 화면");
+		model.addAttribute("regularAskCategoryList", regularAskCategoryList);
 		return "admin/category/regularAsk/regularAskCategory_list";
 	}
 	

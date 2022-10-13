@@ -1,12 +1,12 @@
 package ks44team04.dto;
 
 public class CustomerAskCategory {
-
-    private String askCategory;
-    private String regId;
-    private String categoryName;
-    private String regDate;
-    private String useCheck;
+	
+    private String askCategory;	 // 문의 카테고리 PK
+    private String regId;		 // 회원 아이디 FK(등록인)
+    private String categoryName; // 카테고리명
+    private String regDate;		 // 등록일
+    private String useCheck;	 // 사용 여부
 
     public String getAskCategory() {
         return askCategory;

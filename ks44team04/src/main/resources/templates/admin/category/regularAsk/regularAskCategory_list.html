@@ -41,66 +41,17 @@
 		                    	</tr>
 		                   	</thead>
 							<tbody>
-		                 		<tr style="cursor:pointer;">
+								<!-- 자주 묻는 질문 카테고리 목록 -->
+								<tr th:each="rAskList : ${regularAskCategoryList}" style="cursor:pointer;">
 									<td>
 										<input type="checkbox" class="checkAll" name="checkAll1">
 		             				</td>
-		                          	<td class="moveToDetail">regularAskCategory01</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                          	<td class="moveToDetail">회원/정보 관리</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">regularAskCategory02</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                          	<td class="moveToDetail">배송</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">regularAskCategory03</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                          	<td class="moveToDetail">반품/교환/환불</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">regularAskCategory04</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                          	<td class="moveToDetail">주문/결제</td>
-		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">regularAskCategory05</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                          	<td class="moveToDetail">정기 배송</td>
-		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">regularAskCategory06</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                          	<td class="moveToDetail">포인트/할인쿠폰</td>
-		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
+									<td class="moveToDetail" th:text="${rAskList.regularAskCategory}">자주 묻는 질문 카테고리 PK</td>
+									<td class="moveToDetail" th:text="${rAskList.regId}">회원 아이디 FK(등록인)</td>
+									<td class="moveToDetail" th:text="${rAskList.categoryName}">카테고리명</td>
+									<td class="moveToDetail" th:text="${rAskList.regDate}">등록일</td>
+									<td class="moveToDetail" th:text="${rAskList.useCheck}">사용 여부</td>
+								</tr>	
 							</tbody>
 		        		</table>
 					</div> <!-- </div class="card-box table-responsive"> -->
