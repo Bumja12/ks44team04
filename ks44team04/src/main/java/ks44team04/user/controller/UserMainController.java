@@ -11,4 +11,13 @@ public class UserMainController {
         return "user/main";
     }
 
+    @GetMapping("/user/mpe")
+    public String userMpe() {
+        return "myPageExample";
+    }
+    @GetMapping("/user/mpte")
+    public String userMpte() {
+        return "myPageTableExample";
+    }
+
 }

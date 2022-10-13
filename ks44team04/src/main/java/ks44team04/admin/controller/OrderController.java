@@ -1,13 +1,10 @@
 package ks44team04.admin.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import ks44team04.dto.OrderDetail;
 import ks44team04.dto.PostInfo;
 import ks44team04.service.AddressService;
 import ks44team04.service.OrderService;
 import ks44team04.service.Service;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -106,21 +103,24 @@ public class OrderController {
 
     @PostMapping("/order/cancel")
     @ResponseBody
-    public void setCancelApprove(@RequestBody String orderDetailCode) {
+    public String setCancelApprove(@RequestBody String orderDetailCode) {
         orderService.setCancelApprove(orderDetailCode);
         orderService.setOrderDetailStatus(orderDetailCode, "취소완료");
+        return "성공";
     }
     @PostMapping("/order/exchange")
     @ResponseBody
-    public void setExchangeApprove(@RequestBody String orderDetailCode) {
+    public String setExchangeApprove(@RequestBody String orderDetailCode) {
         orderService.setExchangeApprove(orderDetailCode);
         orderService.setOrderDetailStatus(orderDetailCode, "교환처리중");
+        return "성공";
     }
     @PostMapping("/order/return")
     @ResponseBody
-    public void setReturnApprove(@RequestBody String orderDetailCode) {
+    public String setReturnApprove(@RequestBody String orderDetailCode) {
         orderService.setReturnApprove(orderDetailCode);
         orderService.setOrderDetailStatus(orderDetailCode, "반품처리중");
+        return "성공";
     }
 
 }

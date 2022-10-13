@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/userDefault}">
-<th:block layout:fragment="customCss">     
+<th:block layout:fragment="customCss">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> 
 	<style>
 		body {
@@ -506,7 +506,7 @@
                       </ul>
                     </div>
                   </div>
-                  
+
                   <hr style="border: solid 1px rgb(154, 154, 154); margin-top: 10px;">
                   <div> 내용 </div>
               </div>
@@ -522,7 +522,7 @@
 <th:block layout:fragment="customJsScript">
 <th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
 <script>
-	//side menu 
+	//side menu
     $(document).ready(function() {
       $(".menu>a").click(function() {
         var submenu = $(this).next("ul");

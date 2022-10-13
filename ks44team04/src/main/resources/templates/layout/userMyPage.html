@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/userHead :: headFragment"></head>
+
+<th:block layout:fragment="customCss">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #ffffff;
+            font-family: 'Open Sans', sans-serif;
+            padding: 0px !important;
+            margin: 0px !important;
+            font-size: 13px;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-font-smoothing: antialiased;
+        }
+
+        .profile-nav, .profile-info {
+            margin-top: 30px;
+        }
+
+        .profile-nav .user-heading {
+            background: #a5c44d;
+            color: #fff;
+            border-radius: 4px 4px 0 0;
+            -webkit-border-radius: 4px 4px 0 0;
+            padding: 30px;
+            text-align: center;
+        }
+
+        /*
+        .profile-nav .user-heading.round a  {
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border: 10px solid rgba(255,255,255,0.3);
+            display: inline-block;
+        }
+        */
+
+        .profile-nav .user-heading img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+        }
+
+        .profile-nav .user-heading h1 {
+            font-size: 21px;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 1000;
+        }
+
+        .profile-nav .user-heading p {
+            font-size: 12px;
+        }
+
+        .r-activity {
+            margin: 6px 0 0;
+            font-size: 12px;
+        }
+
+        .p-text-area, .p-text-area:focus {
+            border: none;
+            font-weight: 300;
+            box-shadow: none;
+            color: #c3c3c3;
+            font-size: 16px;
+        }
+
+        .profile-info .panel-footer {
+            background-color: #f8f7f5;
+            border-top: 1px solid #e7ebee;
+        }
+
+        .profile-info .panel-footer ul li a {
+            color: #7a7a7a;
+        }
+
+        .bio-graph-heading {
+            background: #f6f6f6;
+            color: #333;
+            text-align: center;
+            padding: 30px 30px;
+            border-radius: 4px 4px 0 0;
+            -webkit-border-radius: 4px 4px 0 0;
+            font-size: 14px;
+            font-weight: 400;
+            height: 150px;
+        }
+
+        .bio-graph-info {
+            color: #89817e;
+        }
+
+        .bio-graph-info h1 {
+            font-size: 22px;
+            font-weight: 300;
+            margin: 0 0 20px;
+        }
+
+        .bio-row {
+            width: 50%;
+            float: left;
+            margin-bottom: 10px;
+            padding: 0 15px;
+        }
+
+        .bio-row p span {
+            width: 100px;
+            display: inline-block;
+        }
+
+        .file-pos {
+            margin: 6px 0 10px 0;
+        }
+
+        .profile-activity h5 {
+            font-weight: 300;
+            margin-top: 0;
+            color: #c3c3c3;
+        }
+
+        .summary-head {
+            background: #ee7272;
+            color: #fff;
+            text-align: center;
+            border-bottom: 1px solid #ee7272;
+        }
+
+        .summary-head h4 {
+            font-weight: 300;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .summary-head p {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .activity {
+            width: 100%;
+            float: left;
+            margin-bottom: 10px;
+        }
+
+        .activity.alt {
+            width: 100%;
+            float: right;
+            margin-bottom: 10px;
+        }
+
+        .activity span {
+            float: left;
+        }
+
+        .activity.alt span {
+            float: right;
+        }
+
+        .activity span, .activity.alt span {
+            width: 45px;
+            height: 45px;
+            line-height: 45px;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            background: #eee;
+            text-align: center;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .activity.terques span {
+            background: #8dd7d6;
+        }
+
+        .activity.terques h4 {
+            color: #8dd7d6;
+        }
+
+        .activity.purple span {
+            background: #b984dc;
+        }
+
+        .activity.purple h4 {
+            color: #b984dc;
+        }
+
+        .activity.blue span {
+            background: #90b4e6;
+        }
+
+        .activity.blue h4 {
+            color: #90b4e6;
+        }
+
+        .activity.green span {
+            background: #aec785;
+        }
+
+        .activity.green h4 {
+            color: #aec785;
+        }
+
+        .activity h4 {
+            margin-top: 0;
+            font-size: 16px;
+        }
+
+        .activity p {
+            margin-bottom: 0;
+            font-size: 13px;
+        }
+
+        .activity .activity-desk i, .activity.alt .activity-desk i {
+            float: left;
+            font-size: 18px;
+            margin-right: 10px;
+            color: #bebebe;
+        }
+
+        .activity .activity-desk {
+            margin-left: 70px;
+            position: relative;
+        }
+
+        .activity.alt .activity-desk {
+            margin-right: 70px;
+            position: relative;
+        }
+
+        .activity.alt .activity-desk .panel {
+            float: right;
+            position: relative;
+        }
+
+        .activity-desk .panel {
+            background: #F4F4F4;
+            display: inline-block;
+        }
+
+
+        .activity .activity-desk .arrow {
+            border-right: 8px solid #F4F4F4 !important;
+        }
+
+        .activity .activity-desk .arrow {
+            border-bottom: 8px solid transparent;
+            border-top: 8px solid transparent;
+            display: block;
+            height: 0;
+            left: -7px;
+            position: absolute;
+            top: 13px;
+            width: 0;
+        }
+
+        .activity-desk .arrow-alt {
+            border-left: 8px solid #F4F4F4 !important;
+        }
+
+        .activity-desk .arrow-alt {
+            border-bottom: 8px solid transparent;
+            border-top: 8px solid transparent;
+            display: block;
+            height: 0;
+            right: -7px;
+            position: absolute;
+            top: 13px;
+            width: 0;
+        }
+
+        .activity-desk .album {
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .activity-desk .album a {
+            margin-right: 10px;
+        }
+
+        .activity-desk .album a:last-child {
+            margin-right: 0px;
+        }
+
+        .shippingImg {
+            width: 45px;
+            height: 45px;
+            margin-bottom: 10px;
+        }
+
+        .topMenus a {
+            font-size: 25px;
+            font-style: normal;
+            font-weight: 500;
+            color: rgb(56, 52, 52);
+        }
+
+        .topMenuContainer {
+            height: 200px;
+            margin-bottom: 10px;
+        }
+
+        .topMenuText {
+            margin-bottom: 14px;
+            font-weight: 700;
+        }
+
+        .topMenu {
+            border-right: solid 1px #dadada;
+        }
+
+        .topMenu:last-child {
+            border-right: none;
+        }
+
+        .topMenu a {
+            color: #3d3d3d;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .hide > li > a {
+            padding: 14px 20px 16px 5px !important;
+        }
+
+        .leftmenu {
+            padding: 0px;
+            background-color: #fefefe;
+        }
+
+        .leftmenu li {
+            list-style: none;
+        }
+
+        .leftmenu a {
+            border-bottom: 1px solid rgb(242, 242, 242);
+            display: flex;
+            justify-content: space-between;
+            padding: 14px 20px 16px;
+            line-height: 19px;
+            font-size: 14px;
+            color: rgb(102, 102, 102);
+        }
+
+        .leftmenu a {
+            color: #545454;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        h4 {
+            color: #2c2c2c;
+        }
+
+        /* .profile-nav ul > li:hover, .profile-nav ul > li:focus, .profile-nav ul > li:active {
+            background: #faf9f9 !important;
+            border-left: 5px solid #a5c44d;
+        } */
+
+        .leftmenu a:hover:not(.depth-1), .leftmenu a:focus:not(.depth-1), .leftmenu a:active:not(.depth-1) {
+            background: #faf9f9 !important;
+            border-left: 5px solid #a5c44d;
+        }
+
+        .detail {
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: -0.3px;
+            color: rgb(153, 153, 153);
+            line-height: 20px;
+        }
+
+        .mypageOrderInfo {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f7f7f7;
+        }
+
+        .mypageOrderInfo ul li {
+            padding-left: 10px;
+            font-size: 12px;
+            color: #828282;
+            line-height: 22px;
+        }
+
+        .noti-dorpdown-menu {
+            font-size: 12px;
+        }
+
+        .nav-icons {
+            padding: 24px 10px;
+        }
+
+        .noti-ul {
+            list-style: none;
+            padding-left: 0px;
+            width: 250px !important;
+        }
+
+        .noti-ul li a {
+            font-size: 12px !important;
+            padding: 5px 25px 5px !important;
+        }
+    </style>
+    <th:block layout:fragment="customMyPageCss"></th:block>
+
+</th:block>
+
+<body class="goto-here">
+
+<!-- start : top navigation -->
+<div th:replace="fragments/userNav :: navFragment"></div>
+<!-- end : top navigation -->
+
+<!-- mypage template START -->
+<div class="container bootstrap snippets bootdey">
+    <div class="row">
+        <div class="profile-nav col-md-3">
+            <div class="panel">
+                <div class="user-heading round">
+                    <img src="/images/userTest/level01.png" alt="" style="margin-bottom: 15px;">
+                    <h1>김보경님</h1>
+                    <a href="#" style="color: white;"><i class="fa fa-gear" style="color: white;"></i> 회원정보수정</a>
+                </div>
+
+                <!-- left menu Start -->
+                <ul style="border: solid 1px rgb(231, 231, 231);" class="leftmenu">
+                    <li>
+                        <a href="#">받은 알림<span>></span></a>
+                    </li>
+                    <li class="menu">
+                        <a href="#" class="order">주문 관리<span> > </span></a>
+                        <ul class="hide">
+                            <li class="hide1"><a href="#" class="depth-1">주문/배송 내역<span>></span></a></li>
+                            <li class="hide1"><a href="#" class="depth-1">정기배송<span>></span></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">찜한 상품<span>></span></a>
+                    </li>
+                    <li>
+                        <a href="#">배송지 관리<span>></span></a>
+                    </li>
+                    <li>
+                        <a href="#">상품 후기<span>></span></a>
+                    </li>
+                    <li>
+                        <a href="#">상품 문의<span>></span></a>
+                    </li>
+                    <li>
+                        <a href="#">1:1 문의<span>></span></a>
+                    </li>
+                    <li>
+                        <a href="#">포인트<span>></span></a>
+                    </li>
+                    <li>
+                        <a href="#">쿠폰<span>></span></a>
+                    </li>
+                    <li class="menu">
+                        <a href="#">회원정보 수정<span>></span></a>
+                        <ul class="hide">
+                            <li class="hide1"><a href="#" class="depth-1">회원정보 수정<span>></span></a></li>
+                            <li class="hide1"><a href="#" class="depth-1">회원 탈퇴<span>></span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- left menu End -->
+            </div>
+        </div>
+        <div class="profile-info col-md-9">
+            <div class="panel">
+                <div class="bio-graph-heading container topMenuContainer">
+                    <div class="row justify-content-center topMenus">
+                        <div class="col topMenu">
+                            <img src="/images/userTest/shipped.png" class="shippingImg">
+                            <div class="topMenuText">주문/배송</div>
+                            <a href="#"> 3 </a>
+                        </div>
+                        <div class="col topMenu">
+                            <img src="/images/userTest/dollar-coins.png" class="shippingImg">
+                            <div class="topMenuText">포인트</div>
+                            <a href="#"> 1,960 </a>
+                        </div>
+                        <div class="col topMenu">
+                            <img src="/images/userTest/coupon.png" class="shippingImg">
+                            <div class="topMenuText">쿠폰</div>
+                            <a href="#"> 20 </a>
+                        </div>
+                        <div class="col topMenu">
+                            <img src="/images/userTest/conversation.png" class="shippingImg">
+                            <div class="topMenuText">1:1 문의</div>
+                            <a href="#"> 1 </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body bio-graph-info" style="padding: 10px 5px;">
+
+                <th:block layout:fragment="customContents"></th:block>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- mypage template END -->
+<!-- page content -->
+
+<div th:replace="fragments/userFooter :: footerFragment"></div>
+
+<th:block th:replace="fragments/userJs :: jsFragment"></th:block>
+<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+<script>
+    //side menu
+    $(document).ready(function () {
+        $(".menu>a").click(function () {
+            var submenu = $(this).next("ul");
+            if (submenu.is(":visible")) {
+                submenu.slideUp();
+            } else {
+                submenu.slideDown();
+            }
+        });
+    });
+</script>
+
+<!-- 사용자 정의 JsScript-->
+<th:block layout:fragment="customMyPageJs"></th:block>
+</body>
+
+</html>
