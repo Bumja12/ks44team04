@@ -38,4 +38,8 @@ public interface OrderMapper {
     public void addPostInfo(PostInfo postInfo);
 
     public void setOrderDetailPost(@Param(value = "orderDetailCode") String orderDetailCode, @Param(value = "postInfo") String postInfo);
+
+    public void setCancelApprove(String orderDetailCode);
+    public void setExchangeApprove(String orderDetailCode);
+    public void setReturnApprove(String orderDetailCode);
 }
