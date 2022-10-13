@@ -9,6 +9,8 @@ import ks44team04.dto.UserSuspend;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 @Controller
 @RequestMapping("/admin")
 public class ReportController {
@@ -239,6 +242,11 @@ public class ReportController {
 		
 
 		return "admin/report/userSuspendList";
+	}
+	
+	@Scheduled(cron = "0 0 0 * * ?")
+	public void suspendDay() {
+		
 	}
 	
 	
