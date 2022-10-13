@@ -13,6 +13,10 @@
             vertical-align: middle;
             text-align: center;
         }
+
+        .deleteCouponStatus{
+            color: red;
+        }
     </style>
 </th:block>
 
@@ -78,7 +82,7 @@
                                     <td th:text="${cn.adminId}"></td>
                                     <td th:text="${cn.couponIssueDate}"></td>
                                     <td>
-                                        <a href="#"><i class="fa fa-close"></i>삭제</a>
+                                        <a class="deleteCouponStatus" style="cursor:pointer" th:attr="data-couponStatusCode=${cn.couponStatusCode}"><i class="fa fa-close"></i>삭제</a>
                                     </td>
                                 </tr>
                             </th:block>
@@ -92,10 +96,82 @@
             </div>
         </div>
     </div>
+
+    <div class="pwCheckModal modal fade" id="pwCheckModal" tabindex="-1" role="dialog" aria-labelledby="pwCheckModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="pwCheckModalTitle" style="font-weight: bold; text-align: center">관리자확인</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="adminPw" class="col-form-label">비밀번호를 입력해주세요.</label>
+                        <input type="password" class="pwInput form-control" id="adminPw" name="adminPw">
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align: center;">
+                    <button type="button" class="btn btn-dark" id="adminCheckBtn">확인</button>
+                    <button type="button" class="btn btn-secondary" id='closeBtn' data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </th:block>
 
 <th:block layout:fragment="customJsScript">
     <script type="text/javascript">
+        $(function (){
+
+            let pwCheckModal = $('#pwCheckModal')
+
+            $('.deleteCouponStatus').off().on('click', function (){
+                let couponStatusCode = $(this).attr('data-couponStatusCode');
+                console.log(couponStatusCode);
+                pwCheckModal.modal('show');
+
+                $('#adminCheckBtn').off().on('click', function () {
+
+                    var adminPw = $('input[name="adminPw"]').val();
+
+                    var request = $.ajax({
+                        url: "/admin/goods/pwCheck",
+                        method: 'POST',
+                        data: { userPw : adminPw },
+                        dataType: "json"
+                    });
+
+                    request.done(function( data ) {
+                        if (data) {
+                            location.href = "/admin/coupon/deleteCouponStatus/" + couponStatusCode
+                        }else {
+                            if(typeof adminPw == 'undefined' || adminPw == null || adminPw == '') {
+                                alert('비밀번호를 입력해주세요.');
+                                $('#adminPw').focus();
+                                return false;
+                            }else {
+                                alert('비밀번호가 일치하지 않습니다.');
+                                $('#adminPw').focus();
+                                return false;
+                            }
+                        }
+                    })
+                    request.fail(function( jqXHR, textStatus ) {
+                        alert( "Request failed: " + textStatus );
+                    });
+                });
+
+                pwCheckModal.on('hidden.bs.modal', function(e) {
+                    $('#adminPw').val(null);
+                });
+
+                $("#adminPw").keyup(function(e){
+                    if(e.keyCode == 13) {
+                        $('#adminCheckBtn').click();
+                    }
+                });
+
+            })
+        })
     </script>
 </th:block>
 </html>
