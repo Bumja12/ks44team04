@@ -4,23 +4,23 @@ import java.util.List;
 
 public class GoodsLargeCategory {
 
-    private String goodsLargeCategoryPK;
-    private String categoryName;
+    private String goodsLargeCategory;
+    private String goodsCategory;
     private String regId;
     private String useCheck;
     private String regDate;
-    
-	public String getGoodsLargeCategoryPK() {
-		return goodsLargeCategoryPK;
+    private List<GoodsSmallCategory> goodsSmallCategoryInfo;
+	public String getGoodsLargeCategory() {
+		return goodsLargeCategory;
 	}
-	public void setGoodsLargeCategoryPK(String goodsLargeCategoryPK) {
-		this.goodsLargeCategoryPK = goodsLargeCategoryPK;
+	public void setGoodsLargeCategory(String goodsLargeCategory) {
+		this.goodsLargeCategory = goodsLargeCategory;
 	}
-	public String getCategoryName() {
-		return categoryName;
+	public String getGoodsCategory() {
+		return goodsCategory;
 	}
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public void setGoodsCategory(String goodsCategory) {
+		this.goodsCategory = goodsCategory;
 	}
 	public String getRegId() {
 		return regId;
@@ -40,11 +40,19 @@ public class GoodsLargeCategory {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+	public List<GoodsSmallCategory> getGoodsSmallCategoryInfo() {
+		return goodsSmallCategoryInfo;
+	}
+	public void setGoodsSmallCategoryInfo(List<GoodsSmallCategory> goodsSmallCategoryInfo) {
+		this.goodsSmallCategoryInfo = goodsSmallCategoryInfo;
+	}
 	
 	@Override
 	public String toString() {
-		return "GoodsLargeCategory [goodsLargeCategoryPK=" + goodsLargeCategoryPK + ", categoryName=" + categoryName
-				+ ", regId=" + regId + ", useCheck=" + useCheck + ", regDate=" + regDate + "]";
+		return "GoodsLargeCategory [goodsLargeCategory=" + goodsLargeCategory + ", goodsCategory=" + goodsCategory
+				+ ", regId=" + regId + ", useCheck=" + useCheck + ", regDate=" + regDate + ", goodsSmallCategoryInfo="
+				+ goodsSmallCategoryInfo + "]";
 	}
-	
+
+    
 }
