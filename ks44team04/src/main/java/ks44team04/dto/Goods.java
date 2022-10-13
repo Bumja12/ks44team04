@@ -32,7 +32,7 @@ public class Goods {
 	public GoodsQna getGoodsQnaInfo() {
 		return goodsQnaInfo;
 	}
-	public void setUserInfoGoodsQnaInfo(GoodsQna goodsQnaInfo) {
+	public void setGoodsQnaInfo(GoodsQna goodsQnaInfo) {
 		this.goodsQnaInfo = goodsQnaInfo;
 	}
     
