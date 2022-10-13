@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import ks44team04.dto.Cart;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsQna;
@@ -30,19 +29,14 @@ public class UserGoodsController {
     
     //의존성 주입
   	private GoodsService goodsService;
-
-
   	//유저 권한 확인 서비스 
   	private UserService userService;
-
 	public UserGoodsController(GoodsService goodsService, UserService userService) {
 		this.goodsService = goodsService;
 		this.userService = userService;
 	}
-
-
+	
 	//상품 리스트 
-
     @GetMapping("/goodsList")
     public String getGoodsList(Model model) {
         
@@ -59,11 +53,9 @@ public class UserGoodsController {
         return "user/goods/goodsList";
     }
     
-    
     //특정 상품 정보&문의
     @GetMapping("/goods")
     public String goodsDetail(@RequestParam(name="goodsCode", required = false) String goodsCode, Model model) {
-    	
     	
     	//특정 상품의 정보
     	Goods goodsInfo = goodsService.getGoodsInfoByCode(goodsCode);
@@ -135,11 +127,9 @@ public class UserGoodsController {
 				a = 1;
 			}
 		} */
-	 
 		return "user/goods/answerView"; 
 	 }
 	 
-    
     //장바구니
     @GetMapping("/cart")
     public String getCartList(Model model) {
@@ -153,6 +143,18 @@ public class UserGoodsController {
     	return "user/goods/cart";
     }
     
+    //장바구니 추가
+    @GetMapping("/cartAdd")
+    public String cartAdd(Cart cart) {
+    	
+    	cart.setBuyerId("buyer01");
+    	
+    	goodsService.cartAdd(cart);
+    	log.info("장바구니 추가 정보 ::: {}", cart);
+    	
+    	return "user/goods/cart";
+    }
+    
     //장바구니 수량 수정
     @GetMapping("/cartModify")
     @ResponseBody
@@ -160,8 +162,8 @@ public class UserGoodsController {
     	
     	cart.setBuyerId("buyer01");
     	
-		log.info("사용자가 상품 수정한 정보 ::: {}", cart);
 		goodsService.cartModify(cart);
+		log.info("사용자가 상품 수정한 정보 ::: {}", cart);
 		
 		return cart.getCartAmount();
 	}

@@ -528,6 +528,7 @@
         	<association property="goodsInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsResultMap"/>
     </resultMap>
     
+    <!-- 장바구니 보여주기 -->
     <select id="getCartList" parameterType="String" resultMap="cartResultMap" fetchSize="100" >
 	SELECT
 		*
@@ -541,6 +542,24 @@
 		c.buyer_id = #{buyerId}
 	</select>
 	
+	<!-- 장바구니 추가 -->
+	<insert id="cartAdd" parameterType="Cart">
+	/* 장바구니 추가  */
+	INSERT INTO tb_cart
+		(cart_code, goods_code, buyer_id, cart_amount, reg_date)
+	VALUES
+		('#{cartCode}', '#{goodsCode}', '#{buyerId}', '#{cartAmount}', NOW())
+	</insert>
+	
+	<!-- 장바구니 추가 시 코드 증가 -->
+	<select id="cartNewCode" resultType="String">
+	/* 장바구니 추가시 코드 증가*/
+	SELECT	MAX(cart_code)
+	FROM	tb_cart
+	WHERE	buyer_Id = #{buyerId};
+	</select>
+	
+	
 	<!-- 장바구니 수량 수정 -->
 	<update id="cartModify" parameterType="Cart">
 	/* 장바구니 수량 수정 */
@@ -553,15 +572,14 @@
 		cart_code=#{cartCode}
 	AND
 		buyer_id =#{buyerId}
-		
-	<selectKey keyProperty="cartAmount" resultType="int" order="AFTER">
-		SELECT
-			c.cart_amount AS cartAmount
-		FROM
-			tb_cart AS c
-		WHERE 
-			c.cart_code = #{cartCode}
-	</selectKey>
+		<selectKey keyProperty="cartAmount" resultType="int" order="AFTER">
+			SELECT
+				c.cart_amount AS cartAmount
+			FROM
+				tb_cart AS c
+			WHERE 
+				c.cart_code = #{cartCode}
+		</selectKey>
 	</update>
 	
     

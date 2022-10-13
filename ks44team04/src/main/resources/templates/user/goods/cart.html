@@ -90,7 +90,7 @@ button:focus{ outline:none; border:none; }
 						<hr>
 						<div>
 							<span style="font-size:17px;">주문금액</span>
-							<span style="font-size:17px; float:right;">0원</span>
+							<span style="font-size:17px; float:right;" class="checkTotal">0원</span>
 						</div>
 						<div style="float:right; margin-top:5px;">
 							<span class="badge" style="background-color:#d1ebab;">적립</span>
@@ -170,6 +170,7 @@ $(document).ready(function() {
 			console.log(hiddenPrice2);
 		}
 	});
+	
 	/* ~~~~~~~~~~~~~~~~~~~~~~ 수량 마이너스 버튼 ~~~~~~~~~~~~~~~~~~~~~~ */
 	$('.minusBtn').on('click', function(){
 		var goodsPrice = $(this).parent('div').parent('div').find('.goodsPrice').val(); //상품 가격
@@ -229,25 +230,28 @@ $(document).ready(function() {
 	});
 	
 	/* 체크된 상품 결제금액 수정 이벤트 */
-	$('.oneCheck, .plusMinusBtn').click(function(){
+	$('.oneCheck, .plusMinusBtn, #allCheck').click(function(){
 		//var parentDiv = $(this).closest('.cartAll');
 		
-		var totalPrice = 0;
+		var cartPrice = 0;
 		var discountPrice = 0;
 		var postPrice = 0;
+		var totalPrice = 0;
 		$('.oneCheck').each(function(){
 			var parentDiv = $(this).closest('.cartAll')
 			if($(this).is(":checked")){
-				totalPrice += //장바구니에 담긴 수량 * 상품 가격
+				cartPrice += //상품금액 = 장바구니에 담긴 수량  * 상품 가격
 					Number(parentDiv.find('.cartAmount').val()) * Number(parentDiv.find('.goodsPrice').val());	
-				discountPrice += //장바구니에 담긴 수량 * 상품 가격 * 할인율 / 100 
+				discountPrice += //할인금액 = 장바구니에 담긴 수량 * 상품 가격 * 할인율 / 100 
 					Number(parentDiv.find('.cartAmount').val()) * Number(parentDiv.find('.goodsPrice').val()) * Number(parentDiv.find('.goodsDiscountRate').val()) / 100 ;	
-				postPrice += //체크된 해당 상품 배송비 
+				postPrice += //배송비 = 체크된 해당 상품 배송비 
 					Number(parentDiv.find('.goodsPostPrice').val());
+				totalPrice = //결제금액 = 상품금액 - 할인금액 + 배송비
+					cartPrice - discountPrice + postPrice
 			}		
 		});
 			//상품 금액
-			var checkPrice = totalPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+			var checkPrice = cartPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
 			console.log(checkPrice);
 			//할인 금액
 			var checkDiscount = discountPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
@@ -255,12 +259,16 @@ $(document).ready(function() {
 			//상품에 따른 배송비
 			var checkPost = postPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
 			console.log(checkPost);
+			//총 결제금액
+			var checkTotal = totalPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+			console.log(checkTotal);
 			
 			$('.checkPrice').text(checkPrice+'원');
 			$('.checkDiscount').text('-'+checkDiscount+'원');
 			$('.checkPost').text('+'+checkPost+'원');
-			
+			$('.checkTotal').text('+'+checkTotal+'원');
 	});
+	
 	
 
 });

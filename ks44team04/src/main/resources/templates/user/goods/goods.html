@@ -362,32 +362,31 @@ div { margin: 5px 0px }
 									<td th:text="${gqi.userInfo.userId}"></td>
 									<td th:text="${#strings.substring(gqi.goodsQnaDate,0,10)}"></td>
 								</tr>
-									<input type="hidden" class="secretVal" name="secretVal" th:value="${gqi.secretCheck}">
-						 			<tr class="answerToggle" style="display:none;">
-						 				<td colspan="2"></td>
-						 				<td colspan="2" style="text-align:left; padding-left:50px; background-color:#f4f8ed;">
-						 					<div>
-							 					<div style="display:table-cell;">
-							 						<i class="fi fi-bs-comment-question" style="font-size:20px; color:#98b856;"></i>
-							 						<span th:text="${gqi.goodsQnaContent}" style="padding-left:10px; vertical-align:text-top; font-size:16px;"></span>
-							 					</div>
-						 					</div>
-						 					<div style="margin-top:20px;">
-							 					<div th:if="${gqi.qnaStatus}=='답변완료'" style="display:table-cell;" >
-							 						<i class="fi fi-br-comment-check" style="font-size:20px; color:#98b856;"></i>
-							 						<span th:text="${gqi.goodsAnswerInfo.goodsAnswerContent}" style="padding-left:10px; vertical-align:text-top; font-size:16px;"></span>
-							 					</div>
-							 					<div th:unless="${gqi.qnaStatus} == '답변완료'" style="display:table-cell;">
-							 					</div>
-							 					<div>
-							 			 			<span th:text="${#strings.substring(gqi.goodsAnswerInfo.answerDate,0,10)}" style="float:right; padding-right:20px;"></span>
-						 						</div>
-						 					</div>
-						 			 	</td> 
-						 			</tr>
-									<tr th:unless="${not #lists.isEmpty(goodsQnaInfo)}">
-									<td colspan="5">등록된 문의가 없습니다.</td>
-									</tr>
+						 		<tr class="answerToggle" style="display:none;">
+						 			<td colspan="2"></td>
+						 			<td colspan="2" style="text-align:left; padding-left:50px; background-color:#f4f8ed;">
+						 			<div>
+							 			<div style="display:table-cell;">
+							 				<i class="fi fi-bs-comment-question" style="font-size:20px; color:#98b856;"></i>
+							 				<span th:text="${gqi.goodsQnaContent}" style="padding-left:10px; vertical-align:text-top; font-size:16px;"></span>
+							 			</div>
+						 			</div>
+						 			<div style="margin-top:20px;">
+							 			<div th:if="${gqi.qnaStatus}=='답변완료'" style="display:table-cell;" >
+							 				<i class="fi fi-br-comment-check" style="font-size:20px; color:#98b856;"></i>
+							 				<span th:text="${gqi.goodsAnswerInfo.goodsAnswerContent}" style="padding-left:10px; vertical-align:text-top; font-size:16px;"></span>
+							 			</div>
+							 			<div th:unless="${gqi.qnaStatus} == '답변완료'" style="display:table-cell;">
+							 			</div>
+							 			<div>
+							 				<span th:text="${#strings.substring(gqi.goodsAnswerInfo.answerDate,0,10)}" style="float:right; padding-right:20px;"></span>
+						 				</div>
+						 			</div>
+						 			</td> 
+						 		</tr>
+								<tr th:unless="${not #lists.isEmpty(goodsQnaInfo)}">
+								<td colspan="5">등록된 문의가 없습니다.</td>
+								</tr>
 							</th:block>
 							</tbody>
 						</table>
@@ -516,7 +515,7 @@ $(function() {
 		
 		if(countVal > goodsStock){
 			alert('최대 수량입니다');
-			countVal = goodsStock;
+			countVal = 1;
 		}
 		$('.countVal').val(countVal);
 		console.log('plus 버튼: '+countVal);
