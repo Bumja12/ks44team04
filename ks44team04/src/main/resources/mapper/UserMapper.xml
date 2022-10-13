@@ -121,8 +121,7 @@
 		<result  column="g_use_check" 				property="useCheck"/>
 	</resultMap>
 
-
-	<!-- 회원 탈퇴 Start -->
+	<!-- /* ===== 회원 탈퇴 시작 ===== */ -->
 	
 	<!-- (판매자) 판매상품 판매중지여부 Y로 변경 -->
 	<delete id="updateGoodsSaleCheck" parameterType="String">
@@ -166,14 +165,13 @@
 			store_email='',
 			licence_img='',
 			online_licence_img='',
-			approve_check='',
-			approve_id=''
+			approve_check=''
 		WHERE seller_id = #{userId}
 	</update>
 	
 	<!-- (구매자) 배송지목록 정보 지우기 -->
-	<delete id="removeAddressList" parameterType="String">
-		/*  */
+	<update id="removeAddressList" parameterType="String">
+		/* 배송지목록 정보 지우기 */
 		UPDATE tb_address_list
 		SET
 			buyer_id = '',
@@ -188,7 +186,7 @@
 			default_address_check = ''
 		WHERE 
 			buyer_id = #{userId}
-	</delete>
+	</update>
 	
 	<!-- (구매자) 쿠폰보유현황 삭제 -->
 	<delete id="removeCouponStatus" parameterType="String">
@@ -293,7 +291,7 @@
 			user_address2 = '',
 			user_phone = '',
 			user_email = '',
-			user_status = '',
+			user_status = '탈퇴',
 			user_penalty = 0,
 			user_point = 0,
 			user_level = NULL
@@ -318,9 +316,7 @@
 		FROM 	tb_user 	AS u
 		WHERE	u.user_id = 'admin01';
     </select>
-	
-	<!-- 회원 탈퇴 End -->
-
+	<!-- /* ===== 회원 탈퇴 끝 ===== */ -->
 
 	<!-- 판매자 신청 승인 (seller 테이블) -->
 	<update id="approveSeller" parameterType="User">
@@ -354,7 +350,31 @@
 			(#{sellerCode}, #{sellerId}, #{storeName}, #{sellerSort}, #{bankName}, #{account}, #{accountHolder}, #{licenceNum}, #{storeAddress}, #{storeAddress2}, #{storePhone}, #{storeEmail}, NOW(), #{approveDate}, #{approveCheck}, #{approveId})
 	</insert>
 	
-	<!-- 회원정보 수정 -->
+	<!-- 10/13 판매자 정보 수정 -->
+	<update id="modifySeller" parameterType="map">
+		/* 판매자 정보 수정 */
+		UPDATE tb_seller
+		<trim prefix="SET" prefixOverrides=",">
+			<if test="sellerId != null and sellerId != ''">seller_id = #{sellerId}</if>
+			<if test="storeName != null and storeName != ''">,store_name = #{storeName}</if>
+			<if test="sellerSort != null and sellerSort != ''">,seller_sort = #{sellerSort}</if>
+			<if test="bankName != null and bankName != ''">,bank_name = #{bankName}</if>
+			<if test="account != null and account != ''">,account = #{account}</if>
+			<if test="accountHolder != null and accountHolder != ''">,account_holder = #{accountHolder}</if>
+			<if test="storeAddress != null and storeAddress != ''">,licence_num = #{licenceNum}</if>
+			<if test="storeAddress != null and storeAddress != ''">,store_address = #{storeAddress}</if>
+			<if test="storeAddress2 != null and storeAddress2 != ''">,store_address2 = #{storeAddress2}</if>
+			<if test="storePhone != null and storePhone != ''">,store_phone = #{storePhone}</if>
+			<if test="storeEmail != null and storeEmail != ''">,store_email = #{storeEmail}</if>
+			<if test="licenceImg != null and licenceImg != ''">,licence_img = #{licenceImg}</if>
+			<if test="onlineLicenceImg != null and onlineLicenceImg != ''">,online_licence_img = #{onlineLicenceImg}</if>
+			<if test="approveCheck != null and approveCheck != ''">,approve_check = #{approveCheck}</if>
+		</trim>
+		WHERE
+			seller_id = #{sellerId};
+	</update>
+	
+	<!-- 회원 정보 수정 -->
 	<update id="modifyUser" parameterType="map">
 		/* 회원정보 수정 */
 		UPDATE tb_user

@@ -160,7 +160,12 @@ public class UserService {
     	System.out.println("회원가입 결과:" + addUserResult);
     }
     
-	//회원수정
+    //판매자 정보 수정
+    public void modifySeller(Seller seller) {
+    	userMapper.modifySeller(seller);
+    }
+    
+	//회원 정보 수정
 	public void modifyUser(User user) {
 		userMapper.modifyUser(user);
 	}

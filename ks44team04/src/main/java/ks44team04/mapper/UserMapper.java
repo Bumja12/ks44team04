@@ -24,7 +24,6 @@ public interface UserMapper {
     public User getLoginUserInfo(String userId);
     
     /* ===== 회원 탈퇴 시작 ===== */
-    
     //(판매자) 판매상품 판매중지여부 Y로 변경
     public int updateGoodsSaleCheck(String userId);
     
@@ -81,7 +80,6 @@ public interface UserMapper {
     
     //회원 탈퇴를 위한 관리자 비밀번호
   	public String getAdminPw(String userPw);
-    
     /* ===== 회원 탈퇴 끝 ===== */
     
     //유저 마이페이지 
@@ -98,6 +96,7 @@ public interface UserMapper {
     
     //판매자 등록
     public int addSeller(Seller seller);
+    
     
     /* ==== 회원,판매자 등록 / 중복체크 시작 ===== */
     //판매자 휴대폰번호 중복체크
@@ -128,8 +127,13 @@ public interface UserMapper {
 	public int addUser(User user);
 	/* ==== 회원,판매자 등록 / 중복체크 끝 ===== */
 	   
-	//회원 수정
+	/* ==== 회원, 판매자 수정 시작===== */
+	// 10/13 판매자 정보 수정
+	public int modifySeller(Seller seller);
+
+	//회원 정보 수정
 	public int modifyUser(User user);
+	/* ==== 회원, 판매자 수정 끝===== */
 	
 	//특정 판매자 판매상품 조회
 	public List<Goods> getGoodsList(String sellerId);
