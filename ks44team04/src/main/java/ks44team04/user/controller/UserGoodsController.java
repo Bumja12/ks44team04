@@ -21,6 +21,7 @@ import ks44team04.dto.GoodsQnaCategory;
 import ks44team04.dto.Review;
 import ks44team04.service.GoodsService;
 import ks44team04.service.UserService;
+import ks44team04.util.CodeIndex;
 
 @Controller
 @RequestMapping("/user/goods")
@@ -147,7 +148,16 @@ public class UserGoodsController {
     @GetMapping("/cartAdd")
     public String cartAdd(Cart cart) {
     	
-    	cart.setBuyerId("buyer01");
+    	cart.setBuyerId("buyer01"); //임의
+    	String buyerId = "buyer01"; //임의
+    	
+    	//cartNewCode 생성
+    	String cartNewCode = goodsService.cartNewCode(buyerId);
+    	cartNewCode = CodeIndex.codeIndex(cartNewCode, 4);
+    	
+    	log.info("상품 증가 코드 :::{}" , cartNewCode);
+    	
+    	
     	
     	goodsService.cartAdd(cart);
     	log.info("장바구니 추가 정보 ::: {}", cart);
@@ -160,7 +170,7 @@ public class UserGoodsController {
     @ResponseBody
     public int cartModify(Cart cart) {
     	
-    	cart.setBuyerId("buyer01");
+    	cart.setBuyerId("buyer01"); //임의
     	
 		goodsService.cartModify(cart);
 		log.info("사용자가 상품 수정한 정보 ::: {}", cart);

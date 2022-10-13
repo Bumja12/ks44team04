@@ -559,7 +559,6 @@
 	WHERE	buyer_Id = #{buyerId};
 	</select>
 	
-	
 	<!-- 장바구니 수량 수정 -->
 	<update id="cartModify" parameterType="Cart">
 	/* 장바구니 수량 수정 */
