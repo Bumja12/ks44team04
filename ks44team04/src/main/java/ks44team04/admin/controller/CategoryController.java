@@ -29,14 +29,6 @@ public class CategoryController {
 		return "redirect:/admin/category/categoryList";
 	}
 
-	// 카테고리 삭제 처리
-	@PostMapping("/removeCategory")
-	public String removeCategory() {
-
-		// 카테고리 목록 화면으로 리다이렉트
-		return "admin/category/category_remove";
-	}
-
 	// --------------------------------------카테고리 목록  화면--------------------------------------
 	
 	// 구매자 등급 카테고리 목록 화면
@@ -455,4 +447,181 @@ public class CategoryController {
 		return "redirect:/admin/category/goodsQna";
 	}
 	
+	// --------------------------------------카테고리 등록 처리--------------------------------------
+	
+	// --------------------------------------카테고리 삭제 처리--------------------------------------
+	
+	// 구매자 등급 카테고리 삭제 처리
+	@ResponseBody
+	@PostMapping("/removeLevelBuyerCategory")
+	public String removeLevelBuyerCategoryAction(@RequestParam(value="removeElement[]") List<String> removeElement) {
+
+		System.out.println(removeElement.size());
+		
+		// 구매자 등급 카테고리 목록 화면으로 리다이렉트
+		return "/admin/category/removeLevelBuyerCategory";
+	}
+	
+	// 구매자 등급 카테고리 삭제 처리
+	@GetMapping("/removeLevelBuyerCategory")
+	public String removeLevelBuyerCategory(Model model) {
+		
+		model.addAttribute("title", "구매자 등급 카테고리 삭제 화면");  
+		return "admin/category/levelBuyer/levelBuyerCategory_remove";
+	}
+	
+	// 판매자 등급 카테고리 삭제 처리
+	@ResponseBody
+	@PostMapping("/removeLevelSellerCategory")
+	public String removeLevelSellerCategoryAction(@RequestParam(value="removeElement[]") List<String> removeElement) {
+		
+		System.out.println(removeElement.size());
+		
+		// 판매자 등급 카테고리 목록 화면으로 리다이렉트
+		return "/admin/category/removeLevelSellerCategory";
+	}
+	
+	// 판매자 등급 카테고리 삭제 처리
+	@GetMapping("/removeLevelSellerCategory")
+	public String removeLevelSellerCategory(Model model) {
+		
+		model.addAttribute("title", "판매자 등급 카테고리 삭제 화면");  
+		return "admin/category/levelSeller/levelSellerCategory_remove";
+	}
+	
+	// 고객 문의 카테고리 삭제 처리
+	@ResponseBody
+	@PostMapping("/removeCustomerAskCategory")
+	public String removeCustomerAskCategoryAction(@RequestParam(value="removeElement[]") List<String> removeElement) {
+		
+		System.out.println(removeElement.size());
+		
+		// 고객 문의 카테고리 목록 화면으로 리다이렉트
+		return "/admin/category/removeCustomerAskCategory";
+	}
+	
+	// 고객 문의 카테고리 삭제 처리
+	@GetMapping("/removeCustomerAskCategory")
+	public String removeCustomerAskCategory(Model model) {
+		
+		model.addAttribute("title", "고객 문의 카테고리 삭제 화면");  
+		return "admin/category/customerAsk/customerAskCategory_remove";
+	}
+	
+	// 자주 묻는 질문 카테고리 삭제 처리
+	@ResponseBody
+	@PostMapping("/removeRegularAskCategory")
+	public String removeRegularAskCategoryAction(@RequestParam(value="removeElement[]") List<String> removeElement) {
+		
+		System.out.println(removeElement.size());
+		
+		// 자주 묻는 질문 카테고리 목록 화면으로 리다이렉트
+		return "/admin/category/removeRegularAskCategory";
+	}
+	
+	// 자주 묻는 질문 카테고리 삭제 처리
+	@GetMapping("/removeRegularAskCategory")
+	public String removeRegularAskCategory(Model model) {
+		
+		model.addAttribute("title", "자주 묻는 질문 카테고리 삭제 화면");  
+		return "admin/category/regularAsk/regularAskCategory_remove";
+	}
+	
+	// 게시판 카테고리 삭제 처리
+	@ResponseBody
+	@PostMapping("/removeBoardCategory")
+	public String removeBoardCategoryAction(@RequestParam(value="removeElement[]") List<String> removeElement) {
+		
+		System.out.println(removeElement.size());
+		
+		// 게시판 카테고리 목록 화면으로 리다이렉트
+		return "/admin/category/removeBoardCategory";
+	}
+	
+	// 게시판 카테고리 삭제 처리
+	@GetMapping("/removeBoardCategory")
+	public String removeBoardCategory(Model model) {
+		
+		model.addAttribute("title", "게시판 카테고리 삭제 화면");  
+		return "admin/category/board/boardCategory_remove";
+	}
+	
+	// 신고 대상 카테고리 삭제 처리
+	@ResponseBody
+	@PostMapping("/removeReportCategory")
+	public String removeReportCategoryAction(@RequestParam(value="removeElement[]") List<String> removeElement) {
+		
+		System.out.println(removeElement.size());
+		
+		// 신고 대상 카테고리 목록 화면으로 리다이렉트
+		return "/admin/category/removeReportCategory";
+	}
+	
+	// 신고 대상 카테고리 삭제 처리
+	@GetMapping("/removeReportCategory")
+	public String removeReportCategory(Model model) {
+		
+		model.addAttribute("title", "신고 대상 카테고리 삭제 화면");  
+		return "admin/category/report/reportCategory_remove";
+	}
+	
+	// 판매 상품 카테고리 대분류 삭제 처리
+	@ResponseBody
+	@PostMapping("/removeGoodsLargeCategory")
+	public String removeGoodsLargeCategoryAction(@RequestParam(value="removeElement[]") List<String> removeElement) {
+		
+		System.out.println(removeElement.size());
+		
+		// 판매 상품 카테고리 대분류 목록 화면으로 리다이렉트
+		return "/admin/category/removeGoodsLargeCategory";
+	}
+	
+	// 판매 상품 카테고리 대분류 삭제 처리
+	@GetMapping("/removeGoodsLargeCategory")
+	public String removeGoodsLargeCategory(Model model) {
+		
+		model.addAttribute("title", "판매 상품 카테고리 대분류 삭제 화면");  
+		return "admin/category/goodsLarge/goodsLargeCategory_remove";
+	}
+	
+	// 판매 상품 카테고리 소분류 삭제 처리
+	@ResponseBody
+	@PostMapping("/removeGoodsSmallCategory")
+	public String removeGoodsSmallCategoryAction(@RequestParam(value="removeElement[]") List<String> removeElement) {
+		
+		System.out.println(removeElement.size());
+		
+		// 판매 상품 카테고리 소분류 목록 화면으로 리다이렉트
+		return "/admin/category/removeGoodsSmallCategory";
+	}
+	
+	// 판매 상품 카테고리 소분류 삭제 처리
+	@GetMapping("/removeGoodsSmallCategory")
+	public String removeGoodsSmallCategory(Model model) {
+		
+		model.addAttribute("title", "판매 상품 카테고리 소분류 삭제 화면");  
+		return "admin/category/goodsSmall/goodsSmallCategory_remove";
+	}
+	
+	// 상품 문의 카테고리 삭제 처리
+	@ResponseBody
+	@PostMapping("/removeGoodsQnaCategory")
+	public String removeGoodsQnaCategoryAction(@RequestParam(value="removeElement[]") List<String> removeElement) {
+		
+		System.out.println(removeElement.size());
+		
+		// 상품 문의 카테고리 목록 화면으로 리다이렉트
+		return "/admin/category/removeGoodsQnaCategory";
+	}
+	
+	// 상품 문의 카테고리 삭제 처리
+	@GetMapping("/removeGoodsQnaCategory")
+	public String removeGoodsQnaCategory(Model model) {
+		
+		model.addAttribute("title", "상품 문의 카테고리 삭제 화면");  
+		return "admin/category/goodsQna/goodsQnaCategory_remove";
+	}
+	
+	
+	// --------------------------------------카테고리 삭제 처리--------------------------------------
 }
