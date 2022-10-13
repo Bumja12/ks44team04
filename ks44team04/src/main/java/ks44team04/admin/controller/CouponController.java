@@ -42,6 +42,15 @@ public class CouponController {
 		this.userService = userService;
 	}
 
+	//회원쿠폰보유 삭제
+	@GetMapping("/deleteCouponStatus/{couponStatusCode}")
+	public String deleteCouponStatus(@PathVariable(value = "couponStatusCode") String couponStatusCode){
+
+		couponService.deleteCouponStatus(couponStatusCode);
+
+		return "redirect:/admin/coupon/couponStatus";
+	}
+
 	//쿠폰보유 검색
 	@PostMapping("/couponStatus")
 	public String searchCouponStatus(@RequestParam(name="searchKey", defaultValue = "couponName") String sk
