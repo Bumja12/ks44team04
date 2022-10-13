@@ -22,7 +22,7 @@
             </div>
             <div class="x_content">
                 <div class="table-responsive">
-                    <table class="table table-striped jambo_table">
+                    <table id="orderTable" class="table table-striped jambo_table">
                         <thead>
                         <tr class="headings">
                             <th class="column-title">주문번호</th>
@@ -127,7 +127,7 @@
                             i++
                         ) {
                             trHtml +=
-                                '<tr class="pointer"><td><a href="javascript:void(0)">' +
+                                '<tr class="pointer"><td><a href="javascript:void(0)" class="orderDetailCode">' +
                                 data[i].orderDetailCode +
                                 '</a></td><td><a href="javascript:void(0)">' +
                                 data[i].goods.goodsName +
@@ -139,11 +139,11 @@
                                 data[i].orderStatus +
                                 '</td><td>';
                             if (data[i].orderStatus === '취소요청') {
-                                trHtml += '<button type="button">취소처리</button>';
+                                trHtml += '<button type="button" class="btn-xs btn-dark" data-type="cancel">취소처리</button>';
                             } else if (data[i].orderStatus === '교환요청') {
-                                trHtml += '<button type="button">교환처리</button>';
+                                trHtml += '<button type="button" class="btn-xs btn-dark" data-type="exchange">교환처리</button>';
                             } else if (data[i].orderStatus === '반품요청') {
-                                trHtml += '<button type="button">반품처리</button>';
+                                trHtml += '<button type="button" class="btn-xs btn-dark" data-type="return">반품처리</button>';
                             } else {
                                 trHtml += '-';
                             }
@@ -158,6 +158,23 @@
                     displayData(1, dataPerPage);
                 });
         }
+
+        document.querySelector('#orderTable').addEventListener('click', function (e) {
+            if (e.target.tagName === 'BUTTON') {
+               let url = '/admin/order/' + e.target.dataset.type;
+               let orderDetailCode = e.target.closest('tr').querySelector('.orderDetailCode');
+               fetch(url, {
+                   method: "POST",
+                   headers: {"Content-Type": "application/json"},
+                   body: JSON.stringify({
+                       orderDetailCode
+                   })
+               })
+                   .then(()=>console.log('성공'))
+                   .catch(()=>console.log('실패'));
+            }
+        })
+
     </script>
 </th:block>
 </html>

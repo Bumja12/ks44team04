@@ -95,8 +95,7 @@ public class OrderController {
 
     @GetMapping("/order/postinfo/{postInfo}")
     public @ResponseBody PostInfo getPostInfo(@PathVariable(value = "postInfo") String post) {
-        PostInfo postInfo = addressService.getPostInfo(post);
-        return postInfo;
+        return addressService.getPostInfo(post);
     }
 
     @PostMapping("/order/post/modify")
@@ -104,4 +103,24 @@ public class OrderController {
         addressService.setPostInfo(postInfo);
         return "redirect:/admin/order/liston";
     }
+
+    @PostMapping("/order/cancel")
+    @ResponseBody
+    public void setCancelApprove(@RequestBody String orderDetailCode) {
+        orderService.setCancelApprove(orderDetailCode);
+        orderService.setOrderDetailStatus(orderDetailCode, "취소완료");
+    }
+    @PostMapping("/order/exchange")
+    @ResponseBody
+    public void setExchangeApprove(@RequestBody String orderDetailCode) {
+        orderService.setExchangeApprove(orderDetailCode);
+        orderService.setOrderDetailStatus(orderDetailCode, "교환처리중");
+    }
+    @PostMapping("/order/return")
+    @ResponseBody
+    public void setReturnApprove(@RequestBody String orderDetailCode) {
+        orderService.setReturnApprove(orderDetailCode);
+        orderService.setOrderDetailStatus(orderDetailCode, "반품처리중");
+    }
+
 }

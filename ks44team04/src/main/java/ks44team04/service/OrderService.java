@@ -76,4 +76,14 @@ public class OrderService {
     public void setOrderDetailPost(String orderDetailCode, String postInfo) {
         orderMapper.setOrderDetailPost(orderDetailCode, postInfo);
     }
+
+    public void setCancelApprove(String orderDetailCode) {
+        orderMapper.setCancelApprove(orderDetailCode);
+    }
+    public void setExchangeApprove(String orderDetailCode) {
+        orderMapper.setExchangeApprove(orderDetailCode);
+    }
+    public void setReturnApprove(String orderDetailCode) {
+        orderMapper.setReturnApprove(orderDetailCode);
+    }
 }
