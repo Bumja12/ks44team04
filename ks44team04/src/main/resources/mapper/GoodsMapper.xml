@@ -548,7 +548,7 @@
 	INSERT INTO tb_cart
 		(cart_code, goods_code, buyer_id, cart_amount, reg_date)
 	VALUES
-		('#{cartCode}', '#{goodsCode}', '#{buyerId}', '#{cartAmount}', NOW())
+		(#{cartCode}, #{goodsCode}, #{buyerId}, #{cartAmount}, NOW())
 	</insert>
 	
 	<!-- 장바구니 추가 시 코드 증가 -->
