@@ -1,5 +1,6 @@
 package ks44team04.admin.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,11 +102,20 @@ public class CouponController {
 
 	//쿠폰발급
 	@PostMapping("/couponIssue")
-	public String CouponIssue(CouponStatus couponStatus) {
+	public String CouponIssue(@RequestParam String[] userId
+								,@RequestParam String couponCode
+								,@RequestParam String adminId) {
 
-		System.out.println(couponStatus);
-
-
+		System.out.println(Arrays.toString(userId));
+		System.out.println(couponCode);
+		System.out.println(adminId);
+		for(String buyerId : userId){
+			CouponStatus couponStatus = new CouponStatus();
+			couponStatus.setBuyerId(buyerId);
+			couponStatus.setCouponCode(couponCode);
+			couponStatus.setAdminId(adminId);
+			couponService.couponIssue(couponStatus);
+		}
 
 		return "redirect:/admin/coupon/couponStatus";
 	}
