@@ -21,8 +21,8 @@
 		<result column="suspend_day" 		property="suspendDay"/>
 		<result column="start_suspend"  	property="startSuspend"/>
 		<result column="end_suspend" 		property="endSuspend"/>
-		<result column="suspend_result" 		property="suspendResult"/>
-		<result column="suspend_reason" 		property="suspendReason"/>
+		<result column="suspend_result" 	property="suspendResult"/>
+		<result column="suspend_reason" 	property="suspendReason"/>
 	</resultMap>
 
     <resultMap type="Report" id="reportListResultMap">
@@ -327,6 +327,8 @@
 		 ORDER BY s.user_suspend_code DESC 
 	</select>
 	
+	<!-- 벌점 기준 목록  -->
+	
 	<select id="reportRuleList" resultMap="reportRuleListResultMap">
 	/* 벌점 기준 목록 */
 	
@@ -341,9 +343,48 @@
 		tb_report_rule AS r
 		
 	</select>
+	<!-- 정지 등록 (관리자) -->
+	<insert id="suspendAdd" parameterType="UserSuspend" >
+	/* 정지 등록 (관리자) */
+		INSERT INTO tb_user_suspend
+		 	(user_suspend_code
+		 	 ,suspend_id 
+		 	 ,approve_id 
+		 	 ,suspend_day
+		 	 ,start_suspend
+		 	 ,end_suspend
+		 	 ,suspend_result
+		 	 ,suspend_reason)
+		VALUES 
+			(#{userSuspendCode}
+			,#{suspendId}
+			,#{approveId}
+			,0
+			,#{startSuspend}
+			,#{endSuspend}
+			,#{suspendResult}
+			,#{suspendReason})
+	</insert>
+	
+	<!-- 정지 날자 업데이트 (관리자) -->
+	<update id="suspendDayUp" parameterType="UserSuspend">
+	UPDATE tb_user_suspend
+		SET
+			suspend_day = DATEDIFF(end_suspend , start_suspend )
+		WHERE 
+			user_suspend_code = #{userSuspendCode};
+	</update>
 	
 	
 	
+	<!-- 정지 등록 코드 증가 -->
+	<select id="getUserSuspendCods" resultType="String">
+	SELECT 
+		user_suspend_code
+	FROM 
+		tb_user_suspend 
+	ORDER BY user_suspend_code DESC LIMIT 1
+	</select>
 	
 	<!-- 정지 등록시 필요한 유저 아이디 / 닉네임 값 가져오기  -->
 	<select id="userList" resultMap="userResultMap">

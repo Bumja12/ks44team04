@@ -26,7 +26,7 @@
 
 		<!-- 정지 등록 -->
 		 <div class="x_panel">
-	          <div class="accordion" id="userSuspendAdd">
+	          <div class="accordion" >
 	            <div class="card">
 	              <div class="card-header">
 	                <h2 class="mb-0">
@@ -35,11 +35,10 @@
 	                    style="margin: 0px;">정지 등록</button>
 	                </h2>
 	              </div>
-	              <div id="collapseTwo" class="collapse"
-	                data-parent="#userSuspendAdd">
+	              <div id="collapseTwo" class="collapse">
 	                <div class="card-body">
 	                  <div class="x_content2">
-	                    <form>
+	                    <form id="suspendAdd" th:action="@{/admin/report/suspandAdd}" method="post">
 	                      <table class="table" th:object="${Report}">
 	                        <tbody>
 	                        
@@ -49,57 +48,38 @@
 	                          <tr>
 	                          
 	                            <th class="style1" style="padding-top: 15px;">정지 아이디 </th>
-	                            <td>
-	                            	<select style="width: 255px; height: 30px; border-color: #CCCCCC; padding-left: 10px;"	>
+	                            <td >
+	                            	<select  style="width: 255px; height: 30px; border-color: #CCCCCC; padding-left: 10px;"	class="suspendUserId">
 	                            		<option>아아디 :: 닉네임</option>
-	                            	<th:block th:unless="${#lists.isEmpty(userList)}" th:each="u : ${userList}">
-	                            		<option th:text="${u.userId} + ' :: ' + ${u.userName}" th:value="${u.userId}"></option>
-	                            	</th:block>
+		                            	<th:block th:unless="${#lists.isEmpty(userList)}" th:each="u : ${userList}">
+		                            		<option  th:text="${u.userId} + ' :: ' + ${u.userName}" th:value="${u.userId}"></option>
+		                            	</th:block>
 	                            	</select>
+	                            	<input type="hidden" id="suspendId" name="suspendId">
 	                            </td>
 	                            <th class="style1" style="padding-top: 15px;">승인 아이디</th>	
-	                            <td style="padding-top: 15px;"><input type="text" style="border: none;" th:value="${session.SID}" readonly="readonly"> </td>
+	                            <td style="padding-top: 15px;"><input type="text" name="approveId" style="border: none;" th:value="${session.SID}" readonly="readonly"> </td>
 	                          </tr>
 	                          <tr>
 	                            <th class="style1" style="padding-top: 18px;">정지 시작일</th>
 	                            <td > 
-	                              <fieldset style="width: 300px;">
-	                                <div class="control-group">
-	                                  <div class="controls">
-	                                    <div class="col-md-11 xdisplay_inputx form-group row has-feedback"> 
-	                                      <input type="text" class="form-control has-feedback-left" id="single_cal4" placeholder="First Name" aria-describedby="inputSuccess2Status4">
-	                                      <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-	                                      <span id="inputSuccess2Status4" class="sr-only">(success)</span>
-	                                    </div>
-	                                  </div>
-	                                </div>
-	                              </fieldset>
+	                              <input id="startSuspend" name="startSuspend"  class="date-picker form-control" style="width: 255px;" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'">
 	                            </td>
 	                            <th class="style1" style="padding-top: 18px;">정지해제일시</th>
 	                            <td > 
-	                              <fieldset style="width: 300px; text-align: center;">
-	                                <div class="control-group">
-	                                  <div class="controls">
-	                                    <div class="col-md-11 xdisplay_inputx form-group row has-feedback">
-	                                      <input type="text" class="form-control has-feedback-left" id="single_cal3" placeholder="First Name" aria-describedby="inputSuccess2Status3">
-	                                      <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-	                                      <span id="inputSuccess2Status3" class="sr-only">(success)</span>
-	                                    </div>
-	                                  </div>
-	                                </div>
-	                              </fieldset>
+	                             	<input id="endSuspend"  name="endSuspend"  class="date-picker form-control" style="width: 255px;" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'">
 	                            </td>
 	                          </tr>
 	                          <tr>
 	                            <th class="style1">정지 사유</th>
-	                            <td colspan="4"><input style="border: none; width: 1400px; "></td>
+	                            <td colspan="4"><input name="suspendReason" style="border: none; width: 1400px; "></td>
 	                          </tr>
 	                          <tr>
 	                            <td colspan="6" style="text-align: right; ">
-	                              <input type="hidden" >
+	                              <input type="hidden" name="suspendResult" th:value="진행중" >
 	                              <input type="hidden" >
 	                              <i class="fa fa-check" style="padding-top: 10px;"></i>
-	                              <button type="button" class=" btn btn-link " value="등록" style="padding-top:8px; margin: 0px; font-size: 15px;">등록</button>
+	                              <button type="submit" id="addBtn" class=" btn btn-link " value="등록" style="padding-top:8px; margin: 0px; font-size: 15px;">등록</button>
 	                            </td>
 	                          </tr>
 	                        </tbody>
@@ -229,7 +209,24 @@
 
 <th:block layout:fragment="customTopJs">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script>
+	$(function(){
+		$(".suspendUserId").click(function(){
+			let suspend = $(this);
+			console.log(suspend)
+			let suspendUserId = suspend.val();
+			console.log(suspendUserId)
+			
+			if(suspendUserId !== '아아디 :: 닉네임'){
+				$('#suspendId').val(suspendUserId);
+			}
+			
+		});
 	
+	});
+	
+	
+	</script>
 
 </th:block>
 	

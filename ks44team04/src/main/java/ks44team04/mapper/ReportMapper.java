@@ -23,9 +23,6 @@ public interface ReportMapper {
     //신고등록 코드 증가 
     public String getHistoryCode();
     
-    //정지 리스트
-    public List<UserSuspend> getUserSuspendList();
-    
     //특정 신고리스트 
     public Report getReportHostryCode(String reportHistoryCode);
     
@@ -38,11 +35,17 @@ public interface ReportMapper {
     //신고 검색 
     public List<Report> getReportSearch(Map<String, Object> searchMap);
     
+    //정지 리스트
+    public List<UserSuspend> getUserSuspendList();
+    
     //정지 검색 
     public List<UserSuspend> getSuspendSearch(Map<String, Object> searchMap);
     
     //정지 등록
-    public int userSuspendAdd(UserSuspend userSuspend);
+    public int suspendAdd(UserSuspend userSuspend);
+    
+    //정지 일수 업데이트
+    public int suspendDayUp(UserSuspend userSuspend);
     
     //정지 등록 코드 증가
     public String getUserSuspendCods();

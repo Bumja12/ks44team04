@@ -152,6 +152,8 @@ public class ReportController {
 		return "admin/report/reportList";
 	}
 	
+
+	
 	// 신고리스트
 	@GetMapping("/report/reportList")
 	public String getReportList(Model model) {
@@ -162,6 +164,21 @@ public class ReportController {
 		model.addAttribute("reportList", reportList);
 
 		return "admin/report/reportList";
+	}
+	
+	//정지 등록 (관리자)
+	@PostMapping("/report/suspandAdd")
+	public String suspendAdd(UserSuspend userSuspend) {
+		
+		String getUserSuspendCods = reportService.getUserSuspendCode();
+		getUserSuspendCods = CodeIndex.codeIndex(getUserSuspendCods, 13);
+		
+		userSuspend.setUserSuspendCode(getUserSuspendCods);
+		reportService.suspendAdd(userSuspend);
+		//정지 일수 업데이트
+		reportService.suspendDayUp(userSuspend);
+		
+		return "redirect:/admin/report/userSuspendList";
 	}
 	
 	//정지 리스트 검색 
@@ -225,7 +242,7 @@ public class ReportController {
 	}
 	
 	
-	
+	// 벌점 목록
 	@GetMapping("/report/reportRuleList")
 	public String reportRuleList(Model model) {
 		

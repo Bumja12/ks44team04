@@ -81,8 +81,8 @@ public class ReportService {
     }
     
     //정지 등록
-    public void userSuspend(UserSuspend userSuspend) {
- 	   int result = reportMapper.userSuspendAdd(userSuspend);
+    public void suspendAdd(UserSuspend userSuspend) {
+ 	   int result = reportMapper.suspendAdd(userSuspend);
  	   log.info("정지 등록:" + result);
  	   }
     
@@ -93,6 +93,10 @@ public class ReportService {
     
     }
     
+    //정지 일수 업데이트
+    public void suspendDayUp(UserSuspend userSuspend) {
+    	reportMapper.suspendDayUp(userSuspend);
+    }
     //정지 검색
     public List<UserSuspend> getSuspendSearch(Map<String, Object> paramMap){
     	List<UserSuspend> SuspendList = reportMapper.getSuspendSearch(paramMap);
