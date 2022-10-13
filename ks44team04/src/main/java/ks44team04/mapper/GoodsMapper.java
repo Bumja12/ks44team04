@@ -87,6 +87,6 @@ public interface GoodsMapper {
 	public List<Cart> getCartList(String userId);
 	
 	//장바구니 수량 수정
-	public int cartAmountModify(Cart cart);
+	public int cartModify(Cart cart);
 
 }

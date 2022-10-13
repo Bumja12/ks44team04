@@ -28,6 +28,7 @@ button:focus{ outline:none; border:none; }
             </div>
         </div>
         
+        <!-- 전체선택, 선택삭제 칸 -->
 		<div class="row">
 			<div class="col-md-8">
 				<div style="font-size:17px; margin-bottom:-10px;">
@@ -36,33 +37,30 @@ button:focus{ outline:none; border:none; }
 						<button class="selectDel" style="border:none; background-color:rgba(0,0,0,0); outline: none; cursor:pointer;">선택삭제</button>
 				</div>
 			<hr>
-			<form id="cartAmountmodifyForm" th:action="@{/user/goods/cartAmountModify}">
+			
+				<!-- 장바구니 리스트 불러오기 -->
 				<div th:object="${cartList}" th:each="c : ${cartList}">
 					<div class="cartAll form-inline" style="width:100%;"> 
-						<input type="checkbox" class="cartCheck" id="oneCheck" style="margin-right:15px;">
+						<input type="checkbox" class="cartCheck oneCheck" id="oneCheck" style="margin-right:15px;">
 							<img src="/images/goodsTest/apple.png" style="width:85px; height:85px; border-radius:5px;">
 							<span th:text="${c.goodsInfo.goodsName}" style="margin:auto; font-size:18px; font-weight: 500; line-height:22px; color:#333; margin-left: 10px; vertical-align:middle;"></span>
-						
-						
 						<div class="form-inline form-group">
 							<div class="plusMiusDiv input-group" style="width: 150px; float:right;">
 								<button type="button" class="plusMinusBtn minusBtn" th:value="${c.cartCode}">-</button>&nbsp;
-									<input type="text" th:value="${c.cartAmount}" id="cartAmount" name="cartAmount" class="cartAmount2 form-control" style="size:10px; height:35px !important; text-align:center; border-color:#f1f1f1;">&nbsp;
+									<input type="text" th:value="${c.cartAmount}" name="cartAmount" class="cartAmount form-control" style="size:10px; height:35px !important; text-align:center; border-color:#f1f1f1;">&nbsp;
 									<input type="hidden" id="goodsStock" th:value="${c.goodsInfo.goodsStock}">
 								<button type="button" class="plusMinusBtn plusBtn" th:value="${c.cartCode}">+</button>
-								
-									<button type="submit" style="display:none;" class="amountModifyBtn"></button>
-									
 							</div>
 							<div style="margin-top:10px;">
 								<div class="totalPrice" th:text="${#numbers.formatInteger((c.cartAmount*(c.goodsInfo.goodsPrice-c.goodsInfo.goodsPrice*c.goodsInfo.goodsDiscountRate/100)),3,'COMMA') + '원'}" style="font-weight:600; font-size:18px; width:120px; text-align:right;">
 								</div>
 									<input type="hidden" class="hiddenPrice">
 									<input type="hidden" class="hiddenPrice2">
-									<input type="hidden" id="goodsPrice" th:value="${c.goodsInfo.goodsPrice}">
-								<div class="totalPrice2" th:text="${#numbers.formatInteger(c.goodsInfo.goodsPrice,3,'COMMA')+'원'}" style="font-weight:400; font-size:14px; color:#767676; float:right; text-decoration: line-through; margin-top:-12px;">
+									<input type="hidden" class="goodsPrice" th:value="${c.goodsInfo.goodsPrice}">
+								<div class="totalPrice2" th:text="${#numbers.formatInteger(c.cartAmount*(c.goodsInfo.goodsPrice),3,'COMMA')+'원'}" style="font-weight:400; font-size:14px; color:#767676; float:right; text-decoration: line-through; margin-top:-12px;">
 								</div>
-									<input type="hidden" id="goodsDiscountRate" th:value="${c.goodsInfo.goodsDiscountRate}">
+									<input type="hidden" class="goodsDiscountRate" th:value="${c.goodsInfo.goodsDiscountRate}">
+									<input type="hidden" class="goodsPostPrice" th:value="${c.goodsInfo.goodsPostPrice}">
 							</div>
 							<i class="fi fi-br-cross" style="font-size:17px; color:#d3d3d3; width:35px; text-align:right; margin-top:3px;"></i>
 						</div>
@@ -71,34 +69,32 @@ button:focus{ outline:none; border:none; }
 						<hr style="border-style: dashed; margin-top:20px; margin-bottom:20px;">
 					</div>
 				</div>
-			</form>
-			
-			
 			</div>
 		
+			<!-- 결제금액 계산 -->
 			<div class="col-md-4" th:object="${cartList}" style="margin-top:38px; padding-right:40px;">
 				<div style="border:1px solid #e5e5e5; width:100%; height:235px;">
 					<div style="padding:25px 35px 25px 35px; margin-bottom:-15px; width:100%; height:100%;">
 						<div>
 							<span style="font-size:17px;">상품금액</span>
-							<span style="font-size:17px; float:right;">16,000원</span>
+							<span style="font-size:17px; float:right;" class="checkPrice">0원</span>
 						</div>
 						<div>
 							<span style="font-size:17px;">할인금액</span>
-							<span style="font-size:17px; float:right;">-1,600원</span>
+							<span style="font-size:17px; float:right;" class="checkDiscount">0원</span>
 						</div>
 						<div>
 							<span style="font-size:17px;">배송비</span>
-							<span style="font-size:17px; float:right;">+3,000원</span>
+							<span style="font-size:17px; float:right;" class="checkPost">0원</span>
 						</div>
 						<hr>
 						<div>
 							<span style="font-size:17px;">주문금액</span>
-							<span style="font-size:17px; float:right;">17,400원</span>
+							<span style="font-size:17px; float:right;">0원</span>
 						</div>
 						<div style="float:right; margin-top:5px;">
 							<span class="badge" style="background-color:#d1ebab;">적립</span>
-							<span style="font-size:13px; vertical-align:text-top;">72원 적립</span>
+							<span style="font-size:13px; vertical-align:text-top;">0원 적립</span>
 							<span style="font-size:11px; color:#939393;">씨앗등급 0.5%</span>
 						</div>
 					</div>
@@ -110,9 +106,7 @@ button:focus{ outline:none; border:none; }
 		</div>
 	</div>
 	<hr style="width: 80%; text-align:left; margin: auto; margin-top:50px; margin-bottom:50px;">
-	
 </section>
-
 
 </th:block>
 <th:block layout:fragment="customJsScript">
@@ -137,25 +131,26 @@ $(document).ready(function() {
 	
 	/* ~~~~~~~~~~~~~~~~~~~~~~ 수량 플러스 버튼 ~~~~~~~~~~~~~~~~~~~~~~ */
 	$('.plusBtn').on('click', function(){
-		var goodsPrice = $(this).parent('div').parent('div').find('#goodsPrice').val(); //상품 가격
-		var goodsDiscountRate = $(this).parent('div').parent('div').find('#goodsDiscountRate').val(); //상품 할인율
+		var goodsPrice = $(this).parent('div').parent('div').find('.goodsPrice').val(); //상품 가격
+		var goodsDiscountRate = $(this).parent('div').parent('div').find('.goodsDiscountRate').val(); //상품 할인율
 		var discounted = goodsPrice * goodsDiscountRate / 100; //상품 할인가
 		var salePrice = goodsPrice - discounted; //상품 정가-할인가 = 할인가격
-		var quantity = $(this).parent('div').find('input[id=cartAmount]').val(); //선택 수량
+		var quantity = $(this).parent('div').find('input[name=cartAmount]').val(); //선택 수량
 		var totalPrice = salePrice * quantity //할인가격 * 선택 수량
-		var cartAmount = $(this).parent('div').find('#cartAmount').val();
+		var cartAmount = $(this).parent('div').find('.cartAmount').val();
 		
 		//해당 상품의 재고
 		var goodsStock = $(this).parent('div').find('input[id=goodsStock]').val();
 		console.log('해당 상품 재고: '+goodsStock);
 		
 		//버튼 클릭시 수량 +1 되게 하기
-		var quantity = $(this).parent('div').find('input[id=cartAmount]').val();
-		$(this).parent('div').find('input[id=cartAmount]').val(++quantity);
-		
+		if(goodsStock > 1){
+			var quantity = $(this).parent('div').find('input[name=cartAmount]').val();
+			$(this).parent('div').find('input[name=cartAmount]').val(++quantity);
+		}
 		//수량이 상품 재고 이상으로 선택 시 최대 수량 알림 메세지 
 		if(quantity >= goodsStock){
-			$(this).parent('div').find('input[id=cartAmount]').val(cartAmount);
+			$(this).parent('div').find('input[name=cartAmount]').val(cartAmount);
 			alert('최대 수량입니다');
 		} 
 		console.log('선택 수량: '+quantity);
@@ -177,11 +172,11 @@ $(document).ready(function() {
 	});
 	/* ~~~~~~~~~~~~~~~~~~~~~~ 수량 마이너스 버튼 ~~~~~~~~~~~~~~~~~~~~~~ */
 	$('.minusBtn').on('click', function(){
-		var goodsPrice = $(this).parent('div').parent('div').find('#goodsPrice').val(); //상품 가격
-		var goodsDiscountRate = $(this).parent('div').parent('div').find('#goodsDiscountRate').val(); //상품 할인율
+		var goodsPrice = $(this).parent('div').parent('div').find('.goodsPrice').val(); //상품 가격
+		var goodsDiscountRate = $(this).parent('div').parent('div').find('.goodsDiscountRate').val(); //상품 할인율
 		var discounted = goodsPrice * goodsDiscountRate / 100; //상품 할인가
 		var salePrice = goodsPrice - discounted; //상품 정가-할인가 = 할인가격
-		var quantity = $(this).parent('div').find('input[id=cartAmount]').val(); //선택 수량
+		var quantity = $(this).parent('div').find('input[name=cartAmount]').val(); //선택 수량
 		var totalPrice = salePrice * quantity //할인가격 * 선택 수량
 		
 		//해당 상품의 재고
@@ -189,12 +184,12 @@ $(document).ready(function() {
 		console.log('해당 상품 재고: '+goodsStock);
 		
 		//버튼 클릭시 수량 -1 되게 하기
-		var quantity = $(this).parent('div').find('input[id=cartAmount]').val();
-		$(this).parent('div').find('input[id=cartAmount]').val(--quantity);		
+		var quantity = $(this).parent('div').find('input[name=cartAmount]').val();
+		$(this).parent('div').find('input[name=cartAmount]').val(--quantity);		
 		
 		//수량 1이하로 될 시 최소 수량 메세지
 		if(quantity <= 0){
-			$(this).parent('div').find('input[id=cartAmount]').val(1);
+			$(this).parent('div').find('input[name=cartAmount]').val(1);
 			alert('최소 수량입니다');
 		}
 		console.log('선택 수량: '+quantity);
@@ -217,24 +212,57 @@ $(document).ready(function() {
 	
 	/* 장바구니 내에서 수량 변경 시 수량 업데이트 */
 	$('.plusMinusBtn').click(function(){
-		var cartAmount = $(this).parent('div').find('.cartAmount2').val();
+		var cartAmount = $(this).parent('div').find('.cartAmount').val();
 		console.log(cartAmount);
+		var cartCode = $(this).val();
+		console.log(cartCode);
 		
+		$.ajax({ type: "GET",
+       	 		 url: "/user/goods/cartModify",
+      	 		 data: { 'cartAmount' : cartAmount, 
+      	 			     'cartCode' : cartCode },
+      	 		 dataType: "text",
+       	 		 success: function (cartAmount) {
+       	 			$(cartAmount).val(cartAmount);
+           		 }
+		}); 
 	});
 	
+	/* 체크된 상품 결제금액 수정 이벤트 */
+	$('.oneCheck, .plusMinusBtn').click(function(){
+		//var parentDiv = $(this).closest('.cartAll');
+		
+		var totalPrice = 0;
+		var discountPrice = 0;
+		var postPrice = 0;
+		$('.oneCheck').each(function(){
+			var parentDiv = $(this).closest('.cartAll')
+			if($(this).is(":checked")){
+				totalPrice += //장바구니에 담긴 수량 * 상품 가격
+					Number(parentDiv.find('.cartAmount').val()) * Number(parentDiv.find('.goodsPrice').val());	
+				discountPrice += //장바구니에 담긴 수량 * 상품 가격 * 할인율 / 100 
+					Number(parentDiv.find('.cartAmount').val()) * Number(parentDiv.find('.goodsPrice').val()) * Number(parentDiv.find('.goodsDiscountRate').val()) / 100 ;	
+				postPrice += //체크된 해당 상품 배송비 
+					Number(parentDiv.find('.goodsPostPrice').val());
+			}		
+		});
+			//상품 금액
+			var checkPrice = totalPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+			console.log(checkPrice);
+			//할인 금액
+			var checkDiscount = discountPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+			console.log(checkDiscount);
+			//상품에 따른 배송비
+			var checkPost = postPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+			console.log(checkPost);
+			
+			$('.checkPrice').text(checkPrice+'원');
+			$('.checkDiscount').text('-'+checkDiscount+'원');
+			$('.checkPost').text('+'+checkPost+'원');
+			
+	});
 	
-	
-    var timeout; 
-    $('#cartAmount').on('change', 'input.val', function(){       
-        if ( timeout !== undefined ) {
-          clearTimeout( timeout );
-        }       
-        timeout = setTimeout(function() {
-          $("[name='cartAmount']").trigger('click');
-        }, 500 ); // 500 = 0.5초        
-    });
-	
-	
+
 });
 </script>
 </th:block>

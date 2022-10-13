@@ -407,7 +407,6 @@ div { margin: 5px 0px }
 			</div>
 		</div>
 	</div>
-</div>
 </section>
 
 		
@@ -670,7 +669,6 @@ $(function() {
 			});
 		}
     }); */
-    
   
 
     /* 문의 등록시 문의 화면으로 새로고침 */
@@ -728,52 +726,55 @@ $(function() {
     
 });
 
-$(function(){
-	var userId = $('#userId').val();
-	console.log(userId);
-	
-	// 추천버튼 클릭시(추천 추가 또는 추천 제거)
-	$(".reviewLikeBtn").click(function(){
-		let hart = $(this);
-		let reviewList = hart.val();
-		let spanRecom = hart.next();
-		console.log(spanRecom);
-		
-		if(hart.hasClass('off')){
-			$.ajax({
-				url: "/user/review/reviewLike",
-                type: "GET",
-                data: {
-                	'reviewList': reviewList,
-                	'userId': userId
-                },
-                dataType: "text",
-                success: function (likeAmount) {
-                	alert("추천하였습니다.")
-                	$(spanRecom).text('추천수 ' + likeAmount);
-                	hart.removeClass("off").addClass("on")
-                }
-			});
-		}else if(hart.hasClass('on')){
-			$.ajax({
-				url: "/user/review/reviewLikeDelete",
-                type: "GET",
-                data: {
-                	'reviewList': reviewList,
-                	'userId': userId
-                },
-                dataType: "text",
-                success: function (likeAmount) {
-                	alert("추천을 해제 하였습니다.")
-                	$(spanRecom).text('추천수 ' + likeAmount);
-                	hart.removeClass("on").addClass("off")
-                	
-                }
-			});
-		}
-	});
-});
 
+
+	/* --------------------- 상품 후기 이벤트 시작 (초희)--------------------- */
+	$(function(){
+		var userId = $('#userId').val();
+		console.log(userId);
+		
+		// 추천버튼 클릭시(추천 추가 또는 추천 제거)
+		$(".reviewLikeBtn").click(function(){
+			let hart = $(this);
+			let reviewList = hart.val();
+			let spanRecom = hart.next();
+			console.log(spanRecom);
+			
+			if(hart.hasClass('off')){
+				$.ajax({
+					url: "/user/review/reviewLike",
+	                type: "GET",
+	                data: {
+	                	'reviewList': reviewList,
+	                	'userId': userId
+	                },	
+	                dataType: "text",
+	                success: function (likeAmount) {
+	                	alert("추천하였습니다.")
+	                	$(spanRecom).text('추천수 ' + likeAmount);
+	                	hart.removeClass("off").addClass("on")
+	                }
+				});
+			}else if(hart.hasClass('on')){
+				$.ajax({
+					url: "/user/review/reviewLikeDelete",
+	                type: "GET",
+	                data: {
+	                	'reviewList': reviewList,
+	                	'userId': userId
+	                },
+	                dataType: "text",
+	                success: function (likeAmount) {
+	                	alert("추천을 해제 하였습니다.")
+	                	$(spanRecom).text('추천수 ' + likeAmount);
+	                	hart.removeClass("on").addClass("off")
+	                	
+	                }
+				});
+			}
+		});
+	});
+	/* --------------------- 상품 후기 이벤트 끝 (초희)--------------------- */
 
 </script>
 </th:block>

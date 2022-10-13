@@ -26,18 +26,11 @@
         	<association property="goodsSmallCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsSmallCategoryMap"/>
 			<association property="goodsLargeCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsLargeCategoryMap"/>
 			<association property="goodsAnswerInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsAnswerMap"/>
-			<association property="goodsQnaInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsQnaMap"/>
     </resultMap>
     
-
-    
-    
-<!--        
-	        
-	        <association property="userInfo" javaType="User">
-	       		<result column="user_id" 				property="userId"/>
-	        </association>
--->	        
+<!-- 	 <association property="userInfo" javaType="User">
+	        <result column="user_id" 				property="userId"/>
+	     </association> -->	    
     
 	<!-- 상품 목록 조회 -->
 	<select id="getGoodsList" resultMap="goodsResultMap" fetchSize="100" >
@@ -402,9 +395,9 @@
 	<insert id="goodsQnaAdd" parameterType="GoodsQna">
 		/* 상품 문의 등록  */
 		INSERT INTO tb_goods_qna
-			(goods_qna_num, goods_code, goods_qna_category, buyer_id, goods_qna_title, goods_qna_content, goods_qna_date, secret_check, goods_qna_pw, qna_status)
+			(goods_qna_num, goods_code, goods_qna_category, buyer_id, goods_qna_title, goods_qna_content, goods_qna_date, secret_check, goods_qna_pw)
 		VALUES
-			(0, #{goodsCode}, #{goodsQnaCategory}, #{buyerId}, #{goodsQnaTitle}, #{goodsQnaContent}, NOW(), #{secretCheck}, #{goodsQnaPw}, #{qnaStatus})
+			(0, #{goodsCode}, #{goodsQnaCategory}, #{buyerId}, #{goodsQnaTitle}, #{goodsQnaContent}, NOW(), #{secretCheck}, #{goodsQnaPw})
 	</insert>
 
  	<resultMap 	type="GoodsAnswer" 				id="goodsAnswerMap">
@@ -549,15 +542,26 @@
 	</select>
 	
 	<!-- 장바구니 수량 수정 -->
-	<update id="cartAmountModify" parameterType="Cart">
+	<update id="cartModify" parameterType="Cart">
 	/* 장바구니 수량 수정 */
 	UPDATE
 		tb_cart
 	SET
-		 cart_amount = #{cartAmount}
-		,modify_date = NOW()
+		cart_amount=#{cartAmount},
+		modify_date=NOW()
 	WHERE
-		cart_code = #{cartCode};
+		cart_code=#{cartCode}
+	AND
+		buyer_id =#{buyerId}
+		
+	<selectKey keyProperty="cartAmount" resultType="int" order="AFTER">
+		SELECT
+			c.cart_amount AS cartAmount
+		FROM
+			tb_cart AS c
+		WHERE 
+			c.cart_code = #{cartCode}
+	</selectKey>
 	</update>
 	
     

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks44team04.dto.Cart;
@@ -97,13 +98,12 @@ public class UserGoodsController {
 							 ,RedirectAttributes reattr){
 		
 		goodsQna.setBuyerId("buyer01");
-		goodsQna.setQnaStatus("답변대기");
+		//goodsQna.setQnaStatus("답변대기");
 		
 		goodsService.goodsQnaAdd(goodsQna);
 		log.info("사용자가 등록한 문의 정보 ::: {}", goodsQna);
 		
 		reattr.addAttribute("qnaView", "qnaView");
-		
 		
 		return "redirect:" + referer;
 	}
@@ -154,13 +154,16 @@ public class UserGoodsController {
     }
     
     //장바구니 수량 수정
-    @PostMapping("/cart")
-    public String cartAmountModify(Cart cart) {
+    @GetMapping("/cartModify")
+    @ResponseBody
+    public int cartModify(Cart cart) {
+    	
+    	cart.setBuyerId("buyer01");
+    	
 		log.info("사용자가 상품 수정한 정보 ::: {}", cart);
+		goodsService.cartModify(cart);
 		
-		goodsService.cartAmountModify(cart);
-		
-		return "redirect:/user/goods/cart";
+		return cart.getCartAmount();
 	}
 	
     
