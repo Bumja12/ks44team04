@@ -210,7 +210,30 @@ public class UserController {
 		return "admin/user/addUser";
 	}
 	
-	//회원 수정
+	//판매자 정보 수정
+	@PostMapping("/user/modifySeller")
+	public String modifySeller(Seller seller) {
+		
+		log.info("판매자 정보 수정 정보 ::: {}", seller);
+		userService.modifySeller(seller);
+		
+		return "redirect:/admin/user/sellerList";
+	}
+	
+	//판매자 정보 수정(저장된 정보 가져오기)
+	@GetMapping("/user/modifySeller")
+	public String modifySeller(@RequestParam(value="sellerId", required = false) String sellerId
+							  ,Model model) {
+		Seller sellerInfo = userService.getSellerInfoById(sellerId);
+		log.info("회원정보 ::: {}",sellerInfo);
+		
+		model.addAttribute("title", "회원정보수정");
+		model.addAttribute("userInfo", sellerInfo);
+		
+		return "admin/user/modifySeller";
+	}
+	
+	//회원 정보 수정
 	@PostMapping("/user/modifyUser")
 	public String modifyUser(User user) {
 		
@@ -220,7 +243,7 @@ public class UserController {
 		return "redirect:/admin/user/userList";
 	}
 	
-	//회원수정(저장된 정보 가져오기)
+	//회원 정보 수정(저장된 정보 가져오기)
 	@GetMapping("/user/modifyUser")
 	public String modifyUser(@RequestParam(value="userId", required = false) String userId
 							  ,Model model) {

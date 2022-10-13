@@ -90,6 +90,9 @@
 											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks"> 판매자 &nbsp;
 										</label>
 										<label> 
+											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks"> 판매자 승인 전 &nbsp;
+										</label>
+										<label> 
 											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks"> 관리자 &nbsp;
 										</label>
 									</td>
@@ -101,8 +104,9 @@
 												<div class="form-group">
 													<select class="form-control" id="userStatusSearch" style="width: 150px;">
 														<option selected>- 전체검색 -</option>
-														<option value="userId">정상</option>
-														<option value="userId">정지</option>
+														<option value="normal">정상</option>
+														<option value="ban">정지</option>
+														<option value="dormant">휴면</option>
 													</select>
 												</div>
 											</div>
@@ -140,34 +144,48 @@
 					</thead>
 					<tbody>
 						<tr th:if="${not #lists.isEmpty(userList)}" th:each="l : ${userList}">
-							<td th:text="${l.userId}"></td>
-							<td th:text="${l.userName}"></td>
-							<td th:text="${l.userNickname}"></td>
-							<td th:text="${l.rightList.rightStatus}"></td>
-							<td th:text="${l.userLevelName}"></td>
-							<!-- <td th:text="${l.userPhone}"></td>
-							<td th:text="${l.userEmail}"></td> -->
-							<td th:text="${l.userRegDate}"></td>
-							<td th:text="${l.userUpdateDate}"></td>
-							<td th:text="${l.userStatus}" th:value="${l.userStatus}" id="userStatus"></td>
-							<td>
-								<a th:if="${l.rightList.rightStatus == '판매자' and l.userStatus == '정상'}" th:href="@{/admin/user/sellerDetail(sellerId=${l.userId})}"> 
-									<i class="fa fa-info-circle"></i> 상세 &nbsp;
-								</a> 
-								<a th:unless="${l.rightList.rightStatus == '판매자' and l.userStatus == '정상'}" th:href="@{/admin/user/userDetail(userId=${l.userId})}"> 
-									<i class="fa fa-info-circle"></i> 상세 &nbsp;
-								</a> 
-								<a class="Modal removeBtn" th:data-user-id="${l.userId}" data-toggle="modal" data-target="#removeModal">
-									<i class="fa fa-close"></i> 탈퇴 &nbsp;
-								</a>
-								<!-- href="javascript:void(0);" -->
-							</td>
+							<th:block th:if="${l.userStatus} != '탈퇴'">
+								<td th:text="${l.userId}"></td>
+								<td th:text="${l.userName}"></td>
+								<td th:text="${l.userNickname}"></td>
+								<td th:text="${l.rightList.rightStatus}"></td>
+								<td th:text="${l.userLevelName}"></td>
+								<!-- <td th:text="${l.userPhone}"></td>
+								<td th:text="${l.userEmail}"></td> -->
+								<td th:text="${l.userRegDate}"></td>
+								<td th:text="${l.userUpdateDate}"></td>
+								<td th:text="${l.userStatus}" th:value="${l.userStatus}" id="userStatus"></td>
+								<td style="text-align: center;">
+									<th:block th:if="${l.userStatus != '탈퇴'}">
+										<a th:if="${l.rightList.rightStatus == '판매자' and l.userStatus == '정상'}" th:href="@{/admin/user/sellerDetail(sellerId=${l.userId})}"> 
+											<i class="fa fa-info-circle"></i> 상세 &nbsp;
+										</a> 
+										<a th:unless="${l.rightList.rightStatus == '판매자' and l.userStatus == '정상'}" th:href="@{/admin/user/userDetail(userId=${l.userId})}"> 
+											<i class="fa fa-info-circle"></i> 상세 &nbsp;
+										</a> 
+										<a class="Modal removeBtn" th:data-user-id="${l.userId}" data-toggle="modal" data-target="#removeModal">
+											<i class="fa fa-close"></i> 탈퇴 &nbsp;
+										</a>
+										<!-- href="javascript:void(0);" -->
+									</th:block>
+									<th:block th:unless="${l.userStatus != '탈퇴'}">
+										<a th:href="@{/admin/user/leaveList}"> 
+											<i class="fa fa-share-square-o"></i> 관리하기
+										</a>
+									</th:block>
+								</td>
+							</th:block>
 						</tr>
 						<tr th:unless="${not #lists.isEmpty(userList)}">
 							<td colspan="14" style="text-align: center;">등록된 회원이 없습니다.</td>
 						</tr>
 					</tbody>
 				</table>
+				<div>
+					* 회원 정보 수정은 회원 상세페이지에서 할 수 있습니다. <br>
+					* '판매자 승인 전'이고, 판매자 신청을 한 번도 하지 않았던 회원만 상세 정보 페이지에서 판매자 신청을 할 수 있습니다. <br>
+					* 탈퇴한 회원은 탈퇴회원목록에서 관리할 수 있습니다.
+				</div>
 			</div>
 		</div>
 	</div>
@@ -190,6 +208,7 @@
       				</div>
 					<div class="modal-footer" style="text-align: center;">
 						<input type="hidden" name="userId" id="userId">
+						<input type="hidden" name="leaveReason" id="leaveReason" value="관리자 권한으로 탈퇴">
 						<button type="button" class="btn btn-dark" id="removeBtnCheck">확인</button>
 						<button type="button" class="btn btn-secondary" id='closeBtn' data-dismiss="modal">닫기</button>
 					</div>
@@ -202,7 +221,8 @@
 
 <th:block layout:fragment="customTopJs">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
 		
 		//체크박스 전체선택, 해제
 		function checkSelectAll(checkbox)  {
@@ -283,10 +303,10 @@
 			     }
 			});
 		});	
-	
 		
-
 		
+		
+	/*]]>*/
 	</script>
 </th:block>
 </html>
