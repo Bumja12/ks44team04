@@ -25,7 +25,7 @@
     <select id="getUserPoint" parameterType="string" resultType="int">
         select sum(point_deal_detail)
         from tb_point_detail
-        where user_id = 'buyer01'
+        where user_id = #{userId}
         group by user_id;
     </select>
 
