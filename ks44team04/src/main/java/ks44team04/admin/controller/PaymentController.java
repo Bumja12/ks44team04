@@ -74,6 +74,8 @@ public class PaymentController {
 		searchMap.put("fd", fromDate);
 		searchMap.put("td", toDate);
 		
+		System.out.println(searchMap);
+		
 		List<PaymentTotal> paymentDetail = paymentService.searchPaymentDetail(searchMap);
 		model.addAttribute("title", "검색결과");
 		model.addAttribute("paymentDetail", paymentDetail);
