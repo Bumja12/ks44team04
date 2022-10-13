@@ -7,6 +7,29 @@
 	<title th:text="${title}"></title>
 </th:block>
 
+<th:block layout:fragment="customCss">
+
+<style>
+
+	.modal {
+	  text-align: center;
+	  padding: 0!important;
+	}
+	.modal:before {
+	  content: '';
+	  display: inline-block;
+	  height: 100%;
+	  vertical-align: middle;
+	  margin-right: -4px;
+	}
+	.modal-dialog {
+	  display: inline-block;
+	  text-align: left;
+	  vertical-align: middle;
+	}
+</style>
+</th:block>
+
 <th:block layout:fragment="customContents">
 
 	<div class="page-title">
@@ -71,6 +94,22 @@
 										</label>
 									</td>
 								</tr>
+									<tr>
+										<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>상태</b></td>
+										<td class="col-md-4">
+											<div class="form-inline">
+												<div class="form-group">
+													<select class="form-control" id="userStatusSearch" style="width: 150px;">
+														<option selected>- 전체검색 -</option>
+														<option value="userId">정상</option>
+														<option value="userId">정지</option>
+													</select>
+												</div>
+											</div>
+										</td>
+										<td class="col-md-2 col-sm-2" style="padding-top: 17px;"></td>
+										<td class="col-md-4"></td>
+									</tr>
 							</tbody>
 						</table>
 
@@ -118,7 +157,10 @@
 								<a th:unless="${l.rightList.rightStatus == '판매자' and l.userStatus == '정상'}" th:href="@{/admin/user/userDetail(userId=${l.userId})}"> 
 									<i class="fa fa-info-circle"></i> 상세 &nbsp;
 								</a> 
-								<a href="#"><i class="fa fa-close"></i> 탈퇴 &nbsp;</a>
+								<a class="Modal removeBtn" th:data-user-id="${l.userId}" data-toggle="modal" data-target="#removeModal">
+									<i class="fa fa-close"></i> 탈퇴 &nbsp;
+								</a>
+								<!-- href="javascript:void(0);" -->
 							</td>
 						</tr>
 						<tr th:unless="${not #lists.isEmpty(userList)}">
@@ -129,7 +171,33 @@
 			</div>
 		</div>
 	</div>
-
+	
+	<!-- delete check modal start -->
+	<form id="removeUserForm" name="removeUserForm" method="get" th:action="@{/admin/user/removeUser}">
+		<div class="removeModal modal fade" id="removeModal" tabindex="-1" role="dialog">
+  		<!-- <div class="modal-dialog modal-dialog-centered modal-sm" role="document"> -->
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="removeModalLabel" style="font-weight: bold;">삭제하시겠습니까?</h5>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+				            <label for="adminPw" class="col-form-label">관리자 비밀번호</label>
+				            <input type="password" class="pwInput form-control" id="adminPw" name="adminPw">
+            				<p id="checkTip" style="color:gray; font-weight: bold;"> </p>
+          				</div>
+      				</div>
+					<div class="modal-footer" style="text-align: center;">
+						<input type="hidden" name="userId" id="userId">
+						<button type="button" class="btn btn-dark" id="removeBtnCheck">확인</button>
+						<button type="button" class="btn btn-secondary" id='closeBtn' data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<!-- delete check modal end -->
 </th:block>
 
 <th:block layout:fragment="customTopJs">
@@ -152,19 +220,70 @@
 			})
 		}
 		
-		/* 탈퇴회원 정보 수정 금지 (안됨) */
-		/*
- 		$(function() {
-			var leaveUser = $('#userStatus').val();
-			if(leaveUser === '탈퇴') {
-				$('#modifyBtn').click(function (e) {
-					e.preventDefault();
-					alert("탈퇴한 회원의 정보는 수정할 수 없습니다.");
+		//(모달) 김인영에게 심심한 감사를 표합니다 
+		$(function() {
+			 /* 모달 열릴 때 이벤트 */
+			$('.removeModal').on('show.bs.modal', function (event) {
+				//var button = $(event.relatedTarget)
+				//var modal = $(this)
+				//var modalDialog = $(this).find(".modal-dialog");
+				console.log('modal open');
+			});
+			/* 모달 닫을 때 안에 있는 데이터 초기화 */
+			$('.removeModal').on('hidden.bs.modal', function(e) {
+	    		console.log('modal close');
+	    		document.forms['removeUserForm'].reset();
+				$('#pwCheck').text('');
+			});
+			/* 리스트에서 삭제 버튼 클릭 시 해당 회원 아이디 가져오기 */
+			$('.removeBtn').each(function(){
+				$(this).click(function(){
+					var userId =  $(this).data("user-id");
+					$('#userId').val( userId );
+					
+					// 가져온 회원 아이디 콘솔 출력
+					var removeId = $('input[name="userId"]').val();
+					console.log(removeId);
 				});
-			}
-		});
-		*/
-		
+			});	
+			/* ajax & 모달에서 확인 버튼 클릭 시 관리자 비밀번호 확인 유효성 검사 */
+		 	$('#removeBtnCheck').click(function () {
+		 		var adminPw = $('input[name="adminPw"]').val();
+		 		
+				$.ajax({ type: "POST",
+		            	 url: "/admin/user/pwCheck",
+		           	 	 data: { userPw : adminPw } ,
+		            	 success: function (result) {
+		                	if(result == 1){ //비밀번호 불일치
+		                		console.log('일치');
+		                   		$('#removeUserForm').submit();
+		                	}else { //비밀번호 일치
+		                		console.log('불일치');
+		            	 		
+		                    	if(typeof adminPw == 'undefined' || adminPw == null || adminPw == ''){
+		            				$('#checkTip').text('! 비밀번호를 입력해주세요.');
+		            				$('input[name="adminPw"]').focus()
+		            				return false;
+		            			}else{
+		            				$('#checkTip').text('! 비밀번호가 맞지 않습니다.');
+		            				return false;
+		            			}
+		                	}
+		            	 },
+						 error: function (XMLHttpRequest, textStatus, errorThrown) {
+				        		alert("통신 실패.")  // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+		            	}
+				}); 
+			}); 
+			/* 모달에서 엔터치면 click 이벤트 일어나게 하기 */
+			$('.pwInput').keypress(function(event){
+			     if ( event.which == 13 ) {
+			         $('#removeBtnCheck').click();
+			         return false;
+			     }
+			});
+		});	
+	
 		
 
 		
