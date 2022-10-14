@@ -127,6 +127,7 @@ FROM
  	
 </delete>   
 
+<!-- 추천수 update -->
 <update id="reviewLikeUp" parameterType="Review">
 UPDATE tb_review AS r
 	SET
