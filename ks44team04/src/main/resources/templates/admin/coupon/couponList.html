@@ -152,7 +152,6 @@ th {
 									<th>가입일</th>
 									<th>최근접속일</th>
 									<th>상태</th>
-									<th>관리</th>
 									<th style="display: none"><input type="text" name="adminId" th:value="${session.SID}"></th>
 									<th style="display: none"><input type="text" id="couponCode" name="couponCode"></th>
 								</tr>
@@ -293,7 +292,6 @@ th {
 									userList += "<td>" + data[index].userRegDate + "</td>"
 									userList += "<td>" + data[index].userUpdateDate + "</td>"
 									userList += "<td>" + data[index].userStatus + "</td>"
-									userList += "<td>" + data[index].rightList.rightStatus + "</td>"
 									userList += "</tr>"
 								})
 
