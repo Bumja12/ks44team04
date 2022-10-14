@@ -40,20 +40,19 @@ public class UserReviewController {
 	}
 	
 	
-// 상품으로 옮김 
-//    //리뷰 리스트
-//	@GetMapping("/review/reviewList")
-//	public String reviewList( Model model) {
-//		
-//		List<Review> reviewList = reviewService.reviewList();
-//		
-//		model.addAttribute("title", "리뷰리스트");
-//		model.addAttribute("reviewList", reviewList);
-//		
-//		
-//		return "user/review/reviewList";
-//	}
-//	
+
+    //후기 목록
+	@GetMapping("/review/reviewList")
+	public String reviewList( Model model) {
+		
+		List<Review> reviewList = reviewService.reviewList();
+		
+		model.addAttribute("title", "리뷰리스트");
+		model.addAttribute("reviewList", reviewList);
+		
+	return "user/review/reviewList";
+	}
+	
 	// 후기 추천 
 	@GetMapping("/review/reviewLike")
 	@ResponseBody
