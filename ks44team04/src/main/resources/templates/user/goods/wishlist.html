@@ -1,181 +1,104 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/userDefault}">
-
-<th:block layout:fragment="customContents">
-
-    <div th:replace="/fragments/userHeader :: headerFragment"></div>
-
-    <section class="ftco-section ftco-cart">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 ftco-animate">
-                    <div class="cart-list">
-                        <table class="table">
-                            <thead class="thead-primary">
-                            <tr class="text-center">
-                                <th>&nbsp;</th>
-                                <th>Product List</th>
-                                <th>&nbsp;</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="text-center">
-                                <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                <td class="image-prod"><div class="img" style="background-image:url(images/product-1.jpg);"></div></td>
-
-                                <td class="product-name">
-                                    <h3>Bell Pepper</h3>
-                                    <p>Far far away, behind the word mountains, far from the countries</p>
-                                </td>
-
-                                <td class="price">$4.90</td>
-
-                                <td class="quantity">
-                                    <div class="input-group mb-3">
-                                        <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                    </div>
-                                </td>
-
-                                <td class="total">$4.90</td>
-                            </tr><!-- END TR-->
-
-                            <tr class="text-center">
-                                <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                <td class="image-prod"><div class="img" style="background-image:url(images/product-2.jpg);"></div></td>
-
-                                <td class="product-name">
-                                    <h3>Bell Pepper</h3>
-                                    <p>Far far away, behind the word mountains, far from the countries</p>
-                                </td>
-
-                                <td class="price">$15.70</td>
-
-                                <td class="quantity">
-                                    <div class="input-group mb-3">
-                                        <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                    </div>
-                                </td>
-
-                                <td class="total">$15.70</td>
-                            </tr><!-- END TR-->
-
-                            <tr class="text-center">
-                                <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                <td class="image-prod"><div class="img" style="background-image:url(images/product-3.jpg);"></div></td>
-
-                                <td class="product-name">
-                                    <h3>Bell Pepper</h3>
-                                    <p>Far far away, behind the word mountains, far from the countries</p>
-                                </td>
-
-                                <td class="price">$15.70</td>
-
-                                <td class="quantity">
-                                    <div class="input-group mb-3">
-                                        <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                    </div>
-                                </td>
-
-                                <td class="total">$15.70</td>
-                            </tr><!-- END TR-->
-
-                            <tr class="text-center">
-                                <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                <td class="image-prod"><div class="img" style="background-image:url(images/product-4.jpg);"></div></td>
-
-                                <td class="product-name">
-                                    <h3>Bell Pepper</h3>
-                                    <p>Far far away, behind the word mountains, far from the countries</p>
-                                </td>
-
-                                <td class="price">$15.70</td>
-
-                                <td class="quantity">
-                                    <div class="input-group mb-3">
-                                        <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                    </div>
-                                </td>
-
-                                <td class="total">$15.70</td>
-                            </tr><!-- END TR-->
-
-                            <tr class="text-center">
-                                <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                <td class="image-prod"><div class="img" style="background-image:url(images/product-5.jpg);"></div></td>
-
-                                <td class="product-name">
-                                    <h3>Bell Pepper</h3>
-                                    <p>Far far away, behind the word mountains, far from the countries</p>
-                                </td>
-
-                                <td class="price">$15.70</td>
-
-                                <td class="quantity">
-                                    <div class="input-group mb-3">
-                                        <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                    </div>
-                                </td>
-
-                                <td class="total">$15.70</td>
-                            </tr><!-- END TR-->
-
-                            <tr class="text-center">
-                                <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                <td class="image-prod"><div class="img" style="background-image:url(images/product-6.jpg);"></div></td>
-
-                                <td class="product-name">
-                                    <h3>Bell Pepper</h3>
-                                    <p>Far far away, behind the word mountains, far from the countries</p>
-                                </td>
-
-                                <td class="price">$15.70</td>
-
-                                <td class="quantity">
-                                    <div class="input-group mb-3">
-                                        <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                    </div>
-                                </td>
-
-                                <td class="total">$15.70</td>
-                            </tr><!-- END TR-->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
-        <div class="container py-4">
-            <div class="row d-flex justify-content-center py-5">
-                <div class="col-md-6">
-                    <h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
-                    <span>Get e-mail updates about our latest shops and special offers</span>
-                </div>
-                <div class="col-md-6 d-flex align-items-center">
-                    <form action="#" class="subscribe-form">
-                        <div class="form-group d-flex">
-                            <input type="text" class="form-control" placeholder="Enter email address">
-                            <input type="submit" value="Subscribe" class="submit px-3">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+      layout:decorate="~{layout/userMyPage}">
+      
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+<th:block layout:fragment="customMyPageCss">
+<style>
+.table tbody tr td {
+	padding: 10px 10px;
+}
+</style>
 
 </th:block>
+
+<th:block layout:fragment="customContents">
+	<div style="display:flex;">
+   		<div style="font-weight:600; font-size:20px; color:#333;">찜한 상품(<span class="wishCount"></span>)</div>
+    	<span style="padding-left:7px; padding-top:10px;">찜한 상품은 최대 100개까지 저장됩니다.</span>
+    </div>
+    
+    <table class="table" id="wishlist" style="min-width:100% !important; border-top: 2px solid;">
+        <tbody>
+        <tr th:if="${not #lists.isEmpty(wishlist)}" th:each="w : ${wishlist}">
+            <td th:onclick="|location.href='@{/user/goods/goods(goodsCode=${w.goodsInfo.goodsCode})}'|" style="width:150px; cursor:pointer;">
+            	<img src="/images/goodsTest/apple.png" style="width:85px; height:85px; border-radius:5px;">
+            </td>
+           	<td th:onclick="|location.href='@{/user/goods/goods(goodsCode=${w.goodsInfo.goodsCode})}'|" th:text="${w.goodsInfo.goodsName}"
+           		style="cursor:pointer; font-size:18px; font-weight: 600; text-align:left !important; color:#333;"></td>
+            <td>
+            	<div>
+	            	<div th:text="${#numbers.formatInteger(w.goodsInfo.goodsPrice,3,'COMMA')+'원'}" style="font-size:15px; text-decoration: line-through;"></div>
+	            	<div style="margin-top:-10px; text-align: center;">
+	            		<div th:text="${w.goodsInfo.goodsDiscountRate + '%'}" style="display :inline-block; color:#84B147; font-weight:700; font-size:15px; margin-top:2px;"></div>
+	            		<div th:text="${#numbers.formatInteger(w.goodsInfo.goodsPrice - w.goodsInfo.goodsPrice * w.goodsInfo.goodsDiscountRate/100,3,'COMMA') + '원'}" style="display :inline-block; font-size:18px; color:#333; font-weight:700;"></div>	
+            		</div>
+            	</div>
+            </td>
+            <td>
+            	<div>
+            		<button class="wishRemoveBtn" th:data-wish-code="${w.wishCode}" style="cursor:pointer; border:1px solid #ccc; border-radius:2px; width:70px; margin-bottom:2px;
+            						background-color:white; font-weight:600; color:#333; outline:none;">삭제</button>
+            	</div>
+            	<div>
+            		<input type="hidden" class="cartAmout" value="1">
+            		<button class="cartAddBtn" th:data-goods-code="${w.goodsInfo.goodsCode}" style="cursor:pointer; border:1px solid #84B147; border-radius:2px; width:70px; margin-bottom:2px;
+            						background-color:white; font-weight:700; color:#84B147; outline:none;">장바구니</button>
+            	</div>
+            </td>
+        </tr>
+        <tr th:unless="${not #lists.isEmpty(wishlist)}">
+            <td>찜 내역이 없습니다.</td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+
+<th:block layout:fragment="customMyPageJs">
+<script th:inline="javascript">
+
+	/* 찜 상품 개수 출력 */
+	var rowCount = $('#wishlist tr').length;
+	console.log(rowCount);
+	$('.wishCount').text(rowCount);
+
+	/* 장바구니 추가 */
+	$('.cartAddBtn').on('click', function(){
+		console.log('장바구니 추가');
+		var cartAmount = $(".cartAmout").val();
+		var goodsCode = $(this).data("goodsCode");
+		console.log(goodsCode);
+		$.ajax({
+			url: '/user/goods/cartAdd',
+			type: 'post',
+			data: { cartAmount : cartAmount,
+					goodsCode : goodsCode}
+		})
+			.done(function(result){
+				if(result == 1){
+					alert("장바구니에 추가되었습니다.");
+				} 
+			});
+	});
+
+	/* 찜 상품 삭제 */
+	$('.wishRemoveBtn').click(function(){
+		var wishCode = $(this).data("wishCode");
+		console.log(wishCode);
+		$.ajax({ type: "GET",
+	   	 		 url: "/user/wishRemove",
+	  	 		 data: { 'wishCode' : wishCode },
+				 success : function(data){
+					 //location.reload();
+					 $('#wishlist').load(location.href+' #wishlist');
+				 }
+		});
+	});
+
+</script>
+</th:block>
+
+
 
 </html>

@@ -2,17 +2,26 @@ package ks44team04.dto;
 
 public class Wishlist {
 
-    private String wishGoods;
+    private String wishCode;
     private String goodsCode;
     private String buyerId;
     private String regDate;
 
-    public String getWishGoods() {
-        return wishGoods;
+
+	private Goods goodsInfo;
+	public Goods getGoodsInfo() {
+		return goodsInfo;
+	}
+	public void setGoodsInfo(Goods goodsInfo) {
+		this.goodsInfo = goodsInfo;
+	}
+	
+    public String getWishCode() {
+        return wishCode;
     }
 
-    public void setWishGoods(String wishGoods) {
-        this.wishGoods = wishGoods;
+    public void setWishCode(String wishCode) {
+        this.wishCode = wishCode;
     }
 
     public String getGoodsCode() {
@@ -42,10 +51,11 @@ public class Wishlist {
     @Override
     public String toString() {
         return "Wishlist{" +
-                "wishGoods='" + wishGoods + '\'' +
+                "wishCode='" + wishCode + '\'' +
                 ", goodsCode='" + goodsCode + '\'' +
                 ", buyerId='" + buyerId + '\'' +
                 ", regDate='" + regDate + '\'' +
+                ", goodsInfo='" + goodsInfo + '\'' +
                 '}';
     }
 }

@@ -53,9 +53,9 @@
 						<div class="bottom-area px-3" style=" background-color:rgba(255,255,255,0.5); width:100%; height:60px; top:-60px; ">
 							<div class="m-auto" style="text-align:center;">
 								<input type="hidden" class="cartAmout" value="1">
-								<input type="hidden" class="goodsCode" th:value="${g.goodsCode}">
-								<a href="#" style="margin-left:15px; margin-right:15px; background:none;">
+								<a href="#" class="wishAddBtn" style="margin-left:15px; margin-right:15px; background:none;">
 									<i class="fi fi-rs-heart" style="font-size:30px; color:white; line-height:2"></i></a>
+								<input type="hidden" class="goodsCode" th:value="${g.goodsCode}">
 								<a href="#" class="cartAddBtn" style="margin-left:15px; margin-right:15px; background:none;">
 									<i class="fi fi-rr-shopping-cart" style="font-size:30px; color:white; line-height:2"></i></a>
 							</div>
@@ -80,9 +80,9 @@ $(function() {
 	
 	/* 장바구니 추가 */
 	$('.cartAddBtn').on('click', function(){
-		console.log('ddd');
+		console.log('장바구니 추가');
 		var cartAmount = $(".cartAmout").val();
-		var goodsCode = $(".goodsCode").val();
+		var goodsCode = $(this).prev(".goodsCode").val();
 		$.ajax({
 			url: '/user/goods/cartAdd',
 			type: 'post',
@@ -100,7 +100,22 @@ $(function() {
 			});
 	});
 	
-	
+	/* 찜 추가 */
+	$('.wishAddBtn').on('click', function(){
+		console.log('찜 추가');
+		var goodsCode = $(this).next(".goodsCode").val();
+		console.log(goodsCode);
+		$.ajax({
+			url: '/user/wishAdd',
+			type: 'post',
+			data: { goodsCode : goodsCode}
+		})
+			.done(function(result){
+				if(result == 1){
+					alert("찜 목록에 추가되었습니다.");
+				}
+			});
+	});
 });
 
 

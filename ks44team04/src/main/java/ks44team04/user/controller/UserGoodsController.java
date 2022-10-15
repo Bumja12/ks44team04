@@ -12,16 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ks44team04.dto.Cart;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsQna;
 import ks44team04.dto.GoodsQnaCategory;
 import ks44team04.dto.Review;
 import ks44team04.service.GoodsService;
 import ks44team04.service.UserService;
-import ks44team04.util.CodeIndex;
 
 @Controller
 @RequestMapping("/user/goods")
@@ -41,8 +38,9 @@ public class UserGoodsController {
     @GetMapping("/goodsList")
     public String getGoodsList(Model model) {
         
-		List<Goods> goodsList = goodsService.getGoodsListSearch(null);
+		List<Goods> goodsList = goodsService.getGoodsList();
 		log.info("등록된 상품 리스트 ::: {}", goodsList);
+		
 		
 		//List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
 		//log.info("카테고리 대분류 리스트 ::: {}", largeCategoryList);
@@ -107,11 +105,11 @@ public class UserGoodsController {
 								,@RequestParam("userId") String userId ,HttpSession session) {
 	 
 		userService.userLogin(userId);
-		String SID = (String) session.getAttribute("SID");
+		//String SID = (String) session.getAttribute("SID");
 		
-		String userRight = goodsService.userRight(userId);
+		//String userRight = goodsService.userRight(userId);
 		
-		int a = 0;
+		//int a = 0;
 		/*
 		if("admin".equals(userRight)) {
 			a = 1;
@@ -130,61 +128,8 @@ public class UserGoodsController {
 		} */
 		return "user/goods/answerView"; 
 	 }
-	 
-    //장바구니
-    @GetMapping("/cart")
-    public String getCartList(Model model) {
-    	
-    	List<Cart> cartList = goodsService.getCartList("buyer01"); //임시로 buyer01의 
-    	log.info("장바구니 리스트 ::: {}", cartList);
-    	
-    	model.addAttribute("title", "장바구니");
-		model.addAttribute("cartList", cartList);
-    	
-    	return "user/goods/cart";
-    }
-    
-    //장바구니 추가
-    @PostMapping("/cartAdd")
-    @ResponseBody
-    public int cartAdd(Cart cart) {
-    	
-    	String buyerId = "buyer01"; //임의
-    	
-    	//cartNewCode 생성
-    	String cartNewCode = goodsService.cartNewCode(buyerId);
-    	cartNewCode = CodeIndex.codeIndex(cartNewCode, 4);
-    	log.info("상품 증가 코드 :::{}" , cartNewCode);
-    	
-    	cart.setCartCode(cartNewCode);
-    	cart.setBuyerId("buyer01"); //임의
-    	
-    	goodsService.cartAdd(cart);
-    	log.info("장바구니 추가 정보 ::: {}", cart);
-    	
-    	return 2;
-    }
-    
-    //장바구니 수량 수정
-    @GetMapping("/cartModify")
-    @ResponseBody
-    public int cartModify(Cart cart) {
-    	
-    	cart.setBuyerId("buyer01"); //임의
-    	
-		goodsService.cartModify(cart);
-		log.info("사용자가 상품 수정한 정보 ::: {}", cart);
-		
-		return cart.getCartAmount();
-	}
-	
-    
-    //관심 상품 
-    @GetMapping("/wishlist")
-    public String wishlist() {
-        log.info("wishlist 실행");
-        return "user/goods/wishlist";
-    }
+
+
     
     
 
