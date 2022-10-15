@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ks44team04.mapper.GoodsMapper;
-import ks44team04.dto.Cart;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
@@ -152,30 +151,5 @@ public class GoodsService {
 		return reviewSpecific;
 	}
 	
-	/* ~~~ 장바구니 시작 ~~~ */
-		
-	//장바구니 목록 조회
-	public List<Cart> getCartList(String userId) {
-		List<Cart> cartList = goodsMapper.getCartList(userId);
-		return cartList;
-	}
-	
-	//장바구니 추가
-	public void cartAdd(Cart cart) {
-		int result = goodsMapper.cartAdd(cart);
-		log.info("장바구니 추가 :" + result);
-	}
-	
-	//장바구니 추사 시 코드 증가
-	public String cartNewCode(String buyerId) {
-		String cartNewCode = goodsMapper.cartNewCode(buyerId);
-		return cartNewCode;
-	}
-	
-	//장바구니 수량 수정
-	public int cartModify(Cart cart) {
-		int result = goodsMapper.cartModify(cart);
-		return result;
-	}
 	
 }

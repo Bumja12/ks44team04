@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="ks44team04.mapper.WishMapper">
+    
+    <resultMap  type="Wishlist" 	id="wishResultMap">
+        <id 	column="wish_code" 			property="wishCode"/>
+        <result column="goods_code" 		property="goodsCode"/>
+        <result column="buyer_id" 			property="buyerId"/>
+        <result column="reg_date" 			property="regDate"/>
+        	<association property="goodsInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsResultMap"/>
+    </resultMap>
+    
+    <!-- 찜한 목록 보여주기 -->
+    <select id="getWishlist" parameterType="String" resultMap="wishResultMap" >
+	SELECT
+		*
+	FROM
+		tb_wishlist as w
+		inner join
+		tb_goods as g
+		on
+		w.goods_code = g.goods_code
+	WHERE
+		w.buyer_id = #{buyerId}
+	</select>
+	
+	<!-- 찜 추가 -->
+	<insert id="wishAdd" parameterType="Wishlist">
+	/* 찜 추가  */
+	insert into tb_wishlist
+		(wish_code, goods_code, buyer_id, reg_date)
+	values
+		(#{wishCode}, #{goodsCode}, #{buyerId}, NOW());
+	</insert>
+	
+	<!-- 찜 추가 시 코드 증가 -->
+	<select id="wishNewCode" resultType="String">
+	/* 찜 추가시 코드 증가*/
+	SELECT	MAX(wish_code)
+	FROM	tb_wishlist
+	WHERE	buyer_Id = #{buyerId};
+	</select>
+	
+	<!-- 찜 목록에서 찜 삭제 -->
+	<delete id="wishRemove" parameterType="String">
+	/* 찜 목록에서 찜 삭제 */
+	DELETE
+	FROM 
+		tb_wishlist
+	WHERE
+		wish_code = #{wishCode}
+	AND
+		buyer_id = #{buyerId}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="ks44team04.mapper.CartMapper">
+    
+    <resultMap  type="Cart" 	id="cartResultMap">
+        <id 	column="cart_code" 			property="cartCode"/>
+        <result column="goods_code" 		property="goodsCode"/>
+        <result column="buyer_id" 			property="buyerId"/>
+        <result column="cart_amount" 		property="cartAmount"/>
+        <result column="reg_date" 			property="regDate"/>
+        <result column="modify_date" 		property="modifyDate"/>
+        	<association property="goodsInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsResultMap"/>
+    </resultMap>
+    
+    <!-- 장바구니 보여주기 -->
+    <select id="getCartList" parameterType="String" resultMap="cartResultMap" fetchSize="100" >
+	SELECT
+		*
+	FROM
+		tb_cart AS c
+		INNER JOIN
+		tb_goods AS g
+		ON
+		c.goods_code = g.goods_code
+	WHERE
+		c.buyer_id = #{buyerId}
+	</select>
+	
+	<!-- 장바구니 추가 -->
+	<insert id="cartAdd" parameterType="Cart">
+	/* 장바구니 추가  */
+	INSERT INTO tb_cart
+		(cart_code, goods_code, buyer_id, cart_amount, reg_date)
+	VALUES
+		(#{cartCode}, #{goodsCode}, #{buyerId}, #{cartAmount}, NOW())
+	</insert>
+	
+	<!-- 장바구니 추가 시 코드 증가 -->
+	<select id="cartNewCode" resultType="String">
+	/* 장바구니 추가시 코드 증가*/
+	SELECT	MAX(cart_code)
+	FROM	tb_cart
+	WHERE	buyer_Id = #{buyerId};
+	</select>
+	
+	<!-- 장바구니 확인 -->
+	<select id="cartCheck" parameterType="Cart" resultMap="cartResultMap">
+	/* 해당 상품이 장바구니에 있는지 확인 */
+	SELECT
+		*
+	FROM
+		tb_cart
+	WHERE
+		buyer_id = #{buyerId}
+	AND
+		goods_code = #{goodsCode}
+	</select>
+	
+	<!-- 장바구니 수량 수정 -->
+	<update id="cartModify" parameterType="Cart">
+	/* 장바구니 수량 수정 */
+	UPDATE
+		tb_cart
+	SET
+		cart_amount = #{cartAmount},
+		modify_date = NOW()
+	WHERE
+		cart_code = #{cartCode}
+	AND
+		buyer_id = #{buyerId}
+		<selectKey keyProperty="cartAmount" resultType="int" order="AFTER">
+			SELECT
+				c.cart_amount AS cartAmount
+			FROM
+				tb_cart AS c
+			WHERE 
+				c.cart_code = #{cartCode}
+		</selectKey>
+	</update>
+	
+	<!-- 장바구니에서 상품 삭제 -->
+	<delete id="cartRemove" parameterType="String">
+	/* 장바구니에서 상품 삭제 */
+	DELETE
+	FROM 
+		tb_cart
+	WHERE
+		cart_code = #{cartCode}
+	AND
+		buyer_id = #{buyerId}
+	</delete>
+	
+    
+</mapper>

@@ -149,14 +149,15 @@ public class GoodsController {
 		
 		return "redirect:/admin/goods/goodsList";
 	}
-	//상품 삭제
-	@GetMapping("/goodsRemove")
-	public String goodsRemove(@RequestParam(value = "goodsCode") String goodsCode) {
-		
-		goodsService.goodsRemove(goodsCode);
 	
-		return "redirect:/admin/goods/goodsList";
-	}
+	//상품 삭제
+	//@GetMapping("/goodsRemove")
+	//public String goodsRemove(@RequestParam(value = "goodsCode") String goodsCode) {
+		
+	//	goodsService.goodsRemove(goodsCode);
+	
+	//	return "redirect:/admin/goods/goodsList";
+	//}
 	
 	@PostMapping("/pwCheck")
 	@ResponseBody
