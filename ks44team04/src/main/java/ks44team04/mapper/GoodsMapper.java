@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import ks44team04.dto.Goods;
-import ks44team04.dto.GoodsAnswer;
 import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
+import ks44team04.dto.GoodsQnaAnswer;
 import ks44team04.dto.GoodsQnaCategory;
 import ks44team04.dto.Review;
 
@@ -50,7 +50,7 @@ public interface GoodsMapper {
 	//문의 검색
 	public List<GoodsQna> getGoodsQnaSearch(Map<String, Object> searchMap);
 	
-	//특정 문의 조회
+	//유저페이지 특정 상품 문의 조회
 	public List<GoodsQna> getGoodsQnaInfoByCode(String goodsCode);
 	
 	//문의 카테고리 조회
@@ -59,9 +59,28 @@ public interface GoodsMapper {
 	//문의 등록
 	public int goodsQnaAdd(GoodsQna goodsQna);
 	
-	//상품 문의 답변 조회
-	public List<GoodsAnswer> getGoodsAnswer();
+	//문의 수정
+	public int qnaModify(GoodsQna goodsQna);
 	
+	//수정을 위한 특정 문의 조회
+	public GoodsQna qnaInfoByNum(int goodsQnaNum);
+	
+	//상품 문의 답변 조회
+	public List<GoodsQnaAnswer> getGoodsAnswer();
+	
+	//답변 등록
+	public int answerAdd(GoodsQnaAnswer goodsAnswerCode);
+	
+	//마지막 상품코드
+	public String getAnswerNewCode(String sellerId);
+	
+	//답변 수정
+	public int answerModify(GoodsQnaAnswer goodsAnswerCode);
+	
+	//수정을 위한 특정 답변 조회
+	public GoodsQnaAnswer answerInfoByCode(String goodsAnswerCode);
+	
+	/*
 	//유저 권한 불러오기
 	public String userRight(String userId);
 	
@@ -69,7 +88,7 @@ public interface GoodsMapper {
 	public String qnaBuyerView(String userId);
 	
 	//해당 상품 판매자 문의 열람 가능 쿼리
-	public String qnaSellerView(String userId);
+	public String qnaSellerView(String userId); */
 	
 	/* ~~~ 후기 시작 ~~~ */
 	

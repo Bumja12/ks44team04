@@ -3,6 +3,7 @@ package ks44team04.admin.controller;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
+import ks44team04.dto.GoodsQnaAnswer;
 import ks44team04.service.GoodsService;
 import ks44team04.util.CodeIndex;
 import org.slf4j.Logger;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +52,8 @@ public class GoodsController {
 									,@RequestParam(name="searchValue", required = false, defaultValue = "") String searchValue
 									//,@RequestParam(name="searchKey2", defaultValue = "goodsSmallCategory") String searchKey2
 									,@RequestParam(name="searchCate", required = false, defaultValue = "") String searchCate
+									,@RequestParam(name="firstDate", required = false, defaultValue = "") String firstDate
+									,@RequestParam(name="lastDate", required = false, defaultValue = "") String lastDate
 									,Model model) {
 		
 		if("goodsCode".equals(searchKey)) {
@@ -69,8 +71,9 @@ public class GoodsController {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("searchKey", searchKey);
 		paramMap.put("searchValue", searchValue);
-		//paramMap.put("searchKey2", searchKey2);
 		paramMap.put("searchCate", searchCate);
+		paramMap.put("firstDate", firstDate);
+		paramMap.put("lastDate", lastDate);
 		
 		List<Goods> goodsList = goodsService.getGoodsListSearch(paramMap);
 		List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
@@ -78,9 +81,6 @@ public class GoodsController {
 		model.addAttribute("title", "상품 목록 조회");
 		model.addAttribute("goodsList", goodsList);
 		model.addAttribute("largeCategoryList", largeCategoryList);
-		model.addAttribute("searchKey", searchKey);
-		model.addAttribute("searchValue", searchValue);
-		model.addAttribute("searchCate", searchCate);
 		
 		return "/admin/goods/goodsList";
 	
@@ -94,9 +94,12 @@ public class GoodsController {
 		Goods goodsInfo = goodsService.getGoodsInfoByCode(goodsCode);
 		log.info("특정 상품의 정보 ::: {}", goodsInfo);
 		
-		//model 셋팅
+		//대분류 카테고리 리스트 가져오기
+		List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
+		
 		model.addAttribute("title", "상품수정");
 		model.addAttribute("goodsInfo", goodsInfo);
+		model.addAttribute("largeCategoryList", largeCategoryList);
 		
 		return "/admin/goods/goodsModify";
 	}
@@ -104,6 +107,7 @@ public class GoodsController {
 	//상품 수정 쿼리 실행
 	@PostMapping("/goodsModify")
 	public String goodsModify(Goods goods) {
+		
 		log.info("사용자가 상품 수정한 정보 ::: {}", goods);
 		
 		goodsService.goodsModify(goods);
@@ -192,18 +196,20 @@ public class GoodsController {
 									,@RequestParam(name="searchValue", required=false, defaultValue="") String searchValue
 									,@RequestParam(name="searchKey2", defaultValue="goodsCode") String searchKey2
 									,@RequestParam(name="searchQnaStatus", required = false, defaultValue = "") String searchQnaStatus
+									,@RequestParam(name="firstDate", required = false, defaultValue = "") String firstDate
+									,@RequestParam(name="lastDate", required = false, defaultValue = "") String lastDate
 									,Model model) {
 		
 		if("goodsCode".equals(searchKey)) {
-		searchKey = "goods_code";
+			searchKey = "goods_code";
 		}else if("goodsName".equals(searchKey)) {
-		searchKey = "goods_name";
+			searchKey = "goods_name";
 		}else if("categoryName".equals(searchKey)) {
-		searchKey = "category_name";
+			searchKey = "category_name";
 		}else if("goodsQnaContent".equals(searchKey)) {
-		searchKey = "goods_qna_content";
+			searchKey = "goods_qna_content";
 		}else if("userId".equals(searchKey)) {
-		searchKey = "user_id";
+			searchKey = "user_id";
 		}
 		
 		if("qnaStatus".equals(searchKey2)) {
@@ -215,16 +221,66 @@ public class GoodsController {
 		paramMap.put("searchValue", searchValue);
 		paramMap.put("searchKey2", searchKey2);
 		paramMap.put("searchQnaStatus", searchQnaStatus);
+		paramMap.put("firstDate", firstDate);
+		paramMap.put("lastDate", lastDate);
 		
 		List<GoodsQna> goodsQna = goodsService.getGoodsQnaSearch(paramMap);
-		model.addAttribute("title", "상품 목록 조회");
+		model.addAttribute("title", "문의 검색 결과");
 		model.addAttribute("goodsQna", goodsQna);
-		model.addAttribute("searchKey", searchKey);
-		model.addAttribute("searchValue", searchValue);
-		model.addAttribute("searchKey2", searchKey2);
-		model.addAttribute("searchQnaStatus", searchQnaStatus);
 		
 		return "/admin/goods/goodsQna";
+	}
+	
+	//문의 수정을 위해 수정페이지에 정보 불러오기
+	@GetMapping("/qnaModify")
+	public String qnaModify(@RequestParam(name="goodsQnaNum", required = false) int goodsQnaNum,
+							  Model model) {
+		
+		//특정 문의의 정보
+		GoodsQna qnaInfo = goodsService.qnaInfoByNum(goodsQnaNum);
+		log.info("특정 상품의 정보 ::: {}", qnaInfo);
+		
+		model.addAttribute("title", "상품수정");
+		model.addAttribute("qnaInfo", qnaInfo);
+		
+		return "/admin/goods/qnaModify";
+	}
+	
+    //답변 등록 
+	@GetMapping("/answerAdd")
+	public String answerAdd(GoodsQnaAnswer goodsQnaAnswer){
+		
+		String sellerId = "seller01"; //임의
+		
+		// answerNewCode 생성
+		String answerNewCode = goodsService.getAnswerNewCode(sellerId);
+		answerNewCode = CodeIndex.codeIndex(answerNewCode, 6);
+		log.info("상품 증가 코드 :::{}" , answerNewCode);
+		
+		goodsQnaAnswer.setGoodsAnswerCode(answerNewCode);
+		goodsQnaAnswer.setSellerId("seller01");
+		
+		goodsService.answerAdd(goodsQnaAnswer);
+		log.info("사용자가 등록한 답변 정보 ::: {}", goodsQnaAnswer);
+		
+		return "redirect:/admin/goods/goodsQna";
+	}
+	
+	//답변 수정
+	@PostMapping("/answerModify")
+	public String answerModify(@RequestParam(name="goodsAnswerCode", required = false) String goodsAnswerCode,
+							     Model model, GoodsQnaAnswer goodsQnaAnswer) {
+		
+		//특정상품의 정보
+		GoodsQnaAnswer answerInfo = goodsService.answerInfoByCode(goodsAnswerCode);
+		log.info("특정 상품의 정보 ::: {}", answerInfo);
+		
+		goodsService.answerModify(goodsQnaAnswer);
+		
+		model.addAttribute("title", "답변 수정");
+		model.addAttribute("goodsQnaAnswer", answerInfo);
+		
+		return "redirect:/admin/goods/goodsQna";
 	}
 	
 	//상품 문의 답변

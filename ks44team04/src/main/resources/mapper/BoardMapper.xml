@@ -84,12 +84,18 @@
 			tb_user AS u
 			ON
 			b.user_id = u.user_id
-		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="searchCateName != null and searchCateName != ''">
 				${searchKey2} = #{searchCateName}
 			</if>
 			<if test="searchValue != null and searchValue != ''">
 				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+			</if>
+			<if test="firstDate != null and firstDate !='' and lastDate != null and lastDate !=''">
+				AND
+				b.reg_date <![CDATA[>]]> (#{firstDate})
+				AND
+				b.reg_date <![CDATA[<]]> (#{lastDate})
 			</if>
 		</trim>
 		ORDER BY b.reg_date DESC;
@@ -158,12 +164,18 @@
 			tb_user AS u
 			ON
 			l.user_id = u.user_id
-		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="searchCateName != null and searchCateName != ''">
 				${searchKey2} = #{searchCateName}
 			</if>
 			<if test="searchValue != null and searchValue != ''">
 				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+			</if>
+			<if test="firstDate != null and firstDate !='' and lastDate != null and lastDate !=''">
+				AND
+				l.like_reg_date <![CDATA[>]]> (#{firstDate})
+				AND
+				l.like_reg_date <![CDATA[<]]> (#{lastDate})
 			</if>
 		</trim>
 		ORDER BY l.like_reg_date DESC;
@@ -241,12 +253,18 @@
 			tb_user AS u
 			ON
 			co.user_id = u.user_id
-		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="searchCateName != null and searchCateName != ''">
 				${searchKey2} = #{searchCateName}
 			</if>
 			<if test="searchValue != null and searchValue != ''">
 				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+			</if>
+			<if test="firstDate != null and firstDate !='' and lastDate != null and lastDate !=''">
+				AND
+				co.reg_date <![CDATA[>]]> (#{firstDate})
+				AND
+				co.reg_date <![CDATA[<]]> (#{lastDate})
 			</if>
 		</trim>
 		ORDER BY co.reg_date DESC;

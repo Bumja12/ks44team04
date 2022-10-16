@@ -44,15 +44,14 @@
 					<div class="form-inline control-group controls">
 						<label class="control-label" for="qnaSearchDate" style="margin-right: 10px; ">등록일</label>
 						<div class="input-prepend input-group" style="margin-top:9px;">
-							<span class="add-on input-group-addon"><i
-								class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-								<input type="text" style="width: 200px;" name="reservation"
-								id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
+							<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+							<input name="firstDate" class="form-control" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'" style="width:130px;">
 						</div>
+							~ <input name="lastDate" class="form-control" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'" style="width:130px;">							
 						<div class="btn-group  btn-group-sm">
-	                        <button class="btn btn-default" type="button" name="filterDate" value="today">오늘</button>
-	                        <button class="btn btn-default" type="button" name="filterDate" value="week">일주일</button>
-	                        <button class="btn btn-default" type="button" name="filterDate" value="month">한달</button>
+	                        <button class="btn btn-default" type="button" id="today" value="today">오늘</button>
+		                    <button class="btn btn-default" type="button" id="week" value="week">일주일</button>
+		                    <button class="btn btn-default" type="button" id="month" value="month">한달</button>
                      	</div>
 					</div>
 					<div style="text-align: center; margin-bottom:-10px;">
@@ -94,17 +93,76 @@
 		</div>
 </th:block>
 <th:block layout:fragment="customScript">
-	<script th:inline="javascript">
-	 $(function() {
-		 /* select searchCateName 선택 시 boardCateName 히든 인풋에 넣기 (답변 상태 검색에 이용) */
-		$('.searchCateName').change(function() {
-			var boardCateName = $(".searchCateName option:selected").text();
-				console.log(boardCateName);
-				$('#searchCateName').val( boardCateName );
-		});	 
+<script th:inline="javascript">
+$(function() {
+	/* select searchCateName 선택 시 boardCateName 히든 인풋에 넣기 (답변 상태 검색에 이용) */
+	$('.searchCateName').change(function() {
+		var boardCateName = $(".searchCateName option:selected").text();
+		console.log(boardCateName);
+		$('#searchCateName').val( boardCateName );
+	});	 
+	
+	/* 날짜 검색 */
+	var date = new Date();
+	//오늘 날짜 구하기
+	var year = date.getFullYear();
+	var month = ('0' + (date.getMonth() + 1)).slice(-2);
+	var day = ('0' + date.getDate()).slice(-2);
+	//오늘 다음날짜 구하기 
+	var day2 = (date.getDate()+1);
+	//년-월-일 로 출력
+	var today = year + '-' + month + '-' + day;
+	var today2 = year + '-' + month + '-' + day2;
+		
+	/* 오늘 */
+	$('#today').click(function(){
+
+		console.log(today);
+		console.log(today2);
+		
+		$('input[name=firstDate]').val(today);
+		$('input[name=lastDate]').val(today2);
+	});
+	
+	/* 일주일 */
+	$('#week').click(function(){
+		var date = new Date();
+		var weekDate = date.getTime() - (7*24*60*60*1000);
+			date.setTime(weekDate);
+
+		var weekYear = date.getFullYear();
+		var weekMonth = date.getMonth() + 1;
+		var weekDay = date.getDate();
+
+			if(weekMonth < 10) {weekMonth = "0" + weekMonth};
+			if(weekDay < 10) {weekDay = "0" + weekDay};
+
+		var week = weekYear + "-" + weekMonth + "-" + weekDay;
+		
+		console.log(week);
+		console.log(today2);
+		
+		$('input[name=firstDate]').val(week);
+		$('input[name=lastDate]').val(today2);
+	});
+	
+	/* 한 달 */
+	$('#month').click(function(){
+		var today = new Date();
+		
+		var year = date.getFullYear();
+		var month = ('0' + (date.getMonth())).slice(-2);
+		var day = ('0' + date.getDate()).slice(-2);
+		
+		var month2 = year + "-" + month + "-" + day;
+		
+		console.log(month2);
+		
+		$('input[name=firstDate]').val(month2);
+		$('input[name=lastDate]').val(today2);
+	});
 		 
-		 
-	 });
-	</script>
+});
+</script>
 </th:block> 
 </html>

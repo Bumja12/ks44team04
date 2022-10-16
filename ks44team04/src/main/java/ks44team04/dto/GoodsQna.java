@@ -8,11 +8,15 @@ public class GoodsQna {
     private String buyerId;
     private String goodsQnaTitle;
     private String goodsQnaContent;
-    private String goodsQnaDate;
+    private String regDate;
+    private String modifyDate;
     private String secretCheck;
     private String goodsQnaPw;
     private String qnaStatus;
-    private GoodsAnswer goodsAnswerInfo;
+    
+    
+    
+    private GoodsQnaAnswer goodsAnswerInfo;
     private User userInfo;
     private Goods goodsInfo;
     public GoodsQnaCategory goodsQnaCategoryInfo;
@@ -65,12 +69,20 @@ public class GoodsQna {
         this.goodsQnaContent = goodsQnaContent;
     }
 
-    public String getGoodsQnaDate() {
-        return goodsQnaDate;
+    public String getRegDate() {
+    	return regDate;
     }
-
-    public void setGoodsQnaDate(String goodsQnaDate) {
-        this.goodsQnaDate = goodsQnaDate;
+    
+    public void setRegDate(String regDate) {
+    	this.regDate = regDate;
+    }
+    
+    public String getModifyDate() {
+    	return modifyDate;
+    }
+    
+    public void setModifyDate(String modifyDate) {
+    	this.modifyDate = modifyDate;
     }
 
     public String getSecretCheck() {
@@ -97,11 +109,11 @@ public class GoodsQna {
         this.qnaStatus = qnaStatus;
     }
 
-    public GoodsAnswer getGoodsAnswerInfo() {
+    public GoodsQnaAnswer getGoodsAnswerInfo() {
         return goodsAnswerInfo;
     }
 
-    public void setGoodsAnswerInfo(GoodsAnswer goodsAnswerInfo) {
+    public void setGoodsAnswerInfo(GoodsQnaAnswer goodsAnswerInfo) {
         this.goodsAnswerInfo = goodsAnswerInfo;
     }
 
@@ -138,8 +150,9 @@ public class GoodsQna {
                 ", buyerId='" + buyerId + '\'' +
                 ", goodsQnaTitle='" + goodsQnaTitle + '\'' +
                 ", goodsQnaContent='" + goodsQnaContent + '\'' +
-                ", goodsQnaDate='" + goodsQnaDate + '\'' +
                 ", secretCheck='" + secretCheck + '\'' +
+                ", regDate='" + regDate + '\'' +
+                ", modifyDate='" + modifyDate + '\'' +
                 ", goodsQnaPw=" + goodsQnaPw +
                 ", qnaStatus='" + qnaStatus + '\'' +
                 ", goodsAnswerInfo=" + goodsAnswerInfo +

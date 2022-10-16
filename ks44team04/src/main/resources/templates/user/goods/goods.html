@@ -255,7 +255,7 @@ div { margin: 5px 0px }
 			
 				<!-- 상품 정보 Content 시작 -->
 				<div id="tab-1" class="tabContent current" th:object=${goodsInfo}>
-					<p th:text="*{goodsContent}"></p>
+					<p th:text="*{goodsDetail}"></p>
 				</div>
 				<!-- 상품 정보 Content 끝 -->
 				
@@ -361,7 +361,7 @@ div { margin: 5px 0px }
 									<td th:text="${'['+gqi.qnaStatus+']'}" class="answerYN" th:classappend="(${gqi.qnaStatus}=='완료'?Y:'')+(${gqi.qnaStatus}=='대기'?N:'')"></td>
 									<td th:text="${gqi.goodsQnaTitle}" class="qnaToggle" style="cursor:pointer;"></td>
 									<td th:text="${gqi.userInfo.userId}"></td>
-									<td th:text="${#strings.substring(gqi.goodsQnaDate,0,10)}"></td>
+									<td th:text="${#strings.substring(gqi.regDate,0,10)}"></td>
 								</tr>
 						 		<tr class="answerToggle" style="display:none;">
 						 			<td colspan="2"></td>
@@ -380,7 +380,7 @@ div { margin: 5px 0px }
 							 			<div th:unless="${gqi.qnaStatus} == '답변완료'" style="display:table-cell;">
 							 			</div>
 							 			<div>
-							 				<span th:text="${#strings.substring(gqi.goodsAnswerInfo.answerDate,0,10)}" style="float:right; padding-right:20px;"></span>
+							 				<span th:text="${#strings.substring(gqi.goodsAnswerInfo.regDate,0,10)}" style="float:right; padding-right:20px;"></span>
 						 				</div>
 						 			</div>
 						 			</td> 
@@ -612,7 +612,7 @@ $(function() {
 				}
 			});
 	});
-    /* ---------------------  추가--------------------- */
+    /* --------------------- 찜 추가--------------------- */
     
 	$('.wishAddBtn').on('click', function(){
 		console.log('찜 추가');
