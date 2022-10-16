@@ -5,10 +5,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import ks44team04.mapper.AlertMapper;
 import ks44team04.dto.Alert;
 import ks44team04.dto.AlertSend;
+import ks44team04.dto.LevelBuyerCategory;
+import ks44team04.dto.Right;
+import ks44team04.dto.User;
 
 @Service
 public class AlertService {
@@ -19,6 +25,12 @@ public class AlertService {
 	public AlertService(AlertMapper alertMapper) {
 		this.alertMapper = alertMapper;
 	}
+	
+    //알림 등록
+    public void addAlert(Alert alert) {
+    	int addAlertResult = alertMapper.addAlert(alert);
+    	System.out.println("회원가입 결과:" + addAlertResult);
+    }
 	
 	//알림 전송내역 조회
 	public List<AlertSend> getAlertSendList() {

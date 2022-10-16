@@ -31,6 +31,26 @@ public class UserService {
         this.userMapper = userMapper;
     }
     
+    //(휴면목록) 2 휴면해제 클릭시 휴면 테이블 '휴면해제'
+    public void dormantToNormal2(String loginId) {
+    	userMapper.dormantToNormal2(loginId);
+    }
+    
+	//(휴면목록) 1 휴면해제 클릭시 회원상태 '정상'
+	public void dormantToNormal1(String userId) {
+		userMapper.dormantToNormal1(userId);
+	}
+	
+	//휴면 처리 2 (휴면 테이블에 insert)
+	public void insertDormant(String userId) {
+		userMapper.insertDormant(userId);
+	}
+	
+	//휴면 처리 1 (회원상태 '휴면'으로)
+	public void normalToDormant(String userId) {
+		userMapper.normalToDormant(userId);
+	}
+	
     //10/13 회원 탈퇴
   	public int removeUser(String userId, String userRight, String userInfoKeep) {
   		

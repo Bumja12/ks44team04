@@ -23,6 +23,20 @@ public interface UserMapper {
     public String userLogin(String userId);
     public User getLoginUserInfo(String userId);
     
+    /* ===== 휴면 시작 ===== */
+    //(휴면목록) 2 휴면해제 클릭시 휴면 테이블 '휴면해제'
+    public int dormantToNormal2(String loginId);
+
+    //(휴면목록) 1 휴면해제 클릭시 회원상태 '정상'
+    public int dormantToNormal1(String userId);
+    
+    //휴면 처리 2 (휴면 테이블에 insert)
+    public int insertDormant(String userId);
+    
+    //휴면 처리 1 (회원상태 '휴면'으로)
+    public int normalToDormant(String userId);
+    /* ===== 휴면 끝 ===== */
+    
     /* ===== 회원 탈퇴 시작 ===== */
     //(판매자) 판매상품 판매중지여부 Y로 변경
     public int updateGoodsSaleCheck(String userId);

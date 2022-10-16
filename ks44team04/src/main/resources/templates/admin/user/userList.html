@@ -8,7 +8,6 @@
 </th:block>
 
 <th:block layout:fragment="customCss">
-
 <style>
 
 	.modal {
@@ -157,21 +156,16 @@
 								<td th:text="${l.userStatus}" th:value="${l.userStatus}" id="userStatus"></td>
 								<td style="text-align: center;">
 									<th:block th:if="${l.userStatus != '탈퇴'}">
-										<a th:if="${l.rightList.rightStatus == '판매자' and l.userStatus == '정상'}" th:href="@{/admin/user/sellerDetail(sellerId=${l.userId})}"> 
+										<a th:if="${l.rightList.rightStatus == '판매자'}" th:href="@{/admin/user/sellerDetail(sellerId=${l.userId})}"> 
 											<i class="fa fa-info-circle"></i> 상세 &nbsp;
 										</a> 
-										<a th:unless="${l.rightList.rightStatus == '판매자' and l.userStatus == '정상'}" th:href="@{/admin/user/userDetail(userId=${l.userId})}"> 
+										<a th:unless="${l.rightList.rightStatus == '판매자'}" th:href="@{/admin/user/userDetail(userId=${l.userId})}"> 
 											<i class="fa fa-info-circle"></i> 상세 &nbsp;
 										</a> 
 										<a class="Modal removeBtn" th:data-user-id="${l.userId}" data-toggle="modal" data-target="#removeModal">
 											<i class="fa fa-close"></i> 탈퇴 &nbsp;
 										</a>
 										<!-- href="javascript:void(0);" -->
-									</th:block>
-									<th:block th:unless="${l.userStatus != '탈퇴'}">
-										<a th:href="@{/admin/user/leaveList}"> 
-											<i class="fa fa-share-square-o"></i> 관리하기
-										</a>
 									</th:block>
 								</td>
 							</th:block>
@@ -183,7 +177,7 @@
 				</table>
 				<div>
 					* 회원 정보 수정은 회원 상세페이지에서 할 수 있습니다. <br>
-					* '판매자 승인 전'이고, 판매자 신청을 한 번도 하지 않았던 회원만 상세 정보 페이지에서 판매자 신청을 할 수 있습니다. <br>
+					<!-- * '판매자 승인 전'이고, 판매자 신청을 한 번도 하지 않았던 회원만 상세 정보 페이지에서 판매자 신청을 할 수 있습니다. <br> -->
 					* 탈퇴한 회원은 탈퇴회원목록에서 관리할 수 있습니다.
 				</div>
 			</div>

@@ -7,9 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks44team04.service.AlertService;
+import ks44team04.util.CodeIndex;
 import ks44team04.dto.Alert;
 import ks44team04.dto.AlertSend;
 
@@ -24,6 +26,25 @@ public class AlertController {
 		this.alertService = alertService;
 	}
 
+	/* 알림등록 쿼리실행 */
+	@PostMapping("/alert/addAlert")
+    public String addAlert(Alert alert) {
+        alertService.addAlert(alert);
+       //String alertCode = CodeIndex.codeIndex("alert0006", 5);
+        
+        return "redirect:/admin/alert/alertList";
+    }
+	
+	/* 알림등록 화면연결 */
+	@GetMapping("/alert/addAlert")
+	public String addAlertForm(Model model) {
+
+		model.addAttribute("title", "알림등록");
+		
+		return "admin/alert/addAlert";
+	}
+	
+	/* 알림 전송 내역 */
 	@GetMapping("/alert/alertSendList")
 	public String getAlertSendList(Model model) {
 		List<AlertSend> alertSendList = alertService.getAlertSendList();
@@ -48,6 +69,7 @@ public class AlertController {
 		return "admin/alert/alertSendList";
 	}
 
+	/* 알림 목록 */
 	@GetMapping("/alert/alertList")
 	public String getAlertList1(Model model) {
 		List<Alert> alertList = alertService.getAlertList();

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customCss">
+	<style>
+	
+		table {
+			border-bottom: 1px solid #dddddd;
+		}
+		
+		.tableOdd {
+			background-color: #f6f6f6;
+			font-weight: bold;
+			padding-top: 20px !important;
+		}
+  
+		.tableEven .text {
+			width: 230px;
+			margin: 3px;
+		}
+  
+		.tableEven .select {
+			width: 230px;
+			margin: 3px;
+		}
+		
+		.text {
+			margin-right: 6px;
+		}		
+		
+	</style>
+</th:block>
+
+<th:block layout:fragment="customTopJs">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script>
+		
+		/* enter 입력시 submit 방지 */
+		document.addEventListener('keydown', function(event) {
+			if (event.keyCode === 13) {
+				event.preventDefault();
+			};
+		}, true);
+
+	</script>
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+	<form id="addAlertForm" th:action="@{/admin/alert/addAlert}" method="POST">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>알림등록</h3>
+			</div>
+
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="x_panel" style="padding-top: 30px;">
+						<div class="x_content">
+
+							<table class="userDetail table table-responsive" style="border-collapse: separate;">
+								<tbody>
+									<tr>
+										<td class="tableOdd col-md-1">알림제목</td>
+										<td class="tableEven" colspan="3">
+											<div class="form-inline">
+												<input type="text" class="form-control text" id="alertTitle" name="alertTitle" placeholder="제목을 입력해주세요." style="width: 200px;" />
+												<span class="checks" id="titleCheck"></span>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="tableOdd">상세내용</td>
+										<td class="tableEven col-md-4" colspan="3">
+											<div class="form-inline">
+												<input type="text" class="form-control text" id="alertContent" name="alertContent" placeholder="내용을 입력해주세요. (50자 제한)" maxlength="50" style="width: 500px; height: 120px;" />
+											  	<span class="checks" id="contentCheck"></span>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							
+							<input type="hidden" id="alertCode" name="alertCode" value="">
+							
+							<div class="form-group">
+		                        <div style="text-align:center; margin: 30px;" >
+									<button type="button" class="btn btn" th:onclick="|location.href='@{/admin/alert/alertList}'|">취소</button>
+									<button type="submit" id="addAlertBtn" class="btn btn-dark addAlertBtn">등록</button>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</th:block>
+</html>
