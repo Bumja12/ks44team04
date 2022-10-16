@@ -225,10 +225,12 @@ public class UserController {
 	public String modifySeller(@RequestParam(value="sellerId", required = false) String sellerId
 							  ,Model model) {
 		Seller sellerInfo = userService.getSellerInfoById(sellerId);
-		log.info("회원정보 ::: {}",sellerInfo);
+		log.info("판매자 정보 ::: {}",sellerInfo);
+		List<GoodsLargeCategory> goodsLargeCategory = userService.getGoodsLargeCategory();
 		
-		model.addAttribute("title", "회원정보수정");
-		model.addAttribute("userInfo", sellerInfo);
+		model.addAttribute("title", "판매자정보수정");
+		model.addAttribute("sellerInfo", sellerInfo);
+		model.addAttribute("goodsLargeCategory", goodsLargeCategory);
 		
 		return "admin/user/modifySeller";
 	}
@@ -250,11 +252,13 @@ public class UserController {
         User userInfo = userService.getUserInfoById(userId);
         log.info("회원정보 ::: {}",userInfo);
         List<LevelBuyerCategory> levelBuyer = userService.getLevelBuyer();
+        List<LevelSellerCategory> levelSeller = userService.getLevelSeller();
         List<Right> rightList = userService.getRightList();
         
 		model.addAttribute("title", "회원정보수정");
 		model.addAttribute("userInfo", userInfo);
 		model.addAttribute("levelBuyer", levelBuyer);
+		model.addAttribute("levelSeller", levelSeller);
 		model.addAttribute("rightList", rightList);
 		
 		return "admin/user/modifyUser";

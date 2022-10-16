@@ -112,7 +112,7 @@
 									<tr>
 										<td class="tableOdd">계좌정보</td>
 										<td class="tableEven col-md-4" colspan="3">
-												<div class="form-inline">
+											<div class="form-inline">
 												<select class="form-control text" style="width: 160px;" id="bankName" name="bankName">
 							                        <option value="">- 은행선택 -</option>
 							                        <option value="경남은행">경남은행</option>
@@ -223,7 +223,6 @@
     <script>
 
     	var codeCheck = false;
-	    var idCheck = false;
 		var storeNameCheck = false;
 		var bankNameCheck = false;
 		var accountCheck = false;
@@ -468,16 +467,6 @@
 			console.log('codeCheck : ',codeCheck);
 			console.log('sellerCode : ', $('#sellerCode').val());
 			
-			/* 아이디 */
-			if($('#sellerId').val() == "") {
-				$('#idCheck').css('color','#f03f40');
-                $('#idCheck').html("* 아이디를 입력해주세요.");
-                $('#sellerId').css('border','1px solid #f03f40');
-				$('#sellerId').focus();
-				idCheck = false;
-			}
-			console.log('idCheck : ',idCheck);
-			
 			/* 상호명 */
 			if($('#storeName').val() == "") {
 				$('#storeNameCheck').css('color','#f03f40');
@@ -623,7 +612,7 @@
 			$('#addSellerForm').submit(function(event) {});
 	        
 	        /* 최종 유효성 검사 */
-			if(codeCheck && idCheck && storeNameCheck && bankNameCheck && accountCheck && accountHolderCheck && accountCheckFinal && addressCheck && addressCheck2 && addressCheckFinal && emailCheck && phoneCheck && licenceNumCheck && licenceImgCheck && onlineImgCheck && approveCheck) {
+			if(codeCheck && storeNameCheck && bankNameCheck && accountCheck && accountHolderCheck && accountCheckFinal && addressCheck && addressCheck2 && addressCheckFinal && emailCheck && phoneCheck && licenceNumCheck && licenceImgCheck && onlineImgCheck && approveCheck) {
 				$('#addSellerForm').submit();
 	        }
 			//return false;
