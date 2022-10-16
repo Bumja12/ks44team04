@@ -85,23 +85,36 @@
 									<tr>
 										<td class="tableOdd col-md-1">권한</td>
 										<td class="tableEven">
-										 	<select class="select form-control" id="userRight" name="userRight">
+											<input type="text" class="form-control text" id="userRight" name="userRight" th:value="*{rightList.rightStatus}" readonly="readonly" />
+<!-- 										 	<select class="select form-control" id="userRight" name="userRight">
 												<th:block th:unless="${#lists.isEmpty(rightList)}" th:each="r : ${rightList}">
-													<option th:text="${r.rightStatus}" th:value="${r.userRight}"></option>
+													<option th:text="${r.rightStatus}" th:value="${r.userRight}" th:selected="${r.userRight} == *{userRight}"></option>
 												</th:block>
-											</select>
+											</select> -->
 										</td>
 										<td class="tableOdd col-md-1">회원등급</td>
 										<td class="tableEven">
 											<div class="form-inline">
-												<select class="select form-control" id="userLevel" name="userLevel">
-													<th:block th:unless="${#lists.isEmpty(levelBuyer)}" th:each="lb : ${levelBuyer}">
-														<option class="levels" th:value="${lb.levelCode}" th:text="${lb.levelName}" th:selected="${lb.levelCode} == *{userLevel}">등급선택</option>
-													</th:block>
-													<th:block th:if="${#lists.isEmpty(levelBuyer)}">
-														<option th:value="">등록된 회원등급이 없습니다.</option>
-													</th:block>
-												</select>
+												<th:block th:if="*{rightList.rightStatus} == '구매자'">
+													<select class="select form-control" id="userLevel" name="userLevel">
+														<th:block th:unless="${#lists.isEmpty(levelBuyer)}" th:each="lb : ${levelBuyer}">
+															<option class="levels" th:value="${lb.levelCode}" th:text="${lb.levelName}" th:selected="${lb.levelCode} == *{userLevel}">등급선택</option>
+														</th:block>
+														<th:block th:if="${#lists.isEmpty(levelBuyer)}">
+															<option th:value="">등록된 회원등급이 없습니다.</option>
+														</th:block>
+													</select>
+												</th:block>
+												<th:block th:if="*{rightList.rightStatus} == '판매자'">
+													<select class="select form-control" id="userLevel" name="userLevel">
+														<th:block th:unless="${#lists.isEmpty(levelSeller)}" th:each="ls : ${levelSeller}">
+															<option class="levels" th:value="${ls.levelCode}" th:text="${ls.levelName}" th:selected="${ls.levelCode} == *{userLevel}">등급선택</option>
+														</th:block>
+														<th:block th:if="${#lists.isEmpty(levelSeller)}">
+															<option th:value="">등록된 회원등급이 없습니다.</option>
+														</th:block>
+													</select>
+												</th:block>
 											</div>
 										</td>
 									</tr>
@@ -168,7 +181,7 @@
 										<td class="tableOdd">휴대폰번호</td>
 										<td class="tableEven col-md-4">
 											<div class="form-inline">
-												<input type="text" class="form-control text" id="userPhone" name="userPhone" th:value="*{userPhone}" placeholder="숫자만 입력해주세요." />
+												<input type="text" class="form-control text" id="userPhone" name="userPhone" th:value="*{userPhone}" placeholder="숫자만 입력해주세요." oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="11"/>
 												<span class="checks" id="phoneCheck"></span>
 											</div>
 										</td>
@@ -250,7 +263,6 @@
     	/*<![CDATA[*/
     	
 		/* 유효성검사 */
-		var idCheck = true;
 		var pwCheck = true;
 		var pwCheck2 = true;
 		var pwCheckFinal = true; 
@@ -286,18 +298,18 @@
 			input.value = "";
 		});
 		
-		/* db에 저장된 값으로 selected */
-		$(document).ready(function(){
-			
-			//alert($('#levelBuyer').val());
-			
-			$('#levelBuyer').each(function(){
-				if($(this).val() == "${userInfo.userLevel}") {
-				$(this).attr("selected","selected"); // attr적용안될경우 prop으로 
-				}
-			});
+		$(document).ready(function() {
+			var userRight = '[[${userInfo.userRight}]]';
+			if(userRight == 'seller_before') {
+				 $('#userRight,#userLevel,#userPoint,#userPenalty').attr('disabled', 'disabled');
+				 $("#userRight").val(userRight).prop("selected", true);
+				 $("#userLevel").prepend("<option value='선택불가'>선택불가</option>");
+				 $("#userLevel").val("선택불가").prop("selected", true);
+				 $('#userPoint').prop('value', 0);
+				 $('#userPenalty').prop('value', 0);
+			}
 		});
-
+		
     	/* 회원등급 "구매자"로 표시 */
 		$(document).ready(function() {
 			
@@ -307,6 +319,11 @@
 			}
 		});
 		
+		/* '판매자' 옵션 지우기 */
+		$(document).ready(function() {
+			$("select#userRight option[value='seller']").remove();
+		});
+    	
 		/* 숫자만 입력  & 숫자 천단위 콤마 찍기  */
 		$('.comma').on('input',function(){
 			$(this).val($(this).val().replace(/[^0-9.]/g,'').replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,'));
@@ -326,47 +343,6 @@
 				 $('#userPoint').prop('value', 0);
 				 $('#userPenalty').prop('value', 0);
 			 }
-		});
-		
-		/* id 중복체크 - ajax 비동기처리 */			
-		$("#userId").on("propertychange change keyup paste input",function() {
-		
-			var userId = $('#userId').val();
-
-			function id_check( id ) {
-			    var regex= /^[a-z][a-z\d]{5,15}$/;
-			    return (id != '' && id != 'undefined' && regex.test(id));
-			}
-			
-			if(!id_check(userId)) {
-				$('#idCheck').css('color','#f03f40');
-                $('#idCheck').html("* 6~16자의 영문 소문자, 숫자만 입력해주세요");
-                $('#userId').css('border','1px solid #f03f40');
-				$('#userId').focus();
-				idCheck = false;
-			}else {
-				$.ajax({
-					url: '/admin/user/idCheck',
-					method: 'GET',
-					data: { 'userId' : userId },
-					//dataType: "json",  //String이면 text   //text, json, xml, html
-					success : function(cnt) {
-						if(cnt == 0){
-			                $('#idCheck').css('color','#36ae36');
-			                $('#idCheck').html("* 사용 가능한 아이디입니다.");
-			                $('#userId').css('border','1px solid #36ae36');
-							//$('#addUserForm button').prop('disabled', false);
-			                idCheck = true;
-						}else {
-							$('#idCheck').css('color','#ff696a');
-			                $('#idCheck').html("* 이미 사용중인 아이디입니다.");
-							$('#userId').css('border','1px solid #f03f40');
-							$('#userId').focus();
-							idCheck = false;
-						}	
-					}
-				});
-			}
 		});
 		
 	  	/* 비밀번호 유효성검사 */
@@ -603,16 +579,6 @@
 		/* 등록 버튼 클릭시 유효성검사 */
 		$("#modifyUserBtn").click(function(){
 			
-			/* 아이디 */
-			if($('#userId').val() == "") {
-				$('#idCheck').css('color','#f03f40');
-                $('#idCheck').html("* 아이디를 입력해주세요.");
-                $('#userId').css('border','1px solid #f03f40');
-				$('#userId').focus();
-				idCheck = false;
-			}
-			console.log('idCheck : ',idCheck);
-			
 			/* 비밀번호 */
 			if($('#userPw').val() == "") {
 				$('#pwCheck1').css('color','#f03f40');
@@ -770,7 +736,7 @@
 			}); 
 	        
 	        /* 최종 유효성 검사 */
-			if(idCheck && pwCheck && pwCheck2 && pwCheckFinal && nameCheck && nicknameCheck && genderCheck && emailCheck && phoneCheck && addressCheck && addressCheck2 && addressCheckFinal && pointCheck && penaltyCheck && infoKeepCheck) {
+			if(pwCheck && pwCheck2 && pwCheckFinal && nameCheck && nicknameCheck && genderCheck && emailCheck && phoneCheck && addressCheck && addressCheck2 && addressCheckFinal && pointCheck && penaltyCheck && infoKeepCheck) {
 				$('#modifyUserForm').submit();
 	        }
 			return false;

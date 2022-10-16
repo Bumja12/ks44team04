@@ -60,7 +60,7 @@
 					style="margin-right: 10px;">판매자등록</button>
  			<button type="button" id="modifyBtn_leave" class="btn btn-dark pull-right" th:if="${userInfo.userStatus == '탈퇴'}" style="margin-right: 10px;">수정</button>
  			-->			
- 			<button type="button" id="modifyBtn" class="btn btn-dark pull-right" th:unless="${userInfo.userStatus == '탈퇴'}" th:onclick="|location.href='@{/admin/user/modifyUser(userId=${userInfo.userId})}'|" style="margin-right: 10px;">수정</button>
+ 			<button type="button" id="modifyBtn" class="btn btn-dark pull-right" th:unless="${userInfo.userStatus == '탈퇴' || ${userInfo.userStatus == '휴면'}" th:onclick="|location.href='@{/admin/user/modifyUser(userId=${userInfo.userId})}'|" style="margin-right: 10px;">수정</button>
 			<button type="button" class="btn btn-default pull-right" th:onclick="|location.href='@{/admin/user/userList}'|" style="margin-right: 10px;">
 				<i class="fa fa-bars"> 회원목록</i>
 			</button>

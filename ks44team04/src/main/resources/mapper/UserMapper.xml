@@ -341,6 +341,28 @@
 			user_id = #{userId};
 	</update>
 
+	<!-- 10/13 판매자 정보 수정 -->
+	<update id="modifySeller" parameterType="map">
+		/* 판매자 정보 수정 */
+		UPDATE tb_seller
+		<trim prefix="SET" prefixOverrides=",">
+			<if test="storeName != null and storeName != ''">,store_name = #{storeName}</if>
+			<if test="sellerSort != null and sellerSort != ''">,seller_sort = #{sellerSort}</if>
+			<if test="bankName != null and bankName != ''">,bank_name = #{bankName}</if>
+			<if test="account != null and account != ''">,account = #{account}</if>
+			<if test="accountHolder != null and accountHolder != ''">,account_holder = #{accountHolder}</if>
+			<if test="licenceNum != null and licenceNum != ''">,licence_num = #{licenceNum}</if>
+			<if test="storeAddress != null and storeAddress != ''">,store_address = #{storeAddress}</if>
+			<if test="storeAddress2 != null and storeAddress2 != ''">,store_address2 = #{storeAddress2}</if>
+			<if test="storePhone != null and storePhone != ''">,store_phone = #{storePhone}</if>
+			<if test="storeEmail != null and storeEmail != ''">,store_email = #{storeEmail}</if>
+			,licence_img = #{licenceImg}
+			,online_licence_img = #{onlineLicenceImg}
+		</trim>
+		WHERE
+			seller_id = #{sellerId};
+	</update>
+	
 	<!-- 판매자 등록 -->
 	<insert id="addSeller" parameterType="Seller">
 		/* 판매자 등록 */
@@ -350,36 +372,11 @@
 			(#{sellerCode}, #{sellerId}, #{storeName}, #{sellerSort}, #{bankName}, #{account}, #{accountHolder}, #{licenceNum}, #{storeAddress}, #{storeAddress2}, #{storePhone}, #{storeEmail}, NOW(), #{approveDate}, #{approveCheck}, #{approveId})
 	</insert>
 	
-	<!-- 10/13 판매자 정보 수정 -->
-	<update id="modifySeller" parameterType="map">
-		/* 판매자 정보 수정 */
-		UPDATE tb_seller
-		<trim prefix="SET" prefixOverrides=",">
-			<if test="sellerId != null and sellerId != ''">seller_id = #{sellerId}</if>
-			<if test="storeName != null and storeName != ''">,store_name = #{storeName}</if>
-			<if test="sellerSort != null and sellerSort != ''">,seller_sort = #{sellerSort}</if>
-			<if test="bankName != null and bankName != ''">,bank_name = #{bankName}</if>
-			<if test="account != null and account != ''">,account = #{account}</if>
-			<if test="accountHolder != null and accountHolder != ''">,account_holder = #{accountHolder}</if>
-			<if test="storeAddress != null and storeAddress != ''">,licence_num = #{licenceNum}</if>
-			<if test="storeAddress != null and storeAddress != ''">,store_address = #{storeAddress}</if>
-			<if test="storeAddress2 != null and storeAddress2 != ''">,store_address2 = #{storeAddress2}</if>
-			<if test="storePhone != null and storePhone != ''">,store_phone = #{storePhone}</if>
-			<if test="storeEmail != null and storeEmail != ''">,store_email = #{storeEmail}</if>
-			<if test="licenceImg != null and licenceImg != ''">,licence_img = #{licenceImg}</if>
-			<if test="onlineLicenceImg != null and onlineLicenceImg != ''">,online_licence_img = #{onlineLicenceImg}</if>
-			<if test="approveCheck != null and approveCheck != ''">,approve_check = #{approveCheck}</if>
-		</trim>
-		WHERE
-			seller_id = #{sellerId};
-	</update>
-	
 	<!-- 회원 정보 수정 -->
 	<update id="modifyUser" parameterType="map">
 		/* 회원정보 수정 */
 		UPDATE tb_user
 		<trim prefix="SET" prefixOverrides=",">
-			<if test="userId != null and userId != ''">user_id = #{userId}</if>
 			<if test="userPw != null and userPw != ''">,user_pw = #{userPw}</if>
 			<if test="userName != null and userName != ''">,user_name = #{userName}</if>
 			<if test="userGender != null and userGender != ''">,user_gender = #{userGender}</if>
@@ -781,8 +778,8 @@
 		FROM
 			tb_right r
 		WHERE
-			right_status = '구매자' OR right_status = '판매자 승인 전'
-	</select>
+			right_status <![CDATA[<>]]> '관리자'
+	</select> 
 	
 	<!-- 로그인 -->
     <select id="userLogin" parameterType="String" resultType="String">

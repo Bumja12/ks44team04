@@ -286,6 +286,11 @@
 			$(this).val($(this).val().replace(/[^0-9.]/g,'').replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,'));
 		})
 		
+		/* '판매자' 옵션 지우기 */
+		$(document).ready(function() {
+			$("select#userRight option[value='seller']").remove();
+		});
+		
 		/* 권한 판매자 승인전 선택시 등급 select박스 제어 */
 		$('#userRight').change(function() {
 			
