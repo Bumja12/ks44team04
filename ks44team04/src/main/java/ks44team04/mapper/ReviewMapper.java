@@ -21,8 +21,11 @@ public interface ReviewMapper {
 	//후기 검색
 	public List<Review> reviewSerchList(Map<String, Object> searchMap);
 	
-	//후기 댓글 목록 
-	public List<ReviewComment> reviewComment();
+	//후기 삭제(관리자)
+	public int reviewListDelete(Review review);
+	
+	//후기 삭제시 댓글 삭제
+	public int reviewListCommentDelete(ReviewComment reviewComment);
 	
 	//후기 추천
 	public int reviewLike(ReviewLike reviewLike);
@@ -35,4 +38,13 @@ public interface ReviewMapper {
 	
 	//후기 추천수 증가(Update)
 	public int reviewLikeUp(Review review);
+
+	//후기 댓글 목록 
+	public List<ReviewComment> reviewComment();
+	
+	//후기 댓글 목록 검색
+	public List<ReviewComment> reviewCommentSaerch(Map<String, Object> searchMap);
+	
+	//후기 댓글 목록 삭제 
+	public int reviewCommentDelete(ReviewComment reviewComment);
 }

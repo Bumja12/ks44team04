@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ks44team04.dto.Report;
 import ks44team04.dto.Review;
 import ks44team04.dto.ReviewComment;
 import ks44team04.service.ReviewService;
@@ -29,9 +28,12 @@ public class ReviewController {
 	public ReviewController(ReviewService reviewService) {
 		this.reviewService = reviewService;
 	}
+	//후기 목록 검색
 	@PostMapping("/review/reviewList")
 	public String reviewSerchList(@RequestParam(name="reportSearchKey")String sk 
 								 ,@RequestParam(name="reportSearchValue")String sv
+								 ,@RequestParam(name="fromDate", required = false, defaultValue="") String fromDate
+								 ,@RequestParam(name="toDate", required = false, defaultValue= "") String toDate
 								 , Model model) {
 		if("reviewList".equals(sk)) {
 			sk= "review_list";
@@ -46,6 +48,8 @@ public class ReviewController {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("sk", sk);
 		paramMap.put("sv", sv);
+		paramMap.put("fd", fromDate);
+		paramMap.put("td", toDate);
 		
 		List<Review> reviewList = reviewService.reviewSerchList(paramMap);
 	
@@ -76,5 +80,52 @@ public class ReviewController {
 		return "admin/review/reviewComment";
 	}
 	
+	//후기 댓글 목록 검색 (관리자)
+	@PostMapping("/review/reviewCommentSaerch")
+	public String reviewCommentSaerch(@RequestParam(name="reportSearchKey")String sk 
+									 ,@RequestParam(name="reportSearchValue")String sv
+									 ,@RequestParam(name="fromDate", required = false, defaultValue="") String fromDate
+									 ,@RequestParam(name="toDate", required = false, defaultValue= "") String toDate
+									 , Model model) {
+		
+		if("reviewList".equals(sk)) {
+			sk= "review_list";
+		}else if("goodsList".equals(sk)) {
+			sk= "goods_list";
+		}else if("buyerId".equals(sk)) {
+			sk= "buyer_id";
+		}else if("reviewContent".equals(sk)) {
+			sk= "review_content";
+		}
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("sk", sk);
+		paramMap.put("sv", sv);
+		paramMap.put("fd", fromDate);
+		paramMap.put("td", toDate);
+		
+		List<ReviewComment> reviewComment = reviewService.reviewCommentSaerch(paramMap);
 	
+		model.addAttribute("title", "신고목록조회");
+		model.addAttribute("reviewComment", reviewComment);
+		return "/admin/review/reviewComment";
+	}
+	
+	//후기 댓글 목록 삭제 (관리자)
+	@GetMapping("/review/reviewCommentDelete")
+	public String reviewCommentDelete(ReviewComment reviewComment) {
+		
+		reviewService.reviewCommentDelete(reviewComment);
+		
+		return "redirect:/admin/review/reviewComment";
+	}
+	
+	@GetMapping("/review/reviewListDelete")
+	public String reviewListDelete(Review review, ReviewComment reviewComment) {
+		
+		reviewService.reviewListCommentDelete(reviewComment);
+		reviewService.reviewListDelete(review);
+		
+		return "redirect:/admin/review/reviewList";
+	}
 }

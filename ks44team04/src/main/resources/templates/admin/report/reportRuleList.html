@@ -24,38 +24,40 @@
    <!-- 검색  -->
    <div class="x_panel">
     <!-- 검색 시작-->
-	<form method="post" action="/admin/report/reportList">
-		<div class="">
-			<table class=" table table-bordered" style="background-color: white;  ">
-				<tbody >
-					<tr>
-						<td class="col-md-2 col-sm-2" style="padding-top: 10px; text-align:right; border-color: white; width: 60px;"><b >검색어</b></td>
-						<td class="col-md-4"style=" border-color: white; padding: 0px; width: 360px;">
-							<div class="form-inline" style="text-align: center;">
-								<div class="form-group" >
-									<select class="form-control" name="reportSearchKey" style="width: 150px;">
-										<option selected value="''">- 전체검색 -</option>
-										<option value="reportHistoryCode">회원신고기록코드</option>
-										<option value="reportedId">신고 대상 아이디</option>
-										<option value="reportApproveId">승인자 아이디</option>
-										<option value="reportResult">처리상태</option>
-										<option value="reportReason">신고내용</option>
-										
-									</select>
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control text"  name="reportSearchValue" value="" placeholder="검색어를 입력해주세요">
-								</div>
-							</div>
-						</td>
-						<td style=" border-color: white; padding: 0px;">
-							<button type="submit" class="btn btn-dark">검색</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+	 <div class="container" style="float: left; margin-left: 8px; margin-bottom: 10px;">
+			<div class="row">
+				<form class="form-inline" th:action="@{/admin/report/reportRuleList}" method="post">
+					<div class="form-group">
+						<div class="col-sm-2">
+							<input name="fromDate" class="date-picker form-control" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'">
+						</div>
+					</div>
+					<span style="font-size: x-large; vertical-align: middle;">~</span>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<input name="toDate" class="date-picker form-control" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'">
+						</div>
+					</div>
+					<div class="form-group">
+						<select name="reportSearchKey" style="padding-top:7px; padding-bottom: 7px; text-align: center;">
+							<option value="">:::선택:::</option>
+							<option value="reportCode">신고사유코드</option>
+							<option value="reportReason">신고 사유 명 </option>
+							<option value="userId">등록자 아이디</option>
+							<option value="penaltyPoint">벌점</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<div class="col-md-8">
+							<input type="text" name="reportSearchValue" class="form-control" style="width: 200px;" placeholder="검색어를 입력해주세요">
+						</div>
+						<div class="col-md-4">
+							<button type="submit"  class="btn btn-primary " style="width: 100%;">검색</button>
+						</div>
+					</div>
+				</form>
 			</div>
-        </form>
+		</div>
         <!-- 검색 끝 -->
 		<div class="col-md-12 col-sm-12 ">
 
@@ -93,34 +95,31 @@
 								data-parent="#userSuspendAdd">
 								<div class="card-body">
 									<div class="x_content2">
-										<form>
-											<table class="table" th:object="${Report}">
-
+										<form id="reportRuleAdd" th:action="@{/admin/report/reportRuleAdd}" method="get">
+											<table class="table">
 												<tbody>
-
 													<tr>
 														<th colspan="6" style="font-size: 20px;">등록 정보</th>
 													</tr>
 													<tr>
 														<th class="style1" style="padding-top: 15px;">신고 사유명</th>
-														<td style="width: 450px;"><input type="text" style="width: 450px; border: none;"></td>
+														<td style="width: 450px;"><input type="text" id="reportReason" name="reportReason" style="width: 450px; border: none;"></td>
 														<th class="style1" style="padding-top: 15px;">등록 아이디</th>
 														<td style="padding-top: 15px; width: 350px;">
-															<input type="text" style="border: none;" th:value="${session.SID}" readonly="readonly">
+															<input type="text" style="border: none;" name="userId" th:value="${session.SID}" readonly="readonly">
 														</td>
-														<th class="style1" style="padding-top: 15px;">벌점</th>
+														<th class="style1" style="padding-top: 15px;"  >벌점</th>
 														<td>
-															<input type="text" style="width: 450px; border: none;">
+															<input type="text" id="penaltyPoint" name="penaltyPoint" style="width: 450px; border: none; "oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+															<input type="hidden" name="useCheck" th:value="Y">
 														</td>
 													</tr>
 													<tr>
 														<td colspan="6" style="text-align: right; ">
 							                              <i class="fa fa-check" style="padding-top: 10px;"></i>
-							                              <button type="button" class=" btn btn-link " value="등록" style="padding-top:8px; margin: 0px; font-size: 15px;">등록</button>
+							                              <button type="submit" id="addBtn" class=" btn btn-link " value="등록" style="padding-top:8px; margin: 0px; font-size: 15px;">등록</button>
 							                            </td>
 													<tr>
-														
-													
 												</tbody>
 											</table>
 										</form>
@@ -146,8 +145,8 @@
 								<th style="text-align: center;" class="column-title">등록자</th>
 								<th style="text-align: center;" class="column-title">사용여부</th>
 								<th style="text-align: center;" class="column-title">벌점</th>
-								<th style="text-align: center;" class="column-title">수정</th>
-								<th style="text-align: center;" class="bulk-actions" colspan="7">
+								<th style="text-align: center; width: 200px;" class="column-title"></th>
+								<th style="text-align: center;" class="bulk-actions" colspan="8">
 									<a class="antoo" style="color: #fff; font-weight: 500;">Bulk
 										Actions ( <span class="action-cnt"> </span> <i
 										class="fa fa-chevron-down"></i>
@@ -166,7 +165,11 @@
 									<td th:text="${l.userId}"></td>
 									<td th:text="${l.useCheck}"></td>
 									<td th:text="${l.penaltyPoint}"></td>
-									<td style="padding: 0px; "><a th:href="@{#}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">수정</button></a></td>
+									<td style="padding: 0px; ">
+										<a th:href="@{/admin/report/ruleUpList(reportCode=${l.reportCode})}"><button type="button" class="upBtn btn btn-link" style="color: black;" ><i class="glyphicon glyphicon-edit"></i> 수정</button></a>
+										<a th:href="@{/admin/report/reportRuleDelete(reportCode=${l.reportCode})}"><button type="button" class="btn btn-link" style="color: black;"><i class="fa fa-close"></i> 삭제</button></a>
+									</td>
+								
 								</tr>
 							</th:block>
 							<tr th:unless="${not #lists.isEmpty(reportRuleList)}">
@@ -176,9 +179,9 @@
 				</div>
 			</div>
 		</div>
-		<!-- reportModel 불러오기  -->
 		</div>
-         
+		<!-- ruleUptModel 불러오기  -->
+		 
           
 </th:block>
 <!-- jQuery -->
@@ -187,9 +190,44 @@
 
 <th:block layout:fragment="customTopJs">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script>
+		$(function(){
+			var reportReason = false;
+			var penaltyPoint = false;
+			
+		 $('#addBtn').on("click", function() {     //버튼 클릭시 호출되는 함수
+			    	
+				 //정지시작일
+					if($('#reportReason').val() == "") {
+						$('#reportReason').css('color','#f03f40');
+						$('#reportReason').focus();
+						alert("신고 사유명을 입력해주세요 .")
+						   reportReason = false;
+			        }else{
+			        	reportReason = true;
+			        }
+			 		//정지해제일 
+					 if($('#penaltyPoint').val() == "") {
+						$('#penaltyPoint').css('color','#f03f40');
+						$('#penaltyPoint').focus();
+						alert("벌점을 입력해주세요.")
+						   penaltyPoint = false;
+				        }else{
+				        	penaltyPoint = true;
+				        }
+			 		
+			     		$('#reportRuleAdd').submit(function(event) {});
+			     		if(reportReason && penaltyPoint  ) {
+							$('#reportRuleAdd').submit();
+				        }
+						return false;
+			     	
+			 });
+		});
+		
+		
+		</script>
 </th:block>
-	
-
 
 
 </html>
