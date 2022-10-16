@@ -16,37 +16,40 @@
    <!-- 검색  -->
    <div class="x_panel">
     <!-- 검색 시작-->
-	<form method="post" action="/admin/review/reviewList">
-		<div class="">
-			<table class=" table table-bordered" style="background-color: white;  ">
-				<tbody >
-					<tr>
-						<td class="col-md-2 col-sm-2" style="padding-top: 10px; text-align:right; border-color: white; width: 60px;"><b >검색어</b></td>
-						<td class="col-md-4"style=" border-color: white; padding: 0px; width: 360px;">
-							<div class="form-inline" style="text-align: center;">
-								<div class="form-group" >
-									<select class="form-control" name="reportSearchKey" style="width: 150px;">
-										<option selected value="''">- 전체검색 -</option>
-										<option value="reviewList">후기목록</option>
-										<option value="goodsList">상품 코드</option>
-										<option value="buyerId">작성자 아이디</option>
-										<option value="reviewContent">후기내용</option>
-										
-									</select>
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control text"  name="reportSearchValue" value="" placeholder="검색어를 입력해주세요">
-								</div>
-							</div>
-						</td>
-						<td style=" border-color: white; padding: 0px;">
-							<button type="submit" class="btn btn-dark">검색</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+		 <div class="container" style="float: left; margin-left: 8px; margin-bottom: 10px;">
+			<div class="row">
+				<form class="form-inline" th:action="@{/admin/review/reviewCommentSaerch}" method="post">
+					<div class="form-group">
+						<div class="col-sm-2">
+							<input name="fromDate" class="date-picker form-control" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'">
+						</div>
+					</div>
+					<span style="font-size: x-large; vertical-align: middle;">~</span>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<input name="toDate" class="date-picker form-control" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'">
+						</div>
+					</div>
+					<div class="form-group">
+						<select name="reportSearchKey" style="padding-top:7px; padding-bottom: 7px; text-align: center;">
+							<option value="">- 전체검색 -</option>
+							<option value="reviewList">후기목록</option>
+							<option value="goodsList">상품 코드</option>
+							<option value="buyerId">작성자 아이디</option>
+							<option value="reviewContent">후기내용</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<div class="col-md-8">
+							<input type="text" name="reportSearchValue" class="form-control" style="width: 200px;" placeholder="검색어를 입력해주세요">
+						</div>
+						<div class="col-md-4">
+							<button type="submit" class="btn btn-primary" style="width: 100%;">검색</button>
+						</div>
+					</div>
+				</form>
 			</div>
-        </form>
+		</div>
         <!-- 검색 끝 -->
         <div class="col-md-12 col-sm-12 ">
 
@@ -82,7 +85,7 @@
                     <th style="text-align: center;" class="column-title">후기댓글내용 </th>
                     <th style="text-align: center;" class="column-title">등록일시</th>
                     <th style="text-align: center;" class="column-title">수정일시</th>
-                    <th style="text-align: center;" class="column-title">수정</th>
+                    <th style="text-align: center;" class="column-title">삭제</th>
                     <th style="text-align: center;" class="bulk-actions" colspan="7">
                       <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">
                         </span> <i class="fa fa-chevron-down"></i></a>
@@ -100,7 +103,7 @@
 	                    <td th:text="${r.regDate}"></td>
 	                    <td th:text="${r.modifyDate}"></td>
 	                    
-	                    <td style="padding: 0px; "><a  th:href="@{#}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">수정</button></a></td>
+	                    <td style="padding: 0px; "><a th:href="@{/admin/review/reviewCommentDelete(reviewCommentList=${r.reviewCommentList})}"><button type="button" class="btn btn-dark btn-xs" style="margin: 5px 5px 5px; ">삭제</button></a></td>
 	                  </tr>
 	                </th:block>
                   <tr th:unless="${not #lists.isEmpty(reviewComment)}">

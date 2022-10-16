@@ -97,10 +97,37 @@ public class ReportService {
     public void suspendDayUp(UserSuspend userSuspend) {
     	reportMapper.suspendDayUp(userSuspend);
     }
+    
     //정지 검색
     public List<UserSuspend> getSuspendSearch(Map<String, Object> paramMap){
     	List<UserSuspend> SuspendList = reportMapper.getSuspendSearch(paramMap);
     	return SuspendList;
+    }
+    
+    //정지 등록시 필요한 유저 아이디 / 닉네임 값 가져오기 
+    public List<User> userList(){
+    	List<User> userList = reportMapper.userList(); 
+    	
+    	return userList;
+    }
+    
+    //특정 벌점 기준 목록 
+    public UserSuspend SuspendUpList(String userSuspendCode){
+    	UserSuspend userSuspend = reportMapper.SuspendUpList(userSuspendCode);
+ 	   
+ 	   return userSuspend;
+ 	   
+    }
+  
+    
+    //정지 리스트 수정 
+    public void suspendListUp(UserSuspend userSuspend) {
+    	reportMapper.suspendListUp(userSuspend);
+    }
+    
+    //유저 벌점 업데이트 
+    public void reportUserUp(User user) {
+    	reportMapper.reportUserUp(user);
     }
     
     //벌점 기준 목록
@@ -109,11 +136,43 @@ public class ReportService {
     	return reportRuleList;
     }
     
-  //정지 등록시 필요한 유저 아이디 / 닉네임 값 가져오기 
-    public List<User> userList(){
-    	List<User> userList = reportMapper.userList(); 
-    	
-    	return userList;
+    //벌검 기준 목록 검색
+    public List<ReportRule> ruleListSaerch(Map<String, Object> paramMap){
+    	List<ReportRule> RuleList = reportMapper.ruleListSaerch(paramMap);
+    	return RuleList;
     }
+    
+    //벌점 기준 목롞 등록
+    public void reportRuleAdd(ReportRule reportRule) {
+    	int result = reportMapper.reportRuleAdd(reportRule);
+    	log.info("벌점 기준 목록 등록:" + result);
+    }
+    
+    //벌점 기준 목록 코드 증가 
+    public String reportRuleCode() {
+    	String reportRuleCode = reportMapper.reportRuleCode();
+    	
+    	return reportRuleCode;
+    }
+    
+    //벌점 기준 목록 삭제 
+    public void reportRuleDelete(ReportRule reportRule) {
+    	int result = reportMapper.reportRuleDelete(reportRule);
+    	log.info("벌점 기준 목록 삭제:" + result);
+    }
+    
+    //벌점 기준 목록 수정 
+   public void reportRuleUp(ReportRule reportRule) {
+	   reportMapper.reportRuleUp(reportRule);
+   }
+   
+   //특정 벌점 기준 목록 
+   public ReportRule reportRuleUpList(String reportCode){
+	   ReportRule reportRule = reportMapper.reportRuleUpList(reportCode);
+	   
+	   return reportRule;
+	   
+   }
+ 
     
 }

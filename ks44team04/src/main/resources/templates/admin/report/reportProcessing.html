@@ -163,10 +163,10 @@
 								<input type="hidden" id="userPenalty" name="userPenalty" th:value="*{UserDto.userPenalty} + *{reportRuleDto.penaltyPoint}">
 								<input type="hidden" id="reportResult" name="reportResult" >
 								<label><i class="glyphicon glyphicon-ok"></i>
-									<button type="button" class=" btn btn-link "  value="승인">승인</button>
+									<button type="button" class=" btn btn-link processingBtn"  value="승인">승인</button>
 								</label>
 								<label><i class="glyphicon glyphicon-remove"></i>
-									<button type="button" class=" btn btn-link "  value="반려">반려</button>
+									<button type="button" class=" btn btn-link processingBtn"  value="반려">반려</button>
 								</label>
 							</th>
 						</tr>
@@ -188,18 +188,28 @@
 	
 	<script type="text/javascript">
 	
+	
 	 $(document).ready(function() {       
-	     $('.btn').on("click", function() {     //버튼 클릭시 호출되는 함수
-	           if($(this).val() === '반려'){
-	    	 	$('#reportResult').val('반려');
-	    	 	$('#userPenalty').val([[${userPenalty}]]);
-	           $( '#reportProcessing' ).submit();
-	     	}else if($(this).val() === '승인'){
-	     		$('#reportResult').val('승인');
-	     		$( '#reportProcessing' ).submit();
-	     	}
+	     $('.processingBtn').on("click", function() {     //버튼 클릭시 호출되는 함수
+	     	//사유 작성 여부
+			if($('#reportResultReason').val() == "") {
+				$('#reportResultReason').css('color','#f03f40');
+				$('#reportResultReason').focus();
+				alert("사유를 입력해 주세요.")
+			}else {
+				   if($(this).val() === '반려'){
+			    	 	$('#reportResult').val('반려');
+			    	 	$('#userPenalty').val([[${userPenalty}]]);
+			           $( '#reportProcessing' ).submit();
+			     	}else if($(this).val() === '승인'){
+			     		$('#reportResult').val('승인');
+			     		$( '#reportProcessing' ).submit();
+			     	}
+			}
 	     });
+			
 	});
+	 
 	</script>
 
 </th:block>
