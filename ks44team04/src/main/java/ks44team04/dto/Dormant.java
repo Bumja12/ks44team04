@@ -7,7 +7,7 @@ public class Dormant {
     private String dormantStatus;
     private String dormantChangeDate;
 
-    public String getDormantCode() {
+	public String getDormantCode() {
         return dormantCode;
     }
 

@@ -13,6 +13,7 @@ import ks44team04.dto.Right;
 import ks44team04.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
+@EnableScheduling
 @Controller
 @RequestMapping("/admin")
 public class UserController {
@@ -38,6 +40,30 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+    
+    // 10/17 (휴면목록) 1 휴면해제 클릭시 회원상태 '정상' / 2 휴면해제 클릭시 휴면 테이블 '휴면해제'
+    @GetMapping("/user/dormantToNormal")
+    public String dormantToNormal(@RequestParam(value="userId", required = false) String userId) {
+    	
+    	userService.dormantToNormal1(userId);
+    	userService.dormantToNormal2(userId);
+    	
+    	return "redirect:/admin/user/dormantList";
+    }
+    
+    
+    // 10/17 휴면 처리 (1.회원상태 '휴면'으로 / 2.휴면 테이블에 insert)
+    /*
+	@PostMapping("/user/dormantProcess")
+	public String dormantProcess(@RequestParam(value="userId", required = false) String userId) {
+		
+		userService.NormalToDormant(userId);
+		userService.insertDormant(userId);
+		
+		return "redirect:/admin/user/dormantList";
+	}
+	*/
+
 	
     // 10/13 회원 탈퇴
 	@GetMapping("/user/removeUser")
@@ -69,7 +95,7 @@ public class UserController {
 		}
 		return 0;
 	}
-    
+	
 	// 10/11 판매자 신청 승인
 	@PostMapping("/user/approveSeller")
 	public String approveSeller(@RequestParam(value="sellerId", required = false) String sellerId
@@ -185,7 +211,7 @@ public class UserController {
 		return cnt;
 	}
 	
-	//구매자 회원가입
+	//구매자 회원가입 쿼리실행
 	@PostMapping("/user/addUser")
     public String addUser(User user) {
 		log.info("사용자가 입력한 회원의 정보 ::: {}", user);
@@ -195,7 +221,7 @@ public class UserController {
         return "redirect:/admin/user/userList";
     }
 	
-	//구매자 회원가입 쿼리 실행
+	//구매자 회원가입 화면
 	@GetMapping("/user/addUser")
 	public String addUserForm(Model model) {
 		List<LevelBuyerCategory> levelBuyer = userService.getLevelBuyer();
@@ -312,7 +338,7 @@ public class UserController {
 		return "admin/user/userDetail";
 	}
 	
-	//로그 목록
+	/* 로그인 목록 */
 	@GetMapping("/user/loginList")
 	public String getLoginList(Model model) {
 		List<Login> loginList = userService.getLoginList();
@@ -323,6 +349,7 @@ public class UserController {
 		return "admin/user/loginList";
 	}
 	
+	/* 탈퇴회원 목록 */
 	@GetMapping("/user/leaveList")
 	public String getLeaveList(Model model) {
 		List<Leave> leaveList = userService.getLeaveList();
@@ -333,17 +360,18 @@ public class UserController {
 		return "admin/user/leaveList";
 	}
 	
+	/* 휴면회원 목록 */
 	@GetMapping("/user/dormantList")
 	public String getDormantList(Model model) {
 		List<Dormant> dormantList = userService.getDormantList();
 		log.info("휴면회원 목록 ::: {}", dormantList);
-		model.addAttribute("sellerList", dormantList);
+		model.addAttribute("dormantList", dormantList);
 		model.addAttribute("title", "휴면회원목록");
 		
 		return "admin/user/dormantList";
 	}
 	
-	//판매자리스트
+	/* 판매자 목록 */
 	@GetMapping("/user/sellerList")
 	public String getSellerList(Model model) {
 		List<Seller> sellerList = userService.getSellerList();

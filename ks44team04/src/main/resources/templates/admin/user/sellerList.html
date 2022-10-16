@@ -130,13 +130,12 @@
 												<form id="approveSeller" th:action="@{/admin/user/approveSeller}" method="post">
 													<input type="hidden" id="sellerId" name="sellerId" th:value="${l.sellerId}" />
 													<input type="hidden" id="approveId" name="approveId" value="admin01" />
-<!-- 													<input type="hidden" id="userRight" name="userRight" value="판매자" />
- -->												</form>
+ -->											</form>
 												<form id="rejectSeller" th:action="@{/admin/user/sellerList(sellerId=${l.sellerId})}" method="post">
 												</form>
 												<div class="btns">
 													<input type="submit" form="approveSeller" class="approveBtn btn btn-xs btn-dark" id="approveBtn" value="승인">
-													<input type="submit" form="rejectSeller" class="rejectBtn btn btn-xs btn-dark" id="approveBtn" value="거부">
+													<input type="submit" form="rejectSeller" class="rejectBtn btn btn-xs btn-dark" id="rejectBtn" value="거부">
 												</div>
 											</td>
 										</tr>
