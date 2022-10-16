@@ -10,6 +10,7 @@ import ks44team04.mapper.GoodsMapper;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
+import ks44team04.dto.GoodsQnaAnswer;
 import ks44team04.dto.GoodsQnaCategory;
 import ks44team04.dto.Review;
 
@@ -61,7 +62,7 @@ public class GoodsService {
 		goodsMapper.goodsAdd(goods);
 	}
 	
-	//코드 증가
+	//상품 등록 코드 증가
 	public String getGoodsNewCode(String sellerId) {
 		String goodsNewCode = goodsMapper.getGoodsNewCode(sellerId);
 		return goodsNewCode;
@@ -92,7 +93,7 @@ public class GoodsService {
 		return goodsQna;
 	}
 	
-	//특정 문의 조회
+	//유저페이지 특정 상품 문의 조회
 	public List<GoodsQna> getGoodsQnaInfoByCode(String goodsCode) {
 		List<GoodsQna> goodsQna = goodsMapper.getGoodsQnaInfoByCode(goodsCode);
 		return goodsQna;
@@ -110,12 +111,49 @@ public class GoodsService {
 		log.info("등록 결과:"+result);
 	}
 	
+	//문의 수정
+	public int qnaModify(GoodsQna goodsQna) {
+		int result = goodsMapper.qnaModify(goodsQna);
+		return result;
+	}
+	
+	//수정을 위한 특정 문의 조회
+	public GoodsQna qnaInfoByNum(int goodsQnaNum) {
+		GoodsQna goodsQna = goodsMapper.qnaInfoByNum(goodsQnaNum);
+		return goodsQna;
+	}
+	
+	//문의 답변 등록
+	public void answerAdd(GoodsQnaAnswer goodsAnswerCode) {
+		int result = goodsMapper.answerAdd(goodsAnswerCode);
+		log.info("등록 결과:"+result);
+	}
+	
+	//문의 답변 코드 증가
+	public String getAnswerNewCode(String sellerId) {
+		String answerNewCode = goodsMapper.getAnswerNewCode(sellerId);
+		return answerNewCode;
+	}
+	
+	//문의 수정
+	public int answerModify(GoodsQnaAnswer goodsAnswerCode) {
+		int result = goodsMapper.answerModify(goodsAnswerCode);
+		return result;
+	}
+	
+	//수정을 위한 특정 답변 조회
+	public GoodsQnaAnswer answerInfoByCode(String goodsAnswerCode) {
+		GoodsQnaAnswer goodsQnaAnswer = goodsMapper.answerInfoByCode(goodsAnswerCode);
+		return goodsQnaAnswer;
+	}
+	
 	//상품 문의 답변 조회
 	//public List<GoodsAnswer> getGoodsAnswer(){
 	// List<GoodsAnswer> goodsAnswer = goodsMapper.getGoodsAnswer();
 	// return goodsAnswer;
 	//}
 	
+	/*
 	//유저 권한 불러오기
 	public String userRight(String userId) {
 		String userRight = goodsMapper.userRight(userId);
@@ -133,7 +171,7 @@ public class GoodsService {
 		String qnaSellerView = goodsMapper.qnaSellerView(userId);
 		return qnaSellerView;
 	}
-	
+	*/
 	
 	/* ~~~ 후기 시작 ~~~ */
 

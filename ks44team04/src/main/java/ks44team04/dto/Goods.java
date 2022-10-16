@@ -7,6 +7,7 @@ public class Goods {
     private String sellerId;
     private String goodsName;
     private String goodsContent;
+    private String goodsDetail;
     private int goodsPrice;
     private int goodsDiscountRate;
     private int goodsPostPrice;
@@ -20,11 +21,11 @@ public class Goods {
     private String goodsFile;
     
     /* ~~~ 시작 ~~~ */
-	private GoodsAnswer goodsAnswerInfo;
-	public GoodsAnswer getGoodsAnswerInfo() {
+	private GoodsQnaAnswer goodsAnswerInfo;
+	public GoodsQnaAnswer getGoodsAnswerInfo() {
 		return goodsAnswerInfo;
 	}
-	public void setGoodsAnswerInfo(GoodsAnswer goodsAnswerInfo) {
+	public void setGoodsAnswerInfo(GoodsQnaAnswer goodsAnswerInfo) {
 		this.goodsAnswerInfo = goodsAnswerInfo;
 	}
 	
@@ -99,6 +100,14 @@ public class Goods {
 
     public void setGoodsContent(String goodsContent) {
         this.goodsContent = goodsContent;
+    }
+    
+	public String getGoodsDetail() {
+		return goodsDetail;
+    }
+        
+	public void setGoodsDetail(String goodsDetail) {
+		this.goodsDetail = goodsDetail;
     }
 
     public int getGoodsPrice() {
@@ -197,6 +206,7 @@ public class Goods {
                 ", sellerId='" + sellerId + '\'' +
                 ", goodsName='" + goodsName + '\'' +
                 ", goodsContent='" + goodsContent + '\'' +
+                ", goodsDetail='" + goodsDetail + '\'' +
                 ", goodsPrice=" + goodsPrice +
                 ", goodsDiscountRate=" + goodsDiscountRate +
                 ", goodsPostPrice=" + goodsPostPrice +

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+
+dddd
+</th:block>
+
+
+
+
+<th:block layout:fragment="customJsScript">
+<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+<script src="/build/summernote.min.js"></script>
+<script th:inline="javascript">
+    
+$(function(){
+	    
+    });
+</script>
+</th:block>
+</html>

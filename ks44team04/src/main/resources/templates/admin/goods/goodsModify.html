@@ -3,43 +3,26 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/adminDefault}">
 
-<title th:text="${title}"></title>
-
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+	<link rel="stylesheet" th:href="@{/build/summernote.min.css}">
+</th:block>
+<th:block layout:fragment="customCss">
+<style>
+.chk_box { border-radius: 5px; display: block; position: relative; padding-left: 25px; margin-bottom: 10px; cursor: pointer; font-size: 14px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+/* 기본 체크박스 숨기기 */
+.chk_box input[type="checkbox"] { display: none; }
+/* 선택되지 않은 체크박스 스타일 꾸미기 */
+.on { width: 20px; height: 20px; background: #ddd; position: absolute; top: 0; left: 0; border-radius: 5px;}
+/* 선택된 체크박스 스타일 꾸미기 */
+.chk_box input[type="checkbox"]:checked + .on { background: #73879c; }
+.on:after { content: ""; position: absolute; display: none; }
+.chk_box input[type="checkbox"]:checked + .on:after { display: block; }
+.on:after { width: 6px; height: 10px; border: solid #fff; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 4px; }
+</style>
 </th:block>
 
-<!-- <th:block layout:fragment="customJsScript">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
-	<script>
-	
-		$(function(){
-			$(document).on('click', '.goodsModifyBtn', function() {
-				$.ajax({
-        		    url: "/admin/goods/goodsModify",
-        		    type: "POST",
-        		    dataType: "text",
-        		    data: $('#goodsModifyForm').serialize(),
-        		    success: function(data){
-        		    	swal(
-        		    	        '상품 수정',
-        		    	        '<b style="color:green;">수정완료</b> 되었습니다!',
-        		    	        'success'
-        		    	      ).then((result) => {
-        				          if (result.value) {
-        				              window.location = data;
-        				          }
-        		    	      });
-        		    },
-        		    error: function (request, status, error){        
-        		    }
-		    	});
-			});
-		});
-	</script>
-</th:block>	  -->
-	
 <th:block layout:fragment="customContents">
-
-
 	<div class="page-title">
 		<div class="title_left">
 			<h3>상품 수정</h3>
@@ -56,43 +39,16 @@
 							<div class="form-inline form-group">
 								<label class="col-sm-2 control-label">카테고리 대분류</label>
 								<div class="col-sm-1">
-									<select class="form-control" style="margin-left: -8px; font-weight: bold;">
-									
-										<option>::</option>
-										<option value="F000">과일</option>
-										<option value="V000">채소</option>
-										<option value="G000">쌀/잡곡</option>
-										<option value="M000">버섯</option>
-										<option value="UF00">못난이과일</option>
-										<option value="UV00">못난이채소</option>
-										<option value="Z000">기타</option>
+									<select class="largeCate form-control" style="margin-left: -8px; font-weight: bold;">
+										<option th:value="*{goodsLargeCategoryInfo.goodsLargeCategory}" th:text="*{goodsLargeCategoryInfo.goodsCategory}"></option>
+										
 									</select>
 								</div>
 
 								<label class="col-sm-1 control-label" style="margin-left: 3px;">중분류</label>
 								<div class="col-sm-1">
-									<select class="form-control" tabindex="-1" style="margin-left: -8px; font-weight: bold;">
-										<option>::</option>
-										<option value="apple">사과</option>
-										<option value="pineapple">파인애플</option>
-										<option value="watermelon">수박</option>
-										<option value="strawberry">딸기</option>
-										<option value="kmelon">참외</option>
-										<option value="paprika">파프리카</option>
-										<option value="cucumber">오이</option>
-										<option value="carrot">당근</option>
-										<option value="tomato">토마토</option>
-										<option value="bracken">고사리</option>
-										<option value="brownrice">현미</option>
-										<option value="blackrice">흑미</option>
-										<option value="whiterice">백미</option>
-										<option value="millet">조</option>
-										<option value="kingoystermushroom">새송이버섯</option>
-										<option value="enokimushroom">팽이버섯</option>
-										<option value="uglypersimmon">못난이감</option>
-										<option value="uglyapple">못난이사과</option>
-										<option value="uglypotato">못난이감자</option>
-										<option value="uglycorn">못난이옥수수</option>
+									<select class="smallCate form-control" id="goodsSmallCategory" name="goodsSmallCategory" tabindex="-1" style="margin-left: -8px; font-weight: bold;">
+										<option th:value="*{goodsSmallCategoryInfo.goodsSmallCategory}" th:text="*{goodsSmallCategoryInfo.smallCategoryName}"></option>
 									</select>
 								</div>
 							</div>
@@ -104,73 +60,91 @@
 								</div>
 								<label for="sellerId" class="col-sm-2 control-label" style="margin-left: -3px;">판매자</label>
 								<div class="col-sm-1">
-									<input type="text" class="form-control" id="sellerId" name="sellerId" th:value="*{userInfo.userId}" style="margin-left: -8px;" placeholder="Default Input" readonly="readonly">
+									<input type="text" class="form-control" id="sellerId" name="sellerId" th:value="*{sellerId}" style="margin-left: -8px;" placeholder="Default Input" readonly="readonly">
 								</div>
 							</div>
 
 							<div class="form-inline form-group">
 								<label for="goodsName" class="col-sm-2 control-label">상품명</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" id="goodsName" name="goodsName" th:value="*{goodsName}" style="margin-left: -8px;" placeholder="Default Input">
+									<input type="text" class="form-control" id="goodsName" name="goodsName" th:value="*{goodsName}" style="margin-left: -8px;" placeholder="상품명을 입력해주세요">
 								</div>
 							</div>
 
 							<div class="form-inline form-group">
-								<label for="goodsContent" class="col-sm-2 control-label">상품내용</label>
+								<label for="goodsContent" class="col-sm-2 control-label">상품정보</label>
 								<div class="col-sm-10">
-									<textarea class="form-control" id="goodsContent" name="goodsContent" th:value="*{goodsContent}" th:text="*{goodsContent}" rows="3" cols="51" style="margin-left: -8px;"></textarea>
+									<textarea class="form-control" id="goodsContent" name="goodsContent" th:value="*{goodsContent}" th:text="*{goodsContent}" rows="3" cols="48" style="margin-left: -8px; resize: none;"></textarea>
 								</div>
 							</div>
 
 							<div class="form-inline form-group">
 								<label for="goodsPrice" class="col-sm-2 control-label">가격</label>
 								<div class="col-sm-1">
-									<input type="text" class="form-control" id="goodsPrice" name="goodsPrice" th:value="*{goodsPrice}" style="margin-left: -8px;" placeholder="Default Input">
+									<input type="text" class="numberInput form-control" id="goodsPrice" name="goodsPrice" th:value="*{#numbers.formatInteger(goodsPrice,3,'COMMA')}" style="margin-left: -8px;" placeholder="Default Input">
 								</div>
 								<label for="goodsDiscountRate" class="col-sm-2 control-label" style="margin-left: -3px;">할인율</label>
 								<div class="col-sm-1">
-									<input type="text" class="form-control" id="goodsDiscountRate" name="goodsDiscountRate" th:value="*{goodsDiscountRate}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+									<input type="text" class="fnumberInput disRate form-control" id="goodsDiscountRate" name="goodsDiscountRate" th:value="*{goodsDiscountRate}" style="margin-left: -8px;" placeholder="할인율을 입력해주세요">
 								</div>
 							</div>
 
 							<div class="form-inline form-group">
 								<label for="goodsStock" class="col-sm-2 control-label">재고</label>
 								<div class="col-sm-1">
-									<input type="text" class="form-control" id="goodsStock" name="goodsStock" th:value="*{goodsStock}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+									<input type="text" class="numberInput form-control" id="goodsStock" name="goodsStock" th:value="*{goodsStock}" style="margin-left: -8px;" placeholder="재고를 입력해주세요">
 								</div>
 								<label for="goodsPostPrice" class="col-sm-2 control-label" style="margin-left: -3px;">배송비</label>
 								<div class="col-sm-1">
-									<input type="text" class="form-control" id="goodsPostPrice" name="goodsPostPrice" th:value="*{goodsPostPrice}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+									<input type="text" class="numberInput form-control" id="goodsPostPrice" name="goodsPostPrice" th:value="*{#numbers.formatInteger(goodsPostPrice,3,'COMMA')}" style="margin-left: -8px;" placeholder="배송비를 입력해주세요">
 								</div>
 							</div>
 
-							<div class="form-inline form-group">
-								<label for="goodsReportAmount" class="col-sm-2 control-label">누적신고수</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="goodsReportAmount" name="goodsReportAmount" th:value="*{goodsReportAmount}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" style="margin-left: -8px;" placeholder="Default Input">
+							<div class="form-inline form-group" style="margin-top:20px; text-align:right; width:550px;">
+								<div class="input-group">
+									<label for="soldout" class="chk_box">
+										품절여부 <input type="checkbox" id="soldout" th:value="*{soldoutCheck}">
+										<span class="on"></span>
+									</label>
+									<input type="hidden" id="soldoutCheck" name="soldoutCheck">
+								</div>
+								<div class="input-group">
+									<label for="stopSale" class="chk_box">
+										판매중지여부 <input type="checkbox" id="stopSale" th:value="*{stopSaleCheck}">
+										<span class="on"></span>
+									</label>
+									<input type="hidden" id="stopSaleCheck" name="stopSaleCheck">
+								</div>
+								<div class="input-group">
+									<label for="packagePost" class="chk_box">
+										묶음배송여부 <input type="checkbox" id="packagePost" th:value="*{packagePostCheck}">
+										<span class="on"></span>
+									</label>
+									<input type="hidden" id="packagePostCheck" name="packagePostCheck">
+								</div>
+								<div class="input-group">
+									<label for="regularDeliver" class="chk_box">
+										정기배송여부 <input type="checkbox" id="regularDeliver"  th:value="*{regularDeliverCheck}">
+										<span class="on"></span>
+									</label>
+									<input type="hidden" id="regularDeliverCheck" name="regularDeliverCheck">
 								</div>
 							</div>
-							<div class="form-inline form-group">
-								<label for="soldoutCheck" class="col-sm-3 control-label">
-									품절여부 <input type="checkbox" class="flat" id="soldoutCheck" name="soldoutCheck" th:value="*{soldoutCheck}">
-								</label>
-								<label for="stopSaleCheck" class="control-label">
-									판매중지여부 <input type="checkbox" class="flat" id="stopSaleCheck" name="stopSaleCheck" th:value="*{stopSaleCheck}">
-								</label>
-								<label for="packagePostCheck" class="control-label">
-									묶음배송여부 <input type="checkbox" class="flat" id="packagePostCheck" name="packagePostCheck" th:value="*{packagePostCheck}">
-								</label>
-								<label for="regularDeliverCheck" class="control-label">
-									정기배송여부 <input type="checkbox" class="flat" id="regularDeliverCheck" name="regularDeliverCheck" th:value="*{regularDeliverCheck}">
-								</label>
-							</div>
+							
+							
+							<div class="form-inline form-group" style="margin-top: 20px;">
+								<label for="goodsDetail" class="col-sm-2 control-label">상세설명</label>
+								<div class="col-md-9">
+						 			<textarea class="summernote" id="goodsDetail" name="goodsDetail"></textarea>
+						 		</div>
+						 	</div>
 
 							<div class="ln_solid"></div>
 							<div class="form-inline form-group">
 								<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
 									<button type="button" class="btn btn-dark" id="goodsModifyCancel" th:onclick="|location.href='@{/admin/goods/goodsList}'|">취소</button>
 									<button type="reset" class="btn btn-dark" id="goodsModifyReset">초기화</button>
-									<button type="submit" class="btn btn-dark" id="goodsModifyBtn">수정</button>
+									<button type="submit" class="modifyBtn btn btn-dark" id="goodsModifyBtn">수정</button>
 								</div>
 							</div>
 						</form>
@@ -181,8 +155,166 @@
 	</div>
 </th:block>
 <th:block layout:fragment="customJsScript">
-
-    <th:block th:replace="/fragments/adminJs :: datatablesFragment"></th:block>
-
+<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+<script src="/build/summernote.min.js"></script>
+<script th:inline="javascript">
+    
+$(function(){
+	
+	/* 썸머노트 설정 */
+	$(document).ready(function() {
+	    $('.summernote').summernote({
+			height: 300,           //에디터 높이
+			minHeight: null,       //최소 높이
+			maxHeight: null,       //최대 높이
+			lang: "ko-KR",
+			toolbar: [ ['fontname', ['fontname']],
+			           ['fontsize', ['fontsize']],
+			    	   ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+				   	   ['color', ['forecolor','color']],
+			    	   ['table', ['table']],
+			    	   ['para', ['ul', 'ol', 'paragraph']],
+			   	 	   ['height', ['height']],
+			    	   ['insert',['picture','link','video']],
+			    	   ['view', ['fullscreen', 'help']] ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+		});
+	});
+	
+	/* 가격, 재고, 배송비 숫자만 입력 & 숫자 천단위 콤마 찍기  */
+	$('.numberInput').on('input',function(){
+		$(this).val($(this).val().replace(/[^0-9.]/g,'').replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,'));
+	});
+    	
+	/* input 할인율 숫자 99까지만 입력 가능하게 하기 */
+	$('.disRate').on("keyup",function() {
+		var val= $(this).val();
+		if(val < 0 || val > 99) {
+		$(this).val('');
+		}
+	});
+	
+	/* 수정할 때 콤마 없애고 int값으로 submit */
+	$('.modifyBtn').click(function () {
+		//판매가, 배송비 결과값 콤마 없애기
+		$('#goodsPrice').val( Number($('#goodsPrice').val().replace(/,/g, "")) );
+		$('#goodsPostPrice').val( Number($('#goodsPostPrice').val().replace(/,/g, "")) );
+		$('#goodsStock').val( Number($('#goodsStock').val().replace(/,/g, "")) );
+	 
+		$('#goodsModifyForm').submit();
+	});
+	
+	/* 대분류 선택시 중분류 카테고리 나오게 하기 */
+	var largeCategoryList = /*[[${largeCategoryList}]]*/
+		console.log(largeCategoryList)
+	var largeCate = $(".largeCate");
+	var smallCate = $(".smallCate");
+	
+	//대분류 <option> 태그
+	for(var large of largeCategoryList){
+		var largeCode = large.goodsLargeCategory;
+		var largeName = large.goodsCategory;
+		console.log('largeCode: '+large.goodsLargeCategory)
+		console.log('largeName: '+large.goodsCategory)
+		
+		
+		largeCate.append("<option value='"+ largeCode +"'>" + largeName + "</option>");
+	}
+	//대분류 option 클릭 시 중분류 변화
+	$(largeCate).on("change",function(){
+		smallCate.children().remove();
+		smallCate.append("<option value='none'>::</option>")
+			
+		for(var large of largeCategoryList){
+			var selectLarge = $(this).find("option:selected").val();	
+			console.log(selectLarge);
+			
+			for(var small of large.goodsSmallCategoryInfo){
+				var largeCode2 = small.goodsLargeCategory;
+				var smallCode = small.goodsSmallCategory;
+				var smallName = small.smallCategoryName;
+						
+				console.log('largeCode2: '+largeCode2);
+				console.log('smallCode: '+smallCode);
+				console.log('smallName: '+smallName);
+					
+				if(selectLarge === largeCode2){
+					smallCate.append("<option value='"+smallCode+"'>" + smallName + "</option>");
+				}
+			}
+		}
+	});	
+	
+	/* 재고가 0일때 품절여부 체크 하기 */
+	if($('#goodsStock').val() == 0){
+		$("input:checkbox[id='soldout']").prop("checked", true); 
+		
+	    $('#soldout').change(function(){
+	        if($(this).is(":checked")){
+	        	$("#soldoutCheck").val( 'Y' );
+	        }else{
+	        	$("#soldoutCheck").val( 'N' );
+	        }
+	    });
+	};
+	
+	/* 품절여부 값 Y 일 때 체크 표시 / 체크 시 'Y' 체크 해제 시 'N' 값 value로 주기 */
+	if($('#soldout').val() == 'Y'){
+		$("input:checkbox[id='soldout']").prop("checked", true); 
+	};
+	
+    $('#soldout').change(function(){
+        if($(this).is(":checked")){
+        	$("#soldoutCheck").val( 'Y' );
+        	$('#goodsStock').val(0); //품절여부 체크시 재고 0으로
+        }else{
+        	$("#soldoutCheck").val( 'N' );
+        }
+    });
+	
+	/* 판매중지여부 값 Y 일 때 체크 표시 / 체크 시 'Y' 체크 해제 시 'N' 값 value로 주기 */
+	if($('#stopSale').val() == 'Y'){
+		$("input:checkbox[id='stopSale']").prop("checked", true); 
+	};
+	
+    $('#stopSale').change(function(){
+        if($(this).is(":checked")){
+        	$("#stopSaleCheck").val( 'Y' );
+        }else{
+        	$("#stopSaleCheck").val( 'N' );
+        }
+    });
+    
+	/* 묶음배송여부 값 Y 일 때 체크 표시 / 체크 시 'Y' 체크 해제 시 'N' 값 value로 주기 */
+	if($('#packagePost').val() == 'Y'){
+		$("input:checkbox[id='packagePost']").prop("checked", true); 
+	};
+	
+    $('#packagePost').change(function(){
+        if($(this).is(":checked")){
+        	$("#packagePostCheck").val( 'Y' );
+        }else{
+        	$("#packagePostCheck").val( 'N' );
+        }
+    });
+    
+	/* 정기배송여부 값 Y 일 때 체크 표시 / 체크 시 'Y' 체크 해제 시 'N' 값 value로 주기 */
+	if($('#regularDeliver').val() == 'Y'){
+		$("input:checkbox[id='regularDeliver']").prop("checked", true); 
+	};
+	
+    $('#regularDeliver').change(function(){
+        if($(this).is(":checked")){
+        	$("#regularDeliverCheck").val( 'Y' );
+        }else{
+        	$("#regularDeliverCheck").val( 'N' );
+        }
+    });
+    
+	
+	    
+});
+</script>
 </th:block>
 </html>
