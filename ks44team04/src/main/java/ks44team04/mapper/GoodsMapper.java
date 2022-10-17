@@ -31,7 +31,7 @@ public interface GoodsMapper {
 	public int goodsModify(Goods goods);
 	
 	//상품 등록
-	public void goodsAdd(Goods goods);
+	public int goodsAdd(Goods goods);
 	
 	//마지막 상품코드
 	public String getGoodsNewCode(String sellerId);

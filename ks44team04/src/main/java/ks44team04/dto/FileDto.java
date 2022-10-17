@@ -8,6 +8,7 @@ public class FileDto {
 	private String filePath;			//파일 경로
 	private Long fileSize;				//파일 사이즈
 	private boolean fileIsLocal;
+	private String fileGroupIdx;
 	
 	public String getFileIdx() {
 		return fileIdx;
@@ -50,11 +51,21 @@ public class FileDto {
 		this.fileIsLocal = fileIsLocal;
 	}
 	
+	public String getFileGroupIdx() {
+		return fileGroupIdx;
+	}
+	
+	public void setFileGroupIdx(String fileGroupIdx) {
+		this.fileGroupIdx = fileGroupIdx;
+	}
 	@Override
 	public String toString() {
 		return "FileDto [fileIdx=" + fileIdx + ", fileOriginalName=" + fileOriginalName + ", fileNewName=" + fileNewName
-				+ ", filePath=" + filePath + ", fileSize=" + fileSize + ", fileIsLocal=" + fileIsLocal + "]";
+				+ ", filePath=" + filePath + ", fileSize=" + fileSize + ", fileIsLocal=" + fileIsLocal
+				+ ", fileGroupIdx=" + fileGroupIdx + "]";
 	}
+	
+	
 	
 	
 }

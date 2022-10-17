@@ -1,5 +1,6 @@
 package ks44team04.admin.controller;
 
+import ks44team04.dto.FileDto;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
@@ -7,6 +8,7 @@ import ks44team04.dto.GoodsQnaAnswer;
 import ks44team04.service.FileService;
 import ks44team04.service.GoodsService;
 import ks44team04.util.CodeIndex;
+import ks44team04.util.FileUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,11 +32,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class GoodsController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	//의존성 주입
-	private GoodsService goodsService;
-	private FileService fileService;
-	public GoodsController(GoodsService goodsService, FileService fileService) {
+	private final GoodsService goodsService;
+	private final FileService fileService;
+	private final FileUtil fileUtil;
+
+	public GoodsController(GoodsService goodsService, FileService fileService, FileUtil fileUtil) {
 		this.goodsService = goodsService;
 		this.fileService = fileService;
+		this.fileUtil = fileUtil;
 	}
 	
 	//상품 목록 조회
@@ -172,8 +177,14 @@ public class GoodsController {
 			fileRealPath = System.getProperty("user.dir") + "/resources/";
 		}
 		
-		fileService.fileUpload(uploadfile, fileRealPath, isLocalhost);
-		goodsService.goodsAdd(goods);
+		List<FileDto> fileList= fileUtil.parseFileInfo(uploadfile, fileRealPath , isLocalhost);
+		if(fileList != null) {			
+			String addfileGroupIdx = fileList.get(0).getFileGroupIdx();
+			goods.setGoodsFile(addfileGroupIdx);
+			goodsService.goodsAdd(goods, fileList);
+			
+		}
+		//fileService.fileUpload(uploadfile, fileRealPath, isLocalhost);
 		
 		
 		log.info("사용자가 등록한 상품 정보 ::: {}", goods);
