@@ -62,9 +62,17 @@ public interface ReportMapper {
     // 유저 벌점 업데이트 
     public int reportUserUp(User user);
     
+    // 정지 해제 목록조회
+    public List<UserSuspend> getUserSuspendUpdateList();
+    
     // 정지 리스트 수정 
     public int suspendListUp(UserSuspend userSuspend);
     
+    // 특정 시간 마다 확인 후 정지 해제 
+    public int unstopping(List<UserSuspend> userSuspendUpdateList);
+    
+    //
+    public int suspendUserUpdate(List<UserSuspend> userSuspendUpdateList);
     
     /*~~~~~~~~~~~~~~~ 벌점  ~~~~~~~~~~~~~~~ */
     //벌점 기준 목록

@@ -302,6 +302,20 @@
 	ORDER BY s.user_suspend_code DESC 
     </select>
     
+    <select id="getUserSuspendUpdateList" resultMap="userSuspendListResultMap" fetchSize="100">
+    	/* 정지 해제 목록조회 */
+		SELECT 
+			 s.user_suspend_code
+			,s.suspend_id
+		FROM 
+			tb_user_suspend AS s
+		where
+			s.end_suspend <![CDATA[<]]> NOW()
+			and
+			s.suspend_result <![CDATA[<>]]> '해제'
+		ORDER BY s.user_suspend_code DESC;
+    </select>
+    
 
     <!-- 정지 검색  -->
 	<select id="getSuspendSearch" parameterType="map" resultMap="userSuspendListResultMap" fetchSize="100">
@@ -394,10 +408,10 @@
 		
 	</select>
 	
-		<!-- 특정 정지 목록  -->
+	<!-- 특정 정지 목록  -->
 	<select id="SuspendUpList" parameterType="String" resultMap="userSuspendListResultMap">
 	/* 특정 정지 목록 */
-	  SELECT 
+		SELECT
 			 s.user_suspend_code
 			,s.suspend_id
 			,s.approve_id
@@ -409,10 +423,8 @@
 		FROM 
 			tb_user_suspend AS s
 		WHERE 
-		s.user_suspend_code = #{userSuspendCode};
-		ORDER BY s.user_suspend_code DESC 
+		user_suspend_code = #{userSuspendCode};
 
-		
 	</select>
 	
 	<!-- 정지 리스트 수정-->
@@ -420,17 +432,45 @@
 	/*정지 리스트 수정 */
 	UPDATE tb_user_suspend
 	 <trim prefix="SET" prefixOverrides=",">
-		<if test="suspendResult != null and suspendResult != ''">
-			 suspend_result= #{suspendResult}
-		</if>
+	 	approve_id = #{approveId}
 		<if test="suspendReason != null and suspendReason != ''">
 			,suspend_reason = #{suspendReason}
+		</if>
+		<if test="suspendResult != null and suspendResult != ''">
+			 ,suspend_result= #{suspendResult}
 		</if>
 	</trim>
 		WHERE 
 			user_suspend_code = #{userSuspendCode}
-	</update>		
-	
+	</update>	
+		
+	 <!-- 특정 시간 마다 확인 후 정지 해제 --> 
+	 <update id="unstopping" parameterType="list">
+	 	/*특정 시간 마다 확인 후 정지 해제 */
+	 	UPDATE tb_user_suspend 
+		SET 
+			suspend_result = '해제'
+		WHERE
+			user_suspend_code IN 
+					<foreach collection="userSuspendUpdateList" item="item" 
+                    			separator="," open="(" close=")">
+                    	#{item.userSuspendCode}
+                    </foreach>
+	 </update>
+	 
+	 <!-- 정지해제 확인 후 유저 상태 변경 --> 
+	 <update id="suspendUserUpdate" parameterType="list">
+	 	/* 정지해제 확인 후 유저 상태 변경 */
+	 	UPDATE tb_user
+		SET 
+			user_status = '정상'
+		WHERE
+			user_id IN 
+				 <foreach collection="userSuspendUpdateList" item="item" 
+                 			separator="," open="(" close=")">
+                 	#{item.suspendId}
+                 </foreach>
+	 </update>
 	
 	
 	<!-- 벌점 기준 목록  -->
@@ -481,7 +521,7 @@
 		r.report_code
 	FROM 
 		tb_report_rule AS r
-	ORDER BY report_code DESC LIMIT 1
+	ORDER BY report_code DESC LIMIT 1	
 	</select>
 	
     <!--벌겸 기준 목록 등록  -->
