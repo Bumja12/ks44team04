@@ -1,6 +1,5 @@
 package ks44team04.admin.controller;
 
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,19 +20,22 @@ public class LedgerBookController {
 	public LedgerBookController(LedgerBookService ledgerBookService) {
 		this.ledgerBookService = ledgerBookService;
 	}
-//	
-//	@GetMapping("/ledgerBook/sellerBook")
-//	public String lederBook(Model model, HttpSession session) {
-//		String sellerId = (String) session.getAttribute("SID");
-//		
-//		List<Order> orderList = ledgerBookService.orderList();
-//		
-//			
-//		model.addAttribute("title", "판매자 장부");
-//		model.addAttribute("orderList", orderList);
-//		
-//		return "admin/ledgerBook/sellerBook";
-//	}
+	
+	//판매자 장부 매인화면 
+	@GetMapping("/ledgerBook/sellerBook")
+	public String lederBook(Model model, HttpSession session) {
+		/*
+		 * String sellerId = (String) session.getAttribute("SID");
+		 * 
+		 * Order orderList = ledgerBookService.orderList(sellerId);
+		 * 
+		 * 
+		 * model.addAttribute("title", "판매자 장부"); model.addAttribute("orderList",
+		 * orderList);
+		 */
+		
+		return "admin/ledgerBook/sellerBook";
+	}
 	
 	@GetMapping("/ledgerBook/salesStatistics")
 	public String salesStatistics(Model model) {
