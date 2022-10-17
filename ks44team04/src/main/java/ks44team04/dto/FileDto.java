@@ -2,14 +2,12 @@ package ks44team04.dto;
 
 public class FileDto {
 
-	private String fileIdx;
-	private String fileOriginalName;
-	private String fileNewName;
-	private String filePath;
-	private Long fileSize;
+	private String fileIdx;				//파일코드
+	private String fileOriginalName;	//실제 파일 이름
+	private String fileNewName;			//새로운 이름 (사용자가 같은 이름의 파일을 업로드했을 때 중복되므로 세컨드이름)
+	private String filePath;			//파일 경로
+	private Long fileSize;				//파일 사이즈
 	private boolean fileIsLocal;
-	private String tableName;
-	private String tablePk;
 	
 	public String getFileIdx() {
 		return fileIdx;
@@ -52,25 +50,10 @@ public class FileDto {
 		this.fileIsLocal = fileIsLocal;
 	}
 	
-	public String getTableName() {
-		return tableName;
-	}
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
-	
-	public String getTablePk() {
-		return tablePk;
-	}
-	public void setTablePk(String tablePk) {
-		this.tablePk = tablePk;
-	}
-	
 	@Override
 	public String toString() {
 		return "FileDto [fileIdx=" + fileIdx + ", fileOriginalName=" + fileOriginalName + ", fileNewName=" + fileNewName
-				+ ", filePath=" + filePath + ", fileSize=" + fileSize + ", fileIsLocal=" + fileIsLocal + ""
-						+ ", tableName=\" + tableName + \", tablePk=\" + tablePk + \"]";
+				+ ", filePath=" + filePath + ", fileSize=" + fileSize + ", fileIsLocal=" + fileIsLocal + "]";
 	}
 	
 	

@@ -4,8 +4,16 @@ import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
 import ks44team04.dto.GoodsQnaAnswer;
+import ks44team04.service.FileService;
 import ks44team04.service.GoodsService;
 import ks44team04.util.CodeIndex;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,9 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/admin/goods")
@@ -25,8 +31,10 @@ public class GoodsController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	//의존성 주입
 	private GoodsService goodsService;
-	public GoodsController(GoodsService goodsService) {
-	this.goodsService = goodsService;
+	private FileService fileService;
+	public GoodsController(GoodsService goodsService, FileService fileService) {
+		this.goodsService = goodsService;
+		this.fileService = fileService;
 	}
 	
 	//상품 목록 조회
@@ -124,31 +132,51 @@ public class GoodsController {
 		
 		model.addAttribute("title", "상품 등록");
 		model.addAttribute("largeCategoryList", largeCategoryList);
-		
+	    
 		return "admin/goods/goodsAdd";
 	}
 
 	//상품 등록 쿼리 실행
 	@PostMapping("/goodsAdd")
-	public String goodsAdd(Goods goods, Model model) {
+	public String goodsAdd(@RequestParam MultipartFile[] uploadfile, HttpServletRequest request
+						   ,Goods goods, Model model){
 		
+		//대분류 카테고리 리스트 가져오기
+		List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
+				
 		String sellerId = "seller01"; //임의
 		
-		// goodsCode 생성
+		// ========================= goodsCode 생성 =========================
 		String goodsNewCode = goodsService.getGoodsNewCode(sellerId);
 		goodsNewCode = CodeIndex.codeIndex(goodsNewCode, 5);
 		
 		log.info("상품 증가 코드 :::{}" , goodsNewCode);
 		goods.setGoodsCode(goodsNewCode);
 		goods.setSellerId("seller01");
-		goods.setGoodsFile("goods.jpg"); //임의
+		// =================================================================
 		
-		//대분류 카테고리 리스트 가져오기
-		List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
-		log.info("사용자가 등록한 상품 정보 ::: {}", goods);
 		
+		//이미지 업로드
+		String serverName = request.getServerName();
+		log.info("{} <<<< serverName", serverName);
+		log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
+		String fileRealPath = "";
+		boolean isLocalhost = true;
+		
+		if("localhost".equals(serverName)) {				
+			fileRealPath = System.getProperty("user.dir") + "/src/main/resources/static/";
+			//fileRealPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+		}else {
+			//fileRealPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+			isLocalhost = false;
+			fileRealPath = System.getProperty("user.dir") + "/resources/";
+		}
+		
+		fileService.fileUpload(uploadfile, fileRealPath, isLocalhost);
 		goodsService.goodsAdd(goods);
 		
+		
+		log.info("사용자가 등록한 상품 정보 ::: {}", goods);
 		model.addAttribute("largeCategoryList", largeCategoryList);
 		
 		return "redirect:/admin/goods/goodsList";

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team04.mapper.FileMapper">
+	<resultMap type="FileDto" id="fileResultMap">
+		<result property="fileIdx" 			column="file_idx"/>
+		<result property="fileNewName" 		column="file_new_name"/>
+		<result property="fileOriginalName" column="file_original_name"/>
+		<result property="filePath" 		column="file_path"/>
+		<result property="fileSize" 		column="file_size"/>
+		<result property="fileIsLocal" 		column="file_islocal"/>
+	</resultMap>
+	
+	<insert id="addFile" parameterType="list">
+		INSERT INTO tb_file
+		(
+			 file_idx
+			,file_new_name
+			,file_original_name
+			,file_path
+			,file_size
+			,file_islocal
+		)VALUES
+		<foreach collection="list" item="data" separator=",">
+		( 
+			 #{data.fileIdx}
+			,#{data.fileNewName}
+			,#{data.fileOriginalName}
+			,#{data.filePath}
+			,#{data.fileSize}
+			,#{data.fileIsLocal}
+		)
+		</foreach>
+	</insert>
+	
+	<select id="getFileList" resultMap="fileResultMap">
+		SELECT
+			 file_idx
+			,file_new_name
+			,file_original_name
+			,file_path
+			,file_size
+		FROM
+			tb_file
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			file_islocal = #{fileIsLocal};
+		</trim>
+	</select>
+
+	<select id="getFileInfoByIdx" parameterType="string" resultMap="fileResultMap">
+		SELECT
+			 file_idx
+			,file_new_name
+			,file_original_name
+			,file_path
+			,file_size
+		FROM
+			tb_file
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="fileIdx != null and fileIdx != ''">
+				file_idx = #{fileIdx}
+			</if>
+			<if test="fileIsLocal != null and fileIsLocal != ''">
+				AND file_islocal = #{fileIsLocal};
+			</if>
+		</trim>
+	</select>
+</mapper>

@@ -61,7 +61,7 @@
 		</div>
 	</div>
 
-<form id="goodsAddForm" th:action="@{/admin/goods/goodsAdd}" method="post">
+<form id="goodsAddForm" th:action="@{/admin/goods/goodsAdd}" method="post" enctype="multipart/form-data">
 	<div class="x_panel">
 		<div>
 			<h5>
@@ -210,19 +210,17 @@
 			</h5>
 			<div class="clearfix"></div>
 		</div>
-
 		<div class="x_content2">
 			<div class="well well-sm">
 				<div class="firstMenu form-inline">
 					<label class="imgTitle control-label" for="goodsFile">대표이미지</label>
-					<img src="gom.png" class="img img-thumbnail" alt="대표이미지" id="goodsFile" name="goodsFile">
+					<input type="file" name="uploadfile" multiple="multiple" onchange="readURL(this);" style="margin-left: 85px; margin-top: 5px;">
 				</div>
 				<p class="imgExplain">권장 크기 : 640 x 640 (윈도대상 750 x 1000)</p>
-
 				<div class="firstMenu form-inline">
 					<label class="imgTitle control-label">추가이미지</label>
 						<img id="preview" class="img img-thumbnail">
-						<input type="file" onchange="readURL(this);" style="margin-left: 85px; margin-top: 5px;">
+						<!-- <input type="file" id="uploadResult" onchange="readURL(this);" style="margin-left: 85px; margin-top: 5px;">  -->
 				</div>
 				<p class="imgExplain">권장 크기 : 640 x 640 (윈도대상 750 x 1000)</p>
 				<hr class="hrStyle" align="left">
@@ -269,12 +267,6 @@
 <script th:inline="javascript">
    
 $(function(){
-	
-	function showUploadImage(unloadResultArr){
-		
-	}
-	
-	
     /* 썸머노트 설정 */
 	$(document).ready(function() {
     	$('.summernote').summernote({
@@ -295,7 +287,7 @@ $(function(){
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 		});
 	});
-    	
+    
 	/* 숫자만 입력  & 숫자 천단위 콤마 찍기  */
 	$('.numberInput').on('input',function(){
 		$(this).val($(this).val().replace(/[^0-9.]/g,'').replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,'));
