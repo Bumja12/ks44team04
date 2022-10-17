@@ -2,7 +2,6 @@ package ks44team04.user.controller;
 
 import java.util.List;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -29,17 +28,6 @@ public class UserReviewController {
 	public UserReviewController(ReviewService reviewService) {
 		this.reviewService = reviewService;
 	}
-	
-	//리뷰 등록
-	@GetMapping("/review/review")
-	public String review(Model model) {
-		
-		model.addAttribute("title", "리뷰등록");
-		
-		return "user/review/review";
-	}
-	
-	
 
     //후기 목록
 	@GetMapping("/review/reviewList")
@@ -61,7 +49,7 @@ public class UserReviewController {
 		String ReviewLikeCode = reviewService.ReviewLikeCode();
 		ReviewLikeCode = CodeIndex.codeIndex(ReviewLikeCode, 10);
 		
-		log.info("---------------------------------리뷰 코드값 ", ReviewLikeCode);
+		log.info("---------------------------------좋아요 코드값 ", ReviewLikeCode);
 		reviewLike.setReviewLike(ReviewLikeCode);
 		
 		/* review.setLikeAmount(likeAmount); */
@@ -81,6 +69,22 @@ public class UserReviewController {
 		
 		return review.getLikeAmount();
 	}
+	
+	@GetMapping("/review/reviewAdd")
+	public String reviewAdd(Review review) {
+		
+		//코드 증가 
+		String reviewListCode = reviewService.getReviewListCode();
+		reviewListCode = CodeIndex.codeIndex(reviewListCode, 6);
+		
+		review.setReviewList(reviewListCode);
+		log.info("---------------------------------리뷰 코드값 ", reviewListCode);
+		reviewService.reviewAdd(review);
+		
+		return "null";
+	}
+	
+	
 
 
 }

@@ -53,6 +53,45 @@
 		tb_review AS r 
 	
 </select>
+
+<!-- 후기 등록  -->
+<insert id="reviewAdd"  parameterType="Review">
+INSERT INTO tb_review
+	(review_list
+	,goods_list
+	,buyer_id
+	,order_detail_code
+	,review_content
+	,review_img
+	,review_reg_date
+	,review_update_date
+	,save_point
+	,like_amount
+	,grade)
+	VALUES 
+		(#{reviewList}
+		,#{goodsList}
+		,#{buyerId}
+		,#{orderDetailCode}
+		,#{reviewContent}
+		,#{reviewImg}
+		,NOW()
+		,NOW()
+		,0
+		,0
+		,0)
+</insert>
+
+<!-- 후기 등록시 코드 증가  -->
+    <select id="getReviewList" resultType="String">
+    /* 신고등록시 코드 증가*/
+	SELECT 
+		review_list
+	FROM 
+		tb_review
+	ORDER BY review_list DESC LIMIT 1
+    </select>
+
 <!-- 후기목록  검색 -->
 <select id="reviewSerchList" resultMap="reviewListResultMap">
 /* 후기 목록 검색*/
@@ -213,6 +252,28 @@ FROM
 
 </delete>
 
+
+ <select id="userReport" parameterType="String" resultType="map">
+ /* 후기 신고 (조회) */
+	SELECT 
+		r.review_list
+		,r.goods_list
+		,r.buyer_id
+		,r.order_detail_code
+		,r.review_content
+		,r.review_img
+		,r.review_reg_date
+		,r.review_update_date
+		,r.save_point
+		,r.like_amount
+		,r.grade
+	FROM 
+		tb_review AS r 
+	WHERE 
+	 r.review_list = #{reviewList}
+	 
+	
+    </select>
 
     
 </mapper>
