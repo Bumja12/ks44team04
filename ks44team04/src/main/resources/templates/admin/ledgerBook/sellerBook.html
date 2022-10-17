@@ -82,7 +82,7 @@
                <div style="overflow: auto; height: 400px; font-size: 14px;text-align: center; ">
                  <table class="table" >
                    <thead >
-                     <tr >
+                     <tr>
                        <th>월</th>
                        <th>결제 금액</th>
                        <th>배송비</th>
@@ -90,79 +90,15 @@
                      </tr>
                    </thead>
                    <tbody >
-                     <tr >
-                       <td>1월</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                       <td>0원</td>
-
-                     </tr>
-                     <tr>
-                       <td>2월</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                     </tr>
-                     <tr>
-                       <td>3월</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                     </tr>
-                     <tr>
-                       <td>4월</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                     </tr>
-                     <tr>
-                       <td>5월</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                     </tr>
-                     <tr>
-                       <td>6월</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                     </tr>
-                     <tr>
-                       <td>7월</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                     </tr>
-                     <tr>
-                       <td>8월</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                     </tr>
-                     <tr>
-                       <td>9월</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                     </tr>
-                     <tr>
-                       <td>10월</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                     </tr>
-                     <tr>
-                       <td>11월</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                     </tr>
-                     <tr>
-                       <td>12월</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                       <td>0원</td>
-                     </tr>
+                   <th:block th:each="o : ${orderList}"	>
+                   
+                    <tr>
+                    	<td></td>
+                    	<td th:text="${o.totalPrice}"></td>
+                    	<td th:text="${o.postPrice}"></td>
+                    	<td th:text="${o.totalPrice} + ${o.postPrice} "></td>
+                    </tr>
+                   </th:block>
                      <tr>
                        <td colspan="4" style="padding: 0px;"></td>
 

@@ -189,8 +189,6 @@
 			tb_user AS s
 			on
 			r.reported_id = s.user_id
-		where
-			r.report_history_code = #{reportHistoryCode};
      </select>
      
 
