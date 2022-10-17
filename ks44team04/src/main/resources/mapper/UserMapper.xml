@@ -161,9 +161,17 @@
 	<select id="getDormantId" parameterType="String" resultType="String">
 		/* 휴면 대상 아이디 */
 		SELECT 
-		 	l.login_id
+			  l.login_id
+			 ,u.user_id
+			 ,u.user_status
 		FROM 
-			tb_login l
+			tb_login AS l
+			INNER JOIN 
+			tb_user AS u
+			ON
+			l.login_id = u.user_id
+		WHERE 
+			u.user_status <![CDATA[<>]]> '탈퇴' AND u.user_status <![CDATA[<>]]> '휴면'
 		GROUP BY l.login_id
 		HAVING 
 			MAX(l.login_date) <![CDATA[<]]> DATE_ADD(NOW(), INTERVAL -1 YEAR)
