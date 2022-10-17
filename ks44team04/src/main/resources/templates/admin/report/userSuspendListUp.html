@@ -162,7 +162,8 @@
             
 
             <div class="x_content">
-              <table class="table table-striped jambo_table bulk_action">
+            <form th:action="@{/admin/report/userSuspendListUp}" method="post">
+              <table class="table table-striped jambo_table bulk_action" th:object="${userSuspend}">
                 <thead>
                   <tr class="headings">
                     <th style="text-align: center;" class="column-title">회원정지코드 </th>
@@ -182,24 +183,31 @@
                 </thead>
 
                 <tbody style="text-align: center;">
-                <th:block th:if="${not #lists.isEmpty(userSuspendList)}" th:each="usl : ${userSuspendList}" >
                   <tr class="even pointer">
-                    <td th:text="${usl.userSuspendCode}"></td>
-                    <td th:text="${usl.suspendId}"></td>
-                    <td th:text="${usl.approveId}"> </td>
-                    <td th:text="${usl.suspendDay} + '일'"></td>
-                    <td th:text="${usl.startSuspend}"></td>
-                    <td th:text="${usl.endSuspend}"></td>
-                    <td th:text="${usl.suspendReason}"></td>
-                    <td th:text="${usl.suspendResult}"></td>
-                    <td><a th:href="@{/admin/report/userSuspendListUp(userSuspendCode=${usl.userSuspendCode})}"><button type="button" class="upBtn btn btn-link" style="color: black;" ><i class="glyphicon glyphicon-edit"></i> 수정</button></a></td>
+                    <td> 
+                    	<input type="text" name="userSuspendCode" th:value="*{userSuspendCode}" style="text-align: center; border: none; background-color: #F9F9F9;" readonly="readonly">
+                    </td>
+                    <td th:text="*{suspendId}"></td>
+                    <td > 
+                  	  <input type="text" name="approveId" th:value="${session.SID}" style="text-align: center; border: none; background-color: #F9F9F9;" readonly="readonly">
+                    </td>
+                    <td th:text="*{suspendDay} + '일'"></td>
+                    <td th:text="*{startSuspend}"></td>
+                    <td th:text="*{endSuspend}"></td>
+                    <td >
+                    	<input type="text" name="suspendReason"  th:placeholder="*{suspendReason}"  style="text-align: center; border: none; background-color: #F9F9F9;">
+                    </td>
+                    <td >
+                    	<select name="suspendResult">
+							<option th:value="진행중">진행중</option>
+							<option th:value="해제">해제</option>
+						</select>
+                    </td>
+                    <td><a th:href="@{#}"><button type="submit" class="upBtn btn btn-link" style="color: black;" ><i class="glyphicon glyphicon-edit"></i> 수정</button></a></td>
                   </tr>
-                  </th:block>
-                <tr th:unless="${not #lists.isEmpty(userSuspendList)}">
-					<td colspan="12">못찾겠다 꾀꼬리</td>
-				  </tr>
                 </tbody>
               </table>
+            </form>
             </div>
           </div>
          </div>

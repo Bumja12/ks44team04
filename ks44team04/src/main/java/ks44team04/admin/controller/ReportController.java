@@ -264,14 +264,14 @@ public class ReportController {
 		return "admin/report/userSuspendListUp";
 	}
 	
-
-	
-	// 특정 시간에 정지 날짜 비교후 해제 
-	@Scheduled(cron = "0 0 0 * * ?")
-	public void suspendDay() {
+	//특정 정지 목록 수정
+	@PostMapping("/report/userSuspendListUp")
+	public String suspendUp(UserSuspend userSuspend) {
 		
+		reportService.suspendListUp(userSuspend);
+		
+		return "redirect:/admin/report/userSuspendList";
 	}
-	
 	
 	// 벌점 기준 목록
 	@GetMapping("/report/reportRuleList")
@@ -331,6 +331,7 @@ public class ReportController {
 			
 		return "redirect:/admin/report/reportRuleList";
 	}
+	
 	//벌점 기준 목록 삭제
 	@GetMapping("/report/reportRuleDelete")
 	public String reportRuleDelete(ReportRule reportRule) {

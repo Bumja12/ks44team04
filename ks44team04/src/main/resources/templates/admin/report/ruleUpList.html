@@ -119,32 +119,30 @@
 
 							<tbody style="text-align: center;">
 								<tr class="even pointer">
-									<td><input type="text" name="reportCode"
-										th:value="*{reportCode}" readonly="readonly"
-										style="text-align: center; border: none;"></td>
-									<td><input type="text" name="reportReason"
-										th:placeholder="*{reportReason}"
-										style="text-align: center; border: none;"></td>
+									<td>
+										<input type="text" name="reportCode" th:value="*{reportCode}" readonly="readonly" style="text-align: center; border: none; background-color: #F9F9F9;">
+									</td>
+									<td>
+										<input type="text" name="reportReason"	th:placeholder="*{reportReason}" style="text-align: center; border: none; background-color: #F9F9F9;">
+									</td>
 									<td th:text="*{reportDate}"></td>
-									<td><input type="text" name="userId"
-										th:value="${session.SID}"
-										style="text-align: center; border: none;" readonly="readonly"></td>
-									<td><select name="useCheck">
-											<option th:value="Y">Y</option>
-											<option th:value="N">N</option>
-									</select></td>
-									<td><input type="text" th:placeholder="*{penaltyPoint}"
-										name="penaltyPoint"
-										style="width: 100px; text-align: center; border: none;"
-										oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"></td>
+									<td>
+										<input type="text" name="userId" th:value="${session.SID}" style="text-align: center; border: none; background-color: #F9F9F9;" readonly="readonly">
+									</td>
+									<td>
+										<select name="useCheck">
+										<option th:value="Y">Y</option>
+										<option th:value="N">N</option>
+										</select>
+									</td>
+									<td>
+										<input type="text" th:placeholder="*{penaltyPoint}"	name="penaltyPoint"	style="width: 100px; text-align: center; border: none; background-color: #F9F9F9;"
+											oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+									</td>
 									<td style="padding: 0px;">
-										<button type="submit" class="upBtn btn btn-link">
+										<button type="submit" class="upBtn btn btn-link" style="color: #405467;">
 											<i class="glyphicon glyphicon-edit border: none;"></i> 수정
-										</button> <a
-										th:href="@{/admin/report/reportRuleDelete(reportCode=${l.reportCode})}"><button
-												type="button" class="btn btn-link" style="color: black;">
-												<i class="fa fa-close"></i> 삭제
-											</button></a>
+										</button> 
 									</td>
 
 								</tr>

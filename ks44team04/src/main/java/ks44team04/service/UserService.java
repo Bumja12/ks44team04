@@ -51,6 +51,11 @@ public class UserService {
 		userMapper.normalToDormant(userId);
 	}
 	
+	//휴면 대상 아이디
+	public List<String> getDormantId() {
+		return userMapper.getDormantId();
+	}
+	
     //10/13 회원 탈퇴
   	public int removeUser(String userId, String userRight, String userInfoKeep) {
   		

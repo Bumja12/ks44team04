@@ -47,6 +47,11 @@
 				event.preventDefault();
 			};
 		}, true);
+		
+		$('#addAlertBtn').on('click',function() {
+			//$('#addAlertForm').submit(function(event) {}); 
+			$('#addAlertForm').submit();
+		});
 
 	</script>
 </th:block>
@@ -87,8 +92,6 @@
 									</tr>
 								</tbody>
 							</table>
-							
-							<input type="hidden" id="alertCode" name="alertCode" value="">
 							
 							<div class="form-group">
 		                        <div style="text-align:center; margin: 30px;" >

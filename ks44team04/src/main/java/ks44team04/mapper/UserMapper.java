@@ -35,6 +35,9 @@ public interface UserMapper {
     
     //휴면 처리 1 (회원상태 '휴면'으로)
     public int normalToDormant(String userId);
+    
+    //휴면 대상 아이디 
+    public List<String> getDormantId();
     /* ===== 휴면 끝 ===== */
     
     /* ===== 회원 탈퇴 시작 ===== */

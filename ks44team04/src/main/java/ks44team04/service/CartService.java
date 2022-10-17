@@ -35,9 +35,8 @@ public class CartService {
 	}
 	
 	//장바구니 확인
-	public Cart cartCheck(Cart cart) {
-		cartMapper.cartCheck(cart);
-		return cart;
+	public int cartCheck(Cart cart) {
+		return cartMapper.cartCheck(cart);
 	}
 	
 	//장바구니 수량 수정
@@ -45,6 +44,11 @@ public class CartService {
 		int result = cartMapper.cartModify(cart);
 		return result;
 	}
+	
+	//장바구니 같은 상품이라면 개수 더하기
+    public void cartPlus(Cart cart) {
+    	cartMapper.cartPlus(cart);
+    }
 	
 	//장바구니 상품 삭제
 	public void cartRemove(Cart cart) {

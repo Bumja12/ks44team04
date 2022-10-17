@@ -135,6 +135,11 @@ public class GoodsService {
 		return answerNewCode;
 	}
 	
+	//문의 답변 시 문의상태 '답변완료'로 변경
+    public void statusUpdate(int goodsQnaNum) {
+    	goodsMapper.statusUpdate(goodsQnaNum);
+    }
+	
 	//문의 수정
 	public int answerModify(GoodsQnaAnswer goodsAnswerCode) {
 		int result = goodsMapper.answerModify(goodsAnswerCode);

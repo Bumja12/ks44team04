@@ -14,6 +14,7 @@ import ks44team04.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,6 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
-@EnableScheduling
 @Controller
 @RequestMapping("/admin")
 public class UserController {
@@ -51,19 +51,20 @@ public class UserController {
     	return "redirect:/admin/user/dormantList";
     }
     
-    
     // 10/17 휴면 처리 (1.회원상태 '휴면'으로 / 2.휴면 테이블에 insert)
-    /*
+    @Scheduled(cron = "0 0 0 * * *")
 	@PostMapping("/user/dormantProcess")
-	public String dormantProcess(@RequestParam(value="userId", required = false) String userId) {
+	public void dormantProcess() {
+		List<String> userIds = userService.getDormantId(); 
+		//select를 통해 휴면 대상 아이디를 담아줌
 		
-		userService.NormalToDormant(userId);
-		userService.insertDormant(userId);
-		
-		return "redirect:/admin/user/dormantList";
+		for(String userId : userIds) {
+			userService.normalToDormant(userId);
+			// 대상 아이디 tb_user 에서 업데이트
+			userService.insertDormant(userId);
+			// tb_dormant에 인서트
+		}
 	}
-	*/
-
 	
     // 10/13 회원 탈퇴
 	@GetMapping("/user/removeUser")
