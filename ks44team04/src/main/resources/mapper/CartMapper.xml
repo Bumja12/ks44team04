@@ -47,10 +47,10 @@
 	</select>
 	
 	<!-- 장바구니 확인 -->
-	<select id="cartCheck" parameterType="Cart" resultMap="cartResultMap">
+	<select id="cartCheck" parameterType="Cart" resultType="int">
 	/* 해당 상품이 장바구니에 있는지 확인 */
 	SELECT
-		*
+		count(goods_code)
 	FROM
 		tb_cart
 	WHERE
@@ -79,6 +79,17 @@
 			WHERE 
 				c.cart_code = #{cartCode}
 		</selectKey>
+	</update>
+	
+ 	<!-- 장바구니 같은 상품이면 수량 더하기 -->
+	<update id="cartPlus" parameterType="Cart">
+	/* 장바구니 수량 수정 */
+	UPDATE 
+		tb_cart AS c
+	SET
+		c.cart_amount = c.cart_amount+ #{cartAmount}
+	WHERE
+		c.goods_code = #{goodsCode}
 	</update>
 	
 	<!-- 장바구니에서 상품 삭제 -->

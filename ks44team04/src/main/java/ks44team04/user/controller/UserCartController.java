@@ -51,18 +51,22 @@ public class UserCartController {
     	
     	String buyerId = "buyer01"; //임의
     	
-    	
     	//cartNewCode 생성
-    	String cartNewCode = cartService.cartNewCode(buyerId); //임의
+    	String cartNewCode = cartService.cartNewCode(buyerId); //buyerId 임의
     	cartNewCode = CodeIndex.codeIndex(cartNewCode, 4);
     	log.info("장바구니 증가 코드 :::{}" , cartNewCode);
     	
     	cart.setCartCode(cartNewCode);
     	cart.setBuyerId("buyer01"); //임의
 
+    	//만약 장바구니에 같은 상품코드가 있을 시 수량만 더하기
+    	if(cartService.cartCheck(cart) > 0) {
+    		cartService.cartPlus(cart);
+    		return 2;
+    	}
     	cartService.cartAdd(cart);
     	log.info("장바구니 추가 정보 ::: {}", cart);
-
+    	
     	return 1;
     }
     

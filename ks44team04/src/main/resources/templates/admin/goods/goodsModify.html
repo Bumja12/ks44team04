@@ -9,7 +9,7 @@
 </th:block>
 <th:block layout:fragment="customCss">
 <style>
-.chk_box { border-radius: 5px; display: block; position: relative; padding-left: 25px; margin-bottom: 10px; cursor: pointer; font-size: 14px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+.chk_box { border-radius: 5px; display: block; position: relative; padding-left: 25px; margin-bottom: 10px; cursor: pointer; font-size: 13px;}
 /* 기본 체크박스 숨기기 */
 .chk_box input[type="checkbox"] { display: none; }
 /* 선택되지 않은 체크박스 스타일 꾸미기 */
@@ -100,7 +100,7 @@
 								</div>
 							</div>
 
-							<div class="form-inline form-group" style="margin-top:20px; text-align:right; width:550px;">
+							<div class="form-inline form-group" style="margin-top:20px; text-align:right; width:600px;">
 								<div class="input-group">
 									<label for="soldout" class="chk_box">
 										품절여부 <input type="checkbox" id="soldout" th:value="*{soldoutCheck}">

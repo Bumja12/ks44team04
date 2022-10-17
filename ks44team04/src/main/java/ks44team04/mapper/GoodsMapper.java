@@ -74,6 +74,9 @@ public interface GoodsMapper {
 	//마지막 상품코드
 	public String getAnswerNewCode(String sellerId);
 	
+	//장바구니 같은 상품이면 수량 더하기
+    public void statusUpdate(int goodsQnaNum);
+	
 	//답변 수정
 	public int answerModify(GoodsQnaAnswer goodsAnswerCode);
 	
