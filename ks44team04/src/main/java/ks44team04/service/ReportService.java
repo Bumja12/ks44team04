@@ -116,13 +116,22 @@ public class ReportService {
     	UserSuspend userSuspend = reportMapper.SuspendUpList(userSuspendCode);
  	   
  	   return userSuspend;
- 	   
     }
-  
     
     //정지 리스트 수정 
     public void suspendListUp(UserSuspend userSuspend) {
     	reportMapper.suspendListUp(userSuspend);
+    }
+    
+    // 특정 시간 마다 확인 후 정지 해제
+    public void unStopping(List<UserSuspend> userSuspendUpdateList) {
+    	int result = reportMapper.unstopping(userSuspendUpdateList);
+    	if(result > 0) reportMapper.suspendUserUpdate(userSuspendUpdateList);
+    }
+    
+    public List<UserSuspend> getUserSuspendUpdateList (){
+    	List<UserSuspend> userSuspendUpdateList = reportMapper.getUserSuspendUpdateList();
+    	return userSuspendUpdateList;
     }
     
     //유저 벌점 업데이트 

@@ -93,7 +93,7 @@
 		review_list = #{reviewList}
 
 </delete>
-
+<!-- 후기 댓글 목록 삭제 -->
 <delete id="reviewListCommentDelete"  parameterType="ReviewComment"> 
 /* 후기 댓글 목록 삭제*/
 	DELETE 
