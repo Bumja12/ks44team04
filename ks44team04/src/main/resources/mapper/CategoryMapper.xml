@@ -84,6 +84,24 @@
 		FROM 
 			tb_level_seller_category; -- 판매자 등급 카테고리 테이블     	
     </select>
+    
+    <!-- 특정 판매자 등급 카테고리 조희 -->
+    <select id="getLevelSellerCategoryByPK" parameterType="String" resultType="LevelSellerCategory">
+   		/* 특정 판매자 등급 카테고리 조희 */
+		SELECT 
+			 level_code			 AS	levelCode	      -- 등급 코드 PK
+			,level_name		 	 AS levelName   	  -- 등급 이름
+			,reg_id				 AS	regId  			  -- 회원 아이디 FK(등록인)
+			,level_reg_date		 AS	levelRegDate	  -- 등급 생성일
+			,use_check			 AS	useCheck	      -- 사용 여부
+			,seller_price_terms	 AS sellerPriceTerms  -- 1년 누적 판매 금액
+			,seller_score_terms  AS	sellerScoreTerms  -- 1년 누적 판매 건수
+			,seller_review_terms AS sellerReviewTerms -- 6개월 평균 리뷰 평점
+			,level_code_npk 	 AS	levelCodeNpk	  -- 등급 코드
+		FROM 
+			tb_level_seller_category 				  -- 판매자 등급 카테고리 테이블     	
+		WHERE level_code = #{levelCode};              -- 특정 판매자 등급 카테고리의 등급 코드			
+    </select>
 	
 	<!-- ==============================판매자 등급 카테고리============================== -->
 	
@@ -100,7 +118,7 @@
     
     <!-- 고객 문의 카테고리 목록 조희 -->
     <select id="getCustomerAskCategoryList" resultMap="customerAskCategoryListMap">
-    	/* 고객 문의 카테고리 목록 조희 */
+    	/* 고객 문의 카테고리 목록	조회 */
 		SELECT 
 			 ask_category  			  -- 문의 카테고리 PK
 			,reg_id					  -- 회원 아이디 FK(등록인)
@@ -109,6 +127,20 @@
 			,use_check				  -- 사용 여부
 		FROM 
 			tb_customer_ask_category; -- 고객 문의 카테고리 테이블     	 					
+    </select>	
+    
+    <!-- 특정 고객 문의 카테고리 조희 -->
+    <select id="getCustomerAskCategoryByPK" parameterType="String" resultType="CustomerAskCategory">
+    	/* 고객 문의 카테고리 목록 조희 */
+		SELECT 
+			 ask_category  AS askCategory  -- 문의 카테고리 PK
+			,reg_id	       AS regId	       -- 회원 아이디 FK(등록인)
+			,category_name AS categoryName -- 카테고리명
+			,reg_date	   AS regDate	   -- 등록일
+			,use_check 	   AS useCheck	   -- 사용 여부
+		FROM 
+			tb_customer_ask_category       -- 고객 문의 카테고리 테이블     	 					
+		WHERE ask_category = #{askCategory}; -- 특정 고객 문의 카테고리의 PK					
     </select>	
 	
 	<!-- ==============================고객 문의 카테고리============================== -->
@@ -135,6 +167,20 @@
 		    ,rCategory.reg_date					  -- 등록일
 		FROM 
 			tb_regular_ask_category AS rCategory; -- 자주 묻는 질문 카테고리 테이블
+    </select>
+    
+	<!-- 특정 자주 묻는 질문 카테고리 조희 -->
+    <select id="getRegularAskCategoryByPK" parameterType="String" resultType="RegularAskCategory">
+    	/* 특정 자주 묻는 질문 카테고리 조희 */
+    	SELECT 
+	    	 rCategory.regular_ask_category AS regularAskCategory -- 자주 묻는 질문 카테고리 PK
+	 		,rCategory.category_name 		AS categoryName	      -- 자주 묻는 질문 카테고리
+		    ,rCategory.reg_id 				AS regId		      -- 회원 아이디 FK(등록인)
+		    ,rCategory.use_check 			AS useCheck	    	  -- 사용 여부
+		    ,rCategory.reg_date 			AS regDate		      -- 등록일
+		FROM 
+			tb_regular_ask_category AS rCategory 		    	  -- 자주 묻는 질문 카테고리 테이블
+		WHERE regular_ask_category = #{regularAskCategory}; 	  -- 특정 자주 묻는 질문 카테고리의 PK	
     </select>
     
 	<!-- ==============================자주 묻는 질문 카테고리============================== -->

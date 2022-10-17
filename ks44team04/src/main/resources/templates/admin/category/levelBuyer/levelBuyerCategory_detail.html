@@ -37,7 +37,6 @@
 												<option></option>
 												<th:block th:if="${not #lists.isEmpty(levelBuyerCategoryList)}" th:each="lbCategoryList : ${levelBuyerCategoryList}">
 													<!-- th:selected 사용 -->
-													<!-- 모델에 담은 자주 묻는 질문 카테고리 목록 객체에서 자주 묻는 질문 PK값들을 화면에 바인딩한다. -->
 													<option th:if="${lbCategoryList.levelCode eq 'levelBuyer01'}" th:value="${lbCategoryList.levelCode}" th:selected="${levelBuyerCategory.levelName eq '씨앗'}">씨앗</option> 
 													<option th:if="${lbCategoryList.levelCode eq 'levelBuyer02'}" th:value="${lbCategoryList.levelCode}" th:selected="${levelBuyerCategory.levelName eq '새싹'}">새싹</option>
 													<option th:if="${lbCategoryList.levelCode eq 'levelBuyer03'}" th:value="${lbCategoryList.levelCode}" th:selected="${levelBuyerCategory.levelName eq '잎새'}">잎새</option>

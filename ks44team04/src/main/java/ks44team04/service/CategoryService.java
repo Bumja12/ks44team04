@@ -129,6 +129,33 @@ public class CategoryService {
 		return levelBuyerCategory;
 	}
 	
+	// 특정 판매자 등급 카테고리 조희
+	public LevelSellerCategory getLevelSellerCategoryByPK(String levelCode) {
+		
+		// 특정 판매자 등급 카테고리
+		LevelSellerCategory levelSellerCategory = categoryMapper.getLevelSellerCategoryByPK(levelCode);
+		
+		return levelSellerCategory;
+	}
+	
+	// 특정 고객 문의 카테고리 조희
+	public CustomerAskCategory getCustomerAskCategoryByPK(String askCategory) {
+		
+		// 특정 고객 문의 카테고리
+		CustomerAskCategory customerAskCategory = categoryMapper.getCustomerAskCategoryByPK(askCategory);
+		
+		return  customerAskCategory;
+	}
+	
+	// 특정 자주 묻는 질문 카테고리 조희
+	public RegularAskCategory getRegularAskCategoryByPK(String regularAskCategory) {
+		
+		// 특정 자주 묻는 질문 카테고리
+		RegularAskCategory regularAsk = categoryMapper.getRegularAskCategoryByPK(regularAskCategory);
+		
+		return regularAsk;
+	}
+	
 	//==============================내역 조회============================== 
 	
 }

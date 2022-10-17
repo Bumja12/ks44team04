@@ -53,6 +53,14 @@ public interface CategoryMapper {
 	// 특정 구매자 등급 카테고리 조희
 	public LevelBuyerCategory getLevelBuyerCategoryByPK(String levelCode); 
 	
+	// 특정 판매자 등급 카테고리 조희
+	public LevelSellerCategory getLevelSellerCategoryByPK(String levelCode); 
+	
+	// 특정 고객 문의 카테고리 조희
+	public CustomerAskCategory getCustomerAskCategoryByPK(String askCategory); 
+	
+	// 특정 자주 묻는 질문 카테고리 조희
+	public RegularAskCategory getRegularAskCategoryByPK(String regularAskCategory); 
 	
 	//==============================내역 조회============================== 
 	

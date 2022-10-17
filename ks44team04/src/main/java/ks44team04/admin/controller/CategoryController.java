@@ -20,9 +20,11 @@ import ks44team04.dto.GoodsQnaCategory;
 import ks44team04.dto.GoodsSmallCategory;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
+import ks44team04.dto.RegularAsk;
 import ks44team04.dto.RegularAskCategory;
 import ks44team04.dto.ReportCategory;
 import ks44team04.service.CategoryService;
+import ks44team04.service.RegularAskService;
 
 @Controller
 @RequestMapping(value = "/admin/category")
@@ -196,13 +198,15 @@ public class CategoryController {
 	public String getLevelSellerCategoryDetail (@PathVariable(value = "levelCode") String levelCode
 			,Model model) {
 		
-		// 특정 자주 묻는 질문 
-		// RegularAsk regularAsk = regularAskService.getRegularAskByPK(regularAskPK);
+		// 특정 판매자 등급 카테고리
+		LevelSellerCategory levelSellerCategory = categoryService.getLevelSellerCategoryByPK(levelCode);
 		
-		// 자주 묻는 질문 카테고리 목록
-		// List<RegularAskCategory> regularAskCategoryList = categoryManageService.getRegularAskCategoryList();
-		
+		// 판매자 등급 카테고리 목록
+		List<LevelSellerCategory> levelSellerCategoryList = categoryService.getLevelSellerCategoryList();
+
 		model.addAttribute("title", "판매자 등급 카테고리 내역 화면");
+		model.addAttribute("levelSellerCategory", levelSellerCategory);
+		model.addAttribute("levelSellerCategoryList", levelSellerCategoryList);
 		
 		return "admin/category/levelSeller/levelSellerCategory_detail";
 	}
@@ -214,6 +218,15 @@ public class CategoryController {
 			,Model model) {
 		
 		log.info(askCategory);
+		
+		// 특정 고객 문의 카테고리
+		CustomerAskCategory customerAskCategory = categoryService.getCustomerAskCategoryByPK(askCategory);
+		
+		// 고객 문의 카테고리 목록
+		List<CustomerAskCategory> customerAskCategoryList = categoryService.getCustomerAskCategoryList();
+		
+		model.addAttribute("customerAskCategory", customerAskCategory);
+		model.addAttribute("customerAskCategoryList", customerAskCategoryList);
 		model.addAttribute("title", "고객 문의 카테고리 내역 화면");
 		
 		return "admin/category/customerAsk/customerAskCategory_detail";
@@ -224,8 +237,15 @@ public class CategoryController {
 	public String getRegularAskCategoryDetail (@PathVariable(value = "regularAskCategory") String regularAskCategory
 			,Model model) {
 		
-		log.info(regularAskCategory);
+		// 특정 자주 묻는 질문 카테고리
+		RegularAskCategory regularAsk = categoryService.getRegularAskCategoryByPK(regularAskCategory);
+		
+		// 자주 묻는 질문 카테고리 목록
+		List<RegularAskCategory> regularAskCategoryList = categoryService.getRegularAskCategoryList();
+		
 		model.addAttribute("title", "자주 묻는 질문 카테고리 내역 화면");
+		model.addAttribute("regularAsk", regularAsk);
+		model.addAttribute("regularAskCategoryList", regularAskCategoryList);
 		
 		return "admin/category/regularAsk/regularAskCategory_detail";
 	}	
