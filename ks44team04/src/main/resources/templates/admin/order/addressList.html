@@ -112,7 +112,9 @@
 
         function deleteAddressFn(href) {
             if (confirm("정말로 삭제하시겠습니까?")) {
-                location.href = `/admin/address/delete/${href}`;
+                fetch(`/admin/address/${href}`, {
+                    method: 'DELETE'
+                }).then(() => location.href = '/admin/address/list')
             }
         }
     </script>

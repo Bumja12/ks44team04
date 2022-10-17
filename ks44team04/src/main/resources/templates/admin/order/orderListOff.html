@@ -20,6 +20,24 @@
                 <a href="javascript:getOrderList('교환')">교환</a>
                 <a href="javascript:getOrderList('반품')">반품</a>
             </div>
+
+            <div class="input-group col-md-4">
+                <div class="col-md-4">
+                    <select id="orderSearchSelect" class="custom-select form-control">
+                        <option value="order_detail_code">주문번호</option>
+                        <option value="goods_code">상품코드</option>
+                        <option value="tg.goods_name">상품명</option>
+                        <option value="t.buyer_id">구매자</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <input id="orderSearchText" type="text" class="form-control"/>
+                </div>
+                <div class="input-group-append col-md-2">
+                    <button id="orderSearchBtn" class="btn btn-secondary" type="button" onclick="orderSearch();">검색</button>
+                </div>
+            </div>
+
             <div class="x_content">
                 <div class="table-responsive">
                     <table id="orderTable" class="table table-striped jambo_table">
@@ -34,6 +52,9 @@
                         </tr>
                         </thead>
                         <tbody id="tableBody">
+                            <tr>
+                                <td colspan="6">목록이 없습니다.</td>
+                            </tr>
                         </tbody>
                     </table>
                     <ul id="page" class="">
@@ -54,7 +75,7 @@
         window.addEventListener('load', () => getOrderList('취소'));
 
         /* ajax 호출 */
-        function getOrderList(status) {
+        function getOrderList(status, select, text) {
             let dataPerPage = 10;
             let pageCount = 10;
             let globalCurrentPage = 1;
@@ -65,7 +86,7 @@
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: status
+                body: JSON.stringify({status, select, text})
             })
                 .then((response) => response.json())
                 .then((data) => {
@@ -140,9 +161,9 @@
                                 '</td><td>';
                             if (data[i].orderStatus === '취소요청') {
                                 trHtml += '<button type="button" class="btn-xs btn-dark" data-type="cancel">취소처리</button>';
-                            } else if (data[i].orderStatus === '교환요청') {
+                            } else if (data[i].orderStatus === '교환처리중') {
                                 trHtml += '<button type="button" class="btn-xs btn-dark" data-type="exchange">교환처리</button>';
-                            } else if (data[i].orderStatus === '반품요청') {
+                            } else if (data[i].orderStatus === '반품처리중') {
                                 trHtml += '<button type="button" class="btn-xs btn-dark" data-type="return">반품처리</button>';
                             } else {
                                 trHtml += '-';
@@ -163,15 +184,23 @@
             if (e.target.tagName === 'BUTTON') {
                let url = '/admin/order/' + e.target.dataset.type;
                let orderDetailCode = e.target.closest('tr').querySelector('.orderDetailCode').textContent;
+               let postCompany = '';
+               let info = {orderDetailCode}
                fetch(url, {
                    method: "POST",
                    headers: {"Content-Type": "application/json"},
-                   body: orderDetailCode
+                   body: JSON.stringify(info)
                })
                    .then((response)=>console.log(response + ' 성공'))
                    .catch(()=>console.log('실패'));
             }
-        })
+        });
+
+        function orderSearch() {
+            let selected = document.querySelector('#orderSearchSelect');
+            let text = document.querySelector('#orderSearchText');
+            getOrderList('취소|교환|반품', selected.value , text.value);
+        }
 
     </script>
 </th:block>

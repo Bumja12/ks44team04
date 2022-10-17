@@ -10,18 +10,18 @@ import java.util.Map;
 @Mapper
 public interface AddressMapper {
 
-    public List<AddressList> getAddressList(Map<String, String> addressInfo);
+    List<AddressList> getAddressList(Map<String, String> addressInfo);
 
-    public String getAddressListCode();
+    String getAddressListCode();
 
-    public void addressRegister(AddressList userAddress);
+    void addressRegister(AddressList userAddress);
 
-    public void addressModify(AddressList addressList);
+    void addressModify(AddressList addressList);
 
-    public void addressDelete(String addressList);
+    void addressDelete(String addressList);
 
-    public PostInfo getPostInfo(String postInfo);
+    PostInfo getPostInfo(String postInfo);
 
-    public void setPostInfo(PostInfo postInfo);
+    void setPostInfo(PostInfo postInfo);
 
 }

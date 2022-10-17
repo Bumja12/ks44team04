@@ -1,15 +1,20 @@
 package ks44team04.admin.controller;
 
+import com.google.gson.Gson;
 import ks44team04.dto.OrderDetail;
 import ks44team04.dto.PostInfo;
 import ks44team04.service.AddressService;
 import ks44team04.service.OrderService;
 import ks44team04.service.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/admin")
@@ -18,6 +23,7 @@ public class OrderController {
     private final OrderService orderService;
     private final Service service;
     private final AddressService addressService;
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     public OrderController(OrderService orderService, Service service, AddressService addressService) {
         this.orderService = orderService;
@@ -52,27 +58,11 @@ public class OrderController {
 
     @PostMapping("/order/listoff")
     @ResponseBody
-    public List<OrderDetail> orderListOffA(@RequestBody String status) {
+    public List<OrderDetail> orderListOffA(@RequestBody Map<String, String> orderMap) {
         String sellerId = "seller01";
-        return orderService.getOrderListA(sellerId, status);
-    }
-
-    @GetMapping("/order/cancel")
-    public String orderCancel() {
-
-        return "admin/order/cancelResponse";
-    }
-
-    @GetMapping("/order/return")
-    public String orderReturn() {
-
-        return "admin/order/returnResponse";
-    }
-
-    @GetMapping("/order/refund")
-    public String refundList() {
-
-        return "admin/order/refund";
+        orderMap.put("sellerId", sellerId);
+        log.info("=========================orderMap : {}", orderMap);
+        return orderService.getOrderListA(orderMap);
     }
 
     @GetMapping("/order/check/{orderDetailCode}")
@@ -103,23 +93,26 @@ public class OrderController {
 
     @PostMapping("/order/cancel")
     @ResponseBody
-    public String setCancelApprove(@RequestBody String orderDetailCode) {
+    public String setCancelApprove(@RequestBody Map<String, String> info) {
+        String orderDetailCode = info.get("orderDetailCode");
         orderService.setCancelApprove(orderDetailCode);
         orderService.setOrderDetailStatus(orderDetailCode, "취소완료");
         return "성공";
     }
     @PostMapping("/order/exchange")
     @ResponseBody
-    public String setExchangeApprove(@RequestBody String orderDetailCode) {
-        orderService.setExchangeApprove(orderDetailCode);
-        orderService.setOrderDetailStatus(orderDetailCode, "교환처리중");
+    public String setExchangeApprove(@RequestBody Map<String, String> info) {
+        String orderDetailCode = info.get("orderDetailCode");
+        orderService.setExchangeApprove(info);
+        orderService.setOrderDetailStatus(orderDetailCode, "교환완료");
         return "성공";
     }
     @PostMapping("/order/return")
     @ResponseBody
-    public String setReturnApprove(@RequestBody String orderDetailCode) {
+    public String setReturnApprove(@RequestBody Map<String, String> info) {
+        String orderDetailCode = info.get("orderDetailCode");
         orderService.setReturnApprove(orderDetailCode);
-        orderService.setOrderDetailStatus(orderDetailCode, "반품처리중");
+        orderService.setOrderDetailStatus(orderDetailCode, "반품완료");
         return "성공";
     }
 

@@ -10,36 +10,41 @@ import java.util.Map;
 @Mapper
 public interface OrderMapper {
 
-    public void setOrderExchange(OrderExchange orderExchange);
-    public void setOrderReturn(OrderReturn orderReturn);
+    void setOrderExchange(OrderExchange orderExchange);
+    void setOrderReturn(OrderReturn orderReturn);
 
-    public String getOrderExchangeMaxCode();
-    public String getOrderReturnMaxCode();
+    String getOrderExchangeMaxCode();
+    String getOrderReturnMaxCode();
 
-    public OrderDetail getOrderDetail(Map<String, Object> orderMap);
+    OrderDetail getOrderDetail(Map<String, Object> orderMap);
 
-    public void setReturnPost(Map<String, Object> returnPost);
+    void setReturnPost(Map<String, Object> returnPost);
 
-    public void setOrderDetailStatus(@Param(value = "orderDetailCode") String orderDetailCode,
+    void setOrderDetailStatus(@Param(value = "orderDetailCode") String orderDetailCode,
                                      @Param(value = "orderStatus") String orderStatus);
 
-    public List<OrderDetail> getOrderList(String userId);
-    public List<OrderDetail> getOrderListA(@Param(value = "sellerId") String sellerId,
-                                             @Param(value = "status") String status);
+    /* 페이징 테스트 */
+    int getContentsCount();
+    List<OrderDetail> getOrderListTest(Paging paging);
 
-    public Goods getGoodsInfo(String goodsCode);
+    /* 페이징 테스트 */
 
-    public void setOrder(Order order);
+    List<OrderDetail> getOrderList(String userId);
+    List<OrderDetail> getOrderListA(Map<String, String> orderMap);
 
-    public String getOrderNum();
+    Goods getGoodsInfo(String goodsCode);
 
-    public void setOrderDetail(OrderDetail orderDetail);
+    void setOrder(Order order);
 
-    public void addPostInfo(PostInfo postInfo);
+    String getOrderNum();
 
-    public void setOrderDetailPost(@Param(value = "orderDetailCode") String orderDetailCode, @Param(value = "postInfo") String postInfo);
+    void setOrderDetail(OrderDetail orderDetail);
 
-    public void setCancelApprove(String orderDetailCode);
-    public void setExchangeApprove(String orderDetailCode);
-    public void setReturnApprove(String orderDetailCode);
+    void addPostInfo(PostInfo postInfo);
+
+    void setOrderDetailPost(@Param(value = "orderDetailCode") String orderDetailCode, @Param(value = "postInfo") String postInfo);
+
+    void setCancelApprove(String orderDetailCode);
+    void setExchangeApprove(Map<String, String> info);
+    void setReturnApprove(String orderDetailCode);
 }
