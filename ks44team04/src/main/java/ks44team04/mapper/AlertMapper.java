@@ -13,6 +13,9 @@ public interface AlertMapper {
 	//알림 등록
 	public int addAlert(Alert alert);
 	
+	//마지막 알림코드
+	public String getAlertNewCode();
+	
 	//알림 전송내역 조회
 	public List<AlertSend> getAlertSendList();
 	

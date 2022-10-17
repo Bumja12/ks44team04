@@ -26,11 +26,18 @@ public class AlertController {
 		this.alertService = alertService;
 	}
 
+	
+	
 	/* 알림등록 쿼리실행 */
 	@PostMapping("/alert/addAlert")
     public String addAlert(Alert alert) {
-        alertService.addAlert(alert);
-       //String alertCode = CodeIndex.codeIndex("alert0006", 5);
+		
+		String alertNewCode = alertService.getAlertNewCode();
+		alertNewCode = CodeIndex.codeIndex(alertNewCode, 5);
+		log.info("알림코드 증가 :::{}" , alertNewCode);
+		
+		alert.setAlertCode(alertNewCode);
+		alertService.addAlert(alert);
         
         return "redirect:/admin/alert/alertList";
     }
