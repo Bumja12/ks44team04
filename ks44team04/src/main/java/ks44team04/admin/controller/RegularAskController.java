@@ -38,7 +38,7 @@ public class RegularAskController {
 		this.regularAskService = regularAskService;
 	}
 	
-	// 자주 묻는 질문 삭제 처리(비동기 방식 ajax 활용)
+	// 자주 묻는 질문 삭제 처리(비동기 방식 ajax 활용) 
 	@ResponseBody
 	@PostMapping("/removeRegularAsk")
 	public String ajaxRemoveRegularAskAction (@RequestParam(value="removeElement[]") List<String> removeElement) {
@@ -54,7 +54,7 @@ public class RegularAskController {
 		return "/admin/regularAsk/removeRegularAsk";
 	}
 	
-	// 자주 묻는 질문 삭제 처리
+	// 자주 묻는 질문 삭제 처리 
 	@GetMapping("/removeRegularAsk")
 	public String removeRegularAsk(Model model) {
 		

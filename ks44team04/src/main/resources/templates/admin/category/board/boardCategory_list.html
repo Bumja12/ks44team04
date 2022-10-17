@@ -35,62 +35,23 @@
 									</th>
 			                        <th>게시판 카테고리 PK</th>
 			                        <th>카테고리명</th>
-			                        <th>회원 아이디 FK(등록)</th>
-			                        <th>등록일시</th>
+			                        <th>회원 아이디 FK(등록인)</th>
+			                        <th>등록시</th>
 			                        <th>사용 여부</th>
 		                    	</tr>
 		                   	</thead>
 							<tbody>
-		                 		<tr style="cursor:pointer;">
+								<!-- 게시판 카테고리 목록 -->
+								<tr th:each="bList : ${boardCategoryList}" style="cursor:pointer;">
 									<td>
 										<input type="checkbox" class="checkAll" name="checkAll1">
 		             				</td>
-		                          	<td class="moveToDetail">boardCategory001</td>
-		                          	<td class="moveToDetail">레시피</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">boardCategory002</td>
-		                          	<td class="moveToDetail">자유 게시판</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">boardCategory003</td>
-		                          	<td class="moveToDetail">농촌체험</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">boardCategory004</td>
-		                          	<td class="moveToDetail">맛집추천</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
-		                            <td class="moveToDetail">N</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">boardCategory005</td>
-		                          	<td class="moveToDetail">행사</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
-		                            <td class="moveToDetail">N</td>
-		                    	</tr>
+									<td class="moveToDetail" th:text="${bList.boardCategory}">게시판 카테고리 PK</td>
+									<td class="moveToDetail" th:text="${bList.categoryName}">카테고리명</td>
+									<td class="moveToDetail" th:text="${bList.regId}">회원 아이디 FK(등록인)</td>
+									<td class="moveToDetail" th:text="${bList.regDate}">등록일</td>
+									<td class="moveToDetail" th:text="${bList.useCheck}">사용 여부</td>
+								</tr>	
 							</tbody>
 		        		</table>
 					</div> <!-- </div class="card-box table-responsive"> -->

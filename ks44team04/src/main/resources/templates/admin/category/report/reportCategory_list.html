@@ -35,62 +35,23 @@
 									</th>
 			                        <th>신고 카테고리 PK</th>
 			                        <th>카테고리명</th>
-			                        <th>회원 아이디 FK(등록)</th>
-			                        <th>등록일시</th>
+			                        <th>회원 아이디 FK(등록인)</th>
+			                        <th>등록일</th>
 			                        <th>사용 여부</th>
 		                    	</tr>
 		                   	</thead>
 							<tbody>
-		                 		<tr style="cursor:pointer;">
+								<!-- 신고 대상 카테고리 목록 -->
+								<tr th:each="rList : ${reportCategoryList}" style="cursor:pointer;">
 									<td>
 										<input type="checkbox" class="checkAll" name="checkAll1">
 		             				</td>
-		                          	<td class="moveToDetail">1</td>
-		                          	<td class="moveToDetail">판매 상품</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">2</td>
-		                          	<td class="moveToDetail">후기</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">3</td>
-		                          	<td class="moveToDetail">후기 댓글</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">4</td>
-		                          	<td class="moveToDetail">게시글</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
-		                            <td class="moveToDetail">N</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">5</td>
-		                          	<td class="moveToDetail">게시글 댓글</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
-		                            <td class="moveToDetail">N</td>
-		                    	</tr>
+									<td class="moveToDetail" th:text="${rList.reportCategory}">신고 카테고리 PK</td>
+									<td class="moveToDetail" th:text="${rList.categoryName}">카테고리명</td>
+									<td class="moveToDetail" th:text="${rList.userId}">회원 아이디 FK(등록인)</td>
+									<td class="moveToDetail" th:text="${rList.regDate}">등록일</td>
+									<td class="moveToDetail" th:text="${rList.useCheck}">사용 여부</td>
+								</tr>
 							</tbody>
 		        		</table>
 					</div> <!-- </div class="card-box table-responsive"> -->

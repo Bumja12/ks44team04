@@ -13,10 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ks44team04.dto.BoardCategory;
 import ks44team04.dto.CustomerAskCategory;
+import ks44team04.dto.GoodsLargeCategory;
+import ks44team04.dto.GoodsQnaCategory;
+import ks44team04.dto.GoodsSmallCategory;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.RegularAskCategory;
+import ks44team04.dto.ReportCategory;
 import ks44team04.service.CategoryService;
 
 @Controller
@@ -89,7 +94,11 @@ public class CategoryController {
 	@GetMapping("/board")
 	public String getBoardCategoryList(Model model) {
 		
+		// 게시판 카테고리 목록
+		List<BoardCategory> boardCategoryList = categoryService.getBoardCategoryList();
+		
 		model.addAttribute("title", "게시판 카테고리 목록 화면");
+		model.addAttribute("boardCategoryList", boardCategoryList);
 		return "admin/category/board/boardCategory_list";
 	}
 	
@@ -97,7 +106,11 @@ public class CategoryController {
 	@GetMapping("/report")
 	public String getReportCategoryList(Model model) {
 		
+		// 신고 대상 카테고리 목록
+		List<ReportCategory> reportCategoryList = categoryService.getReportCategoryList();
+		
 		model.addAttribute("title", "신고 대상 카테고리 목록 화면");
+		model.addAttribute("reportCategoryList", reportCategoryList);
 		return "admin/category/report/reportCategory_list";
 	}
 	
@@ -105,7 +118,11 @@ public class CategoryController {
 	@GetMapping("/goodsLarge")
 	public String getGoodsLargeCategoryList(Model model) {
 		
+		// 판매 상품 카테고리 대분류 목록
+		List<GoodsLargeCategory> goodsLargeCategoryList = categoryService.getGoodsLargeCategoryList();
+		
 		model.addAttribute("title", "판매 상품 카테고리 대분류 목록 화면");
+		model.addAttribute("goodsLargeCategoryList", goodsLargeCategoryList);
 		return "admin/category/goodsLarge/goodsLargeCategory_list";
 	}
 	
@@ -113,7 +130,12 @@ public class CategoryController {
 	@GetMapping("/goodsSmall")
 	public String getGoodsSmallCategoryList(Model model) {
 		
+		// 판매 상품 카테고리 소분류 목록
+		List<GoodsSmallCategory> goodsSmallCategoryList = categoryService.getGoodsSmallCategoryList();
+		
 		model.addAttribute("title", "판매 상품 카테고리 소분류 목록 화면");
+		model.addAttribute("goodsSmallCategoryList", goodsSmallCategoryList);
+		
 		return "admin/category/goodsSmall/goodsSmallCategory_list";
 	}
 	
@@ -121,7 +143,11 @@ public class CategoryController {
 	@GetMapping("/goodsQna")
 	public String getGoodsQnaCategoryList(Model model) {
 		
+		// 상품 문의 카테고리 목록
+		List<GoodsQnaCategory> goodsQnaCategoryList = categoryService.getGoodsQnaCategoryList();
+		
 		model.addAttribute("title", "상품 문의 카테고리 목록 화면");
+		model.addAttribute("goodsQnaCategoryList", goodsQnaCategoryList);
 		return "admin/category/goodsQna/goodsQnaCategory_list";
 	}
 	
@@ -144,9 +170,14 @@ public class CategoryController {
 	@GetMapping("/levelBuyerCategoryDetail/{levelCode}")
 	public String getLevelBuyerCategoryDetail (@PathVariable(value = "levelCode") String levelCode
 									   ,Model model) {
+		// 특정 구매자 등급 카테고리
+		LevelBuyerCategory levelBuyerCategory = categoryService.getLevelBuyerCategoryByPK(levelCode);
+		// 구매자 등급 카테고리 목록
+		List<LevelBuyerCategory> levelBuyerCategoryList = categoryService.getLevelBuyerCategoryList();
 		
 		model.addAttribute("title", "구매자 등급 카테고리 내역 화면");
-		
+		model.addAttribute("levelBuyerCategory", levelBuyerCategory);
+		model.addAttribute("levelBuyerCategoryList", levelBuyerCategoryList);
 		return "admin/category/levelBuyer/levelBuyerCategory_detail";
 	}
 	

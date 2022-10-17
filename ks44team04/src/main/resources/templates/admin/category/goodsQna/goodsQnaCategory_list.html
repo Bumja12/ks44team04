@@ -34,63 +34,26 @@
 										<input type="checkbox" id="checkAllBtn" >
 									</th>
 			                        <th>상품 문의 카테고리 PK</th>
-			                        <th>회원 아이디 FK(등록)</th>
 			                        <th>카테고리명</th>
-			                        <th>등록일시</th>
+			                        <th>회원 아이디 FK(등록인)</th>
+			                        <th>등록일</th>
+			                        <th>수정일</th>
 			                        <th>사용 여부</th>
 		                    	</tr>
 		                   	</thead>
 							<tbody>
-		                 		<tr style="cursor:pointer;">
+								<!-- 판매 상품 카테고리 소분류 목록 -->
+								<tr th:each="gQnaList : ${goodsQnaCategoryList}" style="cursor:pointer;">
 									<td>
 										<input type="checkbox" class="checkAll" name="checkAll1">
 		             				</td>
-		                          	<td class="moveToDetail">goodsQnaCategory001</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                          	<td class="moveToDetail">상품</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">goodsQnaCategory002</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                          	<td class="moveToDetail">배송</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">goodsQnaCategory003</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                          	<td class="moveToDetail">반품</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">goodsQnaCategory004</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                          	<td class="moveToDetail">교환</td>
-		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">goodsQnaCategory005</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                          	<td class="moveToDetail">기타</td>
-		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
-		                            <td class="moveToDetail">Y</td>
-		                    	</tr>
+									<td class="moveToDetail" th:text="${gQnaList.goodsQnaCategory}">상품 문의 카테고리 PK</td>
+									<td class="moveToDetail" th:text="${gQnaList.categoryName}">카테고리명</td>
+									<td class="moveToDetail" th:text="${gQnaList.regId}">회원 아이디 FK(등록인)</td>
+									<td class="moveToDetail" th:text="${gQnaList.regDate}">등록일</td>
+									<td class="moveToDetail" th:text="${gQnaList.modifyDate}">수정일</td>
+									<td class="moveToDetail" th:text="${gQnaList.useCheck}">사용 여부</td>
+								</tr>
 							</tbody>
 		        		</table>
 					</div> <!-- </div class="card-box table-responsive"> -->
