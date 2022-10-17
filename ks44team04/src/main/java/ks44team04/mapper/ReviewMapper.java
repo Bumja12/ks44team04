@@ -18,6 +18,12 @@ public interface ReviewMapper {
     //후기 목록 
 	public List<Review> reviewList();
 	
+	//후기 등록
+	public int reviewAdd(Review review);
+	
+	//후기 등록 코드 증가 
+	public String getReviewListCode();
+	
 	//후기 검색
 	public List<Review> reviewSerchList(Map<String, Object> searchMap);
 	
@@ -47,4 +53,6 @@ public interface ReviewMapper {
 	
 	//후기 댓글 목록 삭제 
 	public int reviewCommentDelete(ReviewComment reviewComment);
+	
+	
 }
