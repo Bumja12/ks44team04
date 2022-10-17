@@ -7,11 +7,13 @@ import ks44team04.dto.Leave;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.Login;
+import ks44team04.dto.PaymentTotal;
 import ks44team04.dto.Right;
 import ks44team04.dto.Seller;
 import ks44team04.dto.User;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,24 +25,34 @@ public interface UserMapper {
     public String userLogin(String userId);
     public User getLoginUserInfo(String userId);
     
-    /* ===== 휴면 시작 ===== */
-    //(휴면목록) 2 휴면해제 클릭시 휴면 테이블 '휴면해제'
+    
+    /* =============== 검색 시작 =============== */
+    //판매자 검색
+  	public List<Seller> searchSellerList(Map<String, Object> searchMap);
+    
+    //회원검색
+    /* =============== 검색 끝 =============== */
+    
+    
+    /* =============== 휴면 시작 =============== */
+    //(휴면해제2) 휴면해제 클릭시 휴면 테이블 '휴면해제'
     public int dormantToNormal2(String loginId);
 
-    //(휴면목록) 1 휴면해제 클릭시 회원상태 '정상'
+    //(휴면해제1) 휴면해제 클릭시 회원상태 '정상'
     public int dormantToNormal1(String userId);
     
-    //휴면 처리 2 (휴면 테이블에 insert)
+    //(휴면처리3) 휴면 테이블에 insert
     public int insertDormant(String userId);
     
-    //휴면 처리 1 (회원상태 '휴면'으로)
+    //(휴면처리2) 회원상태 '휴면'으로
     public int normalToDormant(String userId);
     
-    //휴면 대상 아이디 
+    //(휴면처리1) 휴면 대상 아이디 목록
     public List<String> getDormantId();
-    /* ===== 휴면 끝 ===== */
+    /* =============== 휴면 끝 =============== */
     
-    /* ===== 회원 탈퇴 시작 ===== */
+    
+    /* =============== 회원 탈퇴 시작 =============== */
     //(판매자) 판매상품 판매중지여부 Y로 변경
     public int updateGoodsSaleCheck(String userId);
     
@@ -97,7 +109,7 @@ public interface UserMapper {
     
     //회원 탈퇴를 위한 관리자 비밀번호
   	public String getAdminPw(String userPw);
-    /* ===== 회원 탈퇴 끝 ===== */
+    /* =============== 회원 탈퇴 끝 =============== */
     
     //유저 마이페이지 
     public String myPage();
@@ -115,7 +127,7 @@ public interface UserMapper {
     public int addSeller(Seller seller);
     
     
-    /* ==== 회원,판매자 등록 / 중복체크 시작 ===== */
+    /* =============== 회원,판매자 등록 / 중복체크 시작 =============== */
     //판매자 휴대폰번호 중복체크
     public int phoneCheckS(String storePhone);
     
@@ -142,16 +154,19 @@ public interface UserMapper {
     
 	//회원 가입
 	public int addUser(User user);
-	/* ==== 회원,판매자 등록 / 중복체크 끝 ===== */
+	/* =============== 회원,판매자 등록 / 중복체크 끝 =============== */
 	   
-	/* ==== 회원, 판매자 수정 시작===== */
+	
+	/* =============== 회원, 판매자 수정 시작 =============== */
 	// 10/13 판매자 정보 수정
 	public int modifySeller(Seller seller);
 
 	//회원 정보 수정
 	public int modifyUser(User user);
-	/* ==== 회원, 판매자 수정 끝===== */
+	/* =============== 회원, 판매자 수정 끝 =============== */
 	
+	
+	/* =============== 조회 시작 =============== */
 	//특정 판매자 판매상품 조회
 	public List<Goods> getGoodsList(String sellerId);
 	
@@ -188,5 +203,5 @@ public interface UserMapper {
 	
 	//회원 목록 조회
 	public List<User> getUserList();
-   
+	/* =============== 조회 끝 =============== */
 }

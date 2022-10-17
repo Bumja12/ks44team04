@@ -8,11 +8,13 @@ import ks44team04.dto.Leave;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.Login;
+import ks44team04.dto.PaymentTotal;
 import ks44team04.dto.Right;
 import ks44team04.dto.Seller;
 import ks44team04.dto.User;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,31 +33,49 @@ public class UserService {
         this.userMapper = userMapper;
     }
     
-    //(휴면목록) 2 휴면해제 클릭시 휴면 테이블 '휴면해제'
+    
+    /* =============== 검색 시작 =============== */
+    //판매자 검색
+	public List<Seller> searchSellerList(Map<String, Object> searchMap) {
+		
+		List<Seller> sellerList = userMapper.searchSellerList(searchMap);
+		
+		return sellerList;
+	}
+    
+    //회원검색
+    /* =============== 검색 끝 =============== */
+    
+    
+    /* =============== 휴면 시작 =============== */
+    //(휴면해제2) 휴면해제 클릭시 휴면 테이블 '휴면해제'
     public void dormantToNormal2(String loginId) {
     	userMapper.dormantToNormal2(loginId);
     }
     
-	//(휴면목록) 1 휴면해제 클릭시 회원상태 '정상'
+	//(휴면해제1) 휴면해제 클릭시 회원상태 '정상'
 	public void dormantToNormal1(String userId) {
 		userMapper.dormantToNormal1(userId);
 	}
 	
-	//휴면 처리 2 (휴면 테이블에 insert)
+	//(휴면처리3) 휴면 테이블에 insert
 	public void insertDormant(String userId) {
 		userMapper.insertDormant(userId);
 	}
 	
-	//휴면 처리 1 (회원상태 '휴면'으로)
+	//(휴면처리2) 회원상태 '휴면'으로
 	public void normalToDormant(String userId) {
 		userMapper.normalToDormant(userId);
 	}
 	
-	//휴면 대상 아이디
+	//(휴면처리1) 휴면 대상 아이디 목록
 	public List<String> getDormantId() {
 		return userMapper.getDormantId();
 	}
+	/* =============== 휴면 끝 =============== */
 	
+	
+	/* =============== 탈퇴 시작 =============== */
     //10/13 회원 탈퇴
   	public int removeUser(String userId, String userRight, String userInfoKeep) {
   		
@@ -99,6 +119,8 @@ public class UserService {
   		String adminPw = userMapper.getAdminPw(userPw);
   		return adminPw;
   	}
+  	/* =============== 탈퇴 끝 =============== */
+  	
     
     // 10/11 판매자 신청 승인 (seller 테이블)
     public void approveSeller(String sellerId, String approveId) {
