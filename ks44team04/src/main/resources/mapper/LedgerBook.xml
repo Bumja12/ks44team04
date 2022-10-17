@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks44team04.mapper.LedgerBookMapper">
+
+	<resultMap type="Order" id="orderResultMap">
+		<id     column="order_num" 				 property="orderNum"/>
+		<result column="buyer_id"  				 property="buyerId"/>
+		<result column="coupon_code" 			 property="couponCode"/>
+		<result column="order_date" 			 property="orderDate"/>
+		<result column="order_status" 			 property="orderStatus"/>
+		<result column="total_sum"  			 property="totalSum"/>
+		<result column="total_price"  			 property="totalPrice"/>
+		<result column="coupon_price" 			 property="couponPrice"/>
+		<result column="use_point"   			 property="usePoint"/>
+		<result column="goods_discount_price"    property="goodsDiscountPrice"/>
+		<result column="post_price"   			 property="postPrice"/>
+		<result column="total_order_price"  	 property="totalOrderPrice"/>
+		<result column="final_confirm_price" 	 property="finalConfirmPrice"/>
+		<result column="final_confirm_date"  	 property="finalConfirmDate"/>
+		<result column="post_address_list"  	 property="postAddressList"/>
+			<association property="OrderDetailDto" javaType="OrderDetail" >
+	        	<id     column="order_detail_code" property="orderDetailCode"/>
+	        </association>
+			<association property="GoodsDto" javaType="Goods" >
+	        	<id     column="goods_code" property="goodsCode"/>
+	        	<result column="seller_id" 	 property="sellerId"/>
+	        </association>
+	</resultMap>
+
+
+<select id="orderList"  resultMap="orderResultMap">
+	SELECT 
+		g.seller_id 
+		,o.total_sum 
+		,o.post_price 
+	FROM 
+		tb_order AS o
+		INNER JOIN 
+		tb_order_detail AS od
+		on
+		o.order_num = od.order_num
+		INNER JOIN 
+		tb_goods AS g
+		on
+		od.goods_code = g.goods_code
+
+</select>
+
+
+
+
+</mapper>
