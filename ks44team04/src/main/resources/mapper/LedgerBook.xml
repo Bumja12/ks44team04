@@ -30,22 +30,26 @@
 	</resultMap>
 
 
-<select id="orderList"  resultMap="orderResultMap">
-	SELECT 
-		g.seller_id 
-		,o.total_sum 
-		,o.post_price 
-	FROM 
-		tb_order AS o
+<select id="orderList" parameterType="String" resultMap="orderResultMap">
+				
+<!-- 		SELECT 
+			MONTH(o.order_date) AS orderDate, 
+    	    SUM(o.total_sum) AS totalSum,
+    	    SUM(o.post_price) AS postPrice
+		FROM 
+		  tb_order AS o
 		INNER JOIN 
-		tb_order_detail AS od
+			tb_order_detail AS od
 		on
 		o.order_num = od.order_num
 		INNER JOIN 
-		tb_goods AS g
+			tb_goods AS g
 		on
-		od.goods_code = g.goods_code
-
+			od.goods_code = g.goods_code
+		WHERE 
+			g.seller_id  = #{sellerId}
+		GROUP BY orderDate;		
+ -->
 </select>
 
 
