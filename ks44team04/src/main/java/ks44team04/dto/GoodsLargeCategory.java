@@ -4,11 +4,11 @@ import java.util.List;
 
 public class GoodsLargeCategory {
 
-    private String goodsLargeCategory;
-    private String goodsCategory;
-    private String regId;
-    private String useCheck;
-    private String regDate;
+    private String goodsLargeCategory; // 판매 상품 카테고리 대분류 PK
+    private String goodsCategory;	   // 카테고리 대분류
+    private String regId; 			   // 회원 아이디 FK(작성자)
+    private String useCheck; 		   // 사용 여부
+    private String regDate; 		   // 등록일
     private List<GoodsSmallCategory> goodsSmallCategoryInfo;
     
 	public String getGoodsLargeCategory() {

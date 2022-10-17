@@ -2,25 +2,17 @@ package ks44team04.dto;
 
 public class LevelSellerCategory {
 
-	// 등급 코드 PK
-    private String levelCode;
-    // 등급 이름
-    private String levelName;
-    // 회원 아이디 FK(등록)
-    private String regId;
-    // 등록일
-    private String levelRegDate;
-    // 사용 여부
-    private String useCheck;
-    // 1년 누적 판매 금액
-    private int sellerPriceTerms;
-    // 1년 누적 판매 건수
-    private int sellerScoreTerms;
-    // 6개월 평균 리뷰 평점
-    private int sellerReviewTerms;
-    // 등급 코드
-    private String levelCodeNpk;
-
+	
+    private String levelCode;      // 등급 코드 PK
+    private String levelName;      // 등급 이름
+    private String regId;          // 회원 아이디 FK(등록)
+    private String levelRegDate;   // 등록일
+    private String useCheck; 	   // 사용 여부
+    private int sellerPriceTerms;  // 1년 누적 판매 금액
+    private int sellerScoreTerms;  // 1년 누적 판매 건수
+    private int sellerReviewTerms; // 6개월 평균 리뷰 평점
+    private String levelCodeNpk;   // 등급 코드
+    
     public String getLevelCode() {
         return levelCode;
     }

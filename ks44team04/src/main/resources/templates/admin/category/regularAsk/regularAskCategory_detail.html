@@ -25,7 +25,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="regularAskCategory">자주 묻는 질문 카테고리 PK
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="regularAskCategory" id="regularAskCategory" value="levelBuyer01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="regularAskCategory" id="regularAskCategory" th:value="${regularAsk.regularAskCategory}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 회원 아이디(등록) -->
@@ -33,7 +33,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="regId">회원 아이디(등록)
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="regId" id="regId" value="admin01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="regId" id="regId" th:value="${regularAsk.regId}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 카테고리명 -->
@@ -43,11 +43,15 @@
 										<div class="col-md-6 col-sm-6 ">
 											<select class="select2_single form-control" id="categoryName" disabled="disabled" name="categoryName" required="required" tabindex="-1">
 												<option></option>
-												<option value="5" selected="selected">포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
+												<th:block th:if="${not #lists.isEmpty(regularAskCategoryList)}" th:each="rAskCategoryList : ${regularAskCategoryList}">
+													<!-- th:selected 사용 -->
+													<option th:if="${rAskCategoryList.regularAskCategory eq 'regularAskCategory01'}" th:value="${rAskCategoryList.regularAskCategory}" th:selected="${regularAsk.categoryName eq '회원/정보 관리'}">회원/정보 관리</option> 
+													<option th:if="${rAskCategoryList.regularAskCategory eq 'regularAskCategory02'}" th:value="${rAskCategoryList.regularAskCategory}" th:selected="${regularAsk.categoryName eq '배송'}">배송</option>
+													<option th:if="${rAskCategoryList.regularAskCategory eq 'regularAskCategory03'}" th:value="${rAskCategoryList.regularAskCategory}" th:selected="${regularAsk.categoryName eq '반품/교환/환불'}">반품/교환/환불</option>
+													<option th:if="${rAskCategoryList.regularAskCategory eq 'regularAskCategory04'}" th:value="${rAskCategoryList.regularAskCategory}" th:selected="${regularAsk.categoryName eq '주문/결제'}">주문/결제</option>
+													<option th:if="${rAskCategoryList.regularAskCategory eq 'regularAskCategory05'}" th:value="${rAskCategoryList.regularAskCategory}" th:selected="${regularAsk.categoryName eq '정기 배송'}">정기 배송</option>
+													<option th:if="${rAskCategoryList.regularAskCategory eq 'regularAskCategory06'}" th:value="${rAskCategoryList.regularAskCategory}" th:selected="${regularAsk.categoryName eq '포인트/할인 쿠폰'}">포인트/할인 쿠폰</option>
+												</th:block>	
 											</select>
 										</div>
 									</div>

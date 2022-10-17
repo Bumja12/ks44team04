@@ -25,7 +25,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="levelCode">등급 코드 PK
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="levelCode" id="levelCode" value="levelBuyer01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="levelCode" id="levelCode" th:value="${levelBuyerCategory.levelCode}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 등급 이름 -->
@@ -35,22 +35,22 @@
 										<div class="col-md-6 col-sm-6 ">
 											<select class="select2_single form-control" id="levelName" disabled="disabled" name="levelName" required="required" tabindex="-1">
 												<option></option>
-												<option value="5" selected="selected">포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
+												<th:block th:if="${not #lists.isEmpty(levelBuyerCategoryList)}" th:each="lbCategoryList : ${levelBuyerCategoryList}">
+													<!-- th:selected 사용 -->
+													<option th:if="${lbCategoryList.levelCode eq 'levelBuyer01'}" th:value="${lbCategoryList.levelCode}" th:selected="${levelBuyerCategory.levelName eq '씨앗'}">씨앗</option> 
+													<option th:if="${lbCategoryList.levelCode eq 'levelBuyer02'}" th:value="${lbCategoryList.levelCode}" th:selected="${levelBuyerCategory.levelName eq '새싹'}">새싹</option>
+													<option th:if="${lbCategoryList.levelCode eq 'levelBuyer03'}" th:value="${lbCategoryList.levelCode}" th:selected="${levelBuyerCategory.levelName eq '잎새'}">잎새</option>
+													<option th:if="${lbCategoryList.levelCode eq 'levelBuyer04'}" th:value="${lbCategoryList.levelCode}" th:selected="${levelBuyerCategory.levelName eq '열매'}">열매</option>
+												</th:block>	
 											</select>
 										</div>
 									</div>
-									
-									
 									<!-- 회원 아이디(등록) -->
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="regId">회원 아이디(등록)
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="regId" id="regId" value="admin01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="regId" id="regId" th:value="${levelBuyerCategory.regId}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 등급 생성일 -->
@@ -58,7 +58,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="levelRegDate">등급 생성일
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="datetime" name="levelRegDate" id="levelRegDate" value="2021-01-01 00:00:00" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="datetime" name="levelRegDate" id="levelRegDate" th:value="${levelBuyerCategory.levelRegDate}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 사용 여부 -->
@@ -66,8 +66,8 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="radio" class="flat" name="useCheck" id="useCheckY" value="Y" checked="checked" required="required" disabled="disabled"/> Y
-											<input type="radio" class="flat" name="useCheck" id="useCheckN" value="N" required="required" disabled="disabled"/> N
+											<input type="radio" class="flat" name="useCheck" id="useCheckY" value="Y" th:checked="${levelBuyerCategory.useCheck eq 'Y'}" required="required" disabled="disabled"/> Y
+											<input type="radio" class="flat" name="useCheck" id="useCheckN" value="N" th:checked="${levelBuyerCategory.useCheck eq 'N'}" required="required" disabled="disabled"/> N
 										</div>
 									</div>
 									<!-- 구매자 구매 금액 조건(6개월) -->
@@ -76,7 +76,7 @@
 										</label>
 										<div class="col-md-6 col-sm-6 ">
 											<!-- 숫자만 입력 가능 -->
-											<input type="number" name="buyerPriceTerms" id="buyerPriceTerms" value="0" disabled="disabled" required="required" class="form-control" oninput="handleOnInput(this, 15)">
+											<input type="number" name="buyerPriceTerms" id="buyerPriceTerms" th:value="${levelBuyerCategory.buyerPriceTerms}" disabled="disabled" required="required" class="form-control" oninput="handleOnInput(this, 15)">
 										</div>
 									</div>
 									<!-- 적립율(%) -->
@@ -85,7 +85,7 @@
 										</label>
 										<div class="col-md-6 col-sm-6 ">
 											<!-- 숫자만 입력 가능 -->
-											<input id="saveRate" class="form-control" type="number" value="0.5" required="required" disabled="disabled" name="saveRate" oninput='handleOnInput(this, 15)'>
+											<input id="saveRate" class="form-control" type="number" th:value="${levelBuyerCategory.saveRate}" required="required" disabled="disabled" name="saveRate" oninput='handleOnInput(this, 15)'>
 										</div>
 									</div>
 									<!-- 등급 코드 -->
@@ -93,7 +93,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="levelCodeNpk">등급 코드 
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="levelCodeNpk" id="levelCodeNpk" value="levelBuyer01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="levelCodeNpk" id="levelCodeNpk" th:value="${levelBuyerCategory.levelCodeNpk}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<div class="ln_solid"></div>
