@@ -120,11 +120,54 @@
 		<result  column="goods_category" 			property="goodsCategory"/>
 		<result  column="g_use_check" 				property="useCheck"/>
 	</resultMap>
-
+	
+	<!-- /* ==================== 검색 시작 =================== */ -->
+	<!-- 판매자 검색 -->
+	<select id="searchSellerList" parameterType="map" resultMap="SellerResultMap" fetchSize="100">
+		/* 판매자 검색 */
+		SELECT
+			 s.seller_code		
+			,s.seller_id		AS s_seller_id
+			,s.store_name
+			,s.seller_sort
+			,s.store_phone
+			,s.approve_date
+		FROM 
+			tb_seller AS s
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv},'%')
+			</if>
+			<if test="fd != null and fd !='' and td != null and td !=''">
+				AND
+				s.approve_date <![CDATA[>]]> (#{fd})
+				AND
+				s.approve_date <![CDATA[<]]> (#{td})
+			</if>
+		</trim>
+		ORDER BY s.seller_id;
+	</select>
+	
+	<!-- 회원 검색 -->
+	<select id="searchUserList" parameterType="map" resultMap="UserResultMap" fetchSize="100">
+		/* 회원 검색 */
+		SELECT
+			*
+		FROM 
+			tb_user AS u
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="sv != null and sv != ''">
+				${sk} LIKE CONCAT('%', #{sv} ,'%')
+			</if>	
+		</trim>
+		ORDER BY u.user_id
+	</select>
+	<!-- /* ==================== 검색 끝 =================== */ -->
 	
 	
-	<!-- (휴면목록) 2 휴면해제 클릭시 휴면 테이블 '휴면해제' -->
-	<insert id="dormantToNormal2" parameterType="Dormant">
+	<!-- /* ==================== 휴면 시작 =================== */ -->
+	<!-- (휴면목록2) 휴면해제 클릭시 휴면 테이블 '휴면해제' -->
+	<insert id="dormantToNormal2" parameterType="String">
 		/* (휴면목록) 2 휴면해제 클릭시 휴면 테이블 '휴면해제' */
 		INSERT INTO tb_dormant
 			(login_id, dormant_status, dormant_change_date)
@@ -132,7 +175,7 @@
 			(#{loginId}, '휴면해제', NOW())
 	</insert>
 	
-	<!-- (휴면목록) 1 휴면해제 클릭시 회원상태 '정상' -->
+	<!-- (휴면목록1) 휴면해제 클릭시 회원상태 '정상' -->
 	<update id="dormantToNormal1" parameterType="String">
 		/* 휴면해제 클릭시 */
 		UPDATE tb_user
@@ -140,7 +183,7 @@
 		WHERE  user_id = #{userId}
 	</update>
 	
-	<!-- 휴면 처리 2 (휴면 테이블에 insert) -->
+	<!-- (휴면처리3) 휴면 테이블에 insert -->
 	<insert id="insertDormant" parameterType="Dormant">
 		/* 휴면 처리 2 (휴면 테이블에 insert) */
 		INSERT INTO tb_dormant
@@ -149,7 +192,7 @@
 			(#{userId}, '휴면전환', NOW())
 	</insert>
 	
-	<!-- 휴면 처리 1 (회원상태 '휴면'으로) -->
+	<!-- (휴면처리2) 회원상태 '휴면'으로 -->
 	<update id="normalToDormant" parameterType="String">
 		/* 휴면 처리 1 (회원상태 '휴면'으로) */
 		UPDATE tb_user
@@ -157,7 +200,7 @@
 		WHERE  user_id = #{userId}
 	</update>
 	
-	<!-- 휴면 대상 아이디 -->
+	<!-- (휴면처리1) 휴면 대상 아이디 목록 -->
 	<select id="getDormantId" parameterType="String" resultType="String">
 		/* 휴면 대상 아이디 */
 		SELECT 
@@ -176,22 +219,9 @@
 		HAVING 
 			MAX(l.login_date) <![CDATA[<]]> DATE_ADD(NOW(), INTERVAL -1 YEAR)
     </select>
+	<!-- /* ==================== 휴면 끝 =================== */ -->
 
-	<!-- 휴면 조건 -->
-	<select id="dormantCheck" parameterType="String" resultType="int">
-		/* 휴면 조건 */
-		SELECT
-			COUNT(*)
-		FROM
-			tb_login l
-		WHERE
-			l.login_date >= DATE_ADD(NOW(), INTERVAL -1 YEAR)
-			AND 
-			l.login_id = 'buyer03'
-	</select>
-
-	<!-- /* ===== 회원 탈퇴 시작 ===== */ -->
-	
+	<!-- /* ==================== 회원 탈퇴 시작 =================== */ -->
 	<!-- (판매자) 판매상품 판매중지여부 Y로 변경 -->
 	<delete id="updateGoodsSaleCheck" parameterType="String">
 		/* 판매상품 판매중지여부 Y로 변경 */
@@ -385,7 +415,7 @@
 		FROM 	tb_user 	AS u
 		WHERE	u.user_id = 'admin01';
     </select>
-	<!-- /* ===== 회원 탈퇴 끝 ===== */ -->
+	<!-- /* ==================== 회원 탈퇴 끝 =================== */ -->
 
 	<!-- 판매자 신청 승인 (seller 테이블) -->
 	<update id="approveSeller" parameterType="User">

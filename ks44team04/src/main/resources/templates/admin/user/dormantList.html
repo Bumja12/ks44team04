@@ -26,6 +26,9 @@
 	  text-align: left;
 	  vertical-align: middle;
 	}
+	.btns {
+		text-align: center;
+	}
 </style>
 </th:block>
 
@@ -53,24 +56,29 @@
 			</div>
 
 			<div class="x_content">
-				<div class="well" style="overflow: auto">
+				<div class="well">
 					<div class="">
 						<table class=" table table-bordered"
 							style="background-color: white;">
 							<tbody>
 								<tr>
-									<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>검색어</b></td>
-									<td class="col-md-10">
+									<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>아이디</b></td>
+									<td class="col-md-4">
+										<div class="form-inline">
+											<div class="form-group">
+												<input type="text" class="form-control text" placeholder="아이디를 입력해주세요.">
+											</div>
+										</div>
+									</td>
+									<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>휴면전환/해제</b></td>
+									<td class="col-md-4">
 										<div class="form-inline">
 											<div class="form-group">
 												<select class="form-control" id="userSearchOption" style="width: 150px;">
 													<option selected>- 전체검색 -</option>
-													<option value="userId">아이디</option>
-													<option value="userName">이름</option>
+													<option value="userId">휴면전환</option>
+													<option value="userName">휴면해제</option>
 												</select>
-											</div>
-											<div class="form-group">
-												<input type="text" class="form-control text" placeholder="검색어를 입력해주세요">
 											</div>
 										</div>
 									</td>
@@ -104,13 +112,16 @@
 							<td th:text="${l.dormantStatus}"></td>
 							<td th:text="${l.dormantChangeDate}"></td>
 							<td>
-<!-- 								<form id="dormantToNormalForm" th:action="@{/admin/user/dormantToNormal(userId=${l.loginId})}" method="get">
-									<input type="hidden" id="loginId" name="loginId" value="${l.loginId}">	
+ 								<form class="dormantToNormalForm" th:action="@{/admin/user/dormantToNormal}" method="get">
+									<input type="hidden" name="userId" th:value="${l.loginId}">	
+									<!-- <input type="submit" form="dormantToNormalForm" class="normalBtn btn btn-dark btn-xs" id="dormantToNormalBtn" value="휴면해제"> -->
 								</form>
-								<input type="submit" form="dormantToNormalForm" class="normalBtn btn btn-dark btn-xs" id="dormantToNormalBtn" value="휴면해제"> -->
-								<a class="Modal removeBtn btn btn-dark btn-xs" th:data-user-id="${l.loginId}" data-toggle="modal" data-target="#removeModal">
-									탈퇴
-								</a>
+								<div class="btns">
+									<button type="submit" form="dormantToNormalForm" class="normalBtn btn btn-dark btn-xs">휴면해제</button>
+									<a class="Modal removeBtn btn btn-dark btn-xs" th:data-user-id="${l.loginId}" data-toggle="modal" data-target="#removeModal">
+										탈퇴
+									</a>
+								</div>
 							</td>
 						</tr>
 						<tr th:unless="${not #lists.isEmpty(dormantList)}">

@@ -9,6 +9,7 @@ import ks44team04.dto.Leave;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.Login;
+import ks44team04.dto.PaymentTotal;
 import ks44team04.dto.Right;
 import ks44team04.dto.User;
 import org.slf4j.Logger;
@@ -25,7 +26,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
@@ -41,30 +44,48 @@ public class UserController {
         this.userService = userService;
     }
     
+	// 10/17 판매자 검색
+	@PostMapping("/user/sellerList")
+	public String searchSellerList(@RequestParam(name="searchKey", defaultValue = "sellerId") String sk
+								   ,@RequestParam(name="searchValue", required = false, defaultValue = "") String sv
+								   ,@RequestParam(name="fromDate", required = false, defaultValue= "") String fromDate
+								   ,@RequestParam(name="toDate", required = false, defaultValue= "") String toDate
+								   ,Model model) {
+		
+		if(sk.equals("sellerId")) {
+			sk = "s.seller_id";
+		}else if(sk.equals("sellerCode")) {
+			sk = "s.seller_code";
+		}else if(sk.equals("sellerSort")) {
+			sk = "s.seller_sort";
+		}else if(sk.equals("storeName")) {
+			sk = "s.store_name";
+		}else if(sk.equals("storePhone")) {
+			sk = "s.store_phone";
+		}
+		
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("sk", sk);
+		searchMap.put("sv", sv);
+		searchMap.put("fd", fromDate);
+		searchMap.put("td", toDate);
+		
+		List<Seller> sellerList = userService.searchSellerList(searchMap);
+		model.addAttribute("title", "검색결과");
+		model.addAttribute("sellerList", sellerList);
+		
+		return "admin/user/sellerList";
+	}
+    
     // 10/17 (휴면목록) 1 휴면해제 클릭시 회원상태 '정상' / 2 휴면해제 클릭시 휴면 테이블 '휴면해제'
     @GetMapping("/user/dormantToNormal")
     public String dormantToNormal(@RequestParam(value="userId", required = false) String userId) {
-    	
+    	log.info("휴면전환 될 회원 아이디:::::::::: {}", userId);
     	userService.dormantToNormal1(userId);
     	userService.dormantToNormal2(userId);
     	
     	return "redirect:/admin/user/dormantList";
     }
-    
-    // 10/17 휴면 처리 (1.회원상태 '휴면'으로 / 2.휴면 테이블에 insert)
-    @Scheduled(cron = "0 0 0 * * *")
-	@PostMapping("/user/dormantProcess")
-	public void dormantProcess() {
-		List<String> userIds = userService.getDormantId(); 
-		//select를 통해 휴면 대상 아이디를 담아줌
-		
-		for(String userId : userIds) {
-			userService.normalToDormant(userId);
-			// 대상 아이디 tb_user 에서 업데이트
-			userService.insertDormant(userId);
-			// tb_dormant에 인서트
-		}
-	}
 	
     // 10/13 회원 탈퇴
 	@GetMapping("/user/removeUser")
