@@ -196,9 +196,9 @@
 			<if test="goodsContent != null and goodsContent != ''">,goods_content = #{goodsContent}</if>
 			<if test="goodsDetail != null and goodsDetail != ''">,goods_detail = #{goodsDetail}</if>
 			<if test="goodsPrice != null and goodsPrice != ''">,goods_price = #{goodsPrice}</if>
-			<if test="goodsDiscountRate != null and goodsDiscountRate != ''">,goods_discount_rate = #{goodsDiscountRate}</if>
-			<if test="goodsPostPrice != null and goodsPostPrice != ''">,goods_post_price = #{goodsPostPrice}</if>
-			<if test="goodsStock != null and goodsStock != ''">,goods_stock = #{goodsStock}</if>
+			,goods_discount_rate = #{goodsDiscountRate}
+			,goods_post_price = #{goodsPostPrice}
+			,goods_stock = #{goodsStock}
 			<if test="soldoutCheck != null and soldoutCheck != ''">,soldout_check = #{soldoutCheck}</if>
 			<if test="stopSaleCheck != null and stopSaleCheck != ''">,stop_sale_check = #{stopSaleCheck}</if>
 			<if test="packagePostCheck != null and packagePostCheck != ''">,package_post_check = #{packagePostCheck}</if>
@@ -460,6 +460,17 @@
 		FROM 	tb_goods_qna_answer
 		WHERE   seller_id = #{SellerId};
     </select>
+    
+	<!-- 문의 답변 시 문의상태 '답변완료'로 변경 -->
+	<update id="statusUpdate" parameterType="int">
+	/* 문의 답변 시 문의상태 '답변완료'로 변경 */
+	UPDATE 
+		tb_goods_qna AS gq
+	SET
+		gq.qna_status = '답변완료'
+	WHERE
+		gq.goods_qna_num = #{goodsQnaNum};
+	</update>
     
     <!-- 문의 답변 수정 -->
 	<update id="answerModify" parameterType="GoodsQnaAnswer">

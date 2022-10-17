@@ -17,10 +17,13 @@ public interface CartMapper {
 	public String cartNewCode(String buyerId);
 	
 	//장바구니 확인
-	public Cart cartCheck(Cart cart);
+	public int cartCheck(Cart cart);
 	
 	//장바구니 수량 수정
 	public int cartModify(Cart cart);
+	
+	//장바구니 내 같은 상품이라면 개수 추가
+    public void cartPlus(Cart cart);
 	
 	//장바구니에서 상품 삭제
 	public void cartRemove(Cart cart);

@@ -261,6 +261,8 @@ public class GoodsController {
 		goodsQnaAnswer.setSellerId("seller01");
 		
 		goodsService.answerAdd(goodsQnaAnswer);
+		goodsService.statusUpdate(goodsQnaAnswer.getGoodsQnaNum());
+		
 		log.info("사용자가 등록한 답변 정보 ::: {}", goodsQnaAnswer);
 		
 		return "redirect:/admin/goods/goodsQna";
