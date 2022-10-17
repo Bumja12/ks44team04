@@ -1,7 +1,9 @@
 package ks44team04.admin.controller;
 
+import ks44team04.service.GoodsService;
 import ks44team04.service.ReportService;
 import ks44team04.util.CodeIndex;
+import ks44team04.dto.Goods;
 import ks44team04.dto.Report;
 import ks44team04.dto.ReportRule;
 import ks44team04.dto.User;
@@ -9,7 +11,6 @@ import ks44team04.dto.UserSuspend;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +29,13 @@ import java.util.Map;
 public class ReportController {
 
 	private ReportService reportService;
+	private GoodsService goodsService;
+	
 	private static final Logger log = LoggerFactory.getLogger(ReportController.class);
 
-	public ReportController(ReportService reportService) {
+	public ReportController(ReportService reportService,GoodsService goodsService) {
 		this.reportService = reportService;
+		this.goodsService = goodsService;
 	}
 	
 	/*
@@ -124,6 +128,25 @@ public class ReportController {
 		/* model.addAttribute("title", "신고하기"); */
 		/* model.addAttribute("reportList", reportList); */
 		return "redirect:/admin/report/reportList";
+	}
+	
+	// 상품에서 신고등록
+	@GetMapping("/report/userReport")
+	public String getUserReport(@RequestParam(value = "goodsList" , required = false) String goodsList, Report report ,Model model) {
+
+		String repoterId = "buyer01";
+		String HistoryCode = reportService.getHistoryCode();
+		HistoryCode = CodeIndex.codeIndex(HistoryCode, 15);
+		log.info("---------------------------------사용자가 입력한 정보", report);
+		report.setReportHistoryCode(HistoryCode);
+		report.setReportingId(repoterId);
+		reportService.setReport(report);
+		log.info("---------------------------------, {}", HistoryCode);
+		Goods goodsInfo = goodsService.getGoodsInfoByCode(goodsList);
+		/* model.addAttribute("title", "신고하기"); */
+		/* model.addAttribute("reportList", reportList); */
+		model.addAttribute("goodsInfo", goodsInfo);
+		return "/user/goods/goods";
 	}
 	
 	//신고 리스트 검색 

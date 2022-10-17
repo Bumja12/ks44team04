@@ -37,80 +37,21 @@
 			                        <th>카테고리 대분류</th>
 			                        <th>회원 아이디 FK(작성자)</th>
 			                        <th>사용 여부</th>
-			                        <th>등록일시</th>
+			                        <th>등록일</th>
 		                    	</tr>
 		                   	</thead>
 							<tbody>
-		                 		<tr style="cursor:pointer;">
+								<!-- 판매 상품 카테고리 대분류 목록 -->
+								<tr th:each="glList : ${goodsLargeCategoryList}" style="cursor:pointer;">
 									<td>
 										<input type="checkbox" class="checkAll" name="checkAll1">
 		             				</td>
-		                          	<td class="moveToDetail">F000</td>
-		                          	<td class="moveToDetail">과일</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">Y</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">V000</td>
-		                          	<td class="moveToDetail">채소</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">Y</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">G000</td>
-		                          	<td class="moveToDetail">쌀/잡곡</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">Y</td>
-		                            <td class="moveToDetail">2021-01-01 00:00:00</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">M000</td>
-		                          	<td class="moveToDetail">버섯</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">Y</td>
-		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">UF00</td>
-		                          	<td class="moveToDetail">못난이 과일</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">Y</td>
-		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">UV00</td>
-		                          	<td class="moveToDetail">못난이채소</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">Y</td>
-		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
-		                    	</tr>
-		                 		<tr style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-		                          	<td class="moveToDetail">Z000</td>
-		                          	<td class="moveToDetail">기타</td>
-		                          	<td class="moveToDetail">admin01</td>
-		                            <td class="moveToDetail">Y</td>
-		                            <td class="moveToDetail">2022-01-01 00:00:00	</td>
-		                    	</tr>
+									<td class="moveToDetail" th:text="${glList.goodsLargeCategory}">판매 상품 카테고리 대분류 PK</td>
+									<td class="moveToDetail" th:text="${glList.goodsCategory}">카테고리 대분류</td>
+									<td class="moveToDetail" th:text="${glList.regId}">회원 아이디 FK(작성자)</td>
+									<td class="moveToDetail" th:text="${glList.useCheck}">사용 여부</td>
+									<td class="moveToDetail" th:text="${glList.regDate}">등록일</td>
+								</tr>
 							</tbody>
 		        		</table>
 					</div> <!-- </div class="card-box table-responsive"> -->

@@ -6,10 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import ks44team04.dto.BoardCategory;
 import ks44team04.dto.CustomerAskCategory;
+import ks44team04.dto.GoodsLargeCategory;
+import ks44team04.dto.GoodsQnaCategory;
+import ks44team04.dto.GoodsSmallCategory;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.RegularAskCategory;
+import ks44team04.dto.ReportCategory;
 import ks44team04.mapper.CategoryMapper;
 
 @Service
@@ -25,6 +30,8 @@ public class CategoryService {
 	public CategoryService(CategoryMapper categoryMapper) {
 		this.categoryMapper = categoryMapper;
 	}
+	
+	//==============================목록 조회============================== 
 	
 	// 구매자 등급 카테고리 목록 조희
 	public List<LevelBuyerCategory> getLevelBuyerCategoryList(){
@@ -62,4 +69,93 @@ public class CategoryService {
 		
 		return regularAskCategoryList;
 	}
+	
+	
+	// 게시판 카테고리 목록 조희
+	public List<BoardCategory> getBoardCategoryList(){
+		
+		// 게시판 카테고리 목록
+		List<BoardCategory> boardCategoryList = categoryMapper.getBoardCategoryList();
+
+		return boardCategoryList;
+	}
+
+	// 신고 대상 카테고리 목록 조희
+	public List<ReportCategory> getReportCategoryList(){
+		
+		// 신고 대상 카테고리 목록
+		List<ReportCategory> reportCategoryList = categoryMapper.getReportCategoryList();
+		
+		return reportCategoryList;
+	}
+	
+	// 판매 상품 카테고리 대분류 목록 조희
+	public List<GoodsLargeCategory> getGoodsLargeCategoryList(){
+		
+		// 판매 상품 카테고리 대분류 목록
+		List<GoodsLargeCategory> goodsLargeCategoryList = categoryMapper.getGoodsLargeCategoryList();
+
+		return goodsLargeCategoryList;
+	}
+	
+	// 판매 상품 카테고리 소분류 목록 조희
+	public List<GoodsSmallCategory> getGoodsSmallCategoryList(){
+		
+		// 판매 상품 카테고리 소분류 목록
+		List<GoodsSmallCategory> goodsSmallCategoryList = categoryMapper.getGoodsSmallCategoryList();
+		
+		return goodsSmallCategoryList;
+	}
+	
+	// 상품 문의 카테고리 목록 조희
+	public List<GoodsQnaCategory> getGoodsQnaCategoryList(){
+		
+		// 상품 문의 카테고리 목록
+		List<GoodsQnaCategory> goodsQnaCategoryList = categoryMapper.getGoodsQnaCategoryList();
+		
+		return goodsQnaCategoryList;
+	}
+
+	//==============================목록 조회============================== 
+	
+	//==============================내역 조회============================== 
+	
+	// 특정 구매자 등급 카테고리 조희
+	public LevelBuyerCategory getLevelBuyerCategoryByPK(String levelCode) {
+		
+		// 특정 구매자 등급 카테고리
+		LevelBuyerCategory levelBuyerCategory = categoryMapper.getLevelBuyerCategoryByPK(levelCode);
+		
+		return levelBuyerCategory;
+	}
+	
+	// 특정 판매자 등급 카테고리 조희
+	public LevelSellerCategory getLevelSellerCategoryByPK(String levelCode) {
+		
+		// 특정 판매자 등급 카테고리
+		LevelSellerCategory levelSellerCategory = categoryMapper.getLevelSellerCategoryByPK(levelCode);
+		
+		return levelSellerCategory;
+	}
+	
+	// 특정 고객 문의 카테고리 조희
+	public CustomerAskCategory getCustomerAskCategoryByPK(String askCategory) {
+		
+		// 특정 고객 문의 카테고리
+		CustomerAskCategory customerAskCategory = categoryMapper.getCustomerAskCategoryByPK(askCategory);
+		
+		return  customerAskCategory;
+	}
+	
+	// 특정 자주 묻는 질문 카테고리 조희
+	public RegularAskCategory getRegularAskCategoryByPK(String regularAskCategory) {
+		
+		// 특정 자주 묻는 질문 카테고리
+		RegularAskCategory regularAsk = categoryMapper.getRegularAskCategoryByPK(regularAskCategory);
+		
+		return regularAsk;
+	}
+	
+	//==============================내역 조회============================== 
+	
 }

@@ -6,14 +6,13 @@
 <div th:fragment="reviewModal">
 	
 			
-			<form class="row" id="reviewForm" th:action="@{/user/review/reviewList}" method="post" >
+			<form class="row" id="reviewForm" th:action="@{/user/review/reviewAdd}" method="post" >
 				<div class="modal fade review" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
 				<div class="modal-dialog" style="width: 450px;">
-					<div class="modal-content" >
-					<div class="modal-header"
-						style="font-size: 30PX; background-color: #82ae46; color: white; text-align: center; ">
+					<div class="modal-content" >	
+					<div class="modal-header" style="font-size: 30PX; background-color: #82ae46; color: white; text-align: center; ">
 						후기작성</div>
-					<div class="modal-body" style="height: 530px;">
+					<div class="modal-body starModal" style="height: 530px;">
 						<fieldset>
 							 <span class="text-bold">별점을 선택해주세요</span>
 							 <input type="radio" name="reviewStar" value="5" id="rate1"><label
@@ -35,8 +34,8 @@
 							<input type="file" >
 						</div>
 						<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-						<button type="submit" class="btn btn-primary" id="reportAdd">작성</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+							<button type="submit" class="btn btn-primary" id="reportAdd">작성</button>
 						</div>
 					</div>
 				</div>

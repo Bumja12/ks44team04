@@ -25,7 +25,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="askCategory">문의 카테고리 PK
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" id="askCategory" name="askCategory" value="levelBuyer01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" id="askCategory" name="askCategory" th:value="${customerAskCategory.askCategory}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 회원 아이디(등록) -->
@@ -33,7 +33,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="regId">회원 아이디(등록)
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="regId" id="regId" value="admin01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="regId" id="regId" th:value="${customerAskCategory.regId}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 카테고리명 -->
@@ -43,20 +43,23 @@
 										<div class="col-md-6 col-sm-6 ">
 											<select class="select2_single form-control" id="categoryName" disabled="disabled" name="categoryName" required="required" tabindex="-1">
 												<option></option>
-												<option value="5" selected="selected">포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
+												<th:block th:if="${not #lists.isEmpty(customerAskCategoryList)}" th:each="cAskCategoryList : ${customerAskCategoryList}">
+													<!-- th:selected 사용 -->
+													<option th:if="${cAskCategoryList.askCategory eq 'askCategory001'}" th:value="${cAskCategoryList.askCategory}" th:selected="${customerAskCategory.categoryName eq '결제 관련 문의'}">결제 관련 문의</option> 
+													<option th:if="${cAskCategoryList.askCategory eq 'askCategory002'}" th:value="${cAskCategoryList.askCategory}" th:selected="${customerAskCategory.categoryName eq '정기 배송 문의'}">정기 배송 문의</option>
+													<option th:if="${cAskCategoryList.askCategory eq 'askCategory003'}" th:value="${cAskCategoryList.askCategory}" th:selected="${customerAskCategory.categoryName eq '배송 관련 문의'}">배송 관련 문의</option>
+													<option th:if="${cAskCategoryList.askCategory eq 'askCategory004'}" th:value="${cAskCategoryList.askCategory}" th:selected="${customerAskCategory.categoryName eq '홈페이지 오류 신고'}">홈페이지 오류 신고</option>
+													<option th:if="${cAskCategoryList.askCategory eq 'askCategory005'}" th:value="${cAskCategoryList.askCategory}" th:selected="${customerAskCategory.categoryName eq '판매 문의'}">판매 문의</option>
+												</th:block>	
 											</select>
 										</div>
 									</div>
 									<!-- 등록일 -->
 									<div class="item form-group">
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="regDate">등록일
-										</label>
+										</label> 
 										<div class="col-md-6 col-sm-6 ">
-											<input type="datetime" name="regDate" id="regDate" value="2021-01-01 00:00:00" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="datetime" name="regDate" id="regDate" th:value="${customerAskCategory.regDate}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 사용 여부 -->
@@ -64,8 +67,8 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="radio" class="flat" name="useCheck" id="useCheckY" value="Y" checked="checked" required="required" disabled="disabled"/> Y
-											<input type="radio" class="flat" name="useCheck" id="useCheckN" value="N" required="required" disabled="disabled"/> N
+											<input type="radio" class="flat" name="useCheck" id="useCheckY" value="Y" th:checked="${customerAskCategory.useCheck eq 'Y'}" required="required" disabled="disabled"/> Y
+											<input type="radio" class="flat" name="useCheck" id="useCheckN" value="N" th:checked="${customerAskCategory.useCheck eq 'N'}"required="required" disabled="disabled"/> N
 										</div>
 									</div>
 									<div class="ln_solid"></div>

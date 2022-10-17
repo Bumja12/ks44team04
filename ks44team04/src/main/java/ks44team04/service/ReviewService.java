@@ -36,6 +36,18 @@ public class ReviewService {
 		
 		return reviewList;
 	}
+	
+	//후기 등록 
+	public void reviewAdd(Review review){
+		reviewMapper.reviewAdd(review);
+	}
+	
+	//후기 등록  코드 증가 
+	public String getReviewListCode() {
+		String getReviewListCode = reviewMapper.getReviewListCode();
+		return getReviewListCode;
+	}
+	
 	//후기 목록 삭제 
 	 public void reviewListDelete(Review review) {
 	    	reviewMapper.reviewListDelete(review);
@@ -93,7 +105,4 @@ public class ReviewService {
     public void reviewCommentDelete(ReviewComment reviewComment) {
     	reviewMapper.reviewCommentDelete(reviewComment);
     }
-    
-    
-	
 }

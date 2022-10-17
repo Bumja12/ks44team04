@@ -2,12 +2,12 @@ package ks44team04.dto;
 
 public class GoodsSmallCategory {
 
-    private String goodsSmallCategory;
-    private String goodsLargeCategory;
-    private String smallCategoryName;
-    private String regId;
-    private String useCheck;
-    private String regDate;
+    private String goodsSmallCategory; // 판매 상품 카테고리 소분류 PK
+    private String goodsLargeCategory; // 판매 상품 카테고리 대분류 FK
+    private String smallCategoryName;  // 판매 상품 소분류
+    private String regId;			   // 회원 아이디 FK(작성자)
+    private String useCheck; 	       // 등록일
+    private String regDate;			   // 사용 여부
 
     public String getGoodsSmallCategory() {
         return goodsSmallCategory;

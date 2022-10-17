@@ -2,11 +2,11 @@ package ks44team04.dto;
 
 public class ReportCategory {
 
-    private String reportCategory;
-    private String categoryName;
-    private String userId;
-    private String regDate;
-    private String useCheck;
+    private String reportCategory; // 신고 카테고리 PK
+    private String categoryName;   // 카테고리명
+    private String userId;		   // 회원 아이디 FK(등록인)
+    private String regDate;		   // 등록일
+    private String useCheck;	   // 사용 여부
 
     public String getReportCategory() {
         return reportCategory;
