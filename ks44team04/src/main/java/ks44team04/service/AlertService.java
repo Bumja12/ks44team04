@@ -31,6 +31,12 @@ public class AlertService {
     	int addAlertResult = alertMapper.addAlert(alert);
     	System.out.println("회원가입 결과:" + addAlertResult);
     }
+    
+	//알림 코드 증가
+	public String getAlertNewCode() {
+		String alertNewCode = alertMapper.getAlertNewCode();
+		return alertNewCode;
+	}
 	
 	//알림 전송내역 조회
 	public List<AlertSend> getAlertSendList() {

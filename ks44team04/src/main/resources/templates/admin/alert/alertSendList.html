@@ -110,9 +110,6 @@
 				<table id="datatable-checkbox" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid">
 					<thead>
 						<tr>
-							<th style="width: 30px;">
-								<input type="checkbox" id="checkAll" class="flat">
-							</th>
 							<th>알림전송</th>
 							<th>제목</th>
 							<th>수신자</th>
@@ -124,9 +121,6 @@
 					</thead>
 					<tbody>
 						<tr th:if="${not #lists.isEmpty(alertSendList)}" th:each="l : ${alertSendList}">
-							<td>
-								<input type="checkbox" class="indivChecks flat">
-							</td>
 							<td th:text="${l.alertSend}"></td>
 							<td th:text="${l.alertInfo.alertTitle}"></td>
 							<td th:text="${l.receiveId}"></td>
