@@ -12,6 +12,20 @@
 		<result property="fileIsLocal" 		column="file_islocal"/>
 	</resultMap>
 	
+	<insert id="addFileControl" parameterType="list">
+		INSERT INTO tb_file_control
+		(
+			 fc_group_file_idx
+			,fc_file_idx
+		)VALUES
+		<foreach collection="list" item="data" separator=",">
+		( 
+			 #{data.fileGroupIdx}
+			,#{data.fileIdx}
+		)
+		</foreach>
+	</insert>
+	
 	<insert id="addFile" parameterType="list">
 		INSERT INTO tb_file
 		(

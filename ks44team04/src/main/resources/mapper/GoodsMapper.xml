@@ -27,6 +27,7 @@
         	<association property="goodsSmallCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsSmallCategoryMap"/>
 			<association property="goodsLargeCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsLargeCategoryMap"/>
 			<association property="goodsAnswerInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsAnswerMap"/>
+			<association property="fileInfo" resultMap="ks44team04.mapper.FileMapper.fileResultMap"/>
     </resultMap>
     
 <!-- 	 <association property="userInfo" javaType="User">
@@ -49,7 +50,11 @@
 			,g.stop_sale_check
 			,g.goods_discount_rate
 			,u.user_id
-			,g.reg_date	
+			,g.reg_date
+			,g.goods_file
+			,fc.fc_file_idx
+			,f.file_idx
+			,f.file_path
 		FROM
 			 tb_goods AS g
 			 INNER JOIN
@@ -64,6 +69,14 @@
 			 tb_goods_large_category AS lc
 			 ON
 			 sc.goods_large_category = lc.goods_large_category
+			 INNER JOIN
+			 tb_file_control AS fc
+			 ON
+			 g.goods_file = fc.fc_group_file_idx
+			 INNER JOIN
+			 tb_file AS f
+			 ON
+			 fc.fc_file_idx = f.file_idx
 		ORDER BY g.reg_date DESC;
 	</select>
 	
@@ -136,7 +149,10 @@
 			,g.stop_sale_check			
 			,g.package_post_check		
 			,g.regular_deliver_check	
-			,g.reg_date					
+			,g.reg_date			
+			,fc.fc_file_idx
+			,f.file_idx
+			,f.file_path
 		FROM
 			tb_goods AS g
 			INNER JOIN
@@ -147,6 +163,14 @@
 			tb_goods_large_category as gl
 			ON
 			gs.goods_large_category = gl.goods_large_category
+			INNER JOIN
+			tb_file_control AS fc
+			ON
+			g.goods_file = fc.fc_group_file_idx
+			INNER JOIN
+			tb_file AS f
+			ON
+			fc.fc_file_idx = f.file_idx
 		WHERE
 			goods_code = #{goodsCode};
 	</select>

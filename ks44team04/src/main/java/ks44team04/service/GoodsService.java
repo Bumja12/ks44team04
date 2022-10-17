@@ -6,7 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import ks44team04.mapper.FileMapper;
 import ks44team04.mapper.GoodsMapper;
+import ks44team04.dto.FileDto;
 import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.dto.GoodsQna;
@@ -21,8 +24,12 @@ public class GoodsService {
 	
 	//의존성 주입
 	private final GoodsMapper goodsMapper;
-	public GoodsService(GoodsMapper goodsMapper) {
-	this.goodsMapper = goodsMapper;
+	private final FileMapper fileMapper;
+	
+	
+	public GoodsService(GoodsMapper goodsMapper, FileMapper fileMapper) {
+		this.goodsMapper = goodsMapper;
+		this.fileMapper = fileMapper;
 	}
 
 	/* ~~~ 상품 시작 ~~~ */
@@ -58,8 +65,13 @@ public class GoodsService {
 	}
 	
 	//상품 등록
-	public void goodsAdd(Goods goods) {
-		goodsMapper.goodsAdd(goods);
+	public void goodsAdd(Goods goods, List<FileDto> fileList) {
+		
+		int result = goodsMapper.goodsAdd(goods);
+		if(result > 0) {
+			fileMapper.addFile(fileList);
+			fileMapper.addFileControl(fileList);
+		}
 	}
 	
 	//상품 등록 코드 증가

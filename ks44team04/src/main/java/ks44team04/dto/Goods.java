@@ -1,7 +1,5 @@
 package ks44team04.dto;
 
-import java.util.List;
-
 public class Goods {
 
     private String goodsCode;
@@ -25,13 +23,13 @@ public class Goods {
     /* ~~~ 시작 ~~~ */
     
     //이미지 업로드
-    private List<FileDto> imageList;
-    public List<FileDto> getImageList(){
-    	return imageList;
-    }
-    public void setImageList(List<FileDto> imageList) {
-    	this.imageList = imageList;
-    }
+	private FileDto fileInfo;
+	public FileDto getFileInfo() {
+		return fileInfo;
+	}
+	public void setFileInfo(FileDto fileInfo) {
+		this.fileInfo = fileInfo;
+	}
     
     //문의 답변
 	private GoodsQnaAnswer goodsAnswerInfo;

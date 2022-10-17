@@ -28,12 +28,14 @@ public class FileUtil {
 		}
 		
 		// 날짜 패턴 
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd"); 
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyMMdd"); 
     	// 현재 날짜(디렉토리 명)
 		ZonedDateTime current = ZonedDateTime.now();
     	
-		// 파일idx, 파일 타입, 헤더안의 콘텐츠의 실제 콘텐츠 유형, 파일 경로, 디렉토리 분류
-    	String fileIdx, originalFileExtension, contentType, path, directory;
+		// 파일idx, 파일 타입, 헤더안의 콘텐츠의 실제 콘텐츠 유형, 파일 경로, 디렉토리 분류, 파일그룹idx
+    	String fileIdx, originalFileExtension, contentType, path, directory, fileGroupIdx;
+    	
+    	fileGroupIdx = "file_group_" + current.format(format)+Long.toString(System.nanoTime()).substring(0, 7);
     	
     	List<FileDto> fileList = new ArrayList<>();    	
 		
@@ -111,7 +113,9 @@ public class FileUtil {
 			    	
 					// 올려진 파일 리스트로 정리(테이블에 삽입할 내용)
 					fileIdx = "file_"+current.format(format)+Long.toString(System.nanoTime());
+					
 					FileDto fileDto = new FileDto();
+					fileDto.setFileGroupIdx(fileGroupIdx);
 					fileDto.setFileIdx(fileIdx);
 					fileDto.setFileSize(multipartFile.getSize());
 					fileDto.setFileOriginalName(multipartFile.getOriginalFilename());
