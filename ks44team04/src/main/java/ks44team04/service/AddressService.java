@@ -20,9 +20,8 @@ public class AddressService {
         this.addressMapper = addressMapper;
     }
 
-    public List<AddressList> getAddressList(Map addressInfo) {
-        List<AddressList> addressLists = addressMapper.getAddressList(addressInfo);
-        return addressLists;
+    public List<AddressList> getAddressList(Map<String, String> addressInfo) {
+        return addressMapper.getAddressList(addressInfo);
     }
 
     public String getAddressListCode() {

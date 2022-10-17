@@ -138,17 +138,17 @@
     </update>
     <update id="setCancelApprove" parameterType="string">
         UPDATE tb_order_cancel
-        SET approve_date=now()
+        SET approve_date = now()
         WHERE order_detail_code = #{orderDetailCode}
     </update>
-    <update id="setExchangeApprove" parameterType="string">
+    <update id="setExchangeApprove" parameterType="map">
         UPDATE tb_order_exchange
-        SET approve_check='Y', approve_date=now()
+        SET approve_check = 'Y', approve_date = now()
         WHERE order_detail_code = #{orderDetailCode}
     </update>
     <update id="setReturnApprove" parameterType="string">
         UPDATE tb_order_return
-        SET permit_date=now()
+        SET permit_date = now()
         WHERE order_detail_code = #{orderDetailCode}
     </update>
 
@@ -161,6 +161,30 @@
             values (#{postInfo}, #{postList}, now(), #{postCompanyName}, #{invoiceNumber})
     </insert>
 
+    <select id="getContentsCount" resultType="int">
+        select count(tod.order_detail_code)
+        from tb_order_detail as tod
+                 inner join tb_goods tg
+                            on tod.goods_code = tg.goods_code
+                 inner join tb_order t
+                            on tod.order_num = t.order_num
+        where t.buyer_id = 'buyer01'
+    </select>
+
+    <!-- 페이징 테스트 -->
+    <select id="getOrderListTest" parameterType="Paging" resultMap="orderDetailResultMap">
+        select *
+        from tb_order_detail as tod
+                 inner join tb_goods tg
+                            on tod.goods_code = tg.goods_code
+                 inner join tb_order t
+                            on tod.order_num = t.order_num
+        where t.buyer_id = 'buyer01'
+        order by order_detail_code desc
+        limit #{pagination.startNumber}, #{contentsPerPage}
+    </select>
+    <!-- 페이징 테스트 -->
+
     <select id="getOrderList" parameterType="String" resultMap="orderDetailResultMap">
         select *
         from tb_order_detail as tod
@@ -171,7 +195,7 @@
         where t.buyer_id = #{userId}
         order by order_detail_code desc
     </select>
-    <select id="getOrderListA" parameterType="String" resultMap="orderDetailResultMap">
+    <select id="getOrderListA" parameterType="map" resultMap="orderDetailResultMap">
         select *
         from tb_order_detail as tod
                  inner join tb_goods tg
@@ -179,7 +203,12 @@
                  inner join tb_order t
                             on tod.order_num = t.order_num
         where tg.seller_id = #{sellerId}
-          and tod.order_status regexp #{status}
+          <if test="status != null and status != ''">
+            and tod.order_status regexp #{status}
+          </if>
+          <if test="text != null and text != ''">
+            and ${select} regexp #{text}
+          </if>
         order by order_detail_code desc
     </select>
 

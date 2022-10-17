@@ -15,6 +15,19 @@
     </style>
 </head>
 <body>
+<div>[[${paging}]]</div>
+
+<ul class="list-inline">
+    <li class="list-inline-item">
+        <a class="btn-sm btn-secondary" th:href="@{/user/order/listtest?currentPage=1}"><</a>
+    </li>
+    <li class="list-inline-item" th:each="n : ${#numbers.sequence(paging.pagination.startPage, paging.pagination.endPage)}">
+        <a class="btn-sm btn-secondary" th:href="@{|/user/order/listtest?currentPage=${n}|}">[[${n}]]</a>
+    </li>
+    <li class="list-inline-item">
+        <a class="btn-sm btn-secondary" th:href="@{|/user/order/listtest?currentPage=${paging.pagination.totalPageCount}|}">></a>
+    </li>
+</ul>
 <div class="container">
     <div class="table-responsive">
         <table class="table text-center" style="height: 100%;">

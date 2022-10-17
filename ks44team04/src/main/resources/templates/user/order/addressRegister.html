@@ -14,63 +14,65 @@
 <body>
 <div class="container">
     <div class="m-3">
-<form id="addressRegisterForm" th:action="@{/user/address/register}" method="post" class="" onsubmit="submitCheck();">
-    <div class="form-group">
-        <label class="" for="addressName"> 배송지명 <span class="required">*</span> </label>
-        <div class="">
-            <input type="text" id="addressName" name="addressName" required="required" class="">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="" for="receiverName"> 수령인 <span class="required">*</span> </label>
-        <div class="">
-            <input type="text" id="receiverName" name="receiverName" required="required" class="">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="" for="postalCode"> 우편번호 <span class="required">*</span> </label>
-        <div class="">
-            <input type="text" id="postalCode" name="postalCode" required="required" class="" readonly>
-            <button id="addressSearchBtn" type="button" class="btn btn-secondary">주소 검색</button>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="" for="address"> 주소 <span class="required">*</span> </label>
-        <div class="">
-            <input type="text" id="address" name="address" required="required" class="" readonly>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="" for="address2"> 상세주소 <span class="required">*</span> </label>
-        <div class="">
-            <input type="text" id="address2" name="address2" required="required" class="">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="" for="phone"> 연락처 <span class="required">*</span> </label>
-        <div class="">
-            <input type="text" id="phone" name="phone" required="required" class="">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="phone2" class=""> 연락처 2 </label>
-        <div class="">
-            <input id="phone2" class="" type="text" name="phone2">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="" for="defaultAddressCheck"> 기본배송지 설정 </label>
-        <input type="checkbox" id="defaultAddressCheck" name="defaultAddressCheck" class="" checked="checked" value="Y">
-    </div>
-    <div class="form-group">
-        <div class="">
-            <button class="btn btn-secondary" type="button" onclick="window.close();">Cancel</button>
-            <button class="btn btn-secondary" type="reset">Reset</button>
-            <button id="addressRegisterBtn" type="submit" class="btn btn-dark">Submit</button>
-        </div>
-    </div>
+        <form id="addressRegisterForm" th:action="@{/user/address/register}" method="post" class=""
+              onsubmit="submitCheck();">
+            <div class="form-group">
+                <label class="" for="addressName"> 배송지명 <span class="required">*</span> </label>
+                <div class="">
+                    <input type="text" id="addressName" name="addressName" required="required" class="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="" for="receiverName"> 수령인 <span class="required">*</span> </label>
+                <div class="">
+                    <input type="text" id="receiverName" name="receiverName" required="required" class="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="" for="postalCode"> 우편번호 <span class="required">*</span> </label>
+                <div class="">
+                    <input type="text" id="postalCode" name="postalCode" required="required" class="" readonly>
+                    <button id="addressSearchBtn" type="button" class="btn btn-secondary">주소 검색</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="" for="address"> 주소 <span class="required">*</span> </label>
+                <div class="">
+                    <input type="text" id="address" name="address" required="required" class="" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="" for="address2"> 상세주소 <span class="required">*</span> </label>
+                <div class="">
+                    <input type="text" id="address2" name="address2" required="required" class="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="" for="phone"> 연락처 <span class="required">*</span> </label>
+                <div class="">
+                    <input type="text" id="phone" name="phone" required="required" class="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone2" class=""> 연락처 2 </label>
+                <div class="">
+                    <input id="phone2" class="" type="text" name="phone2">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="" for="defaultAddressCheck"> 기본배송지 설정 </label>
+                <input type="checkbox" id="defaultAddressCheck" name="defaultAddressCheck" class="" checked="checked"
+                       value="Y">
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <button class="btn btn-secondary" type="button" onclick="window.close();">Cancel</button>
+                    <button class="btn btn-secondary" type="reset">Reset</button>
+                    <button id="addressRegisterBtn" type="submit" class="btn btn-dark">Submit</button>
+                </div>
+            </div>
 
-</form>
+        </form>
     </div>
 </div>
 <script th:src="@{/user/js/jquery.min.js}"></script>

@@ -24,19 +24,21 @@
                 <a href="javascript:getOrderList('구매확정')">구매확정</a>
             </div>
 
-            <div class="input-group">
+            <div class="input-group col-md-4">
                 <div class="col-md-4">
-                <select class="custom-select form-control" id="inputGroupSelect04">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select id="orderSearchSelect" class="custom-select form-control">
+                    <option value="order_detail_code">주문번호</option>
+                    <option value="goods_code">상품코드</option>
+                    <option value="tg.goods_name">상품명</option>
+                    <option value="t.buyer_id">구매자</option>
                 </select>
                 </div>
-                <div class="input-group-append col-sm-3">
-                    <button class="btn btn-outline-secondary" type="button">Button</button>
+                <div class="col-md-6">
+                    <input id="orderSearchText" type="text" class="form-control"/>
                 </div>
-
+                <div class="input-group-append col-md-2">
+                    <button id="orderSearchBtn" class="btn btn-secondary" type="button" onclick="orderSearch();">검색</button>
+                </div>
             </div>
 
             <div class="x_content">
@@ -147,7 +149,7 @@
         window.addEventListener('load', () => getOrderList('결제|배송|구매'));
 
         /* 페이징 ajax 호출 */
-        function getOrderList(status) {
+        function getOrderList(status, select, text) {
             let dataPerPage = 10;
             let pageCount = 10;
             let globalCurrentPage = 1;
@@ -158,7 +160,7 @@
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: status
+                body: JSON.stringify({status, select, text})
             })
                 .then((response) => response.json())
                 .then((data) => {
@@ -260,6 +262,7 @@
                 });
         }
 
+        /* 배송 수정 택배사 목록 받아오기 */
         let postCompanyHtml = '';
 
         fetch('https://apis.tracker.delivery/carriers')
@@ -309,6 +312,12 @@
         function closeModal2() {
             document.querySelector('#postModifyModal').style.display = 'none';
             document.querySelector('#postModifyForm').reset();
+        }
+
+        function orderSearch() {
+            let selected = document.querySelector('#orderSearchSelect');
+            let text = document.querySelector('#orderSearchText');
+            getOrderList('결제|배송|구매', selected.value , text.value);
         }
 
     </script>

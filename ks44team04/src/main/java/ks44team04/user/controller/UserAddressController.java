@@ -24,20 +24,21 @@ public class UserAddressController {
         this.addressService = addressService;
     }
 
-    @GetMapping("/list")
+    @GetMapping("")
     public String addressList(@RequestParam(value = "userId", required = false) String userId, Model model) {
         userId = "buyer01";
         Map<String, String> addressInfo = new HashMap<>();
         addressInfo.put("userId", userId);
         List<AddressList> addressLists = addressService.getAddressList(addressInfo);
         model.addAttribute("addressList", addressLists);
-        return "user/order/addressList";
+        return "user/order/address";
     }
+
 
     @GetMapping("/register")
     public String addressRegister() {
 
-        return "user/order/addressRegister";
+        return "user/order/addressReg";
     }
     @PostMapping("/register")
     public String addressRegister(AddressList addressList) {
@@ -49,7 +50,7 @@ public class UserAddressController {
         addressList.setBuyerId("buyer01");
         addressService.addressRegister(addressList);
 
-        return "redirect:/user/address/success";
+        return "redirect:/user/address";
     }
 
     @GetMapping("/success")
@@ -59,26 +60,25 @@ public class UserAddressController {
     }
 
     @GetMapping("/modify/{addressList}") // 배송지 수정 클릭 시 값 받아와서 화면에 뿌림
-    @ResponseBody
-    public AddressList getAddressModify(@PathVariable(value = "addressList", required = false) String addressList,
+    public String getAddressModify(@PathVariable(value = "addressList", required = false) String addressList,
                                 Model model) {
         Map<String, String> addressInfo = new HashMap<>();
         addressInfo.put("addressList", addressList);
         AddressList addressLists = addressService.getAddressList(addressInfo).get(0);
-        return addressLists;
+        model.addAttribute("addressLists", addressLists);
+        return "user/order/addressMod";
     }
 
     @PostMapping("/modify")
     public String addressModify(AddressList addressList) {
         addressService.addressModify(addressList);
-        log.info("userAddress.addressList, {}", addressList.getAddressList());
-        return "redirect:/user/address/list";
+        return "redirect:/user/address";
     }
 
-    @GetMapping("/delete/{addressList}")
-    public String getAddressDelete(@PathVariable("addressList") String addressList) {
+    @PostMapping("/delete")
+    @ResponseBody
+    public void addressDelete(@RequestBody String addressList) {
         addressService.addressDelete(addressList);
-        return "redirect:/user/address/list";
     }
 
     @GetMapping("/checkoutlist") // 체크아웃 화면에서 배송지 등록 시 처리 후 화면에 보여줌

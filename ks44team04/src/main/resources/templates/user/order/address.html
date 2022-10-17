@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/userMyPage}">
+
+<th:block layout:fragment="customMyPageCss">
+
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+    <div class="card col mb-2" th:if="${not #lists.isEmpty(addressList)}" th:each="l: ${addressList}">
+        <div class="card-body">
+            <h5 class="card-title">[[${l.addressName}]]</h5>
+            <div class="card-text">[[${l.receiverName}]]</div>
+            <div class="card-text">[[${l.address}]], [[${l.address2}]]</div>
+            <div class="card-text">[[${l.phone}]]
+                <th:block th:if="${not #strings.isEmpty(l.phone2)}"> | [[${l.phone2}]]</th:block>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a class="btn-sm btn-secondary" th:href="|javascript:location.href='/user/address/modify/${l.addressList}'|">수정</a>
+            <a class="btn-sm btn-secondary" th:href="|javascript:deleteAddress('${l.addressList}')|">삭제</a>
+
+        </div>
+    </div>
+    <div class="card col mb-2">
+        <button type="button" class="btn form-control" onclick="location.href='/user/address/register'">배송지 추가</button>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="customMyPageJs">
+    <script>
+        function deleteAddress(addressList) {
+            if (confirm("정말로 삭제하시겠습니까?")) {
+                fetch('/user/address/delete', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: addressList
+                })
+                    .then(() => location.href = '/user/address');
+            }
+        }
+    </script>
+
+</th:block>
+
+
+</html>
