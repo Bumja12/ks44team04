@@ -25,7 +25,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="boardCategory">게시판 카테고리 PK
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="boardCategory" id="boardCategory" value="levelBuyer01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="boardCategory" id="boardCategory" th:value="${board.boardCategory}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 카테고리명 -->
@@ -35,11 +35,14 @@
 										<div class="col-md-6 col-sm-6 ">
 											<select class="select2_single form-control" id="categoryName" disabled="disabled" name="categoryName" required="required" tabindex="-1">
 												<option></option>
-												<option value="5" selected="selected">포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
+												<th:block th:if="${not #lists.isEmpty(boardCategoryList)}" th:each="bCategoryList : ${boardCategoryList}">
+													<!-- th:selected 사용 -->
+													<option th:if="${bCategoryList.boardCategory eq 'boardCategory001'}" th:value="${bCategoryList.boardCategory}" th:selected="${board.categoryName eq '레시피'}">레시피</option> 
+													<option th:if="${bCategoryList.boardCategory eq 'boardCategory002'}" th:value="${bCategoryList.boardCategory}" th:selected="${board.categoryName eq '자유게시판'}">자유게시판</option>
+													<option th:if="${bCategoryList.boardCategory eq 'boardCategory003'}" th:value="${bCategoryList.boardCategory}" th:selected="${board.categoryName eq '농촌체험'}">농촌체험</option>
+													<option th:if="${bCategoryList.boardCategory eq 'boardCategory004'}" th:value="${bCategoryList.boardCategory}" th:selected="${board.categoryName eq '맛집추천'}">맛집추천</option>
+													<option th:if="${bCategoryList.boardCategory eq 'boardCategory005'}" th:value="${bCategoryList.boardCategory}" th:selected="${board.categoryName eq '행사'}">행사</option>
+												</th:block>	
 											</select>
 										</div>
 									</div>
@@ -48,7 +51,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="regId">회원 아이디(등록)
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="regId" id="regId" value="admin01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="regId" id="regId" th:value="${board.regId}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 등록일 -->
@@ -56,7 +59,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="regDate">등록일
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="datetime" name="regDate" id="regDate" value="2021-01-01 00:00:00" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="datetime" name="regDate" id="regDate" th:value="${board.regDate}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 사용 여부 -->
@@ -64,8 +67,8 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="radio" class="flat" name="useCheck" id="useCheckY" value="Y" checked="checked" required="required" disabled="disabled"/> Y
-											<input type="radio" class="flat" name="useCheck" id="useCheckN" value="N" required="required" disabled="disabled"/> N
+											<input type="radio" class="flat" name="useCheck" id="useCheckY" value="Y" th:checked="${board.useCheck eq 'Y'}" required="required" disabled="disabled"/> Y
+											<input type="radio" class="flat" name="useCheck" id="useCheckN" value="N" th:checked="${board.useCheck eq 'N'}" required="required" disabled="disabled"/> N
 										</div>
 									</div>
 									<div class="ln_solid"></div>

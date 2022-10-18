@@ -62,6 +62,15 @@ public interface CategoryMapper {
 	// 특정 자주 묻는 질문 카테고리 조희
 	public RegularAskCategory getRegularAskCategoryByPK(String regularAskCategory); 
 	
+	// 특정 게시판 카테고리 조희
+	public BoardCategory getBoardCategoryByPK(String boardCategory); 
+	
+	// 특정 신고 대상 카테고리 조희
+	public ReportCategory getReportCategoryByPK(String reportCategory); 
+	
+	// 특정 판매 상품 대분류 카테고리 조희
+	public GoodsLargeCategory getGoodsLargeCategoryByPK(String goodsLargeCategory); 
+	
 	//==============================내역 조회============================== 
 	
 }

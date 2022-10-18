@@ -25,7 +25,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="reportCategory">신고 카테고리 PK
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="reportCategory" id="reportCategory" value="levelBuyer01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="reportCategory" id="reportCategory" th:value="${report.reportCategory}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 카테고리명 -->
@@ -35,11 +35,14 @@
 										<div class="col-md-6 col-sm-6 ">
 											<select class="select2_single form-control" id="categoryName" disabled="disabled" name="categoryName" required="required" tabindex="-1">
 												<option></option>
-												<option value="5" selected="selected">포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
+												<th:block th:if="${not #lists.isEmpty(reportCategoryList)}" th:each="rCategoryList : ${reportCategoryList}">
+													<!-- th:selected 사용 -->
+													<option th:if="${rCategoryList.reportCategory eq '1'}" th:value="${rCategoryList.reportCategory}" th:selected="${report.categoryName eq '판매상품'}">판매상품</option> 
+													<option th:if="${rCategoryList.reportCategory eq '2'}" th:value="${rCategoryList.reportCategory}" th:selected="${report.categoryName eq '후기'}">후기</option>
+													<option th:if="${rCategoryList.reportCategory eq '3'}" th:value="${rCategoryList.reportCategory}" th:selected="${report.categoryName eq '후기 댓글'}">후기 댓글</option>
+													<option th:if="${rCategoryList.reportCategory eq '4'}" th:value="${rCategoryList.reportCategory}" th:selected="${report.categoryName eq '게시글'}">게시글</option>
+													<option th:if="${rCategoryList.reportCategory eq '5'}" th:value="${rCategoryList.reportCategory}" th:selected="${report.categoryName eq '게시글댓글'}">게시글댓글</option>
+												</th:block>	
 											</select>
 										</div>
 									</div>

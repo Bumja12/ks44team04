@@ -208,6 +208,21 @@
 		FROM 
 			tb_board_category; -- 게시판 카테고리 테이블 	  
     </select>
+    
+	<!-- 특정 게시판 카테고리 조희 -->
+    <select id="getBoardCategoryByPK" parameterType="String" resultType="BoardCategory">
+    	/* 특정 게시판 카테고리 조희 */
+		SELECT 
+			 board_category AS boardCategory 	  -- 게시판 카테고리 PK
+			,category_name  AS categoryName	 	  -- 카테고리명
+			,reg_id	        AS regId   		 	  -- 회원 아이디 FK(등록인)
+			,reg_date	    AS regDate 		 	  -- 등록일
+			,use_check 	    AS useCheck	  	 	  -- 사용 여부
+		FROM 
+			tb_board_category 					  -- 게시판 카테고리 테이블 	
+		WHERE 
+			board_category = #{boardCategory}; 	  -- 특정 게시판 카테고리의 PK
+    </select>
 	
 	<!-- ==============================게시판 카테고리============================== -->
 	
@@ -217,7 +232,7 @@
 	<resultMap  type="ReportCategory"    id="reportCategoryListMap">
 		<id	    column="report_category" property="reportCategory"/> 	<!-- 게시판 카테고리 PK -->
         <result column="category_name"   property="categoryName"/>		<!-- 카테고리명 -->
-        <result column="reg_id" 		 property="regId"/>		        <!-- 회원 아이디 FK(등록인) -->
+        <result column="user_id" 		 property="userId"/>		    <!-- 회원 아이디 FK(등록인) -->
         <result column="reg_date" 		 property="regDate"/>			<!-- 등록일 -->
         <result column="use_check" 		 property="useCheck"/>			<!-- 사용 여부 -->
 	</resultMap>
@@ -233,6 +248,21 @@
 			,use_check 		    -- 사용 여부
 		FROM 
 			tb_report_category; -- 신고 대상 카테고리 테이블 	    	
+    </select>
+    
+	<!-- 특정 신고 대상 카테고리 조희 -->
+    <select id="getReportCategoryByPK" parameterType="String" resultType="ReportCategory">
+    	/* 특정 신고 대상 카테고리 조희 */
+		SELECT 
+			 report_category AS reportCategory	 -- 신고 카테고리 PK
+			,category_name   AS categoryName   	 -- 카테고리명
+			,user_id		 AS userId	       	 -- 회원 아이디 FK(등록인)
+			,reg_date 		 AS	regDate        	 -- 등록일
+			,use_check 		 AS	useCheck       	 -- 사용 여부
+		FROM 
+			tb_report_category 				   	 -- 신고 대상 카테고리 테이블 	    	
+		WHERE 
+			report_category = #{reportCategory}; -- 특정 신고 대상 카테고리의 PK	
     </select>
 	
 	<!-- ==============================신고 대상 카테고리============================== -->
@@ -259,6 +289,21 @@
 			,reg_date 			     -- 등록일
 		FROM 
 			tb_goods_large_category; -- 판매 상품 카테고리 대분류 테이블     	
+    </select>
+    
+	<!-- 특정 판매 상품 카테고리 대분류 조희 -->
+    <select id="getGoodsLargeCategoryByPK" parameterType="String" resultType="GoodsLargeCategory">
+    	/* 특정 판매 상품 카테고리 대분류 조희 */
+		SELECT 
+			 goods_large_category AS goodsLargeCategory   -- 판매 상품 카테고리 대분류 PK
+			,goods_category 	  AS goodsCategory		  -- 카테고리 대분류
+			,reg_id 			  AS regId		 		  -- 회원 아이디 FK(작성자)
+			,use_check 			  AS useCheck		 	  -- 사용 여부
+			,reg_date 			  AS regDate	     	  -- 등록일
+		FROM 
+			tb_goods_large_category 					  -- 판매 상품 카테고리 대분류 테이블     	
+		WHERE
+			goods_large_category = #{goodsLargeCategory}; -- 특정 판매 상품 카테고리 대분류의 PK				
     </select>
 	
 	<!-- ==============================판매 상품 카테고리 대분류============================== -->
