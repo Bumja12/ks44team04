@@ -26,6 +26,9 @@ public interface UserMapper {
     //유저 마이페이지 
     public String myPage();
     
+    //구매자 or 판매자 선택 화면
+    public String chooseRigth();
+    
     /* =============== 유저페이지 =============== */
     
     

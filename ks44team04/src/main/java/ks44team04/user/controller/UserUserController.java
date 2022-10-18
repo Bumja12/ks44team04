@@ -35,6 +35,15 @@ public class UserUserController {
 		return"user/user/myPage";
 	}
 	
+	//구매자 or 판매자 선택 화면
+	@GetMapping("/chooseRight")
+	public String chooseRight(Model model) {
+		
+		model.addAttribute("title", "가입유형선택");
+		
+		return"user/user/chooseRight";
+	}
+	
 	//회원가입 쿼리실행
 	@PostMapping("/addUser")
     public String addUser(User user) {
@@ -71,6 +80,7 @@ public class UserUserController {
             session.setAttribute("SID", userId);
             session.setAttribute("SNAME", loginUserInfo.getUserName());
             session.setAttribute("SRIGHT", loginUserInfo.getUserRight());
+            session.setAttribute("SLEVEL", loginUserInfo.getUserLevel());
             log.info("로그인 유저 아이디 {}",loginUserInfo.getUserId());
             return "redirect:/user";
         }
