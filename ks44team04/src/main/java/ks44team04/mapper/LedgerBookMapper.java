@@ -17,9 +17,10 @@ public interface LedgerBookMapper {
   //메인 화면 2022 결제 금액 테이블
     public List<Order> orderList(Map<String, Object> orderMap);
     
- //메인 화면 2022년 할인 통계 포인트 부분
+  //메인 화면 2022년 할인 통계 포인트 부분
     public List<Order> pointDiscountlist(Map<String, Object> orderMap);
     
-    
+  //메인 화면에 차트 부분
+    public List<Order> mainCartlist(Map<String,Object> orderMap);
     
 }
