@@ -41,7 +41,7 @@
 			<div class="ftco-animate" style="flex:0 0 20%; margin: auto;" th:object="${goodsList}" th:each="g : ${goodsList}">
 				<div class="product" style="border:none; position:realative; width:250px;">
                 	<a th:href="@{/user/goods/goods(goodsCode=${g.goodsCode})}" class="img-prod" style="border-radius:25px;">
-						<img class="img-fluid" th:src="@{'/' + ${g.fileInfo.filePath}}" th:alt="${g.goodsName}" style="border-radius:25px; height:250px;">
+						<img class="img-fluid" th:src="@{'/' + ${g.fileList[0].filePath}}" th:alt="${g.goodsName}" style="border-radius:25px; height:250px;">
                     </a>
                     <div class="text py-3 pb-4 px-3">
 						<span style="font-size:16px;"><a href="#" style="color:#333;" th:text="${g.goodsName}"></a></span>
