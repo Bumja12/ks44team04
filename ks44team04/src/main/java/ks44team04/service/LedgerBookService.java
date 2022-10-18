@@ -1,6 +1,9 @@
 package ks44team04.service;
 
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import ks44team04.dto.Order;
@@ -14,10 +17,16 @@ public class LedgerBookService {
         this.ledgerBookMapper = ledgerBookMapper;
     }
     
-    //특정 주문 내역 
-    public Order orderList(String sellerId) {
-    	Order order = ledgerBookMapper.orderList(sellerId);
-    	return order;
+    //메인 화면 2022 결제 금액 테이블 
+    public List<Order> orderList(Map<String, Object> orderMap) {
+    	List<Order> orderList = ledgerBookMapper.orderList(orderMap);
+    	return orderList;
+    }
+    
+    //메인 화면 2022년 할인 통계 포인트 부분 
+    public List<Order> pointDiscountlist(Map<String, Object> orderMap) {
+    	List<Order> pointDiscountlist = ledgerBookMapper.pointDiscountlist(orderMap);
+    	return pointDiscountlist;
     }
      
     

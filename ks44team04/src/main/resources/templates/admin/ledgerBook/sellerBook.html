@@ -75,9 +75,9 @@
           <div class="div-4">
 
             <div class="div_2 " style="width: 650px; ;">
-              <dl>
-                <dt> 2022년 결제 금액 </dt>
-              </dl>
+              
+                <input id="dateYear" style="border: none; font-size: 20px;" readonly="readonly" > 
+             
                 <hr style="border: solid 1px #D3D3D3; ">
                <div style="overflow: auto; height: 400px; font-size: 14px;text-align: center; ">
                  <table class="table" >
@@ -90,10 +90,16 @@
                      </tr>
                    </thead>
                    <tbody >
-                   
+                   <th:block th:if="${not #lists.isEmpty(orderList)}" th:each="ol : ${orderList}" >
+                   		<tr>
+                   			<td th:text="${ol.orderDate} + '월'"></td>
+                   			<td th:text="${ol.totalSum}"></td>
+                   			<td th:text="${ol.postPrice}"></td>
+                   			<td th:text="${ol.postPrice} + ${ol.totalSum}"></td>
+                   		</tr>
+                   </th:block>
                      <tr>
                        <td colspan="4" style="padding: 0px;"></td>
-
                      </tr>
                    </tbody>
                  </table>
@@ -111,75 +117,32 @@
           </div>
 
           <div class="div_2" style="font-size: 14px; text-align: center; height: 300px; ">
-            <dl>
-              <dt style=" font-size: 18px;"> 2022년 할인 통계 </dt>
-            </dl>
+          <input id="dateYear2" style="border: none; font-size: 20px; text-align: center;" readonly="readonly" > 
               <hr style="border: solid 1px #D3D3D3;">
             <table class="table">
               <thead>
                 <tr>
                   <th>구분</th>
-                  <th>1월</th>
-                  <th>2월</th>
-                  <th>3월</th>
-                  <th>4월</th>
-                  <th>5월</th>
-                  <th>6월</th>
-                  <th>7월</th>
-                  <th>8월</th>
-                  <th>9월</th>
-                  <th>10월</th>
-                  <th>11월</th>
-                  <th>12월</th>
+                  <th:block th:if="${not #lists.isEmpty(pointDiscountlist)}" th:each="pl : ${pointDiscountlist}">
+                  	<th th:text="${pl.orderDate} + '월' "></th>
+                  </th:block>
                 </tr>
               </thead>
               <thead>
               <tbody>
                 <tr>
                   <td>포인트</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
+                  <th:block th:if="${not #lists.isEmpty(pointDiscountlist)}" th:each="pl : ${pointDiscountlist}">
+                  	<th th:text="${pl.usePoint} "></th>
+                  </th:block>
                 </tr>
                 <tr>
                   <td>쿠폰</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
+                  <th:block th:if="${not #lists.isEmpty(pointDiscountlist)}" th:each="pl : ${pointDiscountlist}">
+                  	<th th:text="${pl.couponPrice} "></th>
+                  </th:block>
                 </tr>
-                <tr>
-                  <td>이벤트</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                  <td>0원</td>
-                </tr>
+                
                 <tr>
                   <td style="padding: 0px;" colspan="13"></td>
                 </tr>
@@ -193,7 +156,6 @@
         </div>
 	</form>
 
-  
 	 
 
          
@@ -223,6 +185,17 @@
         },
 
       });
+
+    </script>
+<script>
+$(function(){
+	let date = new Date();
+	console.log(date.getFullYear());
+	$('#dateYear').val(date.getFullYear() + "년 결제 금액")
+	$('#dateYear2').val(date.getFullYear() + "년 할인 통계")
+
+
+});
 
     </script>
 </th:block>
