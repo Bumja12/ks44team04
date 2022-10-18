@@ -18,19 +18,20 @@
                     </div>
                     <div class="col-md topper">
                     	<div class="right">
-                    		<th:block th:switch="${session.SID}">
-                    			<div th:text="${session.SID}"></div>
-	                       		<li th:case="null">
-			                        <a class="toplNavi" th:href="@{/user/user/signUp}">회원가입<span> | </span></a>
-			                        <a class="topNavi" th:href="@{/user/user/login}">로그인<span> | </span></a>
-			                        <a class="topNavi" th:href="@{/user/user/login}">마이페이지</a>
-	                       		</li>
-	                      		<li th:case="*">
-	                      			<a class="topNavi" th:href="@{/user/logout}">로그아웃<span> | </span></a>
-	                      			<a class="topNavi" th:href="@{/user/user/myPage}"> 마이페이지</a>
-	                      		</li>
-                    		</th:block>
-	                        
+                    		<div class="form-inlne">
+	                    		<th:block th:switch="${session.SID}">
+		                       		<li th:case="null">
+				                        <a class="topNavi" th:href="@{/user/user/chooseRight}">회원가입</a><span>&nbsp; | &nbsp;</span>
+				                        <a class="topNavi" th:href="@{/user/user/login}">로그인</a><span>&nbsp; | &nbsp;</span>
+				                        <a class="topNavi" th:href="@{/user/user/login}">마이페이지</a>
+		                       		</li>
+		                      		<li th:case="*">
+	                    				<span th:text="|[${session.SNAME}님]|"></span> &nbsp;
+		                      			<a class="topNavi" th:href="@{/user/user/logout}">로그아웃</a><span>&nbsp; | &nbsp;</span>
+		                      			<a class="topNavi" th:href="@{/user/user/myPage}">마이페이지</a>
+		                      		</li>
+	                    		</th:block>
+                    		</div>
                     	</div>
                     </div>
                 </div>

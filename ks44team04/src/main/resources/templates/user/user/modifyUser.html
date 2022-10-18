@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/userDefault}">
+<th:block layout:fragment="customCss">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> 
+	<style>
+	.loginTitle {
+		font-weight: 800;
+		font-size: 25px;
+		text-align: center;
+		color: #2c2c2c;
+		margin-bottom: 50px;
+	}
+	
+	#firstForBorder {
+		border-top: 2px solid #585858;
+		padding-top: 20px;
+	}
+	
+	#lastForBorder {
+		border-bottom: 1px solid #dbdbdb;
+	}
+	
+	#addUserBtn {
+		background-color: #7fad39;
+		border: none;
+		color: #ffffff;
+		font-size: 16px;
+		font-weight: bold;
+		height: 50px;
+		width: 200px;
+		border-radius: 5px;
+	}
+	
+ 	.addUserBtn {
+		text-align: center;
+		margin-top: 30px;
+		margin-bottom: 40px;
+	}
+	
+	.loginInputs {
+		display: inline-flex;
+		width: 100%;
+		padding: 20px 10px 0px;
+		margin-bottom: 0px !important;
+	}
+	
+	.loginInput {
+		height: 45px;
+		width: 330px;
+		font-size: 15px;
+		font-weight: 500;
+		border: 1px solid #dcdcdc;
+		border-radius: 3px;
+		padding: 10px;
+	}
+	
+	.checkBtn {
+		border: 1px solid #7fad39;
+		background-color: #ffffff;
+		color: #7fad39;
+		font-size: 15px;
+		font-weight: bold;
+		height: 45px;
+		width: 120px;
+		border-radius: 3px;
+	}
+	
+	.formBox {
+		width: 640px;
+		margin: 0px auto;
+	}
+	
+	label {
+		width: 140px;
+		font-weight: 600;
+		font-size: 14px;
+		padding-top: 12px;
+		color: #545454;
+		margin-left: 8px;
+	}
+	
+	.btnGroup {
+		margin-left: 10px;
+	}
+	
+	.checkBtn span {
+		font-size: 14px;
+	}
+	
+	label span {
+		color: #fd6b54;
+	}
+	
+	.checks{
+		margin-left: 160px;
+		font-size: 13px;
+		color: #fd6b54;
+	}
+	</style>
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+	<div class="container mt-5 mb-5">
+		<div class="loginTitle">회원가입</div>
+		<div class="row justify-content-center mt-5 mb-3">
+			<form class="col-lg-7">
+				<div class="form-group loginInputs" id="firstForBorder">
+					<label for="userId">아이디 <span>*</span></label>
+					<input type="text" class="loginInput" id="userId" name="userId" placeholder="아이디를 입력해주세요.">
+					<div class="btnGroup">
+						<button type="button" class="checkBtn" id="idCheckBtn">
+							<span class="checkBtnText">중복확인</span>
+						</button>
+					</div>
+				</div>
+				<div>
+					<span class="checks" id="idCheck">테스트</span>
+				</div>
+				<div class="form-group loginInputs">
+					<label for="userPw">현재 비밀번호 <span>*</span></label>
+					<input type="text" class="loginInput" id="userPw" name="userPw" placeholder="비밀번호를 입력해주세요.">
+				</div>
+				<div class="form-group loginInputs">
+					<label for="userPw">새 비밀번호 <span>*</span></label>
+					<input type="text" class="loginInput" id="userPw" name="userPw" placeholder="새 비밀번호를 입력해주세요.">
+				</div>
+				<div>
+					<span class="checks" id="pwCheck1">테스트</span>
+				</div>
+				<div class="form-group loginInputs">
+					<label for="userPw">새 비밀번호 확인<span>*</span></label>
+					<input type="text" class="loginInput" id="userPwCheck" name="userPwCheck" placeholder="새 비밀번호를 한번 더 입력해주세요.">
+				</div>
+				<div>
+					<span class="checks" id="pwCheck2">테스트</span>
+				</div>
+				<div class="form-group loginInputs">
+					<label for="userPw">이름 <span>*</span></label>
+					<input type="text" class="loginInput" id="userName" name="userName" placeholder="이름을 입력해주세요.">
+				</div>
+				<div>
+					<span class="checks" id="nameCheck">테스트</span>
+				</div>
+				<div class="form-group loginInputs">
+					<label for="userPw">닉네임 <span>*</span></label>
+					<input type="text" class="loginInput" id="userNickname" name="userNickname" placeholder="닉네임을 입력해주세요.">
+					<div class="btnGroup">
+						<button type="button" class="checkBtn" id="idCheckBtn">
+							<span class="checkBtnText">중복확인</span>
+						</button>
+					</div>
+				</div>
+				<div>
+					<span class="checks" id="nicknameCheck">테스트</span>
+				</div>
+				<div class="form-group loginInputs">
+					<label for="userPw">이메일 <span>*</span></label>
+					<input type="text" class="loginInput" id="userEmail" name="userEmail" placeholder="예: ksmart44@mail.com">
+					<div class="btnGroup">
+						<button type="button" class="checkBtn" id="idCheckBtn">
+							<span class="checkBtnText">중복확인</span>
+						</button>
+					</div>
+				</div>
+				<div>
+					<span class="checks" id="emailCheck">테스트</span>
+				</div>
+				<div class="form-group loginInputs">
+					<label for="userPw">휴대폰 <span>*</span></label>
+					<input type="text" class="loginInput" id="userPw" name="userPw" placeholder="숫자만 입력해주세요." maxlength="11">
+					<div class="btnGroup">
+						<button type="button" class="checkBtn" id="idCheckBtn">
+							<span class="checkBtnText">중복확인</span>
+						</button>
+					</div>
+				</div>
+				<div>
+					<span class="checks" id="phoneCheck">테스트</span>
+				</div>
+				<div class="form-group loginInputs">
+					<label for="userPw">성별 <span>*</span></label>
+					<input type="radio" name="usergender" id="userGenderF" value="여">
+					<label for="userGenderF">여자</label>
+					<input type="radio" name="usergender" id="userGenderM" value="남">
+					<label for="userGenderM">남자</label>
+				</div>
+				<div>
+					<span class="checks" id="genderCheck">테스트</span>
+				</div>
+				<div class="form-group loginInputs">
+					<label for="userPw">주소 <span>*</span></label>
+					<input type="text" class="loginInput" id="userPw" name="userPw" placeholder="주소를 검색해주세요." readonly>
+					<div class="btnGroup">
+						<button type="button" class="checkBtn" id="idCheckBtn">
+							<span class="checkBtnText">주소검색</span>
+						</button>
+					</div>
+				</div>
+				<div>
+					<span class="checks" id="addressCheck">테스트</span>
+				</div>
+				<div class="form-group loginInputs">
+					<label for="userPw"></label>
+					<input type="text" class="loginInput" id="userPw" name="userPw" placeholder="상세주소를 입력해주세요.">
+				</div>
+				<div>
+					<span class="checks" id="addressCheck2">테스트</span>
+				</div>
+				<div class="form-group loginInputs" id="lastForBorder">
+					<label for="userPw">정보보관기간 <span>*</span></label>
+					<input type="radio" name="usergender" id="userGenderF" value="여">
+					<label for="userGenderF">탈퇴시까지</label>
+					<input type="radio" name="usergender" id="userGenderM" value="남"> 
+					<label for="userGenderM">1년</label>
+				</div>
+				<div>
+					<span class="checks" id="infoKeepCheck">테스트</span>
+				</div>
+
+				<div class="addUserBtn">
+					<button type="button" id="addUserBtn" class="addUserBtn mt-3">회원가입</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</th:block>
+
+<th:block layout:fragment="customJsScript">
+<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+<script>
+
+</script>
+</th:block>
+</html>
