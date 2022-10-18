@@ -58,7 +58,6 @@ th {
 							<th>가입일</th>
 							<th>최근접속일</th>
 							<th>상태</th>
-							<th>관리</th>
 							<th style="display: none"><input type="text" name="adminId" th:value="${session.SID}"></th>
 							<th style="display: none"><input type="text" id="couponCode" name="couponCode"></th>
 						</tr>
@@ -76,9 +75,6 @@ th {
 							<td th:text="${l.userRegDate}"></td>
 							<td th:text="${l.userUpdateDate}"></td>
 							<td th:text="${l.userStatus}" th:value="${l.userStatus}" id="userStatus"></td>
-							<td>
-								<button class="btn btn-info sendPointBtn" type="button">포인트 개별지급</button>
-							</td>
 						</tr>
 						<tr th:unless="${not #lists.isEmpty(userList)}">
 							<td colspan="14" style="text-align: center;">등록된 회원이 없습니다.</td>
@@ -88,52 +84,6 @@ th {
 				</div>		
 			</div>
 		</div>
-	</div>
-	
-	<div class="modal fade" id="couponCreate" tabindex="-1" role="dialog" aria-labelledby="searchPaymentDetail" aria-hidden="true">
-	  <div class="modal-dialog modal-lg" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h2 class="modal-title" id="couponCreateTitle">쿠폰생성</h2>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-			<div class="x_panel">
-				<form method="post" th:action="@{/admin/coupon/couponCreate}">
-			        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th>쿠폰명</th>
-								<th>할인금액</th>
-								<th>사용조건금액(이상)</th>
-								<th>만료일자</th>
-								<th>등록자</th>
-							</tr>
-						</thead>
-						<tbody>
-								<tr>
-									<td><input name="couponName" class="couponInfo" type="text" style="padding: 4px"></td>
-									<td><input name="discountPrice" class="couponInfo" type="number" style="padding: 4px" placeholder="숫자만 입력해주세요."></td>
-									<td><input name="priceTerms" class="couponInfo" type="number" style="padding: 4px" placeholder="숫자만 입력해주세요."></td>
-									<td><input name="endDate" class="form-control couponInfo" type="datetime-local" style="padding: 4px"></td>
-									<td><input name="regId" class="form-control" type="text" style="padding: 4px; text-align: center" th:value="${session.SID}" readonly="readonly"></td>
-								</tr>
-						</tbody>
-					</table>
-			<div class="text-center">
-	        	<button type="submit" class="btn btn-success float-middle createBtn">생성</button>
-	        	<button type="button" class="btn btn-warning float-middle resetBtn">초기화</button>
-	      	</div>
-				</form>
-			</div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary closeModal" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
 	</div>
 
 	<div class="pwCheckModal modal fade" id="pwCheckModal" tabindex="-1" role="dialog" aria-labelledby="pwCheckModalLabel" aria-hidden="true">
@@ -160,6 +110,68 @@ th {
 
 <th:block layout:fragment="customJsScript">
 	<script type="text/javascript">
+		$(function (){
+			let motherCheck = $('.motherCheck');
+			let childCheck = $('.childCheck');
+			let pointSend = $('.pointSend');
+
+			motherCheck.off().on('click', function(){
+				$('.childCheck').prop('checked', $(this).prop('checked'));
+			})
+
+			pointSend.off().on('click', function(){
+				let pointAmount = $('#pointAmount').val();
+				console.log(pointAmount);
+				if(typeof pointAmount != 'undefined' && pointAmount != null && pointAmount !=''){
+					if(confirm(pointAmount + ' 포인트를 지급하시겠습니까?')){
+						$('#pwCheckModal').modal('show');
+
+						$('#adminCheckBtn').off().on('click', function () {
+							var adminPw = $('input[name="adminPw"]').val();
+
+							var request = $.ajax({
+								url: "/admin/goods/pwCheck",
+								method: 'POST',
+								data: { userPw : adminPw },
+								dataType: "json"
+							});
+
+							request.done(function( data ) {
+								if (data) {
+									$('#pwCheckModal').modal('hide');
+									alert('관리자 확인');
+								}else {
+									if(typeof adminPw == 'undefined' || adminPw == null || adminPw == '') {
+										alert('비밀번호를 입력해주세요.');
+										$('#adminPw').focus();
+										return false;
+									}else {
+										alert('비밀번호가 일치하지 않습니다.');
+										$('#adminPw').focus();
+										return false;
+									}
+								}
+							})
+							request.fail(function( jqXHR, textStatus ) {
+								alert( "Request failed: " + textStatus );
+							});
+						});
+					}
+				}else{
+					alert('지급할 포인트를 입력해주세요.');
+				}
+			})
+
+			$('#pwCheckModal').on('hidden.bs.modal', function(e) {
+				$('#adminPw').val(null);
+			});
+
+			$("#adminPw").keyup(function(e){
+				if(e.keyCode == 13) {
+					$('#adminCheckBtn').click();
+				}
+			});
+		})
 	</script>
 </th:block>
 

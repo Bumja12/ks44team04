@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layout/adminDefault}">
+<!-- 드래그 앤 드롭 라이브러리 -->
+<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 
 <th:block layout:fragment="customTitle">
 	<title th:text="${title}"></title>
@@ -21,6 +23,10 @@
 .chk_box input[type="checkbox"]:checked + .on:after { display: block; }
 .on:after { width: 6px; height: 10px; border: solid #fff; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 4px; }
 
+.fileRemove{
+	border:1px solid #73879c;
+	border-radius: 4px;	
+}
 .firstMenu{
 	margin-top: 5px;
 }
@@ -31,7 +37,7 @@
 	color: slategray; margin-top: 8px; margin-bottom: -3px;
 }
 .imgExplain{
-	color: gray; margin-left: 85px; margin-top: 10px;
+	color: gray; margin-top: 5px;
 }
 .addTitle{
 	margin-right: 10px;
@@ -50,6 +56,56 @@
 }
 .numberTitle{
 	margin-top: -6px;
+}
+
+
+/* 이미지관련 */
+.inputFile{
+    margin-bottom: 10px;
+}
+.uploadfile,
+#imgPreview,
+#imgPreview li{
+    float:left
+}
+/* img버튼 css*/
+.addImgBtn{
+	margin-left:20px;
+	margin-top:30px;
+	float:left;
+    width: 50px;
+    height: 50px;
+    color: #cacaca;
+    border: 2px solid #b7b7b7;
+	border-radius: 4px;
+    font-size: 35px !important;
+    text-align: center;
+}
+/* 미리보기 css */
+#imgPreview li{
+    margin-left: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    border: 1px solid #ececec;
+    cursor:move;
+    list-style-type : none;
+}
+/* 이미지 삭제버튼 css */
+.delBtn{
+    position: absolute;
+    top: -4px;
+    right: -2px;
+    font-size: 13px;
+    background-color: #73879c;
+    color: #fff;
+    width: 18px;
+    height: 18px;
+    line-height: 16px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    border-radius : 50px;
+    border: 1px solid #73879c;
 }
 </style>
 </th:block>
@@ -212,18 +268,15 @@
 		</div>
 		<div class="x_content2">
 			<div class="well well-sm">
-				<div class="firstMenu form-inline">
-					<label class="imgTitle control-label" for="goodsFile">대표이미지</label>
-					<input type="file" name="uploadfile" multiple="multiple" onchange="readURL(this);" style="margin-left: 85px; margin-top: 5px;">
+				<div class="filebox firstMenu form-inline">
+					<div class="inputFile" style="width:100%; height:105px;">
+						<label class="addImgBtn" for="uploadfile">+</label>
+						<input type="file" name="uploadfile" id="uploadfile" class="upload-hidden" multiple="multiple" style="display:none;">
+						<ul id="imgPreview" class="sortable"></ul>
+					</div>
 				</div>
-				<p class="imgExplain">권장 크기 : 640 x 640 (윈도대상 750 x 1000)</p>
-				<div class="firstMenu form-inline">
-					<label class="imgTitle control-label">추가이미지</label>
-						<img id="preview" class="img img-thumbnail">
-						<!-- <input type="file" id="uploadResult" onchange="readURL(this);" style="margin-left: 85px; margin-top: 5px;">  -->
-				</div>
-				<p class="imgExplain">권장 크기 : 640 x 640 (윈도대상 750 x 1000)</p>
 				<hr class="hrStyle" align="left">
+				<p class="imgExplain">권장 크기 : 640 x 640 (윈도대상 750 x 1000)</p>
 				<p class="explain">
 					대표이미지 1장은 필수, 추가이미지는 최대 5장까지 등록할 수 있습니다.<br>
 					추가 이미지는 상세페이지 화면에서 이미지를 클릭하여 크게 볼 수 있습니다.<br>
@@ -261,11 +314,14 @@
 
 <th:block layout:fragment="customJsScript">
 <th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+<!-- 드래그앤드롭 라이브러리 -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" ></script>
 <script src="/build/summernote.min.js"></script>
 <!-- 스크롤이 자꾸 아래로 가서 넣음 -->
 <script>history.scrollRestoration = "manual"</script>
 <script th:inline="javascript">
-   
+
 $(function(){
     /* 썸머노트 설정 */
 	$(document).ready(function() {
@@ -287,6 +343,7 @@ $(function(){
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 		});
 	});
+    
     
 	/* 숫자만 입력  & 숫자 천단위 콤마 찍기  */
 	$('.numberInput').on('input',function(){
@@ -403,9 +460,95 @@ $(function(){
         	$("#regularDeliverCheck").val( 'N' );
         }
     });
+
+    /* 이미지 등록 */ 
+	//드래그 앤 드롭
+	$(".sortable").sortable();
+    
+ 	// 파일 현재 필드 숫자 totalCount랑 비교값
+    var fileCount = 0;
+    // 해당 숫자를 수정하여 전체 업로드 갯수를 정한다.
+    var totalCount = 6;
+    
+	//이미지 등록
+	$("#uploadfile").change(function(e){
+    	//div 내용 비워주기
+	    //$('#imgPreview').empty();
 	
+	    var files = e.target.files;
+	    var arr = Array.prototype.slice.call(files);
+	    
+	    // 파일 개수 확인 및 제한
+	    if (fileCount + arr.length > totalCount) {
+			alert('파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
+			return;
+	    }else{
+	    	fileCount = fileCount + arr.length;
+	    }
 	
+	    //업로드 가능 파일인지 체크
+	    for(var i=0; i<files.length; i++){
+	        if(!checkExtension(files[i].name,files[i].size)){
+	            return false;
+	    	}
+		}
+    	preview(arr);
+
+	    function checkExtension(fileName,fileSize){
+	        var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+	        var maxSize = 20971520;  //20MB
+	
+	        if(fileSize >= maxSize){
+	            alert('이미지 크기가 초과되었습니다.');
+	            $("#uploadfile").val("");  //파일 초기화
+	            return false;
+	        }
+	        if(regex.test(fileName)){
+	            alert('확장자명을 확인해주세요.');
+	            $("#uploadfile").val("");  //파일 초기화
+	            return false;
+	        }
+	        return true;
+	    }
+
+		function preview(arr){
+			arr.forEach(function(f){
+	            /* 파일명이 길면 파일명...으로 처리
+	            var fileName = f.name;
+	            if(fileName.length > 10){
+	                fileName = fileName.substring(0,7)+"...";
+	            } */
+	            
+	            //div에 이미지 추가
+	            var str = '<li class="ui-state-default">';
+	            //str += '<span>'+fileName+'</span><br>';
+	            //이미지 파일 미리보기
+	            if(f.type.match('image.*')){
+	                //파일을 읽기 위한 FileReader객체 생성
+	                var reader = new FileReader(); 
+	                reader.onload = function (e) { 
+	                    //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+	                    str += '<img src="'+e.target.result+'" title="'+f.name+'" multiple="multiple" width=100 height=100>';
+	                    str += '<span class="delBtn" onclick="delImg(this)">x</span>';
+	                    str += '</li>';
+	                    $(str).appendTo('#imgPreview');
+	                } 
+	                reader.readAsDataURL(f);
+	            }else{
+	                //이미지 파일 아닐 경우 대체 이미지
+	                str += '<img src="/resources/img/fileImg.png" title="'+f.name+'" width=100 height=100 />';
+	                $(str).appendTo('#imgPreview');
+	            }
+	    	})
+		}
+
+	});
 });
+
+//미리보기 사진 삭제
+function delImg(_this){
+	$(_this).parent('li').remove()
+}	            
 </script>
 </th:block>
 </html>

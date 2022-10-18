@@ -23,12 +23,22 @@
         <result column="reg_date" 				property="regDate"/>
         <result column="modify_date" 			property="modifyDate"/>
         <result column="goods_file" 			property="goodsFile"/>
-        	<association property="userInfo" resultMap="ks44team04.mapper.UserMapper.UserResultMap"/>
-        	<association property="goodsSmallCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsSmallCategoryMap"/>
-			<association property="goodsLargeCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsLargeCategoryMap"/>
-			<association property="goodsAnswerInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsAnswerMap"/>
-			<association property="fileInfo" resultMap="ks44team04.mapper.FileMapper.fileResultMap"/>
+       	
+       	<association property="userInfo" resultMap="ks44team04.mapper.UserMapper.UserResultMap"/>
+       	<association property="goodsSmallCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsSmallCategoryMap"/>
+		<association property="goodsLargeCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.GoodsLargeCategoryMap"/>
+		<association property="goodsAnswerInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsAnswerMap"/>
+        
+        <collection property="fileList" javaType="list" ofType="FileDto">
+        	<id 	column="file_idx"				property="fileIdx" />
+        	<result column="file_new_name" 			property="fileNewName" />
+			<result column="file_original_name" 	property="fileOriginalName" />
+			<result column="file_path" 				property="filePath" />
+			<result column="file_size" 				property="fileSize" />
+			<result column="file_islocal" 			property="fileIsLocal" />
+        </collection>
     </resultMap>
+		<!-- <association property="fileInfo" resultMap="ks44team04.mapper.FileMapper.fileResultMap"/> -->
     
 <!-- 	 <association property="userInfo" javaType="User">
 	        <result column="user_id" 				property="userId"/>
@@ -144,7 +154,8 @@
 			,g.goods_price				
 			,g.goods_discount_rate		
 			,g.goods_post_price			
-			,g.goods_stock				
+			,g.goods_stock
+			,g.goods_file				
 			,g.soldout_check			
 			,g.stop_sale_check			
 			,g.package_post_check		

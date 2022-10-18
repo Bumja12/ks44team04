@@ -1,6 +1,10 @@
 package ks44team04.admin.controller;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -24,15 +28,20 @@ public class LedgerBookController {
 	//판매자 장부 매인화면 
 	@GetMapping("/ledgerBook/sellerBook")
 	public String lederBook(Model model, HttpSession session) {
-		/*
-		 * String sellerId = (String) session.getAttribute("SID");
-		 * 
-		 * Order orderList = ledgerBookService.orderList(sellerId);
-		 * 
-		 * 
-		 * model.addAttribute("title", "판매자 장부"); model.addAttribute("orderList",
-		 * orderList);
-		 */
+		
+		 String sellerId = (String) session.getAttribute("SID");
+		 
+		 Map<String, Object> orderMap = new HashMap<String, Object>();
+		 orderMap.put("sellerId", sellerId);
+		 
+		 List<Order> orderList = ledgerBookService.orderList(orderMap);		 
+		 
+		 List<Order> pointDiscountlist = ledgerBookService.orderList(orderMap);	
+		 
+		 model.addAttribute("title", "판매자 장부"); 
+		 model.addAttribute("orderList", orderList);
+		 model.addAttribute("pointDiscountlist", pointDiscountlist);
+		
 		
 		return "admin/ledgerBook/sellerBook";
 	}

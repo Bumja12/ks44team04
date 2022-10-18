@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/userDefault}">
+<th:block layout:fragment="customCss">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	<style>
+	.title {
+		font-weight: 800;
+		font-size: 23px;
+		text-align: center;
+		color: #2c2c2c;
+	}
+	
+	#loginBtn {
+		background-color: #7fad39;
+		border: none;
+		color: #ffffff;
+		font-size: 16px;
+		font-weight: bold;
+		height: 50px;
+		border-radius: 5px;
+	}
+	
+	#joinBtn {
+		border: 1px solid #7fad39;
+		background-color: #ffffff;
+		color: #7fad39;
+		font-size: 16px;
+		font-weight: bold;
+		height: 50px;
+		border-radius: 5px;
+	}
+	
+	#userId {
+		font-size: 13px;
+		font-weight: 600;
+		border-radius: 5px;
+	}
+	
+	#userPw {
+		font-size: 13px;
+		font-weight: 600;
+		border-radius: 5px;
+	}
+	
+	.finds {
+		font-size: 13px;
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: 30px;
+	}
+	
+	.btn:active, .btn:focus {
+		border: none;
+		box-shadow: none;
+	}
+	</style>
+</th:block>
+
+<th:block layout:fragment="customContents">
+
+	<div class="container mt-5 mb-5">
+		<div class="title">로그인</div>
+		<div class="row justify-content-center mt-5 mb-3">
+			<form class="col-lg-4" th:action="@{/user/user/login}" method="post">
+				<div class="form-group loginInputs">
+					<input type="text" class="form-control loginInput" id="userId" name="userId" placeholder="아이디를 입력해주세요." required="required">
+				</div>
+				<div class="form-group loginInputs">
+					<input type="text" class="form-control loginInput" id="userPw" name="userPw" placeholder="비밀번호를 입력해주세요." required="required">
+				</div>
+				<div class="finds">
+					<a class="text-dark text-decoration-non" href="#">비밀번호 찾기&nbsp;<span>ㅣ</span>&nbsp; </a> 
+					<a class="text-dark text-decoration-non" href="#">아이디 찾기&nbsp;</a>
+				</div>
+				<div th:if="${loginFailed} != null" th:text="${loginFailed}"></div>
+				
+				<button type="submit" id="loginBtn" class="btn btn-block mt-3">로그인</button>
+				<button type="button" id="joinBtn" class="btn btn-block mt-3" th:onclick="|location.href='@{/user/user/signUp}'|" >회원가입</button>
+			</form>
+		</div>
+	</div>
+
+</th:block>
+
+<th:block layout:fragment="customJsScript">
+	<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+	<script>
+
+	</script>
+</th:block>
+</html>

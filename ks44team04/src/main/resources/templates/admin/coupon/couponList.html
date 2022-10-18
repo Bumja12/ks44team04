@@ -103,8 +103,8 @@ th {
 						<tbody>
 								<tr>
 									<td><input name="couponName" class="couponInfo" type="text" style="padding: 4px"></td>
-									<td><input name="discountPrice" class="couponInfo" type="number" style="padding: 4px" placeholder="숫자만 입력해주세요."></td>
-									<td><input name="priceTerms" class="couponInfo" type="number" style="padding: 4px" placeholder="숫자만 입력해주세요."></td>
+									<td><input name="discountPrice" class="couponInfo" type="number" min="0" style="padding: 4px" placeholder="숫자만 입력해주세요."></td>
+									<td><input name="priceTerms" class="couponInfo" type="number" min="0" style="padding: 4px" placeholder="숫자만 입력해주세요."></td>
 									<td><input name="endDate" class="form-control couponInfo" type="datetime-local" style="padding: 4px"></td>
 									<td><input name="regId" class="form-control" type="text" style="padding: 4px; text-align: center" th:value="${session.SID}" readonly="readonly"></td>
 								</tr>
