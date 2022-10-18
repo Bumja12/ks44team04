@@ -20,12 +20,13 @@
 				<div class="form-group">
 					<select name="searchKey" style="padding-top:7px; padding-bottom: 7px; text-align: center;">
 						<option value="">:::선택:::</option>
-						<option value="couponCode">쿠폰코드</option>
-						<option value="couponName">쿠폰명</option>
-						<option value="discountPrice">할인금액</option>
+						<option value="couponCode">회원아이디</option>
+						<option value="couponName">닉네임</option>
+						<option value="discountPrice">권한</option>
+						<option value="discountPrice">등급</option>
 					</select>
 				</div>
-				<div class="form-group">
+				<div class="form-group row">
 					<div class="col-md-8">
 						<input type="text" name="searchValue" class="form-control" style="width: 200px;" placeholder="검색어를 입력해주세요">
 					</div>
@@ -34,12 +35,15 @@
 					</div>
 				</div>
 			</form>
-			<div class="row form-inline" align="right">
-				<div class="col-sm-11">
-					<input type="number" name="pointAmount" class="form-control" style="width: 200px;" placeholder="검색어를 입력해주세요">
+		</div>
+		<div class="row">
+			<div class="col-sm-12" align="right">
+				<span style="font-size: medium; vertical-align: middle;">선택한 회원에게 포인트 지급: &nbsp</span>
+				<div style="display: inline-block">
+					<input type="number" min="0" id="pointAmount" name="pointAmount" class="form-control" style="width: 200px;" placeholder="숫자를 입력해주세요">
 				</div>
-				<div class="col-sm-12">
-					<button class="btn btn-success couponCreateBtn" type="button" data-toggle="modal">포인트 지급</button>
+				<div style="display: inline-block">
+					<button type="button" class="btn btn-info pointSend">포인트 지급</button>
 				</div>
 			</div>
 		</div>
