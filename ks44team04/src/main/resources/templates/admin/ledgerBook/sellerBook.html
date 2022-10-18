@@ -144,7 +144,7 @@
                 </tr>
                 
                 <tr>
-                  <td style="padding: 0px;" colspan="13"></td>
+               		<td style="padding: 0px;" colspan="13"></td>
                 </tr>
 
               </tbody>
@@ -156,8 +156,11 @@
         </div>
 	</form>
 
-	 
-
+	   <th:block th:if="${not #lists.isEmpty(mainCartList)}" th:each="ml : ${mainCartList}" >
+          <input type="text" class="totalPrice" name="totalPrice"  th:value="${ml.totalPrice}">
+          <input  type="hidden" class="goodsDiscountPrice" th:value="${ml.goodsDiscountPrice}">
+       </th:block>
+				<input type="text" class="mainCartList"  th:value="${mainCartList}">
          
           
 </th:block>
@@ -165,11 +168,41 @@
 <th:block layout:fragment="customScript">
 <th:block th:replace="fragments/adminJs :: datatablesFragment"></th:block>
 <script th:src="@{/build/js/Chart.min.js}"></script>
-<script>
+<script  th:inline="javascript">
+$(function(){
+	// 일주 일 구하는 스트립트 
+	let date = new Date().toLocaleDateString()
+    let today = Date.parse(date)
+    let result = []
+    result.push(date)
+    for (let i=0; i<7; i++) {
+      today -= 86400000;
+      result.push(new Date(today).toLocaleDateString())
+    }
+	console.log("result" + result);
+	// 일주 일 구하는 스트립트  끝
+	
+	// 결제 금액 구하는 스트립트 
+	
+	 let cartList = [];
+
+     /*[# th:each="n : ${mainCartList}"]*/
+
+     cartList.push("[(${n})]");
+
+     /*[/]*/
+     console.log(cartList);
+	
+
+	
+	
+	// 결제 금액 구하는 스트립트  끝
+	
+	
       new Chart(document.getElementById("line-sellerBook"), {
         type: 'line',
         data: {
-          labels: [7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7],
+          labels: result,
           datasets: [{
             data: [86, 114, 106, 106, 107, 111, 133],
             label: "결제 금액",
@@ -185,7 +218,7 @@
         },
 
       });
-
+});
     </script>
 <script>
 $(function(){
