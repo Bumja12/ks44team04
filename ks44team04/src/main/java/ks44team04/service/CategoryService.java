@@ -156,6 +156,33 @@ public class CategoryService {
 		return regularAsk;
 	}
 	
+	// 특정 게시판 카테고리 조희
+	public BoardCategory getBoardCategoryByPK(String boardCategory) {
+		
+		// 특정 게시판 카테고리
+		BoardCategory board = categoryMapper.getBoardCategoryByPK(boardCategory);
+		
+		return board;
+	}
+	
+	// 특정 신고 대상 카테고리 조희
+	public ReportCategory getReportCategoryByPK(String reportCategory) {
+		
+		// 특정 신고 대상 카테고리
+		ReportCategory report = categoryMapper.getReportCategoryByPK(reportCategory);
+		
+		return report;
+	}
+	
+	// 특정 판매 상품 카테고리 대분류 조희
+	public GoodsLargeCategory getGoodsLargeCategoryByPK(String goodsLargeCategory) {
+		
+		// 특정 판매 상품 카테고리 대분류
+		GoodsLargeCategory goodsLarge = categoryMapper.getGoodsLargeCategoryByPK(goodsLargeCategory);
+		
+		return goodsLarge;
+	}
+	
 	//==============================내역 조회============================== 
 	
 }

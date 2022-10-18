@@ -25,7 +25,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="goodsLargeCategoryPK">카테고리 대분류 PK
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="goodsLargeCategoryPK" id="goodsLargeCategoryPK" value="levelBuyer01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="goodsLargeCategoryPK" id="goodsLargeCategoryPK" th:value="${goodsLarge.goodsLargeCategory}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 카테고리 대분류 -->
@@ -35,11 +35,16 @@
 										<div class="col-md-6 col-sm-6 ">
 											<select class="select2_single form-control" id="categoryName" disabled="disabled" name="categoryName" required="required" tabindex="-1">
 												<option></option>
-												<option value="5" selected="selected">포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
+												<th:block th:if="${not #lists.isEmpty(goodsLargeCategoryList)}" th:each="glCategoryList : ${goodsLargeCategoryList}">
+													<!-- th:selected 사용 -->
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'F000'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsLarge.goodsCategory eq '과일'}">과일</option> 
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'G000'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsLarge.goodsCategory eq '쌀/잡곡'}">쌀/잡곡</option>
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'M000'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsLarge.goodsCategory eq '버섯'}">버섯</option>
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'UF00'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsLarge.goodsCategory eq '못난이과일'}">못난이과일</option>
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'UV00'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsLarge.goodsCategory eq '못난이채소'}">못난이채소</option>
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'V000'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsLarge.goodsCategory eq '채소'}">채소</option>
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'Z000'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsLarge.goodsCategory eq '기타'}">기타</option>
+												</th:block>	
 											</select>
 										</div>
 									</div>

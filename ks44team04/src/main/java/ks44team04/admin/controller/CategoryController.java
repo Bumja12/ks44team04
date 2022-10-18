@@ -255,8 +255,15 @@ public class CategoryController {
 	public String getBoardCategoryDetail (@PathVariable(value = "boardCategory") String boardCategory
 			,Model model) {
 		
-		log.info(boardCategory);
+		// 특정 게시판 카테고리
+		BoardCategory board = categoryService.getBoardCategoryByPK(boardCategory);
+		
+		// 게시판 카테고리 목록
+		List<BoardCategory> boardCategoryList = categoryService.getBoardCategoryList();
+		
 		model.addAttribute("title", "게시판 카테고리 내역 화면");
+		model.addAttribute("board", board);
+		model.addAttribute("boardCategoryList", boardCategoryList);
 		
 		return "admin/category/board/boardCategory_detail";
 	}	
@@ -266,8 +273,15 @@ public class CategoryController {
 	public String getReportCategoryDetail (@PathVariable(value = "reportCategory") String reportCategory
 			,Model model) {
 		
-		log.info(reportCategory);
+		// 특정 신고 대상 카테고리
+		ReportCategory report = categoryService.getReportCategoryByPK(reportCategory);
+		
+		// 신고 대상 카테고리 목록
+		List<ReportCategory> reportCategoryList = categoryService.getReportCategoryList();
+		
 		model.addAttribute("title", "신고 카테고리 내역 화면");
+		model.addAttribute("report", report);
+		model.addAttribute("reportCategoryList", reportCategoryList);
 		
 		return "admin/category/report/reportCategory_detail";
 	}	
@@ -277,8 +291,15 @@ public class CategoryController {
 	public String getGoodsLargeCategoryDetail (@PathVariable(value = "goodsLargeCategory") String goodsLargeCategory
 			,Model model) {
 		
-		log.info(goodsLargeCategory);
+		// 특정 판매 상품 카테고리 대분류
+		GoodsLargeCategory goodsLarge = categoryService.getGoodsLargeCategoryByPK(goodsLargeCategory);
+		
+		// 신고 대상 카테고리 목록
+		List<GoodsLargeCategory> goodsLargeCategoryList = categoryService.getGoodsLargeCategoryList();
+		
 		model.addAttribute("title", "판매 상품  카테고리 대분류 내역 화면");
+		model.addAttribute("goodsLarge", goodsLarge);
+		model.addAttribute("goodsLargeCategoryList", goodsLargeCategoryList);
 		
 		return "admin/category/goodsLarge/goodsLargeCategory_detail";
 	}	
