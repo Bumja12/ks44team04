@@ -155,19 +155,21 @@ div { margin: 5px 0px }
 					<button type="button" class="imgRightBtn imgBtn" style="margin-left: 404px;"><i class="fa fa-chevron-right fa-4x" style="color:#f7f7f7;"></i></button>
 				</div>
 				<div class="imgBox" style="width:100%; height:500px;">
-		            <img class="img-fluid img on" src="/images/goodsTest/apple.png" alt="">
-					<img class="img-fluid img" src="/images/goodsTest/gom.png" alt="">
-					<img class="img-fluid img" src="/images/goodsTest/gom2.png" alt="">
-					<img class="img-fluid img" src="/images/goodsTest/gom3.png" alt="">
-					<img class="img-fluid img" src="/images/goodsTest/gom4.png" alt="">
+					<!-- <div th:each="l : ${goodsInfo}" th:text="${l.fileInfo.filePath}"> 
+					</div>-->
+					<th:block th:if="${not #lists.isEmpty(goodsInfo.fileList)}" th:each="fl : ${goodsInfo.fileList}">					
+			            <img class="img-fluid img on" th:src="@{'/' + ${fl.filePath}}" th:alt="*{goodsName}">
+					</th:block>
+					<!-- <img class="img-fluid img" src="/images/goodsTest/gom.png" th:alt="*{goodsName}">
+					<img class="img-fluid img" src="/images/goodsTest/gom2.png" th:alt="*{goodsName}">
+					<img class="img-fluid img" src="/images/goodsTest/gom3.png" th:alt="*{goodsName}">
+					<img class="img-fluid img" src="/images/goodsTest/gom4.png" th:alt="*{goodsName}"> -->
 				</div>
 				<div class="imgSlideList">
 					<ul class="imgSlide">
-						<li><img src="/images/goodsTest/apple.png" alt=""></li>
-		                <li><img src="/images/goodsTest/gom.png" alt=""></li>
-		                <li><img src="/images/goodsTest/gom2.png" alt=""></li>
-		                <li><img src="/images/goodsTest/gom3.png" alt=""></li>
-		                <li><img src="/images/goodsTest/gom4.png" alt=""></li>
+						<li th:if="${not #lists.isEmpty(goodsInfo.fileList)}" th:each="fl : ${goodsInfo.fileList}">
+							<img th:src="@{'/' + ${fl.filePath}}" th:alt="*{goodsName}">
+						</li>
 		            </ul>
                 </div>
 			</div>
@@ -474,6 +476,11 @@ div { margin: 5px 0px }
 <script th:inline="javascript">
 
 $(function() {
+	
+	
+	
+	
+	
 	
 	/* 스크롤 방지 코드 */
 	$(".cartBtn").click(function(e) {
