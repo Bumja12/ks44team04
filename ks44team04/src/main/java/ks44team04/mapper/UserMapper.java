@@ -21,9 +21,12 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserMapper {
 	
-	//로그인
-    public String userLogin(String userId);
-    public User getLoginUserInfo(String userId);
+	
+    /* =============== 유저페이지 =============== */
+    //유저 마이페이지 
+    public String myPage();
+    
+    /* =============== 유저페이지 =============== */
     
     
     /* =============== 검색 시작 =============== */
@@ -111,8 +114,6 @@ public interface UserMapper {
   	public String getAdminPw(String userPw);
     /* =============== 회원 탈퇴 끝 =============== */
     
-    //유저 마이페이지 
-    public String myPage();
     
     //판매자 신청 승인(seller 테이블)
     public int approveSeller(@Param(value="sellerId")String sellerId, @Param(value="approveId")String approveId);
@@ -204,4 +205,9 @@ public interface UserMapper {
 	//회원 목록 조회
 	public List<User> getUserList();
 	/* =============== 조회 끝 =============== */
+	
+	//로그인
+    public String userLogin(String userId);
+    
+    public User getLoginUserInfo(String userId);
 }
