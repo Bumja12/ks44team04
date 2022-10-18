@@ -28,31 +28,74 @@
 	        	<result column="seller_id" 	 property="sellerId"/>
 	        </association>
 	</resultMap>
+	
+		
 
-
-<select id="orderList" parameterType="String" resultMap="orderResultMap">
-				
-<!-- 		SELECT 
-			MONTH(o.order_date) AS orderDate, 
-    	    SUM(o.total_sum) AS totalSum,
-    	    SUM(o.post_price) AS postPrice
+<!-- 메인 화면 2022 결제 금액 테이블  -->
+<select id="orderList" parameterType="map" resultMap="orderResultMap" >
+/*메인 화면 2022 결제 금액 테이블*/	
+	SELECT 
+			MONTH(o.order_date) AS `order_date`, 
+    	    SUM(o.total_sum) AS `total_sum`,
+    	    SUM(o.post_price) AS `post_price`
 		FROM 
-		  tb_order AS o
-		INNER JOIN 
+		  	tb_order AS o
+			INNER JOIN 
 			tb_order_detail AS od
+			on
+			o.order_num = od.order_num
+			INNER JOIN 
+			tb_goods AS g
+			on
+			od.goods_code = g.goods_code
+		WHERE
+			g.seller_id  = #{sellerId}  AND  YEAR(NOW()) = YEAR(o.order_date)
+		GROUP BY MONTH(o.order_date);		
+</select>
+
+<!-- 메인 화면 2022년 할인 통계 포인트 부분 -->
+<select id="pointDiscountlist" parameterType="map" resultMap="orderResultMap" >
+	/*메인 화면 2022년 할인 통계 포인트/쿠폰 부분*/			
+		SELECT 
+			MONTH(o.order_date) AS `order_date`
+			,SUM(o.coupon_price) AS `coupon_price`
+    	    ,SUM(o.use_point) AS `use_point`
+		FROM 
+		  	tb_order AS o
+			INNER JOIN 
+			tb_order_detail AS od
+			on
+			o.order_num = od.order_num
+			INNER JOIN 
+			tb_goods AS g
+			on
+			od.goods_code = g.goods_code
+		WHERE
+			g.seller_id  = #{sellerId}  AND  YEAR(NOW()) = YEAR(o.order_date)
+		GROUP BY MONTH(o.order_date);		
+</select>
+
+<!-- 메인 화면에 차트 부분 -->
+<select  id="mainCartlist" parameterType="map" resultMap="orderResultMap">
+/* 메인 화면에 차트 부분 */
+	SELECT
+		DATE_FORMAT(o.order_date,'%Y-%m-%d')
+		,sum(o.goods_discount_price)
+		,sum(o.total_price)
+	FROM 
+	  	tb_order AS o
+		INNER JOIN 
+		tb_order_detail AS od
 		on
 		o.order_num = od.order_num
 		INNER JOIN 
-			tb_goods AS g
+		tb_goods AS g
 		on
-			od.goods_code = g.goods_code
-		WHERE 
-			g.seller_id  = #{sellerId}
-		GROUP BY orderDate;		
- -->
+		od.goods_code = g.goods_code
+	WHERE
+	 o.order_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW() AND g.seller_id = 'seller01'
+	GROUP BY DATE_FORMAT(o.order_date,'%Y-%m-%d');
 </select>
-
-
 
 
 </mapper>
