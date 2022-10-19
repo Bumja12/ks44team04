@@ -36,11 +36,14 @@ public class LedgerBookController {
 		 
 		 List<Order> orderList = ledgerBookService.orderList(orderMap);		 
 		 
-		 List<Order> pointDiscountlist = ledgerBookService.orderList(orderMap);	
+		 List<Order> pointDiscountlist = ledgerBookService.pointDiscountlist(orderMap);
+		 
+		 List<Order> mainCartList = ledgerBookService.mainCartList(orderMap);
 		 
 		 model.addAttribute("title", "판매자 장부"); 
 		 model.addAttribute("orderList", orderList);
 		 model.addAttribute("pointDiscountlist", pointDiscountlist);
+		 model.addAttribute("mainCartList", mainCartList);
 		
 		
 		return "admin/ledgerBook/sellerBook";

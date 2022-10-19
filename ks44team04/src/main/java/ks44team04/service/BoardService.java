@@ -7,6 +7,8 @@ import ks44team04.mapper.BoardMapper;
 import ks44team04.dto.Board;
 import ks44team04.dto.BoardComment;
 import ks44team04.dto.BoardLike;
+import ks44team04.dto.Cart;
+import ks44team04.dto.Goods;
 
 
 @Service
@@ -30,6 +32,41 @@ public class BoardService {
 		List<Board> boardList = boardMapper.getBoardListSearch(paramMap);
 		return boardList;
 	}
+	
+	//게시물 등록
+	public int boardAdd(Board board) {
+		int result = boardMapper.boardAdd(board);
+		return result;
+	}
+	
+	//게시물 상세정보 조회 (유저)
+	public Board boardByCode(String boardCode) {
+		Board board = boardMapper.boardByCode(boardCode);
+		return board;
+	}
+	
+	//게시물 수정
+	public int boardModify(Board board) {
+		int result = boardMapper.boardModify(board);
+		return result;
+	}
+	
+	//게시물 삭제 (delete_yn 컬럼 n -> y 업데이트 쿼리)
+	public void boardRemoveByCode(String boardCode) {
+		boardMapper.boardRemoveByCode(boardCode);
+	}
+	
+	//게시물 목록 조회(딜리트 n인 것만)
+	public List<Board> BoardListUser() {
+		List<Board> BoardListUser = boardMapper.BoardListUser();
+		return BoardListUser;
+	}
+	
+	
+	
+	
+	
+	/* 좋아요 */
 	
 	//게시물 좋아요 조회
 	public List<BoardLike> getBoardLikeList() {

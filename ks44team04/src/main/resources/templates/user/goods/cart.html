@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/userDefault}">
-<th:block layout:fragment="customContents">
+<th:block layout:fragment="customCss">
 <!-- 폰트 -->
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 <!-- 장바구니 상품 삭제 아이콘 -->
@@ -19,7 +19,9 @@
 button:focus{ outline:none; border:none; }
 
 </style>
+</th:block>
 
+<th:block layout:fragment="customContents">
 <section class="ftco-section" style="padding:2em 0;">
 	<div class="container">
 		<div class="row justify-content-center">

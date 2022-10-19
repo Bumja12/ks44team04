@@ -18,10 +18,8 @@
 	padding: 7px 7px;
 }
 .boardAdd { 
-	margin-right: 55px;
  	right: 0px;
  	padding: 0px 10px;
-	position:absolute;
 	width: 110px;
 	height: 40px;
 	font-size: 15px;
@@ -46,7 +44,7 @@
             </div>
         </div>
         
-        
+        <div style="width:100px; margin-left:55px; font-size:17px; font-weight:400;">게시글작성</div>
         <!-- 테이블 시작 -->
         <table class="table table-hover">
 			<thead>
@@ -70,8 +68,15 @@
 				</tr>
 			</tbody>
 		</table>
+		<div class="form-inline form-group">
+			<div>
+				<button type="button" class="boardAdd" th:onclick="|location.href='@{/user/board/boardFree}'|">취소</button>
+				<a th:href="@{/user/board/boardFree}"><button type="button" class="boardAdd">등록하기</button></a>
+			</div>
+		</div>
 		<div style="position: relative; width: 100%; height: 40px; display: flex; margin-top:10px;">
-			<a th:href="@{/user/board/boardAdd}"><button type="button" class="boardAdd">작성하기</button></a>
+			<div>
+			</div>
 		</div>
 		
 	</div> 

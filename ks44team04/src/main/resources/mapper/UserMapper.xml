@@ -889,7 +889,8 @@
 
     <select id="getLoginUserInfo" parameterType="String" resultMap="UserResultMap">
         SELECT user_name,
-               user_right
+               user_right,
+               user_level
         FROM tb_user
         WHERE user_id = #{userId};
     </select>

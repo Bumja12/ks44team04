@@ -79,9 +79,9 @@
 <select  id="mainCartlist" parameterType="map" resultMap="orderResultMap">
 /* 메인 화면에 차트 부분 */
 	SELECT
-		DATE_FORMAT(o.order_date,'%Y-%m-%d')
-		,sum(o.goods_discount_price)
-		,sum(o.total_price)
+		DATE_FORMAT(o.order_date,'%Y.%m.%d')  AS `order_date`
+		,sum(o.goods_discount_price) AS `goods_discount_price`
+		,sum(o.total_price) AS `total_price`
 	FROM 
 	  	tb_order AS o
 		INNER JOIN 
@@ -93,8 +93,8 @@
 		on
 		od.goods_code = g.goods_code
 	WHERE
-	 o.order_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW() AND g.seller_id = 'seller01'
-	GROUP BY DATE_FORMAT(o.order_date,'%Y-%m-%d');
+	 o.order_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW() AND g.seller_id = #{sellerId}
+	GROUP BY DATE_FORMAT(o.order_date,'%Y.%m.%d');
 </select>
 
 

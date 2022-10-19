@@ -29,5 +29,11 @@ public class LedgerBookService {
     	return pointDiscountlist;
     }
      
+    //메인 화면에 차트 부분
+    public List<Order> mainCartList(Map<String, Object> orderMap){
+    	
+    	List<Order> mainCartList = ledgerBookMapper.mainCartlist(orderMap);
+    	return mainCartList;
+    }
     
 }
