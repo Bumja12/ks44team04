@@ -1,5 +1,7 @@
 package ks44team04.dto;
 
+import java.util.List;
+
 public class Wishlist {
 
     private String wishCode;
@@ -7,7 +9,16 @@ public class Wishlist {
     private String buyerId;
     private String regDate;
 
-
+	//이미지 리스트 
+	private List<FileDto> fileList;
+	
+    public List<FileDto> getFileList() {
+		return fileList;
+	}
+	public void setFileList(List<FileDto> fileList) {
+		this.fileList = fileList;
+	}
+	
 	private Goods goodsInfo;
 	public Goods getGoodsInfo() {
 		return goodsInfo;
