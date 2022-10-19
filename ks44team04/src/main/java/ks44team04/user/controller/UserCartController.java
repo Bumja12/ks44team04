@@ -45,12 +45,10 @@ public class UserCartController {
     //장바구니 추가
     @PostMapping("/cartAdd")
     @ResponseBody
-    public int cartAdd(Cart cart
-    				  ,@RequestParam("goodsCode") String goodsCode
-    				  ,@RequestParam("cartAmount") int cartAmount) {
+    public int cartAdd(Cart cart ,@RequestParam("goodsCode") String goodsCode
+    				             ,@RequestParam("cartAmount") int cartAmount) {
     	
     	String buyerId = "buyer01"; //임의
-    	
     	
     	//cartNewCode 생성
     	String cartNewCode = cartService.cartNewCode(buyerId); //buyerId 임의
@@ -74,6 +72,7 @@ public class UserCartController {
     	
     	return 1;
     }
+    
     
     //장바구니 수량 수정
     @GetMapping("/cartModify")

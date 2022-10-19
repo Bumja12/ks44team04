@@ -164,7 +164,7 @@ $(document).ready(function() {
 			$(this).parent('div').find('input[name=cartAmount]').val(++quantity);
 		}
 		//수량이 상품 재고 이상으로 선택 시 최대 수량 알림 메세지
-		if(quantity >= goodsStock){
+		if(quantity > goodsStock){
 			$(this).parent('div').find('input[name=cartAmount]').val(cartAmount);
 			alert('최대 수량입니다');
 		}
@@ -245,7 +245,7 @@ $(document).ready(function() {
 	});
 
 	/* 체크된 상품 결제금액 수정 이벤트 */
-	$('.oneCheck, .plusMinusBtn, #allCheck').click(function(){
+	$('#oneCheck, .plusMinusBtn, #allCheck').click(function(){
 		//var parentDiv = $(this).closest('.cartAll');
 
 		var cartPrice = 0;
