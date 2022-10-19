@@ -33,14 +33,20 @@ public class LedgerBookController {
 		 
 		 Map<String, Object> orderMap = new HashMap<String, Object>();
 		 orderMap.put("sellerId", sellerId);
+		 //판매자 메인 화면 상단 부분 
+		 List<Order> mainTop = ledgerBookService.mainTop(orderMap);
 		 
-		 List<Order> orderList = ledgerBookService.orderList(orderMap);		 
+		 //판매자 메인 화면 2022 결제 금액 테이블
+		 List<Order> orderList = ledgerBookService.orderList(orderMap);	
 		 
+		 //판매자 메인 화면 2022년 할인 통계 포인트 부분
 		 List<Order> pointDiscountlist = ledgerBookService.pointDiscountlist(orderMap);
 		 
+		 //판매자 메인 화면에 차트 부분
 		 List<Order> mainCartList = ledgerBookService.mainCartList(orderMap);
 		 
 		 model.addAttribute("title", "판매자 장부"); 
+		 model.addAttribute("mainTop", mainTop);
 		 model.addAttribute("orderList", orderList);
 		 model.addAttribute("pointDiscountlist", pointDiscountlist);
 		 model.addAttribute("mainCartList", mainCartList);
@@ -50,9 +56,26 @@ public class LedgerBookController {
 	}
 	
 	@GetMapping("/ledgerBook/salesStatistics")
-	public String salesStatistics(Model model) {
+	public String salesStatistics(Model model, HttpSession session) {
 		
-		model.addAttribute("title", "연령/지역별 통계");
+		String sellerId = (String) session.getAttribute("SID");
+		 
+		 Map<String, Object> orderMap = new HashMap<String, Object>();
+		 orderMap.put("sellerId", sellerId);
+		 //판매자 매출 통계 카테고리별 결제 금액 그래프(비율포함)
+		 List<Order> paymentAmount = ledgerBookService.paymentAmount(orderMap);	
+		 
+		 //판매자 매출 통계 카테고리별 교환 테이블 부분
+		 List<Order> orderExchange = ledgerBookService.orderExchange(orderMap);	
+		 
+		 //판매자 매출 통계 카테고리별 반품 테이블 부분 
+		 Map<String, Object> orderReturnMap = ledgerBookService.orderReturn(orderMap);		
+		 
+		model.addAttribute("title", "매출 통계");
+		model.addAttribute("paymentAmount", paymentAmount);
+		model.addAttribute("orderExchange", orderExchange);
+		model.addAttribute("orderReturn", orderReturnMap.get("orderReturn"));
+		model.addAttribute("cateInfoList", orderReturnMap.get("cateInfoList"));
 		
 		return "admin/ledgerBook/salesStatistics";
 	}
