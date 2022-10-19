@@ -51,9 +51,14 @@ public class UserCartController {
     	
     	String buyerId = "buyer01"; //임의
     	
+    	
     	//cartNewCode 생성
     	String cartNewCode = cartService.cartNewCode(buyerId); //buyerId 임의
-    	cartNewCode = CodeIndex.codeIndex(cartNewCode, 4);
+    	if(cartNewCode == null) {
+    		cartNewCode = "cart001";
+    	} else {
+    		cartNewCode = CodeIndex.codeIndex(cartNewCode, 4);
+    	}
     	log.info("장바구니 증가 코드 :::{}" , cartNewCode);
     	
     	cart.setCartCode(cartNewCode);
@@ -84,7 +89,7 @@ public class UserCartController {
 	}
     
 	//장바구니 삭제
-	@GetMapping("/cartRemove")
+	@PostMapping("/cartRemove")
     @ResponseBody
 	public String cartRemove(Cart cart) {
 		
@@ -93,7 +98,7 @@ public class UserCartController {
 		cartService.cartRemove(cart);
 		log.info("사용자가 삭제한 장바구니 정보 ::: {}", cart);
 		
-		return "redirect:";
+		return "redirect:/";
 	}
 	
     

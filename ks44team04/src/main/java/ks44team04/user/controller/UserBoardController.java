@@ -1,15 +1,20 @@
 package ks44team04.user.controller;
 
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import ks44team04.dto.Board;
-import ks44team04.dto.GoodsLargeCategory;
 import ks44team04.service.BoardService;
+import ks44team04.util.CodeIndex;
 
 @Controller
 @RequestMapping("/user/board")
@@ -24,9 +29,7 @@ public class UserBoardController {
     @GetMapping("/boardFree")
     public String boardFree(Model model, Board board) {
     	
-        board.setBoardCategory("boardCategory002");
-        
-        List<Board> boardListUser = boardService.BoardListUser();
+        List<Board> boardListUser = boardService.BoardListUser("boardCategory002");
         log.info("조회된 자유게시판 리스트 ::: {}", boardListUser);
         
 		model.addAttribute("title", "자유게시판");
@@ -35,15 +38,61 @@ public class UserBoardController {
         return "user/board/boardFree";
     }
 	
-	//자유게시판 게시물 등록 
+    //게시물 보기
+    @GetMapping("/boardView")
+    public String boardByCode(@RequestParam(value="boardCode", required = false) String boardCode
+							  ,Board board ,Model model) {
+    	
+    	Board boardInfo = boardService.boardByCode(boardCode);
+    	
+    	log.info("게시물 상세정보 ::: {}",boardInfo);
+    	
+		model.addAttribute("title", "게시물 보기");
+		model.addAttribute("boardInfo", boardInfo);
+    	
+    	return "user/board/boardView";
+    }
+    
+	//게시물 등록 
 	@GetMapping("/boardAdd")
-	public String boardAdd(Model model){
+	public String boardAdd(@RequestHeader(value = "Referer") String referer ,Model model){
+		
+		if(referer != null) {
+			if(referer.contains("boardFree")) {
+				model.addAttribute("boardCategory", "boardCategory002");
+			} else if (referer.contains("boardFarm")) {
+				model.addAttribute("boardCategory", "boardCategory003");
+			} else if (referer.contains("boardRecipe")) {
+				model.addAttribute("boardCategory", "boardCategory001");
+			}
+		}
 		
 		model.addAttribute("title", "게시물 등록");
 	    
 		return "user/board/boardAdd";
 	}
-    
+	
+	//게시물 등록 
+	@PostMapping("/boardAdd")
+	public String boardAdd(Board board, HttpSession session){
+		String userId = (String) session.getAttribute("SID");
+		
+		String boardNewCode = boardService.getBoardNewCode();
+		boardNewCode = CodeIndex.codeIndex(boardNewCode, 5);
+		
+		log.info("게시물 코드 증가 :::{}" , boardNewCode);
+		board.setBoardCode(boardNewCode);
+		board.setUserId(userId);
+		
+		boardService.boardAdd(board);
+		
+		return "redirect:/user/board/boardFree";
+	}
+  
+	
+	
+	
+	
     //레시피 게시판 
     @GetMapping("/boardRecipe")
     public String boardRecipe() {

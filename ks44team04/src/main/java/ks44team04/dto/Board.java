@@ -8,13 +8,11 @@ public class Board {
     private String boardTitle;
     private String boardContent;
     private String boardFile;
-    private String boardTag;
     private String fixCheck;
     private int viewAmount;
     private int likeAmount;
     private String regDate;
     private String modifyDate;
-    private int reportAmount;
     private int savePoint;
     private int deleteCheck;
     
@@ -63,13 +61,6 @@ public class Board {
 		this.boardFile = boardFile;
 	}
 
-	public String getBoardTag() {
-		return boardTag;
-	}
-	public void setBoardTag(String boardTag) {
-		this.boardTag = boardTag;
-	}
-
 	public String getFixCheck() {
 		return fixCheck;
 	}
@@ -105,13 +96,6 @@ public class Board {
 		this.modifyDate = modifyDate;
 	}
 
-	public int getReportAmount() {
-		return reportAmount;
-	}
-	public void setReportAmount(int reportAmount) {
-		this.reportAmount = reportAmount;
-	}
-
 	public int getSavePoint() {
 		return savePoint;
 	}
@@ -144,8 +128,8 @@ public class Board {
 	public String toString() {
 		return "Board [boardCode=" + boardCode + ", boardCategory=" + boardCategory + ", userId=" + userId
 				+ ", boardTitle=" + boardTitle + ", boardContent=" + boardContent + ", boardFile=" + boardFile
-				+ ", boardTag=" + boardTag + ", fixCheck=" + fixCheck + ", viewAmount=" + viewAmount + ", likeAmount="
-				+ likeAmount + ", regDate=" + regDate + ", modifyDate=" + modifyDate + ", reportAmount=" + reportAmount
+				+ ", fixCheck=" + fixCheck + ", viewAmount=" + viewAmount + ", likeAmount="
+				+ likeAmount + ", regDate=" + regDate + ", modifyDate=" + modifyDate
 				+ ", savePoint=" + savePoint + ", deleteCheck=" + deleteCheck + ", userInfo=" + userInfo
 				+ ", boardCategoryInfo=" + boardCategoryInfo + "]";
 	}

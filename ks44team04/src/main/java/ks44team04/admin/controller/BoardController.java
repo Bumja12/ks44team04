@@ -69,6 +69,12 @@ public class BoardController {
 		
 		model.addAttribute("title", "게시물 검색");
 		model.addAttribute("boardList", boardList);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("searchKey2", searchKey2);
+		model.addAttribute("searchCateName", searchCateName);
+		model.addAttribute("firstDate", firstDate);
+		model.addAttribute("lastDate", lastDate);
 		
 		return "/admin/board/boardList";
 	}
@@ -114,6 +120,12 @@ public class BoardController {
 		
 		model.addAttribute("title", "댓글 검색");
 		model.addAttribute("boardCommentList", boardCommentList);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("searchKey2", searchKey2);
+		model.addAttribute("searchCateName", searchCateName);
+		model.addAttribute("firstDate", firstDate);
+		model.addAttribute("lastDate", lastDate);
 		
 		return "/admin/board/boardComment";
 	}
@@ -157,6 +169,13 @@ public class BoardController {
 		
 		model.addAttribute("title", "좋아요 검색");
 		model.addAttribute("boardLikeList", boardLikeList);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("searchKey2", searchKey2);
+		model.addAttribute("searchCateName", searchCateName);
+		model.addAttribute("firstDate", firstDate);
+		model.addAttribute("lastDate", lastDate);
+
 		
 		return "/admin/board/boardLike";
 	}	
