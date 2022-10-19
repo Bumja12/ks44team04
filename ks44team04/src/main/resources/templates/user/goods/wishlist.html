@@ -15,7 +15,7 @@
 
 <th:block layout:fragment="customContents">
 	<div style="display:flex;">
-   		<div style="font-weight:600; font-size:20px; color:#333;">찜한 상품(<span class="wishCount"></span>)</div>
+   		<div style="font-weight:600; font-size:20px; color:#333;">찜한 상품</div>
     	<span style="padding-left:7px; padding-top:10px;">찜한 상품은 최대 100개까지 저장됩니다.</span>
     </div>
     
@@ -23,7 +23,7 @@
         <tbody>
         <tr th:if="${not #lists.isEmpty(wishlist)}" th:each="w : ${wishlist}">
             <td th:onclick="|location.href='@{/user/goods/goods(goodsCode=${w.goodsInfo.goodsCode})}'|" style="width:150px; cursor:pointer;">
-            	<img src="/images/goodsTest/apple.png" style="width:85px; height:85px; border-radius:5px;">
+            	<img th:src="@{'/' + ${w.fileList[0].filePath}}" style="width:85px; height:85px; border-radius:5px;">
             </td>
            	<td th:onclick="|location.href='@{/user/goods/goods(goodsCode=${w.goodsInfo.goodsCode})}'|" th:text="${w.goodsInfo.goodsName}"
            		style="cursor:pointer; font-size:18px; font-weight: 600; text-align:left !important; color:#333;"></td>
@@ -58,10 +58,10 @@
 <th:block layout:fragment="customMyPageJs">
 <script th:inline="javascript">
 
-	/* 찜 상품 개수 출력 */
+	/* 찜 상품 개수 출력
 	var rowCount = $('#wishlist tr').length;
 	console.log(rowCount);
-	$('.wishCount').text(rowCount);
+	$('.wishCount').text(rowCount); */
 
 	/* 장바구니 추가 */
 	$('.cartAddBtn').on('click', function(){
