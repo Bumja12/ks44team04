@@ -11,6 +11,7 @@ import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.Login;
 import ks44team04.dto.PaymentTotal;
 import ks44team04.dto.Right;
+import ks44team04.dto.Search;
 import ks44team04.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ import org.thymeleaf.util.StringUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
@@ -38,16 +40,33 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private UserService userService;
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    
+	private static final Logger log = LoggerFactory.getLogger(UserController.class);
+
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
     
+    // 10/19 회원 검색
+    @GetMapping("/user/userList2")
+    public String searchUserList(Search search, Model model) {
+    	
+    	log.info(">>>>{}",search);
+    	
+    	List<User> userList = userService.searchUserList(search);
+    	model.addAttribute("title", "검색결과");
+    	model.addAttribute("userList", userList);
+    	log.info("회원 검색결과 :::::::::: {}", userList);
+    	
+    	
+    	return "admin/user/userList";
+    }
+    
 	// 10/17 판매자 검색
-	@PostMapping("/user/sellerList")
-	public String searchSellerList(@RequestParam(name="searchKey", defaultValue = "sellerId") String sk
-								   ,@RequestParam(name="searchValue", required = false, defaultValue = "") String sv
+	@GetMapping("/user/sellerList2")
+	public String searchSellerList(@RequestParam(name="searchKey") String sk
+								   ,@RequestParam(name="searchValue") String sv
 								   ,@RequestParam(name="fromDate", required = false, defaultValue= "") String fromDate
 								   ,@RequestParam(name="toDate", required = false, defaultValue= "") String toDate
 								   ,Model model) {
@@ -72,7 +91,10 @@ public class UserController {
 		
 		List<Seller> sellerList = userService.searchSellerList(searchMap);
 		model.addAttribute("title", "검색결과");
-		model.addAttribute("sellerList", sellerList);
+		model.addAttribute("sellerListY", sellerList);
+		model.addAttribute("searchKey", sk);
+		model.addAttribute("searchValue", sv);
+		log.info("회원 검색결과 :::::::::: {}", sellerList);
 		
 		return "admin/user/sellerList";
 	}
@@ -396,7 +418,7 @@ public class UserController {
 	/* 판매자 목록 */
 	@GetMapping("/user/sellerList")
 	public String getSellerList(Model model) {
-		List<Seller> sellerList = userService.getSellerList();
+		List<Seller> sellerList = userService.searchSellerList(null);
 		log.info("판매자 목록 ::: {}", sellerList);
 		List<Seller> sellerListY = sellerList.stream()
 											 .filter(t -> StringUtils.equals("Y", t.getApproveCheck()))

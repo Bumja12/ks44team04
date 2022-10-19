@@ -122,6 +122,55 @@
 	</resultMap>
 	
 	<!-- /* ==================== 검색 시작 =================== */ -->
+	<!-- 회원 검색 -->
+	<select id="searchUserList" parameterType="Search" resultMap="UserResultMap" fetchSize="100">
+		/* 회원 검색 */
+		SELECT 
+			 u.user_id
+			,u.user_pw
+			,u.user_name
+			,u.user_gender
+			,u.user_nickname
+			,u.user_address
+			,u.user_address2
+			,u.user_phone
+			,u.user_email
+			,u.user_right
+			,r.right_status
+			,u.user_reg_date
+			,u.user_update_date
+			,u.user_status
+			,u.user_penalty
+			,u.user_point
+			,u.user_info_keep
+			,u.user_level
+		FROM 
+			tb_user AS u
+			INNER JOIN 
+			tb_right AS r
+			ON 
+			u.user_right = r.user_right
+		<where>
+			<if test="searchValue != null and searchValue != '' and searchKey == 'u.user_address'">
+				CONCAT(u.user_address, ' ', u.user_address2) LIKE CONCAT('%',#{searchValue},'%')
+			</if>
+			<if test="searchValue != null and searchValue != '' and searchKey != 'u.user_address'">
+				${searchKey} LIKE CONCAT('%',#{searchValue},'%')
+			</if>
+			<if test="userStatus != null and userStatus != ''">
+				AND
+				u.user_status = #{userStatus}
+			</if>
+			<if test="indivChecks != null and indivChecks != ''">
+				AND
+				u.user_right IN 
+				<foreach collection="indivChecks" item="data" open="(" close=")" separator=",">
+					#{data}
+				</foreach>
+			</if>
+		</where>
+	</select> 
+	
 	<!-- 판매자 검색 -->
 	<select id="searchSellerList" parameterType="map" resultMap="SellerResultMap" fetchSize="100">
 		/* 판매자 검색 */
@@ -130,8 +179,20 @@
 			,s.seller_id		AS s_seller_id
 			,s.store_name
 			,s.seller_sort
+			,s.bank_name
+			,s.account
+			,s.account_holder
+			,s.licence_num
+			,s.store_address
+			,s.store_address2
 			,s.store_phone
+			,s.store_email
+			,s.licence_img
+			,s.online_licence_img
+			,s.approve_ask_date
 			,s.approve_date
+			,s.approve_check
+			,s.approve_id
 		FROM 
 			tb_seller AS s
 		<trim prefix="WHERE" prefixOverrides="AND">
@@ -146,21 +207,6 @@
 			</if>
 		</trim>
 		ORDER BY s.seller_id;
-	</select>
-	
-	<!-- 회원 검색 -->
-	<select id="searchUserList" parameterType="map" resultMap="UserResultMap" fetchSize="100">
-		/* 회원 검색 */
-		SELECT
-			*
-		FROM 
-			tb_user AS u
-		<trim prefix="WHERE" prefixOverrides="AND |OR ">
-			<if test="sv != null and sv != ''">
-				${sk} LIKE CONCAT('%', #{sv} ,'%')
-			</if>	
-		</trim>
-		ORDER BY u.user_id
 	</select>
 	<!-- /* ==================== 검색 끝 =================== */ -->
 	
@@ -694,7 +740,8 @@
 	</select>
     
     <!-- 판매자 목록 조회 -->
-    <select id="getSellerList" resultMap="SellerResultMap">
+		<!--     
+		<select id="getSellerList" resultMap="SellerResultMap">
     	/* 판매자 목록 조회 */
     	SELECT 
 			 s.seller_code		
@@ -722,7 +769,8 @@
 				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%');
 			</if>
 		</trim>
-    </select>
+    </select> 
+    -->
 	
 	<!-- 특정회원 조회 -->
 	<select id="getUserInfoById" parameterType="String" resultMap="UserResultMap">
@@ -792,11 +840,6 @@
 			tb_right AS r
 			ON 
 			u.user_right = r.user_right
-		<trim prefix="where" prefixOverrides="AND |OR ">
-			<if test="searchValue != null and searchValue != ''">
-				AND ${searchKey} LIKE CONCAT('%', #{searchValue}, '%');
-			</if>
-		</trim>
 		ORDER BY u.user_id
     </select>
 	

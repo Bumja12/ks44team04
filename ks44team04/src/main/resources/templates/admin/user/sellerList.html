@@ -34,56 +34,56 @@
 			</div>
 
 			<!-- 검색 시작 -->	
-			<form class="form-inline" th:action="@{/admin/user/sellerList}" method="post">
-			<div class="x_content">
-				<div class="well" style="overflow: auto; margin-bottom: 5px;">
-					<div class="">
-						<table class="table table-bordered" style="background-color: white;">
-							<tbody>
-								<tr>
-									<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>검색어</b></td>
-									<td class="col-md-4">
-										<div class="form-inline">
+			<form class="form-inline" th:action="@{/admin/user/sellerList2}" method="get">
+				<div class="x_content">
+					<div class="well" style="overflow: auto; margin-bottom: 5px;">
+						<div class="">
+							<table class="table table-bordered" style="background-color: white;">
+								<tbody>
+									<tr>
+										<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>검색어</b></td>
+										<td class="col-md-4">
+											<div class="form-inline">
+												<div class="form-group">
+													<select name="searchKey" class="form-control" id="userSearchOption" style="width: 150px;">
+														<option value="">- 전체검색 -</option>
+														<option value="sellerId" 	th:selected="${'s.seller_id' == searchKey}">아이디</option>
+														<option value="sellerCode" 	th:selected="${'s.seller_code' == searchKey}">판매자코드</option>
+														<option value="sellerSort" 	th:selected="${'s.seller_sort' == searchKey}">분류코드</option>
+														<option value="storeName" 	th:selected="${'s.store_name' == searchKey}">농장이름</option>
+														<option value="sellerPhone" th:selected="${'s.seller_phone' == searchKey}">전화번호</option>
+													</select>
+												</div>
+												<div class="form-group">
+													<input type="text" name="searchValue" class="form-control text" th:value="${searchValue != null ? searchValue : ''}" placeholder="검색어를 입력해주세요" />
+												</div>
+											</div>
+										</td>
+										<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>판매자 승인 일자</b></td>
+										<td class="col-md-4" style="padding-left: 0px;">
 											<div class="form-group">
-												<select name="searchKey" class="form-control" id="userSearchOption" style="width: 150px;">
-													<option selected>- 전체검색 -</option>
-													<option value="sellerId">아이디</option>
-													<option value="sellerCode">판매자코드</option>
-													<option value="sellerSort">분류코드</option>
-													<option value="storeName">농장이름</option>
-													<option value="sellerPhone">전화번호</option>
-												</select>
+												<div class="col-sm-2">
+													<input name="fromDate" class="date-picker form-control" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'">
+												</div>
 											</div>
+											<span style="font-size: large; vertical-align: middle;">~</span>
 											<div class="form-group">
-												<input type="text" name="searchValue" class="form-control text" placeholder="검색어를 입력해주세요" />
+												<div class="col-sm-2">
+													<input name="toDate" class="date-picker form-control" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'">
+												</div>
 											</div>
-										</div>
-									</td>
-									<td class="col-md-2 col-sm-2" style="padding-top: 17px;"><b>판매자 승인 일자</b></td>
-									<td class="col-md-4" style="padding-left: 0px;">
-										<div class="form-group">
-											<div class="col-sm-2">
-												<input name="fromDate" class="date-picker form-control" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'">
-											</div>
-										</div>
-										<span style="font-size: large; vertical-align: middle;">~</span>
-										<div class="form-group">
-											<div class="col-sm-2">
-												<input name="toDate" class="date-picker form-control" placeholder="연도-월-일" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='date'">
-											</div>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-
-						<div style="text-align: center;">
-							<button type="reset" class="btn btn-dark">초기화</button>
-							<button type="submit" class="btn btn-dark">검색</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+	
+							<div style="text-align: center;">
+								<button type="reset" class="btn btn-dark">초기화</button>
+								<button type="submit" class="btn btn-dark">검색</button>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 			</form>
 			<!-- 검색 끝 -->
 
@@ -132,7 +132,7 @@
 												<form id="approveSeller" th:action="@{/admin/user/approveSeller}" method="post">
 													<input type="hidden" id="sellerId" name="sellerId" th:value="${l.sellerId}" />
 													<input type="hidden" id="approveId" name="approveId" value="admin01" />
- -->											</form>
+												</form>
 												<form id="rejectSeller" th:action="@{/admin/user/sellerList(sellerId=${l.sellerId})}" method="post">
 												</form>
 												<div class="btns">
@@ -169,23 +169,25 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${not #lists.isEmpty(sellerListY)}" th:each="l : ${sellerListY}">
-							<td th:text="${l.sellerCode}"></td>
-							<td th:text="${l.sellerId}"></td>
-							<td th:text="${l.storeName}"></td>
-							<td th:text="${l.sellerSort}"></td>
-							<td th:text="${l.storeAddress}"></td>
-							<td th:text="${l.storePhone}"></td>
-							<td th:text="${l.storeEmail}"></td>
-							<td th:text="${l.approveAskDate}"></td>
-							<td th:text="${l.approveDate}"></td>
-							<td th:text="${l.approveId}"></td>
-							<td>
-								<a th:href="@{/admin/user/sellerDetail(sellerId=${l.sellerId})}">
-									<i class="fa fa-info-circle"></i> 상세 
-								</a>
-							</td>
-						</tr>
+						<th:block  th:if="${not #lists.isEmpty(sellerListY)}">
+							<tr th:each="l : ${sellerListY}" th:if="${l.sellerSort != ''}">
+								<td th:text="${l.sellerCode}"></td>
+								<td th:text="${l.sellerId}"></td>
+								<td th:text="${l.storeName}"></td>
+								<td th:text="${l.sellerSort}"></td>
+								<td th:text="${l.storeAddress}"></td>
+								<td th:text="${l.storePhone}"></td>
+								<td th:text="${l.storeEmail}"></td>
+								<td th:text="${l.approveAskDate}"></td>
+								<td th:text="${l.approveDate}"></td>
+								<td th:text="${l.approveId}"></td>
+								<td>
+									<a th:href="@{/admin/user/sellerDetail(sellerId=${l.sellerId})}">
+										<i class="fa fa-info-circle"></i> 상세 
+									</a>
+								</td>
+							</tr>
+						</th:block>
 						<tr th:unless="${not #lists.isEmpty(sellerListY)}">
 							<td class="text-center" colspan="11">등록된 판매자가 없습니다.</td>
 						</tr>

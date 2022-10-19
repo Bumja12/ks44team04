@@ -122,6 +122,9 @@
 		margin-left: 10px;
 	}
 	
+	#userAddress {
+		background-color: #ccc;
+	}
 	
 	</style>
 </th:block>
@@ -226,7 +229,7 @@
 					<button type="button" id="addUserBtn" class="addUserBtn mt-3">회원가입</button>
 				</div>
 				
-				<input type="hidden" id="userRight" name="userRight" value="buyer">
+				<input type="hidden" id="userRight" name="userRight" th:value="${userRight}">
 				<input type="hidden" id="userStatus" name="userStatus" value="정상">
 				<input type="hidden" id="userPenalty" name="userPenalty" value=0>
 				<input type="hidden" id="userPoint" name="userPoint" value=0>

@@ -31,6 +31,11 @@
 		height: 50px;
 		width: 200px;
 		border-radius: 5px;
+		cursor:pointer;
+	}
+	
+	.addUserBtn:active, .addUserBtn:focus {
+		outline:none;
 	}
 	
  	.addUserBtn {
@@ -48,12 +53,18 @@
 	
 	.loginInput {
 		height: 45px;
-		width: 330px;
+		width: 350px;
 		font-size: 15px;
 		font-weight: 500;
 		border: 1px solid #dcdcdc;
 		border-radius: 3px;
 		padding: 10px;
+	}
+	
+	.loginInput:active, .loginInput:focus {
+		outline: #545454;
+		outline-style: solid;
+		outline-width: thin;
 	}
 	
 	.checkBtn {
@@ -63,8 +74,13 @@
 		font-size: 15px;
 		font-weight: bold;
 		height: 45px;
-		width: 120px;
+		width: 60px;
 		border-radius: 3px;
+		cursor:pointer;
+	}
+					
+	.checkBtn:active, .checkBtn:focus {
+		outline:none;
 	}
 	
 	.formBox {
@@ -73,12 +89,12 @@
 	}
 	
 	label {
-		width: 140px;
+		width: 130px;
 		font-weight: 600;
 		font-size: 14px;
 		padding-top: 12px;
 		color: #545454;
-		margin-left: 8px;
+		margin-left: 25px;
 	}
 	
 	.btnGroup {
@@ -90,14 +106,27 @@
 	}
 	
 	label span {
-		color: #fd6b54;
+		color: #f03f40;
 	}
 	
 	.checks{
-		margin-left: 160px;
+		margin-left: 167px;
 		font-size: 13px;
-		color: #fd6b54;
 	}
+	
+	.radio, .radioLabel  {
+		cursor:pointer;
+	}
+	
+	.radioLabel {
+		margin-left: 10px;
+	}
+	
+	#userAddress {
+		background-color: #F4F4F4;
+	}
+	
+	
 	</style>
 </th:block>
 
@@ -106,123 +135,131 @@
 	<div class="container mt-5 mb-5">
 		<div class="loginTitle">회원가입</div>
 		<div class="row justify-content-center mt-5 mb-3">
-			<form class="col-lg-7">
+			<form class="col-lg-6" id="modifyUserForm" th:action="@{/user/user/modifyUser}" th:object="${userInfo}" method="post">
 				<div class="form-group loginInputs" id="firstForBorder">
 					<label for="userId">아이디 <span>*</span></label>
-					<input type="text" class="loginInput" id="userId" name="userId" placeholder="아이디를 입력해주세요.">
-					<div class="btnGroup">
-						<button type="button" class="checkBtn" id="idCheckBtn">
-							<span class="checkBtnText">중복확인</span>
-						</button>
-					</div>
+					<input type="text" class="loginInput" id="userId" name="userId" th:value="*{userId}" placeholder="아이디를 입력해주세요.">
 				</div>
 				<div>
-					<span class="checks" id="idCheck">테스트</span>
+					<span class="checks" id="idCheck"></span>
 				</div>
 				<div class="form-group loginInputs">
 					<label for="userPw">현재 비밀번호 <span>*</span></label>
-					<input type="text" class="loginInput" id="userPw" name="userPw" placeholder="비밀번호를 입력해주세요.">
+					<input type="password" class="loginInput" id="userPw" name="userPw" placeholder="비밀번호를 입력해주세요.">
 				</div>
 				<div class="form-group loginInputs">
 					<label for="userPw">새 비밀번호 <span>*</span></label>
-					<input type="text" class="loginInput" id="userPw" name="userPw" placeholder="새 비밀번호를 입력해주세요.">
+					<input type="password" class="loginInput" id="userPw" name="userPw" placeholder="새 비밀번호를 입력해주세요.">
 				</div>
 				<div>
-					<span class="checks" id="pwCheck1">테스트</span>
+					<span class="checks" id="pwCheck1"></span>
 				</div>
 				<div class="form-group loginInputs">
-					<label for="userPw">새 비밀번호 확인<span>*</span></label>
-					<input type="text" class="loginInput" id="userPwCheck" name="userPwCheck" placeholder="새 비밀번호를 한번 더 입력해주세요.">
+					<label for="userPwCheck">새 비밀번호 확인 <span>*</span></label>
+					<input type="password" class="loginInput" id="userPwCheck" name="*{userPwCheck}" placeholder="새 비밀번호를 한번 더 입력해주세요.">
 				</div>
 				<div>
-					<span class="checks" id="pwCheck2">테스트</span>
+					<span class="checks" id="pwCheck2"></span>
 				</div>
 				<div class="form-group loginInputs">
-					<label for="userPw">이름 <span>*</span></label>
-					<input type="text" class="loginInput" id="userName" name="userName" placeholder="이름을 입력해주세요.">
+					<label for="userName">이름 <span>*</span></label>
+					<input type="text" class="loginInput" id="userName" name="userName" th:value="*{userName}" placeholder="이름을 입력해주세요.">
 				</div>
 				<div>
-					<span class="checks" id="nameCheck">테스트</span>
+					<span class="checks" id="nameCheck"></span>
 				</div>
 				<div class="form-group loginInputs">
-					<label for="userPw">닉네임 <span>*</span></label>
-					<input type="text" class="loginInput" id="userNickname" name="userNickname" placeholder="닉네임을 입력해주세요.">
+					<label for="userNickname">닉네임 <span>*</span></label>
+					<input type="text" class="loginInput" id="userNickname" name="userNickname" th:value="*{userNickname}" placeholder="닉네임을 입력해주세요.">
+				</div>
+				<div>
+					<span class="checks" id="nicknameCheck"></span>
+				</div>
+				<div class="form-group loginInputs">
+					<label for="userEmail">이메일 <span>*</span></label>
+					<input type="text" class="loginInput" id="userEmail" name="userEmail" th:value="*{userEmail}" placeholder="예: ksmart44@mail.com">
+				</div>
+				<div>
+					<span class="checks" id="emailCheck"></span>
+				</div>
+				<div class="form-group loginInputs">
+					<label for="userPhone">휴대폰 <span>*</span></label>
+					<input type="text" class="loginInput" id="userPhone" name="userPhone" th:value="*{userPhone}" placeholder="숫자만 입력해주세요." oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="11">
+				</div>
+				<div>
+					<span class="checks" id="phoneCheck"></span>
+				</div>
+				<div class="form-group loginInputs">
+					<label>성별 <span>*</span></label>
+					<div class="radioDiv" th:switch="${userInfo.userGender}" style="margin: 7px 5px;">
+						<p th:case="여">
+							<input type="radio" id="genderF1" name="userGender" th:value="여" checked />
+							<label class="" for="genderF1"> 여자 &nbsp; &nbsp; &nbsp; </label>
+							<input type="radio" id="genderM1" name="userGender" th:value="남" />
+							<label class="" for="genderM1"> 남자 </label>
+						</p>
+						<p th:case="남">
+							<input type="radio" id="genderF2" name="userGender" th:value="여" />
+							<label class="" for="genderF2"> 여자 &nbsp; &nbsp; &nbsp; </label>
+							<input type="radio" id="genderM2" name="userGender" th:value="남" checked />
+							<label class="" for="genderM2"> 남자 </label>
+						</p>
+					</div>
+				</div>
+				<div>
+					<span class="checks" id="genderCheck"></span>
+				</div>
+				<div class="form-group loginInputs">
+					<label for="userAddress">주소 <span>*</span></label>
+					<input type="text" class="loginInput" id="userAddress" name="userAddress" th:value="*{userAddress}" placeholder="주소를 검색해주세요." style="width: 280px" readonly>
 					<div class="btnGroup">
-						<button type="button" class="checkBtn" id="idCheckBtn">
-							<span class="checkBtnText">중복확인</span>
+						<button type="button" class="checkBtn" id="addrSearchBtn">
+							<span class="checkBtnText">검색</span>
 						</button>
 					</div>
 				</div>
 				<div>
-					<span class="checks" id="nicknameCheck">테스트</span>
+					<span class="checks" id="addressCheck"></span>
 				</div>
 				<div class="form-group loginInputs">
-					<label for="userPw">이메일 <span>*</span></label>
-					<input type="text" class="loginInput" id="userEmail" name="userEmail" placeholder="예: ksmart44@mail.com">
-					<div class="btnGroup">
-						<button type="button" class="checkBtn" id="idCheckBtn">
-							<span class="checkBtnText">중복확인</span>
-						</button>
-					</div>
+					<label for="userAddress2"></label>
+					<input type="text" class="loginInput" id="userAddress2" name="userAddress2" th:value="*{userAddress2}" placeholder="상세주소를 입력해주세요.">
 				</div>
 				<div>
-					<span class="checks" id="emailCheck">테스트</span>
+					<span class="checks" id="addressCheck2"></span>
 				</div>
 				<div class="form-group loginInputs">
-					<label for="userPw">휴대폰 <span>*</span></label>
-					<input type="text" class="loginInput" id="userPw" name="userPw" placeholder="숫자만 입력해주세요." maxlength="11">
-					<div class="btnGroup">
-						<button type="button" class="checkBtn" id="idCheckBtn">
-							<span class="checkBtnText">중복확인</span>
-						</button>
-					</div>
+					<label>정보보관기간 <span>*</span></label>
+					<div class="radioDiv" th:switch="${userInfo.userInfoKeep}">
+						<p th:case="탈퇴시까지">
+							<input type="radio" id="untilLeave1" name="userInfoKeep" th:value="탈퇴시까지" checked />
+							<label class="" for="untilLeave1"> 탈퇴시까지 &nbsp; &nbsp; &nbsp; </label>
+							<input type="radio" id="oneYear1" name="userInfoKeep" th:value="1년" />
+							<label class="" for="oneYear1"> 1년 </label>
+						</p>
+						<p th:case="1년">
+							<input type="radio" id="untilLeave2" name="userInfoKeep" th:value="탈퇴시까지" />
+							<label class="" for="untilLeave2"> 탈퇴시까지 &nbsp; &nbsp; &nbsp; </label>
+							<input type="radio" id="oneYear2" name="userInfoKeep" th:value="1년" checked />
+							<label class="l" for="oneYear2"> 1년 </label>
+						</p>
+					</div> 
 				</div>
 				<div>
-					<span class="checks" id="phoneCheck">테스트</span>
+					<span class="checks" id="infoKeepCheck"></span>
 				</div>
-				<div class="form-group loginInputs">
-					<label for="userPw">성별 <span>*</span></label>
-					<input type="radio" name="usergender" id="userGenderF" value="여">
-					<label for="userGenderF">여자</label>
-					<input type="radio" name="usergender" id="userGenderM" value="남">
-					<label for="userGenderM">남자</label>
-				</div>
-				<div>
-					<span class="checks" id="genderCheck">테스트</span>
-				</div>
-				<div class="form-group loginInputs">
-					<label for="userPw">주소 <span>*</span></label>
-					<input type="text" class="loginInput" id="userPw" name="userPw" placeholder="주소를 검색해주세요." readonly>
-					<div class="btnGroup">
-						<button type="button" class="checkBtn" id="idCheckBtn">
-							<span class="checkBtnText">주소검색</span>
-						</button>
-					</div>
-				</div>
-				<div>
-					<span class="checks" id="addressCheck">테스트</span>
-				</div>
-				<div class="form-group loginInputs">
-					<label for="userPw"></label>
-					<input type="text" class="loginInput" id="userPw" name="userPw" placeholder="상세주소를 입력해주세요.">
-				</div>
-				<div>
-					<span class="checks" id="addressCheck2">테스트</span>
-				</div>
-				<div class="form-group loginInputs" id="lastForBorder">
-					<label for="userPw">정보보관기간 <span>*</span></label>
-					<input type="radio" name="usergender" id="userGenderF" value="여">
-					<label for="userGenderF">탈퇴시까지</label>
-					<input type="radio" name="usergender" id="userGenderM" value="남"> 
-					<label for="userGenderM">1년</label>
-				</div>
-				<div>
-					<span class="checks" id="infoKeepCheck">테스트</span>
-				</div>
+				<div class="form-group loginInputs" id="lastForBorder"></div>
 
 				<div class="addUserBtn">
 					<button type="button" id="addUserBtn" class="addUserBtn mt-3">회원가입</button>
 				</div>
+				
+				<input type="hidden" id="userRight" name="userRight" th:value="${userRight}">
+				<input type="hidden" id="userStatus" name="userStatus" value="정상">
+				<input type="hidden" id="userPenalty" name="userPenalty" value=0>
+				<input type="hidden" id="userPoint" name="userPoint" value=0>
+				<input type="hidden" id="userLevel" name="userLevel" value="levelBuyer01">
+				
 			</form>
 		</div>
 	</div>
@@ -231,8 +268,425 @@
 
 <th:block layout:fragment="customJsScript">
 <th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
-<script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+    
+		var idCheck = false;
+		var pwCheck = false;
+		var pwCheck2 = false;
+		var pwCheckFinal = false; 
+		var NameCheck = false; 
+		var nicknameCheck = false;
+		var genderCheck = false;
+		var emailCheck = false;
+		var phoneCheck = false;
+		var addressCheck = false;
+		var addressCheck2 = false;
+		var addressCheckFinal = false;
+		var statusCheck = false; 
+		var infoKeepCheck = false;
+		
+		$('#idCheck').hide();
+		$('#pwCheck1').hide();
+		$('#pwCheck2').hide();
+		$('#nameCheck').hide();
+		$('#nicknameCheck').hide();
+		$('#emailCheck').hide();
+		$('#phoneCheck').hide();
+		$('#genderCheck').hide();
+		$('#addressCheck').hide();
+		$('#addressCheck2').hide();
+		$('#infoKeepCheck').hide();
+		
+		
+    	/* 주소 검색 */
+		let text = document.querySelector('#userAddress');
+		document.querySelector('#addrSearchBtn').addEventListener('click', function () {
+			
+			new daum.Postcode({
+				oncomplete: function (data) {
+					/* 주소 입력시 경고표시 없애기 */
+			        $('#addressCheck').hide();
+					text.value = data.address;
+				}
+			}).open();
+			
+			//상세주소 초기화
+			var input = document.getElementById('userAddress2'); 
+			input.value = "";
+		});
+		
+		/* id 중복체크 - ajax 비동기처리 */			
+		$("#userId").on("propertychange change keyup paste input",function() {
+		
+			var userId = $('#userId').val();
 
-</script>
+			function id_check( id ) {
+			    var regex= /^[a-z][a-z\d]{5,15}$/;
+			    return (id != '' && id != 'undefined' && regex.test(id));
+			}
+			
+			if(!id_check(userId)) {
+				$('#idCheck').show();
+				$('#idCheck').css('color','#f03f40');
+                $('#idCheck').html("6~16자의 영문 소문자, 숫자만 입력해주세요");
+				$('#userId').focus();
+				idCheck = false;
+			}else {
+				$.ajax({
+					url: '/admin/user/idCheck',
+					method: 'GET',
+					data: { 'userId' : userId },
+					//dataType: "json",  //String이면 text   //text, json, xml, html
+					success : function(cnt) {
+						if(cnt == 0){
+			                $('#idCheck').css('color','#7fad39');
+			                $('#idCheck').html("사용 가능한 아이디입니다.");
+			                idCheck = true;
+						}else {
+							$('#idCheck').css('color','#f03f40');
+			                $('#idCheck').html("이미 사용중인 아이디입니다.");
+							$('#userId').focus();
+							idCheck = false;
+						}	
+					}
+				});
+			}
+		});
+		
+	  	/* 비밀번호 유효성검사 */
+		$("#userPw").on("propertychange change keyup paste input",function(){
+              
+           	var regex = /^[A-Za-z\d]{5,15}$/;
+            var userPw = regex.exec($("#userPw").val());
+            var userPwCheck = $('#userPwCheck').val();
+
+            if(userPw != null){
+            	$('#pwCheck1').hide();
+            	pwCheck = true;
+            }else{
+            	$('#pwCheck1').show();
+               	$('#pwCheck1').css('color','#f03f40');
+               	$('#pwCheck1').html('6~16자의 영문 대소문자, 숫자만 입력해주세요.');
+               	pwCheck = false;
+            }
+			
+			if(userPw != userPwCheck) {
+               	$('#pwCheck2').css('color','#f03f40');
+               	$('#pwCheck2').html('비밀번호가 일치하지 않습니다.');
+               	pwCheck2 = false
+			}else if(userPwCheck == "" || userPw != userPwCheck) {
+               	$('#pwCheck2').css('color','#f03f40');
+               	$('#pwCheck2').html('비밀번호가 일치하지 않습니다.');
+               	pwCheck2 = false
+			}
+			
+        });
+		
+		/* 비밀번호 확인 */
+		$('#userPwCheck').on("propertychange change keyup paste input",function() {
+			
+			var userPw = $('#userPw').val();
+			var userPwCheck = $('#userPwCheck').val();
+			
+			if(userPwCheck != "" && userPw == userPwCheck) {
+				$('#pwCheck2').hide();
+               	pwCheck2 = true;
+			}else if(userPwCheck == "" || userPw != userPwCheck) {
+				$('#pwCheck2').show();
+               	$('#pwCheck2').css('color','#f03f40');
+               	$('#pwCheck2').html('비밀번호가 일치하지 않습니다.');
+               	pwCheck2 = false
+			}
+		});
+	  	
+		//닉네임 중복체크
+		$("#userNickname").on("propertychange change keyup paste input",function() {
+		
+			var userNickname = $('#userNickname').val();
+			
+			$.ajax({
+				url: '/admin/user/nicknameCheck',
+				method: 'GET',
+				data: { 'userNickname' : userNickname },
+				success : function(cnt) {
+					
+					if(userNickname == "" || userNickname == null) {
+						$('#nicknameCheck').hide();
+						nicknameCheck = false;
+					}else {
+						if(cnt == 0){
+							$('#nicknameCheck').show();
+							$('#nicknameCheck').css('color','#7fad39');
+			                $('#nicknameCheck').html("사용 가능한 닉네임입니다.");
+			                nicknameCheck = true;
+						}else {
+							$('#nicknameCheck').show();
+							$('#nicknameCheck').css('color','#f03f40');
+			                $('#nicknameCheck').html("이미 사용중인 닉네임입니다.");
+							$('#userNickname').focus();
+							nicknameCheck = false;
+						}	
+					}
+				}
+			});
+		});
+		
+		/* 이메일 중복체크 */
+		$("#userEmail").on("propertychange change keyup paste input",function() {
+			
+			var userEmail = $('#userEmail').val();
+			
+			// 정규표현식 (@, . 포함)
+			function email_check( email ) {
+			    var regex=/^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+			    return (email != '' && email != 'undefined' && regex.test(email));
+			}
+			
+			if(! email_check(userEmail)) {
+				$('#emailCheck').show();
+				$('#emailCheck').css('color','#f03f40');
+                $('#emailCheck').html("잘못된 형식의 이메일입니다.");
+				$('#userEmail').focus();
+				emailCheck = false
+			}else {
+				$.ajax({
+					url: '/admin/user/emailCheckU',
+					method: 'GET',
+					data: { 'userEmail' : userEmail },
+					success : function(cnt) {
+						if(cnt == 0){
+			                $('#emailCheck').css('color','#7fad39');
+			                $('#emailCheck').html("사용 가능한 이메일입니다.");
+			                emailCheck = true;
+						}else {
+							$('#emailCheck').css('color','#f03f40');
+			                $('#emailCheck').html("이미 사용중인 이메일입니다.");
+							$('#userEmail').focus();
+							emailCheck = false
+						}	
+					}
+				});
+			}
+		});
+		
+		//전화번호 중복체크
+		$("#userPhone").on("propertychange change keyup paste input",function() {
+			
+			var userPhone = $('#userPhone').val();
+			
+			if(userPhone == "" || userPhone == null) {
+				$('#phoneCheck').hide();
+			}else {
+				if(userPhone.length != 11) {
+					$('#phoneCheck').show();
+					$('#phoneCheck').css('color','#f03f40');
+	                $('#phoneCheck').html("11자리 숫자를 입력해주세요.");
+					$('#userPhone').focus();
+					phoneCheck = false;
+				}else {
+					$.ajax({
+						url: '/admin/user/phoneCheckU',
+						method: 'GET',
+						data: { 'userPhone' : userPhone },
+						success : function(cnt) {
+							if(cnt == 0){
+				                $('#phoneCheck').css('color','#7fad39');
+				                $('#phoneCheck').html("사용 가능한 휴대폰번호입니다.");
+				                phoneCheck = true;
+							}else {
+								$('#phoneCheck').css('color','#f03f40');
+				                $('#phoneCheck').html("이미 사용중인 휴대폰번호입니다.");
+								$('#userPhone').focus();
+								phoneCheck = false;
+							}	
+						}
+					});
+				}
+			}
+		});
+		
+	  	/* 이름 입력시 경고표시 없애기 */
+		$('#userName').on("propertychange change input", function(){
+			if($('#userName').val() != ""){
+				$('#nameCheck').hide();
+	        }
+		});
+	  	
+		/* 성별 선택시 경고표시 없애기 */
+		$("input[name='userGender']").change(function(){
+	        if($('input[name=userGender]:checked').length > 0){
+	        	$('#genderCheck').hide();
+	        }			
+		});
+		
+		/* 상세주소 입력시 경고표시 없애기 */
+		$('#userAddress2').on("propertychange change input",function() {
+			if($('#userAddress2').val != "") {
+				$('#addressCheck2').hide();
+			}
+		});
+		
+		/* 정보보관기간 선택시 경고표시 없애기 */
+		$("input[name='userInfoKeep']").change(function(){
+	        if($('input[name=userInfoKeep]:checked').length > 0){
+	        	$('#infoKeepCheck').hide();
+	        }			
+		});
+		
+		/* 등록 버튼 클릭시 유효성검사 */
+		$("#addUserBtn").click(function(){
+			
+			/* 아이디 */
+			if($('#userId').val() == "") {
+				$('#idCheck').show();
+				$('#idCheck').css('color','#f03f40');
+                $('#idCheck').html("* 아이디를 입력해주세요.");
+				$('#userId').focus();
+				idCheck = false;
+			}
+			console.log('idCheck : ',idCheck);
+			
+			/* 비밀번호 */
+			if($('#userPw').val() == "") {
+				$('#pwCheck1').show();
+				$('#pwCheck1').css('color','#f03f40');
+                $('#pwCheck1').html("* 비밀번호를 입력해주세요.");
+				$('#userPw').focus();
+				pwCheck = false;
+			}
+			console.log('pwCheck : ',pwCheck);
+			
+			/* 비밀번호확인 */
+			if($('#userPwCheck').val() == "") {
+				$('#pwCheck2').show();
+				$('#pwCheck2').css('color','#f03f40');
+                $('#pwCheck2').html("* 비밀번호를 한번 더 입력해주세요.");
+				$('#userPwCheck').focus();
+				pwCheck = false;
+			}
+			console.log('pwCheck2 : ',pwCheck2);
+			
+			/* 비밀번호 최종확인 */
+			if(pwCheck == true && pwCheck2 == true) {
+				pwCheckFinal = true;
+			}else {
+				pwCheckFinal = false;
+			}
+			console.log('pwCheckFinal : ',pwCheckFinal);
+			
+			/* 이름 유효성검사 */
+	        if($('#userName').val() == ""){
+	        	$('#nameCheck').show();
+				$('#nameCheck').css('color','#f03f40');
+                $('#nameCheck').html("* 이름을 입력해주세요.");
+				$('#userName').focus();
+				nameCheck = false;
+	        }else {
+	        	nameCheck = true;
+	        }
+	        console.log('nameCheck : ',nameCheck);
+			
+			/* 닉네임 */
+	        if($('#userNickname').val() == ""){
+	        	$('#nicknameCheck').show();
+				$('#nicknameCheck').css('color','#f03f40');
+                $('#nicknameCheck').html("* 닉네임을 입력해주세요.");
+				$('#userNickname').focus();
+				nicknameCheck = false;
+	        }
+			console.log('nicknameCheck : ',nicknameCheck);
+	        
+	        /* 성별 */
+	        if($('input[name=userGender]:checked').length == 0){
+	        	$('#genderCheck').show();
+	        	$('#genderCheck').css('color','#f03f40');
+                $('#genderCheck').html("* 성별을 입력해주세요.");
+	            genderCheck = false;
+	        }else{
+	        	genderCheck = true;
+	        }
+	        console.log('genderCheck : ',genderCheck);
+	        
+	        /* 이메일 */
+	        if($('#userEmail').val() == ""){
+	        	$('#emailCheck').show();
+				$('#emailCheck').css('color','#f03f40');
+                $('#emailCheck').html("* 이메일을 입력해주세요.");
+				$('#userEmail').focus();
+				emailCheck = false;
+	        }
+			console.log('emailCheck : ',emailCheck);
+	        
+			/* 휴대폰번호 */
+	        if($('#userPhone').val() == ""){
+	        	$('#phoneCheck').show();
+				$('#phoneCheck').css('color','#f03f40');
+                $('#phoneCheck').html("* 휴대폰번호를 입력해주세요.");
+				$('#userPhone').focus();
+				phoneCheck = false;
+	        }
+			console.log('phoneCheck : ',phoneCheck);
+			
+	        /* 주소 */
+	        if($('#userAddress').val() == ""){
+	        	$('#addressCheck').show();
+				$('#addressCheck').css('color','#f03f40');
+                $('#addressCheck').html("* 주소를 입력해주세요.");
+				$('#userAddress').focus();
+				addressCheck = false;
+	        }else {
+	        	addressCheck = true;
+	        }
+	        console.log('addressCheck : ',addressCheck);
+	        
+	        /* 상세주소 */
+	        if($('#userAddress2').val() == "") {
+	        	$('#addressCheck2').show();
+				$('#addressCheck2').css('color','#f03f40');
+                $('#addressCheck2').html("* 상세주소를 입력해주세요.");
+				$('#userAddress2').focus();
+				addressCheck2 = false;
+	        }else {
+	        	addressCheck2 = true;
+	        }
+	        console.log('addressCheck2 : ',addressCheck2);
+	        
+			/* 주소,상세주소 최종확인 */
+			if(addressCheck == true && addressCheck2 == true) {
+				addressCheckFinal = true;
+			}else {
+				addressCheckFinal = false;
+			}
+			console.log('addressCheckFinal : ',addressCheckFinal);
+	 
+	        /* 정보보관기간 유효성검사 */
+	        if($('input[name=userInfoKeep]:checked').length == 0){
+	        	$('#infoKeepCheck').show();
+				$('#infoKeepCheck').css('color','#f03f40');
+                $('#infoKeepCheck').html("* 정보보관기간을 입력해주세요.");
+                infoKeepCheck = false;
+	        }else{
+	        	infoKeepCheck = true;
+	        }
+	        console.log('infoKeepCheck : ',infoKeepCheck);
+	        
+	        $('#userPoint').val( Number($('#userPoint').val().replace(/,/g, "")) );
+			$('#userPenalty').val( Number($('#userPenalty').val().replace(/,/g, "")) );
+	        
+	        /* form 전송 */
+			$('#addUserForm').submit(function(event) {}); 
+	        
+	        /* 최종 유효성 검사 */
+			if(idCheck && pwCheck && pwCheck2 && pwCheckFinal && nameCheck && nicknameCheck && genderCheck && emailCheck && phoneCheck && addressCheck && addressCheck2 && addressCheckFinal && infoKeepCheck) {
+				$('#addUserForm').submit();
+	        }
+			//return false;
+		});
+
+		
+
+    </script>
+    
 </th:block>
 </html>
