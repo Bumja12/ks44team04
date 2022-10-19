@@ -319,6 +319,7 @@
 
         .topMenu a {
             color: #3d3d3d;
+            text-decoration: underline;
         }
 
         .hide {
@@ -424,8 +425,28 @@
         <div class="profile-nav col-md-3">
             <div class="panel">
                 <div class="user-heading round">
-                    <img src="/images/userTest/level01.png" alt="" style="margin-bottom: 15px;">
-                    <h1>김보경님</h1>
+                    <!--
+                        <th:block th:if="${session.SLEVEL} != null" th:switch="${session.SLEVEL}">
+                          <img src="/images/myPage/levelBuyer01.png" th:case="'levelBuyer01'" style="margin-bottom: 15px;">
+                          <img src="/images/myPage/levelBuyer02.png" th:case="'levelBuyer02'" style="margin-bottom: 15px;">
+                          <img src="/images/myPage/levelBuyer03.png" th:case="'levelBuyer03'" style="margin-bottom: 15px;">
+                          <img src="/images/myPage/levelBuyer04.png" th:case="'levelBuyer04'" style="margin-bottom: 15px;">
+                          <th:block th:case="levelSeller01">
+                              <img src="/images/myPage/levelSeller01.png" style="margin-bottom: 15px;">
+                              </th:block>
+                              <th:block th:case="levelSeller02">
+                              <img src="/images/myPage/levelSeller02.png" style="margin-bottom: 15px;">
+                              </th:block>
+                              <th:block th:case="levelSeller03">
+                              <img src="/images/myPage/levelSeller03.png" style="margin-bottom: 15px;">
+                              </th:block>
+                              <th:block th:case="levelSeller04">
+                              <img src="/images/myPage/levelSeller04.png" style="margin-bottom: 15px;">
+                              </th:block>
+                        </th:block>
+                       -->
+                    <img src="/images/myPage/levelBuyer01.png" style="margin-bottom: 15px;">
+                    <h1 th:text="|${session.SNAME}님|"></h1>
                     <a href="#" style="color: white;"><i class="fa fa-gear" style="color: white;"></i> 회원정보수정</a>
                 </div>
 
@@ -464,13 +485,11 @@
                     </li>
                     <li class="menu">
                         <a href="#">회원정보 수정<span>></span></a>
-                        <ul class="hide">
-                            <li class="hide1"><a href="#" class="depth-1">회원정보 수정<span>></span></a></li>
-                            <li class="hide1"><a href="#" class="depth-1">회원 탈퇴<span>></span></a></li>
-                        </ul>
                     </li>
                 </ul>
                 <!-- left menu End -->
+
+
             </div>
         </div>
         <div class="profile-info col-md-9">
@@ -478,22 +497,22 @@
                 <div class="bio-graph-heading container topMenuContainer">
                     <div class="row justify-content-center topMenus">
                         <div class="col topMenu">
-                            <img src="/images/userTest/shipped.png" class="shippingImg">
+                            <img src="/images/myPage/shipped.png" class="shippingImg">
                             <div class="topMenuText">주문/배송</div>
                             <a href="#"> 3 </a>
                         </div>
                         <div class="col topMenu">
-                            <img src="/images/userTest/dollar-coins.png" class="shippingImg">
+                            <img src="/images/myPage/dollar-coins.png" class="shippingImg">
                             <div class="topMenuText">포인트</div>
                             <a href="#"> 1,960 </a>
                         </div>
                         <div class="col topMenu">
-                            <img src="/images/userTest/coupon.png" class="shippingImg">
+                            <img src="/images/myPage/coupon.png" class="shippingImg">
                             <div class="topMenuText">쿠폰</div>
                             <a href="#"> 20 </a>
                         </div>
                         <div class="col topMenu">
-                            <img src="/images/userTest/conversation.png" class="shippingImg">
+                            <img src="/images/myPage/conversation.png" class="shippingImg">
                             <div class="topMenuText">1:1 문의</div>
                             <a href="#"> 1 </a>
                         </div>
@@ -502,7 +521,7 @@
             </div>
 
             <div style="padding: 10px 5px;">
-               <th:block layout:fragment="customContents"></th:block>
+                <th:block layout:fragment="customContents"></th:block>
             </div>
         </div>
     </div>

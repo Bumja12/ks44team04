@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +26,8 @@ public class UserAddressController {
     }
 
     @GetMapping("")
-    public String addressList(@RequestParam(value = "userId", required = false) String userId, Model model) {
-        userId = "buyer01";
+    public String addressList(Model model, HttpSession session) {
+        String userId = (String) session.getAttribute("SID");
         Map<String, String> addressInfo = new HashMap<>();
         addressInfo.put("userId", userId);
         List<AddressList> addressLists = addressService.getAddressList(addressInfo);
@@ -34,14 +35,17 @@ public class UserAddressController {
         return "user/order/address";
     }
 
-
     @GetMapping("/register")
-    public String addressRegister() {
-
+    public String addressRegister(@RequestHeader(value = "Referer") String referer, Model model) {
+        if (referer != null && referer.contains("checkout")) {
+            model.addAttribute("checkout", "checkout");
+            return "user/order/checkoutAddressReg";
+        }
         return "user/order/addressReg";
     }
     @PostMapping("/register")
-    public String addressRegister(AddressList addressList) {
+    public String addressRegister(AddressList addressList,
+                                  @RequestParam(value = "checkout") String checkout) {
 
         String addressListCode = addressService.getAddressListCode();
         addressListCode = CodeIndex.codeIndex(addressListCode, 13);
@@ -49,14 +53,10 @@ public class UserAddressController {
         addressList.setAddressList(addressListCode);
         addressList.setBuyerId("buyer01");
         addressService.addressRegister(addressList);
-
+        if (checkout != null && checkout.equals("checkout")) {
+            return "redirect:/user/address/checkout";
+        }
         return "redirect:/user/address";
-    }
-
-    @GetMapping("/success")
-    public String successClose() {
-
-        return "user/order/success";
     }
 
     @GetMapping("/modify/{addressList}") // 배송지 수정 클릭 시 값 받아와서 화면에 뿌림
@@ -68,7 +68,6 @@ public class UserAddressController {
         model.addAttribute("addressLists", addressLists);
         return "user/order/addressMod";
     }
-
     @PostMapping("/modify")
     public String addressModify(AddressList addressList) {
         addressService.addressModify(addressList);
@@ -91,5 +90,15 @@ public class UserAddressController {
 
         return addressLists.get(addressLists.size() - 1);
     }
-  
+
+    @GetMapping("/checkout")
+    public String addressListOnCheckout(Model model) {
+        String userId = "buyer01";
+        Map<String, String> addressInfo = new HashMap<>();
+        addressInfo.put("userId", userId);
+        List<AddressList> addressLists = addressService.getAddressList(addressInfo);
+        model.addAttribute("addressList", addressLists);
+        return "user/order/checkoutAddress";
+    }
+
 }
