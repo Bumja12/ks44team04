@@ -21,17 +21,86 @@
 		<result column="final_confirm_date"  	 property="finalConfirmDate"/>
 		<result column="post_address_list"  	 property="postAddressList"/>
 			<association property="OrderDetailDto" javaType="OrderDetail" >
-	        	<id     column="order_detail_code" property="orderDetailCode"/>
+	        	<id     column="order_detail_code"	 property="orderDetailCode"/>
+	        	<result column="order_num"			 property="orderNum"/>
+	        	<result column="goods_code"			 property="goodsCode"/>
+	        	<result column="order_amount"		 property="orderAmount"/>
+	        	<result column="order_og_price"		 property="orderOgPrice"/>
+	        	<result column="order_price"		 property="orderPrice"/>
+	        	<result column="order_status"		 property="orderStatus"/>
+	        	<result column="post_info"			 property="postInfo"/>
+	        	<result column="refund_check"		 property="refundCheck"/>
+	        	<result column="auto_confirm_date"	 property="autoConfirmDate"/>
+	        	<result column="order_confirm_date"	 property="orderConfirmDate"/>
+	        	<result column="save_point"			 property="savePoint"/>
 	        </association>
 			<association property="GoodsDto" javaType="Goods" >
-	        	<id     column="goods_code" property="goodsCode"/>
-	        	<result column="seller_id" 	 property="sellerId"/>
+	        	<id     column="goods_code"				 property="goodsCode"/>
+	        	<result column="goods_small_category" 	 property="goods_small_category"/>
+	        	<result column="seller_id" 	 			 property="sellerId"/>
+	        	<result column="goods_name" 	 		 property="goods_name"/>
+	        	<result column="goods_content" 			 property="goods_content"/>
+	        	<result column="goods_detail" 			 property="goods_detail"/>
+	        	<result column="goods_price" 			 property="goods_price"/>
+	        	<result column="goods_discount_rate" 	 property="goods_discount_rate"/>
+	        	<result column="goods_post_price" 		 property="goods_post_price"/>
+	        	<result column="goods_stock" 			 property="goods_stock"/>
+	        	<result column="soldout_check" 			 property="soldout_check"/>
+	        	<result column="stop_sale_check" 		 property="stop_sale_check"/>
+	        	<result column="package_post_check" 	 property="package_post_check"/>
+	        	<result column="regular_deliver_check" 	 property="regular_deliver_check"/>
+	        	<result column="goods_file" 	 		 property="goods_file"/>
+	        	<result column="reg_date" 				 property="reg_date"/>
+	        	<result column="modify_date" 			 property="modify_date"/>
 	        </association>
+			<association property="GoodsLargeCategoryDto" resultMap="ks44team04.mapper.CategoryMapper.GoodsLargeCategoryMap"/>
+	       	<association property="GoodsSmallCategorDto" resultMap="ks44team04.mapper.CategoryMapper.GoodsSmallCategoryMap"/>
+	       	<association  property="OrderExchangeDto" javaType="OrderExchange">
+	      	 	<id     column="exchange_ask_code"		 property="exchangeAskCode"/>
+	        	<result column="order_detail_code" 	  	 property="orderDetailCode"/>
+	        	<result column="buyer_id" 	 			 property="buyerId"/>
+	        	<result column="post_info" 	 			 property="postInfo"/>
+	        	<result column="exchange_ask_date" 	 	 property="exchangeAskDate"/>
+	        	<result column="exchange_reason" 	 	 property="exchangeReason"/>
+	        	<result column="approve_check" 	 		 property="approveCheck"/>
+	        	<result column="approve_date" 	 		 property="approveDate"/>
+	        	<result column="post_company" 			 property="postCompany"/>
+	        	<result column="invoice_number" 		 property="invoiceNumber"/>
+	       	</association>
+	       	<association  property="OrderReturnDto" 	javaType="OrderReturn">
+	      	 	<id     column="order_return_code"		 property="orderReturnCode"/>
+	        	<result column="order_detail_code" 	  	 property="orderDetailCode"/>
+	        	<result column="buyer_id" 	 			 property="buyerId"/>
+	        	<result column="return_ask_date" 	 	 property="returnAskDate"/>
+	        	<result column="return_reason" 	 		 property="returnReason"/>
+	        	<result column="permit_date" 	 		 property="permitDate"/>
+	        	<result column="post_company" 	 		 property="postCompany"/>
+	        	<result column="invoice_number" 	 	 property="invoiceNumber"/>
+	       	</association>
 	</resultMap>
 	
-		
+<!--판매자 메인 화면 상단 부분  -->
+<select id="mainTop" parameterType="map" resultMap="orderResultMap" >
+/*판매자 메인 화면 상단 부분*/
+	SELECT 
+		 COUNT(if(o.order_date = DATE_FORMAT(NOW(),'%Y-%m-%d'), o.order_date, NULL)) AS `order_date` 
+		 ,COUNT(if(o.final_confirm_date = DAT	E_FORMAT(NOW(),'%Y-%m-%d'), o.final_confirm_date, NULL)) AS `final_confirm_date` 
+		 ,COUNT(if(o.final_confirm_date = DATE_FORMAT(NOW(),'%Y-%m-%d'), o.final_confirm_price, NULL)) AS `final_confirm_price` 
+	FROM 
+	  	tb_order AS o
+		INNER JOIN 
+		tb_order_detail AS od
+		on
+		o.order_num = od.order_num
+		INNER JOIN 
+		tb_goods AS g
+		on
+		od.goods_code = g.goods_code
+	WHERE 
+		g.seller_id = #{sellerId}
+</select>		
 
-<!-- 메인 화면 2022 결제 금액 테이블  -->
+<!--판매자 메인 화면 2022 결제 금액 테이블  -->
 <select id="orderList" parameterType="map" resultMap="orderResultMap" >
 /*메인 화면 2022 결제 금액 테이블*/	
 	SELECT 
@@ -53,7 +122,7 @@
 		GROUP BY MONTH(o.order_date);		
 </select>
 
-<!-- 메인 화면 2022년 할인 통계 포인트 부분 -->
+<!--판매자 메인 화면 2022년 할인 통계 포인트 부분 -->
 <select id="pointDiscountlist" parameterType="map" resultMap="orderResultMap" >
 	/*메인 화면 2022년 할인 통계 포인트/쿠폰 부분*/			
 		SELECT 
@@ -75,27 +144,212 @@
 		GROUP BY MONTH(o.order_date);		
 </select>
 
-<!-- 메인 화면에 차트 부분 -->
+<!--판매자 메인 화면에 차트 부분 -->
 <select  id="mainCartlist" parameterType="map" resultMap="orderResultMap">
-/* 메인 화면에 차트 부분 */
-	SELECT
-		DATE_FORMAT(o.order_date,'%Y.%m.%d')  AS `order_date`
-		,sum(o.goods_discount_price) AS `goods_discount_price`
-		,sum(o.total_price) AS `total_price`
+	/* 메인 화면에 차트 부분 */
+	WITH RECURSIVE date_data AS (
+		SELECT DATE_SUB(CURDATE(), INTERVAL 6 DAY) AS pDate
+		UNION all
+		SELECT pDate + INTERVAL 1 DAY FROM date_data WHERE pDate <![CDATA[<]]> CURDATE()
+	)
+	SELECT DATE_FORMAT(pDate,'%Y.%m.%d') AS `order_date`
+			,if(d.goods_discount_price is NULL, 0 , d.goods_discount_price) AS `goods_discount_price`
+			,if(d.final_confirm_price is NULL , 0,d.final_confirm_price) AS `final_confirm_price` 
+			 FROM date_data
+
+	LEFT JOIN(
+				SELECT
+						DATE_FORMAT(o.order_date,'%Y.%m.%d')  AS `order_date`
+						,sum(o.goods_discount_price) AS `goods_discount_price`
+						,sum(o.final_confirm_price) AS `final_confirm_price`
+					FROM 
+					  	tb_order AS o
+						INNER JOIN 
+						tb_order_detail AS od
+						on
+						o.order_num = od.order_num
+						INNER JOIN 
+						tb_goods AS g
+						on
+						od.goods_code = g.goods_code
+					WHERE
+					 o.order_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW() AND g.seller_id = #{sellerId}
+					GROUP BY DATE_FORMAT(o.order_date,'%Y.%m.%d')) AS d
+					ON 
+					pDate =  d.order_date
+</select>
+
+<!-- 판매자 매출 통계 카테고리별 결제 금액 그래프(비율포함) -->
+<select id="paymentAmount" parameterType="map" resultMap="orderResultMap">
+/*판매자 매출 통계 카테고리별 결제 금액 그래프(비율포함)*/
+	SELECT 
+		glc.goods_category AS `goods_category`
+		,sum(od.order_price) * SUM(od.order_amount) `order_price`
 	FROM 
-	  	tb_order AS o
+		tb_goods_large_category AS glc
 		INNER JOIN 
-		tb_order_detail AS od
+		tb_goods_small_category AS gsc
 		on
-		o.order_num = od.order_num
+		glc.goods_large_category = gsc.goods_large_category
 		INNER JOIN 
 		tb_goods AS g
 		on
-		od.goods_code = g.goods_code
-	WHERE
-	 o.order_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW() AND g.seller_id = #{sellerId}
-	GROUP BY DATE_FORMAT(o.order_date,'%Y.%m.%d');
+		gsc.goods_small_category = g.goods_small_category
+		INNER JOIN 
+		tb_order_detail AS od
+		on
+		g.goods_code = od.goods_code
+		INNER join
+		tb_order AS o
+		on
+		od.order_num = o.order_num 
+		
+	WHERE 
+		g.seller_id = #{sellerId}
+	GROUP BY glc.goods_category
+
 </select>
+
+<!-- 판매자 매출 통계 카테고리별 교환 테이블 부분  -->
+<select id="orderExchange" parameterType="map" resultMap="orderResultMap">
+SELECT 
+	MONTH(oe.exchange_ask_date) AS `exchange_ask_date`
+	,COUNT(glc.goods_large_category) AS `goods_large_category`
+	,sum(od.order_price) * sum(od.order_amount) AS `order_price`
+	,glc.goods_category AS `goods_category`
+FROM 
+	tb_goods_large_category AS glc
+	INNER JOIN 
+	tb_goods_small_category AS gsc
+	on
+	glc.goods_large_category = gsc.goods_large_category
+	INNER JOIN 
+	tb_goods AS g
+	on
+	gsc.goods_small_category = g.goods_small_category
+	INNER JOIN 
+	tb_order_detail AS od
+	on
+	g.goods_code = od.goods_code
+	INNER join
+	tb_order AS o
+	on
+	od.order_num = o.order_num 
+	INNER JOIN 
+	tb_order_exchange AS oe	
+	on
+	od.order_detail_code = oe.order_detail_code
+	
+WHERE 
+	g.seller_id = #{sellerId}
+GROUP BY MONTH(oe.exchange_ask_date),glc.goods_category;
+</select>
+
+<!-- 판매자 매출 통계 카테고리별 반품 테이블 부분 -->
+<select id="orderReturnCateList" parameterType="map" resultType="map">
+	SELECT 
+		distinct glc.goods_category					AS goodsCategory
+		,concat(glc.goods_large_category,'Cnt') 	AS cnt
+		,concat(glc.goods_large_category,'Total')	AS total
+	FROM 
+		tb_goods_large_category AS glc
+		INNER JOIN 
+		tb_goods_small_category AS gsc
+		on
+		glc.goods_large_category = gsc.goods_large_category
+		INNER JOIN 
+		tb_goods AS g
+		on
+		gsc.goods_small_category = g.goods_small_category
+		INNER JOIN 
+		tb_order_detail AS od
+		on
+		g.goods_code = od.goods_code
+		INNER join
+		tb_order AS o
+		ON
+		od.order_num = o.order_num 
+		INNER JOIN 
+		tb_order_return AS ort
+		on
+		od.order_detail_code = ort.order_detail_code
+	WHERE 
+		g.seller_id = #{sellerId};
+</select>
+
+<!-- 판매자 매출 통계 카테고리별 반품 테이블 부분 -->
+<select id="orderReturn" parameterType="map" resultType="map">
+	SELECT 
+		 MONTH(ort.return_ask_date) AS returnAskDate
+		<foreach collection="cateInfoList" item="cate">
+			,count(if(glc.goods_category=#{cate.goodsCategory}, glc.goods_large_category, NULL)) AS ${cate.cnt}
+			,sum(if(glc.goods_category=#{cate.goodsCategory}, (od.order_price*od.order_amount), 0)) AS ${cate.total}
+		</foreach>
+	FROM 
+		tb_goods_large_category AS glc
+		INNER JOIN 
+		tb_goods_small_category AS gsc
+		on
+		glc.goods_large_category = gsc.goods_large_category
+		INNER JOIN 
+		tb_goods AS g
+		on
+		gsc.goods_small_category = g.goods_small_category
+		INNER JOIN 
+		tb_order_detail AS od
+		on
+		g.goods_code = od.goods_code
+		INNER join
+		tb_order AS o
+		ON
+		od.order_num = o.order_num 
+		INNER JOIN 
+		tb_order_return AS ort
+		on
+		od.order_detail_code = ort.order_detail_code
+	WHERE 
+		g.seller_id = #{sellerId}
+	GROUP BY MONTH(ort.return_ask_date)
+	ORDER BY returnAskDate asc;
+</select>
+
+<!-- 판매자 매출 통계 카테고리별 반품 테이블 부분 
+<select id="orderReturn" parameterType="map" resultMap="orderResultMap">
+SELECT 
+	MONTH(ort.return_ask_date) AS `return_ask_date`
+	,COUNT(glc.goods_large_category) AS `goods_large_category`
+	,sum(od.order_price) * sum(od.order_amount) AS `order_price`
+	,glc.goods_category AS `goods_category`
+	
+FROM 
+	tb_goods_large_category AS glc
+	INNER JOIN 
+	tb_goods_small_category AS gsc
+	on
+	glc.goods_large_category = gsc.goods_large_category
+	INNER JOIN 
+	tb_goods AS g
+	on
+	gsc.goods_small_category = g.goods_small_category
+	INNER JOIN 
+	tb_order_detail AS od
+	on
+	g.goods_code = od.goods_code
+	INNER join
+	tb_order AS o
+	ON
+	od.order_num = o.order_num 
+	INNER JOIN 
+	tb_order_return AS ort
+	on
+	od.order_detail_code = ort.order_detail_code
+	
+WHERE 
+	g.seller_id = #{sellerId}
+GROUP BY MONTH(ort.return_ask_date),glc.goods_category;
+</select>
+ -->
+
 
 
 </mapper>

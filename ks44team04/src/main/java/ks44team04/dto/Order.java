@@ -19,6 +19,43 @@ public class Order {
     private String postAddressList;
     private OrderDetail OrderDetailDto;
     private Goods GoodsDto;
+    private GoodsLargeCategory GoodsLargeCategoryDto;
+    private GoodsSmallCategory GoodsSmallCategorDto;
+    private OrderExchange OrderExchangeDto;
+    private OrderReturn OrderReturnDto;
+    
+    public OrderReturn getOrderReturnDto() {
+		return OrderReturnDto;
+	}
+
+	public void setOrderReturnDto(OrderReturn orderReturnDto) {
+		OrderReturnDto = orderReturnDto;
+	}
+
+    public OrderExchange getOrderExchangeDto() {
+		return OrderExchangeDto;
+	}
+
+	public void setOrderExchangeDto(OrderExchange orderExchangeDto) {
+		OrderExchangeDto = orderExchangeDto;
+	}
+
+	public GoodsLargeCategory getGoodsLargeCategoryDto() {
+		return GoodsLargeCategoryDto;
+	}
+
+	public void setGoodsLargeCategoryDto(GoodsLargeCategory goodsLargeCategoryDto) {
+		GoodsLargeCategoryDto = goodsLargeCategoryDto;
+	}
+
+	public GoodsSmallCategory getGoodsSmallCategorDto() {
+		return GoodsSmallCategorDto;
+	}
+
+	public void setGoodsSmallCategorDto(GoodsSmallCategory goodsSmallCategorDto) {
+		GoodsSmallCategorDto = goodsSmallCategorDto;
+	}
+
 
     public OrderDetail getOrderDetailDto() {
 		return OrderDetailDto;
@@ -192,6 +229,8 @@ public class Order {
 				+ goodsDiscountPrice + ", postPrice=" + postPrice + ", totalOrderPrice=" + totalOrderPrice
 				+ ", finalConfirmPrice=" + finalConfirmPrice + ", finalConfirmDate=" + finalConfirmDate
 				+ ", postAddressList=" + postAddressList + ", OrderDetailDto=" + OrderDetailDto + ", GoodsDto="
-				+ GoodsDto + "]";
+				+ GoodsDto + ", GoodsLargeCategoryDto=" + GoodsLargeCategoryDto + ", GoodsSmallCategorDto="
+				+ GoodsSmallCategorDto + ", OrderExchangeDto=" + OrderExchangeDto + ", OrderReturnDto=" + OrderReturnDto
+				+ "]";
 	}
 }

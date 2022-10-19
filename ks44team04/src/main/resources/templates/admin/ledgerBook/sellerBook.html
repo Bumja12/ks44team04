@@ -49,27 +49,29 @@
 </style>
 	<form>
         <div class="container">
-          <div class="div_1 " style=" padding: 40px 100px 30px 100px; " >
-            <div >
-              <dl>
-                <dt><i class="fa fa-edit" style="font-size: 20px;"></i> 오늘 주문접수</dt>
-                <dd><span id="today_order_count">0</span> 건</dd>
-              </dl>
+          <div class="div_1 " style=" padding: 40px 100px 30px 100px;">
+         	 <th:block th:if="${not #lists.isEmpty(mainTop)}" th:each="mt : ${mainTop}">
+            <div>
+        		 <dl>
+	               <dt><i class="fa fa-edit" style="font-size: 20px;"></i> 오늘 주문접수</dt>
+	               <dd> <input type="text" style="border: none; font-size: 20px; text-align: center;" readonly="readonly"  th:value="${mt.orderDate} + ' 건'"></dd>
+               	 </dl>
             </div>
 
             <div >
               <dl>
-                <dt><i class="fa fa-won"></i> 오늘 결제확인</dt>
-                <dd><span id="today_deposit_count">0</span> 건</dd>
+                <dt><i class="fa fa-won"></i> 오늘 구매 확정</dt>
+                <dd><input type="text" style="border: none; font-size: 20px; text-align: center;" readonly="readonly"  th:value="${mt.finalConfirmDate} + ' 건'"></dd>
               </dl>
             </div>
 
             <div >
               <dl>
                 <dt><i class="fa fa-money"></i> 오늘 매출</dt>
-	                <dd><span id="today_deposit_price">0</span> 원</dd>
+	            <dd><input type="text" style="border: none; font-size: 20px; text-align: center;" readonly="readonly"  th:value="${mt.finalConfirmPrice} + ' 원'"></dd>
               </dl>
             </div>
+          	</th:block>
           </div>
 
           <div class="div-4">
@@ -156,12 +158,6 @@
         </div>
 	</form>
 
-	   <th:block th:if="${not #lists.isEmpty(mainCartList)}" th:each="ml : ${mainCartList}" >
-          <input type="text" class="totalPrice" name="totalPrice"  th:value="${ml.totalPrice}">
-          <input  type="hidden" class="goodsDiscountPrice" th:value="${ml.goodsDiscountPrice}">
-       </th:block>
-				<input type="text" class="mainCartList"  th:value="${mainCartList}">
-         
           
 </th:block>
 <!-- jQuery -->
@@ -170,46 +166,32 @@
 <script th:src="@{/build/js/Chart.min.js}"></script>
 <script  th:inline="javascript">
 $(function(){
-	// 일주 일 구하는 스트립트 
-	let date = new Date().toLocaleDateString()
-    let today = Date.parse(date)
-    let result = []
-    result.push(date)
-    for (let i=0; i<7; i++) {
-      today -= 86400000;
-      result.push(new Date(today).toLocaleDateString())
-    }
-	console.log("result" + result);
-	// 일주 일 구하는 스트립트  끝
 	
-	// 결제 금액 구하는 스트립트 
-	
-	 let cartList = [];
-
+	 let orderDate = [];
+	 let finalConfirmPrice = [];
+	 let goodsDiscountPrice = [];
+	 
      /*[# th:each="n : ${mainCartList}"]*/
-
-     cartList.push("[(${n})]");
-
+      orderDate.push("[(${n.orderDate})]") ; 
+      finalConfirmPrice.push("[(${n.finalConfirmPrice})]");
+      goodsDiscountPrice.push("[(${n.goodsDiscountPrice})]");
      /*[/]*/
-     console.log(cartList);
-	
-
-	
-	
-	// 결제 금액 구하는 스트립트  끝
-	
+     
+     console.log(orderDate);
+     console.log(finalConfirmPrice);
+     console.log(goodsDiscountPrice);
 	
       new Chart(document.getElementById("line-sellerBook"), {
         type: 'line',
         data: {
-          labels: result,
+          labels: orderDate,
           datasets: [{
-            data: [86, 114, 106, 106, 107, 111, 133],
+            data: finalConfirmPrice,
             label: "결제 금액",
             borderColor: "#5F04B4",
             fill: false
           }, {
-            data: [282, 350, 411, 502, 635, 809, 947],
+            data: goodsDiscountPrice,
             label: "할인 금액",
             borderColor: "#0431B4",
             fill: false
@@ -219,17 +201,16 @@ $(function(){
 
       });
 });
-    </script>
-<script>
+
+// 년도 구해서 화면에 띄워주기 
 $(function(){
 	let date = new Date();
 	console.log(date.getFullYear());
 	$('#dateYear').val(date.getFullYear() + "년 결제 금액")
 	$('#dateYear2').val(date.getFullYear() + "년 할인 통계")
-
-
 });
 
-    </script>
+</script>
+	
 </th:block>
 </html>

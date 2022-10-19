@@ -40,6 +40,9 @@
 	display: flex;
 	justify-content: space-around;
 }
+th {
+	text-align: center;
+}
 </style>
 
 
@@ -77,9 +80,11 @@
 
 	<div class="row  div-4">
 		<div class="div_2 " style="width: 1000px; height: 1010px;">
-			<dl><dt>카테고리별 결제 금액 (그래프)</dt></dl>
+			<dl>
+				<dt>카테고리별 결제 금액 (그래프) 	 <small>*상품의 원가로 계산되었습니다</small></dt>
+			</dl>
 				<hr style="border: solid 1px #D3D3D3;">
-			<canvas id="bar-chart" width="800" height="750"></canvas>
+			<canvas id="cayegoryBar-cart" width="800" height="750"></canvas>
 		</div>
 		<div>
 
@@ -91,41 +96,76 @@
 			<div class="div_2" style="width: 810px;">
 				<dl><dt>카테고리별 교환/환불</dt></dl>
 					<hr style="border: solid 1px #D3D3D3;">
-				<ul class="nav nav-tabs">
-					<li class="nav-item"><a class="nav-link active"
-						id="Exchange-tab" data-toggle="tab" href="#Exchange" role="tab"
-						aria-controls="Exchange" aria-selected="true">교환</a></li>
-					<li class="nav-item"><a class="nav-link" id="Refund-tab"
-						data-toggle="tab" href="#Refund" role="tab" aria-controls="Refund"
-						aria-selected="false">환불</a></li>
-				</ul>
-				<!--교환 테그-->
-				<div class="tab-pane fade show active" id="Exchange" role="tabpanel"
-					aria-labelledby="Exchange-tab">
-					<table class="table table-bordered"
-						style="font-size: 13px; text-align: center;">
-						<tbody>
-							<tr>
-								<th rowspan="2" style="text-align: center;">날짜</th>
-								<th colspan="2">카테고리명</th>
-								<th colspan="2">카테고리명</th>
-								<th colspan="2">카테고리명</th>
-							</tr>
-							<tr>
-								<td>건수</td>
-								<td>금액</td>
-								<td>건수</td>
-								<td>금액</td>
-								<td>건수</td>
-								<td>금액</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+				<div class="" role="tabpanel" data-example-id="togglable-tabs">
+						<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+							<li role="presentation" class="active" >
+								<a href="#exchangeTab" class="tabs" role="tab" data-toggle="tab"><b>교환</b></a>
+							</li>
+							<li role="presentation" class="" >
+								<a href="#cancelTab" class="tabs" role="tab" data-toggle="tab"><b>반품</b></a>
+							</li>
+						</ul>
+						<div id="myTabContent" class="tab-content">
+							<div role="tabpanel" class="tab-pane fade active in" id="exchangeTab">
 
-				<!--환불 테그-->
-				<div class="tab-pane fade show active" id="Refund" role="tabpanel"
-					aria-labelledby="Refund-tab"></div>
+								<!-- user detail form Start -->
+								<table class=" table table-responsive" >
+									<tbody style="text-align: center;">
+										<tr>
+											<th rowspan="2" style=" padding-top: 25px; " th:text="월"></th>
+										<th:block th:if="${not #lists.isEmpty(orderExchange)}"  th:each="oe : ${orderExchange}">
+											<th colspan="2"  th:text="${oe.GoodsLargeCategoryDto.goodsCategory}"></th>
+										</th:block>
+										</tr>
+										<tr>
+										<th:block th:if="${not #lists.isEmpty(orderExchange)}" th:each="oe : ${orderExchange}">
+											<td>건수</td>
+											<td>금액</td>
+										</th:block>
+										</tr>
+										<th:block th:if="${not #lists.isEmpty(orderExchange)}" th:each="oe : ${orderExchange}">
+											<tr>
+												<td th:text="${oe.OrderExchangeDto.exchangeAskDate}"></td>
+												<td th:text="${oe.GoodsLargeCategoryDto.goodsLargeCategory}"></td>
+												<td th:text="${oe.OrderDetailDto.orderPrice}"></td>
+											</tr>
+										</th:block>
+									</tbody>
+								</table>
+								<!-- user detail form Start -->
+
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="cancelTab">
+								<!-- farm detail form Start -->
+								<table class=" table table-responsive" >
+									<tbody style="text-align: center;">
+										<tr>
+											<th rowspan="2" style=" padding-top: 25px; " th:text="월"></th>
+										<th:block th:if="${not #lists.isEmpty(cateInfoList)}"  th:each="cl : ${cateInfoList}">
+											<th colspan="2"  th:text="${cl.goodsCategory}"></th>
+										</th:block>
+										</tr>
+										<tr>
+										<th:block th:if="${not #lists.isEmpty(orderReturn)}"  th:each="cl : ${cateInfoList}">
+											<td>건수</td>
+											<td>금액</td>
+										</th:block>
+										</tr>
+										<th:block th:if="${not #lists.isEmpty(orderReturn)}"  th:each="ore : ${orderReturn}">
+											<tr>
+												<td th:text="${ore.returnAskDate}"></td>
+												<th:block th:if="${not #lists.isEmpty(cateInfoList)}"  th:each="cl : ${cateInfoList}">												
+													<td th:text="${ore.get(cl.cnt)}"></td>
+													<td th:text="${ore.get(cl.total) > 0 ? #numbers.formatInteger(ore.get(cl.total),3,'COMMA') : 0}"></td>
+												</th:block>
+											</tr>
+										</th:block>
+									</tbody>
+								</table>
+								<!-- farm detail form End -->
+							</div>
+						</div>
+					</div>
 			</div>
 		</div>
 	</div>
@@ -183,51 +223,63 @@
 	<th:block th:replace="fragments/adminJs :: datatablesFragment"></th:block>
 	<script th:src="@{/build/js/Chart.min.js}"></script>
 
-<script>
-
-  new Chart(document.getElementById("bar-chart"), {
-    type: 'bar',
-    data: {
-      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-      datasets: [
-        {
-          label: "Population (millions)",
-            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-            data: [2478,5267,734,784,433]
-          }
-        ]
-      },
-      options: {
-        legend: { display: false },
-        title: {
-          display: true,
-          text: 'Predicted world population (millions) in 2050'
-        }
-      }
-    });
-    </script>
-
-    <script>
-      new Chart(document.getElementById("doughnut-chart"), {
-    type: 'doughnut',
-    data: {
-      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-      datasets: [
-        {
-          label: "Population (millions)",
-          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-          data: [2478,5267,734,784,433]
-        }
-      ]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Predicted world population (millions) in 2050'
-      }
-    }
+<script th:inline="javascript">
+$(function(){	
+	 /*<![CDATA[*/
+	 let goodsCategory = [];
+	 let orderPrice = [];
+	 /*]]>*/
+     /*[# th:each="n : ${paymentAmount}"]*/
+      goodsCategory.push("[(${n.GoodsLargeCategoryDto.goodsCategory})]") ; 
+      orderPrice.push("[(${n.OrderDetailDto.orderPrice})]");
+     /*[/]*/
+     
+     console.log(goodsCategory);
+     console.log(orderPrice);
+     
+     
+	  new Chart(document.getElementById("cayegoryBar-cart"), {
+	    type: 'bar',
+	    data: {
+	      labels: goodsCategory,
+	      datasets: [
+	        {
+	          label: "결제 금액",
+	            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+	            data: orderPrice
+	          }
+	        ]
+	      },
+	      options: {
+	        legend: { display: false },
+	        title: {
+	          display: true,
+	          text: '카테고리 결제 금액'
+	        }
+	      }
+	    });
+	    
+	      new Chart(document.getElementById("doughnut-chart"), {
+	    type: 'doughnut',
+	    data: {
+	      labels: goodsCategory,
+	      datasets: [
+	        {
+	          label: "Population (millions)",
+	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+	          data: orderPrice
+	        }
+	      ]
+	    },
+	    options: {
+	      title: {
+	        display: true,
+	        text: 'Predicted world population (millions) in 2050'
+	      }
+	    }
+	});
 });
-    </script>s
+    </script>
 
 </th:block>
 </html>
