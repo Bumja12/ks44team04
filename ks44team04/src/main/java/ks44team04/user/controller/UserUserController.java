@@ -1,5 +1,7 @@
 package ks44team04.user.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ks44team04.dto.LevelBuyerCategory;
+import ks44team04.dto.LevelSellerCategory;
+import ks44team04.dto.Right;
 import ks44team04.dto.User;
 import ks44team04.service.UserService;
 
@@ -54,11 +59,36 @@ public class UserUserController {
         return "redirect:/user";
     }
 	
+	//회원 정보 수정
+	@PostMapping("/modifyUser")
+	public String modifyUser(User user) {
+		
+		log.info("회원정보 수정 정보 ::: {}", user);
+		userService.modifyUser(user);
+		
+		return "redirect:/user/user/myPage";
+	}
+	
+	//회원 정보 수정(저장된 정보 가져오기)
+	@GetMapping("/modifyUser")
+	public String modifyUser(@RequestParam(value="userId", required = false) String userId
+							  ,Model model) {
+        User userInfo = userService.getUserInfoById(userId);
+        log.info("회원정보 ::: {}",userInfo);
+        
+		model.addAttribute("title", "회원정보수정");
+		model.addAttribute("userInfo", userInfo);
+		
+		return "user/user/modifyUser";
+	}
+	
 	//회원가입 화면
 	@GetMapping("/signUp")
-	public String signUp(Model model) {
+	public String signUp(Model model, @RequestParam("userRight") String userRight) {
 		
 		model.addAttribute("title", "회원가입");
+		model.addAttribute("userRight", userRight);
+		
 		
 		return"user/user/signUp";
 	}

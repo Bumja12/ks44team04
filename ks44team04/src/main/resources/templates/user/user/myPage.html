@@ -412,27 +412,16 @@
       <div class="profile-nav col-md-3">
           <div class="panel">
               <div class="user-heading round">
-				<!--               	  	  
               	  <th:block th:if="${session.SLEVEL} != null" th:switch="${session.SLEVEL}">
-		              <img src="/images/myPage/levelBuyer01.png" th:case="'levelBuyer01'" style="margin-bottom: 15px;">
-		              <img src="/images/myPage/levelBuyer02.png" th:case="'levelBuyer02'" style="margin-bottom: 15px;">
-		              <img src="/images/myPage/levelBuyer03.png" th:case="'levelBuyer03'" style="margin-bottom: 15px;">
-		              <img src="/images/myPage/levelBuyer04.png" th:case="'levelBuyer04'" style="margin-bottom: 15px;">
-					  <th:block th:case="levelSeller01">
-		                  <img src="/images/myPage/levelSeller01.png" style="margin-bottom: 15px;">
-              	  	  </th:block>
-              	  	  <th:block th:case="levelSeller02">
-		                  <img src="/images/myPage/levelSeller02.png" style="margin-bottom: 15px;">
-              	  	  </th:block>
-              	  	  <th:block th:case="levelSeller03">
-		                  <img src="/images/myPage/levelSeller03.png" style="margin-bottom: 15px;">
-              	  	  </th:block>
-              	  	  <th:block th:case="levelSeller04">
-		                  <img src="/images/myPage/levelSeller04.png" style="margin-bottom: 15px;">
-              	  	  </th:block> 
+		              <img src="/images/myPage/levelBuyer01.png" th:case="'levelBuyer01'" style="margin-bottom: 20px;">
+		              <img src="/images/myPage/levelBuyer02.png" th:case="'levelBuyer02'" style="margin-bottom: 20px;">
+		              <img src="/images/myPage/levelBuyer03.png" th:case="'levelBuyer03'" style="margin-bottom: 20px;">
+		              <img src="/images/myPage/levelBuyer04.png" th:case="'levelBuyer04'" style="margin-bottom: 20px;">
+		              <img src="/images/myPage/levelSeller01.png" th:case="'levelSeller01'" style="margin-bottom: 20px;">
+		              <img src="/images/myPage/levelSeller02.png" th:case="'levelSeller02'" style="margin-bottom: 20px;">
+		              <img src="/images/myPage/levelSeller03.png" th:case="'levelSeller03'" style="margin-bottom: 20px;">
+		              <img src="/images/myPage/levelSeller04.png" th:case="'levelSeller04'" style="margin-bottom: 20px;">
               	  </th:block>
-              	 -->
-              	  <img src="/images/myPage/levelBuyer01.png" style="margin-bottom: 15px;">
                   <h1 th:text="|${session.SNAME}님|"></h1>
                   <a href="#" style="color: white;"><i class="fa fa-gear" style="color: white;"></i> 회원정보수정</a>
               </div>
@@ -450,7 +439,7 @@
                   </ul>
                 </li>
                 <li>
-                  <a href="#">찜한 상품<span>></span></a>
+                  <a th:href="@{/user/goods/wishlist}">찜한 상품<span>></span></a>
                 </li>
                 <li>
                     <a th:href="@{/user/address}">배송지 관리<span>></span></a>
@@ -470,8 +459,8 @@
                 <li>
                   <a href="#">쿠폰<span>></span></a>
                 </li>
-                <li class="menu">
-                  <a href="#">회원정보 수정<span>></span></a>
+                <li>
+                  <a th:href="@{/user/user/modifyUser(userId=${session.SID})}">회원정보 수정<span>></span></a>
                 </li>
               </ul>
               <!-- left menu End -->

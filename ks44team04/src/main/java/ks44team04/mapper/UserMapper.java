@@ -9,6 +9,7 @@ import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.Login;
 import ks44team04.dto.PaymentTotal;
 import ks44team04.dto.Right;
+import ks44team04.dto.Search;
 import ks44team04.dto.Seller;
 import ks44team04.dto.User;
 
@@ -21,22 +22,13 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserMapper {
 	
-	
-    /* =============== 유저페이지 =============== */
-    //유저 마이페이지 
-    public String myPage();
-    
-    //구매자 or 판매자 선택 화면
-    public String chooseRigth();
-    
-    /* =============== 유저페이지 =============== */
-    
     
     /* =============== 검색 시작 =============== */
     //판매자 검색
   	public List<Seller> searchSellerList(Map<String, Object> searchMap);
     
     //회원검색
+  	public List<User> searchUserList(Search search);
     /* =============== 검색 끝 =============== */
     
     

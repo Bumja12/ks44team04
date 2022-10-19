@@ -10,6 +10,7 @@ import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.Login;
 import ks44team04.dto.PaymentTotal;
 import ks44team04.dto.Right;
+import ks44team04.dto.Search;
 import ks44team04.dto.Seller;
 import ks44team04.dto.User;
 
@@ -37,13 +38,50 @@ public class UserService {
     /* =============== 검색 시작 =============== */
     //판매자 검색
 	public List<Seller> searchSellerList(Map<String, Object> searchMap) {
-		
 		List<Seller> sellerList = userMapper.searchSellerList(searchMap);
-		
 		return sellerList;
 	}
     
     //회원검색
+	public List<User> searchUserList(Search search) {
+		List<User> userList = userMapper.searchUserList(search);
+		if(userList != null) {
+			for(User user : userList) {
+				
+				String userLevel = user.getUserLevel();
+				
+				if(userLevel != null) {
+					String lvName = userLevel.substring(userLevel.length() - 2);
+					
+					if(userLevel.contains("Buyer")) {
+						if(lvName.equals("01")) {
+							user.setUserLevelName("씨앗");
+						}else if(lvName.equals("02")) {
+							user.setUserLevelName("새싹");
+						}else if(lvName.equals("03")) {
+							user.setUserLevelName("잎새");
+						}else if(lvName.equals("04")) {
+							user.setUserLevelName("열매");
+						}
+					}else if(userLevel.contains("Seller")) {
+						if(lvName.equals("01")) {
+							user.setUserLevelName("물방울");
+						}else if(lvName.equals("02")) {
+							user.setUserLevelName("시냇물");
+						}else if(lvName.equals("03")) {
+							user.setUserLevelName("호수");
+						}else if(lvName.equals("04")) {
+							user.setUserLevelName("강");
+						}
+					}
+				}else {
+				user.setUserLevelName("-");
+			}
+			log.info("user.getUserLevelName(), {}", user.getUserLevelName());
+			}
+		}
+		return userList;
+	}
     /* =============== 검색 끝 =============== */
     
     

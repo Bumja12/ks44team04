@@ -53,7 +53,7 @@
 			</div>
 
 			<!-- 검색 시작 -->	
-			<form class="form-inline" th:action="@{/admin/user/userList}" method="post">
+			<form class="form-inline" th:action="@{/admin/user/userList2}" method="get">
 			<div class="x_content">
 				<div class="well" style="overflow: auto">
 					<div class="">
@@ -64,18 +64,18 @@
 									<td class="col-md-4">
 										<div class="form-inline">
 											<div class="form-group">
-												<select class="form-control" id="userSearchOption" style="width: 150px;">
+												<select class="form-control" id="userSearchOption" name="searchKey" style="width: 150px;">
 													<option selected>- 전체검색 -</option>
-													<option value="userId">아이디</option>
-													<option value="userName">이름</option>
-													<option value="userNickName">닉네임</option>
-													<option value="userAddr">주소</option>
-													<option value="userPhone">전화번호</option>
-													<option value="userEmail">이메일</option>
+													<option value="u.user_id" 		th:selected="${'u.user_id' == searchKey}">아이디</option>
+													<option value="u.user_name" 	th:selected="${'u.user_name' == searchKey}">이름</option>
+													<option value="u.user_nickname" th:selected="${'u.user_nickname' == searchKey}">닉네임</option>
+													<option value="u.user_address" 	th:selected="${'u.user_address' == searchKey}">주소</option>
+													<option value="u.user_phone" 	th:selected="${'u.user_phone' == searchKey}">전화번호</option>
+													<option value="u.user_email" 	th:selected="${'u.user_email' == searchKey}">이메일</option>
 												</select>
 											</div>
 											<div class="form-group">
-												<input type="text" class="form-control text" placeholder="검색어를 입력해주세요">
+												<input type="text" class="form-control text" name="searchValue" th:value="${searchValue != null ? searchValue : ''}" placeholder="검색어를 입력해주세요">
 											</div>
 										</div>
 									</td>
@@ -85,16 +85,16 @@
 											<input type="checkbox" onclick='selectAll(this)' class="form-check-input" id="rowAllCheck" name="rowAllCheck"> 전체 &nbsp;
 										</label>
 										<label> 
-											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks"> 구매자 &nbsp;
+											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks" value="buyer"> 구매자 &nbsp;
 										</label>
 										<label> 
-											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks"> 판매자 &nbsp;
+											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks" value="seller"> 판매자 &nbsp;
 										</label>
 										<label> 
-											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks"> 판매자 승인 전 &nbsp;
+											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks" value="seller_before"> 판매자 승인 전 &nbsp;
 										</label>
 										<label> 
-											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks"> 관리자 &nbsp;
+											<input type="checkbox" onclick='checkSelectAll(this)' class="indivChecks form-check-input" name="indivChecks" value="admin"> 관리자 &nbsp;
 										</label>
 									</td>
 								</tr>
@@ -103,11 +103,11 @@
 										<td class="col-md-4">
 											<div class="form-inline">
 												<div class="form-group">
-													<select class="form-control" id="userStatusSearch" style="width: 150px;">
+													<select class="form-control" id="userStatusSearch" name="userStatus" style="width: 150px;">
 														<option selected>- 전체검색 -</option>
-														<option value="normal">정상</option>
-														<option value="ban">정지</option>
-														<option value="dormant">휴면</option>
+														<option value="정상">정상</option>
+														<option value="정지">정지</option>
+														<option value="휴면">휴면</option>
 													</select>
 												</div>
 											</div>
@@ -120,7 +120,7 @@
 
 						<div style="text-align: center;">
 							<button type="reset" class="btn btn-dark">초기화</button>
-							<button type="button" class="btn btn-dark">검색</button>
+							<button type="submit" class="btn btn-dark">검색</button>
 						</div>
 					</div>
 				</div>
