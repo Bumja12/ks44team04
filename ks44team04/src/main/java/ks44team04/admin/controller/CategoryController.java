@@ -1,6 +1,8 @@
 package ks44team04.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +22,10 @@ import ks44team04.dto.GoodsQnaCategory;
 import ks44team04.dto.GoodsSmallCategory;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
-import ks44team04.dto.RegularAsk;
 import ks44team04.dto.RegularAskCategory;
 import ks44team04.dto.ReportCategory;
 import ks44team04.service.CategoryService;
-import ks44team04.service.RegularAskService;
+import ks44team04.util.CodeIndex;
 
 @Controller
 @RequestMapping(value = "/admin/category")
@@ -135,8 +136,13 @@ public class CategoryController {
 		// 판매 상품 카테고리 소분류 목록
 		List<GoodsSmallCategory> goodsSmallCategoryList = categoryService.getGoodsSmallCategoryList();
 		
+		// 판매 상품 카테고리 대분류 목록
+		List<GoodsLargeCategory> goodsLargeCategoryList = categoryService.getGoodsLargeCategoryList();
+
+		
 		model.addAttribute("title", "판매 상품 카테고리 소분류 목록 화면");
 		model.addAttribute("goodsSmallCategoryList", goodsSmallCategoryList);
+		model.addAttribute("goodsLargeCategoryList", goodsLargeCategoryList);
 		
 		return "admin/category/goodsSmall/goodsSmallCategory_list";
 	}
@@ -294,7 +300,7 @@ public class CategoryController {
 		// 특정 판매 상품 카테고리 대분류
 		GoodsLargeCategory goodsLarge = categoryService.getGoodsLargeCategoryByPK(goodsLargeCategory);
 		
-		// 신고 대상 카테고리 목록
+		// 판매 상품 카테고리 대분류 목록
 		List<GoodsLargeCategory> goodsLargeCategoryList = categoryService.getGoodsLargeCategoryList();
 		
 		model.addAttribute("title", "판매 상품  카테고리 대분류 내역 화면");
@@ -309,8 +315,15 @@ public class CategoryController {
 	public String getGoodsSmallCategoryDetail (@PathVariable(value = "goodsSmallCategory") String goodsSmallCategory
 			,Model model) {
 		
-		log.info(goodsSmallCategory);
+		// 특정 판매 상품 카테고리 소분류
+		GoodsSmallCategory goodsSmall = categoryService.getGoodsSmallCategoryByPK(goodsSmallCategory);
+		
+		// 판매 상품 카테고리 대분류 목록
+		List<GoodsLargeCategory> goodsLargeCategoryList = categoryService.getGoodsLargeCategoryList();
+		
 		model.addAttribute("title", "판매 상품  카테고리 소분류 내역 화면");
+		model.addAttribute("goodsSmall", goodsSmall);
+		model.addAttribute("goodsLargeCategoryList", goodsLargeCategoryList);
 		
 		return "admin/category/goodsSmall/goodsSmallCategory_detail";
 	}	
@@ -319,9 +332,16 @@ public class CategoryController {
 	@GetMapping("/goodsQnaCategoryDetail/{goodsQnaCategory}")
 	public String getGoodsQnaCategoryDetail (@PathVariable(value = "goodsQnaCategory") String goodsQnaCategory
 			,Model model) {
-		
-		log.info(goodsQnaCategory);
+
+		// 특정 상품 문의 카테고리 
+		GoodsQnaCategory goodsQna = categoryService.getGoodsQnaCategoryByPK(goodsQnaCategory);
+
+		// 상품 문의 카테고리 목록
+		List<GoodsQnaCategory> goodsQnaCategoryList = categoryService.getGoodsQnaCategoryList();
+
 		model.addAttribute("title", "상품 문의 카테고리 내역 화면");
+		model.addAttribute("goodsQna", goodsQna);
+		model.addAttribute("goodsQnaCategoryList", goodsQnaCategoryList);
 		
 		return "admin/category/goodsQna/goodsQnaCategory_detail";
 	}	
@@ -332,8 +352,12 @@ public class CategoryController {
 	
 	// 구매자 등급 카테고리 수정 처리
 	@PostMapping("modifylevelBuyerCategory")
-	public String modifylevelBuyerCategoryAction() {
+	public String modifylevelBuyerCategoryAction(LevelBuyerCategory levelBuyerCategory) {
 
+		System.out.println(levelBuyerCategory.toString());
+		
+		categoryService.modifyLevelBuyerCategory(levelBuyerCategory);
+		
 		// 구매자 등급 카테고리 목록 화면으로 리다이렉트
 		return "redirect:/admin/category/levelBuyer";
 	}
@@ -416,8 +440,17 @@ public class CategoryController {
 	
 	// 구매자 등급 카테고리 등록 처리
 	@PostMapping("/addLevelBuyerCategory")
-	public String addLevelBuyerCategoryAction(Model model) {
-
+	public String addLevelBuyerCategoryAction(LevelBuyerCategory levelBuyerCategory) {
+		
+		// 마지막 인덱스에 저장되어 있는 자주 묻는 질문의 PK값 조회
+		String lastIndexOfLevelBuyerCategoryPK = categoryService.getLastIndexOfLevelBuyerCategoryPK();
+		
+		// 새로운 PK값
+		String newLevelCode = CodeIndex.codeIndex(lastIndexOfLevelBuyerCategoryPK, 10);
+		levelBuyerCategory.setLevelCode(newLevelCode);
+		
+		categoryService.addLevelBuyerCategory(levelBuyerCategory);
+		
 		return "redirect:/admin/category/levelBuyer";
 	}
 	
@@ -550,8 +583,10 @@ public class CategoryController {
 	@PostMapping("/removeLevelBuyerCategory")
 	public String removeLevelBuyerCategoryAction(@RequestParam(value="removeElement[]") List<String> removeElement) {
 
-		System.out.println(removeElement.size());
-		
+		for(int i=0; i<removeElement.size(); i++) {
+			categoryService.removeLevelBuyerCategory(removeElement.get(i));
+
+		}
 		// 구매자 등급 카테고리 목록 화면으로 리다이렉트
 		return "/admin/category/removeLevelBuyerCategory";
 	}
@@ -723,9 +758,38 @@ public class CategoryController {
 	
 	// 구매자 등급 카테고리 검색 처리
 	@PostMapping("/searchLevelBuyerCategory")
-	public String searchLevelBuyerCategoryAction() {
-
-		return "redirect:/admin/category/levelBuyer";
+	public String searchLevelBuyerCategoryAction(@RequestParam(name="searchKey", defaultValue="levelName") String sK
+			  									,@RequestParam(name="searchValue", required=false, defaultValue="") String sV
+			  									,Model model) {
+		
+		// 검색 조각에서 입력한 키가 levelName라면 실제 쿼리문에서 사용할 컬럼명 rAskCate.category_name으로 바꾼다.
+		if("levelName".equals(sK)) {
+			sK = "level_name";
+		// 제목 검색
+		// 검색 조각에서 입력한 키가 useCheck라면 실제 쿼리문에서 사용할 컬럼명 regular_ask_title으로 바꾼다.
+		}else if("useCheck".equals(sK)) {
+			sK = "use_check";
+		// 내용 검색
+		// 검색 조각에서 입력한 키가 buyerPriceTerms라면 실제 쿼리문에서 사용할 컬럼명 regular_ask_content으로 바꾼다.
+		}else if("buyerPriceTerms".equals(sK)) {
+			sK = "buyer_price_terms";
+		// 사용 여부 검색
+		// 검색 조각에서 입력한 키가 saveRate라면 실제 쿼리문에서 사용할 컬럼명 rAsk.use_check으로 바꾼다.
+		}else { 
+			sK = "save_rate";
+		}
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("sV", sV);
+		paramMap.put("sK", sK);
+		
+    	// 구매자 등급 카테고리 검색 결과
+    	List<LevelBuyerCategory> searchResult = categoryService.searchLevelBuyerCategory(paramMap);
+    	
+		// 검색 결과를 모델에 담아 뷰로 넘겨준다.
+		model.addAttribute(searchResult);  
+		
+		return "admin/category/levelBuyer/levelBuyerCategory_list";
 	}
 	
 	// 판매자 등급 카테고리 검색 처리
@@ -785,4 +849,5 @@ public class CategoryController {
 	}
 	
 	// --------------------------------------카테고리 검색 처리--------------------------------------
+	
 }

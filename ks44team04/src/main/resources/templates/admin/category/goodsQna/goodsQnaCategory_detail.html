@@ -25,7 +25,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="goodsQnaCategory">상품 문의 카테고리 PK
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="goodsQnaCategory" id="goodsQnaCategory" value="levelBuyer01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="goodsQnaCategory" id="goodsQnaCategory" th:value="${goodsQna.goodsQnaCategory}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 카테고리명 -->
@@ -35,11 +35,14 @@
 										<div class="col-md-6 col-sm-6 ">
 											<select class="select2_single form-control" id="categoryName" disabled="disabled" name="categoryName" required="required" tabindex="-1">
 												<option></option>
-												<option value="5" selected="selected">포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
+												<th:block th:if="${not #lists.isEmpty(goodsQnaCategoryList)}" th:each="gqCategoryList : ${goodsQnaCategoryList}">
+													<!-- th:selected 사용 -->
+													<option th:if="${gqCategoryList.goodsQnaCategory eq 'goodsQnaCategory001'}" th:value="${gqCategoryList.goodsQnaCategory}" th:selected="${goodsQna.categoryName eq '상품'}">상품</option> 
+													<option th:if="${gqCategoryList.goodsQnaCategory eq 'goodsQnaCategory002'}" th:value="${gqCategoryList.goodsQnaCategory}" th:selected="${goodsQna.categoryName eq '배송'}">배송</option>
+													<option th:if="${gqCategoryList.goodsQnaCategory eq 'goodsQnaCategory003'}" th:value="${gqCategoryList.goodsQnaCategory}" th:selected="${goodsQna.categoryName eq '반품'}">반품</option>
+													<option th:if="${gqCategoryList.goodsQnaCategory eq 'goodsQnaCategory004'}" th:value="${gqCategoryList.goodsQnaCategory}" th:selected="${goodsQna.categoryName eq '교환'}">교환</option>
+													<option th:if="${gqCategoryList.goodsQnaCategory eq 'goodsQnaCategory005'}" th:value="${gqCategoryList.goodsQnaCategory}" th:selected="${goodsQna.categoryName eq '기타'}">기타</option>
+												</th:block>	
 											</select>
 										</div>
 									</div>

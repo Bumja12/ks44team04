@@ -61,8 +61,8 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="radio" class="flat" name="useCheck " id="useCheckY" value="Y" checked="checked" required="required" disabled="disabled"/> Y
-											<input type="radio" class="flat" name="useCheck " id="useCheckN" value="N" required="required" disabled="disabled"/> N
+											<input type="radio" class="flat" name="useCheck " id="useCheckY" value="Y" th:checked="${goodsLarge.useCheck eq 'Y'}" required="required" disabled="disabled"/> Y
+											<input type="radio" class="flat" name="useCheck " id="useCheckN" value="N" th:checked="${goodsLarge.useCheck eq 'N'}" required="required" disabled="disabled"/> N
 										</div>
 									</div>
 									<!-- 등록일 -->

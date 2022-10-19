@@ -19,6 +19,9 @@ public interface BoardMapper {
 	//게시물 등록 (유저)
 	public int boardAdd(Board board);
 	
+	//게시물 코드증가
+	public String getBoardNewCode();
+	
 	//게시물 상세정보 조회 (유저)
 	public Board boardByCode(String boardCode);
 	
@@ -29,7 +32,7 @@ public interface BoardMapper {
 	public void boardRemoveByCode(String boardCode);
 	
 	//게시물 목록 조회(딜리트 n인 것만)
-	public List<Board> BoardListUser();
+	public List<Board> BoardListUser(String boardCategory);
 	
 	
 	

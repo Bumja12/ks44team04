@@ -2,10 +2,10 @@ package ks44team04.dto;
 
 public class Pagination {
 
-    private int totalContentsCount;
-    private int totalPageCount;
-    private int startNumber;
-    private int startPage;
+    private int totalContentsCount;  // 디비를 조회한 후 페이지 수를 계산해서 입력
+    private int totalPageCount;      // totalContentsCount / 페이지당 컨텐츠 수 + 1 => 페이지 개수
+    private int startNumber;		// 해당 페이지 첫번째 글의 INDEX
+    private int startPage;			// 현재목록에서 첫번째
     private int endPage;
 
     public Pagination(Paging paging, int totalContentsCount) {

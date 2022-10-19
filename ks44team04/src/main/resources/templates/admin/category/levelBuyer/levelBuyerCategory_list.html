@@ -44,6 +44,20 @@
 		                    	</tr>
 		                   	</thead>
 							<tbody>
+								<!-- 구매자 등급 카테고리 검색 결과 -->
+								<th:block th:if="${not #lists.isEmpty(searchResult)}" th:each="sResult : ${searchResult}">
+									<td>
+										<input type="checkbox" class="checkAll" name="checkAll1">
+		             				</td>
+									<td class="moveToDetail" th:text="${sResult.levelCode}">등급 코드 PK</td>
+									<td class="moveToDetail" th:text="${sResult.levelName}">등급 이름</td>
+									<td class="moveToDetail" th:text="${sResult.regId}">회원 아이디 FK(등록인)</td>
+									<td class="moveToDetail" th:text="${sResult.levelRegDate}">등급 생성일</td>
+									<td class="moveToDetail" th:text="${sResult.useCheck}">사용 여부</td>
+									<td class="moveToDetail" th:text="${sResult.buyerPriceTerms}">구매자 구매 금액 조건 (6개월)</td>
+									<td class="moveToDetail" th:text="${sResult.saveRate}">적립율(%)</td>
+									<td class="moveToDetail" th:text="${sResult.levelCodeNpk}">등급 코드</td>
+								</th:block>							
 								<!-- 구매자 등급 카테고리 목록 -->
 								<tr th:each="lBuyer : ${levelBuyerCategoryList}" style="cursor:pointer;">
 									<td>

@@ -42,18 +42,22 @@
 		                    	</tr>
 		                   	</thead>
 							<tbody>
-								<!-- 판매 상품 카테고리 소분류 목록 -->
-								<tr th:each="gsList : ${goodsSmallCategoryList}" style="cursor:pointer;">
-									<td>
-										<input type="checkbox" class="checkAll" name="checkAll1">
-		             				</td>
-									<td class="moveToDetail" th:text="${gsList.goodsSmallCategory}">판매 상품 카테고리 소분류 PK</td>
-									<td class="moveToDetail" th:text="${gsList.goodsLargeCategory}">판매 상품 카테고리 대분류 FK</td>
-									<td class="moveToDetail" th:text="${gsList.smallCategoryName}">판매 상품 소분류</td>
-									<td class="moveToDetail" th:text="${gsList.regId}">회원 아이디 FK(작성자)</td>
-									<td class="moveToDetail" th:text="${gsList.regDate}">등록일</td>
-									<td class="moveToDetail" th:text="${gsList.useCheck}">사용 여부</td>
-								</tr>
+									
+									<!-- 판매 상품 카테고리 소분류 목록 -->
+									<th:block th:if="${not #lists.isEmpty(goodsSmallCategoryList)}" th:each="gsList : ${goodsSmallCategoryList}">
+										<tr style="cursor:pointer;">	
+											<td>
+												<input type="checkbox" class="checkAll" name="checkAll1">
+				             				</td>
+											<td class="moveToDetail" th:text="${gsList.goodsSmallCategory}">판매 상품 카테고리 소분류 PK</td>
+											<td class="moveToDetail" th:text="${gsList.goodsLargeCategory}">판매 상품 카테고리 소분류 PK</td>
+											<td class="moveToDetail" th:text="${gsList.smallCategoryName}">판매 상품 소분류</td>
+											<td class="moveToDetail" th:text="${gsList.regId}">회원 아이디 FK(작성자)</td>
+											<td class="moveToDetail" th:text="${gsList.regDate}">등록일</td>
+											<td class="moveToDetail" th:text="${gsList.useCheck}">사용 여부</td>
+										</tr>
+									</th:block>									
+									
 							</tbody>
 		        		</table>
 					</div> <!-- </div class="card-box table-responsive"> -->

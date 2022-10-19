@@ -16,6 +16,70 @@
         <result column="point_deal_reference" property="pointDealReference"/>
     </resultMap>
 
+    <resultMap 	id="UserResultMap"			type="User">
+        <result column="user_id" 			property="userId"/>
+        <result column="user_pw" 			property="userPw"/>
+        <result column="user_name" 			property="userName"/>
+        <result column="user_gender" 		property="userGender"/>
+        <result column="user_nickname" 		property="userNickname"/>
+        <result column="user_address" 		property="userAddress"/>
+        <result column="user_address2" 		property="userAddress2"/>
+        <result column="user_phone" 		property="userPhone"/>
+        <result column="user_email" 		property="userEmail"/>
+        <result column="user_right" 		property="userRight"/>
+        <result column="user_reg_date" 		property="userRegDate"/>
+        <result column="user_update_date" 	property="userUpdateDate"/>
+        <result column="user_status" 		property="userStatus"/>
+        <result column="user_penalty" 		property="userPenalty"/>
+        <result column="user_point" 		property="userPoint"/>
+        <result column="user_info_keep" 	property="userInfoKeep"/>
+        <result column="user_level" 		property="userLevel"/>
+        <association property="rightList"		resultMap="RightResultMap"/>
+        <association property="levelBuyer"		resultMap="LevelBuyerResultMap"/>
+        <association property="levelSeller"		resultMap="LevelSellerResultMap"/>
+    </resultMap>
+
+    <!-- 전체회원 검색 !-->
+    <select id="searchUserList" parameterType="map" resultMap="UserResultMap" fetchSize="100">
+        SELECT
+            u.user_id
+            ,u.user_pw
+            ,u.user_name
+            ,u.user_gender
+            ,u.user_nickname
+            ,u.user_address
+            ,u.user_address2
+            ,u.user_phone
+            ,u.user_email
+            ,u.user_right
+            ,r.right_status
+            ,u.user_reg_date
+            ,u.user_update_date
+            ,u.user_status
+            ,u.user_penalty
+            ,u.user_point
+            ,u.user_info_keep
+            ,u.user_level
+            FROM
+                tb_user AS u
+            INNER JOIN
+                tb_right AS r
+            ON
+            u.user_right = r.user_right
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="sv != null and sv != ''">
+                ${sk} LIKE CONCAT('%', #{sv},'%')
+            </if>
+            <if test="fd != null and fd !='' and td != null and td !=''">
+                AND
+                u.userUpdateDate <![CDATA[>]]> (#{fd})
+                AND
+                u.userUpdateDate <![CDATA[<]]> (#{td})
+            </if>
+        </trim>
+        ORDER BY u.user_reg_date
+    </select>
+
     <select id="pointHistory" resultMap="pointHistoryMap">
         SELECT *
         FROM tb_point_deal AS p

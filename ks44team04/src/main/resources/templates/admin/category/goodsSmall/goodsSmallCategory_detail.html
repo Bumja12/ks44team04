@@ -25,7 +25,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="goodsSmallCategoryPK">카테고리 소분류 PK
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="goodsSmallCategoryPK" id="goodsSmallCategoryPK" value="levelBuyer01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="goodsSmallCategoryPK" id="goodsSmallCategoryPK" th:value="${goodsSmall.goodsSmallCategory}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 카테고리 대분류 FK -->
@@ -35,11 +35,16 @@
 										<div class="col-md-6 col-sm-6 ">
 											<select class="select2_single form-control" id="goodsLargeCategoryFK" disabled="disabled" name="goodsLargeCategoryFK" required="required" tabindex="-1">
 												<option></option>
-												<option value="5" selected="selected">포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
-												<option value="5" >포인트/할인 쿠폰</option>
+												<th:block th:if="${not #lists.isEmpty(goodsLargeCategoryList)}" th:each="glCategoryList : ${goodsLargeCategoryList}">
+													<!-- th:selected 사용 -->
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'F000'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsSmall.goodsLargeCategory eq 'F000'}" th:text="${glCategoryList.goodsCategory}">과일</option> 
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'G000'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsSmall.goodsLargeCategory eq 'G000'}" th:text="${glCategoryList.goodsCategory}">쌀/잡곡</option>
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'M000'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsSmall.goodsLargeCategory eq 'M000'}" th:text="${glCategoryList.goodsCategory}">버섯</option>
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'UF00'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsSmall.goodsLargeCategory eq 'UF00'}" th:text="${glCategoryList.goodsCategory}">못난이과일</option>
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'UV00'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsSmall.goodsLargeCategory eq 'UV00'}" th:text="${glCategoryList.goodsCategory}">못난이채소</option>
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'V000'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsSmall.goodsLargeCategory eq 'V000'}" th:text="${glCategoryList.goodsCategory}">채소</option>
+													<option th:if="${glCategoryList.goodsLargeCategory eq 'Z000'}" th:value="${glCategoryList.goodsLargeCategory}" th:selected="${goodsSmall.goodsLargeCategory eq 'Z000'}" th:text="${glCategoryList.goodsCategory}">기타</option>
+												</th:block>	
 											</select>
 										</div>
 									</div>
@@ -48,7 +53,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="smallCategoryName">판매 상품 소분류
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="smallCategoryName" id="smallCategoryName" value="사과" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="smallCategoryName" id="smallCategoryName" th:value="${goodsSmall.smallCategoryName}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 회원 아이디(작성자) -->
@@ -56,7 +61,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="regId">회원 아이디(작성자)
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" name="regId" id="regId" value="admin01" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="text" name="regId" id="regId" th:value="${goodsSmall.regId}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 등록일 -->
@@ -64,7 +69,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="regDate">등록일
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="datetime" name="regDate" id="regDate" value="2021-01-01 00:00:00" disabled="disabled" required="required" class="form-control" maxlength="15">
+											<input type="datetime" name="regDate" id="regDate" th:value="${goodsSmall.regDate}" disabled="disabled" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 사용 여부 -->
@@ -72,8 +77,8 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align">사용 여부
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="radio" class="flat" name="useCheck" id="useCheckY" value="Y" checked="checked" required="required" disabled="disabled"/> Y
-											<input type="radio" class="flat" name="useCheck" id="useCheckN" value="N" required="required" disabled="disabled"/> N
+											<input type="radio" class="flat" name="useCheck" id="useCheckY" th:checked="${goodsSmall.useCheck eq 'Y'}" checked="checked" required="required" disabled="disabled"/> Y
+											<input type="radio" class="flat" name="useCheck" id="useCheckN" th:checked="${goodsSmall.useCheck eq 'N'}" value="N" required="required" disabled="disabled"/> N
 										</div>
 									</div>
 									<div class="ln_solid"></div>

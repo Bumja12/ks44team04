@@ -1,6 +1,7 @@
 package ks44team04.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,6 +12,7 @@ import ks44team04.dto.GoodsQnaCategory;
 import ks44team04.dto.GoodsSmallCategory;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
+import ks44team04.dto.RegularAsk;
 import ks44team04.dto.RegularAskCategory;
 import ks44team04.dto.ReportCategory;
 
@@ -68,9 +70,47 @@ public interface CategoryMapper {
 	// 특정 신고 대상 카테고리 조희
 	public ReportCategory getReportCategoryByPK(String reportCategory); 
 	
-	// 특정 판매 상품 대분류 카테고리 조희
+	// 특정 판매 상품 카테고리 대분류 조희
 	public GoodsLargeCategory getGoodsLargeCategoryByPK(String goodsLargeCategory); 
+	
+	// 특정 판매 상품 카테고리 소분류 조희
+	public GoodsSmallCategory getGoodsSmallCategoryByPK(String goodsSmallCategory); 
+	
+	// 특정 상품 문의 카테고리 조희
+	public GoodsQnaCategory getGoodsQnaCategoryByPK(String goodsQnaCategory); 
 	
 	//==============================내역 조회============================== 
 	
+	//==============================수정 처리============================== 
+	
+	// 구매자 등급 카테고리 수청 처리 
+    public void modifyLevelBuyerCategory(LevelBuyerCategory levelBuyerCategory);
+    
+	//==============================수정 처리============================== 
+    
+    //==============================등록 처리============================== 
+	
+    // 구매자 등급 카테고리 등록 처리
+    public void addLevelBuyerCategory(LevelBuyerCategory levelBuyerCategory);
+    
+    // 마지막 인덱스에 저장되어 있는 PK값을 조회
+    public String getLastIndexOfLevelBuyerCategoryPK();
+    
+    
+    //==============================등록 처리============================== 
+    
+    //==============================삭제 처리============================== 
+    
+    // 구매자 등급 카테고리 삭제 처리
+    public void removeLevelBuyerCategory(String levelCode);
+    
+    //==============================삭제 처리============================== 
+    
+    //==============================검색 처리============================== 
+    
+    // 구매자 등급 카테고리 검색 처리
+    public List<LevelBuyerCategory> searchLevelBuyerCategory(Map<String, Object> paramMap);
+    
+    //==============================검색 처리============================== 
+    
 }
