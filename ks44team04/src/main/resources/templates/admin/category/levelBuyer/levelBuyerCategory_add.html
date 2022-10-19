@@ -25,7 +25,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="level_name">등급 이름
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" id="level_name" required="required" class="form-control" maxlength="15">
+											<input type="text" id="levelName" name="levelName" required="required" class="form-control" maxlength="15">
 										</div>
 									</div>
 									<!-- 사용 여부 -->
@@ -43,7 +43,7 @@
 										</label>
 										<div class="col-md-6 col-sm-6 ">
 											<!-- 숫자만 입력 가능 -->
-											<input type="number" id="buyer_price_terms" name="buyer_price_terms" value="0" required="required" class="form-control" oninput="handleOnInput(this, 15)">
+											<input type="number" id="buyerPriceTerms" name="buyerPriceTerms" value="0" required="required" class="form-control" oninput="handleOnInput(this, 15)">
 										</div>
 									</div>
 									<!-- 적립율(%) -->
@@ -52,7 +52,7 @@
 										</label>
 										<div class="col-md-6 col-sm-6 ">
 											<!-- 숫자만 입력 가능 -->
-											<input id="save_rate" class="form-control" type="number" value="0.5" required="required" name="save_rate" oninput='handleOnInput(this, 15)'>
+											<input id="saveRate" name="saveRate" class="form-control" type="number" value="0" required="required" oninput='handleOnInput(this, 15)'>
 										</div>
 									</div>
 									<div class="ln_solid"></div>

@@ -33,16 +33,7 @@
 										<label class="col-form-label col-md-3 col-sm-3 label-align" for="levelName">등급 이름
 										</label>
 										<div class="col-md-6 col-sm-6 ">
-											<select class="select2_single form-control" id="levelName" disabled="disabled" name="levelName" required="required" tabindex="-1">
-												<option></option>
-												<th:block th:if="${not #lists.isEmpty(levelBuyerCategoryList)}" th:each="lbCategoryList : ${levelBuyerCategoryList}">
-													<!-- th:selected 사용 -->
-													<option th:if="${lbCategoryList.levelCode eq 'levelBuyer01'}" th:value="${lbCategoryList.levelCode}" th:selected="${levelBuyerCategory.levelName eq '씨앗'}">씨앗</option> 
-													<option th:if="${lbCategoryList.levelCode eq 'levelBuyer02'}" th:value="${lbCategoryList.levelCode}" th:selected="${levelBuyerCategory.levelName eq '새싹'}">새싹</option>
-													<option th:if="${lbCategoryList.levelCode eq 'levelBuyer03'}" th:value="${lbCategoryList.levelCode}" th:selected="${levelBuyerCategory.levelName eq '잎새'}">잎새</option>
-													<option th:if="${lbCategoryList.levelCode eq 'levelBuyer04'}" th:value="${lbCategoryList.levelCode}" th:selected="${levelBuyerCategory.levelName eq '열매'}">열매</option>
-												</th:block>	
-											</select>
+											<input id="levelName" name="levelName" class="form-control" type="text" th:value="${levelBuyerCategory.levelName}" required="required" disabled="disabled" maxlength="20">
 										</div>
 									</div>
 									<!-- 회원 아이디(등록) -->

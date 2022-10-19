@@ -50,7 +50,64 @@
 			tb_level_buyer_category  	 		  -- 구매자 등급 카테고리 테이블
 		WHERE level_code = #{levelCode};          -- 특정 구매자 등급 카테고리의 등급 코드
     </select>
-	
+    
+    <!-- 구매자 등급 카테고리 수청 처리  -->
+    <update id="modifyLevelBuyerCategory" parameterType="LevelBuyerCategory">
+    	/* 구매자 등급 카테고리 수청 처리 */
+    	UPDATE tb_level_buyer_category 									  -- 구매자 등급 카테고리 테이블
+     	<trim prefix="SET" prefixOverrides=",">
+			<if test="levelName != null and levelName != ''">             -- 등급 이름
+				level_name = #{levelName}
+			</if>
+			<if test="useCheck != null and useCheck != ''"> 			  -- 사용 여부
+				,use_check = #{useCheck}
+			</if>
+			<if test="buyerPriceTerms != null and buyerPriceTerms != ''"> -- 구매자 구매 금액 조건 (6개월)
+				,buyer_price_terms = #{buyerPriceTerms}
+			</if>
+			<if test="saveRate != null and saveRate != ''"> 			  -- 적립율(%)
+				,save_rate = #{saveRate}
+			</if>
+			<if test="levelCodeNpk != null and levelCodeNpk != ''"> 	  -- 등급 코드
+				,level_code_npk = #{levelCodeNpk}
+			</if>
+		</trim>
+			WHERE 
+				level_code = #{levelCode};								  -- 특정 구매자 등급 카테고리의 등급 코드
+     </update>
+    
+    <!-- 구매자 등급 카테고리 등록 처리  -->
+    <insert id="addLevelBuyerCategory" parameterType="LevelBuyerCategory">
+    	/* 구매자 등급 카테고리 등록 처리 */
+		INSERT INTO tb_level_buyer_category -- 구매자 등급 카테고리 테이블
+			(level_code						-- 등급 코드 PK
+			,level_name						-- 등급 이름
+			,reg_id							-- 회원 아이디 FK(등록인)
+			,level_reg_date					-- 등급 생성일
+			,use_check						-- 사용 여부
+			,buyer_price_terms				-- 구매자 구매 금액 조건 (6개월)
+			,save_rate						-- 적립율(%) 
+			,level_code_npk)				-- 등급 코드
+		VALUES 
+			(#{levelCode}					-- 등급 코드 PK
+			,#{levelName}					-- 등급 이름
+			,'admin01'						-- 회원 아이디 FK(등록인)
+			,NOW()							-- 등급 생성일
+			,#{useCheck} 					-- 사용 여부
+			,#{buyerPriceTerms} 			-- 구매자 구매 금액 조건 (6개월)
+			,#{saveRate}					-- 적립율(%)
+			,#{levelCode});					-- 등급 코드
+    </insert>    
+    
+    <!-- 마지막 인덱스에 저장되어 있는 PK값을 조회 -->
+    <select id="getLastIndexOfLevelBuyerCategoryPK" resultType="String">
+    	/* 마지막 인덱스에 저장되어 있는 PK값을 조회 */
+		SELECT
+			MAX(level_code) 		-- 마지막 인덱스에 저장되어 있는 PK값
+		FROM 
+			tb_level_buyer_category -- 구매자 등급 카테고리 테이블   	
+    </select>
+    
 	<!-- ==============================구매자 등급 카테고리============================== -->
 	
 	<!-- ==============================판매자 등급 카테고리============================== -->
@@ -328,10 +385,27 @@
 			,goods_large_category    -- 판매 상품 카테고리 대분류 FK
 			,small_category_name 	 -- 판매 상품 소분류
 			,reg_id 			     -- 회원 아이디 FK(작성자)
+			,reg_date 			     -- 등록일
 			,use_check 				 -- 사용 여부
 			,reg_id 			     -- 등록일
 		FROM 
 			tb_goods_small_category; -- 판매 상품 카테고리 소분류 테이블     		
+    </select>
+    
+	<!-- 특정 판매 상품 카테고리 소분류 조희 -->
+    <select id="getGoodsSmallCategoryByPK" parameterType="String" resultType="GoodsSmallCategory">
+    	/* 특정 판매 상품 카테고리 소분류 조희 */
+		SELECT 
+			 goods_small_category AS goodsSmallCategory   -- 판매 상품 카테고리 소분류 PK
+			,goods_large_category AS goodsLargeCategory   -- 판매 상품 카테고리 대분류 FK
+			,small_category_name  AS smallCategoryName	  -- 판매 상품 소분류
+			,reg_id 			  AS regId 				  -- 회원 아이디 FK(작성자)
+			,use_check 			  AS useCheck		      -- 사용 여부
+			,reg_id 			  AS regDate  			  -- 등록일
+		FROM 
+			tb_goods_small_category 			    	  -- 판매 상품 카테고리 소분류 테이블     		
+		WHERE
+			goods_small_category = #{goodsSmallCategory}; -- 특정 판매 상품 카테고리 소분류의 PK				
     </select>
 	
 	<!-- ==============================판매 상품 카테고리 소분류============================== -->
@@ -360,6 +434,22 @@
 			,use_check			   -- 사용 여부
 		FROM 
 			tb_goods_qna_category; -- 상품 문의 카테고리 테이블	
+    </select>
+    
+	<!-- 특정 상품 문의 카테고리 조희 -->
+    <select id="getGoodsQnaCategoryByPK" parameterType="String" resultType="GoodsQnaCategory">
+    	/* 특정 상품 문의 카테고리 조희 */
+		SELECT 
+			 goods_qna_category AS goodsQnaCategory   -- 상품 문의 카테고리 PK
+			,reg_id 			AS regId  			  -- 회원 아이디 FK(등록인)
+			,category_name 		AS categoryName       -- 카테고리명
+			,reg_date			AS regDate  		  -- 등록일
+			,modify_date		AS modifyDate  		  -- 수정일
+			,use_check			AS useCheck  		  -- 사용 여부
+		FROM 
+			tb_goods_qna_category  					  -- 상품 문의 카테고리 테이블	
+		WHERE
+			goods_qna_category = #{goodsQnaCategory}; -- 특정 상품 문의 카테고리의 PK				
     </select>
 	
 	<!-- ==============================상품 문의 카테고리============================== -->

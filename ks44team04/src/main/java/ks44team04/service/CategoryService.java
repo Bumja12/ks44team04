@@ -183,6 +183,53 @@ public class CategoryService {
 		return goodsLarge;
 	}
 	
+	// 특정 판매 상품 카테고리 소분류 조희
+	public GoodsSmallCategory getGoodsSmallCategoryByPK(String goodsSmallCategory) {
+		
+		// 특정 판매 상품 카테고리 소분류
+		GoodsSmallCategory goodsSmall = categoryMapper.getGoodsSmallCategoryByPK(goodsSmallCategory);
+		
+		return goodsSmall;
+	}
+	
+	// 특정 상품 문의 카테고리 조희
+	public GoodsQnaCategory getGoodsQnaCategoryByPK(String goodsQnaCategory) {
+		
+		// 특정 상품 문의 카테고리 
+		GoodsQnaCategory goodsQna = categoryMapper.getGoodsQnaCategoryByPK(goodsQnaCategory);
+		
+		return goodsQna;
+	}
+	
 	//==============================내역 조회============================== 
+	
+	// 구매자 등급 카테고리 수청 처리 
+    public void modifyLevelBuyerCategory(LevelBuyerCategory levelBuyerCategory) {
+    	
+    	categoryMapper.modifyLevelBuyerCategory(levelBuyerCategory);
+    };
+
+	
+	//==============================수정 처리============================== 
+	
+	
+	//==============================등록처리============================== 
+    
+    // 구매자 등급 카테고리 등록 처리
+    public void addLevelBuyerCategory(LevelBuyerCategory levelBuyerCategory) {
+    	
+    	categoryMapper.addLevelBuyerCategory(levelBuyerCategory);
+    }
+    
+    // 마지막 인덱스에 저장되어 있는 PK값을 조회
+    public String getLastIndexOfLevelBuyerCategoryPK() {
+    	
+    	// 마지막 인덱스에 저장되어 있는 PK값
+    	String lastIndexOfLevelBuyerCategoryPK = categoryMapper.getLastIndexOfLevelBuyerCategoryPK();
+    	
+    	return lastIndexOfLevelBuyerCategoryPK;
+    };
+
+    //==============================등록처리============================== 
 	
 }
