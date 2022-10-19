@@ -11,15 +11,13 @@
         <result column="board_title" 		property="boardTitle"/>
         <result column="board_content" 		property="boardContent"/>
         <result column="board_file" 		property="boardFile"/>
-        <result column="board_tag" 			property="boardTag"/>
         <result column="fix_check" 			property="fixCheck"/>
         <result column="view_amount" 		property="viewAmount"/>
         <result column="like_amount" 		property="likeAmount"/>
         <result column="reg_date" 			property="regDate"/>
         <result column="modify_date" 		property="modifyDate"/>
-        <result column="report_amount" 		property="reportAmount"/>
-        <result column="save_point" 				property="savePoint"/>
-        <result column="detele_check" 				property="deleteCheck"/>
+        <result column="save_point" 		property="savePoint"/>
+        <result column="detele_check" 		property="deleteCheck"/>
 			<association property="userInfo" resultMap="ks44team04.mapper.UserMapper.UserResultMap"/>
 			<association property="boardCategoryInfo" resultMap="ks44team04.mapper.CategoryMapper.BoardCategoryMap"/>
     </resultMap>
@@ -35,13 +33,11 @@
 			,b.board_title
 			,b.board_content
 			,b.board_file
-			,b.board_tag
 			,b.fix_check
 			,b.view_amount
 			,b.like_amount
 			,b.reg_date
 			,b.modify_date
-			,b.report_amount
 			,b.save_point
 		FROM
 			tb_board AS b
@@ -67,13 +63,11 @@
 			,b.board_title
 			,b.board_content
 			,b.board_file
-			,b.board_tag
 			,b.fix_check
 			,b.view_amount
 			,b.like_amount
 			,b.reg_date
 			,b.modify_date
-			,b.report_amount
 			,b.save_point
 		FROM
 			tb_board AS b
@@ -102,16 +96,29 @@
 		ORDER BY b.reg_date DESC;
 	</select>
 	
+	<!-- 페이징에 필요한 게시물 카운터 -->
+	<!-- 
+	<select>
+		SELECT COUNT(*) FROM tb_board WHERE board_category = 'boardCategory002';
+	</select>
+	 -->
+	
 	<!-- 게시물 등록 -->
 	<insert id="boardAdd" parameterType="Board">
 	/* 게시물 등록  */
 	INSERT INTO tb_board
-		(board_code, user_id, board_title, board_content, board_file, board_tag, fix_check, view_amount, like_amount, reg_date, report_amount, save_point)
+		(board_code, board_category, user_id, board_title, board_content, board_file, reg_date, save_point)
 	VALUES
-		(#{boardCode}, #{userId}, #{boardTitle}, #{boardCotent}, #{boardFile}, #{boardTag}, #{fixCheck}, #{viewAmount}, #{likeAmount}, NOW(), #{reportAmount}, #{savePoint})
+		(#{boardCode}, #{boardCategory}, #{userId}, #{boardTitle}, #{boardContent}, #{boardFile}, NOW(), #{savePoint})
 	</insert>
 	
-	<!-- 게시글 상세정보 조회 -->
+	<!-- 게시물 코드증가 -->
+	<select id="getBoardNewCode" parameterType="String" resultType="String">
+		SELECT  MAX(board_code)
+		FROM 	tb_board
+    </select>
+	
+	<!-- 게시글 상세 조회 -->
     <select id="boardByCode"  parameterType="String" resultMap="boardResultMap">
         SELECT
             *
@@ -153,15 +160,19 @@
     </delete>
 	
 	<!-- 게시글 리스트 조회 -->
-    <select id="BoardListUser" parameterType="map" resultMap="boardResultMap">
+    <select id="BoardListUser" parameterType="string" resultMap="boardResultMap">
         SELECT
             *
         FROM
-            tb_board
+            tb_board AS b
+            INNER JOIN
+            tb_user AS u
+            ON
+            b.user_id = u.user_id
         WHERE
             delete_check = 'N'
- <!--      AND
-        	board_category = #{boardCategory} -->  
+		AND
+        	board_category = #{boardCategory}
         ORDER BY board_code DESC;
     </select>
 	

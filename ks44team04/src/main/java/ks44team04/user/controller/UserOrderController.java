@@ -100,11 +100,14 @@ public class UserOrderController {
     public String orderListTest(@ModelAttribute(value = "paging") Paging paging, Model model) {
         int totalContentsCount = orderService.getContentsCount();
         paging.setPagination(new Pagination(paging, totalContentsCount));
+        paging.setCondition("buyer01");
 
         log.info("==================================={}", paging);
         log.info("===================================2{}", paging.getPagination());
+        
         List<OrderDetail> orderList = orderService.getOrderListTest(paging);
         model.addAttribute("orderList", orderList);
+        
         return "user/order/orderList_test";
     }
 

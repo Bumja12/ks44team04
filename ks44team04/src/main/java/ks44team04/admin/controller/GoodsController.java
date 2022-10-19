@@ -94,6 +94,11 @@ public class GoodsController {
 		model.addAttribute("title", "상품 목록 조회");
 		model.addAttribute("goodsList", goodsList);
 		model.addAttribute("largeCategoryList", largeCategoryList);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("searchCate", searchCate);
+		model.addAttribute("firstDate", firstDate);
+		model.addAttribute("lastDate", lastDate);
 		
 		return "/admin/goods/goodsList";
 	
@@ -266,6 +271,12 @@ public class GoodsController {
 		List<GoodsQna> goodsQna = goodsService.getGoodsQnaSearch(paramMap);
 		model.addAttribute("title", "문의 검색 결과");
 		model.addAttribute("goodsQna", goodsQna);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("searchKey2", searchKey2);
+		model.addAttribute("searchQnaStatus", searchQnaStatus);
+		model.addAttribute("firstDate", firstDate);
+		model.addAttribute("lastDate", lastDate);
 		
 		return "/admin/goods/goodsQna";
 	}

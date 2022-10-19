@@ -42,36 +42,42 @@
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="text-center" style="height:100px;">
-				<div style="font-size:25px;">자유게시판</div>
+				<div style="font-size:25px;"></div>
             </div>
         </div>
         
         
         <!-- 테이블 시작 -->
-        <table class="table table-hover">
+        <table class="table" th:object="${boardInfo}">
 			<thead>
 				<tr>
-					<th style="width: 60px;">번호</th>
-					<th>제목</th>
-					<th style="width: 100px;">작성자</th>
-					<th style="width: 110px;">작성일</th>
-					<th style="width: 90px;">조회수</th>
-					<th style="width: 90px;">좋아요</th>
+					<th colspan="7" th:text="*{boardTitle}" style="font-size:17px; text-align:left;"></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:if="${not #lists.isEmpty(boardListUser)}" th:each="b, e : ${boardListUser}" >
-					<td th:text="${e.size - e.index}">1</td>
-					<td th:text="${b.boardTitle}" th:onclick="|location.href='@{/user/board/boardView(boardCode=${b.boardCode})}'|" style="padding-left:40px; text-align:left !important;"></td>
-					<td th:text="${b.userInfo.userNickname}"></td>
-					<td th:text="${#strings.substring(b.regDate,0,10)}"></td>
-					<td th:text="${b.viewAmount}"></td>
-					<td th:text="${b.likeAmount}"></td>
+				<tr class="d-flex">
+					<td class="col-md-5"></td>
+					<td class="col-md-1">작성일</td>
+					<td class="col-md-2" th:text="*{#strings.substring(regDate,0,10)}"></td>
+					<td class="col-md-1">조회수</td>
+					<td class="col-md-1" th:text="*{viewAmount}"></td>
+					<td class="col-md-1">좋아요</td>
+					<td class="col-md-1" th:text="*{likeAmount}"></td>
+				</tr>
+				<tr style="height:400px;">
+					<td class="d-flex" colspan="7" style="border-bottom:1px solid #dee2e6 !important;">
+						<div th:utext="*{boardContent}" style="height:400px; text-align:left;"></div>
+					</td>
 				</tr>
 			</tbody>
+			<tfoot>
+				<tr>
+					<td style="text-align:left; font-size:18px;">댓글</td>
+				</tr>
+			</tfoot>
 		</table>
 		<div style="position: relative; width: 100%; height: 40px; display: flex; margin-top:10px;">
-			<button type="button" class="boardAdd">작성하기</button>
+			<button type="button" class="boardAdd">목록</button>
 		</div>
 		<hr style="margin-top:50px;">
 		

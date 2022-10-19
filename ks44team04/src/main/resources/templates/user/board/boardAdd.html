@@ -2,8 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/userDefault}">
-      
+
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
 <th:block layout:fragment="customCss">
+	<link rel="stylesheet" th:href="@{/build/summernote.min.css}"> 
 <!-- 폰트 -->
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 <style>
@@ -36,6 +41,8 @@
 </th:block>
 
 <th:block layout:fragment="customContents">
+<form id="goodsAddForm" th:action="@{/user/board/boardAdd}" method="post">
+<input type="hidden" name="boardCategory" th:value="${boardCategory}">
 <section class="ftco-section" style="padding:2em 0;">
 	<div class="container">
 		<div class="row justify-content-center">
@@ -44,42 +51,68 @@
             </div>
         </div>
         
-        <div style="width:100px; margin-left:55px; font-size:17px; font-weight:400;">게시글작성</div>
-        <!-- 테이블 시작 -->
-        <table class="table table-hover">
-			<thead>
-				<tr>
-					<th style="width: 60px;">번호</th>
-					<th>제목</th>
-					<th style="width: 100px;">작성자</th>
-					<th style="width: 110px;">작성일</th>
-					<th style="width: 90px;">조회수</th>
-					<th style="width: 90px;">좋아요</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:if="${not #lists.isEmpty(boardListUser)}" th:each="b : ${boardListUser}" >
-					<td>1</td>
-					<td th:text="${b.boardTitle}" style="padding-left:40px; text-align:left !important;"></td>
-					<td th:text="${b.userInfo.userId}"></td>
-					<td th:text="${#strings.substring(b.regDate,0,10)}"></td>
-					<td th:text="${b.viewAmount}"></td>
-					<td th:text="${b.likeAmount}"></td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="form-inline form-group">
-			<div>
-				<button type="button" class="boardAdd" th:onclick="|location.href='@{/user/board/boardFree}'|">취소</button>
-				<a th:href="@{/user/board/boardFree}"><button type="button" class="boardAdd">등록하기</button></a>
+        <div style="width:1000px; margin:auto;">
+	        <div style="width:100px; font-size:17px; font-weight:400; margin-bottom:-15px;">게시글작성</div>
+	        <hr> 
+	        <!-- 테이블 시작 -->
+	 		<div style="width:850px; height:50px;">
+	 			<span style="font-size:18px; padding:0px 20px;">제목</span>
+	 			<input id="boardTitle" name="boardTitle" type="text" size="100" style="outline:none; border:1px solid #cccccc; border-radius:4px;">
+	 		</div>
+	 		<div style="margin-bottom:20px;">
+ 				<textarea class="summernote" id="boardContent" name="boardContent"></textarea>
+ 			</div>
+ 			
+			<div class="form-inline form-group">
+				<div style="margin:auto;">
+					<button type="button" class="boardAdd" th:onclick="|location.href='@{/user/board/boardFree}'|">취소</button>
+					<button type="submit" class="boardAdd">등록하기</button>
+				</div>
+			</div>
+			<div style="position: relative; width: 100%; height: 40px; display: flex; margin-top:10px;">
+				<div>
+				</div>
 			</div>
 		</div>
-		<div style="position: relative; width: 100%; height: 40px; display: flex; margin-top:10px;">
-			<div>
-			</div>
-		</div>
-		
 	</div> 
 </section>
+</form>
 </th:block>
+<th:block layout:fragment="customJsScript">
+<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+<script src="/build/summernote.min.js"></script>
+<!-- 스크롤이 자꾸 아래로 가서 넣음 -->
+<script>history.scrollRestoration = "manual"</script>
+<script th:inline="javascript">
+
+$(function(){
+	
+    /* 썸머노트 설정 */
+	$(document).ready(function() {
+    	$('.summernote').summernote({
+			height: 400,           //에디터 높이
+			minHeight: null,       //최소 높이
+			maxHeight: null,       //최대 높이
+			lang: "ko-KR",
+			toolbar: [ ['fontname', ['fontname']],
+			           ['fontsize', ['fontsize']],
+			    	   ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    	   ['color', ['forecolor','color']],
+			    	   ['table', ['table']],
+			    	   ['para', ['ul', 'ol', 'paragraph']],
+			   	 	   ['height', ['height']],
+			    	   ['insert',['picture','link','video']],
+			    	   ['view', ['fullscreen', 'help']] ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+		});
+	});
+    
+
+    
+    
+    
+});
+
+</script>
 </html>

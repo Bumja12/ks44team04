@@ -285,30 +285,28 @@ $(document).ready(function() {
 	});
 
 	/* 장바구니 상품 삭제 */
-	$('.cartRemove').click(function(){
+	$('#cartList').on('click', '.cartRemove', function(){
 		var cartCode = $(this).data("cartCode");
 		console.log(cartCode);
-		$.ajax({ type: "GET",
+		$.ajax({ type: "POST",
        	 		 url: "/user/goods/cartRemove",
       	 		 data: { 'cartCode' : cartCode },
 				 success : function(data){
-					 //location.reload();
-					 $('#cartList').load(location.href+' #cartList');
+					 $('#cartList').load(location.href + ' #cartList');
 				 }
 		});
 	});
-
+	
 	/* 장바구니 선택 삭제 */
 	$('.selectDel').click(function(){
-		$('input[id=oneCheck]:checked').each(function(){
+		$('input[name=cartCheck]:checked').each(function(){
 			var cartCode = $(this).data("cartCode");
 			console.log(cartCode);
-			$.ajax({ type: "GET",
+			$.ajax({ type: "POST",
       	 		 url: "/user/goods/cartRemove",
      	 		 data: { 'cartCode' : cartCode },
 				 success : function(data){
-					 //location.reload();
-					 $('#cartList').reload(location.href+' #cartList');
+					 $('#cartList').load(location.href+' #cartList');
 				 }
 			});
 		});

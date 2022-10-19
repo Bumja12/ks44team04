@@ -179,7 +179,7 @@
                             on tod.goods_code = tg.goods_code
                  inner join tb_order t
                             on tod.order_num = t.order_num
-        where t.buyer_id = 'buyer01'
+        where t.buyer_id = #{condition}
         order by order_detail_code desc
         limit #{pagination.startNumber}, #{contentsPerPage}
     </select>
