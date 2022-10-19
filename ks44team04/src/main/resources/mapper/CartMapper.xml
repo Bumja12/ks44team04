@@ -13,6 +13,15 @@
         <result column="reg_date" 			property="regDate"/>
         <result column="modify_date" 		property="modifyDate"/>
         	<association property="goodsInfo" resultMap="ks44team04.mapper.GoodsMapper.goodsResultMap"/>
+        	
+        <collection property="fileList" javaType="list" ofType="FileDto">
+        	<id 	column="file_idx"				property="fileIdx" />
+        	<result column="file_new_name" 			property="fileNewName" />
+			<result column="file_original_name" 	property="fileOriginalName" />
+			<result column="file_path" 				property="filePath" />
+			<result column="file_size" 				property="fileSize" />
+			<result column="file_islocal" 			property="fileIsLocal" />
+        </collection>
     </resultMap>
     
     <!-- 장바구니 보여주기 -->
@@ -25,6 +34,14 @@
 		tb_goods AS g
 		ON
 		c.goods_code = g.goods_code
+		INNER JOIN
+		tb_file_control AS fc
+		ON
+		g.goods_file = fc.fc_group_file_idx
+		INNER JOIN
+		tb_file AS f
+		ON
+		fc.fc_file_idx = f.file_idx
 	WHERE
 		c.buyer_id = #{buyerId}
 	</select>

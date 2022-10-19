@@ -1,5 +1,7 @@
 package ks44team04.dto;
 
+import java.util.List;
+
 public class Cart {
 
    private String cartCode;
@@ -9,6 +11,17 @@ public class Cart {
    private String regDate;
    private String modifyDate;
 
+	//이미지 리스트 
+	private List<FileDto> fileList;
+	
+   public List<FileDto> getFileList() {
+		return fileList;
+	}
+	public void setFileList(List<FileDto> fileList) {
+		this.fileList = fileList;
+	}
+	
+	
 	private Goods goodsInfo;
 	public Goods getGoodsInfo() {
 		return goodsInfo;

@@ -48,7 +48,7 @@ button:focus{ outline:none; border:none; }
 							<input type="hidden" class="cartCode" th:value="${c.cartCode}">
 							<input type="hidden" class="goodsCode" th:value="${c.goodsInfo.goodsCode}">
 							<a th:href="@{/user/goods/goods(goodsCode=${c.goodsInfo.goodsCode})}">
-								<img src="/images/goodsTest/apple.png" style="width:85px; height:85px; border-radius:5px;">
+								<img th:src="@{'/' + ${c.fileList[0].filePath}}" style="width:85px; height:85px; border-radius:5px;">
 							</a>
 							<a th:href="@{/user/goods/goods(goodsCode=${c.goodsInfo.goodsCode})}" style="margin:auto; font-size:18px; font-weight: 500; line-height:22px; color:#333; margin-left: 10px; vertical-align:middle;">
 								<span th:text="${c.goodsInfo.goodsName}"></span>
