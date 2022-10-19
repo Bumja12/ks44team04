@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -39,11 +40,6 @@ public class UserOrderController {
         this.orderService = orderService;
         this.service = service;
         this.gson = gson;
-    }
-
-    @GetMapping("/cc/{cc}")
-    public String cc(@PathVariable(value = "cc") Object cc) {
-        return "user/order/checkout";
     }
 
     @GetMapping("/checkout")
@@ -88,8 +84,8 @@ public class UserOrderController {
     }
 
     @GetMapping("/list")
-    public String orderList(Model model) {
-        String userId = "buyer01";
+    public String orderList(Model model, HttpSession session) {
+        String userId = (String) session.getAttribute("SID");
         List<OrderDetail> orderList = orderService.getOrderList(userId);
         model.addAttribute("orderList", orderList);
         return "user/order/orderList";
@@ -107,26 +103,7 @@ public class UserOrderController {
         model.addAttribute("orderList", orderList);
         return "user/order/orderList_test";
     }
-
     /* 페이징 테스트 */
-
-    @GetMapping("/detail")
-    public String orderDetail() {
-
-        return "user/order/orderDetail";
-    }
-
-    @GetMapping("/modify")
-    public String orderModify() {
-
-        return "user/order/orderModify";
-    }
-
-    @GetMapping("/cancel")
-    public String orderCancel() {
-
-        return "user/order/orderCancel";
-    }
 
     @GetMapping("/postcheck/{postCode}")
     public String postCheck(@PathVariable(value = "postCode") String postInfo) {
@@ -224,34 +201,23 @@ public class UserOrderController {
 
     @PostMapping("/end")
     public String setOrder(Order order, OrderDetail orderDetail, OrderDetailStr orderDetailStr, PointDeal pointDeal,
-                           @RequestParam("couponStatusCode") String couponStatusCode) {
-        String sessionId = "buyer01";
+                           @RequestParam("couponStatusCode") String couponStatusCode,
+                           HttpSession session) {
+        String userId = (String) session.getAttribute("SID");
         String orderNum = orderService.getOrderNum();
 
         if (orderNum == null) {
             LocalDate now = LocalDate.now();
             DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
             orderNum = now.format(format) + "001";
-        } else {
-            orderNum = CodeIndex.codeIndex(orderNum, 8);
-        }
+        } else {orderNum = CodeIndex.codeIndex(orderNum, 8); }
 
-        if ("".equals(order.getCouponCode())) {
-            order.setCouponCode(null);
-        }
+        if ("".equals(order.getCouponCode())) order.setCouponCode(null);
 
         order.setOrderNum(orderNum);
-        order.setBuyerId(sessionId);
+        order.setBuyerId(userId);
 
         orderService.setOrder(order);
-
-        log.info("=============================={}", orderDetailStr);
-        log.info("=============================={}", orderDetailStr.getGoodsCode());
-        log.info("=============================={}", (String[]) orderDetailStr.getGoodsCode().split(","));
-        log.info("=============================={}", orderDetailStr.getGoodsCode().split(",").length);
-        log.info("=============================={}", orderDetailStr.getGoodsCode().split(",")[0]);
-        log.info("=============================={}", orderDetailStr.getGoodsCode().split(",")[1]);
-
 
         for (int i = 0; i < orderDetailStr.getGoodsCode().split(",").length; i++) {
             orderDetail.setOrderDetailCode(orderNum + "_" + (i + 1));
@@ -265,7 +231,7 @@ public class UserOrderController {
         }
 
         /* 포인트 사용 */
-        pointDeal.setUserId(sessionId);
+        pointDeal.setUserId(userId);
         pointDeal.setStatus("사용");
         pointDeal.setPointDealReason("상품구매");
         pointDeal.setPointDealReference(orderNum);
@@ -274,11 +240,9 @@ public class UserOrderController {
         pointService.addPointDetailMinus(dealId);
 
         /* 쿠폰 사용 */
-        if (order.getCouponCode() != null) {
-            couponService.deleteCouponStatus(couponStatusCode);
-        }
+        if (order.getCouponCode() != null) couponService.deleteCouponStatus(couponStatusCode);
 
-        return "redirect:/user/order/checkout";
+        return "redirect:/user/order/list";
     }
 
 }

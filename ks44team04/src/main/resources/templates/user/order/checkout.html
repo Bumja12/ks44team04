@@ -4,7 +4,6 @@
       layout:decorate="~{layout/userDefault}">
 
 <th:block layout:fragment="customCss">
-
 </th:block>
 
 <th:block layout:fragment="customContents">
@@ -19,35 +18,9 @@
                     <h2>주문서 작성</h2>
                     <div class="border mb-2 p-3">
                     <h4>배송지</h4>
-                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                        <ul id="addressSelect" class="nav nav-tabs" role="tablist">
-                            <th:block th:if="${not #lists.isEmpty(addressList)}"
-                                      th:each="l, e : ${addressList}">
-                                <li role="presentation">
-                                    <a th:href="@{|#${l.addressName}|}" class="address" role="tab" data-toggle="tab"
-                                       th:data-address-list="${l.addressList}" th:text="${l.addressName}">
-                                    </a>&nbsp;|&nbsp;
-                                </li>
-                            </th:block>
-                            <li role="presentation" id="submitCheck" class="">
-                                <a href="javascript:pop()">배송지등록</a>
-                            </li>
-                        </ul>
-                        <div id="addressSelectContent" class="tab-content">
-                            <th:block th:if="${not #lists.isEmpty(addressList)}" th:each="l, e : ${addressList}">
-                                <div role="tabpanel" class="tab-pane fade" th:id="${l.addressName}">
-                                    <input type="hidden" class="postAddressList" th:value="${l.addressList}">
-                                    <div>[[${l.receiverName}]]</div>
-                                    <div>
-                                        <span>[[${l.phone}]]</span>
-                                        <span th:if="${l.phone2 != null}">|</span>
-                                        <span>[[${l.phone2}]]</span>
-                                    </div>
-                                    <div>[[${l.address}]]</div>
-                                    <div>[[${l.address2}]]</div>
-                                </div>
-                            </th:block>
-                        </div>
+                    <div id="addressList" data-checked="N">
+                        <button type="button" class="btn-sm btn-secondary"
+                                onclick="window.open('/user/address/checkout', 'address', 'width=800,height=600')">배송지 선택</button>
                     </div>
                     </div>
                     <div class="border mb-2 p-3">
@@ -82,7 +55,6 @@
                         <input type="hidden" name="couponStatusCode" value=""/>
                         <input type="hidden" name="totalPrice" value=""/>
                         <input type="hidden" name="totalOrderPrice" value=""/>
-                        <input type="hidden" name="postAddressList" value=""/>
                         <input type="hidden" name="postPrice" value=""/>
                         <div class="d-flex p-2">
                             <span class="p-2 mr-auto">상품할인</span>
@@ -90,7 +62,7 @@
                         </div>
                         <div class="d-flex p-2">
                             <span class="p-2 mr-auto">쿠폰사용</span>
-                            <button type="button" id="selectCoupon" class="p-2 btn btn-dark">선택</button>
+                            <button type="button" id="selectCoupon" class="p-2 btn-sm btn-secondary">선택</button>
                         </div>
                         <div class="d-flex p-2">
                             <span class="p-2 mr-auto">쿠폰할인</span>
@@ -103,7 +75,7 @@
                         </div>
                         <div class="d-flex p-2">
                             <span class="p-2 mr-auto">보유포인트</span>
-                            <span id="userPoint" class="p-2" th:text="${userPoint} + '원'"></span>
+                            <span id="userPoint" class="p-2" th:data-point="${userPoint}" th:text="${userPoint} + '원'"></span>
                         </div>
                     </div>
                     <div class="border mb-2 p-3">
@@ -138,37 +110,7 @@
 <th:block layout:fragment="customScript">
 
     <script>
-        let pop = function () {
-            let addressPop = window.open('/user/address/register', 'addressPop', 'width=350,height=550');
-            let popInterval = window.setInterval(function () {
-                if (addressPop !== undefined) {
-                    if (addressPop.closed) {
-                        if (document.querySelector('#submitCheck').classList.contains('submit')) {
-                            fetch('/user/address/checkoutlist')
-                                .then((response) => response.json())
-                                .then((data) => {
-                                    let addressList = data.addressList;
-                                    let addressName = data.addressName;
-                                    let receiverName = data.receiverName;
-                                    let address = data.address;
-                                    let address2 = data.address2;
-                                    let phone = data.phone;
-                                    let phone2 = data.phone2;
-                                    let addressSelect = `<li role="presentation " data-address-list="${addressList}"> <a href="#${addressName}" role="tab" data-toggle="tab" aria-expanded="true">${addressName}</a>&nbsp;|&nbsp; </li>`;
-                                    let addressContent = `<div role="tabpanel" class="tab-pane fade" id="${addressName}"><div>${receiverName}</div>` +
-                                        `<div> <span>${phone}</span> <span> | </span> <span>${phone2}</span> </div>` +
-                                        `<div>${address}</div> <div>${address2}</div> </div>`;
-                                    let addressSelectLi = document.querySelectorAll('#addressSelect li');
-                                    addressSelectLi[addressSelectLi.length - 1].insertAdjacentHTML('beforebegin', addressSelect);
 
-                                    document.querySelector('#addressSelectContent').insertAdjacentHTML('beforeend', addressContent);
-                                })
-                        }
-                        window.clearInterval(popInterval);
-                    }
-                }
-            }, 1000);
-        }
 
         /* 쿠폰 선택 팝업, 팝업 종료 시 할인 금액 반영 */
         document.querySelector('#selectCoupon').addEventListener('click', function () {
@@ -206,9 +148,7 @@
         /* 포인트, 쿠폰 금액 변경 시 할인금액과 결제금액 변경 함수*/
         let discountFn = function () {
             let usePoint = 0;
-            if (document.querySelector('#usePoint').value !== '') {
-                usePoint = Number(document.querySelector('#usePoint').value);
-            }
+            usePoint = Number(document.querySelector('#usePoint').value);
             let couponPrice = Number(document.getElementsByName('couponPrice')[0].value);
             document.querySelector('#goodsDiscountPrice').textContent
                 = (goodsDiscountPrice + usePoint + couponPrice).toString() + '원';
@@ -221,13 +161,19 @@
         }
 
         /* 포인트 변경 시 discountFn 함수 호출 */
-        document.querySelector('#usePoint').onchange = discountFn;
-
-        /* 배송지목록 클릭이벤트 */
-        document.querySelectorAll('.address').forEach(function (e) {
-            e.onclick = function () {
-                document.getElementsByName('postAddressList')[0].value = e.dataset.addressList;
+        document.querySelector('#usePoint').addEventListener('focus', function () {
+           this.value = '';
+        });
+        document.querySelector('#usePoint').addEventListener('blur', function () {
+            if (this.value > Number(document.querySelector('#userPoint').dataset.point)) {
+                alert('보유포인트를 넘길 수 없습니다.');
+                this.value = '0';
             }
+            if (this.value === '') {
+                this.value = '0';
+            }
+            discountFn();
+
         });
 
     </script>
