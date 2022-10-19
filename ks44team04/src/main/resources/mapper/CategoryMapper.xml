@@ -108,6 +108,52 @@
 			tb_level_buyer_category -- 구매자 등급 카테고리 테이블   	
     </select>
     
+    <!-- 구매자 등급 카테고리 삭제 처리 -->
+ 	<delete id="removeLevelBuyerCategory" parameterType="String">
+  		/* 자주 묻는 질문 삭제 */
+		DELETE FROM
+			tb_level_buyer_category    -- 구매자 등급 카테고리 테이블
+		WHERE 
+			level_code = #{levelCode}; -- 구매자 등급 카테고리의 등급 코드 
+ 	</delete>
+ 	
+ 	<!-- 구매자 등급 카테고리 검색 처리 -->
+ 	<!-- 100까지만 검색이 가능하다. -->
+    <select id="searchLevelBuyerCategory" parameterType="Map" resultMap="levelBuyerCategoryListMap" fetchSize="100">
+    	/* 구매자 등급 카테고리 검색 처리 */
+		SELECT 
+			 level_code				 		-- 등급 코드 PK
+			,level_name 					-- 등급 이름
+			,reg_id 				 		-- 회원 아이디 FK(등록인)
+			,level_reg_date			 		-- 등급 생성일
+			,use_check				 		-- 사용 여부
+			,buyer_price_terms       		-- 구매자 구매 금액 조건 (6개월)
+			,save_rate		         		-- 적립율(%)
+			,level_code_npk	   		 		-- 등급 코드
+	    FROM 
+			tb_level_buyer_category 		-- 구매자 등급 카테고리 테이블
+		<if test="sK != null and sV != ''"> -- 검색 키가 있고, 검색 값이 공백이 아니다.
+			<trim prefix="WHERE" prefixOverrides="AND | OR">					  -- WHERE 필터
+				<if test="sK != null and sV != '' and sK == 'level_name'"> 		  -- 검색 키가 등급 이름이다.
+					${sK} LIKE CONCAT('%', #{sV}, '%')
+				</if>
+				/* 제목 */ 
+				<if test="sK != null and sV != '' and sK == 'use_check'"> 		  -- 검색 키가 사용 여부이다.
+					${sK} = #{sV}
+				</if>
+				/* 내용 검색 */ 
+				<if test="sK != null and sV != '' and sK == 'buyer_price_terms'"> -- 검색 키가 구매자 구매 금액 조건 (6개월)이다.
+					${sK} = #{sV}
+				</if>
+				/* 사용 여부 검색 */ 
+				<if test="sK != null and sV != '' and sK == 'save_rate'"> 		  -- 검색 키가 적립율(%)이다.
+					${sK} = #{sV}
+				</if>
+			</trim>
+		</if>
+		ORDER BY level_code ASC;											  	  -- 자주 묻는 질문 PK를 내림차순으로 정렬한다.
+    </select>
+    
 	<!-- ==============================구매자 등급 카테고리============================== -->
 	
 	<!-- ==============================판매자 등급 카테고리============================== -->

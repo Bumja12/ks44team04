@@ -1,6 +1,7 @@
 package ks44team04.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -97,4 +98,19 @@ public interface CategoryMapper {
     
     
     //==============================등록 처리============================== 
+    
+    //==============================삭제 처리============================== 
+    
+    // 구매자 등급 카테고리 삭제 처리
+    public void removeLevelBuyerCategory(String levelCode);
+    
+    //==============================삭제 처리============================== 
+    
+    //==============================검색 처리============================== 
+    
+    // 구매자 등급 카테고리 검색 처리
+    public List<LevelBuyerCategory> searchLevelBuyerCategory(Map<String, Object> paramMap);
+    
+    //==============================검색 처리============================== 
+    
 }

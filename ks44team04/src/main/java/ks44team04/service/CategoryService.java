@@ -1,6 +1,7 @@
 package ks44team04.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -213,7 +214,7 @@ public class CategoryService {
 	//==============================수정 처리============================== 
 	
 	
-	//==============================등록처리============================== 
+	//==============================등록 처리============================== 
     
     // 구매자 등급 카테고리 등록 처리
     public void addLevelBuyerCategory(LevelBuyerCategory levelBuyerCategory) {
@@ -230,6 +231,29 @@ public class CategoryService {
     	return lastIndexOfLevelBuyerCategoryPK;
     };
 
-    //==============================등록처리============================== 
-	
+    //==============================등록 처리============================== 
+    
+    //==============================삭제 처리============================== 
+    
+    // 구매자 등급 카테고리 삭제 처리
+    public void removeLevelBuyerCategory(String levelCode) {
+    	
+    	categoryMapper.removeLevelBuyerCategory(levelCode);
+    }
+    
+    //==============================삭제 처리============================== 
+    
+    //==============================검색 처리============================== 
+    
+    // 구매자 등급 카테고리 검색 처리
+    public List<LevelBuyerCategory> searchLevelBuyerCategory(Map<String, Object> paramMap){
+    	
+    	// 구매자 등급 카테고리 검색 결과
+    	List<LevelBuyerCategory> searchResult = categoryMapper.searchLevelBuyerCategory(paramMap);
+    	
+    	return searchResult;
+    }
+    
+    //==============================검색 처리============================== 
+    
 }

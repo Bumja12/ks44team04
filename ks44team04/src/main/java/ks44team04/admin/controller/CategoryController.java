@@ -1,6 +1,8 @@
 package ks44team04.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +22,9 @@ import ks44team04.dto.GoodsQnaCategory;
 import ks44team04.dto.GoodsSmallCategory;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
-import ks44team04.dto.RegularAsk;
 import ks44team04.dto.RegularAskCategory;
 import ks44team04.dto.ReportCategory;
 import ks44team04.service.CategoryService;
-import ks44team04.service.RegularAskService;
 import ks44team04.util.CodeIndex;
 
 @Controller
@@ -583,8 +583,10 @@ public class CategoryController {
 	@PostMapping("/removeLevelBuyerCategory")
 	public String removeLevelBuyerCategoryAction(@RequestParam(value="removeElement[]") List<String> removeElement) {
 
-		System.out.println(removeElement.size());
-		
+		for(int i=0; i<removeElement.size(); i++) {
+			categoryService.removeLevelBuyerCategory(removeElement.get(i));
+
+		}
 		// 구매자 등급 카테고리 목록 화면으로 리다이렉트
 		return "/admin/category/removeLevelBuyerCategory";
 	}
@@ -756,9 +758,38 @@ public class CategoryController {
 	
 	// 구매자 등급 카테고리 검색 처리
 	@PostMapping("/searchLevelBuyerCategory")
-	public String searchLevelBuyerCategoryAction() {
-
-		return "redirect:/admin/category/levelBuyer";
+	public String searchLevelBuyerCategoryAction(@RequestParam(name="searchKey", defaultValue="levelName") String sK
+			  									,@RequestParam(name="searchValue", required=false, defaultValue="") String sV
+			  									,Model model) {
+		
+		// 검색 조각에서 입력한 키가 levelName라면 실제 쿼리문에서 사용할 컬럼명 rAskCate.category_name으로 바꾼다.
+		if("levelName".equals(sK)) {
+			sK = "level_name";
+		// 제목 검색
+		// 검색 조각에서 입력한 키가 useCheck라면 실제 쿼리문에서 사용할 컬럼명 regular_ask_title으로 바꾼다.
+		}else if("useCheck".equals(sK)) {
+			sK = "use_check";
+		// 내용 검색
+		// 검색 조각에서 입력한 키가 buyerPriceTerms라면 실제 쿼리문에서 사용할 컬럼명 regular_ask_content으로 바꾼다.
+		}else if("buyerPriceTerms".equals(sK)) {
+			sK = "buyer_price_terms";
+		// 사용 여부 검색
+		// 검색 조각에서 입력한 키가 saveRate라면 실제 쿼리문에서 사용할 컬럼명 rAsk.use_check으로 바꾼다.
+		}else { 
+			sK = "save_rate";
+		}
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("sV", sV);
+		paramMap.put("sK", sK);
+		
+    	// 구매자 등급 카테고리 검색 결과
+    	List<LevelBuyerCategory> searchResult = categoryService.searchLevelBuyerCategory(paramMap);
+    	
+		// 검색 결과를 모델에 담아 뷰로 넘겨준다.
+		model.addAttribute(searchResult);  
+		
+		return "admin/category/levelBuyer/levelBuyerCategory_list";
 	}
 	
 	// 판매자 등급 카테고리 검색 처리
