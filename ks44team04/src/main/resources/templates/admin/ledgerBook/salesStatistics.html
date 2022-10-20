@@ -113,21 +113,23 @@ th {
 									<tbody style="text-align: center;">
 										<tr>
 											<th rowspan="2" style=" padding-top: 25px; " th:text="월"></th>
-										<th:block th:if="${not #lists.isEmpty(orderExchange)}"  th:each="oe : ${orderExchange}">
-											<th colspan="2"  th:text="${oe.GoodsLargeCategoryDto.goodsCategory}"></th>
+										<th:block th:if="${not #lists.isEmpty(cateInfoListEx)}"  th:each="cle : ${cateInfoListEx}">
+											<th colspan="2"  th:text="${cle.goodsCategory}"></th>
 										</th:block>
 										</tr>
 										<tr>
-										<th:block th:if="${not #lists.isEmpty(orderExchange)}" th:each="oe : ${orderExchange}">
+										<th:block th:if="${not #lists.isEmpty(orderExchange)}"  th:each="cle : ${cateInfoListEx}">
 											<td>건수</td>
 											<td>금액</td>
 										</th:block>
 										</tr>
-										<th:block th:if="${not #lists.isEmpty(orderExchange)}" th:each="oe : ${orderExchange}">
+										<th:block th:if="${not #lists.isEmpty(orderExchange)}"  th:each="oeh : ${orderExchange}">
 											<tr>
-												<td th:text="${oe.OrderExchangeDto.exchangeAskDate}"></td>
-												<td th:text="${oe.GoodsLargeCategoryDto.goodsLargeCategory}"></td>
-												<td th:text="${oe.OrderDetailDto.orderPrice}"></td>
+												<td th:text="${oeh.exchangeAskDate}"></td>
+												<th:block th:if="${not #lists.isEmpty(cateInfoListEx)}"  th:each="cle : ${cateInfoListEx}">												
+													<td th:text="${oeh.get(cle.cnt)}"></td>
+													<td th:text="${oeh.get(cle.total) > 0 ? #numbers.formatInteger(oeh.get(cle.total),3,'COMMA') : 0}"></td>
+												</th:block>
 											</tr>
 										</th:block>
 									</tbody>
@@ -274,7 +276,7 @@ $(function(){
 	    options: {
 	      title: {
 	        display: true,
-	        text: 'Predicted world population (millions) in 2050'
+	        text: '카테고리별 결제 금액 비율'
 	      }
 	    }
 	});
