@@ -30,14 +30,15 @@ public interface LedgerBookMapper {
     public List<Order> paymentAmount(Map<String,Object> orderMap);
     
   //판매자 매출 통계 카테고리별 교환 테이블 부분  
-    public List<Order> orderExchange(Map<String,Object> orderMap);
+    public List<Map<String, String>> orderExchange(Map<String,Object> orderMap);
+  //판매자 매출 통계 카테고리별 교환 테이블 부분  (카테고리명)
+    public List<Map<String, String>> orderExchangeCate(Map<String,Object> orderMap);
     
+ 
   //판매자 매출 통계 카테고리별 반품 테이블 부분   
-    //public List<Order> orderReturn(Map<String,Object> orderMap);
-    //판매자 매출 통계 카테고리별 반품 테이블 부분   
-    public List<Map<String, String>> orderReturn(Map<String,Object> orderMap);
-    
-    //카테고리 조회
-    public List<Map<String, String>> orderReturnCateList(Map<String,Object> orderMap);
+	public List<Map<String, String>> orderReturn(Map<String,Object> orderMap);
+	
+  //판매자 매출 통계 카테고리별 반품 테이블 부분(카테고리 명 )
+	public List<Map<String, String>> orderReturnCateList(Map<String,Object> orderMap);
     
 }

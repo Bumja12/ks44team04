@@ -84,7 +84,7 @@
 /*판매자 메인 화면 상단 부분*/
 	SELECT 
 		 COUNT(if(o.order_date = DATE_FORMAT(NOW(),'%Y-%m-%d'), o.order_date, NULL)) AS `order_date` 
-		 ,COUNT(if(o.final_confirm_date = DAT	E_FORMAT(NOW(),'%Y-%m-%d'), o.final_confirm_date, NULL)) AS `final_confirm_date` 
+		 ,COUNT(if(o.final_confirm_date = DATE_FORMAT(NOW(),'%Y-%m-%d'), o.final_confirm_date, NULL)) AS `final_confirm_date` 
 		 ,COUNT(if(o.final_confirm_date = DATE_FORMAT(NOW(),'%Y-%m-%d'), o.final_confirm_price, NULL)) AS `final_confirm_price` 
 	FROM 
 	  	tb_order AS o
@@ -140,7 +140,7 @@
 			on
 			od.goods_code = g.goods_code
 		WHERE
-			g.seller_id  = #{sellerId}  AND  YEAR(NOW()) = YEAR(o.order_date)
+			g.seller_id  = #{sellerId}  AND  YEAR(NOW()) = YEAR(o.order_date)	
 		GROUP BY MONTH(o.order_date);		
 </select>
 
@@ -210,42 +210,78 @@
 
 </select>
 
-<!-- 판매자 매출 통계 카테고리별 교환 테이블 부분  -->
-<select id="orderExchange" parameterType="map" resultMap="orderResultMap">
+<!-- 판매자 매출 통계 카테고리별 교환 테이블 부분  (카테고리명)-->
+<select id="orderExchangeCate" parameterType="map" resultType="map">
 SELECT 
-	MONTH(oe.exchange_ask_date) AS `exchange_ask_date`
-	,COUNT(glc.goods_large_category) AS `goods_large_category`
-	,sum(od.order_price) * sum(od.order_amount) AS `order_price`
-	,glc.goods_category AS `goods_category`
-FROM 
-	tb_goods_large_category AS glc
-	INNER JOIN 
-	tb_goods_small_category AS gsc
-	on
-	glc.goods_large_category = gsc.goods_large_category
-	INNER JOIN 
-	tb_goods AS g
-	on
-	gsc.goods_small_category = g.goods_small_category
-	INNER JOIN 
-	tb_order_detail AS od
-	on
-	g.goods_code = od.goods_code
-	INNER join
-	tb_order AS o
-	on
-	od.order_num = o.order_num 
-	INNER JOIN 
-	tb_order_exchange AS oe	
-	on
-	od.order_detail_code = oe.order_detail_code
-	
-WHERE 
-	g.seller_id = #{sellerId}
-GROUP BY MONTH(oe.exchange_ask_date),glc.goods_category;
+		distinct glc.goods_category					AS goodsCategory
+		,concat(glc.goods_large_category,'Cnt') 	AS cnt
+		,concat(glc.goods_large_category,'Total')	AS total
+	FROM 
+		tb_goods_large_category AS glc
+		INNER JOIN 
+		tb_goods_small_category AS gsc
+		on
+		glc.goods_large_category = gsc.goods_large_category
+		INNER JOIN 
+		tb_goods AS g
+		on
+		gsc.goods_small_category = g.goods_small_category
+		INNER JOIN 
+		tb_order_detail AS od
+		on
+		g.goods_code = od.goods_code
+		INNER join
+		tb_order AS o
+		ON
+		od.order_num = o.order_num 
+		INNER JOIN 
+		tb_order_exchange AS oe
+		on
+		od.order_detail_code = oe.order_detail_code
+	WHERE 
+		g.seller_id = #{sellerId}
 </select>
 
-<!-- 판매자 매출 통계 카테고리별 반품 테이블 부분 -->
+
+
+<!-- 판매자 매출 통계 카테고리별 교환 테이블 부분  -->
+<select id="orderExchange" parameterType="map" resultType="map">
+SELECT 
+		 MONTH(oe.exchange_ask_date) AS exchangeAskDate
+		<foreach collection="cateInfoListEx" item="cate">
+			,count(if(glc.goods_category=#{cate.goodsCategory}, glc.goods_large_category, NULL)) AS ${cate.cnt}
+			,sum(if(glc.goods_category=#{cate.goodsCategory}, (od.order_price*od.order_amount), 0)) AS ${cate.total}
+		</foreach>
+	FROM 
+		tb_goods_large_category AS glc
+		INNER JOIN 
+		tb_goods_small_category AS gsc
+		on
+		glc.goods_large_category = gsc.goods_large_category
+		INNER JOIN 
+		tb_goods AS g
+		on
+		gsc.goods_small_category = g.goods_small_category
+		INNER JOIN 
+		tb_order_detail AS od
+		on
+		g.goods_code = od.goods_code
+		INNER join
+		tb_order AS o
+		ON
+		od.order_num = o.order_num 
+		INNER JOIN 
+			tb_order_exchange AS oe
+			on
+			od.order_detail_code = oe.order_detail_code
+	WHERE 
+		g.seller_id = #{sellerId}
+	GROUP BY MONTH(oe.exchange_ask_date)
+	ORDER BY exchangeAskDate asc;
+
+</select>
+
+<!-- 판매자 매출 통계 카테고리별 반품 테이블 부분(카테고리 명 ) -->
 <select id="orderReturnCateList" parameterType="map" resultType="map">
 	SELECT 
 		distinct glc.goods_category					AS goodsCategory
@@ -274,7 +310,7 @@ GROUP BY MONTH(oe.exchange_ask_date),glc.goods_category;
 		on
 		od.order_detail_code = ort.order_detail_code
 	WHERE 
-		g.seller_id = #{sellerId};
+		g.seller_id = #{sellerId};										
 </select>
 
 <!-- 판매자 매출 통계 카테고리별 반품 테이블 부분 -->
