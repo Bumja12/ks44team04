@@ -51,18 +51,28 @@ public class LedgerBookService {
     
     
     //판매자 매출 통계 카테고리별 교환 테이블 부분
-    public List<Order> orderExchange(Map<String, Object> orderMap){
+    public  Map<String, Object> orderExchange(Map<String, Object> orderMap){
     	
-    	List<Order> orderExchange = ledgerBookMapper.orderExchange(orderMap);
-    	return orderExchange;
+    	List<Map<String, String>> cateInfoListEx = ledgerBookMapper.orderExchangeCate(orderMap);
+    	orderMap.put("cateInfoListEx", cateInfoListEx);
+    	
+    	List<Map<String, String>> orderExchange = ledgerBookMapper.orderExchange(orderMap);
+    	Map<String, Object> orderExchangeMap = new HashMap<String, Object>();
+    	
+    	orderExchangeMap.put("cateInfoListEx", cateInfoListEx);
+    	orderExchangeMap.put("orderExchange", orderExchange);
+    	
+    	return orderExchangeMap;
     }
     
     //판매자 매출 통계 카테고리별 반품 테이블 부분 
     public Map<String, Object> orderReturn(Map<String, Object> orderMap){
     	List<Map<String, String>> cateInfoList = ledgerBookMapper.orderReturnCateList(orderMap);
     	orderMap.put("cateInfoList", cateInfoList);
+    	
     	List<Map<String, String>> orderReturn = ledgerBookMapper.orderReturn(orderMap);
     	Map<String, Object> orderReturnMap = new HashMap<String, Object>();
+    	
     	orderReturnMap.put("cateInfoList", cateInfoList);
     	orderReturnMap.put("orderReturn", orderReturn);
     	return orderReturnMap;
