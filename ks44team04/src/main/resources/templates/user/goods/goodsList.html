@@ -72,8 +72,8 @@
 
 
 
+<th:block th:replace="fragments/userJs :: datatablesFragment"></th:block>
 <th:block layout:fragment="customJsScript">
-<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
 <script th:inline="javascript">
 
 $(function() {
@@ -120,4 +120,5 @@ $(function() {
 
 
 </script>
+</th:block>
 </html>

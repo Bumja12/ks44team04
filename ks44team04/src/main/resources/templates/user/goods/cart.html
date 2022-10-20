@@ -125,7 +125,7 @@ button:focus{ outline:none; border:none; }
 
 </th:block>
 <th:block layout:fragment="customJsScript">
-<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+<th:block th:replace="fragments/userJs :: datatablesFragment"></th:block>
 <script th:inline="javascript">
 
 $(document).ready(function() {

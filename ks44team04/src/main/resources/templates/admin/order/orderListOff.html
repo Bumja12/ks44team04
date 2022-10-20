@@ -70,7 +70,7 @@
 </th:block>
 
 <th:block layout:fragment="customJsScript">
-    <th:block th:replace="/fragments/adminJs :: datatablesFragment"></th:block>
+    <th:block th:replace="fragments/adminJs :: datatablesFragment"></th:block>
     <script>
         window.addEventListener('load', () => getOrderList('취소'));
 

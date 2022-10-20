@@ -257,7 +257,7 @@ button:focus{ outline:none; border:none; }
 			
 			
 				<!-- 상품 정보 Content 시작 -->
-				<div id="tab-1" class="tabContent current" th:object=${goodsInfo}>
+				<div id="tab-1" class="tabContent current" th:object="${goodsInfo}">
 					<p th:text="*{goodsDetail}"></p>
 				</div>
 				<!-- 상품 정보 Content 끝 -->
@@ -473,7 +473,7 @@ button:focus{ outline:none; border:none; }
 </th:block>
 
 <th:block layout:fragment="customJsScript">
-<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+<th:block th:replace="fragments/userJs :: datatablesFragment"></th:block>
 <script th:inline="javascript">
 
 $(function() {

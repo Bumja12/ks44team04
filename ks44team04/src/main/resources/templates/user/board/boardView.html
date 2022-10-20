@@ -85,7 +85,7 @@
 </section>
 </th:block>
 <th:block layout:fragment="customJsScript">
-<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+<th:block th:replace="fragments/userJs :: datatablesFragment"></th:block>
 <script th:inline="javascript">
 //<a th:href="@{/user/board/boardAdd}">
     $('.boardAdd').on('click', function(){
@@ -97,4 +97,5 @@
     	}
     });
 </script>
+</th:block>
 </html>
