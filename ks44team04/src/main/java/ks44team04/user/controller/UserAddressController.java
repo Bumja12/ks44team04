@@ -80,14 +80,12 @@ public class UserAddressController {
         addressService.addressDelete(addressList);
     }
 
-    @GetMapping("/checkoutlist") // 체크아웃 화면에서 배송지 등록 시 처리 후 화면에 보여줌
+    @GetMapping("/checkoutlist")
     @ResponseBody
     public AddressList checkoutList(@RequestParam(value = "userId", required = false) String userId) {
-        userId = "buyer01";
         Map<String, String> addressInfo = new HashMap<>();
         addressInfo.put("userId", userId);
         List<AddressList> addressLists = addressService.getAddressList(addressInfo);
-
         return addressLists.get(addressLists.size() - 1);
     }
 
