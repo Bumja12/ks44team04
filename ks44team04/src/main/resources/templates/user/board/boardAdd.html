@@ -79,7 +79,7 @@
 </form>
 </th:block>
 <th:block layout:fragment="customJsScript">
-<th:block th:replace="/fragments/userJs :: datatablesFragment"></th:block>
+<th:block th:replace="fragments/userJs :: datatablesFragment"></th:block>
 <script src="/build/summernote.min.js"></script>
 <!-- 스크롤이 자꾸 아래로 가서 넣음 -->
 <script>history.scrollRestoration = "manual"</script>
@@ -115,4 +115,5 @@ $(function(){
 });
 
 </script>
+</th:block>
 </html>
