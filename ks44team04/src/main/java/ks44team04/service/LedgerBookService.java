@@ -78,4 +78,17 @@ public class LedgerBookService {
     	return orderReturnMap;
     }
     
+    //
+    public Map<String, Object> paymentAmountTable(Map<String, Object> orderMap){
+    	List<Map<String, String>> cateInfoMonth = ledgerBookMapper.pMonth(orderMap);
+    	orderMap.put("cateInfoMonth", cateInfoMonth);
+    	
+    	List<Map<String, String>> paymentAmountTable = ledgerBookMapper.paymentAmountTable(orderMap);
+    	Map<String, Object> paymentAmountTableMap = new HashMap<String, Object>();
+    	
+    	paymentAmountTableMap.put("cateInfoMonth", cateInfoMonth);
+    	paymentAmountTableMap.put("paymentAmountTable", paymentAmountTable);
+    	return paymentAmountTableMap;
+    }
+    
 }

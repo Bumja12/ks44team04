@@ -41,4 +41,12 @@ public interface LedgerBookMapper {
   //판매자 매출 통계 카테고리별 반품 테이블 부분(카테고리 명 )
 	public List<Map<String, String>> orderReturnCateList(Map<String,Object> orderMap);
     
+	
+	
+	//
+	public List<Map<String, String>> pMonth(Map<String,Object> orderMap);
+	
+	//
+	public List<Map<String, String>> paymentAmountTable(Map<String,Object> orderMap);
+	
 }
