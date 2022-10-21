@@ -43,58 +43,21 @@
 						        <th>번호</th>
 						        <th>문의 카테고리</th>
 						        <th>제목</th>
-       						    <!-- 구매자의 닉네임 - tb_user 테이블에서 가져온다. -->
 						        <th>작성자</th>
-						        <th>등록일</th>
+						        <th>문의일</th>
 						        <th>답변 여부</th>
 				      		</tr>
 			    		</thead>
 					    <tbody class="text-center">
-				        	<tr style="cursor:pointer;">
-				        		<td class="moveToDetail d-none">customerAsk001</td>
-						        <td class="moveToDetail">1</td>
-						        <td class="moveToDetail">결제 관련 문의</td>
-						        <td class="moveToDetail">제목 01</td>
-						        <td class="moveToDetail">김우식</td>
-						        <td class="moveToDetail">2022-05-22 00:00:00</td>
-						        <td class="moveToDetail">Y</td>
-				      		</tr><!-- END TR-->
-					        <tr style="cursor:pointer;">
-					        	<td class="moveToDetail d-none">customerAsk002</td>
-						        <td class="moveToDetail">2</td>
-						        <td class="moveToDetail">정기 배송 문의</td>
-						        <td class="moveToDetail">제목 02</td>
-						        <td class="moveToDetail">김우식</td>
-						        <td class="moveToDetail">2022-05-15 00:00:00</td>
-						        <td class="moveToDetail">Y</td>
-				      		</tr><!-- END TR-->
-					        <tr style="cursor:pointer;">
-					        	<td class="moveToDetail d-none">customerAsk003</td>
-						        <td class="moveToDetail">3</td>
-						        <td class="moveToDetail">배송 관련 문의</td>
-						        <td class="moveToDetail">제목 03</td>
-						        <td class="moveToDetail">김우식</td>
-						        <td class="moveToDetail">2022-05-20 00:00:00</td>
-						        <td class="moveToDetail">Y</td>
-				      		</tr><!-- END TR-->
-					        <tr style="cursor:pointer;">
-					        	<td class="moveToDetail d-none">customerAsk004</td>
-						        <td class="moveToDetail">4</td>
-						        <td class="moveToDetail">홈페이지 오류 신고</td>
-						        <td class="moveToDetail">제목 04</td>
-						        <td class="moveToDetail">김도도</td>
-						        <td class="moveToDetail">2022-06-01 00:00:00</td>
-						        <td class="moveToDetail">Y</td>
-				      		</tr><!-- END TR-->
-					        <tr style="cursor:pointer;">
-						        <td class="moveToDetail d-none">customerAsk005</td>
-						        <td class="moveToDetail">5</td>
-						        <td class="moveToDetail">판매 문의</td>
-						        <td class="moveToDetail">제목 05</td>
-						        <td class="moveToDetail">김도도</td>
-						        <td class="moveToDetail">2022-06-03 00:00:00</td>
-						        <td class="moveToDetail">Y</td>
-				      		</tr><!-- END TR-->
+							<!-- 고객 문의 카테고리 목록 -->
+							<tr th:each="cAskList, status : ${customerAskList}" style="cursor:pointer;">
+								<td class="moveToDetail" th:text="${status.count}">번호</td>
+								<td class="moveToDetail" th:text="${cAskList.askCategory}">문의 카테고리 FK</td>
+								<td class="moveToDetail" th:text="${cAskList.askTitle}">제목</td>
+								<td class="moveToDetail" th:text="${cAskList.userId}">작성자</td>
+								<td class="moveToDetail" th:text="${cAskList.askDate}">문의일</td>
+								<td class="moveToDetail" th:text="${cAskList.answercheck}">답변 여부</td>
+							</tr>	
 				    	</tbody>
 				    </table>
     			</div> <!-- </div class="col-md-12 mb-5 text-center"> -->

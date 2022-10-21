@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="ks44team04.mapper.CustomerAskMapper">
+
+	<!-- 고객 문의 목록  -->
+	<resultMap  type="CustomerAsk"	  	   id="CustomerAskListMap">
+		<id	    column="cAsk.customer_ask" property="customerAsk"/> <!-- 문의 PK -->
+        <result column="category_name" 	   property="askCategory"/> <!-- 문의 카테고리 FK -->
+        <result column="user_id" 	  	   property="userId"/>	   	<!-- 회원 아이디 FK(문의인) -->
+        <result column="ask_title" 	  	   property="askTitle"/>	<!-- 문의 제목 -->
+        <result column="ask_desc" 	  	   property="askDesc"/>	 	<!-- 문의 내용 -->
+        <result column="ask_file"	  	   property="askFile"/>	 	<!-- 첨부 파일 -->
+        <result column="ask_date" 	 	   property="askDate"/>	 	<!-- 문의일 -->
+        <result column="modify_date" 	   property="modifyDate"/>  <!-- 수정일 -->
+        <result column="answer_check" 	   property="answercheck"/> <!-- 답변 여부 -->
+	</resultMap>
+    
+    <!-- 고객 문의 목록 조회 -->
+    <select id="getCustomerAskList" resultMap="CustomerAskListMap">
+   		/* 고객 문의 목록 조회 */
+		SELECT
+			 cAsk.customer_ask    				 -- 문의 PK
+			,cAsk.ask_category 					 -- 문의 카테고리 FK
+			,cAsk.user_id 						 -- 회원 아이디 FK(문의인)
+			,cAsk.ask_title  					 -- 문의 제목
+			,cAsk.ask_desc 						 -- 문의 내용 
+			,cAsk.ask_file 						 -- 첨부 파일
+			,cAsk.ask_date  					 -- 문의일
+			,cAsk.modify_date  					 -- 수정일
+			,cAsk.answer_check 					 -- 답변 여부
+			,cAskCate.category_name 			 -- 문의 카테고리
+		FROM 
+			tb_customer_ask AS cAsk 			 -- 고객 문의 테이블 
+			INNER JOIN    						 -- 내부 조인
+			tb_customer_ask_category AS cAskCate -- 고객 문의 카테고리 테이블  	 		  
+			ON cAsk.ask_category = cAskCate.ask_category; 
+    </select>
+
+</mapper>
