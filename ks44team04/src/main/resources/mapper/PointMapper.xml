@@ -16,6 +16,37 @@
         <result column="point_deal_reference" property="pointDealReference"/>
     </resultMap>
 
+    <resultMap 	id="RightResultMap" 		type="Right">
+        <id 	column="user_right" 		property="userRight"/>
+        <result column="right_status" 		property="rightStatus"/>
+        <result column="reg_id" 			property="regId"/>
+        <result column="reg_date" 			property="regDate"/>
+        <result column="use_check" 			property="useCheck"/>
+    </resultMap>
+
+    <resultMap 	id="LevelBuyerResultMap" 	type="LevelBuyerCategory">
+        <id 	column="b_level_code" 		property="levelCode"/>
+        <result column="b_level_name" 		property="levelName"/>
+        <result column="reg_id" 			property="regId"/>
+        <result column="level_reg_date" 	property="levelRegDate"/>
+        <result column="use_check" 			property="useCheck"/>
+        <result column="buyer_price_terms" 	property="buyerPriceTerms"/>
+        <result column="save_rate" 			property="saveRate"/>
+        <result column="level_code_npk" 	property="levelCodeNpk"/>
+    </resultMap>
+
+    <resultMap 	 id="LevelSellerResultMap" 		type="LevelSellerCategory">
+        <id 	 column="s_level_code" 			property="levelCode"/>
+        <result  column="s_level_name" 			property="levelName"/>
+        <result  column="reg_id" 				property="regId"/>
+        <result  column="level_reg_date" 		property="levelRegDate"/>
+        <result  column="use_check" 			property="useCheck"/>
+        <result  column="seller_price_terms" 	property="sellerPriceTerms"/>
+        <result  column="seller_score_terms" 	property="sellerScoreTerms"/>
+        <result  column="seller_review_terms"	property="sellerReviewTerms"/>
+        <result  column="level_code_npk" 	 	property="levelCodeNpk"/>
+    </resultMap>
+
     <resultMap 	id="UserResultMap"			type="User">
         <result column="user_id" 			property="userId"/>
         <result column="user_pw" 			property="userPw"/>
@@ -39,7 +70,26 @@
         <association property="levelSeller"		resultMap="LevelSellerResultMap"/>
     </resultMap>
 
-    <!-- 전체회원 검색 !-->
+    <select id="searchPointHistory" resultMap="pointHistoryMap">
+        SELECT
+            *
+        FROM
+            tb_point_deal AS p
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="sv != null and sv != ''">
+                ${sk} LIKE CONCAT('%', #{sv},'%')
+            </if>
+            <if test="fd != null and fd !='' and td != null and td !=''">
+                AND
+                p.point_deal_date <![CDATA[>]]> (#{fd})
+                AND
+                p.point_deal_date <![CDATA[<]]> (#{td})
+            </if>
+        </trim>
+        ORDER BY p.point_deal_date desc;
+    </select>
+
+    <!-- 전체회원 쿠폰보유현황 검색 !-->
     <select id="searchUserList" parameterType="map" resultMap="UserResultMap" fetchSize="100">
         SELECT
             u.user_id
@@ -72,9 +122,9 @@
             </if>
             <if test="fd != null and fd !='' and td != null and td !=''">
                 AND
-                u.userUpdateDate <![CDATA[>]]> (#{fd})
+                u.user_update_date <![CDATA[>]]> (#{fd})
                 AND
-                u.userUpdateDate <![CDATA[<]]> (#{td})
+                u.user_update_date <![CDATA[<]]> (#{td})
             </if>
         </trim>
         ORDER BY u.user_reg_date
@@ -83,7 +133,7 @@
     <select id="pointHistory" resultMap="pointHistoryMap">
         SELECT *
         FROM tb_point_deal AS p
-        ORDER BY p.point_deal_date;
+        ORDER BY p.point_deal_date desc;
     </select>
 
     <select id="getUserPoint" parameterType="string" resultType="int">

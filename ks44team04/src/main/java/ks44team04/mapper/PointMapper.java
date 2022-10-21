@@ -12,6 +12,7 @@ import java.util.Map;
 @Mapper
 public interface PointMapper {
 
+	public List<PointDeal> searchPointHistory(Map<String, Object> searchMap);
 	public List<User> searchUserList(Map<String, Object> searchMap);
 
 	public List<PointDeal> pointHistory();

@@ -29,6 +29,14 @@ public class PointService {
 		log.info("PointService bean 생성");
 	}
 
+	public List<PointDeal> searchPointHistory(Map<String, Object> searchMap){
+
+		List<PointDeal> pointHistory = pointMapper.searchPointHistory(searchMap);
+
+		return pointHistory;
+
+	}
+
 	//전체회원 포인트조회
 	public List<User> searchUserList(Map<String, Object> searchMap){
 
