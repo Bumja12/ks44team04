@@ -349,6 +349,65 @@ SELECT
 	ORDER BY returnAskDate asc;
 </select>
 
+
+<!--월 -->
+<select id="pMonth" parameterType="map" resultType="map">
+	WITH RECURSIVE date_data AS (
+		SELECT  1 AS pDate
+		UNION all
+		SELECT pDate + 1 FROM date_data WHERE pDate <![CDATA[<]]> 12
+	)
+	SELECT
+		pDate AS pDate
+		,concat(pDate ,'월') AS pMonth
+	FROM 
+		date_data								
+</select>
+
+<!-- 내용 -->
+<select id="paymentAmountTable" parameterType="map" resultType="map">
+	SELECT
+		 glc.goods_category AS 'goodsCategory'
+		<foreach collection="cateInfoMonth" item="cate">
+			,SUM(if(MONTH(o.order_date) = #{cate.pDate}, od.order_price, 0)) AS ${cate.pMonth}
+		</foreach>
+	FROM 
+		tb_goods_large_category AS glc
+		INNER JOIN 
+		tb_goods_small_category AS gsc
+		on
+		glc.goods_large_category = gsc.goods_large_category
+		INNER JOIN 
+		tb_goods AS g
+		on
+		gsc.goods_small_category = g.goods_small_category
+		INNER JOIN 
+		tb_order_detail AS od
+		on
+		g.goods_code = od.goods_code
+		INNER join
+		tb_order AS o
+		ON
+		od.order_num = o.order_num 
+	WHERE 
+		g.seller_id = #{sellerId} AND YEAR(o.order_date) = YEAR(NOW())
+	GROUP BY goodsCategory
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- 판매자 매출 통계 카테고리별 반품 테이블 부분 
 <select id="orderReturn" parameterType="map" resultMap="orderResultMap">
 SELECT 
