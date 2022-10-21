@@ -71,6 +71,9 @@ public class LedgerBookController {
 		 //판매자 매출 통계 카테고리별 반품 테이블 부분 
 		 Map<String, Object> orderReturnMap = ledgerBookService.orderReturn(orderMap);		
 		 
+		 //
+		 Map<String, Object> paymentAmountTableMap = ledgerBookService.paymentAmountTable(orderMap);		
+		 
 		model.addAttribute("title", "매출 통계");
 		
 		model.addAttribute("paymentAmount", paymentAmount);
@@ -80,6 +83,9 @@ public class LedgerBookController {
 		
 		model.addAttribute("orderReturn", orderReturnMap.get("orderReturn"));
 		model.addAttribute("cateInfoList", orderReturnMap.get("cateInfoList"));
+		
+		model.addAttribute("paymentAmountTable", paymentAmountTableMap.get("paymentAmountTable"));
+		model.addAttribute("cateInfoMonth", paymentAmountTableMap.get("cateInfoMonth"));
 		
 		return "admin/ledgerBook/salesStatistics";
 	}

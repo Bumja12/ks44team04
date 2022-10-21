@@ -1,13 +1,13 @@
 package ks44team04.admin.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import ks44team04.dto.CouponStatus;
-import ks44team04.dto.PointDetail;
-import ks44team04.dto.User;
+import ks44team04.dto.*;
 import ks44team04.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks44team04.service.PointService;
-import ks44team04.dto.PointDeal;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -38,6 +37,67 @@ public class PointController {
 
 		this.pointService = pointService;
 		this.userService = userService;
+	}
+
+	//포인트 내역 검색
+	@PostMapping("/pointHistory")
+	public String searchPointHistory(@RequestParam(name="searchKey", defaultValue = "userId") String sk
+			,@RequestParam(name="searchValue", required = false, defaultValue = "") String sv
+			,@RequestParam(name="fromDate", required = false, defaultValue= "") String fromDate
+			,@RequestParam(name="toDate", required = false, defaultValue= "") String toDate
+			,Model model) {
+
+		if(sk.equals("userId")) {
+			sk = "user_id";
+		}else if(sk.equals("status")) {
+			sk = "status";
+		}else if(sk.equals("pointDealReason")) {
+			sk = "point_deal_reason";
+		}
+
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("sk", sk);
+		searchMap.put("sv", sv);
+		searchMap.put("fd", fromDate);
+		searchMap.put("td", toDate);
+
+		List<PointDeal> pointHistory = pointService.searchPointHistory(searchMap);
+
+		model.addAttribute("title", "검색결과");
+		model.addAttribute("pointHistory", pointHistory);
+
+		return "admin/point/pointHistory";
+	}
+
+	//전체회원 포인트조회 검색기능
+	@PostMapping("/pointUserList")
+	public String searchUserPoint(@RequestParam(name="searchKey", defaultValue = "userId") String sk
+			,@RequestParam(name="searchValue", required = false, defaultValue = "") String sv
+			,@RequestParam(name="fromDate", required = false, defaultValue= "") String fromDate
+			,@RequestParam(name="toDate", required = false, defaultValue= "") String toDate
+			,Model model) {
+
+		if(sk.equals("userId")) {
+			sk = "user_id";
+		}else if(sk.equals("userNickname")) {
+			sk = "user_nickname";
+		}else if(sk.equals("rightStatus")) {
+			sk = "right_status";
+		}else if(sk.equals("userLevelName")){
+			sk = "user_level_name";
+		}
+
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("sk", sk);
+		searchMap.put("sv", sv);
+		searchMap.put("fd", fromDate);
+		searchMap.put("td", toDate);
+
+		List<User> userList = pointService.searchUserList(searchMap);
+		model.addAttribute("title", "검색결과");
+		model.addAttribute("userList", userList);
+
+		return "admin/point/pointUserList";
 	}
 
 	//관리자포인트지급

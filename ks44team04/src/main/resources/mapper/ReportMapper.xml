@@ -189,6 +189,9 @@
 			tb_user AS s
 			on
 			r.reported_id = s.user_id
+		WHERE 
+			report_history_code= #{reportHistoryCode};
+     
      </select>
      
 
