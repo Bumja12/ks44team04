@@ -275,7 +275,7 @@
 		        			</div>
 		        		</div>
 		          	</div>
-	        		<form class="eventRemove" action="removeCustomerAsk"  method="POST">
+	        		<form class="eventRemove" action="/admin/customerAsk/removeCustomerAsk"  method="POST">
 	        	    	<div class="modal-body">
 		            		<h4>비밀번호 확인</h4>
 		            	    <input type="text" id="pwInput2" placeholder="비밀번호를 입력하시길 바랍니다." style="height: 30px; width: 250px;">
@@ -391,7 +391,6 @@
 				
 				// 등록 버튼 클릭 시에 등록 처리
 				$addAskAnswerBtn.click(function(){
- 					// window.location = 'http://localhost:8080/admin/customerAsk/addAskAnswer';
  					
 					// 답변 내용 탐색
 					let $addAskAnswerContent =  $('#addAskAnswerContent');
@@ -411,6 +410,7 @@
 					
 					isAnswer = true; // true -> 답변이 있다.
 					console.log(isAnswer);
+ 					window.location = "/admin/customerAsk/askAnswerList";
 					
 				});
 				
@@ -424,7 +424,7 @@
 				// 취소 버튼 각각에 클릭시 이벤트 등록
 				$cancleBtn.each(function(i){
 					$(this).click(function(){
-						window.location = '/admin/customerAsk/customerAskDetail';
+						window.location = '/admin/customerAsk/customerAskDetail/' + "customerAsk001";
 					});
 				});
 				

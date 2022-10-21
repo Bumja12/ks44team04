@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +37,7 @@ public class CustomerAskContorller {
 	public String modifyCustomerAskAction() {
 		
 		// 수정 처리 후 관리자 고객 문의 내역 화면으로 리다이렉트
-		return "redirect:/admin/customerAsk/customerAskDetail";
+		return "redirect:/admin/customerAsk/customerAskDetail/" +"customerAsk001";
 	}
 	
 	// 고객 문의 삭제 처리
@@ -56,19 +57,10 @@ public class CustomerAskContorller {
 	} 
 	
 	// 관리자 자주 묻는 질문 내역 화면
-	@PostMapping("/customerAskDetail")
-	public String ajaxCustomerAskDetail (@RequestParam(value="customerAskPK") String customerAskPK
-										,Model model) {
-		model.addAttribute("관리자 고객 문의 내역 화면");
-//		log.info("ajaxCustomerAskDetail");
+	@GetMapping("/customerAskDetail/{customerAskPK}")
+	public String getCustomerAskDetail (@PathVariable (value="customerAskPK") String customerAskPK
+									    ,Model model) {
 		log.info(customerAskPK);
-		return "customerAskDetail/";
-	}
-	
-	// 관리자 자주 묻는 질문 내역 화면
-	@GetMapping("/customerAskDetail")
-	public String getCustomerAskDetail (Model model) {
-		
 		model.addAttribute("title", "관리자 고객 문의 내역 화면");
 		return "admin/customerAsk/admin_customerAsk_detail";
 	}
