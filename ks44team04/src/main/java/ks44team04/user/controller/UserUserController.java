@@ -1,7 +1,5 @@
 package ks44team04.user.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ks44team04.dto.LevelBuyerCategory;
-import ks44team04.dto.LevelSellerCategory;
-import ks44team04.dto.Right;
 import ks44team04.dto.User;
 import ks44team04.service.UserService;
 
