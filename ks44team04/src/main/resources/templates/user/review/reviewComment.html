@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div th:fragment="reviewCommentModal">
+
+		
+	<form class="row" id="" th:action="@{#}" method="Post" >
+		<div class="modal fade reviweComment" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+			<div class="modal-dialog ">
+				<div class="modal-content">
+					<div class="modal-header" style="font-size: 30PX; width:490px; background-color: #82ae46; color: white; text-align: center; ">
+						댓글
+					</div>
+					<div class="modal-body" style="height: 530px;">
+					<th:block th:if="${not #lists.isEmpty(reviewComment)}" th:each="l : ${reviewComment}">
+						<input type="hidden" id="rvcode">
+							
+						<p th:text="${l.userId} + '○' + ${l.regDate}"> </p>
+						
+						<input type="text" style=" width: 99%; height: 50px;">
+						<div class="row">
+						  	<hr align="center" style="border: solid 1px #EDEDED; width: 80%;">
+					      </div>
+					</th:block>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+
+
+
+</div>
+</html>

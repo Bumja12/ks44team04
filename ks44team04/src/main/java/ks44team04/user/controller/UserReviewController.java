@@ -8,9 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ks44team04.dto.Review;
+import ks44team04.dto.ReviewComment;
 import ks44team04.dto.ReviewLike;
 import ks44team04.service.ReviewService;
 import ks44team04.util.CodeIndex;
@@ -70,19 +72,19 @@ public class UserReviewController {
 		return review.getLikeAmount();
 	}
 	
-	@GetMapping("/review/reviewAdd")
-	public String reviewAdd(Review review) {
-		
-		//코드 증가 
-		String reviewListCode = reviewService.getReviewListCode();
-		reviewListCode = CodeIndex.codeIndex(reviewListCode, 6);
-		
-		review.setReviewList(reviewListCode);
-		log.info("---------------------------------리뷰 코드값 ", reviewListCode);
-		reviewService.reviewAdd(review);
-		
-		return "null";
-	}
+	/*
+	 * //후기 댓글 특정 목록
+	 * 
+	 * @GetMapping("/review/reviewCommentList") public String
+	 * reviewCommintList(@RequestParam(value = "reviewList",required = false) String
+	 * reviewList, Model model) {
+	 * 
+	 * ReviewComment reviewCommintList =
+	 * reviewService.reviewCommnetList(reviewList);
+	 * model.addAttribute("reviewCommintList", reviewCommintList); return null; }
+	 */
+	
+	
 	
 	
 
