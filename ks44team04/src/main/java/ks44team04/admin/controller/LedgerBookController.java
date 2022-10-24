@@ -56,7 +56,7 @@ public class LedgerBookController {
 	}
 	
 	@GetMapping("/ledgerBook/salesStatistics")
-	public String salesStatistics(Model model, HttpSession session) {
+	public String salesStatistics(Model model, HttpSession session ) {
 		
 		String sellerId = (String) session.getAttribute("SID");
 		 
@@ -74,6 +74,7 @@ public class LedgerBookController {
 		 //
 		 Map<String, Object> paymentAmountTableMap = ledgerBookService.paymentAmountTable(orderMap);		
 		 
+		 
 		model.addAttribute("title", "매출 통계");
 		
 		model.addAttribute("paymentAmount", paymentAmount);
@@ -87,14 +88,14 @@ public class LedgerBookController {
 		model.addAttribute("paymentAmountTable", paymentAmountTableMap.get("paymentAmountTable"));
 		model.addAttribute("cateInfoMonth", paymentAmountTableMap.get("cateInfoMonth"));
 		
+		
 		return "admin/ledgerBook/salesStatistics";
 	}
 	
 	@GetMapping("/ledgerBook/ageAreaStatistics")
 	public String ageAreaStatistics(Model model) {
-		
+
 		model.addAttribute("title", "연령/지역별 통계");
-		
 		return "admin/ledgerBook/ageAreaStatistics";
 	}
 	

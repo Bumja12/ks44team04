@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -148,7 +149,7 @@ public class GoodsController {
 
 	//상품 등록 쿼리 실행
 	@PostMapping("/goodsAdd")
-	public String goodsAdd(@RequestParam MultipartFile[] uploadfile, HttpServletRequest request
+	public String goodsAdd(@RequestParam MultipartFile[] uploadfile, HttpServletRequest request, HttpSession session
 						   ,Goods goods, Model model){
 		
 		//대분류 카테고리 리스트 가져오기

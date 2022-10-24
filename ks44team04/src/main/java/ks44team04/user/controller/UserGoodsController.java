@@ -17,7 +17,9 @@ import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsQna;
 import ks44team04.dto.GoodsQnaCategory;
 import ks44team04.dto.Review;
+import ks44team04.dto.ReviewComment;
 import ks44team04.service.GoodsService;
+import ks44team04.service.ReviewService;
 import ks44team04.service.UserService;
 
 @Controller
@@ -27,11 +29,14 @@ public class UserGoodsController {
     
     //의존성 주입
   	private GoodsService goodsService;
+  	private ReviewService reviewService;
+  	
   	//유저 권한 확인 서비스 
   	private UserService userService;
-	public UserGoodsController(GoodsService goodsService, UserService userService) {
+	public UserGoodsController(GoodsService goodsService, UserService userService, ReviewService reviewService) {
 		this.goodsService = goodsService;
 		this.userService = userService;
+		this.reviewService = reviewService;
 	}
 	
 	//상품 리스트 
@@ -40,7 +45,6 @@ public class UserGoodsController {
         
 		List<Goods> goodsList = goodsService.getGoodsList();
 		log.info("등록된 상품 리스트 ::: {}", goodsList);
-		
 		
 		//List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
 		//log.info("카테고리 대분류 리스트 ::: {}", largeCategoryList);
@@ -71,6 +75,7 @@ public class UserGoodsController {
     	//특정 후기 목록
     	List<Review> reviewSpecific = goodsService.reviewSpecific(goodsCode);
     	
+    			
 		model.addAttribute("title", "상품");
 		model.addAttribute("goodsInfo", goodsInfo);
 		model.addAttribute("goodsQnaInfo", goodsQnaInfo);

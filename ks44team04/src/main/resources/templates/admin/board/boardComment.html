@@ -76,7 +76,6 @@
 								<th style="width: 160px;">게시물</th>
 								<th>내용</th>
 								<th style="width: 80px;">작성자</th>
-								<th style="width: 60px;">신고수</th>
 								<th style="width: 140px;">등록일</th>
 								<th style="width: 140px;">수정일</th>
 								<th>관리</th>
@@ -90,9 +89,8 @@
 								<td th:text="${c.boardInfo.boardTitle}"></td>
 								<td th:text="${c.commentContent}"></td>
 								<td th:text="${c.userInfo.userId}"></td>
-								<td th:text="${c.reportAmount}"></td>
-								<td th:text="${c.regDate}"></td>
-								<td th:text="${c.modifyDate}"></td>
+								<td th:text="${c.coRegDate}"></td>
+								<td th:text="${c.coModifyDate}"></td>
 								<td style="text-align: center; width: 110px;">
 									<a href="#"><i class="fa fa-edit"></i> 수정</a>
 									<a href="#"><i class="fa fa-close"></i> 삭제</a>

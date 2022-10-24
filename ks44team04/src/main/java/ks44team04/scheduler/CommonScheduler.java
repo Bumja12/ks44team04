@@ -6,8 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import ks44team04.dto.LevelBuyerCategory;
+import ks44team04.dto.LevelSellerCategory;
+import ks44team04.dto.User;
 import ks44team04.dto.UserSuspend;
 import ks44team04.service.ReportService;
 import ks44team04.service.UserService;
@@ -54,17 +60,27 @@ public class CommonScheduler {
 		}
 	}
     
-    // 10/23 구매자/판매자 등급관리
-    /*
-    @Scheduled(cron = "0 0 0 * * *")
+    // 10/23 구매자,판매자 등급관리 / 매달 등급 부여 / 바뀔시 level_status update
+    //@Scheduled(cron = "0 0 0 * * *")
+    @RequestMapping(value = "/asd", method = RequestMethod.GET)
     public void levelAccum() {
     	//관리 대상 아이디 List
     	List<String> buyerTotalList = userService.buyerTotalList();
-    	
+    	//List<String> sellerTotalList = userService.sellerTotalList();
+        
+    	//구매자 등급 관리 - buyer_total / tb_user / level_buyer_status
     	for(String buyerId : buyerTotalList) {
-    		userService.buyerTotal(buyerId);
+    		int a = userService.buyerLevelManage(buyerId);
+    		System.out.println(a);
     	}
+    	//판매자 등급 고나리 - seller_total / tb_user / level_seller_status
+    	/*
+    	for(String sellerId : sellerTotalList) {
+    		int a = userService.sellerLevelManage(sellerId);
+    		System.out.println(a);
+    	}
+    	*/
     }
-    */
+   
     
 }

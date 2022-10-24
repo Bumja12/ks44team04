@@ -12,6 +12,8 @@
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 <!-- 초희 하트 이미지  -->
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+<!-- 초희 댓글 이미지  -->
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 <!-- 문의, 답변, 답변대기 아이콘 -->
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-straight/css/uicons-bold-straight.css'>
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css'>
@@ -307,15 +309,13 @@ button:focus{ outline:none; border:none; }
 			        			<span>
 			        				<label th:text="${l.buyerId} + '○' + ${l.reviewRegDate}"></label>
 			        			</span>
-								<button type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
-					         	<button type="button" class="btn"  style="font-size: 13px; padding: 0px;">삭제</button>		      
 								<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
 					         	<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn"  style="font-size: 13px; padding: 0px;">삭제</button>		      
 			       			 </div>
-			       			 <div class="col-9">
+			       			 <div class="col-8">
 			        			<p th:text="${l.reviewContent}"></p>
 			        		 </div>
-							 <div class="col-3" >
+							 <div class="col-4" >
 								<label>
 									<button type="button" class="reviewLikeBtn off" style="border: none; background-color: white; outline: none;" th:value="${l.reviewList}">
 										 <span><i class="fi fi-sr-heart"></i></span>
@@ -323,14 +323,14 @@ button:focus{ outline:none; border:none; }
 									<span  th:text="'추천수 ' + ${l.likeAmount}  "></span>
 								 </label>
 								 <label>
-									 <button type="button" class="btn btn-link" data-toggle="modal" data-target=".userReport" id="userReportModal" th:vaule="*{goodsCode}" data-backdrop="static">신고</button>
+									 <button type="button" class="btn btn-link  reviweCommentCode" style="color: black;" data-toggle="modal" data-target=".reviweComment"  th:data-review-code="${l.reviewList}" data-backdrop="static"> <i class="fi fi-rr-comment" ></i> 댓글</button>
+								 </label>
+								 <label>
+									 <button type="button" style="color: black;" class="btn btn-link userReportModal" data-toggle="modal" data-target=".userReport" id="userReportModal" th:data-review-list="${l.reviewList}" th:data-buyer-id="${l.buyerId}" data-backdrop="static">신고</button>
 								 </label>
 			       			 		
 							</div>
-					
-							<input type="hidden" id="userId" name="userId" value="buyer01">
-							<input type="hidden" id="reviewList" name="reviewList" value="review001">
-					
+							<input type="hidden" id="userId" th:value="${session.SID}">
 			    		  </div>
 					      <div class="row">
 						  	<hr align="center" style="border: solid 1px black; width: 82%;">
@@ -457,7 +457,7 @@ button:focus{ outline:none; border:none; }
 	      		<input type="hidden" class="qnaTitle" id="goodsQnaTitle" name="goodsQnaTitle">
 	      		<input type="hidden" th:value="${goodsInfo.goodsCode}" id="goodsCode" name="goodsCode">
 		        <button type="button" class="qnaClose" id="closeBtn" data-dismiss="modal">취소</button>
-		        <button type="submit" class="qnaSubmit" id="qnaAdd">등록</button>
+		        <button type="button" class="qnaSubmit" id="qnaAdd">등록</button>
 	      </div>
 	    </div>
 	  </div>
@@ -469,6 +469,8 @@ button:focus{ outline:none; border:none; }
 	<div th:include="user/review/review :: reviewModal"></div>		
 <!-- 후기 신고 모달 -->
 	<div th:include="user/review/userReport :: userReportModal"></div>		
+<!-- 후기 댓글 모달 -->
+	<div th:include="user/review/reviewComment :: reviewCommentModal"></div>		
 				
 </th:block>
 
@@ -477,11 +479,6 @@ button:focus{ outline:none; border:none; }
 <script th:inline="javascript">
 
 $(function() {
-	
-	
-	
-	
-	
 	
 	/* 스크롤 방지 코드 */
 	$(".cartBtn").click(function(e) {
@@ -766,7 +763,7 @@ $(function() {
 			let hart = $(this);
 			let reviewList = hart.val();
 			let spanRecom = hart.next();
-			console.log(spanRecom);
+			console.log(reviewList);
 			
 			if(hart.hasClass('off')){
 				$.ajax({
@@ -808,7 +805,44 @@ $(function() {
 	
 	
 	/* --------------------- 상품 후기 이벤트 끝 (초희)--------------------- */
-
+		
+	/* 초희 - 모달로 값 보내기*/
+	// 신고 부분
+		$('.userReportModal').click(function(){
+			let review = $(this).data("review-list");
+			console.log("test 중 " + review);
+			
+			let buyerId = $(this).data("buyer-id");
+			$('#reportedId').val( buyerId );
+			console.log(buyerId);
+			/* var goodsCode =  $(this).data("goods-code");
+			$('#goodsCodeeee').val( goodsCode );
+			console.log(goodsCode); */
+			
+			$('#reportWhat').val( review );
+			console.log(review);
+		});
+	// 댓글 부분 
+		$('.reviweCommentCode').click(function(){
+			
+			let reviewList = $(this).data("review-code");
+			console.log("review 댓글 " + reviewList)
+			
+		/* 	$.ajax({
+				url: "/user/review/reviewCommentList",
+                type: "GET",
+                data: {
+                	'reviewList': reviewList
+                },	
+                dataType: "data",
+                success: function () {
+                	
+                }
+			}); */
+			
+		});
+		
+	
 </script>
 </th:block>
 </html>

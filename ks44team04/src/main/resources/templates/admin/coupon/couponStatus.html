@@ -142,7 +142,9 @@
 
                     request.done(function( data ) {
                         if (data) {
-                            location.href = "/admin/coupon/deleteCouponStatus/" + couponStatusCode
+                            if(confirm('정말 삭제하시겠습니까?')){
+                                location.href = "/admin/coupon/deleteCouponStatus/" + couponStatusCode;
+                            }
                         }else {
                             if(typeof adminPw == 'undefined' || adminPw == null || adminPw == '') {
                                 alert('비밀번호를 입력해주세요.');

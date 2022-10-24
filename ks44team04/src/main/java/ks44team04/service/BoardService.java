@@ -49,6 +49,34 @@ public class BoardService {
 		return board;
 	}
 	
+	//게시물 조회시 조회수 증가
+	public void viewCount(String boardCode) {
+		boardMapper.viewCount(boardCode);
+	}
+	
+	//댓글 등록
+	public int commentAdd(BoardComment boardComment) {
+		int result = boardMapper.commentAdd(boardComment);
+		return result;
+	}
+	
+	//댓글 코드 증가
+	public String getCommentNewCode() {
+		String commentNewCode = boardMapper.getCommentNewCode();
+		return commentNewCode;
+	}
+	
+	//댓글 수정
+	public int commentModify(BoardComment boardComment) {
+		int result = boardMapper.commentModify(boardComment);
+		return result;
+	}
+	
+	//댓글 삭제
+	public void commentRemove(BoardComment boardComment) {
+		boardMapper.commentRemove(boardComment);
+	}
+	
 	//게시물 수정
 	public int boardModify(Board board) {
 		int result = boardMapper.boardModify(board);

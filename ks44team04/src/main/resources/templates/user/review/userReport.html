@@ -5,7 +5,7 @@
 <div th:fragment="userReportModal">
 
 		
-	<form class="row" id="setReport" th:action="@{/admin/report/userReport}" method="get">
+	<form class="row" id="setReport" th:action="@{/admin/report/userReport}" method="Post" enctype="multipart/form-data">
 		<div class="modal fade userReport" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
 			<div class="modal-dialog ">
 				<div class="modal-content">
@@ -13,10 +13,9 @@
 					<div class="modal-header" style="font-size: 30PX; background-color: #82ae46; color: white; text-align: center; ">신고</div>
 					<div class="modal-body" style="height: 530px;">
 						<h5>신고 대상 ID 및 내용</h5>
-
-						<input type="hidden" name="reportedId" value="buyer03">
+						<input type="hidden" id="reportedId" name="reportedId" >
 						 <input	type="hidden" name="reportCategory" value="2"> 
-						 <input	type="hidden" name="reportWhat" value="board006"> 
+						 <input	type="hidden" id="reportWhat" name="reportWhat"> 
 						 <input	type="hidden" name="reportResult" value="대기중"> 
 						 <input	type="text" id="reportReason" name="reportReason" style="width: 450px; height: 200px; font-size: 20px; margin-bottom: 5px;">
 
@@ -45,7 +44,7 @@
 							증거사진 첨부<i class="fa fa-image" style="margin-left: 5px;"></i>
 						</h5>
 						<label> 
-							<input type="file" name="boardFile"	style="font-size: 13px;" id="reportImage" accept="image/*" onchange="setreportImage(event);" multiple />
+							<input type="file" name="uploadfile" style="font-size: 13px;" multiple="multiple" id="uploadfile" accept="image/*" />
 						</label>
 					</div>
 					<br>

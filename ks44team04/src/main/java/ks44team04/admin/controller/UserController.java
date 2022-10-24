@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -474,6 +475,22 @@ public class UserController {
         session.invalidate();
         return "redirect:/admin";
     }
+    
+    /*
+    @RequestMapping(value = "/asd", method = RequestMethod.GET)
+    public void levelAccum() {
+    	//관리 대상 아이디 List
+    	List<String> buyerTotalList = userService.buyerTotalList();
+    	//List<String> sellerTotalList = userService.sellerTotalList();
+        
+    	//구매자 등급 관리 - buyer_total / tb_user / level_buyer_status
+    	for(String buyerId : buyerTotalList) {
+    		int a = userService.buyerLevelManage(buyerId);
+    		System.out.println(a);
+    	}
+    	//판매자 등급 고나리 - seller_total / tb_user / level_seller_status
+	}
+	*/
     
   
 }
