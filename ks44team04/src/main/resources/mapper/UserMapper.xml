@@ -123,53 +123,92 @@
 	
 	
 	<!-- /* =============== 구매자/판매자 등급관리 시작 =============== */ -->
- 	<!-- (스케줄러) 구매자 등급조건 누적 관리 - 6개월 누적구매금액 -->
-<!-- 	<insert id="buyerTotal" parameterType="String">
-		/* 구매자 등급조건 누적 관리 (스케줄러) */
-		INSERT INTO tb_buyer_total
-			(buyer_id, total_buyer_price, total_date)
-		SELECT 'buyer01'
-			   ,(SELECT 
-					SUM(o.final_confirm_price)
-				 FROM 
-					tb_order AS o
-				 WHERE 
-					o.buyer_id = 'buyer01'
-					AND 
-					o.final_confirm_date BETWEEN LAST_DAY(NOW()-INTERVAL 6 month)+interval 1 DAY AND LAST_DAY(NOW()))
-			   ,NOW()
-	</insert> -->
-	
 	<!-- 구매자 등급조건 누적 관리 대상 ID 목록 -->
-<!-- 	<select id="buyerTotalList" parameterType="String" resultType="String">
+	<select id="buyerTotalList" parameterType="String" resultType="String">
 		/* 구매자 등급조건 누적 관리 대상 ID 목록 */
 		SELECT 
-			*
+			u.user_id
 		FROM 
 			tb_user u
 		WHERE 
 			u.user_right = 'buyer'
 			AND
 			(u.user_status = '정상' OR u.user_status = '정지')
-	</select> -->
+	</select> 
 	
-	<!-- (스케줄러) 판매자 등급조건 누적 관리 - 12개월 누적판매금액, 건수, 별점평균 -->
-<!-- 	<insert id="sellerTotal" parameterType="String">
-	
-	</insert> -->
+	<!-- 구매자 등급 관리 - buyer_total / tb_user / level_buyer_status -->
+	<select id="buyerLevelManage" parameterType="String" resultType="String">
+		/* 구매자 등급 관리 */
+		CALL set_buyer_level(#{userId})
+	</select>
 	
 	<!-- 판매자 등급조건 누적 관리 대상 ID 목록 -->
-	<select id="buyerTotalList" parameterType="String" resultType="String">
+	<select id="sellerTotalList" parameterType="String" resultType="String">
 		/* 판매자 등급조건 누적 관리 대상 ID 목록 */
 		SELECT 
 			*
 		FROM 
 			tb_user u
 		WHERE 
-			u.user_right = 'seller'
+			u.user_right = #{sellerId}
 			AND
 			(u.user_status = '정상' OR u.user_status = '정지')
-	</select>
+	</select> 
+	
+	<!-- (스케줄러) 판매자 등급조건 누적 관리 - 12개월 누적판매금액, 건수, 별점평균 -->
+	<!-- 	
+	<insert id="sellerTotal" parameterType="String">
+		/* 판매자 등급조건 누적 관리 - 12개월 누적판매금액, 건수, 별점평균 */
+		INSERT INTO tb_seller_total
+			(seller_id, total_seller_price, total_seller_number, review_average_score, total_date)
+		SELECT
+			 #{sellerId}
+			 ,(SELECT 
+					SUM(od.order_price)
+				FROM 
+					tb_goods AS g
+					INNER JOIN
+					tb_order_detail AS od
+					ON
+					g.goods_code = od.goods_code
+				WHERE
+					g.seller_id = #{sellerId}
+					AND 
+					od.order_status = '구매확정'
+					AND
+					od.order_confirm_date BETWEEN LAST_DAY(NOW() - INTERVAL 1 YEAR) + interval 1 DAY AND LAST_DAY(NOW())
+				)
+			 ,(SELECT 
+					SUM(od.order_amount)
+				FROM 
+					tb_goods AS g
+					INNER JOIN
+					tb_order_detail AS od
+					ON
+					g.goods_code = od.goods_code
+				WHERE
+					g.seller_id = #{sellerId}
+					AND 
+					od.order_status = '구매확정'
+					AND
+					od.order_confirm_date BETWEEN LAST_DAY(NOW() - INTERVAL 1 YEAR) + interval 1 DAY AND LAST_DAY(NOW())
+				)
+			 ,(SELECT 
+					AVG(r.grade)
+				FROM 
+					tb_goods AS g
+					LEFT JOIN
+					tb_review AS r
+					ON
+					g.goods_code = r.goods_list
+				WHERE 
+					g.seller_id = #{sellerId}
+					AND
+					r.review_reg_date BETWEEN LAST_DAY(NOW() - INTERVAL 6 MONTH) + interval 1 DAY AND LAST_DAY(NOW())
+				)
+			 ,NOW()
+	</insert>  
+	-->
 	<!-- /* =============== 구매자/판매자 등급관리 끝 =============== */ -->
 	
 	
@@ -949,6 +988,7 @@
 		SELECT
 			 lb.level_code		AS b_level_code
 			,lb.level_name		AS b_level_name
+			,lb.buyer_price_terms
 		FROM
 			tb_level_buyer_category lb
 	</select>
@@ -959,6 +999,9 @@
 		SELECT
 			 ls.level_code		AS s_level_code
 			,ls.level_name		AS s_level_name
+			,ls.seller_price_terms
+			,ls.seller_score_terms
+			,ls.seller_review_terms
 		FROM
 			tb_level_seller_category ls
 	</select>

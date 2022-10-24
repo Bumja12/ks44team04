@@ -26,14 +26,11 @@ public interface UserMapper {
 	//구매자 등급조건 누적 관리 대상 ID 목록
 	public List<String> buyerTotalList();
 	
-	//(스케줄러) 구매자 등급조건 누적 관리 - 6개월 누적구매금액
-	public int buyerTotal(String userId);
-	
 	//판매자 등급조건 누적 관리 대상 ID 목록
+	public List<String> sellerTotalList();
 	
-	
-	//(스케줄러) 판매자 등급조건 누적 관리 - 12개월 누적판매금액, 건수, 별점평균
-	
+	//구매자 등급 관리 - buyer_total / tb_user / level_buyer_status
+	public int buyerLevelManage(String userId);
 	/* =============== 구매자/판매자 등급관리 끝 =============== */
 
 	
