@@ -61,6 +61,9 @@
               <table class="table table-bordered" style="margin-top: 20px; font-size: 15px;">
                 <tbody>
                   <tr>
+                  	<th:block th:if="${not #lists.isEmpty(test)}"  th:each="t : ${test}">
+						<td th:text="${t.orderDate}"></td>
+					</th:block>
                     <th rowspan="2">
                        
                     </th>

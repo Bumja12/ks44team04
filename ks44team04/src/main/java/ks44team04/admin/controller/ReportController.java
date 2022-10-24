@@ -1,13 +1,11 @@
 package ks44team04.admin.controller;
 
-import ks44team04.service.GoodsService;
-import ks44team04.service.ReportService;
-import ks44team04.util.CodeIndex;
-import ks44team04.dto.Goods;
-import ks44team04.dto.Report;
-import ks44team04.dto.ReportRule;
-import ks44team04.dto.User;
-import ks44team04.dto.UserSuspend;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,26 +14,38 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import ks44team04.dto.Report;
+import ks44team04.dto.ReportRule;
+import ks44team04.dto.User;
+import ks44team04.dto.UserSuspend;
+import ks44team04.service.FileService;
+import ks44team04.service.GoodsService;
+import ks44team04.service.ReportService;
+import ks44team04.util.CodeIndex;
+import ks44team04.util.FileUtil;
 
-@Component
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/report")
 public class ReportController {
 
 	private ReportService reportService;
 	private GoodsService goodsService;
+	private final FileService fileService;
+	private final FileUtil fileUtil;
 	
 	private static final Logger log = LoggerFactory.getLogger(ReportController.class);
 
-	public ReportController(ReportService reportService,GoodsService goodsService) {
+	public ReportController(ReportService reportService,GoodsService goodsService, FileService fileService ,FileUtil fileUtil) {
 		this.reportService = reportService;
 		this.goodsService = goodsService;
+		this.fileService = fileService;
+		this.fileUtil = fileUtil;
 	}
 	
 	/*
@@ -50,7 +60,7 @@ public class ReportController {
 
 	
 	//상세 처리  
-	@PostMapping("/report/reportParticulars")
+	@PostMapping("/reportParticulars")
 	public String reportParticulars(@RequestParam(value = "reportResult" , required = false) String reportResult, 
 										@RequestParam(value = "penaltyPoint", required = false) int penaltyPoint, 
 										@RequestParam(value = "totalPenaltyPoint" , required = false) int totalPenaltyPoint, Report report , User user) {
@@ -67,7 +77,7 @@ public class ReportController {
 	}
 	
 	//상세 처리  
-	@GetMapping("/report/reportParticulars")
+	@GetMapping("/reportParticulars")
 	public String reportParticulars(@RequestParam(value = "reportHistoryCode" , required = false) String
             reportHistoryCode, Report report, Model model) {
 		
@@ -81,7 +91,7 @@ public class ReportController {
 	}
 	
 	//신고 처리  
-	@PostMapping("/report/reportProcessing")
+	@PostMapping("/reportProcessing")
 	public String getreportProcessing(@RequestParam(value = "reportResult" , required = false) String reportResult, 
 										@RequestParam(value = "penaltyPoint", required = false) int penaltyPoint, 
 										@RequestParam(value = "totalPenaltyPoint" , required = false) int totalPenaltyPoint, Report report, User user) {
@@ -99,7 +109,7 @@ public class ReportController {
 	}
 	
 	//신고 처리
-	@GetMapping("/report/reportProcessing")
+	@GetMapping("/reportProcessing")
 	public String getreportProcessing(@RequestParam(value = "reportHistoryCode" , required = false) String
             reportHistoryCode, Report report ,Model model) {
 		
@@ -113,7 +123,7 @@ public class ReportController {
 	}
 	
 	// 신고등록
-	@GetMapping("/report/report")
+	@GetMapping("/report")
 	public String getReport(Report report) {
 
 		String repoterId = "buyer01";
@@ -131,10 +141,19 @@ public class ReportController {
 	}
 	
 	// 상품에서 신고등록
-	@GetMapping("/report/userReport")
-	public String getUserReport(@RequestParam(value = "goodsList" , required = false) String goodsList, Report report ,Model model) {
-
-		String repoterId = "buyer01";
+	@PostMapping("/userReport")
+	public String getUserReport(
+			  @RequestParam MultipartFile[] uploadfile
+			, @RequestHeader(value = "Referer") String referer
+			, HttpServletRequest request, HttpSession session
+			, Report report ,Model model) {
+		
+		//세션아이디  
+		 String sellerId = (String) session.getAttribute("SID");
+		
+		//세션아이디 넣기 
+		String repoterId = sellerId;
+		//코드 증가
 		String HistoryCode = reportService.getHistoryCode();
 		HistoryCode = CodeIndex.codeIndex(HistoryCode, 15);
 		log.info("---------------------------------사용자가 입력한 정보", report);
@@ -142,15 +161,23 @@ public class ReportController {
 		report.setReportingId(repoterId);
 		reportService.setReport(report);
 		log.info("---------------------------------, {}", HistoryCode);
-		Goods goodsInfo = goodsService.getGoodsInfoByCode(goodsList);
-		/* model.addAttribute("title", "신고하기"); */
-		/* model.addAttribute("reportList", reportList); */
-		model.addAttribute("goodsInfo", goodsInfo);
-		return "/user/goods/goods";
+		
+		//이미지 업로드
+		String serverName = request.getServerName();
+		log.info("{} <<<< serverName", serverName);
+		log.info("{} <<<< user 디렉토리", System.getProperty("user.dir"));
+		String fileRealPath = "";
+		boolean isLocalhost = true;
+		
+		//파일 업로드
+		fileService.fileUpload(uploadfile, fileRealPath, isLocalhost);
+		
+				
+		return "redirect:" + referer;
 	}
 	
 	//신고 리스트 검색 
-	@PostMapping("/report/reportList")
+	@PostMapping("/reportList")
 	public String getReportSearch(@RequestParam(name="reportSearchKey")String sk 
 								 ,@RequestParam(name="reportSearchValue")String sv
 								 ,@RequestParam(name="fromDate", required = false, defaultValue="") String fromDate
@@ -185,7 +212,7 @@ public class ReportController {
 
 	
 	// 신고리스트
-	@GetMapping("/report/reportList")
+	@GetMapping("/reportList")
 	public String getReportList(Model model) {
 		log.info("/admin/reportList getReportList ReportController.java");
 		List<Report> reportList = reportService.getReportSearch(null);
@@ -197,7 +224,7 @@ public class ReportController {
 	}
 	
 	//정지 등록 (관리자)
-	@PostMapping("/report/suspandAdd")
+	@PostMapping("/suspandAdd")
 	public String suspendAdd(UserSuspend userSuspend, User user) {
 		
 		String getUserSuspendCods = reportService.getUserSuspendCode();
@@ -215,7 +242,7 @@ public class ReportController {
 	}
 	
 	//정지 리스트 검색 
-	@PostMapping("/report/userSuspendList")
+	@PostMapping("/userSuspendList")
 	public String getSuspendSearch(@RequestParam(name="reportSearchKey")String sk 
 								  ,@RequestParam(name="reportSearchValue", required = false, defaultValue="")String sv
 								  ,@RequestParam(name="SearchKey", required = false, defaultValue="")String dk
@@ -257,7 +284,7 @@ public class ReportController {
 	}
 	
 	// 정지리스트
-	@GetMapping("/report/userSuspendList")
+	@GetMapping("/userSuspendList")
 	public String getUserSuspendList(Model model) {
 		
 		  List<UserSuspend> userSuspendList = reportService.getSuspendSearch(null);
@@ -275,7 +302,7 @@ public class ReportController {
 	}
 	
 	//특정 정지 목록
-	@GetMapping("/report/userSuspendListUp")
+	@GetMapping("/userSuspendListUp")
 	public String suspendListUp(@RequestParam(value = "userSuspendCode" , required = false) String userSuspendCode, Model model) {
 		
 		UserSuspend userSuspend = reportService.SuspendUpList(userSuspendCode);
@@ -288,7 +315,7 @@ public class ReportController {
 	}
 	
 	//특정 정지 목록 수정
-	@PostMapping("/report/userSuspendListUp")
+	@PostMapping("/userSuspendListUp")
 	public String suspendUp(UserSuspend userSuspend) {
 		
 		reportService.suspendListUp(userSuspend);
@@ -297,7 +324,7 @@ public class ReportController {
 	}
 	
 	// 벌점 기준 목록
-	@GetMapping("/report/reportRuleList")
+	@GetMapping("/reportRuleList")
 	public String reportRuleList(Model model) {
 		
 		List<ReportRule> reportRuleList = reportService.reportRuleList();
@@ -308,7 +335,7 @@ public class ReportController {
 	}
 	
 	//벌점 기준 목록 검색
-	@PostMapping("/report/reportRuleList")
+	@PostMapping("/reportRuleList")
 	public String ruleListSaerch(@RequestParam(name="reportSearchKey")String sk 
 								 ,@RequestParam(name="reportSearchValue", required = false, defaultValue="")String sv
 								 ,@RequestParam(name="fromDate", required = false, defaultValue="") String fromDate
@@ -343,7 +370,7 @@ public class ReportController {
 	}
 	
 	//벌점 기준 목록 등록 
-	@GetMapping("/report/reportRuleAdd")
+	@GetMapping("/reportRuleAdd")
 	public String reportRuleAdd(ReportRule reportRule) {
 		
 			String reportRuleCode = reportService.reportRuleCode();
@@ -356,7 +383,7 @@ public class ReportController {
 	}
 	
 	//벌점 기준 목록 삭제
-	@GetMapping("/report/reportRuleDelete")
+	@GetMapping("/reportRuleDelete")
 	public String reportRuleDelete(ReportRule reportRule) {
 		
 		reportService.reportRuleDelete(reportRule);
@@ -365,7 +392,7 @@ public class ReportController {
 	}
 	
 	//벌점 기준 특정 목록 조회 
-	@GetMapping("/report/ruleUpList")
+	@GetMapping("/ruleUpList")
 	public String reportRuleUpList(@RequestParam(value = "reportCode" , required = false) String
 			reportCode, Model model ) {
 		
@@ -379,7 +406,7 @@ public class ReportController {
 	}
 	
 	//벌점 기준목록 수정 
-	@PostMapping("/report/ruleUp")
+	@PostMapping("/ruleUp")
 	public String ruleUp(ReportRule reportRule) {
 		
 		reportService.reportRuleUp(reportRule);

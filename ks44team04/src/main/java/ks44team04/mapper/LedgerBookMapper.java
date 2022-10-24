@@ -49,4 +49,5 @@ public interface LedgerBookMapper {
 	//
 	public List<Map<String, String>> paymentAmountTable(Map<String,Object> orderMap);
 	
+	
 }

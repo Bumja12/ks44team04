@@ -350,7 +350,7 @@ SELECT
 </select>
 
 
-<!--월 -->
+<!-- -->
 <select id="pMonth" parameterType="map" resultType="map">
 	WITH RECURSIVE date_data AS (
 		SELECT  1 AS pDate
@@ -364,7 +364,7 @@ SELECT
 		date_data								
 </select>
 
-<!-- 내용 -->
+<!--  -->
 <select id="paymentAmountTable" parameterType="map" resultType="map">
 	SELECT
 		 glc.goods_category AS 'goodsCategory'
