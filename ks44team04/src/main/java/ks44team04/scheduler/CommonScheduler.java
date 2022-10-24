@@ -55,6 +55,7 @@ public class CommonScheduler {
 	}
     
     // 10/23 구매자/판매자 등급관리
+    /*
     @Scheduled(cron = "0 0 0 * * *")
     public void levelAccum() {
     	//관리 대상 아이디 List
@@ -64,5 +65,6 @@ public class CommonScheduler {
     		userService.buyerTotal(buyerId);
     	}
     }
+    */
     
 }
