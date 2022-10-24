@@ -68,7 +68,7 @@
             <div >
               <dl>
                 <dt><i class="fa fa-money"></i> 오늘 매출</dt>
-	            <dd><input type="text" style="border: none; font-size: 20px; text-align: center;" readonly="readonly"  th:value="${mt.finalConfirmPrice} + ' 원'"></dd>
+	            <dd><input type="text" style="border: none; font-size: 20px; text-align: center;" readonly="readonly"  th:value="${mt.finalConfirmPrice > 0 ?#numbers.formatInteger(mt.finalConfirmPrice,3,'COMMA') : 0} + ' 원'"></dd>
               </dl>
             </div>
           	</th:block>
@@ -95,9 +95,9 @@
                    <th:block th:if="${not #lists.isEmpty(orderList)}" th:each="ol : ${orderList}" >
                    		<tr>
                    			<td th:text="${ol.orderDate} + '월'"></td>
-                   			<td th:text="${ol.totalSum}"></td>
-                   			<td th:text="${ol.postPrice}"></td>
-                   			<td th:text="${ol.postPrice} + ${ol.totalSum}"></td>
+                   			<th th:text="${ol.totalSum  > 0 ?#numbers.formatInteger(ol.totalSum ,3,'COMMA') : 0}"></th>
+                   			<th th:text="${ol.postPrice > 0 ?#numbers.formatInteger(ol.postPrice,3,'COMMA') : 0}"></th>
+                   			<th th:text="${ol.postPrice > 0 ?#numbers.formatInteger(ol.postPrice,3,'COMMA') : 0}"></th>
                    		</tr>
                    </th:block>
                      <tr>
@@ -135,13 +135,13 @@
                 <tr>
                   <td>포인트</td>
                   <th:block th:if="${not #lists.isEmpty(pointDiscountlist)}" th:each="pl : ${pointDiscountlist}">
-                  	<th th:text="${pl.usePoint} "></th>
+                  	<th th:text="${pl.usePoint > 0 ?#numbers.formatInteger(pl.usePoint,3,'COMMA') : 0}"></th>
                   </th:block>
                 </tr>
                 <tr>
                   <td>쿠폰</td>
                   <th:block th:if="${not #lists.isEmpty(pointDiscountlist)}" th:each="pl : ${pointDiscountlist}">
-                  	<th th:text="${pl.couponPrice} "></th>
+                  	<th th:text="${pl.couponPrice > 0 ?#numbers.formatInteger(pl.couponPrice,3,'COMMA') : 0}"></th>
                   </th:block>
                 </tr>
                 

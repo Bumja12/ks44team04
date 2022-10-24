@@ -66,16 +66,26 @@ public class LedgerBookController {
 		 List<Order> paymentAmount = ledgerBookService.paymentAmount(orderMap);	
 		 
 		 //판매자 매출 통계 카테고리별 교환 테이블 부분
-		 List<Order> orderExchange = ledgerBookService.orderExchange(orderMap);	
+		 Map<String, Object> orderExchangeMap = ledgerBookService.orderExchange(orderMap);	
 		 
 		 //판매자 매출 통계 카테고리별 반품 테이블 부분 
 		 Map<String, Object> orderReturnMap = ledgerBookService.orderReturn(orderMap);		
 		 
+		 //
+		 Map<String, Object> paymentAmountTableMap = ledgerBookService.paymentAmountTable(orderMap);		
+		 
 		model.addAttribute("title", "매출 통계");
+		
 		model.addAttribute("paymentAmount", paymentAmount);
-		model.addAttribute("orderExchange", orderExchange);
+		
+		model.addAttribute("orderExchange", orderExchangeMap.get("orderExchange"));
+		model.addAttribute("cateInfoListEx", orderExchangeMap.get("cateInfoListEx"));
+		
 		model.addAttribute("orderReturn", orderReturnMap.get("orderReturn"));
 		model.addAttribute("cateInfoList", orderReturnMap.get("cateInfoList"));
+		
+		model.addAttribute("paymentAmountTable", paymentAmountTableMap.get("paymentAmountTable"));
+		model.addAttribute("cateInfoMonth", paymentAmountTableMap.get("cateInfoMonth"));
 		
 		return "admin/ledgerBook/salesStatistics";
 	}

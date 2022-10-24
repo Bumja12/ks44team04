@@ -22,7 +22,7 @@
 		border-bottom: 1px solid #dbdbdb;
 	}
 	
-	#addUserBtn {
+	#modifyUserBtn {
 		background-color: #7fad39;
 		border: none;
 		color: #ffffff;
@@ -34,11 +34,11 @@
 		cursor:pointer;
 	}
 	
-	.addUserBtn:active, .addUserBtn:focus {
+	.modifyUserBtn:active, .modifyUserBtn:focus {
 		outline:none;
 	}
 	
- 	.addUserBtn {
+ 	.modifyUserBtn {
 		text-align: center;
 		margin-top: 30px;
 		margin-bottom: 40px;
@@ -133,19 +133,19 @@
 <th:block layout:fragment="customContents">
 
 	<div class="container mt-5 mb-5">
-		<div class="loginTitle">회원가입</div>
+		<div class="loginTitle">회원정보수정</div>
 		<div class="row justify-content-center mt-5 mb-3">
 			<form class="col-lg-6" id="modifyUserForm" th:action="@{/user/user/modifyUser}" th:object="${userInfo}" method="post">
 				<div class="form-group loginInputs" id="firstForBorder">
 					<label for="userId">아이디 <span>*</span></label>
-					<input type="text" class="loginInput" id="userId" name="userId" th:value="*{userId}" placeholder="아이디를 입력해주세요.">
-				</div>
-				<div>
-					<span class="checks" id="idCheck"></span>
+					<input type="text" class="loginInput" id="userId" name="userId" th:value="*{userId}" readonly="readonly">
 				</div>
 				<div class="form-group loginInputs">
-					<label for="userPw">현재 비밀번호 <span>*</span></label>
-					<input type="password" class="loginInput" id="userPw" name="userPw" placeholder="비밀번호를 입력해주세요.">
+					<label for="curUserPw">현재 비밀번호 <span>*</span></label>
+					<input type="password" class="loginInput" id="curUserPw" name="curUserPw" placeholder="비밀번호를 입력해주세요.">
+				</div>
+				<div>
+					<span class="checks" id="curPwCheck"></span>
 				</div>
 				<div class="form-group loginInputs">
 					<label for="userPw">새 비밀번호 <span>*</span></label>
@@ -250,8 +250,8 @@
 				</div>
 				<div class="form-group loginInputs" id="lastForBorder"></div>
 
-				<div class="addUserBtn">
-					<button type="button" id="addUserBtn" class="addUserBtn mt-3">회원가입</button>
+				<div class="modifyUserBtn">
+					<button type="button" id="modifyUserBtn" class="modifyUserBtn mt-3">회원정보수정</button>
 				</div>
 				
 				<input type="hidden" id="userRight" name="userRight" th:value="${userRight}">
@@ -269,9 +269,10 @@
 <th:block layout:fragment="customJsScript">
 <th:block th:replace="fragments/userJs :: datatablesFragment"></th:block>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script>
+    <script th:inline="javascript">
+    	/*<![CDATA[*/
     
-		var idCheck = false;
+    	var curPwCheck = false;
 		var pwCheck = false;
 		var pwCheck2 = false;
 		var pwCheckFinal = false; 
@@ -283,10 +284,13 @@
 		var addressCheck = false;
 		var addressCheck2 = false;
 		var addressCheckFinal = false;
-		var statusCheck = false; 
 		var infoKeepCheck = false;
 		
-		$('#idCheck').hide();
+		var exisNickname = /*[[${userInfo.userNickname}]]*/
+		var exisEmail = /*[[${userInfo.userEmail}]]*/
+		var exisPhone = /*[[${userInfo.userPhone}]]*/
+		
+		$('#curPwCheck').hide();
 		$('#pwCheck1').hide();
 		$('#pwCheck2').hide();
 		$('#nameCheck').hide();
@@ -316,41 +320,19 @@
 			input.value = "";
 		});
 		
-		/* id 중복체크 - ajax 비동기처리 */			
-		$("#userId").on("propertychange change keyup paste input",function() {
+		var curUserPw = /*[[${userInfo.userPw}]]*/
 		
-			var userId = $('#userId').val();
-
-			function id_check( id ) {
-			    var regex= /^[a-z][a-z\d]{5,15}$/;
-			    return (id != '' && id != 'undefined' && regex.test(id));
-			}
+		/* 기존 비밀번호 일치 확인 */
+		$("#curUserPw").on("propertychange change keyup paste input",function(){
 			
-			if(!id_check(userId)) {
-				$('#idCheck').show();
-				$('#idCheck').css('color','#f03f40');
-                $('#idCheck').html("6~16자의 영문 소문자, 숫자만 입력해주세요");
-				$('#userId').focus();
-				idCheck = false;
+			if($("#curUserPw").val() != curUserPw) {
+				$('#curPwCheck').show();
+				$('#curPwCheck').css('color','#f03f40');
+               	$('#curPwCheck').html('비밀번호가 일치하지 않습니다.');
+               	curPwCheck = false;
 			}else {
-				$.ajax({
-					url: '/admin/user/idCheck',
-					method: 'GET',
-					data: { 'userId' : userId },
-					//dataType: "json",  //String이면 text   //text, json, xml, html
-					success : function(cnt) {
-						if(cnt == 0){
-			                $('#idCheck').css('color','#7fad39');
-			                $('#idCheck').html("사용 가능한 아이디입니다.");
-			                idCheck = true;
-						}else {
-							$('#idCheck').css('color','#f03f40');
-			                $('#idCheck').html("이미 사용중인 아이디입니다.");
-							$('#userId').focus();
-							idCheck = false;
-						}	
-					}
-				});
+				$('#curPwCheck').hide();
+				curPwCheck = true;
 			}
 		});
 		
@@ -361,14 +343,19 @@
             var userPw = regex.exec($("#userPw").val());
             var userPwCheck = $('#userPwCheck').val();
 
-            if(userPw != null){
+           	$('#pwCheck1').show();
+            $('#pwCheck1').css('color','#f03f40');
+            $('#pwCheck1').html('6~16자의 영문 대소문자, 숫자만 입력해주세요.');
+            pwCheck = false;
+            
+            if(userPw != null && userPw != curUserPw){
             	$('#pwCheck1').hide();
             	pwCheck = true;
-            }else{
+            }else if(userPw == curUserPw) {
             	$('#pwCheck1').show();
-               	$('#pwCheck1').css('color','#f03f40');
-               	$('#pwCheck1').html('6~16자의 영문 대소문자, 숫자만 입력해주세요.');
-               	pwCheck = false;
+            	$('#pwCheck1').css('color','#f03f40');
+               	$('#pwCheck1').html('현재 비밀번호와 다르게 입력해주세요.');
+               	pwCheck = false;	
             }
 			
 			if(userPw != userPwCheck) {
@@ -380,7 +367,6 @@
                	$('#pwCheck2').html('비밀번호가 일치하지 않습니다.');
                	pwCheck2 = false
 			}
-			
         });
 		
 		/* 비밀번호 확인 */
@@ -405,31 +391,36 @@
 		
 			var userNickname = $('#userNickname').val();
 			
-			$.ajax({
-				url: '/admin/user/nicknameCheck',
-				method: 'GET',
-				data: { 'userNickname' : userNickname },
-				success : function(cnt) {
-					
-					if(userNickname == "" || userNickname == null) {
-						$('#nicknameCheck').hide();
-						nicknameCheck = false;
-					}else {
-						if(cnt == 0){
-							$('#nicknameCheck').show();
-							$('#nicknameCheck').css('color','#7fad39');
-			                $('#nicknameCheck').html("사용 가능한 닉네임입니다.");
-			                nicknameCheck = true;
-						}else {
-							$('#nicknameCheck').show();
-							$('#nicknameCheck').css('color','#f03f40');
-			                $('#nicknameCheck').html("이미 사용중인 닉네임입니다.");
-							$('#userNickname').focus();
+			if(exisNickname == userNickname) {
+				$('#nicknameCheck').hide();
+				nicknameCheck = true;
+			}else {
+				$.ajax({
+					url: '/admin/user/nicknameCheck',
+					method: 'GET',
+					data: { 'userNickname' : userNickname },
+					success : function(cnt) {
+						
+						if(userNickname == "" || userNickname == null) {
+							$('#nicknameCheck').hide();
 							nicknameCheck = false;
-						}	
+						}else {
+							if(cnt == 0){
+								$('#nicknameCheck').show();
+								$('#nicknameCheck').css('color','#7fad39');
+				                $('#nicknameCheck').html("사용 가능한 닉네임입니다.");
+				                nicknameCheck = true;
+							}else {
+								$('#nicknameCheck').show();
+								$('#nicknameCheck').css('color','#f03f40');
+				                $('#nicknameCheck').html("이미 사용중인 닉네임입니다.");
+								$('#userNickname').focus();
+								nicknameCheck = false;
+							}	
+						}
 					}
-				}
-			});
+				});
+			}
 		});
 		
 		/* 이메일 중복체크 */
@@ -443,30 +434,36 @@
 			    return (email != '' && email != 'undefined' && regex.test(email));
 			}
 			
-			if(! email_check(userEmail)) {
-				$('#emailCheck').show();
-				$('#emailCheck').css('color','#f03f40');
-                $('#emailCheck').html("잘못된 형식의 이메일입니다.");
-				$('#userEmail').focus();
-				emailCheck = false
+			if(exisEmail == userEmail) {
+				$('#emailCheck').hide();
+				emailCheck = true;
 			}else {
-				$.ajax({
-					url: '/admin/user/emailCheckU',
-					method: 'GET',
-					data: { 'userEmail' : userEmail },
-					success : function(cnt) {
-						if(cnt == 0){
-			                $('#emailCheck').css('color','#7fad39');
-			                $('#emailCheck').html("사용 가능한 이메일입니다.");
-			                emailCheck = true;
-						}else {
-							$('#emailCheck').css('color','#f03f40');
-			                $('#emailCheck').html("이미 사용중인 이메일입니다.");
-							$('#userEmail').focus();
-							emailCheck = false
-						}	
-					}
-				});
+				if(! email_check(userEmail)) {
+					$('#emailCheck').show();
+					$('#emailCheck').css('color','#f03f40');
+	                $('#emailCheck').html("* 잘못된 형식의 이메일입니다.");
+					$('#userEmail').focus();
+					emailCheck = false
+				}else {
+					$.ajax({
+						url: '/admin/user/emailCheckU',
+						method: 'GET',
+						data: { 'userEmail' : userEmail },
+						//dataType: "json",  //String이면 text   //text, json, xml, html
+						success : function(cnt) {
+							if(cnt == 0){
+				                $('#emailCheck').css('color','#7fad39');
+				                $('#emailCheck').html("* 사용 가능한 이메일입니다.");
+				                emailCheck = true;
+							}else {
+								$('#emailCheck').css('color','#f03f40');
+				                $('#emailCheck').html("* 이미 사용중인 이메일입니다.");
+								$('#userEmail').focus();
+								emailCheck = false
+							}	
+						}
+					});
+				}
 			}
 		});
 		
@@ -475,13 +472,14 @@
 			
 			var userPhone = $('#userPhone').val();
 			
-			if(userPhone == "" || userPhone == null) {
+			if(exisPhone == userPhone) {
 				$('#phoneCheck').hide();
+				phoneCheck = true;
 			}else {
 				if(userPhone.length != 11) {
 					$('#phoneCheck').show();
 					$('#phoneCheck').css('color','#f03f40');
-	                $('#phoneCheck').html("11자리 숫자를 입력해주세요.");
+	                $('#phoneCheck').html("* 11자리 숫자를 입력해주세요.");
 					$('#userPhone').focus();
 					phoneCheck = false;
 				}else {
@@ -489,14 +487,15 @@
 						url: '/admin/user/phoneCheckU',
 						method: 'GET',
 						data: { 'userPhone' : userPhone },
+						//dataType: "json",  //String이면 text   //text, json, xml, html
 						success : function(cnt) {
 							if(cnt == 0){
 				                $('#phoneCheck').css('color','#7fad39');
-				                $('#phoneCheck').html("사용 가능한 휴대폰번호입니다.");
+				                $('#phoneCheck').html("* 사용 가능한 휴대폰번호입니다.");
 				                phoneCheck = true;
 							}else {
 								$('#phoneCheck').css('color','#f03f40');
-				                $('#phoneCheck').html("이미 사용중인 휴대폰번호입니다.");
+				                $('#phoneCheck').html("* 이미 사용중인 휴대폰번호입니다.");
 								$('#userPhone').focus();
 								phoneCheck = false;
 							}	
@@ -535,23 +534,23 @@
 		});
 		
 		/* 등록 버튼 클릭시 유효성검사 */
-		$("#addUserBtn").click(function(){
+		$("#modifyUserBtn").click(function(){
 			
-			/* 아이디 */
-			if($('#userId').val() == "") {
-				$('#idCheck').show();
-				$('#idCheck').css('color','#f03f40');
-                $('#idCheck').html("* 아이디를 입력해주세요.");
-				$('#userId').focus();
-				idCheck = false;
+			/* 기존 비밀번호 */
+			if($('#curUserPw').val() == "") {
+				$('#curPwCheck').show();
+				$('#curPwCheck').css('color','#f03f40');
+                $('#curPwCheck').html("* 비밀번호를 입력해주세요.");
+				$('#curUserPw').focus();
+				curPwCheck = false;
 			}
-			console.log('idCheck : ',idCheck);
+			console.log('curPwCheck : ',curPwCheck);
 			
 			/* 비밀번호 */
 			if($('#userPw').val() == "") {
 				$('#pwCheck1').show();
 				$('#pwCheck1').css('color','#f03f40');
-                $('#pwCheck1').html("* 비밀번호를 입력해주세요.");
+                $('#pwCheck1').html("* 새 비밀번호를 입력해주세요.");
 				$('#userPw').focus();
 				pwCheck = false;
 			}
@@ -561,7 +560,7 @@
 			if($('#userPwCheck').val() == "") {
 				$('#pwCheck2').show();
 				$('#pwCheck2').css('color','#f03f40');
-                $('#pwCheck2').html("* 비밀번호를 한번 더 입력해주세요.");
+                $('#pwCheck2').html("* 새 비밀번호를 한번 더 입력해주세요.");
 				$('#userPwCheck').focus();
 				pwCheck = false;
 			}
@@ -588,7 +587,9 @@
 	        console.log('nameCheck : ',nameCheck);
 			
 			/* 닉네임 */
-	        if($('#userNickname').val() == ""){
+			if(exisNickname == $('#userNickname').val()) {
+				nicknameCheck = true;
+			}else if($('#userNickname').val() == ""){
 	        	$('#nicknameCheck').show();
 				$('#nicknameCheck').css('color','#f03f40');
                 $('#nicknameCheck').html("* 닉네임을 입력해주세요.");
@@ -609,7 +610,9 @@
 	        console.log('genderCheck : ',genderCheck);
 	        
 	        /* 이메일 */
-	        if($('#userEmail').val() == ""){
+	       	if(exisEmail == $('#userEmail').val()) {
+	       		emailCheck = true;
+			}else if($('#userEmail').val() == ""){
 	        	$('#emailCheck').show();
 				$('#emailCheck').css('color','#f03f40');
                 $('#emailCheck').html("* 이메일을 입력해주세요.");
@@ -619,7 +622,9 @@
 			console.log('emailCheck : ',emailCheck);
 	        
 			/* 휴대폰번호 */
-	        if($('#userPhone').val() == ""){
+			if(exisPhone == $('#userPhone').val()) {
+				phoneCheck = true;
+			}else if($('#userPhone').val() == ""){
 	        	$('#phoneCheck').show();
 				$('#phoneCheck').css('color','#f03f40');
                 $('#phoneCheck').html("* 휴대폰번호를 입력해주세요.");
@@ -675,17 +680,17 @@
 			$('#userPenalty').val( Number($('#userPenalty').val().replace(/,/g, "")) );
 	        
 	        /* form 전송 */
-			$('#addUserForm').submit(function(event) {}); 
+			$('#modifyUserForm').submit(function(event) {}); 
 	        
 	        /* 최종 유효성 검사 */
-			if(idCheck && pwCheck && pwCheck2 && pwCheckFinal && nameCheck && nicknameCheck && genderCheck && emailCheck && phoneCheck && addressCheck && addressCheck2 && addressCheckFinal && infoKeepCheck) {
-				$('#addUserForm').submit();
+			if(curPwCheck && pwCheck && pwCheck2 && pwCheckFinal && nameCheck && nicknameCheck && genderCheck && emailCheck && phoneCheck && addressCheck && addressCheck2 && addressCheckFinal && infoKeepCheck) {
+				$('#modifyUserForm').submit();
 	        }
 			//return false;
 		});
 
 		
-
+		/*]]>*/
     </script>
     
 </th:block>

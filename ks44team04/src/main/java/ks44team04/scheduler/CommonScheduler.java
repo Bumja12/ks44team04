@@ -41,7 +41,6 @@ public class CommonScheduler {
 	
     // 10/17 휴면 처리 (1.회원상태 '휴면'으로 / 2.휴면 테이블에 insert)
     @Scheduled(cron = "0 0 0 * * *")
-	@PostMapping("/user/dormantProcess")
 	public void dormantProcess() {
     	//휴면 대상 아이디 List
 		List<String> userIds = userService.getDormantId();
@@ -54,5 +53,18 @@ public class CommonScheduler {
 			userService.insertDormant(userId);
 		}
 	}
-
+    
+    // 10/23 구매자/판매자 등급관리
+    /*
+    @Scheduled(cron = "0 0 0 * * *")
+    public void levelAccum() {
+    	//관리 대상 아이디 List
+    	List<String> buyerTotalList = userService.buyerTotalList();
+    	
+    	for(String buyerId : buyerTotalList) {
+    		userService.buyerTotal(buyerId);
+    	}
+    }
+    */
+    
 }

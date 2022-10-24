@@ -13,10 +13,10 @@
             <form th:action="@{/admin/login}" method="post">
               <h1>관리자 로그인</h1>
               <div>
-                <input type="text" id="userId" name="userId" class="form-control" placeholder="아이디" required="" />
+                <input type="text" id="userId" name="userId" class="form-control" placeholder="관리자: admin01, 구매자: buyer01, 판매자: seller01" required="" />
               </div>
               <div>
-                <input type="password" id="userPw" name="userPw" class="form-control" placeholder="비밀번호" required="" />
+                <input type="password" id="userPw" name="userPw" class="form-control" placeholder="관리자: pw001, 구매자: pw001, 판매자: pw001" required="" />
               </div>
               <div th:if="${loginFailed} != null" th:text="${loginFailed}"></div>
               <div>

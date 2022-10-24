@@ -43,7 +43,7 @@ th {
 			</div>
 			<div class="x_content">
 				<div class="x_panel">
-					<div th:replace="fragments/pointUserListSearch :: pointUserListSearchFragment"></div>
+					<div th:replace="fragments/pointHistorySearch :: pointHistorySearchFragment"></div>
 					<table class="table table-hover">
 						<thead>
 							<tr>
@@ -52,7 +52,6 @@ th {
 								<th style="width: 170px">포인트</th>
 								<th style="width: 110px">포인트거래내용</th>
 								<th>거래일시</th>
-								<th>관리</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -62,10 +61,6 @@ th {
 								<td th:text="${p.pointDealPrice}"></td>
 								<td th:text="${p.pointDealReason}"></td>
 								<td th:text="${p.pointDealDate}"></td>
-								<td>
-									<span style="cursor:pointer;"><i class="fa fa-edit"></i> 수정  </span>
-									<span style="cursor:pointer;"><i class="fa fa-close"></i> 삭제</span>
-								</td>
 							</tr>
 							<tr th:unless="${not #lists.isEmpty(pointHistory)}">
 								<td colspan="5">등록된 쿠폰이 없습니다.</td>
