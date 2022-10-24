@@ -22,19 +22,25 @@ public class Goods {
     private String modifyDate;
     private String goodsFile;
     
+    private List<FileDto> fileList;
+    private GoodsQnaAnswer goodsAnswerInfo;
+    private GoodsQna goodsQnaInfo;
+    private User userInfo;
+    private GoodsSmallCategory goodsSmallCategoryInfo;
+    private GoodsLargeCategory goodsLargeCategoryInfo;
+    
     /* ~~~ 시작 ~~~ */
     
-    //이미지 업로드
+    /*이미지 업로드
 	private FileDto fileInfo;
 	public FileDto getFileInfo() {
 		return fileInfo;
 	}
 	public void setFileInfo(FileDto fileInfo) {
 		this.fileInfo = fileInfo;
-	}
+	}*/
     
 	//이미지 리스트 
-	private List<FileDto> fileList;
 	
     public List<FileDto> getFileList() {
 		return fileList;
@@ -44,7 +50,6 @@ public class Goods {
 	}
 
 	//문의 답변
-	private GoodsQnaAnswer goodsAnswerInfo;
 	public GoodsQnaAnswer getGoodsAnswerInfo() {
 		return goodsAnswerInfo;
 	}
@@ -53,7 +58,6 @@ public class Goods {
 	}
 	
 	//문의
-	private GoodsQna goodsQnaInfo;
 	public GoodsQna getGoodsQnaInfo() {
 		return goodsQnaInfo;
 	}
@@ -62,7 +66,6 @@ public class Goods {
 	}
     
 	//유저
-	private User userInfo;
 	public User getUserInfo() {
 		return userInfo;
 	}
@@ -71,7 +74,6 @@ public class Goods {
 	}
 	
 	//스몰카테고리
-	private GoodsSmallCategory goodsSmallCategoryInfo;
 	public GoodsSmallCategory getGoodsSmallCategoryInfo() {
 		return goodsSmallCategoryInfo;
 	}
@@ -80,7 +82,6 @@ public class Goods {
 	}
 	
 	//라지카테고리
-	private GoodsLargeCategory goodsLargeCategoryInfo;
 	public GoodsLargeCategory getGoodsLargeCategoryInfo() {
 		return goodsLargeCategoryInfo;
 	}
@@ -224,8 +225,7 @@ public class Goods {
     public void setGoodsFile(String goodsFile) {
         this.goodsFile = goodsFile;
     }
-
-    @Override
+	@Override
 	public String toString() {
 		return "Goods [goodsCode=" + goodsCode + ", goodsSmallCategory=" + goodsSmallCategory + ", sellerId=" + sellerId
 				+ ", goodsName=" + goodsName + ", goodsContent=" + goodsContent + ", goodsDetail=" + goodsDetail
@@ -233,9 +233,10 @@ public class Goods {
 				+ goodsPostPrice + ", goodsStock=" + goodsStock + ", soldoutCheck=" + soldoutCheck + ", stopSaleCheck="
 				+ stopSaleCheck + ", packagePostCheck=" + packagePostCheck + ", regularDeliverCheck="
 				+ regularDeliverCheck + ", regDate=" + regDate + ", modifyDate=" + modifyDate + ", goodsFile="
-				+ goodsFile + ", fileInfo=" + fileInfo + ", fileList=" + fileList + ", goodsAnswerInfo="
-				+ goodsAnswerInfo + ", goodsQnaInfo=" + goodsQnaInfo + ", userInfo=" + userInfo
-				+ ", goodsSmallCategoryInfo=" + goodsSmallCategoryInfo + ", goodsLargeCategoryInfo="
-				+ goodsLargeCategoryInfo + "]";
+				+ goodsFile + ", fileList=" + fileList + ", goodsAnswerInfo=" + goodsAnswerInfo + ", goodsQnaInfo="
+				+ goodsQnaInfo + ", userInfo=" + userInfo + ", goodsSmallCategoryInfo=" + goodsSmallCategoryInfo
+				+ ", goodsLargeCategoryInfo=" + goodsLargeCategoryInfo + "]";
 	}
+
+
 }

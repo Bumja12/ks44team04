@@ -25,6 +25,15 @@ public interface BoardMapper {
 	//게시물 상세정보 조회 (유저)
 	public Board boardByCode(String boardCode);
 	
+	//조회할 때 조회수+1
+	public void viewCount(String boardCode);
+	
+	//댓글 등록
+	public int commentAdd(BoardComment boardComment);
+	
+	//게시물 코드증가
+	public String getCommentNewCode();
+	
 	//게시물 수정
 	public int boardModify(Board board);
 	
