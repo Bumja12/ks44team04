@@ -124,7 +124,7 @@
 	
 	<!-- /* =============== 구매자/판매자 등급관리 시작 =============== */ -->
  	<!-- (스케줄러) 구매자 등급조건 누적 관리 - 6개월 누적구매금액 -->
-	<insert id="buyerTotal" parameterType="String">
+<!-- 	<insert id="buyerTotal" parameterType="String">
 		/* 구매자 등급조건 누적 관리 (스케줄러) */
 		INSERT INTO tb_buyer_total
 			(buyer_id, total_buyer_price, total_date)
@@ -138,10 +138,10 @@
 					AND 
 					o.final_confirm_date BETWEEN LAST_DAY(NOW()-INTERVAL 6 month)+interval 1 DAY AND LAST_DAY(NOW()))
 			   ,NOW()
-	</insert>
+	</insert> -->
 	
 	<!-- 구매자 등급조건 누적 관리 대상 ID 목록 -->
-	<select id="buyerTotalList" parameterType="String" resultType="String">
+<!-- 	<select id="buyerTotalList" parameterType="String" resultType="String">
 		/* 구매자 등급조건 누적 관리 대상 ID 목록 */
 		SELECT 
 			*
@@ -151,7 +151,7 @@
 			u.user_right = 'buyer'
 			AND
 			(u.user_status = '정상' OR u.user_status = '정지')
-	</select>
+	</select> -->
 	
 	<!-- (스케줄러) 판매자 등급조건 누적 관리 - 12개월 누적판매금액, 건수, 별점평균 -->
 <!-- 	<insert id="sellerTotal" parameterType="String">
