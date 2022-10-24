@@ -41,7 +41,6 @@ public class UserGoodsController {
 		List<Goods> goodsList = goodsService.getGoodsList();
 		log.info("등록된 상품 리스트 ::: {}", goodsList);
 		
-		
 		//List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
 		//log.info("카테고리 대분류 리스트 ::: {}", largeCategoryList);
 		
