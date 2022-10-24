@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import ks44team04.dto.Board;
 import ks44team04.dto.BoardComment;
+import ks44team04.dto.Cart;
 import ks44team04.service.BoardService;
 import ks44team04.util.CodeIndex;
 
@@ -100,7 +100,6 @@ public class UserBoardController {
 						   //@RequestHeader(value = "commentContent") String commentContent
 						   ){
 		
-		log.info("댓글 등록 정보 ::: {}", boardComment);
 		String userId = (String) session.getAttribute("SID");
 		
 		//commentNewCode 생성
@@ -116,8 +115,38 @@ public class UserBoardController {
 		boardComment.setUserId(userId);
 		
 		boardService.commentAdd(boardComment);
+		log.info("댓글 등록 정보 ::: {}", boardComment);
 		
-		return "123";
+		return "1";
+	}
+	
+    //댓글 수정
+	@PostMapping("/commentModify")
+    @ResponseBody
+    public String commentModify(BoardComment boardComment, HttpSession session) {
+    	
+		String userId = (String) session.getAttribute("SID");
+		
+		boardComment.setUserId(userId);
+		boardService.commentModify(boardComment);
+		log.info("사용자가 댓글 수정한 정보 ::: {}", boardComment);
+		
+		return "redirect:/";
+	}
+	
+	//댓글 삭제
+	@PostMapping("/commentRemove")
+    @ResponseBody
+	public String commentRemove(BoardComment boardComment, HttpSession session) {
+		
+		String userId = (String) session.getAttribute("SID");
+		
+		boardService.commentRemove(boardComment);
+		boardComment.setUserId(userId);
+		
+		log.info("사용자가 삭제한 댓글 정보 ::: {}", boardComment);
+		
+		return "redirect:/";
 	}
 	
 	
