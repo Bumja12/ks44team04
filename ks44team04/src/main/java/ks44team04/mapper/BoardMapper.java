@@ -31,8 +31,14 @@ public interface BoardMapper {
 	//댓글 등록
 	public int commentAdd(BoardComment boardComment);
 	
-	//게시물 코드증가
+	//댓글 코드증가
 	public String getCommentNewCode();
+	
+	//댓글 수정
+	public int commentModify(BoardComment boardComment);
+	
+	//댓글 삭제
+	public void commentRemove(BoardComment boardComment);
 	
 	//게시물 수정
 	public int boardModify(Board board);

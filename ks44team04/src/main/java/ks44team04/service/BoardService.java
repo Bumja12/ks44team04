@@ -66,6 +66,17 @@ public class BoardService {
 		return commentNewCode;
 	}
 	
+	//댓글 수정
+	public int commentModify(BoardComment boardComment) {
+		int result = boardMapper.commentModify(boardComment);
+		return result;
+	}
+	
+	//댓글 삭제
+	public void commentRemove(BoardComment boardComment) {
+		boardMapper.commentRemove(boardComment);
+	}
+	
 	//게시물 수정
 	public int boardModify(Board board) {
 		int result = boardMapper.boardModify(board);

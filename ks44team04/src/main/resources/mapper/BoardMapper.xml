@@ -171,6 +171,25 @@
 		FROM 	tb_board_comment
     </select>
 	
+	<!-- 댓글 삭제 -->
+    <delete id="commentRemove" parameterType="BoardComment">
+    	DELETE
+    	FROM
+    		tb_board_comment
+        WHERE
+            board_comment = #{boardComment}
+    </delete>
+    
+    <!-- 댓글 수정 -->
+    <update id="commentModify" parameterType="BoardComment">
+        UPDATE tb_board_comment
+        SET
+			 comment_content = #{commentContent}
+			,co_modify_date = NOW()
+        WHERE
+            board_comment = #{boardComment}
+    </update>    
+    
 	<!-- 게시글 수정 -->
     <update id="boardModify" parameterType="Board">
         UPDATE tb_board
@@ -194,13 +213,13 @@
     </update>
     
     <!-- 게시글 삭제 -->
-    <delete id="boardRemoveByCode" parameterType="Board">
+    <update id="boardRemoveByCode" parameterType="Board">
         UPDATE tb_board
         SET
             delete_check = 'Y'
         WHERE
             board_code = #{boardCode}
-    </delete>
+    </update>
 	
 	<!-- 게시글 리스트 조회 -->
     <select id="BoardListUser" parameterType="string" resultMap="boardResultMap">

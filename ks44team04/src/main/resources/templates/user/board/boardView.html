@@ -114,12 +114,12 @@
 			</thead>
 			<tbody>
 				<tr th:if="${not #lists.isEmpty(boardInfo.commentList)}" th:each="bc : ${boardInfo.commentList}">
-					<td class="col-7" th:text="${bc.commentContent}" style="text-align:left !important;"></td>
+					<td class="col-7" id="commentContent" th:text="${bc.commentContent}" style="text-align:left !important;"></td>
 					<td class="col-2" th:text="${bc.userInfo.userNickname}"></td>
 					<td class="col-2" th:text="${bc.coRegDate}"></td>
-					<td class="col-1" style="color:#a8a8a8; font-weight:300;">
-						<a>수정</a>
-						<a>삭제</a>
+					<td class="col-1">
+						<a href="#" class="commentModify" id="modifyBtn" th:data-board-comment="${bc.boardComment}" style="color:#a8a8a8; font-weight:300;">수정</a>
+						<a href="#" class="commentRemove" id="cancelBtn" th:data-board-comment="${bc.boardComment}" style="color:#a8a8a8; font-weight:300;">삭제</a>
 					</td>
 				</tr>
 				<!-- <tr th:unless="${boardInfo.commentList.commentContent == null}">
@@ -153,37 +153,51 @@
 	    obj.style.height = '1px';
 	    obj.style.height = (12 + obj.scrollHeight) + 'px';
 	}
-	$('.commentAdd').on('click', function(){
-		var commentContent = $("#commentContent").val();
-		console.log(commentContent);
-		if(commentContent == null && commentContent == '''){
-			alert("댓글 내용을 입력해주세요.");
-		};
-	});
 	
-	/*
+	//댓글 등록
 	$('.commentAdd').on('click', function(){
 		var commentContent = $("#commentContent").val();
 		var boardCode = $("#boardCode").val()
 		console.log(commentContent);
 		console.log(boardCode);
 		
-		if(commentContent == null){
+		if(commentContent == ''){
 			alert("댓글 내용을 입력해주세요.");
+		}else if(commentContent != ''){
+		    $.ajax({
+		        url: "/user/board/commentAdd",
+		        type: "post",
+		        data: { commentContent,
+		        		boardCode }
+		    })
+		        .done(function(result){
+		        		$('#commentList').load(location.href+' #commentList');
+		        		$("#commentContent").val("");
+		        });
 		}
 		
-	    $.ajax({
-	        url: "/user/board/commentAdd",
-	        type: "post",
-	        data: { commentContent,
-	        		boardCode }
-	    })
-	        .done(function(result){
-	        	 $('#commentList').load(location.href+' #commentList');
-	        	 //location.reload();
-	        });
 	});
-	*/
+	
+	//댓글 삭제
+	$('#commentList').on('click', '.commentModify', function(e){
+		e.preventDefault();
+		var boardComment = $(this).data("boardComment");
+		console.log(boardComment);
+		
+		var str="";
+		str += '<textarea class="commentInput" id="commentContent" rows="1" cols="70" onkeydown="resize(this)" onkeyup="resize(this)">';
+		$('#commentContent').html(str);
+		
+		var str2="";
+		str2 += '완료';
+		$('#modifyBtn').html(str2);
+		
+		var str3="";
+		str3 += '취소';
+		$('#cancelBtn').html(str3);
+	});
+	
+	
 
 </script>
 </th:block>
