@@ -161,7 +161,7 @@ th {
 							</table>
 							<div class="text-center">
 								<button type="submit" class="btn btn-success float-middle couponIssueBtn">쿠폰발급</button>
-								<button type="button" class="btn btn-warning float-middle resetBtn">초기화</button>
+								<button type="button" class="btn btn-warning float-middle checkResetBtn">초기화</button>
 							</div>
 						</form>
 					</div>
@@ -199,8 +199,12 @@ th {
 	<script type="text/javascript">
 		$(function(){
 			let motherCheck = $('.motherCheck');
-			let childCheckUser = $('.childCheck');
 			let adminId = $('#regId').val();
+
+			$('.checkResetBtn').click(function (){
+				$('.childCheck').prop('checked', false);
+				motherCheck.prop('checked', false);
+			})
 
 			$('.resetBtn').click(function (){
 				$('.couponInfo').val(null);

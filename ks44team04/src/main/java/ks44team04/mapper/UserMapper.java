@@ -7,7 +7,6 @@ import ks44team04.dto.Leave;
 import ks44team04.dto.LevelBuyerCategory;
 import ks44team04.dto.LevelSellerCategory;
 import ks44team04.dto.Login;
-import ks44team04.dto.PaymentTotal;
 import ks44team04.dto.Right;
 import ks44team04.dto.Search;
 import ks44team04.dto.Seller;
@@ -23,6 +22,21 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
 	
     
+	/* =============== 구매자/판매자 등급관리 시작 =============== */
+	//구매자 등급조건 누적 관리 대상 ID 목록
+	public List<String> buyerTotalList();
+	
+	//(스케줄러) 구매자 등급조건 누적 관리 - 6개월 누적구매금액
+	public int buyerTotal(String userId);
+	
+	//판매자 등급조건 누적 관리 대상 ID 목록
+	
+	
+	//(스케줄러) 판매자 등급조건 누적 관리 - 12개월 누적판매금액, 건수, 별점평균
+	
+	/* =============== 구매자/판매자 등급관리 끝 =============== */
+
+	
     /* =============== 검색 시작 =============== */
     //판매자 검색
   	public List<Seller> searchSellerList(Map<String, Object> searchMap);
