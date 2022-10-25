@@ -253,19 +253,19 @@ FROM
 </delete>
 
 
-<select id="reviewCommnetList" resultMap="reviewCommentSersultMap">
-/*후기 특정 댓글 목록 */
-SELECT 
-	 rc.review_comment_list
-	,rc.review_list
-	,rc.user_id
-	,rc.review_comment_content
-	,rc.reg_date
-	,rc.modify_date
-FROM 
-	tb_review_comment AS rc
-WHERE
- rc.review_list = #{reviewList}
+<select id="reviewCommnetList"  parameterType="String" resultType="map">
+	/*후기 특정 댓글 목록 */
+	SELECT 
+		 rc.review_comment_list
+		,rc.review_list
+		,rc.user_id
+		,rc.review_comment_content
+		,rc.reg_date
+		,rc.modify_date
+	FROM 
+		tb_review_comment AS rc
+	WHERE
+	 rc.review_list = #{reviewList}
 </select>
     
 </mapper>

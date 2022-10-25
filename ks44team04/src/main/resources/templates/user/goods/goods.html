@@ -840,6 +840,17 @@ $(function() {
                 }
 			}); */
 			
+	         	$.ajax({
+	              url: "/user/review/reviewCommentList",
+	              method: "GET",
+	              data: { 'reviewList' : reviewList },
+	              dataType: "json",
+				  success: function (data) {
+            	  console.log(data);
+            	  
+           		}
+			
+			});
 		});
 		
 	

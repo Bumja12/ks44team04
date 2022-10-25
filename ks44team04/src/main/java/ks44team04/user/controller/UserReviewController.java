@@ -1,6 +1,7 @@
 package ks44team04.user.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ks44team04.dto.Review;
-import ks44team04.dto.ReviewComment;
 import ks44team04.dto.ReviewLike;
 import ks44team04.service.ReviewService;
 import ks44team04.util.CodeIndex;
@@ -83,10 +83,19 @@ public class UserReviewController {
 	 * reviewService.reviewCommnetList(reviewList);
 	 * model.addAttribute("reviewCommintList", reviewCommintList); return null; }
 	 */
+	 //입고등록 모달 - 특정 상품코드 조회
+	
+	   @GetMapping("/review/reviewCommentList")
+	   @ResponseBody
+	   public List<Map<String, Object>>reviewCommnetList(@RequestParam(value="reviewList") String reviewList){
+	      
+		  List<Map<String, Object>> reviewCommnetList = reviewService.reviewCommnetList(reviewList);
+	      
+	      return reviewCommnetList;
+	   }
 	
 	
-	
-	
+	 
 
 
 }
