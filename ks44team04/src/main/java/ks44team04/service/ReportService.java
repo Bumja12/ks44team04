@@ -110,6 +110,28 @@ public class ReportService {
     	
     	return userList;
     }
+    //정지 리스트 수정 
+    public void suspendListUp(UserSuspend userSuspend) {
+    	reportMapper.suspendListUp(userSuspend);
+    }
+    	
+    // 특정 시간 마다 확인 후 정지 해제
+    public void unStopping(List<UserSuspend> userSuspendUpdateList) {
+    	int result = reportMapper.unstopping(userSuspendUpdateList);
+    	if(result > 0) reportMapper.suspendUserUpdate(userSuspendUpdateList);
+    }
+    // 정지 해제 목록조회 
+    public List<UserSuspend> getUserSuspendUpdateList (){
+    	List<UserSuspend> userSuspendUpdateList = reportMapper.getUserSuspendUpdateList();
+    	return userSuspendUpdateList;
+    }
+    
+    //정지 업데이트시 유저 상태 정지로 업데이트  
+    public void reportUserUp(User user) {
+    	reportMapper.reportUserUp(user);
+    }
+    
+    
     
     //특정 벌점 기준 목록 
     public UserSuspend SuspendUpList(String userSuspendCode){
@@ -118,27 +140,7 @@ public class ReportService {
  	   return userSuspend;
     }
     
-    //정지 리스트 수정 
-    public void suspendListUp(UserSuspend userSuspend) {
-    	reportMapper.suspendListUp(userSuspend);
-    }
-    
-    // 특정 시간 마다 확인 후 정지 해제
-    public void unStopping(List<UserSuspend> userSuspendUpdateList) {
-    	int result = reportMapper.unstopping(userSuspendUpdateList);
-    	if(result > 0) reportMapper.suspendUserUpdate(userSuspendUpdateList);
-    }
-    
-    public List<UserSuspend> getUserSuspendUpdateList (){
-    	List<UserSuspend> userSuspendUpdateList = reportMapper.getUserSuspendUpdateList();
-    	return userSuspendUpdateList;
-    }
-    
-    //유저 벌점 업데이트 
-    public void reportUserUp(User user) {
-    	reportMapper.reportUserUp(user);
-    }
-    
+   
     //벌점 기준 목록
     public List<ReportRule> reportRuleList(){
     	List<ReportRule> reportRuleList = reportMapper.reportRuleList();

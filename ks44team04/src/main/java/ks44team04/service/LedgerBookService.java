@@ -78,7 +78,7 @@ public class LedgerBookService {
     	return orderReturnMap;
     }
     
-    //
+    //판매자 매출 통계 카테고리 별 결제 금액 표부분 
     public Map<String, Object> paymentAmountTable(Map<String, Object> orderMap){
     	List<Map<String, String>> cateInfoMonth = ledgerBookMapper.pMonth(orderMap);
     	orderMap.put("cateInfoMonth", cateInfoMonth);

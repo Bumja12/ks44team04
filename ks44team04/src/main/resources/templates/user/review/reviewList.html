@@ -102,8 +102,6 @@
 		        	<span>
 		        	<label th:text="${l.buyerId} + '○' + ${l.reviewRegDate}"></label>
 		        	</span>
-					<button type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
-		         	<button type="button" class="btn"  style="font-size: 13px; padding: 0px;">삭제</button>		      
 					<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
 		         	<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn"  style="font-size: 13px; padding: 0px;">삭제</button>		      
 		        </div>
