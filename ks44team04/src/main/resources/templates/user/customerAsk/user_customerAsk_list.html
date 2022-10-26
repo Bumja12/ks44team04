@@ -91,16 +91,13 @@
 
 <th:block layout:fragment="customJsScript">
 	<script type="text/javascript">
-			// 삭제 버튼 탐색
 			
 			$(function(){
 				
 				// moveToDetail 클래스를 가지고 있는 모든 <tr> 탐색
 				var $moveToDetail = $('.moveToDetail');
 				
-				// 자주 묻는 질문 PK값을 저장하는 배열 객체 removeElement 선언
-				var removeElement = [];
-				
+
 				// moveToDetail 클래스를 가지고 있는 모든 <td>에 이벤트 등록
 				$moveToDetail.each(function(i){
 					$(this).click(function(){
@@ -133,37 +130,10 @@
 					});
 				});
 				
- 				// categoryActive 클래스를 가지고 있는 모든 <a> 탐색
-				var $categoryActive = $('.categoryActive');
+ 
+
  				
- 				// pageNumber 클래스를 가지고 있는 모든 <a> 탐색
-				var $pageNumber = $('.pageNumber');
- 				
- 				// categoryActive 클래스를 가지고 있는 모든 <a>에 이벤트 등록
-				$categoryActive.each(function(i){
-					$(this).click(function(){
-						// 현재 active 클래스를 가진 카테고리 탐색
-						let $activeCategory = $('.categoryActive.active');
-						
-						console.log($activeCategory);
-						console.log($(this));
-						$activeCategory.toggleClass('active');
-						$(this).toggleClass('active');
-					});
-				});
- 				
- 				// pageNumber 클래스를 가지고 있는 모든 <li>에 이벤트 등록
-				$pageNumber.each(function(i){
-					$(this).click(function(){
-						// 현재 active, pageNumber 클래스를 가진 <li> 탐색
-						let $activeNumber = $('.pageNumber.active');
-						
-						console.log($activeNumber);
-						console.log($(this));
-						$activeNumber.toggleClass('active');
-						$(this).toggleClass('active');
-					});
-				});
+
 			});
 			
 				

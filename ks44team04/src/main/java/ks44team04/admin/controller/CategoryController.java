@@ -591,7 +591,7 @@ public class CategoryController {
 		return "/admin/category/removeLevelBuyerCategory";
 	}
 	
-	// 구매자 등급 카테고리 삭제 처리
+	// 구매자 등급 카테고리 삭제 완료 화면
 	@GetMapping("/removeLevelBuyerCategory")
 	public String removeLevelBuyerCategory(Model model) {
 		
@@ -610,7 +610,7 @@ public class CategoryController {
 		return "/admin/category/removeLevelSellerCategory";
 	}
 	
-	// 판매자 등급 카테고리 삭제 처리
+	// 판매자 등급 카테고리 삭제 완료 화면
 	@GetMapping("/removeLevelSellerCategory")
 	public String removeLevelSellerCategory(Model model) {
 		
@@ -629,7 +629,7 @@ public class CategoryController {
 		return "/admin/category/removeCustomerAskCategory";
 	}
 	
-	// 고객 문의 카테고리 삭제 처리
+	// 고객 문의 카테고리 삭제 완료 화면
 	@GetMapping("/removeCustomerAskCategory")
 	public String removeCustomerAskCategory(Model model) {
 		
@@ -648,7 +648,7 @@ public class CategoryController {
 		return "/admin/category/removeRegularAskCategory";
 	}
 	
-	// 자주 묻는 질문 카테고리 삭제 처리
+	// 자주 묻는 질문 카테고리 삭제 완료 화면
 	@GetMapping("/removeRegularAskCategory")
 	public String removeRegularAskCategory(Model model) {
 		
@@ -667,7 +667,7 @@ public class CategoryController {
 		return "/admin/category/removeBoardCategory";
 	}
 	
-	// 게시판 카테고리 삭제 처리
+	// 게시판 카테고리 삭제 완료 화면
 	@GetMapping("/removeBoardCategory")
 	public String removeBoardCategory(Model model) {
 		
@@ -686,7 +686,7 @@ public class CategoryController {
 		return "/admin/category/removeReportCategory";
 	}
 	
-	// 신고 대상 카테고리 삭제 처리
+	// 신고 대상 카테고리 삭제 완료 화면
 	@GetMapping("/removeReportCategory")
 	public String removeReportCategory(Model model) {
 		
@@ -705,7 +705,7 @@ public class CategoryController {
 		return "/admin/category/removeGoodsLargeCategory";
 	}
 	
-	// 판매 상품 카테고리 대분류 삭제 처리
+	// 판매 상품 카테고리 대분류 삭제 완료 화면
 	@GetMapping("/removeGoodsLargeCategory")
 	public String removeGoodsLargeCategory(Model model) {
 		
@@ -724,7 +724,7 @@ public class CategoryController {
 		return "/admin/category/removeGoodsSmallCategory";
 	}
 	
-	// 판매 상품 카테고리 소분류 삭제 처리
+	// 판매 상품 카테고리 소분류 삭제 완료 화면
 	@GetMapping("/removeGoodsSmallCategory")
 	public String removeGoodsSmallCategory(Model model) {
 		
@@ -743,7 +743,7 @@ public class CategoryController {
 		return "/admin/category/removeGoodsQnaCategory";
 	}
 	
-	// 상품 문의 카테고리 삭제 처리
+	// 상품 문의 카테고리 삭제 완료 화면
 	@GetMapping("/removeGoodsQnaCategory")
 	public String removeGoodsQnaCategory(Model model) {
 		

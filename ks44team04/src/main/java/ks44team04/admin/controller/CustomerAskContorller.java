@@ -56,7 +56,7 @@ public class CustomerAskContorller {
 		return "redirect:/admin/customerAsk/customerAskList";
 	} 
 	
-	// 관리자 자주 묻는 질문 내역 화면
+	// 관리자 고객 문의 내역 화면
 	@GetMapping("/customerAskDetail/{customerAskPK}")
 	public String getCustomerAskDetail (@PathVariable (value="customerAskPK") String customerAskPK
 									    ,Model model) {
