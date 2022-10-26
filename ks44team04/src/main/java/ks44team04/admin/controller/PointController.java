@@ -142,7 +142,7 @@ public class PointController {
 
 	//포인트내역
 	@GetMapping("/pointHistory")
-	public String paymentList(Model model) {
+	public String pointList(Model model) {
 
 		List<PointDeal> pointHistory = pointService.pointHistory();
 
