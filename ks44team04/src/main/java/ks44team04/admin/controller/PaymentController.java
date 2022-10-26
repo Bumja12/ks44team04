@@ -159,7 +159,7 @@ public class PaymentController {
 
 	// 주문상세번호 삭제
 	@GetMapping("/remove/{orderDetailCode}")
-	public String removeMember(@PathVariable(value = "orderDetailCode") String orderDetailCode, Model model) {
+	public String removePaymentDetail(@PathVariable(value = "orderDetailCode") String orderDetailCode, Model model) {
 
 		PaymentTotal paymentTotal = paymentService.getPaymentDetail(orderDetailCode);
 		model.addAttribute("title", "주문상세삭제: " + orderDetailCode);
