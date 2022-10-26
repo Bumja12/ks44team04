@@ -1,6 +1,9 @@
 package ks44team04.user.controller;
 
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -31,9 +34,11 @@ public class UserCartController {
 
 	//장바구니
     @GetMapping("/cart")
-    public String getCartList(Model model) {
+    public String getCartList(Model model, HttpSession session) {
     	
-    	List<Cart> cartList = cartService.getCartList("buyer01"); //임시로 buyer01의 
+    	String userId = (String) session.getAttribute("SID");
+    	
+    	List<Cart> cartList = cartService.getCartList(userId);
     	log.info("장바구니 리스트 ::: {}", cartList);
     	
     	model.addAttribute("title", "장바구니");
@@ -45,13 +50,14 @@ public class UserCartController {
     //장바구니 추가
     @PostMapping("/cartAdd")
     @ResponseBody
-    public int cartAdd(Cart cart ,@RequestParam("goodsCode") String goodsCode
-    				             ,@RequestParam("cartAmount") int cartAmount) {
+    public int cartAdd(Cart cart, HttpSession session
+    				  ,@RequestParam("goodsCode") String goodsCode
+    				  ,@RequestParam("cartAmount") int cartAmount) {
     	
-    	String buyerId = "buyer01"; //임의
+    	String userId = (String) session.getAttribute("SID");
     	
     	//cartNewCode 생성
-    	String cartNewCode = cartService.cartNewCode(buyerId); //buyerId 임의
+    	String cartNewCode = cartService.cartNewCode(userId);
     	if(cartNewCode == null) {
     		cartNewCode = "cart001";
     	} else {
@@ -60,7 +66,7 @@ public class UserCartController {
     	log.info("장바구니 증가 코드 :::{}" , cartNewCode);
     	
     	cart.setCartCode(cartNewCode);
-    	cart.setBuyerId("buyer01"); //임의
+    	cart.setBuyerId(userId); //임의
 
     	//만약 장바구니에 같은 상품코드가 있을 시 수량만 더하기
     	if(cartService.cartCheck(cart) > 0) {
@@ -77,9 +83,10 @@ public class UserCartController {
     //장바구니 수량 수정
     @GetMapping("/cartModify")
     @ResponseBody
-    public int cartModify(Cart cart) {
+    public int cartModify(Cart cart, HttpSession session) {
     	
-    	cart.setBuyerId("buyer01"); //임의
+    	String userId = (String) session.getAttribute("SID");
+    	cart.setBuyerId(userId); //임의
     	
     	cartService.cartModify(cart);
 		log.info("사용자가 상품 수정한 정보 ::: {}", cart);
@@ -90,9 +97,10 @@ public class UserCartController {
 	//장바구니 삭제
 	@PostMapping("/cartRemove")
     @ResponseBody
-	public String cartRemove(Cart cart) {
+	public String cartRemove(Cart cart, HttpSession session) {
 		
-		cart.setBuyerId("buyer01"); //임의
+		String userId = (String) session.getAttribute("SID");
+		cart.setBuyerId(userId); //임의
 		
 		cartService.cartRemove(cart);
 		log.info("사용자가 삭제한 장바구니 정보 ::: {}", cart);

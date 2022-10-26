@@ -1,6 +1,7 @@
 package ks44team04.user.controller;
 
 import ks44team04.dto.AddressList;
+import ks44team04.dto.Seller;
 import ks44team04.service.AddressService;
 import ks44team04.util.CodeIndex;
 import org.slf4j.Logger;
@@ -90,8 +91,8 @@ public class UserAddressController {
     }
 
     @GetMapping("/checkout")
-    public String addressListOnCheckout(Model model) {
-        String userId = "buyer01";
+    public String addressListOnCheckout(Model model, HttpSession session) {
+        String userId = (String) session.getAttribute("SID");
         Map<String, String> addressInfo = new HashMap<>();
         addressInfo.put("userId", userId);
         List<AddressList> addressLists = addressService.getAddressList(addressInfo);

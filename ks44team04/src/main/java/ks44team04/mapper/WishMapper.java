@@ -10,6 +10,9 @@ public interface WishMapper {
 	//찜 목록 조회
 	public List<Wishlist> getWishlist(String userId);
 	
+	//장바구니 확인
+	public int wishCheck(Wishlist wishlist);
+	
 	//찜 추가
 	public int wishAdd(Wishlist wishlist);
 	

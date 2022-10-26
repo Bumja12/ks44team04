@@ -43,11 +43,11 @@ public interface LedgerBookMapper {
     
 	
 	
-	//
+  //판매자 매출 통계 카테고리 별 결제 금액 표부분(월)
 	public List<Map<String, String>> pMonth(Map<String,Object> orderMap);
 	
-	//
-	public List<Map<String, String>> paymentAmountTable(Map<String,Object> orderMap);
+  //판매자 매출 통계 카테고리 별 결제 금액 표부분
+    public List<Map<String, String>> paymentAmountTable(Map<String,Object> orderMap);
 	
 	
 }

@@ -162,7 +162,7 @@
 
         /* 포인트 변경 시 discountFn 함수 호출 */
         document.querySelector('#usePoint').addEventListener('focus', function () {
-           this.value = '';
+            this.value = '';
         });
         document.querySelector('#usePoint').addEventListener('blur', function () {
             if (this.value > Number(document.querySelector('#userPoint').dataset.point)) {

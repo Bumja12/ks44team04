@@ -1,6 +1,9 @@
 package ks44team04.user.controller;
 
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -31,9 +34,11 @@ public class UserWishController {
 
 	//관심 상품 
     @GetMapping("/wishlist")
-    public String getWishlist(Model model) {
+    public String getWishlist(Model model, HttpSession session) {
     	
-    	List<Wishlist> wishlist = wishService.getWishlist("buyer01");
+    	String userId = (String) session.getAttribute("SID");
+    	
+    	List<Wishlist> wishlist = wishService.getWishlist(userId);
     	log.info("찜 리스트 ::: {}", wishlist);
     	
     	model.addAttribute("title", "찜");
@@ -44,18 +49,22 @@ public class UserWishController {
     //찜 추가
     @PostMapping("/wishAdd")
     @ResponseBody
-    public int wishAdd(Wishlist wishlist) {
+    public int wishAdd(Wishlist wishlist, HttpSession session) {
     	
-    	String buyerId = "buyer01"; //임의
+    	String userId = (String) session.getAttribute("SID");
     	
     	//wishNewCode 생성
-    	String wishNewCode = wishService.wishNewCode(buyerId); //임의
+    	String wishNewCode = wishService.wishNewCode(userId);
     	wishNewCode = CodeIndex.codeIndex(wishNewCode, 4);
     	log.info("찜 증가 코드 :::{}" , wishNewCode);
     	
     	wishlist.setWishCode(wishNewCode);
-    	wishlist.setBuyerId("buyer01"); //임의
+    	wishlist.setBuyerId(userId);
 
+    	//만약 찜 목록에 같은 상품코드가 있을 시 추가 안 하기
+    	if(wishService.wishCheck(wishlist) > 0) {
+    		return 2;
+    	}
     	wishService.wishAdd(wishlist);
     	log.info("찜 추가 정보 ::: {}", wishlist);
 
@@ -65,9 +74,11 @@ public class UserWishController {
 	//찜 삭제
 	@GetMapping("/wishRemove")
     @ResponseBody
-	public String wishRemove(Wishlist wishlist) {
+	public String wishRemove(Wishlist wishlist, HttpSession session) {
 		
-		wishlist.setBuyerId("buyer01"); //임의
+		String userId = (String) session.getAttribute("SID");
+		
+		wishlist.setBuyerId(userId);
 		
 		wishService.wishRemove(wishlist);
 		log.info("사용자가 삭제한 장바구니 정보 ::: {}", wishlist);

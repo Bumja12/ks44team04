@@ -45,6 +45,19 @@
 		w.buyer_id = #{buyerId}
 	</select>
 	
+	<!-- 찜 확인 -->
+	<select id="wishCheck" parameterType="Wishlist" resultType="int">
+	/* 해당 상품이 찜 목록에 있는지 확인 */
+	SELECT
+		count(goods_code)
+	FROM
+		tb_wishlist
+	WHERE
+		buyer_id = #{buyerId}
+	AND
+		goods_code = #{goodsCode}
+	</select>
+	
 	<!-- 찜 추가 -->
 	<insert id="wishAdd" parameterType="Wishlist">
 	/* 찜 추가  */
