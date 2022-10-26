@@ -143,7 +143,8 @@
     </update>
     <update id="setExchangeApprove" parameterType="map">
         UPDATE tb_order_exchange
-        SET approve_check = 'Y', approve_date = now()
+        SET approve_check = 'Y',
+            approve_date  = now()
         WHERE order_detail_code = #{orderDetailCode}
     </update>
     <update id="setReturnApprove" parameterType="string">
@@ -154,11 +155,12 @@
 
     <insert id="addPostInfo" parameterType="PostInfo">
         <selectKey resultType="String" keyColumn="post_info" keyProperty="postInfo" order="BEFORE">
-            select concat(substr(max(post_info), 1, 2), lpad(cast(substr(max(post_info), 3) as unsigned) + 1, 8, 0)) as post_info
+            select concat(substr(max(post_info), 1, 2), lpad(cast(substr(max(post_info), 3) as unsigned) + 1, 8, 0)) as
+            post_info
             from tb_post_info
         </selectKey>
         insert into tb_post_info (post_info, post_list, reg_date, post_company_name, invoice_number)
-            values (#{postInfo}, #{postList}, now(), #{postCompanyName}, #{invoiceNumber})
+        values (#{postInfo}, #{postList}, now(), #{postCompanyName}, #{invoiceNumber})
     </insert>
 
     <select id="getContentsCount" resultType="int">
@@ -198,17 +200,17 @@
     <select id="getOrderListA" parameterType="map" resultMap="orderDetailResultMap">
         select *
         from tb_order_detail as tod
-                 inner join tb_goods tg
-                            on tod.goods_code = tg.goods_code
-                 inner join tb_order t
-                            on tod.order_num = t.order_num
+        inner join tb_goods tg
+        on tod.goods_code = tg.goods_code
+        inner join tb_order t
+        on tod.order_num = t.order_num
         where tg.seller_id = #{sellerId}
-          <if test="status != null and status != ''">
+        <if test="status != null and status != ''">
             and tod.order_status regexp #{status}
-          </if>
-          <if test="text != null and text != ''">
+        </if>
+        <if test="text != null and text != ''">
             and ${select} regexp #{text}
-          </if>
+        </if>
         order by order_detail_code desc
     </select>
 
@@ -218,6 +220,7 @@
         where goods_code = #{goodsCode}
     </select>
 
+    <!-- tb_order 테이블 데이터 입력 -->
     <insert id="setOrder" parameterType="Order">
         insert into tb_order (order_num, buyer_id, coupon_code, order_date, order_status, total_sum, total_price,
                               coupon_price, use_point, goods_discount_price, post_price, total_order_price,
@@ -226,18 +229,20 @@
                 #{usePoint}, #{goodsDiscountPrice}, #{postPrice}, #{totalOrderPrice}, #{postAddressList});
     </insert>
 
+    <!-- 주문 번호 호출 -->
     <select id="getOrderNum" resultType="String">
         select max(order_num)
         from tb_order
         where order_num like concat((curdate() + 0), '%');
     </select>
 
+    <!-- tb_order_detail 테이블 데이터 입력 -->
     <insert id="setOrderDetail" parameterType="OrderDetail">
         insert into tb_order_detail (order_detail_code, order_num, goods_code, order_amount, order_og_price,
-        order_price,
-        order_status, refund_check, auto_confirm_date)
+                                     order_price,
+                                     order_status, refund_check, auto_confirm_date)
         values (#{orderDetailCode}, #{orderNum}, #{goodsCode}, #{orderAmount}, #{orderOgPrice}, #{orderPrice}, '주문처리중',
-        'Y', date_add(now(), interval 7 day));
+                'Y', date_add(now(), interval 7 day));
     </insert>
 
 </mapper>

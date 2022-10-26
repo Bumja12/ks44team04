@@ -26,7 +26,8 @@
         <result column="post_company_name" property="postCompanyName"/>
         <result column="invoice_number" property="invoiceNumber"/>
     </resultMap>
-    
+
+    <!-- 배송지 목록 조회 -->
     <select id="getAddressList" resultMap="addressListResultMap" parameterType="map">
         SELECT
             *
