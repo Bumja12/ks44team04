@@ -111,7 +111,7 @@ public class CouponController {
 
 	//쿠폰발급
 	@PostMapping("/couponIssue")
-	public String CouponIssue(@RequestParam String[] userId
+	public String couponIssue(@RequestParam String[] userId
 								,@RequestParam String couponCode
 								,@RequestParam String adminId) {
 
@@ -147,7 +147,7 @@ public class CouponController {
 
 	//쿠폰생성
 	@PostMapping("/couponCreate")
-	public String CouponCreate(Coupon coupon) {
+	public String couponCreate(Coupon coupon) {
 
 		System.out.println(coupon);
 		couponService.couponCreate(coupon);
@@ -157,7 +157,7 @@ public class CouponController {
 
 	//쿠폰보유현황
 	@GetMapping("/couponStatus")
-	public String CouponStatus(Model model) {
+	public String couponStatus(Model model) {
 		
 		List<CouponStatus> couponStatus = couponService.couponStatus();
 		
@@ -170,7 +170,7 @@ public class CouponController {
 	
 	//쿠폰목록
 	@GetMapping("/couponList")
-	public String CouponList(Model model) {
+	public String couponList(Model model) {
 		
 		List<Coupon> couponList = couponService.couponList();
 		
