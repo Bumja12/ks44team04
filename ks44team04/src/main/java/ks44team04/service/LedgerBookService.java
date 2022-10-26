@@ -90,5 +90,4 @@ public class LedgerBookService {
     	paymentAmountTableMap.put("paymentAmountTable", paymentAmountTable);
     	return paymentAmountTableMap;
     }
-    
 }
