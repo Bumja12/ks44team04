@@ -166,6 +166,15 @@ public class UserController {
 		return cnt;
 	}
 	
+	// 10/10 판매자 이메일 중복체크
+	@GetMapping("/user/emailCheckS")
+	@ResponseBody
+	public int emailCheckS(@RequestParam(name="storeEmail") String storeEmail) {
+		int cnt = userService.emailCheckS(storeEmail);
+		
+		return cnt;
+	}
+	
 	// 10/10 판매자 상호명 중복체크
 	@GetMapping("/user/storeNameCheck")
 	@ResponseBody
@@ -205,15 +214,6 @@ public class UserController {
 		model.addAttribute("goodsLargeCategory", goodsLargeCategory);
 		
 		return "admin/user/addSeller";
-	}
-	
-	// 10/10 판매자 이메일 중복체크
-	@GetMapping("/user/emailCheckS")
-	@ResponseBody
-	public int emailCheckS(@RequestParam(name="storeEmail") String storeEmail) {
-		int cnt = userService.emailCheckS(storeEmail);
-		
-		return cnt;
 	}
     
 	// 10/8 회원 휴대폰번호 중복체크
