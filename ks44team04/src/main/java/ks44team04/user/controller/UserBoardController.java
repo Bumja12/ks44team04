@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ks44team04.dto.Board;
 import ks44team04.dto.BoardComment;
-import ks44team04.dto.Cart;
 import ks44team04.service.BoardService;
 import ks44team04.util.CodeIndex;
 
@@ -78,6 +77,7 @@ public class UserBoardController {
 	//게시물 등록 
 	@PostMapping("/boardAdd")
 	public String boardAdd(Board board, HttpSession session){
+		
 		String userId = (String) session.getAttribute("SID");
 		
 		String boardNewCode = boardService.getBoardNewCode();
@@ -95,10 +95,7 @@ public class UserBoardController {
 	//댓글 등록
 	@PostMapping("/commentAdd")
     @ResponseBody
-	public String boardAdd(BoardComment boardComment, HttpSession session
-						   //@RequestHeader(value = "boardCode") String boardCode,
-						   //@RequestHeader(value = "commentContent") String commentContent
-						   ){
+	public String commentAdd(BoardComment boardComment, HttpSession session){
 		
 		String userId = (String) session.getAttribute("SID");
 		

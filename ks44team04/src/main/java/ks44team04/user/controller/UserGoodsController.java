@@ -17,9 +17,7 @@ import ks44team04.dto.Goods;
 import ks44team04.dto.GoodsQna;
 import ks44team04.dto.GoodsQnaCategory;
 import ks44team04.dto.Review;
-import ks44team04.dto.ReviewComment;
 import ks44team04.service.GoodsService;
-import ks44team04.service.ReviewService;
 import ks44team04.service.UserService;
 
 @Controller
@@ -29,14 +27,11 @@ public class UserGoodsController {
     
     //의존성 주입
   	private GoodsService goodsService;
-  	private ReviewService reviewService;
-  	
   	//유저 권한 확인 서비스 
   	private UserService userService;
-	public UserGoodsController(GoodsService goodsService, UserService userService, ReviewService reviewService) {
+	public UserGoodsController(GoodsService goodsService, UserService userService) {
 		this.goodsService = goodsService;
 		this.userService = userService;
-		this.reviewService = reviewService;
 	}
 	
 	//상품 리스트 
@@ -75,7 +70,6 @@ public class UserGoodsController {
     	//특정 후기 목록
     	List<Review> reviewSpecific = goodsService.reviewSpecific(goodsCode);
     	
-    			
 		model.addAttribute("title", "상품");
 		model.addAttribute("goodsInfo", goodsInfo);
 		model.addAttribute("goodsQnaInfo", goodsQnaInfo);
@@ -89,12 +83,13 @@ public class UserGoodsController {
     
     //문의 등록 
 	@PostMapping("/goods")
-	public String goodsQnaAdd(GoodsQna goodsQna
+	public String goodsQnaAdd(GoodsQna goodsQna, HttpSession session
 							 ,@RequestHeader(value = "Referer") String referer
 							 ,RedirectAttributes reattr){
 		
-		goodsQna.setBuyerId("buyer01");
-		//goodsQna.setQnaStatus("답변대기");
+		String userId = (String) session.getAttribute("SID");
+		
+		goodsQna.setBuyerId(userId);
 		
 		goodsService.goodsQnaAdd(goodsQna);
 		log.info("사용자가 등록한 문의 정보 ::: {}", goodsQna);

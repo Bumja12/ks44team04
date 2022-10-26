@@ -22,6 +22,11 @@ public class WishService {
 		return wishlist;
 	}
 	
+	//장바구니 확인
+	public int wishCheck(Wishlist wishlist) {
+		return wishMapper.wishCheck(wishlist);
+	}
+	
 	//찜 추가
 	public int wishAdd(Wishlist wishlist) {
 		int result = wishMapper.wishAdd(wishlist);

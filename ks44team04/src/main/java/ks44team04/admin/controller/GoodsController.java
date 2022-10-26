@@ -149,21 +149,21 @@ public class GoodsController {
 
 	//상품 등록 쿼리 실행
 	@PostMapping("/goodsAdd")
-	public String goodsAdd(@RequestParam MultipartFile[] uploadfile, HttpServletRequest request, HttpSession session
-						   ,Goods goods, Model model){
+	public String goodsAdd(@RequestParam MultipartFile[] uploadfile, HttpServletRequest request
+						   ,Goods goods, Model model, HttpSession session){
+		
+		String userId = (String) session.getAttribute("SID");
 		
 		//대분류 카테고리 리스트 가져오기
 		List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
-				
-		String sellerId = "seller01"; //임의
 		
 		// ========================= goodsCode 생성 =========================
-		String goodsNewCode = goodsService.getGoodsNewCode(sellerId);
+		String goodsNewCode = goodsService.getGoodsNewCode(userId);
 		goodsNewCode = CodeIndex.codeIndex(goodsNewCode, 5);
 		
 		log.info("상품 증가 코드 :::{}" , goodsNewCode);
 		goods.setGoodsCode(goodsNewCode);
-		goods.setSellerId("seller01");
+		goods.setSellerId(userId);
 		// =================================================================
 		
 		
