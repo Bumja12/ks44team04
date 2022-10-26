@@ -102,7 +102,7 @@ public class PointController {
 
 	//관리자포인트지급
 	@PostMapping("/pointSend")
-	public String PointSend(@RequestParam String[] userId
+	public String pointSend(@RequestParam String[] userId
 							,@RequestParam String pointAmount
 							,@RequestParam String adminId) {
 
