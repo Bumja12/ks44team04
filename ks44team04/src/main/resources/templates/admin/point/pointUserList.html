@@ -123,7 +123,19 @@ th {
 				$('.childCheck').prop('checked', $(this).prop('checked'));
 			})
 
+			$('#pointAmountInput').off().on('click', function(){
+				let checkboxCheck = $('.childCheck').is(':checked');
+				if(checkboxCheck == false){
+					alert('포인트를 발급할 회원을 먼저 선택해주세요.');
+				}
+				console.log(2);
+			})
+
 			pointSend.off().on('click', function(){
+				let checkboxCheck = $('.childCheck').is(':checked');
+				if(checkboxCheck == false){
+					alert('포인트를 발급할 회원을 먼저 선택해주세요.');
+				}
 				let pointAmount = $('#pointAmountInput').val();
 				$('#pointAmount').val(pointAmount);
 
