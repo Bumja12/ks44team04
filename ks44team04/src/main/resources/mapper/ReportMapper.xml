@@ -302,7 +302,7 @@
 		tb_user_suspend AS s
 	ORDER BY s.user_suspend_code DESC 
     </select>
-    
+    <!-- 정지 해제 목록조회  -->
     <select id="getUserSuspendUpdateList" resultMap="userSuspendListResultMap" fetchSize="100">
     	/* 정지 해제 목록조회 */
 		SELECT 
