@@ -321,6 +321,12 @@
             document.querySelector('#postModifyForm').reset();
         }
 
+        function orderSearch() {
+            let selected = document.querySelector('#orderSearchSelect');
+            let text = document.querySelector('#orderSearchText');
+            getOrderList('결제|배송|구매', selected.value, text.value);
+        }
+
     </script>
 </th:block>
 </html>
