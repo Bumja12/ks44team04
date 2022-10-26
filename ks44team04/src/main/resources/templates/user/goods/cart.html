@@ -124,10 +124,10 @@ button:focus{ outline:none; border:none; }
 	<form id="checkoutForm" th:action="@{/user/order/checkout}" method="get"></form>
 
 </th:block>
+
 <th:block layout:fragment="customJsScript">
 <th:block th:replace="fragments/userJs :: datatablesFragment"></th:block>
 <script th:inline="javascript">
-
 $(document).ready(function() {
 
 	/* 전체 선택 클릭 시 장바구니 안에 있는 상품 다 전체 선택 */

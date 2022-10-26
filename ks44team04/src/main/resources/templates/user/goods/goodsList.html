@@ -113,6 +113,8 @@ $(function() {
 			.done(function(result){
 				if(result == 1){
 					alert("찜 목록에 추가되었습니다.");
+				}else if(result ==2){
+					alert("이미 찜한 상품입니다.");
 				}
 			});
 	});
