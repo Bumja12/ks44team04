@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -31,18 +32,6 @@ public class OrderController {
 		this.addressService = addressService;
 	}
 
-	@GetMapping("/order/response")
-	public String orderResponse() {
-
-		return "admin/order/response";
-	}
-
-	@GetMapping("/order/address")
-	public String orderAddress() {
-
-		return "admin/order/addressResponse";
-	}
-
 	@GetMapping("/order/liston")
 	public String orderListOn(Model model) {
 		model.addAttribute("title", "주문목록");
@@ -58,10 +47,10 @@ public class OrderController {
 
 	@PostMapping("/order/listoff")
 	@ResponseBody
-	public List<OrderDetail> orderListOffA(@RequestBody Map<String, String> orderMap) {
-		String sellerId = "seller01";
+	public List<OrderDetail> orderListOffA(@RequestBody Map<String, String> orderMap,
+										   HttpSession session) {
+		String sellerId = (String) session.getAttribute("SID");
 		orderMap.put("sellerId", sellerId);
-		log.info("=========================orderMap : {}", orderMap);
 		return orderService.getOrderListA(orderMap);
 	}
 

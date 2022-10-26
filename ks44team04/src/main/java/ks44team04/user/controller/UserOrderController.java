@@ -43,10 +43,10 @@ public class UserOrderController {
     }
 
     @GetMapping("/checkout")
-    public String checkout(Model model,
+    public String checkout(Model model, HttpSession session,
                            @RequestParam(value = "goodsCode") String[] goodsCode,
                            @RequestParam(value = "cartAmount") String[] cartAmount) {
-        String userId = "buyer01";
+        String userId = (String) session.getAttribute("SID");
         Map<String, String> addressInfo = new HashMap<>();
         addressInfo.put("userId", userId);
         List<AddressList> addressLists = addressService.getAddressList(addressInfo);
@@ -70,17 +70,11 @@ public class UserOrderController {
     }
 
     @GetMapping("/couponlist")
-    public String getCouponStatus(Model model) {
-        String userId = "buyer01";
+    public String getCouponStatus(Model model, HttpSession session) {
+        String userId = (String) session.getAttribute("SID");
         List<CouponStatus> couponStatus = couponService.getCouponStatus(userId);
         model.addAttribute("couponStatus", couponStatus);
         return "user/order/couponList";
-    }
-
-    @GetMapping("/payment")
-    public String orderPayment() {
-
-        return "user/order/payment";
     }
 
     @GetMapping("/list")
@@ -125,8 +119,8 @@ public class UserOrderController {
         return "redirect:https://tracker.delivery/#/" + company + "/" + in;
     }
 
-    @GetMapping("/exchange/{orderdetailcode}")
-    public String orderExchange(@PathVariable("orderdetailcode") String orderDetailCode, Model model) {
+    @GetMapping("/exchange/{orderDetailCode}")
+    public String orderExchange(@PathVariable("orderDetailCode") String orderDetailCode, Model model) {
         Map<String, Object> orderMap = new HashMap<>();
         orderMap.put("orderDetailCode", orderDetailCode);
         OrderDetail orderDetail = orderService.getOrderDetail(orderMap);
@@ -178,7 +172,7 @@ public class UserOrderController {
         orderMap.put("orderDetailCode", orderDetailCode);
         OrderDetail orderDetail = orderService.getOrderDetail(orderMap);
         model.addAttribute("orderDetail", orderDetail);
-        return "/user/order/orderReturn";
+        return "user/order/orderReturn";
     }
 
     @PostMapping("/return")
@@ -202,6 +196,7 @@ public class UserOrderController {
         return "redirect:" + referer;
     }
 
+    /* 주문 완료 처리 */
     @PostMapping("/end")
     public String setOrder(Order order, OrderDetail orderDetail, OrderDetailStr orderDetailStr, PointDeal pointDeal,
                            @RequestParam("couponStatusCode") String couponStatusCode,
