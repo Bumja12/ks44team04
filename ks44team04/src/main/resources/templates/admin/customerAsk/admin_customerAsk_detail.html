@@ -381,10 +381,8 @@
 					console.log($addAskAnswerForm);
 					// 관리자 답변 내역이 있다면
 					if(isAnswer){
-// 						$askAnswerDetail.removeClass('d-none');
 						$addAskAnswerForm.addClass('d-none');
 					}else{ // 관리자 답변 내역이 없다면 
-// 						$askAnswerDetail.addClass('d-none');
 						$addAskAnswerForm.removeClass('d-none');
 					}
 				});
@@ -395,18 +393,6 @@
 					// 답변 내용 탐색
 					let $addAskAnswerContent =  $('#addAskAnswerContent');
 					console.log($addAskAnswerContent);
-// 					if(pwInput.value == ""){
-// 						alert("비밀번호를 입력하세요.")
-// 						pwInput.focus();
-						
-// 					}else if(pwInput.value != userPw){
-// 							alert("비밀번호를 확인하시길 바랍니다.")
-// 							pwInput.focus();
-							
-// 					}else if(pwInput.value == userPw){
-// 						console.log(i.type);
-// 						i.type = 'submit';
-// 					}
 					
 					isAnswer = true; // true -> 답변이 있다.
 					console.log(isAnswer);

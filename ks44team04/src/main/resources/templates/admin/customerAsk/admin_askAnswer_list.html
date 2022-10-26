@@ -203,7 +203,7 @@
 						var $allTd = $(this).parent().children();
 						console.log($allTd[1].innerText); // String type
 						var $customerAskPK = $allTd[3].innerText
-						location.href='customerAskDetail?customer_ask=' + $customerAskPK;
+						location.href='/admin/customerAsk/customerAskDetail/' + $customerAskPK;
 					});
 				});
 				
