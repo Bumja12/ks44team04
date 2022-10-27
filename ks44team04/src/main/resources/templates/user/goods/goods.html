@@ -829,27 +829,26 @@ $(function() {
 	      let reviewList = $(this).data("review-code");
 	      console.log("review 댓글 " + reviewList)
 	
-	   /*     $.ajax({
-	         url: "/user/review/reviewCommentList",
-	               type: "GET",
-	               data: {
-	                   'reviewList': reviewList
-	               },
-	               dataType: "data",
-	               success: function () {
-	
-	               }
-	      }); */
-	
+			let recomModel = $('#recomModel');
 	           $.ajax({
 	              url: "/user/review/reviewCommentList",
 	              method: "GET",
 	              data: { 'reviewList' : reviewList },
 	              dataType: "json",
-	           success: function (data) {
-	                 console.log(data);
-	
-	              }
+	          	  success: function (data) {
+	                 console.log(data);	
+	                 let recomModel = "";
+	        	  	$.each(data, function(index, item){
+	        	  		recomModel += "<p>" + data[index].user_id +" ○ " + data[index].reg_date +  "</p>"
+	        	  		recomModel += "<input type='text' style=' width: 99%; height: 50px;' value=" + data[index].review_comment_content + ">"
+	        	  		recomModel += "<div class='row'> <hr align='center' style='border: solid 1px #EDEDED; width: 80%;'> </div>"
+					})
+					$('#recomModel').prepend(recomModel);
+	        	  	$('.reviweComment').on('hidden.bs.modal', function(e) {
+						$('#recomModel').empty();
+					})
+              	
+	        	}
 	
 	      });
 	   });
