@@ -106,16 +106,16 @@ public class ReviewService {
     	reviewMapper.reviewCommentDelete(reviewComment);
     }
     
-    //후기 댓글 특정 목록 
-	/*
-	 * public ReviewComment reviewCommnetList(String reviewList) { ReviewComment
-	 * reviewCommnetList = reviewMapper.reviewCommnetList(reviewList); return
-	 * reviewCommnetList; }
-	 */
-    //입고등록 모달 - 특정 상품코드 조회
-    public List<Map<String, Object>> reviewCommnetList(String reviewList){
-    	
-       return reviewMapper.reviewCommnetList(reviewList);
-    }
+  //후기 댓글 특정 목록
+    /*
+     * public ReviewComment reviewCommnetList(String reviewList) { ReviewComment
+     * reviewCommnetList = reviewMapper.reviewCommnetList(reviewList); return
+     * reviewCommnetList; }
+     */
+       //입고등록 모달 - 특정 상품코드 조회
+       public List<Map<String, Object>> reviewCommnetList(String reviewList){
+
+          return reviewMapper.reviewCommnetList(reviewList);
+       }
   
 }
