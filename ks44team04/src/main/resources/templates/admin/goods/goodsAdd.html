@@ -107,6 +107,15 @@
     border-radius : 50px;
     border: 1px solid #73879c;
 }
+/* 유효성 검사 경고 태그 */
+.ck_warn{
+	display: none;			
+	padding-left: 10px;
+    padding-top: 10px;
+    text-align: center;
+    color: red;
+    font-weight: 400;    
+}
 </style>
 </th:block>
 
@@ -137,12 +146,12 @@
 						<select class="smallCate form-control" id="goodsSmallCategory" name="goodsSmallCategory">
 							<option value="none">::</option>
 						</select>
+					<span class="ck_warn category_warn">카테고리를 선택해주세요.</span>
 					<p class="explain">
 						상품에 맞지 않는 카테고리에 등록할 경우 강제 이동되거나 판매중지, 판매금지 될 수 있습니다.</p>
 				</div>
 			</div>
 		</div>
-
 
 		<div>
 			<h5>
@@ -156,12 +165,14 @@
 				<div class="firstMenu form-inline">
 					<label class="addTitle control-label" for="goodsName">상품명</label>
 						<input type="text" class="form-control" id="goodsName" name="goodsName" required="required" size="30">
+				<span class="ck_warn name_warn">상품명을 입력해주세요.</span>
 				</div>
 				<div class="firstMenu form-inline" style="margin-top:15px;">
 					<label class="addTitle control-label" for="goodsContent">상품정보</label>
-						<textarea class="form-control" id="goodsContent" name="goodsContent" required="required" style="width:300px; height:70px; resize: none;"></textarea>
+						<textarea class="form-control" id="goodsContent" name="goodsContent" required="required" style="width:300px; height:60px; resize: none;"></textarea>
+					<span class="ck_warn content_warn">상품 정보를 입력해주세요.</span>
 					<p class="explain">
-						상품명 최대 30글자까지 입력가능하며, 일부 특수문자를 포함한 금칙어는 상품명으로 사용할 수 없습니다.<br>
+						상품명 최대 40자까지 입력가능하며, 일부 특수문자를 포함한 금칙어는 상품명으로 사용할 수 없습니다.<br>
 						판매 상품과 직접 관련이 없는 다른 상품명, 스팸성 키워드 입력 시 관리자에 의해 판매 금지될 수 있습니다.</p>
 				</div>
 			</div>
@@ -183,13 +194,21 @@
 						<input type="text" class="salePrice numberInput form-control" id="goodsPrice" name="goodsPrice" size="12" placeholder="숫자만 입력 가능">
 						<span class="input-group-addon">원</span>
 					</div>
+					<span class="ck_warn price_warn">판매가를 입력해주세요.</span>
 				</div>
 				<div class="firstMenu form-inline">
 					<label class="addTitle numberTitle control-label" for="goodsDiscountRate">할인율</label>
-					<div class="input-group">
+					<div class="input-group" style="margin-right:10px;">
 						<input type="text" class="disRate numberInput form-control" id="goodsDiscountRate" name="goodsDiscountRate" size="3">
 						<span class="input-group-addon">%</span>
 					</div>
+					<div class="addTitle input-group" style="margin-top:10px;">
+						<label for="noDiscount" class="chk_box">
+							<input type="checkbox" id="noDiscount" >할인없음
+							<span class="on"></span>
+						</label>
+					</div>
+					<span class="ck_warn discount_warn">할인율을 입력해주세요.</span>
 				</div>
 				<hr class="hrStyle" align="left">
 				<div class="firstMenu form-inline">
@@ -223,6 +242,7 @@
 						<input type="text" class="numberInput form-control" id="goodsStock" name="goodsStock" size="5">
 						<span class="input-group-addon">개</span>
 					</div>
+					<span class="ck_warn stock_warn">재고를 입력해주세요.</span>
 					<p class="explain">
 						주문하면 재고수량이 차감되며, 재고가 0으로 변경 시 품절상태로 변경됩니다.</p>
 				</div>
@@ -239,6 +259,7 @@
 							<span class="on"></span>
 						</label>
 					</div>
+					<span class="ck_warn post_warn">배송비를 입력해주세요.</span>
 				</div>
 				<p class="explain" style="margin-bottom:15px;">
 					무료배송 체크 시, 자동으로 배송비는 0원으로 변경됩니다.</p>
@@ -246,14 +267,16 @@
 				<div class="firstMenu form-inline" style="margin-bottom:-15px;">
 					<div class="input-group">
 						<label class="addTitle chk_box">
-							<input type="checkbox" id="packagePostCheck" name="packagePostCheck" value="Y" checked> 묶음배송
+							<input type="checkbox" class="packYN"> 묶음배송
 							<span class="on"></span>
+							<input type="hidden" class="hiddenPackCk" id="packagePostCheck" name="packagePostCheck" value="N">
 						</label>
 					</div>
 					<div class="input-group" >
 						<label class="addTitle chk_box">
-							<input type="checkbox" id="regularDeliverCheck" name="regularDeliverCheck" value="Y" checked> 정기배송
+							<input type="checkbox" class="deliverYN"> 정기배송
 							<span class="on"></span>
+							<input type="hidden" class="hiddenDeliverCk" id="regularDeliverCheck" name="regularDeliverCheck" value="N">
 						</label>
 					</div>
 				</div>
@@ -275,6 +298,8 @@
 						<ul id="imgPreview" class="sortable"></ul>
 					</div>
 				</div>
+				<br>
+				<span class="ck_warn image_warn">이미지를 첨부해주세요.</span>
 				<hr class="hrStyle" align="left">
 				<p class="imgExplain">권장 크기 : 640 x 640 (윈도대상 750 x 1000)</p>
 				<p class="explain">
@@ -296,6 +321,7 @@
 				<div class="form-inline form-group" style="margin-top: 20px;">
  					<textarea class="summernote" id="goodsDetail" name="goodsDetail"></textarea>
  				</div>
+ 				<span class="ck_warn detail_warn">상품 설명을 입력해주세요.</span>
  				<p class="explain">
  					상세설명 권장 크기 : 가로 860px <br>
 					상품명과 직접적 관련 없는 상세설명, 외부 링크 입력 시 관리자에 의해 판매 금지 될 수 있습니다.<br>
@@ -325,7 +351,7 @@
 $(function(){
     /* 썸머노트 설정 */
 	$(document).ready(function() {
-    	$('.summernote').summernote({
+		$('.summernote').summernote({
 			height: 300,           //에디터 높이
 			minHeight: null,       //최소 높이
 			maxHeight: null,       //최대 높이
@@ -372,20 +398,55 @@ $(function(){
 			$('#hiddenPrice').val(salePrice - discounted);
 			var hiddenPrice = $('#hiddenPrice').val().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
 			$('.discountPrice').text( hiddenPrice );
-    	} 
+    		
+			//다시 할인율 0으로 할 때
+			$('#noDiscount').change(function(){
+				if($(this).prop("checked")){
+					var salePrice = $('.salePrice').val().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+					$('.discountPrice').text( salePrice );
+					$('.discountVal').text( 0 );
+				}
+			});
+		
+		} 
 	});
-   
-    /* form 전송 */ 
-	$('#goodsAddForm').submit(function(event) {
-	});
-	  
-	$('#goodsAddBtn').click(function () {
-		//판매가, 배송비 결과값 콤마 없애기
-		$('.salePrice').val( Number($('.salePrice').val().replace(/,/g, "")) );
-		$('.postPrice').val( Number($('.postPrice').val().replace(/,/g, "")) );
-	 
-		$('#goodsAddForm').submit();
-	});
+    
+    /*	상품명 30글자 제한하기 */
+    $('#goodsName').keyup(function (e) {
+	    if ($('#goodsName').val().length > 30) {
+		    $(this).val($(this).val().substring(0, 30));
+		   	$('.name_warn').css('display','initial');
+		   	$('.name_warn').html('상품명은 40자까지 입력가능합니다.');
+		};
+    });
+    
+	/* checkbox 선택 시 Y 해제 시 N */
+	//묶음배송
+    $('.packYN').click(function(){
+        var packagePostCheck = $(this).prop('checked'); 
+        // this를 사용하여 클릭한 checkbox 가 체크되도록 설정
+        if(packagePostCheck){
+            $('.hiddenPackCk').val( 'Y' );
+            console.log( 'Y ');
+        }
+        else{
+            $('.hiddenPackCk').val( 'N' );
+            console.log( 'N ');
+        }
+    });
+	//정기배송
+    $('.deliverYN').click(function(){
+        var regularDeliverCheck = $(this).prop('checked'); 
+        // this를 사용하여 클릭한 checkbox 가 체크되도록 설정
+        if(regularDeliverCheck){
+            $('.hiddenDeliverCk').val( 'Y' );
+            console.log( 'Y ');
+        }
+        else{
+            $('.hiddenDeliverCk').val( 'N' );
+            console.log( 'N ');
+        }
+    });
 	
 	/* 대분류 선택시 중분류 카테고리 나오게 하기 */
 	var largeCategoryList = /*[[${largeCategoryList}]]*/
@@ -426,6 +487,17 @@ $(function(){
 			}
 		}
 	});
+	/* 할인없음 체크박스 체크, 해제 시 이벤트 */
+    $("#noDiscount").change(function(){
+    	if($(this).prop("checked")){
+    		console.log("할인없음 체크 : Y ");
+    		$("#goodsDiscountRate").attr("disabled", true); //할인없음 체크시 할인율 인풋 막기
+    		$("#goodsDiscountRate").val( 0 );
+    	}else{
+    		console.log("할인없음 체크 해제 : N ");
+    		$("#goodsDiscountRate").attr("disabled", false);
+    	}
+    });
 	
 	/* 무료배송 체크박스 체크, 해제 시 이벤트 */
     $("#freePost").change(function(){
@@ -436,31 +508,10 @@ $(function(){
     	}else{
     		console.log("무료배송 체크 해제 : N ");
     		$("#goodsPostPrice").attr("disabled", false);
+    		$("#goodsPostPrice").val( "" );
     	}
     });
 	
-    /* 묶음배송 체크박스 체크, 해제 시 이벤트 */
-    $("#packagePostCheck").change(function(){
-        if($(this).is(":checked")){
-        	console.log("묶음배송 체크 : Y ");
-        	$("#packagePostCheck").val( 'Y' );
-        }else{
-        	console.log("묶음배송 체크 해제 : N ");
-        	$("#packagePostCheck").val( 'N' );
-        }
-    });
-    
-    /* 정기배송 체크박스 체크, 해제 시 이벤트 */
-    $("#regularDeliverCheck").change(function(){
-        if($(this).is(":checked")){
-        	console.log("정기배송 체크 : Y ");
-        	$("#regularDeliverCheck").val( 'Y' );
-        }else{
-        	console.log("정기배송 체크 해제 : N ");
-        	$("#regularDeliverCheck").val( 'N' );
-        }
-    });
-
     /* 이미지 등록 */ 
 	//드래그 앤 드롭
 	$(".sortable").sortable();
@@ -545,10 +596,188 @@ $(function(){
 	});
 });
 
-//미리보기 사진 삭제
-function delImg(_this){
-	$(_this).parent('li').remove()
-}	            
+	//미리보기 사진 삭제
+	function delImg(_this){
+		$(_this).parent('li').remove()
+	}	 
+
+	/* 입력시 경고 없애기 */
+	//카테고리
+	$('#goodsSmallCategory').on("change", function(){
+		if($('#goodsSmallCategory').val() != 'none'){ //선택하면 경고창 없애기
+			$('.category_warn').css('display','none');
+		};
+	});
+	//상품명
+	$('#goodsName').on("propertychange change keyup paste input", function(){
+		if($('#goodsName').val() != ''){
+			$('.name_warn').css('display','none');
+		};
+	});
+	//상품정보
+	$('#goodsContent').on("propertychange change keyup paste input", function(){
+		if($('#goodsName').val() != ''){	
+			$('.content_warn').css('display','none');
+		};
+	});
+	//판매가
+	$('#goodsPrice').on("propertychange change keyup paste input", function(){
+			$('.price_warn').css('display','none');
+	});
+	//할인율
+	$('#goodsDiscountRate').on("propertychange change keyup paste input", function(){
+			$('.discount_warn').css('display','none');
+	});
+	$("#noDiscount").on("propertychange change keyup paste input", function(){
+		$('.discount_warn').css('display','none');
+	});
+	//재고
+	$('#goodsStock').on("propertychange change keyup paste input", function(){
+		$('.stock_warn').css('display','none');
+	});
+	//배송비
+	$('#goodsPostPrice').on("propertychange change keyup paste input", function(){
+		$('.post_warn').css('display','none');
+	});
+	$("#freePost").on("propertychange change keyup paste input", function(){
+		$('.post_warn').css('display','none');
+	});
+	//이미지
+	$('#uploadfile').on("propertychange change keyup paste input", function(){
+		$('.image_warn').css('display','none');
+	});
+	//상품설명
+	$('#summernote').on("propertychange change keyup paste input", function(){
+		$('.detail_warn').css('display','none');
+	});
+	/* 상품 등록 유효성 검사*/
+	
+	//상품 등록 버튼
+	$('#goodsAddBtn').on('click', function(e){
+		e.preventDefault();
+		
+		//체크 변수
+		var categoryCk = false;
+		var goodsNameCk = false;
+		var contentCk = false;
+		var priceCk = false;
+		var discountCk = false;
+		var stockCk = false;
+		var postCk = false;
+		var imageCk = false;
+		var detailCk = false;
+	
+		//체크 대상 변수
+		var goodsSmallCategory = $("select[name='goodsSmallCategory']").val();
+		var goodsName = $("input[name='goodsName']").val();
+		var goodsContent = $("textarea[name='goodsContent']").val();
+		var goodsPrice = $("input[name='goodsPrice']").val();
+		var goodsDiscountRate = $("input[name='goodsDiscountRate']").val();
+		var goodsStock = $("input[name='goodsStock']").val();
+		var goodsPostPrice = $("input[name='goodsPostPrice']").val();
+		var uploadfile = $("input[name='uploadfile']").val();
+		var goodsDetail  = $("textarea[name='goodsDetail']").val();
+		
+		//카테고리
+		if(goodsSmallCategory != 'none'){
+			$(".category_warn").css('display','none');
+			categoryCk = true;
+		} else {
+			$(".category_warn").css('display','initial');
+			categoryCk = false;
+		}
+		//상품명
+		if(goodsName){
+			$(".name_warn").css('display','none');
+			goodsNameCk = true;
+		} else {
+			$(".name_warn").css('display','initial');
+			goodsNameCk = false;
+		}
+		//상품정보
+		if(goodsContent){
+			$(".content_warn").css('display','none');
+			contentCk = true;
+		} else {
+			$(".content_warn").css('display','initial');
+			contentCk = false;
+		}
+		//가격
+		if(goodsPrice != 0){
+			$(".price_warn").css('display','none');
+			priceCk = true;
+		} else {
+			$(".price_warn").css('display','initial');
+			priceCk = false;
+			$("input[name='goodsPrice']").val("");
+		}
+		//할인율
+		if(goodsDiscountRate != ''){
+			$(".discount_warn").css('display','none');
+			discountCk = true;
+		} else {
+			$(".discount_warn").css('display','initial');
+			$(".discount_warn").css('padding-left','0px');
+			discountCk = false;
+		}
+		//재고
+		if(goodsStock != 0){
+			$(".stock_warn").css('display','none');
+			stockCk = true;
+		} else {
+			$(".stock_warn").css('display','initial');
+			stockCk = false;
+		}
+		//배송비
+		if(goodsStock != ''){
+			$(".post_warn").css('display','none');
+			postCk = true;
+		} else {
+			$(".post_warn").css('display','initial');
+			$(".post_warn").css('padding-left','0px');
+			postCk = false;
+		}
+		//이미지
+		if(uploadfile){
+			$(".image_warn").css('display','none');
+			imageCk = true;
+		} else {
+			$(".image_warn").css('display','initial');
+			imageCk = false;
+		}
+		//상품 상세
+		if(goodsDetail){
+			$(".detail_warn").css('display','none');
+			detailCk = true;
+		} else {
+			$(".detail_warn").css('display','initial');
+			detailCk = false;
+		}
+		
+		//숫자 콤마없애기 //입력 안 하고 submit할 시 아무것도 입력 안되게 하기
+		$('#goodsPrice').val( Number($('#goodsPrice').val().replace(/,/g, "")) );
+		$('#goodsDiscountRate').val( Number($('#goodsDiscountRate').val().replace(/,/g, "")) );
+		$('#goodsStock').val( Number($('#goodsStock').val().replace(/,/g, "")) );
+		$('#goodsPostPrice').val( Number($('#goodsStock').val().replace(/,/g, "")) );
+		//입력 안 하고 submit할 시 아무것도 입력 안되게 하기
+		/*$('#goodsPrice').val( "" );
+		$('#goodsDiscountRate').val( "" );
+		$('#goodsStock').val( "" );
+		$('#goodsPostPrice').val( "" ); */
+		
+		
+	    /* form 전송 */
+		$('#goodsAddForm').submit(function(event) {}); 
+	    
+	    
+		//최종 확인
+		if(categoryCk && goodsNameCk && contentCk && priceCk && discountCk && stockCk && postCk && imageCk && detailCk){
+			//alert('통과');
+			$('#goodsAddForm').submit();
+		//} else {
+		//return false;
+		}
+	});
 </script>
 </th:block>
 </html>
