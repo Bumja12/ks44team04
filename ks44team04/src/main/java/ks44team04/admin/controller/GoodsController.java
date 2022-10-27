@@ -153,19 +153,22 @@ public class GoodsController {
 						   ,Goods goods, Model model, HttpSession session){
 		
 		String userId = (String) session.getAttribute("SID");
+		//String sellerId = "seller01";
 		
 		//대분류 카테고리 리스트 가져오기
 		List<GoodsLargeCategory> largeCategoryList = goodsService.goodsLargeCategoryList();
 		
 		// ========================= goodsCode 생성 =========================
 		String goodsNewCode = goodsService.getGoodsNewCode(userId);
-		goodsNewCode = CodeIndex.codeIndex(goodsNewCode, 5);
-		
-		log.info("상품 증가 코드 :::{}" , goodsNewCode);
+		//if(goodsNewCode == null) {
+			//굿즈뉴코드는 판매자분류코드받아와서 그걸 통해서 새코드 001 만들기
+		//}else{
+			goodsNewCode = CodeIndex.codeIndex(goodsNewCode, 5);
+		//}
 		goods.setGoodsCode(goodsNewCode);
 		goods.setSellerId(userId);
+		log.info("상품 증가 코드 :::{}" , goodsNewCode);
 		// =================================================================
-		
 		
 		//이미지 업로드
 		String serverName = request.getServerName();
@@ -192,7 +195,6 @@ public class GoodsController {
 		}
 		//fileService.fileUpload(uploadfile, fileRealPath, isLocalhost);
 		
-		
 		log.info("사용자가 등록한 상품 정보 ::: {}", goods);
 		model.addAttribute("largeCategoryList", largeCategoryList);
 		
@@ -200,19 +202,19 @@ public class GoodsController {
 	}
 	
 	//상품 삭제
-	//@GetMapping("/goodsRemove")
-	//public String goodsRemove(@RequestParam(value = "goodsCode") String goodsCode) {
+	@GetMapping("/goodsRemove")
+	public String goodsRemove(@RequestParam(value = "goodsCode") String goodsCode) {
 		
-	//	goodsService.goodsRemove(goodsCode);
+		goodsService.goodsRemove(goodsCode);
 	
-	//	return "redirect:/admin/goods/goodsList";
-	//}
+		return "redirect:/admin/goods/goodsList";
+	}
 	
+	//상품 삭제
 	@PostMapping("/pwCheck")
 	@ResponseBody
 	public int pwCheck(@RequestParam(value = "userPw") String userPw) {
 		
-		//String userId = "admin01";
 		String adminPw = goodsService.getAdminPw(userPw);
 		log.info("관리자 비밀번호 ::: {}", adminPw);
 		
