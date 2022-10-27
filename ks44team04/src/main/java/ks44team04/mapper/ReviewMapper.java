@@ -54,9 +54,10 @@ public interface ReviewMapper {
 	//후기 댓글 목록 삭제 - 관
 	public int reviewCommentDelete(ReviewComment reviewComment);
 	
-	//후기 댓글 특정 댓글 목록 - 유 
+	//후기 댓글 특정 댓글 목록 - 유
 	/*public ReviewComment reviewCommnetList(String reviewList);*/
-	
+
 	public List<Map<String, Object>> reviewCommnetList(String reviewList);
+
 	
 }

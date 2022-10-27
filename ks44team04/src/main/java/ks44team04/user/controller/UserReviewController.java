@@ -83,17 +83,16 @@ public class UserReviewController {
 	 * reviewService.reviewCommnetList(reviewList);
 	 * model.addAttribute("reviewCommintList", reviewCommintList); return null; }
 	 */
-	 //입고등록 모달 - 특정 상품코드 조회
-	
-	   @GetMapping("/review/reviewCommentList")
-	   @ResponseBody
-	   public List<Map<String, Object>>reviewCommnetList(@RequestParam(value="reviewList") String reviewList){
-	      
-		  List<Map<String, Object>> reviewCommnetList = reviewService.reviewCommnetList(reviewList);
-	      
-	      return reviewCommnetList;
-	   }
-	
+	//입고등록 모달 - 특정 상품코드 조회
+
+	  @GetMapping("/review/reviewCommentList")
+	  @ResponseBody
+	  public List<Map<String, Object>>reviewCommnetList(@RequestParam(value="reviewList") String reviewList){
+
+	List<Map<String, Object>> reviewCommnetList = reviewService.reviewCommnetList(reviewList);
+
+	     return reviewCommnetList;
+	  }
 	
 	 
 
