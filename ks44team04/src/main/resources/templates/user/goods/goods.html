@@ -309,8 +309,6 @@ button:focus{ outline:none; border:none; }
 			        			<span>
 			        				<label th:text="${l.buyerId} + '○' + ${l.reviewRegDate}"></label>
 			        			</span>
-								<button type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
-					         	<button type="button" class="btn"  style="font-size: 13px; padding: 0px;">삭제</button>		      
 								<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn" style="font-size: 13px; padding: 0px;">수정</button>        
 					         	<button th:if="${session.SID} == ${l.buyerId}" type="button" class="btn"  style="font-size: 13px; padding: 0px;">삭제</button>		      
 			       			 </div>
@@ -839,16 +837,19 @@ $(function() {
 	                 console.log(data);	
 	                 let recomModel = "";
 	        	  	$.each(data, function(index, item){
-	        	  		recomModel += "<p>" + data[index].user_id +" ○ " + data[index].reg_date +  "</p>"
-	        	  		recomModel += "<input type='text' style=' width: 99%; height: 50px;' value=" + data[index].review_comment_content + ">"
+						let reviewCommentContent = data[index].review_comment_content; 	 
+						console.log(reviewCommentContent);
+	        	  		recomModel += "<p>" + data[index].user_id + " ○ " + data[index].reg_date +  "</p>"
+	        	  		recomModel += "<input type='text' style='width:99%; height: 50px;' readonly='readonly' value = '"+ reviewCommentContent +"'>" 
 	        	  		recomModel += "<div class='row'> <hr align='center' style='border: solid 1px #EDEDED; width: 80%;'> </div>"
 					})
 					$('#recomModel').prepend(recomModel);
+	        	  	// 모달 닫을때 값 초기화
 	        	  	$('.reviweComment').on('hidden.bs.modal', function(e) {
 						$('#recomModel').empty();
 					})
               	
-	        	}
+	        	}	
 	
 	      });
 	   });
